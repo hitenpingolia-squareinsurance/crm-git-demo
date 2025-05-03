@@ -1,0 +1,114 @@
+ 
+<form [formGroup]="PayInForm" (ngSubmit)="AddPayIn()">   
+    <!-- /.box-header -->   
+    <div>
+
+<div class="table-responsive">
+<table class="table table-bordered">
+<thead>
+  <tr>
+    <th>
+        <table>
+            <tr>
+                <td>Agent</td>
+                <td>Ins&nbsp;Company</td>
+                <td>LOB</td>
+                <td>File&nbsp;Type</td>
+                <td>Product</td>
+                <td>Sub&nbsp;-&nbsp;Product</td>
+                <td>Segment</td>
+                <td>Class</td>
+                <td>Sub&nbsp;-&nbsp;Class</td>
+                <td>Create&nbsp;-&nbsp;Date</td>
+            </tr>
+        </table>
+    </th>
+    <th>Pay&nbsp;-&nbsp;Out&nbsp;OD</th>
+    <th>Pay&nbsp;-&nbsp;Out&nbsp;TP</th>
+    <th>Pay&nbsp;-&nbsp;Out&nbsp;Net</th>
+    
+    <th>Pay&nbsp;-&nbsp;Out&nbsp;Reward</th>
+    <th>Pay&nbsp;-&nbsp;Out&nbsp;Scheme</th>
+    <th>Remark</th>
+    <th>Action</th>
+  </tr>
+</thead>
+<tbody formArrayName="Payout">
+
+  <tr *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+    
+    <td *ngIf="Sr_Data[i]['Is_Update'] =='0'">
+        <table style="width: 90%;">
+            <tr>
+                <td>{{Sr_Data[i]['Agent_Name']}} - {{Sr_Data[i]['Agent_Code']}}</td>
+                <td>{{Sr_Data[i]['Insurance_Company_Name']}}</td> 
+                <td>{{Sr_Data[i]['LOB_Id']}}</td>
+                <td>{{Sr_Data[i]['File_Type']}}</td>
+                <td>{{Sr_Data[i]['Product_Id']}}</td>
+                <td>{{Sr_Data[i]['SubProduct_Id']}}</td>
+                <td>{{Sr_Data[i]['Segment_Id']}}</td>
+                <td>{{Sr_Data[i]['Class_Id']}}</td>
+                <td>{{Sr_Data[i]['Sub_Class_Id']}}</td>
+                <td>{{Sr_Data[i]['SR_Create_Date']}}</td>
+            </tr>
+        </table>
+        
+        <input type="hidden" formControlName="SR_Id">
+        
+        <input type="hidden" formControlName="Payin_OD">
+        <input type="hidden" formControlName="Payin_TP">
+        <input type="hidden" formControlName="Payin_Net">
+        <input type="hidden" formControlName="Payin_Reward">
+        <input type="hidden" formControlName="Payin_Scheme">
+         
+        <input type="hidden" formControlName="PayOutOD">
+        <input type="hidden" formControlName="PayOutTP">
+        <input type="hidden" formControlName="PayOutNet">
+         
+        <input type="hidden" formControlName="PayOutReward">
+        <input type="hidden" formControlName="PayOutScheme"> 
+        
+    </td> 
+  
+    <td *ngIf="Sr_Data[i]['Is_Update'] =='0'"><input type="number" formControlName="Input_PayOutOD" (keyup)="onChangeInput($event,'OD',i)" min="1" class="form-control"></td>
+    <td *ngIf="Sr_Data[i]['Is_Update'] =='0'"><input type="number" formControlName="Input_PayOutTP" (keyup)="onChangeInput($event,'TP',i)" min="1" class="form-control"></td>
+    <td *ngIf="Sr_Data[i]['Is_Update'] =='0'"><input type="number" formControlName="Input_PayOutNet" (keyup)="onChangeInput($event,'Net',i)" min="1" class="form-control"></td>
+     
+    <td *ngIf="Sr_Data[i]['Is_Update'] =='0'"><input type="number" formControlName="Input_PayOutReward" (keyup)="onChangeInput($event,'Reward',i)" min="1" class="form-control"></td>
+    <td *ngIf="Sr_Data[i]['Is_Update'] =='0'"><input type="number" formControlName="Input_PayOutScheme" (keyup)="onChangeInput($event,'Scheme',i)" min="1" class="form-control"></td>
+    <td *ngIf="Sr_Data[i]['Is_Update'] =='0'"><input type="text" formControlName="Input_Remark" [value]="SR_Ar[i]['Remark']" class="form-control" style="width: 150px;"></td>
+    <td *ngIf="Sr_Data[i]['Is_Update'] =='0'"> 
+        <button *ngIf="(SR_Ar[i]['flagButton']==1 || SR_Ar[i]['flagButton']==0)" style="margin-right: 4%; margin-top: 6%;" type="button" (click)="AddPayInSingle(i)" class="btn btn-info pull-right">Update</button>
+    </td>
+
+</tr>
+   
+</tbody>
+</table>
+</div> 
+
+<!--<div class="form-group row">    
+    <div class="col-lg-6"> 
+         <label>Remark:</label>
+        <input type="text" formControlName="Remark" class="form-control"> 	 	   
+        <span *ngIf="isSubmitted && FC.Remark.errors" class="form-text text-muted">
+            <span *ngIf="FC.Remark.errors.required" style="color:red;">Please enter remark !</span>
+        </span>
+    </div>  
+    <div class="col-lg-6">
+     <button *ngIf="(flagButton==1 || flagButton==0)" style="margin-right: 4%; margin-top: 6%;" type="submit" class="btn btn-info pull-right">Update</button>
+    <button style="margin-top: 6%;"  type="button" (click)="CloseModel()" class="btn btn-default pull-right">Cancel</button>
+</div>
+</div>-->
+
+<div class="form-group row">    
+
+<div class="col-lg-12">
+    <button style="margin-top: 6%;"  type="button" (click)="CloseModel()" class="btn btn-default pull-right">Cancel</button>
+</div>
+</div>
+
+</div>	
+
+
+</form>	

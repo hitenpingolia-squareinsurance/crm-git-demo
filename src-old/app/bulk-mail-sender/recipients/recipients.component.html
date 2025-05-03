@@ -1,0 +1,113 @@
+<section class="custom-scroll" id="click-close">
+  <button type="button" (click)="closeDialog()" class="close closeModelButton">
+    <i class="fa fa-close"></i>
+  </button>
+  <div class="main_body_email">
+    <div class="main_top_tabs">
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li id="email" class="nav-item active">
+          <button class="nav-link" (click)="loadEmailDetails()">
+            Email Details
+          </button>
+        </li>
+        <li id="content" class="nav-item">
+          <button class="nav-link" (click)="loadContentPreview()">
+            Content Preview
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="bulk_data_email">
+      <div class="email_details_tab" *ngIf="isEmailVisible">
+        <div class="email_inner_details">
+          <div class="side_data_email">
+            <ul *ngFor="let item of dataAr">
+              <li>
+                <span>Bulk Mail Id</span>
+                <p>{{ item.bulkid }}</p>
+              </li>
+              <li>
+                <span>Date</span>
+                <p>{{ item.add_stamp }}</p>
+              </li>
+              <li>
+                <span>Subject</span>
+                <p>{{ item.subject }}</p>
+              </li>
+              <li>
+                <span>Mail Agent Name</span>
+                <p>Other</p>
+              </li>
+              <li>
+                <span>From Email</span>
+                <p>{{ item.fromemail }}</p>
+              </li>
+              <li>
+                <span>From Name</span>
+                <p>{{ item.fromemailName }}</p>
+              </li>
+
+              <!-- <li *ngIf="doc == 1">
+                <span>Attachment</span>
+                <button class="btn btn-active" (click)="Download(item.id)">
+                  Download
+                </button>
+              </li> -->
+              <!-- <li *ngIf="doc == 1">
+                <span>Attachments</span>
+                <ul *ngFor="let item_file of item.attachment">
+                  <li (click)="Download(item_file)">{{ item_file }}</li>
+                </ul>
+              </li> -->
+              <li *ngIf="doc == 1">
+                <span>Attachments</span>
+                <ul *ngFor="let item_file of item.attachment">
+                  <li (click)="Download(item_file.Path)" class="cursor">
+                    {{ item_file.name }}
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="mian_email_data">
+            <div class="table-responsive">
+              <table class="table">
+                <tr>
+                  <th>SR.No.</th>
+                  <th>Recipient</th>
+                  <th>Status</th>
+                </tr>
+                <tr *ngFor="let item of dataAr">
+                  <td>1</td>
+                  <td>{{ item.toemail }}</td>
+                  <td>
+                    <span *ngIf="item.status == 0" class="label label-warning"
+                      >Pending</span
+                    >
+                    <span *ngIf="item.status == 1" class="label label-success"
+                      >Delivered</span
+                    >
+                    <span *ngIf="item.status == 2" class="label label-danger"
+                      >Not delivered</span
+                    >
+                    <!-- {{ item.status }} -->
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content_preview" *ngIf="isContentVisible">
+        <div class="email_previ_data">
+          <div *ngFor="let item of dataAr">
+            <h2>{{ item.subject }}</h2>
+            <p><strong>To Email:</strong> {{ item.toemail }}</p>
+            <p><strong>Message:</strong></p>
+            <div [innerHTML]="item.message"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

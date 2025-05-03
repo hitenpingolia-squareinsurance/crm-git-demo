@@ -1,0 +1,73 @@
+<div class="row">
+  <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+</div>
+
+
+<table class="table table-bordered">
+
+  <thead>
+    <tr>
+      <th colspan="8" style="text-align: center; background-color: #2cb2b3; color: white;">KRA Ratings Update Track</th>
+    </tr>
+
+    <tr>
+      <th colspan="8">
+        <div class="col-sm-12">
+          <form [formGroup]="SearchForm" (ngSubmit)="GetRatingsUpdateTrack()">
+
+            <div class="row"  >
+              <div class="col-sm-3">
+                <ng-multiselect-dropdown class="form-control" placeholder="Employee" [data]="Emps_Ar"
+                  [(ngModel)]="Selected_Emp_Ar" formControlName="Emp_Id" [settings]="dropdownSettingSingleSelect">
+                </ng-multiselect-dropdown>
+              </div>
+
+
+              <div class="col-sm-3">
+                <input type="submit" class="btn btn-info" value="Search">&nbsp;&nbsp;
+                <!-- <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger" value="Reset"> <i
+                      class="fa fa-close"> Reset</i> </button> -->
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </th>
+    </tr>
+
+    <tr>
+      <th>Sr&nbsp;No</th>
+      <th>KRA&nbsp;Type</th>
+      <th>Weightage</th>
+      <!-- <th>Rating</th> -->
+      <th>Remarks</th>
+      <th>Status</th>
+      <th>Updated&nbsp;By</th>
+      <th>Update&nbsp;Date</th>
+    </tr>
+  </thead>
+
+  <tbody *ngIf="dataAr?.length != 0">
+    <tr *ngFor="let row of dataAr; let i=index;">
+      <td> {{ row.SrNo }} </td>
+
+      <td> {{ row.KraType }} </td>
+      <td> {{ row.Weightage }} </td>
+      <!-- <td> {{ row.CurrentRating }} </td> -->
+      <td> {{ row.Remarks }} </td>
+      <td>
+        <span *ngIf="row.Status == 'Approved'" style="margin-right: 5px;" class="label label-success">Approved</span>
+        <span *ngIf="row.Status == 'Submitted'" style="margin-right: 5px;" class="label label-warning">Submitted</span>
+        <span *ngIf="row.Status == 'Saved'" style="margin-right: 5px;" class="label label-primary">Saved</span>
+      <td> {{ row.ActionUser }} </td>
+      <td> {{ row.UpdateDate }} </td>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="dataAr?.length == 0">
+    <tr>
+      <td colspan="8" align="center">No data Available !</td>
+    </tr>
+  <tbody>
+
+</table>

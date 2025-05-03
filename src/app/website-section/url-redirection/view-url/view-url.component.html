@@ -1,0 +1,135 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">URL REDIRECTION</div>
+          </div>
+          <div *ngIf="!hasAccess" class="error-message">
+            <div class="container" style="text-align: center;">
+              <img src="assets/Authorised.png" alt="">
+              <h4>{{ errorMessage }}</h4>
+            </div>
+            
+          </div>
+
+          <div class="main_body main_card_height_scroll" *ngIf="hasAccess">
+            <div class="filterquotesrow">
+              <button class="btn btninfo1" style="margin-right:10px;" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><a role="button"><i class="fa fa-filter"></i><span>Filters</span><i class="fa fa-angle-down"></i></a></button>
+              <button class="btn btn-info nextBtn pull-right" (click)="Addurl('Add',0)"
+                  style="float:right; margin-bottom:2px; margin-right:10px;">Add Url <i class="fa fa-plus"></i></button>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panelbody">
+                <form [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+
+                  <div class="row" style="margin-top: 1%;margin-bottom: 2%;">
+    
+                    <div class="col-sm-2"><input type="text" formControlName="search" name="search" class="form-control"
+                        placeholder="Search"></div>
+    
+                    <div class="col-sm-2" style="text-align: right;">
+                      <input type="submit" class="btn btn-info" (click)="SearchData()" value="Search"> &nbsp;&nbsp;
+                      <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                        value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                    </div>
+    
+                  </div>
+    
+                </form>
+              </div>
+            </div>
+           
+            <hr>
+            <div class="mydiv">
+              <!-- table  -->
+
+
+              <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" id="Table1" class="row-border table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+                <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                  <li class="table-row tablerow" *ngFor="let row of dataAr">
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{row.SrNo}}.</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Old Url</div>
+                              <strong class="fs_18"><span>{{row.oldurl}}</span></strong>
+                              
+                            </div>
+                          </div>
+                      </div>
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Created Date - <strong class="fs_18"><span>{{row.addstamp}}</span></strong></div>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      
+                      
+                    <hr>
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+                        <div class="label_chips non_motor_lob">
+                          <span>New Url - {{row.newurl}}</span>&nbsp;&nbsp;
+                        </div>
+                        <div class="label_chips finance_lob">
+                          <span>Updated At - {{row.updatedate}}</span>
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <div class="last_row">
+                      <div class="effective_date">
+                        <div class="d_flex">
+                         
+                        </div>
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                        
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                        <div class="row">
+                          <button *ngIf="row.status == 1" class="btn btn-success" style="padding: 3px 10px; margin-right:10px;"
+                            (click)="ActiveInactive(row.Id, 0, 'sco_url_redirection')">Active</button>
+                          <button *ngIf="row.status == 0" class="btn btn-danger" style="padding: 3px 10px; margin-right:10px;"
+                            (click)="ActiveInactive(row.Id, 1, 'sco_url_redirection')">Inactive</button>
+                          <button class="btn btn-info" style="padding: 3px 10px; margin-right:10px;" (click)="Addurl('Edit',row.Id)">Edit</button>
+                          <button class="btn btn-danger" style="padding: 3px 10px; margin-right:10px;"
+                            (click)="DeleteRequest(row.Id,'sco_url_redirection')">Delete</button>
+                          &nbsp;
+                          
+                        </div>
+  
+                          
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

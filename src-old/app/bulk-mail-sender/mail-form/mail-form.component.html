@@ -1,0 +1,212 @@
+<section class="custom-scrool" id="click-close">
+  <div class="">
+    <div class="main_card_form">
+      <div class="main_header">
+        <h4 class="header_title">Bulk Mail Form</h4>
+        <button type="button" (click)="CloseModel()" class="close closeModelButton">
+          <i class="fa fa-close"></i>
+        </button>
+        <div class="call-precess" id="callProcess" style="display: none">
+          <div class="call-align">
+            <img src="assets/image/calling.gif" alt="" />
+          </div>
+          <div class="heading-call">Call in Progress....</div>
+        </div>
+      </div>
+      <hr />
+      <div class="modal_body">
+        <div class="row"></div>
+        <form [formGroup]="sendbulkmailForm" (ngSubmit)="submit()">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="check-flex" *ngIf="mailForm == 0">
+                <label>From Mail</label>
+                <button class="close_btn plus" type="button" (click)="addMail(1)">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="check-flex" *ngIf="mailForm == 1">
+                <label>From Mail</label>
+                <button class="close_btn minus" type="button" (click)="addMail(0)">
+                  <i class="fa fa-minus" aria-hidden="true"></i>
+                </button>
+              </div>
+              <ng-multiselect-dropdown [data]="fromMail" formControlName="fromMail" class="form-control"
+                [settings]="dropdownSettingsType" placeholder="Select From Mail" *ngIf="mailForm == 0">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.fromMail.errors" class="Validationerrors">
+                <div *ngIf="formControls.fromMail.errors.required">
+                  <span style="color: red">Please Select From Mail!</span>
+                </div>
+                <div *ngIf="formControls.fromMail.errors.pattern">
+                  <span style="color: red">Please Select From Mail!</span>
+                </div>
+              </div>
+
+              <form (ngSubmit)="submitMail()" [formGroup]="NewMailSubmit" *ngIf="mailForm == 1">
+                <div class="col-sm-10">
+                  <input type="email" class="form-control" formControlName="fromMail" placeholder="Type Email" />
+
+                  <div *ngIf="isSubmitted1 && formControls.fromMail.errors" class="Validationerrors">
+                    <div *ngIf="formControls.fromMail.errors.required">
+                      <span style="color: red">Please Enter Email!</span>
+                    </div>
+                    <!-- <div *ngIf="formControls.fromMail.errors.pattern">
+                      <span style="color: red">please enter correct email!</span>
+                    </div> -->
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div class="button-div-yes-no" style="margin-right: 14px">
+                    <button type="submit" class="btn btn-info">Submit</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="col-sm-6" style="margin-top: 13px">
+              <label>From Name</label>
+              <input type="text" class="form-control" formControlName="fromname" placeholder="From Name" />
+              <div *ngIf="isSubmitted && formControls.subject.errors" class="Validationerrors">
+                <div *ngIf="formControls.subject.errors.required">
+                  <span style="color: red">Please Enter From Mail Name!</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="check-flex" *ngIf="toChange == 0">
+                <label>To Mail</label>
+                <button class="close_btn plus" type="button" (click)="toMailChange(1)">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="check-flex" *ngIf="toChange == 1">
+                <label>To Mail</label>
+                <button class="close_btn minus" type="button" (click)="toMailChange(0)">
+                  <i class="fa fa-minus" aria-hidden="true"></i>
+                </button>
+              </div>
+
+              <div *ngIf="toChange == 0">
+                <ng-multiselect-dropdown [data]="toMailAr" formControlName="toMail" class="form-control"
+                  [settings]="dropdownSettingsType" placeholder="Select Mail Type"
+                  (ngModelChange)="tomailCheck($event)">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.toMail.errors" class="Validationerrors">
+                  <div *ngIf="formControls.toMail.errors.required">
+                    <span style="color: red">Please Select To Mail!</span>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="toChange == 1">
+                <input type="text" class="form-control" formControlName="more" placeholder="Type Mails" />
+                <div *ngIf="isSubmitted && formControls.more.errors" class="Validationerrors">
+                  <div *ngIf="formControls.more.errors.required">
+                    <span style="color: red">Please Enter Mail!</span>
+                  </div>
+                  <div *ngIf="formControls.more.errors.pattern">
+                    <span style="color: red">Please Enter Proper Mail</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4" style="margin-top: 7px" *ngIf="MailCheck === 1">
+              <label>Vertical</label>
+              <ng-multiselect-dropdown [data]="Vertical_Ar" formControlName="verticalform" class="form-control"
+                [settings]="dropdownSettingsMultiselect" placeholder="Select Vertical"
+                (ngModelChange)="partnerData($event)">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.verticalform.errors" class="Validationerrors">
+                <div *ngIf="formControls.verticalform.errors.required">
+                  <span style="color: red">Please Select verticalform</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4" style="margin-top: 7px" *ngIf="MailCheck === 1">
+              <label>Employees</label>
+              <ng-multiselect-dropdown [data]="Partner_Ar" formControlName="partnerform" class="form-control"
+                [settings]="dropdownSettingsMultiselect" placeholder="Select Employees">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.partnerform.errors" class="Validationerrors">
+                <div *ngIf="formControls.partnerform.errors.required">
+                  <span style="color: red">Please Select Partner</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4" style="margin-top: 7px" *ngIf="MailCheck === 2">
+              <label>Partner</label>
+              <ng-multiselect-dropdown [data]="toMailAr1" formControlName="partnerform" class="form-control"
+                [settings]="dropdownSettingsMultiselect" placeholder="Select Partner">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.partnerform.errors" class="Validationerrors">
+                <div *ngIf="formControls.partnerform.errors.required">
+                  <span style="color: red">Please Select Partner</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4" style="margin-top: 13px">
+              <label>Subject</label>
+              <input type="text" class="form-control" formControlName="subject" placeholder="Type Subject" />
+              <div *ngIf="isSubmitted && formControls.subject.errors" class="Validationerrors">
+                <div *ngIf="formControls.subject.errors.required">
+                  <span style="color: red">Please enter subject!</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6" style="margin-top: 13px">
+              <label>Attachement</label>
+              <div>
+                <input type="radio" id="Yes" name="fav_language" (click)="SubmitAttachment(1)" />
+                <label for="Yes">Yes</label>
+                <input type="radio" id="No" name="fav_language" (click)="SubmitAttachment(0)" />
+                <label for="No">No</label><br />
+              </div>
+
+              <input type="file" formControlName="attachement" multiple="" *ngIf="attach == 1"
+                (change)="onFileChange($event)" class="form-control" />
+
+              <div *ngIf="isSubmitted && formControls.attachement.errors" class="Validationerrors">
+                <div *ngIf="formControls.attachement.errors.required">
+                  <span style="color: red">Please choose Attachement!</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-sm-12">
+              <label for="state">Message</label>
+              <ckeditor [config]="ckconfig" [(ngModel)]="MessageBody" formControlName="MessageBody">
+              </ckeditor>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12" style="margin-top: 2%">
+              <div class="float-end pull-right">
+                <button type="button" (click)="formValidationCheck()" class="btn btn-info">
+                  Preview And Submit
+                </button>
+                <button id="btn-none" type="submit" class="btn btn-info">
+                  Submit</button>&nbsp;
+                <button type="reset" click="ResetDT()" class="btn btn-danger">
+                  Reset
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

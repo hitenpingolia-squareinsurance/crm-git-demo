@@ -1,0 +1,257 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">
+      
+                <div class="header_title">Contest</div>
+                <!-- *ngIf="login_userId == 173" -->
+                  <button *ngIf="login_userId == 173"
+                    class="btn btn-primary nextBtn pull-right"
+                    (click)="AddContest('Add', 0)">
+                    <i class="fa fa-plus"> </i>Add Contest
+                  </button>
+            </div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div *ngIf="UserType == 'employee'">
+              <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                  <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                      data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                      aria-controls="collapseOne">
+                      <a role="button" class="fa fa-filter"><span>Filters</span><i
+                              class="fa fa-angle-down pull-right"></i></a>
+                  </button>
+              </div>
+          </div>
+
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+              aria-labelledby="headingOne">
+              <div class="panel-body">
+                  <!-- filter  -->
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-view">
+                        <div class="form-check form-check-inline">
+                          <input type="radio" id="contestForAll" name="ContestFor" value="All" [(ngModel)]="contestfor" (change)="onRadioChange($event)"
+                      /> 
+                          <label class="form-check-label" for="contestForAll">For All</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input type="radio" id="contestForEmployee" name="ContestFor" value="Employee" [(ngModel)]="contestfor" (change)="onRadioChange($event)"
+                      /> 
+                          <label class="form-check-label" for="contestForEmployee">For Employee</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input type="radio" id="contestForPOSP" name="ContestFor" value="POSP" [(ngModel)]="contestfor" (change)="onRadioChange($event)"
+                      />
+                          <label class="form-check-label" for="contestForPOSP" >For POSP</label>
+                        </div>
+                 
+                      </div>
+                    </div>
+                  
+                    
+                  </div>
+              </div>
+          </div>
+            <div class="row">
+              
+              <div class="col-md-12">
+                <div class="btn-group custom-group">
+                  <!-- <a (click)="onButtonChange('All')" [class.active]="activeCheck == 'All'" class="btn btn-primary" aria-current="page">All</a> -->
+                  <a (click)="onButtonChange('1')" [class.active]="activeCheck == '1'" class="btn btn-primary">Ongoing</a>
+                  <a (click)="onButtonChange('0')" [class.active]="activeCheck == '0'" class="btn btn-primary">Closed</a>
+                </div>
+              </div>
+             
+              
+            </div>
+
+            <div class="mydiv table-responsive">
+              <!-- table  -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="All">
+                  <div class="custom_table">
+                    <ul class="responsive-table">
+                      <cdk-virtual-scroll-viewport
+                        #scroller
+                        itemSize="72"
+                        class="content mt_0"
+                      >
+                        <mat-list>
+                          <ng-container
+                            *cdkVirtualFor="let row of this.post; let i = index"
+                          >
+                            <mat-list-item>
+                              <li class="table-row">
+                                <div
+                                  class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm"
+                                >
+                                  <div class="agents_data agents_data1">
+                                    <div class="icon_re_cl">{{ i + 1 }}</div>
+                                    <div class="agent_name_mobile">
+                                      <div class="agent_data">
+                                        <div>Contest Name</div>
+                                        <strong class="fs_18">{{
+                                          row.contest_name
+                                        }}</strong>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="agents_data agents_data2">
+                                    <div class="agent_name_mobile">
+                                      <div
+                                        class="agent_data"
+                                        *ngIf="
+                                          login_userId == 173 ||
+                                          login_user_type == 'employee'
+                                        "
+                                      >
+                                        <div>Contest For</div>
+                                        <!-- <strong class="fs_18"><span>{{ row.Category}}</span></strong> -->
+                                        <strong class="fs_18"
+                                          ><span>{{
+                                            row.Category.split(",").join(", ")
+                                          }}</span></strong
+                                        >
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="agents_data agents_data3">
+                                    <div class="agent_name_mobile">
+                                      <!-- <div class="agent_data">
+                                          <div>Category</div><strong class="fs_18">{{ row.Category}}</strong>
+                                        </div> -->
+                                      <div>Document</div>
+                                      <strong class="fs_18"
+                                        ><span class="link"></span
+                                        ><label class="label label-info">
+                                          <a
+                                            style="color: white"
+                                            *ngIf="row.Image != ''"
+                                            href="{{ row.Image }}"
+                                            target="_blank"
+                                          >
+                                            View</a
+                                          ></label
+                                        ></strong
+                                      >
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="last_row_div">
+                                  <div class="d_flex">
+                                    <!-- <div class="label_chips motor_lob dark">
+                                      <span>Effective from {{ row.enabledate }} to {{row.disabledate}}</span>&nbsp;&nbsp;
+                                    </div> -->
+
+                                    <div class="label_chips non_motor_lob">
+                                      <span
+                                        >Effective from {{ row.enabledate }} to
+                                        {{ row.disabledate }}</span
+                                      >&nbsp;&nbsp;
+                                    </div>
+
+                                    <div
+                                      class="label_chips motor_lob"
+                                      *ngIf="row.user_id != login_userId"
+                                    >
+                                      <span *ngIf="row.Status == 1"
+                                        >Status : Ongoing</span
+                                      >
+                                      <span *ngIf="row.Status == 0"
+                                        >Status : Closed</span
+                                      >
+                                    </div>
+
+                                    <div
+                                      class="label_chips motor_lob"
+                                      *ngIf="row.user_id == login_userId"
+                                    >
+                                      <span
+                                        *ngIf="row.Status == 1"
+                                        (click)="ActiveInactive(row.Id, 0)"
+                                        >Status :Active</span
+                                      >
+                                      <span
+                                        *ngIf="row.Status == 0"
+                                        (click)="ActiveInactive(row.Id, 1)"
+                                        >Status :In-Active</span
+                                      >
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="last_row">
+                                  <div class="d_flex effective_date">
+                                    Remark : {{ row.remark }}
+                                  </div>
+
+                                  <div
+                                    class="col_2 action_btn d_flex flex_Middel box-bottom"
+                                    *ngIf="row.user_id == login_userId"
+                                  >
+                                    <a
+                                      data-toggle="modal"
+                                      (click)="AddContest('Edit', row.Id)"
+                                      data-target="#AddCatSubCatOOOO"
+                                      data-backdrop="static"
+                                      data-keyboard="false"
+                                      >Edit</a
+                                    >
+
+                                    <a
+                                      data-toggle="modal"
+                                      class="details"
+                                      (click)="DeleteRequest(row.Id)"
+                                      data-target="#followUpPopup"
+                                      data-backdrop="static"
+                                      data-keyboard="false"
+                                      >Delete</a
+                                    >
+                                  </div>
+                                </div>
+                              </li>
+
+                              <mat-divider></mat-divider>
+                            </mat-list-item>
+                          </ng-container>
+
+                          <div
+                            class="spinner-item"
+                            *ngIf="loading"
+                            style="display: block; margin: auto; width: 50px"
+                          >
+                            <mat-progress-spinner
+                              [mode]="'indeterminate'"
+                              [diameter]="50"
+                            ></mat-progress-spinner>
+                          </div>
+
+                          <ul
+                            class="responsive-table"
+                            *ngIf="this.loading == false && post.length == 0"
+                          >
+                            <li class="table-row">
+                              <div class="no_data_found">
+                                No Contest available !
+                              </div>
+                            </li>
+                          </ul>
+                        </mat-list>
+                      </cdk-virtual-scroll-viewport>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

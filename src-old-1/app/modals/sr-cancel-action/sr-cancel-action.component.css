@@ -1,0 +1,23 @@
+.btn-box-tool {
+  padding: 5px 10px;
+  font-size: 18px;
+  background: #0075bb;
+  color: #ffffff;
+}
+
+.row.ng-star-inserted {
+  margin-bottom: 15px;
+}
+
+
+.remark{
+  margin-top: 15px;
+}
+
+.box-header>.fa, .box-header>.glyphicon, .box-header>.ion, .box-header .box-title {
+  display: inline-block;
+  font-size: 22px;
+  margin: 0;
+  line-height: 1;
+  font-weight: 600;
+}

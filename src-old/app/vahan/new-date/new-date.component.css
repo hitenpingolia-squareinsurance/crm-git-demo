@@ -1,0 +1,74 @@
+.custom-scrool .main_card_form .main_header {
+  background: #fff;
+  padding: 5px 40px 0 40px;
+  border-radius: 0px;
+  color: #3c8dbc;
+}
+
+.custom-scrool .main_card_form {
+  background: #fff;
+  border-radius: 0px;
+  box-shadow: none;
+  border: none;
+}
+
+.main_card_form .main_header .header_title {
+  color: #3c8dbc;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.col-md-12{
+  padding: 0 40px 0 40px;
+}
+
+.closeModelButton{
+  margin: 5px 5px 0 0;
+}
+
+.float-end{
+  margin-top: 20px;
+}
+
+.check-flex{
+  display: flex;
+  justify-content: space-between;
+}
+
+.check-flex {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  label {
+    margin-left: 2px;
+  }
+}
+
+.cat-list-inline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-info1 {
+  background-color: rgba(44, 178, 179, 1);
+  color: white;
+}
+
+.check-flex {
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  label {
+    margin-left: 2px;
+  }
+}
+
+.btn{
+  margin-right: 10px;
+}

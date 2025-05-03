@@ -1,0 +1,81 @@
+.modal-footer {
+    padding: 0px;
+    border: none;
+} 
+.modal-body {
+    padding: 24px;
+}
+.box.box-solid.box-primary {
+    border: none !important;
+    position: relative;
+    border-radius: 0;
+    background: #ffffff;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: none;
+    margin-top: 0px;
+}
+.box-header .box-title {
+    font-weight: 500;
+    color: #2cb2b3;
+    font-size: 16px !important;
+    margin-bottom: 20px !important;
+    border-bottom: 1px solid #2cb2b3;
+    display: flex !important;
+    padding-bottom: 10px;
+    margin: 0;
+    line-height: 1;
+}
+.box.box-solid.box-primary>.box-header {
+    color: #2cb2b3;
+    background: transparent !important;
+    background-color: transparent !important;
+    padding: 0px;
+    border: none !important;
+    box-shadow: none;
+    margin-bottom: 0px;
+}
+.box-header>.box-tools {
+    float: right;
+    margin-top: -5px;
+    margin-bottom: -5px;
+}
+.dashpro .box-tools.btn-right-side {
+    position: absolute;
+    top: 5px;
+    right: 0;
+}
+.box-solid.dashpro .box-header .box-tools.pull-right .btn-primary.send-mail {
+    margin: 0px !important;
+    padding: 3px 5px;
+    font-size: 12px !important;
+    margin-right: 5px !important;
+}
+
+.box.box-solid.box-primary>.box-header a span.label {
+    padding: 3px 5px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 3px;
+}
+.direct-chat-messages, .direct-chat-contacts {
+    border: 1px solid rgb(44 178 179 / 19%);
+    border-radius: 5px;
+    overflow: hidden;
+    background: #2cb2b30d;
+}
+.box-footer .input-group-btn .btn-info.btn-flat {
+    margin: 0px !important;
+    border-radius: 3px;
+}
+.box-info {
+    border-top-color: rgba(44, 178, 179, 9)
+}
+.table-responsive .table a.view-table {
+    color: #2cb2b3;
+    background-color: #2cb2b32b;
+    font-size: 12px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-weight: 500;
+}

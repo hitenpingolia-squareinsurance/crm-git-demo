@@ -1,0 +1,210 @@
+/*
+.box {
+  padding-left: 250px;
+  padding-right: 450px;
+  padding-top: 50px;
+}
+ input.ng-invalid{
+   border-right: 5px solid red;
+ }
+
+ input.ng-valid{
+  border-right: 5px solid green;
+}
+button.btn.btn-primary {
+  float: right;
+}
+h5 {
+  text-align: center;
+} */
+
+.box {
+    width: 40%;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.2);
+    padding: 35px;
+    border: 2px solid #fff;
+    border-radius: 20px/50px;
+    background-clip: padding-box;
+    text-align: center;
+  }
+  
+  .button {
+    font-size: 1em;
+    padding: 10px;
+    color: #000;
+    border: 2px solid #06D85F;
+    border-radius: 20px/50px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+  }
+  .button:hover {
+    background: #06D85F;
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+  }
+  .overlay:target {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .popup-documents {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 70%;
+    position: relative;
+    transition: all 5s ease-in-out;
+  }
+  
+  .popup-documents h2 {
+        margin-top: 0;
+      color: #425fb1;
+      font-family: Tahoma, Arial, sans-serif;
+      font-size: 19px;
+      border-bottom: 1px solid #425fb1;
+      padding-bottom: 10px;
+      border-style: dashed;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      margin-bottom: 15px;
+  }
+  
+  .popup-documents .content {
+    max-height: 30%;
+    overflow: auto;
+  }
+  
+  
+  .button-div-yes-no{
+      text-align: right;
+    margin-top: 20px;
+  }
+  
+  
+  .button-div-yes-no button{
+      background: #ffffff;
+      padding: 10px 30px;
+      border: 1px solid #085c7c;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 15px;
+      color: #425fb1;
+      font-weight: bold;
+      box-shadow: 1px 1px 10px #1a404838;
+      margin-left: 20px;
+  
+  }
+  
+  .button-div-yes-no button a{
+      font-size: 15px;
+      color: #425fb1;
+      text-decoration: none;
+      font-weight: bold;
+      float: none;
+      opacity: 1;
+  }
+  
+  .button-div-yes-no button i{
+      padding-right: 5px;
+  }
+  
+  .button-div-yes-no button a i{
+      padding-right: 5px;
+  }
+  
+  
+  .button-submit{
+    margin-top: 31px;
+  }
+  
+  
+  
+  
+  /* .popup-content-body {
+      overflow: auto;
+      height: 370px;
+      min-height: auto;
+  
+  
+  }
+  
+  
+  .popup-content-body::-webkit-scrollbar {
+      width: 10px;
+      background-color: #2cb2b3;
+      height: 10px;
+  }
+  
+  .popup-content-body::-webkit-scrollbar-thumb {
+      background-color: #2cb2b3;
+      border: 0px solid #546c84;
+  }
+  
+  
+  .popup-content-body::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
+      background-color: #ffff;
+  } */
+  
+  
+  
+  
+  @media screen and (max-width: 700px){
+    .box{
+      width: 70%;
+    }
+    .popup{
+      width: 70%;
+    }
+    .popup-documents {
+      margin: 10px auto;
+      padding: 10px;
+      background: #fff;
+      border-radius: 5px;
+      width: 95%;
+      position: relative;
+      transition: all 5s ease-in-out;
+  }
+  
+  .documents-req ul li{
+      width: 96%;
+      float: none;
+  }
+  
+  
+  
+  
+  }
+  
+  
+  
+  .mat-dialog-container::-webkit-scrollbar {
+    width: 10px;
+    background-color: #2cb2b3;
+    height: 10px;
+  }
+  .mat-dialog-container::-webkit-scrollbar-thumb {
+    background-color: #2cb2b3;
+    border: 0px solid #546c84;
+  }
+  
+  
+  .mat-dialog-container::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
+    background-color: #ffff;
+  }
+  

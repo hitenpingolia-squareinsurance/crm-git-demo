@@ -1,0 +1,256 @@
+<div style="position:relative;" data-loader="CustomForm">
+  <form class="form-blog-top " [formGroup]="SearchForm" (ngSubmit)="SearchFormData()">
+
+    <div class="row">
+      <div class="col-sm-3">
+        <ng-multiselect-dropdown class="form-control" placeholder="Financial Year" [data]="session_year_ar"
+          formControlName="financial_year" [settings]="dropdownSettingsingleselect"
+          (onSelect)="OnSessionYearChange($event)" (onDeSelect)="OnSessionYearChange($event)"
+          [(ngModel)]="sel_session_year_ar">
+        </ng-multiselect-dropdown>
+        <span *ngIf="isSubmitted && formControls.financial_year.errors" class="ValidationError">
+          <span *ngIf="formControls.financial_year.errors.required">Financial Year is required</span></span>
+      </div>
+
+      <div class="col-sm-3">
+        <input type="text" placeholder="Select Date OR Date-Range" class="form-control" formControlName="date_range"
+          bsDaterangepicker [minDate]="minDate" [maxDate]="maxDate">
+      </div>
+
+      <!--===== COMMON HIERARCHY FILTER SECTION START =====-->
+
+      <div *ngIf="LoginType == 'employee'">
+        <div class="col-sm-3" *ngIf="urlSegmentRoot != 'lead-management'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Vertical" [data]="vertical_ar"
+            formControlName="vertical" [settings]="dropdownSettingsmultiselect1" (onSelect)="GetZoneData()"
+            (onDeSelect)="GetZoneData()" [disabled]="ButtonDisableTrue">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3" *ngIf="urlSegmentRoot != 'lead-management'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Zone" [data]="zone_ar" formControlName="zone"
+            [settings]="dropdownSettingsmultiselect1" (onSelect)="GetRegionalOfficeData()"
+            (onDeSelect)="GetRegionalOfficeData()" [disabled]="ButtonDisableTrue">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3" *ngIf="urlSegmentRoot != 'lead-management'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Regional Office" [data]="regional_office_ar"
+            formControlName="regional_office" [settings]="dropdownSettingsmultiselect1" (onSelect)="GetBranchData()"
+            (onDeSelect)="GetBranchData()" [disabled]="ButtonDisableTrue">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3" *ngIf="urlSegmentRoot != 'lead-management'">
+          <ng-multiselect-dropdown class="form-control" placeholder="IRDA Branch" [data]="branch_ar"
+            formControlName="branch" [settings]="dropdownSettingsmultiselect1" (onSelect)="GetServiceLocationData()"
+            (onDeSelect)="GetServiceLocationData()" [disabled]="ButtonDisableTrue">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3" *ngIf="urlSegmentRoot != 'lead-management'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Service Location" [data]="service_location_ar"
+            formControlName="service_location" [settings]="dropdownSettingsmultiselect" (onSelect)="GetEmployeeData()"
+            (onDeSelect)="GetEmployeeData()" [disabled]="ButtonDisableTrue">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <!-- <div class="col-sm-3">
+          <ng-multiselect-dropdown class="form-control" name="status" placeholder="Employee Status"
+            [data]="employee_status_ar" formControlName="employee_status" (onSelect)="searchEmployee('', 0)"
+            (onDeSelect)="onItemDeSelect($event,'EmployeeStatus')" [settings]="dropdownSettingsingleselect1"
+            [disabled]="ButtonDisableTrue">
+          </ng-multiselect-dropdown>
+        </div> -->
+
+        <div class="col-sm-3" *ngIf="urlSegmentRoot != 'lead-management'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Employee Name & Code" [data]="employee_ar"
+            formControlName="emp_id" [settings]="dropdownSettingsmultiselect" (onSelect)="GetAgentData()"
+            (onDeSelect)="GetAgentData()" [disabled]="ButtonDisableTrue"> </ng-multiselect-dropdown>
+        </div>
+
+
+        <div class="col-sm-3" *ngIf="urlSegmentRoot == 'lead-management' && urlSegment!='social_leads'  && urlSegment != 'report'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Employee Name & Code" [data]="LMS_employee_arr"
+            formControlName="LMS_emp_id" (onSelect)="GetAgentDataNew()" (onDeSelect)="GetAgentDataNew()"
+            [settings]="dropdownSettingsmultiselect" [disabled]="ButtonDisableTrue">
+          </ng-multiselect-dropdown>
+        </div>
+
+
+        <div class="col-sm-3" *ngIf="urlSegmentRoot == 'lead-management' && urlSegment != 'social_leads' && urlSegment != 'report'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Partner Group" [data]="partnerGroup"
+            formControlName="partnergroup" (onSelect)="GetAgentDataNew()" (onDeSelect)="GetAgentDataNew()"
+            [settings]="dropdownSettingsingleselect">
+          </ng-multiselect-dropdown>
+        </div>
+
+
+        <div class="col-sm-3" *ngIf="urlSegmentRoot == 'lead-management' && urlSegment != 'social_leads' && urlSegment != 'report'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Agent Name/Code" [data]="agent_id_lms"
+            formControlName="agent_id_lms" [settings]="dropdownSettingsingleselect">
+          </ng-multiselect-dropdown>
+        </div>
+
+
+
+        <div class="col-sm-3">
+          <ng-multiselect-dropdown class="form-control" placeholder="Authenticity Status" [data]="Verified_Status"
+            formControlName="verifiedStatus" [settings]="dropdownSettingsingleselect">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <!-- <div class="col-sm-3" *ngIf="urlSegmentRoot == 'lead-management' && urlSegment!='social_leads'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Agent Type" [data]="agent_type_ar"
+            formControlName="agent_type" [settings]="dropdownSettingsingleselect1" (onSelect)="GetAgentData()"
+            (onDeSelect)="GetAgentData()" [disabled]="ButtonDisableTrue">
+          </ng-multiselect-dropdown>
+        </div> -->
+
+        <div class="col-sm-3" *ngIf="urlSegmentRoot != 'lead-management'">
+          <!-- <div class="col-sm-3"> -->
+          <ng-multiselect-dropdown class="form-control" placeholder="Report Type" [data]="report_type_ar"
+            formControlName="report_type" [settings]="dropdownSettingsingleselect" (onSelect)="GetAgentData()"
+            (onDeSelect)="GetAgentData()" [disabled]="reportTypeDisable">
+          </ng-multiselect-dropdown>
+        </div>
+        <div *ngIf="tab_name != 'Prospect Call' && urlSegmentRoot != 'lead-management'">
+          <div class="col-sm-3">
+            <ng-multiselect-dropdown class="form-control" placeholder="Select POS LOB" [data]="agent_lob_ar"
+              formControlName="lob" [settings]="dropdownSettingsingleselect1" (onSelect)="GetAgentData()"
+              (onDeSelect)="GetAgentData()" (onSelectAll)="GetAgentData()" (onDeSelectAll)="GetAgentData()">
+            </ng-multiselect-dropdown>
+          </div>
+
+          <div class="col-sm-3" *ngIf="urlSegmentRoot != 'dsr' && urlSegmentRoot != 'lead-management'">
+            <ng-multiselect-dropdown class="form-control" placeholder="Agent Type" [data]="agent_type_ar"
+              formControlName="agent_type" [settings]="dropdownSettingsingleselect1" (onSelect)="GetAgentData()"
+              (onDeSelect)="GetAgentData()" [disabled]="ButtonDisableTrue">
+            </ng-multiselect-dropdown>
+          </div>
+
+          <div class="col-sm-3">
+            <ng-multiselect-dropdown class="form-control" placeholder="Agent Name/Code" [data]="agent_ar"
+              formControlName="agent_id" [settings]="dropdownSettingsmultiselect" [disabled]="ButtonDisableTrue">
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+      </div>
+      <!--===== COMMON HIERARCHY FILTER SECTION END =====-->
+
+
+      <!--===== DSR RELATED FILTER SECTION START =====-->
+
+      <div *ngIf="urlSegmentRoot == 'dsr'">
+        <div class="col-sm-3" *ngIf="tab_name == 'Club'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Club LOB" [data]="club_lob_ar"
+            formControlName="lob_type" [settings]="dropdownSettingsingleselect1">
+          </ng-multiselect-dropdown>
+          <!-- <span *ngIf="isSubmitted && formControls.lob_type.errors" class="ValidationError">
+            <span *ngIf="formControls.lob_type.errors.required">Lob is required.</span></span> -->
+        </div>
+        <div class="col-sm-3" *ngIf="tab_name == 'Club'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Club Status" [data]="club_status_ar"
+            formControlName="agent_status" (onSelect)="EnableDisableFields($event,'Club')"
+            (onDeSelect)="EnableDisableFields($event,'Club')" [settings]="dropdownSettingsingleselect1">
+          </ng-multiselect-dropdown>
+          <span *ngIf="isSubmitted && formControls.agent_status.errors" class="ValidationError">
+            <span *ngIf="formControls.agent_status.errors.required">Club is required.</span></span>
+        </div>
+
+        <div class="col-sm-3" *ngIf="urlSegment != 'manager-report' && tab_name != 'Prospect Call'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Club Manager Report" [data]="lead_status_ar"
+            (onSelect)="UpateDsrFilterField('Lead_Status')" (onDeSelect)="UpateDsrFilterField('Lead_Status')"
+            formControlName="lead_status" [settings]="dropdownSettingsingleselect1"> </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3">
+          <ng-multiselect-dropdown class="form-control" placeholder="Interaction Type" [data]="interaction_type_ar"
+            (onSelect)="UpateDsrFilterField('Interaction_Type')" (onDeSelect)="UpateDsrFilterField('Interaction_Type')"
+            formControlName="interaction_type" [settings]="dropdownSettingsingleselect1"> </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3">
+          <ng-multiselect-dropdown class="form-control" placeholder="Follow Ups" [data]="followup_time_ar"
+            formControlName="followup_time" (onSelect)="EnableDisableFields1('FollowUp_Lead')"
+            (onDeSelect)="EnableDisableFields1('FollowUp_Lead')" [settings]="dropdownSettingsingleselect1">
+          </ng-multiselect-dropdown>
+        </div>
+
+      </div>
+      <!--===== DSR RELATED FILTER SECTION END =====-->
+
+
+      <!--===== LMS RELATED FILTER SECTION START =====-->
+
+      <div class="col-sm-3" *ngIf="urlSegmentRoot == 'lead-management'">
+        <ng-multiselect-dropdown class="form-control" placeholder="Lead Source" [data]="leadSourceData"
+          formControlName="Lead_Source" [settings]="dropdownSettingsingleselect1"
+          (ngModelChange)="soucreDropdownChange($event)"> </ng-multiselect-dropdown>
+      </div>
+
+      <div class="col-sm-3" *ngIf="urlSegmentRoot == 'lead-management'">
+        <ng-multiselect-dropdown class="form-control" placeholder="Lead Lob" [data]="leadLobData"
+          formControlName="Lead_Lob" [settings]="dropdownSettingsmultiselectAllcheck"
+          (ngModelChange)="handleDropdownChange($event)"> </ng-multiselect-dropdown>
+      </div>
+
+      <div *ngIf="quotationStatus != false">
+        <div class="col-sm-3" *ngIf="urlSegmentRoot == 'lead-management'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Lead Quote Status" [data]="leadQuoteStatus"
+            formControlName="Quote_Status" [settings]="dropdownSettingsmultiselectAllcheck"> </ng-multiselect-dropdown>
+        </div>
+      </div>
+
+      <div *ngIf="this.currentUrl=='/lead-management/report'">
+        <div class="col-sm-3">
+          <ng-multiselect-dropdown class="form-control" placeholder="Lead Status" [data]="leadStatus"
+            formControlName="LeadStatus" [settings]="dropdownSettingsingleselect1"
+            (onSelect)="onSelectLeadStatus($event)"> </ng-multiselect-dropdown>
+        </div>
+      </div>
+
+      <div *ngIf="this.currentUrl=='/lead-management/report'">
+        <div class="col-sm-3" *ngIf="this.ShowLeadStatusValue==2">
+          <ng-multiselect-dropdown class="form-control" placeholder="Days" [data]="FollowUpDays"
+            formControlName="FollowUpDaysStatus" [settings]="dropdownSettingsingleselect1"> </ng-multiselect-dropdown>
+        </div>
+      </div>
+
+      <div class="col-sm-3" *ngIf="this.currentUrl=='/lead-management/report' || this.urlSegment =='social_leads'">
+        <ng-multiselect-dropdown class="form-control" placeholder="Manager Name & Code" [data]="employeeManager_arr"
+          formControlName="LMSManager_id" [settings]="dropdownSettingsmultiselect" [disabled]="ButtonDisableTrue">
+        </ng-multiselect-dropdown>
+      </div>
+      <div class="col-sm-3"
+        *ngIf="this.urlSegment == 'social_leads' && (this.Loginid === '54' || this.Loginid === '336') ">
+        <ng-multiselect-dropdown class="form-control" placeholder="UTM Source" [data]="utmSourceAr"
+          formControlName="utmSourceId" [settings]="dropdownSettingsmultiselect" [disabled]="ButtonDisableTrue">
+        </ng-multiselect-dropdown>
+      </div>
+
+
+
+      <div class="col-sm-3" *ngIf="this.urlSegment == 'report'">
+      <ng-multiselect-dropdown class="form-control" placeholder="Remarks" [data]="RemarksOptions"
+        formControlName="remarks" [settings]="dropdownSettingsingleselect">
+      </ng-multiselect-dropdown>
+    </div>
+
+
+      <!--===== LMS RELATED FILTER SECTION END =====-->
+
+      <div class="col-sm-3"><input type="text" formControlName="search_value" class="form-control" placeholder="Search">
+      </div>
+
+      <div class="col-sm-3">
+        <button type="submit" class="btn btn-info" style="font-size: small;" value="Search"> <i class="fa fa-search">
+            Search</i></button> &nbsp;&nbsp;
+        <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger" value="Reset"> <i
+            class="fa fa-close"> Reset</i></button>
+      </div>
+
+    </div>
+
+  </form>
+</div>

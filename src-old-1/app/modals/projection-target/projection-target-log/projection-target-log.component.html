@@ -1,0 +1,245 @@
+<div class="row">
+  <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+</div>
+
+<!-- <div class="table-responsive mydiv">
+  <table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover"
+    style="width: 100% !important;">
+    <thead>
+      <tr>
+        <th colspan="6" style="text-align: center; background-color: #2cb2b3; color: white;">Daily Projection Track</th>
+      </tr>
+
+      <tr>
+        <th colspan="6" style="text-align: right !important; background-color: #fff !important; color: white;">
+          <div class="row">
+            <div class="col-sm-12">
+              <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+                <div class="row"  >
+                  <div class="col-sm-4">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Year" [data]="YearArray"
+                      [(ngModel)]="SelectedYear" formControlName="Year_Name" [settings]="dropdownSettingsingleselect1">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.Year_Name.errors " class="ValidationError">
+                      <div *ngIf="formControls.Year_Name.errors.required">Please Select Year! </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Month" [data]="MonthArray"
+                      [(ngModel)]="SelectedCurrentMonth" formControlName="Month_Name"
+                      [settings]="dropdownSettingsingleselect1"> </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.Month_Name.errors " class="ValidationError">
+                      <div *ngIf="formControls.Month_Name.errors.required">Please Select Month! </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <input type="submit" class="btn btn-info" value="Search">&nbsp;&nbsp;
+                    <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                      value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </th>
+      </tr>
+
+      <tr>
+        <th>Sr&nbsp;No</th>
+        <th>Date&nbsp;Time</th>
+        <th>Target</th>
+        <th>Achievement</th>
+        <th>Achievement&nbsp;%</th>
+      </tr>
+    </thead>
+
+    <tbody *ngIf="dataAr?.length != 0">
+      <tr *ngFor="let row of dataAr; let i=index;">
+        <td>{{row.SNo}} </td>
+        <td><strong>{{row.Date}}</strong></td>
+
+        <td>
+          <div *ngIf="ProfileName != 'Relationship Manager'">
+            <span class="label label-warning" style="cursor: not-allowed;"> Self : {{row.SelfTarget}}</span><br>
+            <span class="label label-primary" style="cursor: not-allowed;" *ngIf="row.ShowTeamData == 'Yes'"> Team :
+              {{row.TeamTarget}}</span>
+          </div>
+
+          <span class="label label-warning" style="cursor: not-allowed;"
+            *ngIf="ProfileName == 'Relationship Manager'">{{row.SelfTarget}}</span>
+        </td>
+
+        <td>
+          <div *ngIf="ProfileName != 'Relationship Manager'">
+            <span class="label label-warning" style="cursor: not-allowed;"> Self : {{row.SelfBusiness}}</span><br>
+            <span class="label label-primary" style="cursor: not-allowed;" *ngIf="row.ShowTeamData == 'Yes'"> Team :
+              {{row.TeamBusiness}}</span>
+          </div>
+
+          <span class="label label-warning" style="cursor: not-allowed;"
+            *ngIf="ProfileName == 'Relationship Manager'">{{row.SelfBusiness}}</span>
+        </td>
+
+        <td>
+          <div *ngIf="ProfileName != 'Relationship Manager'">
+            <span class="label label-warning" style="cursor: not-allowed;"> Self :
+              {{row.SelfAchivementPercent}}</span><br>
+            <span class="label label-primary" style="cursor: not-allowed;" *ngIf="row.ShowTeamData == 'Yes'"> Team :
+              {{row.TeamAchivementPercent}}</span>
+          </div>
+
+          <span class="label label-warning" style="cursor: not-allowed;"
+            *ngIf="ProfileName == 'Relationship Manager'">{{row.SelfAchivementPercent}}</span>
+        </td>
+
+      </tr>
+    </tbody>
+
+    <tbody *ngIf="dataAr?.length == 0">
+      <tr>
+        <td colspan="6" align="center">No data Available !</td>
+      </tr>
+    <tbody>
+
+  </table>
+</div> -->
+
+
+<div class="main_card_form">
+  <div class="main_header" style="padding:1px 15px;">
+    <h3 class="header_title" style="margin-top:10px;">Daily Projection Track</h3>
+  </div>
+
+  <div class="row" style="margin-top:20px; margin-left:10px;">
+    <div class="col-sm-12">
+      <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+        <div class="row">
+          <div class="col-sm-4">
+            <ng-multiselect-dropdown class="form-control" placeholder="Select Year" [data]="YearArray"
+              [(ngModel)]="SelectedYear" formControlName="Year_Name" [settings]="dropdownSettingsingleselect1">
+            </ng-multiselect-dropdown>
+            <div *ngIf="isSubmitted && formControls.Year_Name.errors " class="ValidationError">
+              <div *ngIf="formControls.Year_Name.errors.required">Please Select Year! </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <ng-multiselect-dropdown class="form-control" placeholder="Select Month" [data]="MonthArray"
+              [(ngModel)]="SelectedCurrentMonth" formControlName="Month_Name" [settings]="dropdownSettingsingleselect1">
+            </ng-multiselect-dropdown>
+            <div *ngIf="isSubmitted && formControls.Month_Name.errors " class="ValidationError">
+              <div *ngIf="formControls.Month_Name.errors.required">Please Select Month! </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <input type="submit" class="btn btn-info" value="Search">&nbsp;&nbsp;
+            <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+              value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- <h5 colspan="6" style="text-align: center; background-color: #2cb2b3; color: white; padding:6px;">Daily Projection Track</h5> -->
+  <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ; padding-left: 10px;">
+    <div class="custom_table tables_layout_design">
+      <table datatable [dtOptions]="dtOptions" class="row-border hover table table-bordered table-hover table-checkable"
+        id="kt_datatable" style="margin-top: 13px !important; width: 100% !important">
+        <thead>
+          <tr>
+            <th></th>
+          </tr>
+        </thead>
+      </table>
+
+
+      <!--======= Refer Table  =========-->
+      <ul class="responsive-table">
+        <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+
+          <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+            <div class="agents_data agents_data1">
+              <div class="icon_re_cl">{{ row.SNo }}</div>
+              <div class="agent_name_mobile">
+                <div class="agent_data">
+                  <div>Date</div>
+                  <strong class="fs_18 text-bold">{{ row.Date }}</strong>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="last_row_div">
+            <div class="d_flex custon-234">
+              <div class="label_chips real_estate_lob" style="width: auto; cursor: not-allowed;"
+                *ngIf="ProfileName != 'Relationship Manager'">
+                <span style="color:#fff;">Target (Self) : {{ row.SelfTarget }}</span>
+              </div>
+              <div class="label_chips life_lob" style="width: auto; cursor: not-allowed;"
+                *ngIf="row.ShowTeamData == 'Yes' && ProfileName != 'Relationship Manager'">
+                <span style="color:#fff;">Target (Team) : {{ row.TeamTarget }}</span>
+              </div>
+              <div class="label_chips real_estate_lob" style="width: auto; cursor: not-allowed;"
+                *ngIf="ProfileName == 'Relationship Manager'">
+                <span style="color:#fff;">Target : {{ row.SelfTarget }}</span>
+              </div>
+
+
+              <div class="label_chips real_estate_lob" style="width: auto; cursor: not-allowed;"
+                *ngIf="ProfileName != 'Relationship Manager'">
+                <span style="color:#fff;">Achievement (Self) : {{ row.SelfBusiness }}</span>
+              </div>
+              <div class="label_chips life_lob" style="width: auto; cursor: not-allowed;"
+                *ngIf="row.ShowTeamData == 'Yes' && ProfileName != 'Relationship Manager'">
+                <span style="color:#fff;">Achievement (Team) : {{ row.TeamBusiness }}</span>
+              </div>
+              <div class="label_chips real_estate_lob" style="width: auto; cursor: not-allowed;"
+                *ngIf="ProfileName == 'Relationship Manager'">
+                <span style="color:#fff;">Achievement : {{ row.SelfBusiness }}</span>
+              </div>
+
+
+              <div class="label_chips real_estate_lob" style="width: auto; cursor: not-allowed;"
+                *ngIf="ProfileName != 'Relationship Manager'">
+                <span style="color:#fff;">Achievement(%) (Self) : {{ row.SelfAchivementPercent }}</span>
+              </div>
+              <div class="label_chips life_lob" style="width: auto; cursor: not-allowed;"
+                *ngIf="row.ShowTeamData == 'Yes' && ProfileName != 'Relationship Manager'">
+                <span style="color:#fff;">Achievement(%) (Team) : {{ row.TeamAchivementPercent }}</span>
+              </div>
+              <div class="label_chips real_estate_lob" style="width: auto; cursor: not-allowed;"
+                *ngIf="ProfileName == 'Relationship Manager'">
+                <span style="color:#fff;">Achievement(%) : {{ row.SelfAchivementPercent }}</span>
+              </div>
+
+            </div>
+          </div>
+
+        </li>
+      </ul>
+
+
+      <!--======= Refer Table END =========-->
+
+      <div class="row" *ngIf="dataAr?.length == 0">
+        <div class="col-md-12">
+          <div class="no_data_found">
+            <span><img src="assets/image/no_data_banner.jpg"></span>
+            <small>No data available !</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

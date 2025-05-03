@@ -1,0 +1,48 @@
+
+<div class="modal_header d_flex flex_Equal flex_Middel">
+    <div class="modal_title">Add Lead</div>
+    <button type="button" (click)="CloseModel()" class="close_btn"><i class="fa fa-close"></i></button>
+</div>
+<div class="modal_body py_15">
+    <div class="row">
+        <div class="col-md-12">
+            <form [formGroup]="AddFieldForm">
+               
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="type">Type</label>
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Lob" [data]="type"
+                            formControlName="type"  (onSelect)="UpdateTypeValue($event)" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && formControls.type.errors" class="ValidationError">
+                                <div *ngIf="formControls.type.errors.required">required..</div>
+                            </div>
+                    </div>
+                    <div class="col-md-4" *ngIf="showlobfield != false">
+                        <label for="lob">Lob</label>
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Lob" [data]="LobData"
+                            formControlName="lob" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && formControls.lob.errors" class="ValidationError">
+                                <div *ngIf="formControls.lob.errors.required">required..</div>
+                            </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input_group">
+                            <label for="name">File</label>
+                            <!-- <input type="file" class="form_control" formControlName="fileuplode"> -->
+                            <input type="file" class="form-control" (change)="UploadDocs($event,'file')" formControlName="fileuplode">
+                            <div *ngIf="isSubmitted && formControls.fileuplode.errors" class="ValidationError">
+                                <div *ngIf="formControls.fileuplode.errors.required">Please Choose
+                                    file!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal_footer ">
+    <button class="btn btn-primary nextBtn pull-right" (click)="Submit()" type="submit">Submit</button>
+</div>

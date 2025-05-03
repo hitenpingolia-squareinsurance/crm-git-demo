@@ -1,0 +1,897 @@
+<section class="inner_page_css main_dashboard_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+                            <div class="header_title">
+                                <div *ngIf="currentView === 'request'">
+                                    Cashless Garage Request
+                                    
+                                </div>
+                                <div *ngIf="currentView === 'manager'">
+                                    Cashless Garage Manager
+                                   
+                                </div>
+                                <div *ngIf="currentView === 'master'">
+                                    Cashless Garage Document Master
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div *ngIf="!hasAccess" class="error-message">
+                        <div class="container" style="text-align: center;">
+                          <img src="assets/Authorised.png" alt="">
+                          <h4>{{ errorMessage }}</h4>
+                        </div>
+                        
+                      </div>
+            
+                      <div class="main_body main_card_height_scroll" *ngIf="hasAccess">
+                        <div class="filterquotesrow" *ngIf="currentView === 'request'">
+                            <button class="btn btninfo1" style="margin-right:10px;" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><a role="button"><i class="fa fa-filter"></i><span>Filters</span><i class="fa fa-angle-down"></i></a></button>
+
+                            <button  class="btn btn-info" data-toggle="modal" *ngIf="LoginType === 'agent'"
+                                        data-target="#FormModelRequest" data-backdrop="static" data-keyboard="false"
+                                        (click)="openModal('Garage','Add','')"
+                                        style="float:right;  margin-bottom:2px;">
+                                        Raise Request &nbsp;<i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                    </button>
+                        </div>
+                        <div class="filterquotesrow" *ngIf="currentView === 'manager'" >
+                            <button class="btn btninfo1" style="margin-right:10px;" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><a role="button"><i class="fa fa-filter"></i><span>Filters</span><i class="fa fa-angle-down"></i></a></button>
+
+                            <button class="btn btn-info" data-toggle="modal"
+                            data-target="#FormModelRequest" data-backdrop="static" data-keyboard="false"
+                            (click)="openModal('Garage','Add','')"
+                            style="float:right; color:#000; padding:2px; margin-bottom:2px;">
+                            Raise Request &nbsp;<i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                </button>
+                        </div>
+                        <div class="filterquotesrow" *ngIf="currentView === 'master'">
+                            <button class="btn btninfo1" style="margin-right:10px;" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><a role="button"><i class="fa fa-filter"></i><span>Filters</span><i class="fa fa-angle-down"></i></a></button>
+
+                            <button class="btn btn-info" data-toggle="modal" data-backdrop="static"
+                                        data-keyboard="false" data-target="#FormModelMaster"
+                                        (click)="openModal('master','Add','')"
+                                        style="float:right;  margin-bottom:2px;">
+                                        Add Document &nbsp;<i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                    </button>
+                        </div>
+                          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panelbody">
+                                <form [formGroup]="Search" (ngSubmit)="SearchData()">
+                                    <div class="row">
+                                        <div class="col-sm-3" *ngIf="currentView === 'manager'">
+                                            <ng-multiselect-dropdown class="form-control" name="QuoteType"
+                                                placeholder="QuoteType" [data]="QuoteTypes"
+                                                formControlName="QuoteType"
+                                                [settings]="dropdownSingleSelectSettingsType"
+                                                [(ngModel)]="QuoteTypeVal" required>
+                                            </ng-multiselect-dropdown>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <input type="text" id="search-input" class="form-control"
+                                                placeholder="Search" formControlName="SearchVal">
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <button type="submit" class="btn btn-info" style="font-size: small;"
+                                                value="Search"> <i class="fa fa-search">
+                                                    Search</i> </button>
+                                            &nbsp;&nbsp;
+                                            <button (click)="ClearSearch()" type="button" style="font-size: small;"
+                                                class="btn btn-danger" value="Reset"> <i class="fa fa-close">
+                                                    Reset</i> </button>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                          </div>
+                        <div class="box box-default"
+                            style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                            <div class="custom_table tables_layout_design">
+                                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <!-- ======= Refer Table  =========-->
+                                <ul class="responsive-table" *ngIf="currentView === 'master'">
+                                    <li class=" table-row tablerow" *ngFor="let vendor of dataAr; let i=index;"
+                                        [ngClass]="{'activestatus': vendor.status == '1' , 'inactivestatus': vendor.status == '0' }">
+
+
+                                        <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+
+
+
+                                            <div class="agents_data agents_data1">
+                                                <div class="icon_re_cl">{{i+1}}</div>
+                                                <div class="agent_name_mobile">
+                                                    <div class="agent_data">
+                                                        <div>Company Name</div>
+                                                        <strong class="fs_18"><span>{{vendor.company_name
+                                                                }}</span></strong>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="agents_data agents_data2">
+                                                <div class="agent_name_mobile">
+                                                    <div class="agent_data">
+                                                        <div>Name</div>
+                                                        <strong class="fs_18" id="emailToCopy">{{vendor.name}}</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <hr>
+
+
+                                        <div class="last_row">
+                                            <div class="effective_date">
+                                                <div class="d_flex">
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                                                <button class="btn"
+                                                    [ngClass]="{'btn-success': vendor.status == 1, 'btn-danger': vendor.status == 0}"
+                                                    (click)="toggleStatus(vendor.Id,vendor.status,'update')"
+                                                    style="margin-right: 10px; padding:3px 10px;">
+                                                    {{ vendor.status == 1 ? 'Active' : 'Inactive' }}
+                                                </button>
+
+                                                <button class="btn btn-primary"
+                                                    style="margin-right: 10px; padding:3px 10px;" data-toggle="modal"
+                                                    data-target="#FormModelMaster" data-backdrop="static"
+                                                    data-keyboard="false"
+                                                    (click)="openModal('master','Edit',vendor.Id)">Edit</button>
+
+                                                <button class="btn btn-danger"
+                                                    style="margin-right: 10px; padding:3px 10px;"
+                                                    (click)="toggleStatus(vendor.Id,vendor.status,'delete')">Delete</button>
+
+
+
+
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                </ul>
+                                <ul class="responsive-table" *ngIf="currentView !== 'master'">
+                                    <li class=" table-row tablerow" *ngFor="let vendor of dataAr; let i=index;"
+                                        [ngClass]="{'activestatus': vendor.status == '1' , 'inactivestatus': vendor.status == '0' }">
+                                        <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+
+
+
+                                            <div class="agents_data agents_data1">
+                                                <div class="icon_re_cl">{{i+1}}</div>
+                                                <div class="agent_name_mobile">
+                                                    <div class="agent_data">
+                                                        <div>Company Name</div>
+                                                        <strong class="fs_18"><span>{{vendor.company_name
+                                                                }}</span></strong>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="agents_data agents_data2">
+                                                <div class="agent_name_mobile">
+                                                    <div class="agent_data">
+                                                        <div>Spoke Person</div>
+                                                        <strong class="fs_18"
+                                                            id="emailToCopy">{{vendor.spokesperson_name}}</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="agents_data agents_data3">
+                                                <div class="agent_name_mobile">
+                                                    <div class="agent_data">
+                                                        <div>Spoke Person Contact</div>
+                                                        <strong class="fs_18">{{vendor.spokesperson_contact}}</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="agents_data agents_data3">
+                                                <div class="agent_name_mobile">
+                                                    <div class="agent_data">
+                                                        <div>Garage Name</div>
+                                                        <strong class="fs_18"><span>{{vendor.garage_name
+                                                                }}</span></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <hr>
+                                        <div class="last_row_div">
+                                            <div class="d_flex custon-234">
+                                                <div class="label_chips non_motor_lob">
+                                                    <span>State - {{vendor.state}}</span>&nbsp;&nbsp;
+                                                </div>
+                                                <div class="label_chips motor_lob">
+                                                    <span>City. - {{ vendor.city}}</span>
+                                                </div>
+                                                <div class="label_chips finance_lob">
+                                                    <span>Pincode. -
+                                                        {{ vendor.pincode}}</span>
+                                                </div>
+                                                <div class="label_chips finance_lob">
+                                                    <span>Create Date - {{ vendor.created_at}}</span>
+                                                </div>
+                                                <div class="label_chips non_motor_lob">
+                                                    <span>Creator Details - {{vendor.CreatorDetails}}</span>&nbsp;&nbsp;
+                                                </div>
+                                                <div class="label_chips motor_lob">
+                                                    <span>Manager Details - {{ vendor.ManagerDetails}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="last_row">
+                                            <div class="effective_date">
+                                                <div class="d_flex custon-234">
+
+
+                                                    <span *ngIf="vendor.action_status == '1'">
+                                                        Pending
+                                                    </span>
+                                                    <span *ngIf="vendor.action_status == '2'">
+                                                        In Progress
+                                                    </span>
+                                                    <span *ngIf="vendor.action_status == '3'">
+                                                        Reject
+                                                    </span>
+                                                    <span *ngIf="vendor.action_status == '4'">
+                                                        Complete
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col_2 action_btn d_flex flex_Middel box-bottom"
+                                                *ngIf="currentView === 'manager' && vendor.manager_id ==''">
+
+
+                                                <button class="btn btn-success" style="margin-right: 10px;"
+                                                    (click)="ManagerAcceptQuote(vendor.Id)">Accept</button>
+                                            </div>
+
+
+
+
+                                            <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                                                <!-- <button class="btn btn-success" style="margin-right: 10px;"
+                                                    *ngIf="vendor.manager_id == this.LoginId && currentView === 'manager'"
+                                                    data-toggle="modal" data-target="#FormModelRequest"
+                                                    (click)="openModal('Garage','Edit',vendor.Id)">Edit Request</button> -->
+
+
+
+                                                <button class="btn btn-success" style="margin-right: 10px;"
+                                                    *ngIf="vendor.manager_id == this.LoginId && currentView === 'manager'"
+                                                    data-toggle="modal" data-target="#FormModelAddVisits"
+                                                    data-backdrop="static" data-keyboard="false"
+                                                    (click)="openModal('Visit','Add',vendor.Id)">Add Visit</button>
+
+                                                <button class="btn btn-success" style="margin-right: 10px;"
+                                                    data-toggle="modal" data-target="#FormModelViewVisits"
+                                                    (click)="getdata(vendor.Id)">View Visit</button>
+
+                                                <button type="button" style="margin-right: 10px; padding:3px 10px;"
+                                                    class="btn btn-info" data-toggle="modal"
+                                                    data-target="#VendorWiseDocument"
+                                                    (click)="DocumetSetView(vendor.Document,vendor.Id,vendor.insurer_id,vendor)">
+                                                    View
+                                                </button>
+                                                <button type="button" style="margin-right: 10px; padding:3px 10px;"
+                                                    *ngIf="(vendor.action_status === '2' || vendor.action_status =='1') && vendor.manager_id == this.LoginId && currentView === 'manager'"
+                                                    class=" btn btn-info" data-toggle="modal" data-backdrop="static"
+                                                    data-keyboard="false" data-target="#UpdateRequestStatus"
+                                                    (click)="SetGarageId(vendor.Id,vendor.action_status)">
+                                                    Update Status
+                                                </button>
+
+
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                </ul>
+
+                                <!--======= Refer Table END ========= -->
+                                <div class="row" *ngIf="dataAr?.length == 0">
+                                    <div class="col-md-12">
+                                        <div class="no_data_found">
+                                            <span><img src="assets/image/no_data_banner.jpg"></span>
+                                            <small>No data available !</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<div id="FormModelMaster" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_header">
+                            <div class="header_title">
+                                {{ ModelAction === 'Add' ? 'Create' : 'Edit' }} {{currentView === 'master' ? 'Document'
+                                :
+                                'Document'}}
+                            </div>
+                        </div>
+                        <form [formGroup]="FormMaster" (ngSubmit)="FormMasterSubmit()">
+                            <div class="main_body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i> Basic Details
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="input_group">
+                                            <label for="vendorType">Company Name</label>
+                                            <ng-multiselect-dropdown [settings]="dropdownSingleSelectSettingsType"
+                                                class="form-control" formControlName="company"
+                                                placeholder="Select Company Name" [data]="CompanyData" required
+                                                [(ngModel)]="selectedCompanyType">
+                                            </ng-multiselect-dropdown>
+                                            <span *ngIf="SubmitFormMaster && formcontrolsFormMaster.company.errors"
+                                                class="ValidationError">
+                                                <span *ngIf="formcontrolsFormMaster.company.errors.required">Company is
+                                                    required</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="vendorName"> Name
+                                        </label>
+                                        <input type="text" class="form-control" id="vendorName" formControlName="name"
+                                            name="name" required />
+                                        <span *ngIf="SubmitFormMaster && formcontrolsFormMaster.name.errors"
+                                            class="ValidationError">
+                                            <span *ngIf="formcontrolsFormMaster.name.errors.required">Name is
+                                                required</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="main_footer">
+                                <button type="button" id="close1" class="mr_5 btn-danger Save_click"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="Save_click">
+                                    {{ ModelAction === 'Add' ? 'Submit' : 'Update' }}
+                                </button>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="FormModelRequest" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_header">
+                            <div class="header_title">
+                                {{ ModelAction === 'Add' ? 'Create' : 'Edit' }} {{currentView === 'Request' ? 'Garage' :
+                                'Garage'}}
+                            </div>
+                        </div>
+                        <form [formGroup]="GarageForm" (ngSubmit)="GarageFormSubmit()">
+                            <div class="main_body main_card_height_scroll">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i> Basic Details
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12" *ngIf="currentView === 'manager'">
+                                        <div class="input_group">
+                                            <label for="vendorType">Mapping</label>
+                                            <ng-multiselect-dropdown [settings]="dropdownSingleSelectSettingsType"
+                                                class="form-control" formControlName="agent_mapping"
+                                                placeholder="Select Agent Name" [data]="AgentData" required
+                                                (onSelect)="onItemSelect1($event,'Agent')"
+                                                (onDeSelect)="onItemDeSelect1($event,'Agent')">
+                                            </ng-multiselect-dropdown>
+                                            <span
+                                                *ngIf="SubmitFormGarage && formcontrolsGarageForm.agent_mapping.errors"
+                                                class="ValidationError">
+                                                <span *ngIf="formcontrolsGarageForm.agent_mapping.errors.required">Agent
+                                                    is
+                                                    required</span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="input_group">
+                                            <label for="vendorType">Company Name</label>
+                                            <ng-multiselect-dropdown [settings]="dropdownSingleSelectSettingsType"
+                                                class="form-control" formControlName="company"
+                                                placeholder="Select Company Name" [data]="CompanyData" required
+                                                (onSelect)="onItemSelect1($event,'CompanyGarage')"
+                                                (onDeSelect)="onItemDeSelect1($event,'CompanyGarage')">
+                                            </ng-multiselect-dropdown>
+                                            <span *ngIf="SubmitFormGarage && formcontrolsGarageForm.company.errors"
+                                                class="ValidationError">
+                                                <span *ngIf="formcontrolsGarageForm.company.errors.required">Company is
+                                                    required</span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="vendorType">State</label>
+                                        <ng-multiselect-dropdown [settings]="dropdownSingleSelectSettingsType"
+                                            class="form-control" formControlName="state" placeholder="Select State"
+                                            [data]="StateData" required (onSelect)="onItemSelect1($event,'State')"
+                                            (onDeSelect)="onItemDeSelect1($event,'State')">
+                                        </ng-multiselect-dropdown>
+                                        <span *ngIf="SubmitFormGarage && formcontrolsGarageForm.state.errors"
+                                            class="ValidationError">
+                                            <span *ngIf="formcontrolsGarageForm.state.errors.required">State is
+                                                required</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="vendorType">City</label>
+                                        <ng-multiselect-dropdown [settings]="dropdownSingleSelectSettingsType"
+                                            class="form-control" formControlName="city" placeholder="Select City"
+                                            [data]="CityData" required (onSelect)="onItemSelect1($event,'City')"
+                                            (onDeSelect)="onItemDeSelect1($event,'City')">
+                                        </ng-multiselect-dropdown>
+                                        <span *ngIf="SubmitFormGarage && formcontrolsGarageForm.city.errors"
+                                            class="ValidationError">
+                                            <span *ngIf="formcontrolsGarageForm.city.errors.required">City is
+                                                required</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="vendorType">Pincode</label>
+                                        <ng-multiselect-dropdown [settings]="dropdownMultiSelectSettingsType"
+                                            class="form-control" formControlName="pincode" placeholder="Select Pincode"
+                                            [data]="PincodeData" required>
+                                        </ng-multiselect-dropdown>
+                                        <span *ngIf="SubmitFormGarage && formcontrolsGarageForm.pincode.errors"
+                                            class="ValidationError">
+                                            <span *ngIf="formcontrolsGarageForm.pincode.errors.required">Pincode is
+                                                required</span>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-12 ">
+                                        <label for="garage_name"> Garage Name
+                                        </label>
+                                        <input type="text" class="form-control" id="garage_name"
+                                            formControlName="garage_name" name="name" required />
+                                        <span *ngIf="SubmitFormGarage && formcontrolsGarageForm.garage_name.errors"
+                                            class="ValidationError">
+                                            <span *ngIf="formcontrolsGarageForm.garage_name.errors.required">Garage Name
+                                                is
+                                                required</span>
+                                            <!-- <span *ngIf="formcontrolsGarageForm.garage_name.errors.pattern">Only
+                                                alphabets and spaces are allowed</span> -->
+                                        </span>
+                                    </div>
+
+
+                                    <div class="col-md-12 ">
+                                        <label for="garage_spokesperson_name"> Garage Spokesperson Name
+                                        </label>
+                                        <input type="text" class="form-control" id="garage_spokesperson_name"
+                                            formControlName="garage_spokesperson_name" name="name" required
+                                            pattern="^[a-zA-Z ]*$" />
+                                        <span
+                                            *ngIf="SubmitFormGarage && formcontrolsGarageForm.garage_spokesperson_name.errors"
+                                            class="ValidationError">
+                                            <span
+                                                *ngIf="formcontrolsGarageForm.garage_spokesperson_name.errors.required">Garage
+                                                Spokesperson Name is
+                                                required</span>
+                                            <span
+                                                *ngIf="formcontrolsGarageForm.garage_spokesperson_name.errors.pattern">Only
+                                                alphabets and spaces are allowed</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-12 ">
+                                        <label for="garage_spokesperson_name"> Garage Spokesperson Contact
+                                        </label>
+                                        <input type="text" class="form-control" id="garage_spokesperson_contact"
+                                            formControlName="garage_spokesperson_contact" name="name" required
+                                            pattern="^((\+91-?)|0)?[6-9]{1}[0-9]{9}$" />
+                                        <span
+                                            *ngIf="SubmitFormGarage && formcontrolsGarageForm.garage_spokesperson_contact.errors"
+                                            class="ValidationError">
+                                            <span
+                                                *ngIf="formcontrolsGarageForm.garage_spokesperson_contact.errors.required">Garage
+                                                Spokesperson Contact is
+                                                required</span>
+                                            <span
+                                                *ngIf="formcontrolsGarageForm.garage_spokesperson_contact.errors.pattern">Enter
+                                                a valid 10-digit mobile number
+                                            </span>
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <br>
+                                        <!-- <br> -->
+                                    </div>
+                                    <div formArrayName="CompanyFileDocument">
+
+                                        <div class="col-md-6"
+                                            *ngFor="let JourneyDetails_formArray of CompanyFileDocument.controls; let i = index">
+                                            <div class="input_group">
+                                                <label
+                                                    class="form_control fileUpload_btn d_flex flex_Center flex_Middel"
+                                                    name="button" value="aadhaar_document_front">
+                                                    <input type="file" style="display: none !important;" id="file"
+                                                        name="aadhaar_document_front" formControlName="File"
+                                                        (change)="onFileChangeLocal($event,FetchCompanyWiseDocuments[i].id)"
+                                                        accept="image/png, image/gif, image/jpeg ,application/pdf" />
+                                                    <i class="fas fa-user-alt"><b>{{FetchCompanyWiseDocuments[i].name}}
+                                                            Document</b></i>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="main_footer">
+                                <button type="button" id="closeFormModelRequest" class="mr_5 btn-danger Save_click"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="Save_click">
+                                    {{ ModelAction === 'Add' ? 'Submit' : 'Update' }}
+                                </button>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="FormModelAddVisits" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_header">
+                            <div class="header_title">
+                                {{ ModelAction === 'Add' ? 'Create' : 'Edit' }} {{currentView === 'Request' ? 'Visit' :
+                                'Visit'}}
+                            </div>
+                        </div>
+                        <form [formGroup]="FormAddVisit" (ngSubmit)="FormAddVisitSubmit()">
+                            <div class="main_body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i> Basic Details
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 ">
+                                        <label for="vendorType">Visitor Type</label>
+                                        <ng-multiselect-dropdown [settings]="dropdownSingleSelectSettingsType"
+                                            class="form-control" formControlName="garage_visitor"
+                                            placeholder="Select visitor" [data]="garagevisitordata"
+                                            (onSelect)="onItemSelect1($event,'Visitor Type')"
+                                            (onDeSelect)="onItemDeSelect1($event,'Visitor Type')" required>
+                                        </ng-multiselect-dropdown>
+                                        <span
+                                            *ngIf="SubmitFormAddVisit && formcontrolsFormAddVisit.garage_visitor.errors"
+                                            class="ValidationError">
+                                            <span
+                                                *ngIf="formcontrolsFormAddVisit.garage_visitor.errors.required">Visitor
+                                                is
+                                                required</span>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-12  " *ngIf="this.SelectedVisitorType == 'Insurer'">
+                                        <label for="visit_remark"> Name
+                                        </label>
+                                        <input type="text" class="form-control" id="vendorName"
+                                            formControlName="insurer_name" name="insurer_name" required />
+                                        <span *ngIf="SubmitFormAddVisit && formcontrolsFormAddVisit.insurer_name.errors"
+                                            class="ValidationError">
+                                            <span *ngIf="formcontrolsFormAddVisit.insurer_name.errors.required">
+                                                name is
+                                                required</span>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-12 " *ngIf="this.SelectedVisitorType == 'Insurer'">
+                                        <label for="insurer_contact">Contact
+                                        </label>
+                                        <input type="text" class="form-control" id="vendorName"
+                                            formControlName="insurer_contact" name="insurer_contact" required
+                                            pattern="^((\+91-?)|0)?[6-9]{1}[0-9]{9}$" />
+                                        <span
+                                            *ngIf="SubmitFormAddVisit && formcontrolsFormAddVisit.insurer_contact.errors"
+                                            class="ValidationError">
+                                            <span *ngIf="formcontrolsFormAddVisit.insurer_contact.errors.required">
+                                                Contact is
+                                                required</span>
+                                            <span *ngIf="formcontrolsFormAddVisit.insurer_contact.errors.pattern">Enter
+                                                a valid 10-digit mobile number
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-12" *ngIf="this.SelectedVisitorType == 'Square'">
+                                        <label for="visit_remark">Select Employee
+                                        </label>
+                                        <ng-multiselect-dropdown [settings]="dropdownSingleSelectSettingsType"
+                                            class="form-control" formControlName="square_employee"
+                                            placeholder="Select Employee" [data]="EmployeeData" required>
+                                        </ng-multiselect-dropdown>
+                                        <span
+                                            *ngIf="SubmitFormAddVisit && formcontrolsFormAddVisit.square_employee.errors"
+                                            class="ValidationError">
+                                            <span
+                                                *ngIf="formcontrolsFormAddVisit.square_employee.errors.required">Please
+                                                Select
+                                                Employee</span>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-12 ">
+                                        <label for="visit_remark">Date
+                                        </label>
+                                        <input type="date" class="form-control" id="vendorName"
+                                            formControlName="visit_date" name="visit_date" required />
+                                        <span *ngIf="SubmitFormAddVisit && formcontrolsFormAddVisit.visit_date.errors"
+                                            class="ValidationError">
+                                            <span *ngIf="formcontrolsFormAddVisit.visit_date.errors.required">Date is
+                                                required</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="visit_remark">Reamrk
+                                        </label>
+                                        <textarea type="text" class="form-control" id="vendorName"
+                                            formControlName="visit_remark" name="visit_remark" required></textarea>
+                                        <span *ngIf="SubmitFormAddVisit && formcontrolsFormAddVisit.visit_remark.errors"
+                                            class="ValidationError">
+                                            <span *ngIf="formcontrolsFormAddVisit.visit_remark.errors.required">Remark
+                                                is
+                                                required</span>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="main_footer">
+                                <button type="button" id="closeFormModelAddVisits" class="mr_5 btn-danger Save_click"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="Save_click">
+                                    {{ ModelAction === 'Add' ? 'Submit' : 'Update' }}
+                                </button>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="UpdateRequestStatus" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_header">
+                            <div class="header_title">
+                                Update Request Status
+                            </div>
+                        </div>
+                        <form [formGroup]="UpdateStatus" (ngSubmit)="UpdateGarageRequest()">
+                            <div class="main_body">
+                                <div class="row">
+
+
+                                    <div class="col-md-12 ">
+                                        <label for="vendorType">Request Status</label>
+                                        <ng-multiselect-dropdown [settings]="dropdownSingleSelectSettingsType"
+                                            class="form-control" formControlName="RequestStatus"
+                                            placeholder="Select Request" [data]="RequestStatusData" required
+                                            [(ngModel)]="selectedRequestType">
+                                        </ng-multiselect-dropdown>
+                                        <span
+                                            *ngIf="SubmitUpdateGarageRequest && formcontrolsUpdateStatus.RequestStatus.errors"
+                                            class="ValidationError">
+                                            <span *ngIf="formcontrolsUpdateStatus.RequestStatus.errors.required">Request
+                                                Status is
+                                                required</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-12 ">
+                                        <label for="vendorName"> Remark
+                                        </label>
+                                        <textarea type="text" class="form-control" id="Remark" formControlName="Remark"
+                                            name="Remark" required>
+                                                            </textarea>
+                                        <span
+                                            *ngIf="SubmitUpdateGarageRequest && formcontrolsUpdateStatus.Remark.errors"
+                                            class="ValidationError">
+                                            <span *ngIf="formcontrolsUpdateStatus.Remark.errors.required">Remark is
+                                                required</span>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="main_footer">
+                                <button type="button" id="closeUpdateRequestStatus" class="mr_5 btn-danger Save_click"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="Save_click">
+                                    {{ ModelAction === 'Add' ? 'Submit' : 'Update' }}
+                                </button>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="FormModelViewVisits" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_header">
+                            <div class="header_title">
+                                View Visit
+                            </div>
+                        </div>
+                        <div class="main_body main_card_height_scroll">
+                            <div class="row">
+
+                                <div class="col-md-12 ">
+
+                                    <div [innerHTML]="dataArra">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="VendorWiseDocument" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_header">
+                            <div class="header_title">
+                                View Documents
+                            </div>
+                        </div>
+                        <div class="main_body">
+                            <div class="row">
+                                <div class="col-md-12 ">
+                                    <ul class="responsivetableupdatedocs">
+                                        <li class="table-row tablerow" *ngFor="let Doc of DocumentAr; let i=index;">
+                                            <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                                                <div class="agents_data agents_data1">
+                                                    <div class="icon_re_cl">{{i+1}}</div>
+                                                    <div class="agent_name_mobile">
+                                                        <div class="agent_data">
+                                                            <div>Name</div>
+                                                            <strong class="fs_18"><span>{{Doc.Name}}</span></strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="agents_data agents_data2">
+                                                    <div class="agent_name_mobile">
+                                                        <div class="agent_data d_flex">
+                                                            <div class="input_group" *ngIf="currentView === 'manager'">
+                                                                <label
+                                                                    class="form_control fileUpload_btn d_flex flex_Center flex_Middel"
+                                                                    name="button" value="aadhaar_document_front">
+                                                                    <input type="file" style="display: none !important;"
+                                                                        id="file" name="aadhaar_document_front"
+                                                                        (change)="UploadDocs($event,Doc.Id)"
+                                                                        accept="image/png, image/gif, image/jpeg ,application/pdf" />
+                                                                    <i class="fas fa-user-alt"><b>
+                                                                            Update Docs</b></i>
+                                                                </label>
+                                                            </div>
+                                                            <!-- <button type="button" class="mr_5 btn-info Save_click"
+                                                                (click)="downloadFile(Doc.Value)">Update Docs</button> -->
+                                                            <button type="button" class="btn-info Save_click"
+                                                                (click)="downloadFile(Doc.Value)">View</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </li>
+                                    </ul>
+
+                                    <div class="row" *ngIf="DocumentAr?.length == 0">
+                                        <div class="col-md-12">
+                                            <div class="no_data_found">
+                                                <span><img src="assets/image/no_data_banner.jpg"></span>
+                                                <small>No data available !</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

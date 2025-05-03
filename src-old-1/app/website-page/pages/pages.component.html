@@ -1,0 +1,750 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header flex-header">
+                        <div class="header_title ">Website Pages</div>
+                        <button class="btn btn-primay btn-align" data-toggle="modal" data-target="#EmployeeResignPoupup"
+                            (click)="Helper()" style="cursor: pointer;">Add
+                            Page</button>
+                    </div>
+
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+
+                        <form [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+
+                            <div class="row">
+
+                                <div class="col-sm-3">
+                                    <input type="text" formControlName="Search" name="Search" class="form-control"
+                                        placeholder="Search">
+                                </div>
+                                <div class="col-sm-6">
+                                    <div>
+                                        <input (click)="SearchData()" type="button" class="btn btn-info" value="Filter">
+                                        &nbsp;&nbsp;
+                                        <input (click)="ClearSearch()" type="button" class="btn btn-danger"
+                                            value="Reset">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                        <hr>
+                        <div class=" mydiv table-responsive">
+                            <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Page name</th>
+                                        <th>Title</th>
+                                        <th>Company Name</th>
+                                        <th>lob</th>
+                                        <th>Date</th>
+                                        <th>Add And View Section</th>
+                                        <th> Action </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr">
+                                        <td>{{row.SrNo}}.</td>
+
+
+
+
+                                        <td>{{row.page_name}}</td>
+                                        <td>{{row.title}}</td>
+                                        <td>{{row.company_name}}</td>
+
+                                        <td>{{row.lob}}</td>
+                                        <td>{{row.created_at}}</td>
+                                        <td>
+
+                                            <!-- <label class="label label-info" (click)="AddSection(row.id)">Add Section
+                                            </label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp; -->
+                                            <label class="label label-info" data-toggle="modal"
+                                                data-target="#AddSectionPopup" (click)="getIdValue(row.id)"
+                                                data-id="{{row.id}}" style="cursor: pointer;">Add Section
+                                            </label>
+
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+                                            <label class="label label-info"
+                                                routerLink="/CompanyPages/section/{{row.id}}">
+                                                View Section
+                                            </label>
+                                        </td>
+
+                                        <td>
+
+                                            <label class="label label-info" (click)="DeletePage(row.id)">Delete
+                                            </label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <!-- <label class="label label-info" (click)="EditPage(row.id)">Edit
+                                            </label> -->
+                                            <label class="label label-info" data-toggle="modal"
+                                                data-target="#EmployeeResignPoupup" (click)="getValueEdit(row.id)"
+                                                data-id="{{row.id}}" style="cursor: pointer;">Edit
+                                            </label>
+
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="14" align="center">No data available!</td>
+                                    </tr>
+                                <tbody>
+
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<div id="EmployeeResignPoupup" class="modal fade" role="dialog" style="z-index: 1042 !important;">
+    <div class="modal-dialog cs_table_data ">
+
+        <div class="main_card_form">
+            <div class="main_header">
+                <div class="header_title">Add Page</div>
+                <button class="close closeModelButton" data-dismiss="modal" id="ClosePOUPUP1" (click)="Helper()"
+                    type="button">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="view_more_cases">
+
+                    <form (ngSubmit)="submit()" [formGroup]="Submitform">
+                        <div class="popup-content-body">
+                            <div class="row popup-form">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Page Name </label>
+                                        <input type="text" class="form-control" formControlName="pageName">
+                                        <div *ngIf="isSubmitted && formControls.pageName.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.pageName.errors.required"><span
+                                                    style="color: red;">Please enter
+                                                    Page Name !</span></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="lob">Lob</label>
+
+                                        <ng-multiselect-dropdown class="form-control"
+                                            [settings]="dropdownSingleSettingsType" placeholder="select lob"
+                                            formControlName="lob" [data]="lob" [(ngModel)]="lob_name"
+                                            (onSelect)="FetchCompany($event)">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && formControls.lob.errors" class="Validationerrors">
+                                            <div *ngIf="formControls.lob.errors.required">
+                                                <span style="color: red;">Please select a lob </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Order</label>
+                                        <input type="number" formControlName="order" class="form-control">
+                                        <div *ngIf="isSubmitted && formControls.order.errors" class="Validationerrors">
+                                            <div *ngIf="formControls.order.errors.required"><span
+                                                    style="color: red;">Please choose
+                                                    order </span></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Page Slug</label>
+                                        <input type="text" class="form-control" formControlName="slug">
+                                        <div *ngIf="isSubmitted && formControls.slug.errors" class="Validationerrors">
+                                            <div *ngIf="formControls.slug.errors.required"><span
+                                                    style="color: red;">Please enter
+                                                    Slug!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Segment </label>
+                                        <input type="text" class="form-control" formControlName="segment">
+                                        <div *ngIf="isSubmitted && formControls.segment.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.segment.errors.required"><span
+                                                    style="color: red;">Please enter
+                                                    Segment!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Company Name</label>
+                                        <select class="form-control" formControlName="companyName">
+                                            <option value="">Select a company</option>
+                                            <option value="SBI">SBI</option>
+                                            <option value="HDFC">HDFC</option>
+                                            <option value="Shriram">Shriram</option>
+                                            <option value="united-india">United </option>
+                                            <option value="bajaj">Bajaj </option>
+                                        </select>
+
+                                        
+                                    </div>
+
+                                </div> -->
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="company">Company Name</label>
+                                        <ng-multiselect-dropdown class="form-control"
+                                            [settings]="dropdownSingleSettingsType" placeholder="select company"
+                                            formControlName="companyName" [data]="company_name" [(ngModel)]="company">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Title</label>
+                                        <input type="text" class="form-control" formControlName="title">
+                                        <!-- <div *ngIf="isSubmitted && formControls.title.errors" class="Validationerrors">
+                                            <div *ngIf="formControls.title.errors.required"><span
+                                                    style="color: red;">Please enter
+                                                    title!</span></div>
+                                        </div> -->
+                                    </div>
+
+                                </div>
+
+                                <!-- <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Description</label>
+                                        <input type="text" class="form-control" formControlName="description"
+                                            (input)="onDescriptionChange()">
+
+
+                                        <textarea class="form-control" formControlName="description"
+                                            style="min-height: 100px;"></textarea>
+
+
+                                        <div *ngIf="isSubmitted && formControls.description.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.description.errors.required"><span
+                                                    style="color: red;">Please enter
+                                                    Description!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+                                <!-- <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="state">Select Blog</label>
+
+                                        <select class="form-control" formControlName="SelectBlog" name="SelectBlog"
+                                            id="SelectBlog">
+
+                                            <option disabled value="">Select Blog</option>
+                                            <option value="HTML">HTML</option>
+                                            <option value="Ckeditor">Ckeditor</option>
+
+                                        </select>
+
+                                        <ckeditor [editor]="CKEditorComponent" formControlName="ckeditor"></ckeditor>
+                                        <div *ngIf="isSubmitted && formControls.SelectBlog.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.SelectBlog.errors.required"><span
+                                                    style="color: red;">
+                                                    Select Blog!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+                                <!-- <div class="col-md-12" *ngIf="Submitform.value['SelectBlog'] ==='HTML' ">
+                                    <div class="form-group">
+                                        <label for="state">Editor</label>
+                                        <textarea class="form-control" formControlName="ckeditorContent"></textarea>
+                                        <ckeditor [editor]="CKEditorComponent" formControlName="ckeditor"></ckeditor>
+                                        <div *ngIf="isSubmitted && formControls.ckeditorContent.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.ckeditorContent.errors.required"><span
+                                                    style="color: red;">
+                                                    ckeditor!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+                                <div class="col-md-12 ">
+                                    <div class="form-group">
+                                        <label for="state">Editor</label>
+                                        <ckeditor [config]="editorConfig" formControlName="ckeditorContent"></ckeditor>
+
+                                        <div *ngIf="isSubmitted && formControls.ckeditorContent.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.ckeditorContent.errors.required"><span
+                                                    style="color: red;">
+                                                    ckeditor!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="button-div-yes-no" align="right">
+                                        <!-- <button type="button" (click)="CloseModel()"
+                                                        class="btn btn-danger">Close</button> -->
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div id="AddSectionPopup" class="modal fade" role="dialog" style="z-index: 1042 !important;">
+    <div class="modal-dialog cs_table_data">
+
+        <div class="main_card_form">
+            <div class="main_header">
+                <div class="header_title">Add Section</div>
+                <button class="close closeModelButton" data-dismiss="modal" id="ClosePOUPUP4"
+                    (click)="resetSectionPage()" type="button">×</button>
+            </div>
+            <div class="cs_modal_body modal-body">
+                <div class="view_more_cases">
+                    <form (ngSubmit)="onSectionSubmit()" [formGroup]="Submitform1">
+
+
+                        <div class="popup-content-body">
+
+
+                            <div class="row popup-form">
+
+
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Section Type</label>
+                                        <select class="form-control" formControlName="sectionType">
+
+                                            <option value="normal">Normal</option>
+                                            <option value="table">Table</option>
+                                            <option value="faq">FAQs</option>
+                                            <option value="image">Image</option>
+                                            <option value="listing">Listing </option>
+
+                                            <option value="html"> Html</option>
+
+
+                                        </select>
+                                        <div *ngIf="isSubmitted && formControls1.sectionType.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls1.sectionType.errors.required">
+                                                <span style="color: red;">Please select a Section Type </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6"
+                                    *ngIf="formControls1.sectionType?.value === 'normal' ||formControls1.sectionType?.value === 'faq'||formControls1.sectionType?.value === 'listing' || formControls1.sectionType?.value === 'html' ||formControls1.sectionType?.value === 'ul_li'">
+                                    <div class=" form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="background">Backround Color </label>
+                                                <div>
+                                                    <input type="checkbox" formControlName="background" id="background">
+                                                    <!-- <label for="background" class="form-check-label">Background color </label> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="textCenter">Text center </label>
+                                                <div>
+                                                    <input type="checkbox" formControlName="textCenter" id="textCenter">
+                                                    <!-- <label for="textCenter" class="form-check-label">Background color </label> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+
+
+                                <!-- <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Category</label>
+                                    <select class="form-control" formControlName="category">
+                                        <option value="">Select a Category</option>
+                                        <option value="third party">THIRD PARTY</option>
+                                        <option value="comprehensive">COMPREHENSIVE</option>
+                                        <option value="zero depreciation">ZERO DEPRECIATION</option>
+                                        <option value="claim">CLAIM</option>
+
+                                    </select>
+                                    <div *ngIf="isSubmitted && formControls1.category.errors"
+                                        class="Validationerrors">
+                                        <div *ngIf="formControls1.category.errors.required">
+                                            <span style="color: red;">Please select a category</span>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    
+                                </div> -->
+
+                                <!-- <div class="col-md-6">
+                                    <label for="state">Sub Category</label>
+                                    <select class="form-control" formControlName="subCategory">
+                                        <option value="">Select a Sub Category</option>
+                                        <option value="SBI">SBI</option>
+                                        <option value="HDFC">HDFC</option>
+                                        <option value="Shriram">Shriram</option>
+                                        <option value="united">United </option>
+                                        <option value="bajaj">Bajaj </option>
+                    
+                                    </select>
+                                    <div *ngIf="isSubmitted && formControls.subCategory.errors" class="Validationerrors">
+                                        <div *ngIf="formControls.subCategory.errors.required">
+                                            <span style="color: red;">Please select a category</span>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+
+
+
+                                <!-- <div class="col-md-6">
+                    
+                                    <label for="lob">Section Type</label>
+                    
+                                    <ng-multiselect-dropdown class="form-control" [settings]="dropdownSingleSettingsType"
+                                        placeholder="select section type " formControlName="sectionType" [data]="sectionType">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="isSubmitted && formControls.sectionType.errors" class="Validationerrors">
+                                        <div *ngIf="formControls.sectionType.errors.required">
+                                            <span style="color: red;">Please select a Section Type </span>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Title</label>
+                                        <input type="text" class="form-control" formControlName="title">
+                                        <!-- <div *ngIf="isSubmitted && formControls1.title.errors" class="Validationerrors">
+                                            <div *ngIf="formControls1.title.errors.required"><span
+                                                    style="color: red;">Please enter
+                                                    title!</span></div>
+                                        </div> -->
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Title color </label>
+                                        <input type="color" formControlName="titleColor" class="form-control">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6" *ngIf="formControls1.sectionType?.value != 'image'">
+                                    <div class="form-group">
+                                        <label for="state">Background color </label>
+                                        <input type="color" formControlName="bgcolor" class="form-control">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Text Color </label>
+                                        <input type="color" formControlName="txtcolor" class="form-control">
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-6" *ngIf="formControls1.sectionType?.value === 'image' ">
+                                    <div class="form-group">
+                                        <label for="state">URL </label>
+                                        <input type="text" class="form-control" formControlName="url">
+                                        <div *ngIf="isSubmitted && formControls1.url.errors" class="Validationerrors">
+                                            <div *ngIf="formControls1.url.errors.required"><span
+                                                    style="color: red;">Please
+                                                    enter
+                                                    url!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6" *ngIf="formControls1.sectionType?.value === 'image'">
+                                    <div class="form-group">
+                                        <label for="state">Image</label>
+                                        <input type="file" formControlName="image" (change)="UploadDocs($event,'image')"
+                                            class="form-control">
+                                        <div *ngIf="isSubmitted && formControls1.image.errors" class="Validationerrors">
+                                            <div *ngIf="formControls1.image.errors.required"><span
+                                                    style="color: red;">Please choose
+                                                    file!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="col-md-12" *ngIf="formControls1.sectionType?.value === 'table'">
+                                    <div>
+                                        <div class="form-group">
+                                            <label for="noOfColumns">No of Columns</label>
+
+                                            <input type="number" formControlName="noOfColumns" class="form-control"
+                                                [(ngModel)]="numColumns" id="noOfColumns"
+                                                (input)="onNoOfColumnsChange()">
+                                            <div *ngIf="isSubmitted && formControls1.noOfColumns.errors"
+                                                class="Validationerrors">
+                                                <div *ngIf="formControls1.noOfColumns.errors.required">
+                                                    <span style="color: red;">Please choose Number</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <!-- <div *ngFor="let row of rows; let rowIndex = index"> -->
+                                    <div class="row " *ngIf="numColumns > 0">
+                                        <div class="form-group">
+                                            <div formArrayName="allRowData">
+                                                <div *ngFor="let row of allRowData.controls; let rowIndex = index"
+                                                    [formGroupName]="rowIndex">
+                                                    <div formArrayName="columns">
+                                                        <div class="col-md-12"
+                                                            *ngFor="let column of row.get('columns').controls; let columnIndex = index"
+                                                            [formGroupName]="columnIndex">
+                                                            <div class="form-group">
+                                                                <div class="row border border-secondary">
+                                                                    <div class="col-md-3">
+                                                                        <!-- <input type="text" class="form-control" [formControlName]="columnIndex"
+                                                                placeholder="Column {{columnIndex + 1}}"> -->
+
+                                                                        <input type="text" class="form-control"
+                                                                            [formControlName]="'name'"
+                                                                            placeholder="Name">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <!-- URL Input Field -->
+                                                                        <input type="text" class="form-control mt-2"
+                                                                            [formControlName]="'url'" placeholder="URL">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <!-- Is Button Checkbox -->
+                                                                        <div class="form-check mt-2">
+                                                                            <input type="checkbox"
+                                                                                class="form-check-input"
+                                                                                [formControlName]="'is_button'">
+                                                                            <label class="form-check-label">Is
+                                                                                Button</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <!-- Is Clickable Checkbox -->
+                                                                        <div class="form-check mt-2">
+                                                                            <input type="checkbox"
+                                                                                class="form-check-input"
+                                                                                [formControlName]="'is_clickable'">
+                                                                            <label class="form-check-label">Is
+                                                                                Clickable</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12" *ngIf="rowIndex >0">
+                                                        <button type="button" class="btn btn-danger"
+                                                            (click)="removeRow(rowIndex)">Remove
+                                                            Row</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+
+                                    <button (click)="addRow()" class="addmore" type="button">Add More</button>
+                                </div>
+
+
+
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Order</label>
+                                        <input type="number" formControlName="order" class="form-control">
+                                        <div *ngIf="isSubmitted && formControls1.order.errors" class="Validationerrors">
+                                            <div *ngIf="formControls1.order.errors.required"><span
+                                                    style="color: red;">Please choose
+                                                    order </span></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- <div class="col-md-6"
+                                    *ngIf="formControls1.sectionType?.value === 'normal' ||formControls1.sectionType?.value === 'faq'||formControls1.sectionType?.value === 'listing'">
+                                    <div class="form-group">
+                                        <label for="state">Description</label>
+                                        <input type="text" class="form-control" formControlName="description"
+                                            (input)="onDescriptionChange1()">
+                                        <textarea class="form-control" formControlName="description"
+                                            style="min-height: 100px;"></textarea>
+                                        <div *ngIf="isSubmitted && formControls1.description.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls1.description.errors.required"><span
+                                                    style="color: red;">Please enter
+                                                    Description!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+                                <!-- <div class="col-md-12"
+                                    *ngIf="formControls1.sectionType?.value === 'normal' ||formControls1.sectionType?.value === 'faq' ||formControls1.sectionType?.value === 'listing'">
+                                    <div class="form-group">
+                                        <label for="state">Select Blog</label>
+
+                                        <select class="form-control" formControlName="SelectBlog" name="SelectBlog"
+                                            id="SelectBlog">
+
+                                            <option disabled value="">Select Blog</option>
+                                            <option value="HTML">HTML</option>
+                                            <option value="Ckeditor">Ckeditor</option>
+
+                                        </select>
+
+                                        <ckeditor [editor]="CKEditorComponent" formControlName="ckeditor"></ckeditor>
+                                        <div *ngIf="isSubmitted && formControls1.SelectBlog.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls1.SelectBlog.errors.required"><span
+                                                    style="color: red;">
+                                                    Select Blog!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+                                <!-- <div class="col-md-12" *ngIf="Submitform1.value['SelectBlog'] ==='HTML' ">
+                                    <div class="form-group">
+                                        <label for="state">Editor</label>
+                                        <textarea class="form-control" formControlName="ckeditorContent"></textarea>
+                                        <ckeditor [editor]="CKEditorComponent" formControlName="ckeditor"></ckeditor>
+                                        <div *ngIf="isSubmitted && formControls1.ckeditorContent.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls1.ckeditorContent.errors.required"><span
+                                                    style="color: red;">
+                                                    ckeditor!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+                                <div class="col-md-12"
+                                    *ngIf="formControls1.sectionType?.value === 'normal' ||formControls1.sectionType?.value === 'faq'||formControls1.sectionType?.value === 'listing' ||formControls1.sectionType?.value === 'html' || formControls1.sectionType?.value === 'table'">
+                                    <div class="form-group">
+                                        <label for="state">Editor</label>
+                                        <ckeditor [config]="editorConfig" formControlName="ckeditorContent"></ckeditor>
+                                        <!-- <ckeditor [editor]="CKEditorComponent" formControlName="ckeditor"></ckeditor> -->
+                                        <!-- <div *ngIf="isSubmitted && formControls1.ckeditorContent.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls1.ckeditorContent.errors.required"><span
+                                                    style="color: red;">
+                                                    ckeditor!</span></div>
+                                        </div> -->
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="button-div-yes-no" align="right">
+                                        <!-- <button type="button" (click)="CloseModel()"
+                                        class="btn btn-danger">Close</button> -->
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+                    </form>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

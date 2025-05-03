@@ -1,0 +1,94 @@
+<form class="form" [formGroup]="ActionForm" (ngSubmit)="UpdatePaymentFrequency()">
+  <table class="table table-bordered">
+    <thead>
+     <tr>
+      <th style="text-align: center;">Change Payment Frequency
+        <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+      </th>
+     </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <label>New Payment Frequency *: </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Choose  New Payment Frequency" [data]="FrequencyArray"   formControlName="Payment_Frequency" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+            </div>
+          </div><br>
+          <strong >Product Type : {{ StepData['LI_Product_Type'] }}</strong>
+          <!--== IF PRODUCT TYPE IS NOT EQUAL TO TERM + SAVING COMBO AND PRODUCT NAME IS Param Rakshak Plus Solution START==-->
+          <div class="row" style="margin-top: 10px;" *ngIf="StepData['LI_Product_Type'] != 'Term + Saving Combo' && (StepData['LI_Product_Id'] == 'Param Rakshak Solution' || StepData['LI_Product_Id'] == 'Param Rakshak Plus Solution')">
+            <div class="col-sm-6">
+              <label>Rider Net Premium *: </label>
+              <input type="number" (keyup)="Calculation('LI_Rider_Premium')" class="form-control" placeholder="0.00" formControlName="LI_Rider_Premium">
+            </div>
+
+            <div class="col-sm-6">
+              <label>Rider Gross Premium *: </label>
+              <input type="number" (keyup)="Calculation('LI_Rider_Gross_Premium')" class="form-control" placeholder="0.00" formControlName="LI_Rider_Gross_Premium">
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;" *ngIf="StepData['LI_Product_Type'] != 'Term + Saving Combo' && (StepData['LI_Product_Id'] == 'Param Rakshak Solution' || StepData['LI_Product_Id'] == 'Param Rakshak Plus Solution')">
+            <div class="col-sm-12">
+              <label>Base/ULIP Premium *: </label>
+              <input type="number" (keyup)="Calculation('LI_Base_Premium')" class="form-control" placeholder="0.00" formControlName="LI_Base_Premium">
+            </div>
+          </div>
+          <!--== IF PRODUCT TYPE IS NOT EQUAL TO TERM + SAVING COMBO AND PRODUCT NAME IS Param Rakshak Plus Solution END==-->
+
+
+          <!--== IF PRODUCT TYPE IS NOT EQUAL TO TERM + SAVING COMBO AND PRODUCT NAME IS NOT Param Rakshak Plus Solution START==-->
+          <div class="row" style="margin-top: 10px;" *ngIf="StepData['LI_Product_Type'] != 'Term + Saving Combo' && (StepData['LI_Product_Id'] != 'Param Rakshak Solution' && StepData['LI_Product_Id'] != 'Param Rakshak Plus Solution')">
+            <div class="col-sm-6">
+              <label>Net Premium *: </label>
+              <input type="number" (keyup)="Calculation('Net_Premium_LI')" class="form-control" placeholder="0.00" formControlName="LI_Net_Premium">
+            </div>
+
+            <div class="col-sm-6">
+              <label>Gross Premium *: </label>
+              <input type="number" (keyup)="Calculation('Gross_Premium_LI')" class="form-control" placeholder="0.00" formControlName="LI_Gross_Premium">
+            </div>
+          </div>
+          <!--== IF PRODUCT TYPE IS NOT EQUAL TO TERM + SAVING COMBO AND PRODUCT NAME IS NOT Param Rakshak Plus Solution END==-->
+
+
+          <!--== IF PRODUCT TYPE IS EQUAL TO TERM + SAVING COMBO START==-->
+          <div class="row" style="margin-top: 10px;" *ngIf="StepData['LI_Product_Type'] == 'Term + Saving Combo'">
+            <div class="col-sm-6">
+              <label>Term Plan Net Premium *: </label>
+              <input type="number" (keyup)="Calculation('Term_Net_Premium_LI')" class="form-control" placeholder="0.00" formControlName="LI_Term_Net_Premium">
+            </div>
+
+            <div class="col-sm-6">
+              <label>Term Plan Gross Premium *: </label>
+              <input type="number" (keyup)="Calculation('Term_Gross_Premium_LI')" class="form-control" placeholder="0.00" formControlName="LI_Term_Gross_Premium">
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;" *ngIf="StepData['LI_Product_Type'] == 'Term + Saving Combo'">
+            <div class="col-sm-6">
+              <label>Saving Plan Net Premium *: </label>
+              <input type="number" (keyup)="Calculation('Net_Premium_LI')" class="form-control" placeholder="0.00" formControlName="LI_Net_Premium">
+            </div>
+
+            <div class="col-sm-6">
+              <label>Saving Plan Gross Premium *: </label>
+              <input type="number" (keyup)="Calculation('Gross_Premium_LI')" class="form-control" placeholder="0.00" formControlName="LI_Gross_Premium">
+            </div>
+          </div>
+          <!--== IF PRODUCT TYPE IS EQUAL TO TERM + SAVING COMBO START==-->
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

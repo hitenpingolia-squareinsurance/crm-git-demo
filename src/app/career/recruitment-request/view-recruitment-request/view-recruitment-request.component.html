@@ -1,0 +1,329 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header d_flex flex_Equal flex_Middel">
+              <div class="header_title">Recruitment Request</div>
+              <!-- <div class="row">
+                <div class="col-md-4">
+                  
+                </div>
+                <div class="col-md-6">&nbsp;</div>
+                <div class="col-md-2">
+                  <button class="btn btn-primary nextBtn pull-right" (click)="AddRequest()" style="margin-right: 5px;"> <i
+                      class="fa fa-plus"> Add Request </i></button>
+                </div>
+              </div> -->
+            </div>
+            <div *ngIf="!hasAccess" class="error-message">
+              <div class="container" style="text-align: center;">
+                <img src="assets/Authorised.png" alt="">
+                <h4>{{ errorMessage }}</h4>
+              </div>
+              
+            </div>
+  
+            <div class="main_body main_card_height_scroll" *ngIf="hasAccess">
+
+              <div class="filterquotesrow">
+                <div class="row">
+                  <div class="col-md-12" style="text-align: end;">
+                    <button class="btn btn-info" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                      href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="margin-right: 10px;"><a role="button" style="color: white;"><i
+                      class="fa fa-filter"></i><span>Filters</span><i class="fa fa-angle-down"></i></a></button>
+                  </div>
+                </div>
+                
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panelbody">
+                  <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+  
+                    <div class="row" style="margin-top: 1%;margin-bottom: 2%;">
+                      <div class="col-sm-2"><input type="text" formControlName="Search" name="Search" class="form-control"
+                          placeholder="Search">
+                      </div>
+                      <div class="col-sm-3">
+                        <button type="submit" class="btn btn-info" style="font-size: small;" value="Search"> <i
+                            class="fa fa-search">Search</i> </button>
+                        &nbsp;&nbsp;
+                        <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                          value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              
+              <div class="mydiv">
+
+
+
+
+                <div class="custom_table tables_layout_design">
+                  <table datatable [dtOptions]="dtOptions" id="example2" class="row-border table">
+                    <thead>
+                      <tr>
+                        <th></th>
+                      </tr>
+                    </thead>
+                  </table>
+                  <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                    <li class="table-row tablerow" *ngFor="let row of dataAr; let i=index;">
+                      <!-- <span class="addon_tag_name" style="background: rgba(44, 178, 179, 1);" *ngIf="row.source == 'web'">WEB</span>
+                      <span class="addon_tag_name" style="background-color: #00a65a;" *ngIf="row.source == 'crm'">CRM</span>
+                      <span class="addon_tag_name" style="background-color: #f39c12;" *ngIf="row.source == 'bms'">BMS</span> -->
+                      
+                      <!-- <span class="addon_tag_name">{{row.source}}</span> -->
+                      <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15" style="margin-top: 15px;">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">{{row.SrNo}}</div>
+                            <div class="agent_name_mobile">
+                              <div class="agent_data">
+                                <div>Name</div>
+                                <strong class="fs_18"><span>
+                                  {{row.Name}}
+                                </span></strong>
+                                
+                              </div>
+  
+                              
+  
+                            </div>
+                        </div>
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data" *ngIf="row.AppliedPost != ''">
+                              <div>Applied For Post</div>
+                              <strong class="fs_18"><span>{{row.AppliedPost}}</span></strong>
+                            </div>
+                          </div>
+                          
+                          
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data" *ngIf="row.Date != ''">
+                              <div>Date</div>
+                              <strong class="fs_18"><span>{{row.Date}}</span></strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="last_row_div">
+                        <div class="d_flex custon-234">
+
+                          <div class="label_chips mutual_fund_lob" style="align-content: center;">
+                            <div>
+  
+                              <!-- Email Section -->
+                              <span class="label label-secondary" *ngIf="Masking == 'Email'+i"
+                              (click)="ShowMaskingField('TempEmail')"> 
+                              Email : {{ row.Email }}  
+                              <span (click)="CopyText(row.Email)" class="fa fa-copy"></span>
+                              </span>
+                          
+                              <ng-container *ngIf="Masking != 'Email'+i">
+                                  <span class="label label-secondary" (click)="ShowMaskingField('Email'+i)">
+                                      Email : ****
+                                  </span>
+                              </ng-container>
+  
+                            </div>
+                          </div>
+  
+                          <div class="label_chips mutual_fund_lob" style="align-content: center;">
+                            <div>
+                                <!-- Add space between Email and Mobile -->
+                              <span style="display: inline-block; width: 10px;"></span>
+                          
+                              <!-- Mobile Section -->
+                              <span class="label label-secondary" *ngIf="Masking =='Mobile'+i"
+                                  (click)="ShowMaskingField('TempMobile')"> 
+                                  Mobile : {{ row.ContactNo }}
+                              </span>
+                          
+                              <ng-container *ngIf="Masking != 'Mobile'+i">
+                                  <span class="label label-secondary" (click)="ShowMaskingField('Mobile'+i)">
+                                      Mobile : ****
+                                  </span>
+                              </ng-container>
+                            </div>
+                          </div>
+  
+                          <div class="label_chips growth_positive">
+                            <strong><span>Experience : </span></strong>
+                            <span>{{row.Experience}}</span>
+                          </div>
+  
+                          <div class="label_chips finance_lob">
+                            <strong><span>Current Employer : </span></strong>
+                            <span>{{row.CurrentEmployer}}</span>
+                          </div>
+  
+  
+                          
+                          
+  
+                          <div class="label_chips health_lob">
+                            <strong><span>Current CTC : </span></strong>
+                            <span>{{row.CurrentCTC}}</span>
+                          </div>
+                        
+                          <div class="label_chips non_motor_lob">
+                            <strong><span>Notice Period : </span></strong>
+                            <span>{{row.NoticePeriod}}</span>
+                          </div>
+
+                          <button class="btn label_chips finance_lob" (click)="ViewDocument(row.Resume)" *ngIf="row.Resume != ''"><strong><span>Resume</span></strong>
+                                
+                          </button>
+
+                          <!-- <div class="label_chips motor_lob">
+                            <button class="btn btn-info" (click)="ViewDocument(row.Resume)">Resume</button>
+                          </div> -->
+
+
+                          
+                        </div>
+                      </div>
+                      
+                      <div class="last_row">
+                        
+                        <div class="effective_date">
+                          <div class="d_flex">
+                          </div>
+                        </div>
+                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                          <div class="row">
+                            
+  
+                            
+
+                            <button *ngIf="row.Status == 1" class="btn btn-danger" (click)="ActiveInactive(row.Id, 0, 'Career')" style="padding:3px 10px; margin-right:10px;">In-Active</button>
+                            
+                            <button *ngIf="row.Status == 0" class="btn btn-success" (click)="ActiveInactive(row.Id, 1, 'Career')" style="padding:3px 10px; margin-right:10px;">Active</button>
+
+                            <button class="btn btn-warning" *ngIf="row.Follow_up=='pending'" (click)="career_Details('Add',row.Id)" style="padding:3px 10px; margin-right:10px;">{{row.Follow_up}}</button>
+
+                            <button class="btn btn-success" *ngIf="row.Follow_up=='Selected'" (click)="career_Details('Add',row.Id)" style="padding:3px 10px; margin-right:10px;">{{row.Follow_up}}</button>
+
+                            <button class="btn btn-info" *ngIf="row.Follow_up=='Follow Up'" (click)="career_Details('Add',row.Id)" style="padding:3px 10px; margin-right:10px;">{{row.Follow_up}}</button>
+
+                            <button class="btn btn-danger" *ngIf="row.Follow_up=='Don`t Selected'" (click)="career_Details('Add',row.Id)" style="padding:3px 10px; margin-right:10px;">{{row.Follow_up}}</button>
+
+                            <button class="btn btn-danger" (click)="DeleteRequest(row.Id,'Career')" style="padding:3px 10px; margin-right:10px;">Delete</button>
+
+                           
+                          
+                            
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="row" *ngIf="dataAr?.length == 0">
+                    <div class="col-md-12">
+                      <div class="no_data_found">
+                        <span><img src="assets/image/no_data_banner.jpg"></span>
+                        <small>No data available !</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+                <!-- <table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>S.No</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Mobile</th>
+                      <th>Applied For Post</th>
+                      <th>Experience </th>
+                      <th>Current Employer </th>
+                      <th>Current CTC </th>
+                      <th>Notice Period </th>
+                      <th>Date</th>
+                      <th>Resume</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+  
+                  <tbody *ngIf="dataAr?.length != 0">
+  
+                    <tr *ngFor="let row of dataAr; let i=index;">
+                      <td>{{row.SrNo}}</td>
+                      <td>{{row.Name}}</td>
+  
+  
+                      <td>
+                        <span class="label label-primary" *ngIf="Masking == 'Email'+i"
+                          (click)="ShowMaskingField('TempEmail')"> Email : {{row.Email}} <span
+                            (click)="CopyText(row.Email)" class="fa fa-copy"></span></span>
+  
+                        <span class="label label-primary" *ngIf="Masking != 'Email'+i"
+                          (click)="ShowMaskingField('Email'+i)"> Email : ****</span>
+                      </td>
+  
+                      <td>
+                        <span class="label label-primary" *ngIf="Masking =='Mobile'+i"
+                          (click)="ShowMaskingField('TempMobile')"> Mobile : {{row.ContactNo}}</span>
+  
+                        <span class="label label-primary" *ngIf="Masking != 'Mobile'+i"
+                          (click)="ShowMaskingField('Mobile'+i)"> Mobile : ****</span>
+  
+                      </td>
+  
+                      <td>{{row.AppliedPost}}</td>
+                      <td>{{row.Experience}}</td>
+                      <td>{{row.CurrentEmployer}}</td>
+                      <td>{{row.CurrentCTC}}</td>
+                      <td>{{row.NoticePeriod}}</td>
+                      <td>{{row.Date}}</td>
+                      <td>
+  
+                        <label class="label label-info" *ngIf="(row.Resume !='')"
+                          (click)="ViewDocument(row.Resume)">Resume</label>
+                      </td>
+                      <td>
+                        <label class="fa fa-trash" (click)="DeleteRequest(row.Id,'Career')"></label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <label *ngIf="row.Status == 1" class="fa fa-close "
+                          (click)="ActiveInactive(row.Id, 0, 'Career')"></label>
+                        <label *ngIf="row.Status == 0" class="fa fa-check"
+                          (click)="ActiveInactive(row.Id, 1, 'Career')"></label>
+                          <br>
+                          <label class="label label-warning" *ngIf="row.Follow_up=='pending'" (click)="career_Details('Add',row.Id)">{{row.Follow_up}}</label>
+                          <label class="label label-success" *ngIf="row.Follow_up=='Selected'" (click)="career_Details('Add',row.Id)">{{row.Follow_up}}</label>
+                          <label class="label label-info" *ngIf="row.Follow_up=='Follow Up'" (click)="career_Details('Add',row.Id)">{{row.Follow_up}}</label>
+                          <label class="label label-danger" *ngIf="row.Follow_up=='Don`t Selected'" (click)="career_Details('Add',row.Id)">{{row.Follow_up}}</label>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="dataAr?.length == 0">
+                    <tr>
+                      <td colspan="8" align="center">No data Available !</td>
+                    </tr>
+                  <tbody>
+                </table> -->
+              </div>
+            </div>
+  
+  
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    
+
+</section>

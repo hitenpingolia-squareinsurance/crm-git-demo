@@ -1,0 +1,92 @@
+<div>
+    <button (click)="CloseModel()" type="button"
+    class="close closeModelButton">&times;</button>
+    <form class="form" [formGroup]="addEmployeeForm">
+        <div class="box-body">
+            <div class="row">
+
+              <div class="row clearfix" style="margin-top: 10px;">
+                <div class="col-md-12">
+
+                  <div class="col-md-4">
+                    <label>Zone</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="ZoneData"
+                      formControlName="zone" [settings]="dropdownSettingsType" (onSelect)="getRoData()"
+                      (onDeSelect)="onItemDeSelect('Zone')" [(ngModel)]="zone">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.zone.errors " class="ValidationError">
+                      <div *ngIf="formControls.zone.errors.required">Please Select Zone!
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label>Regional Office</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="ROData"
+                      formControlName="ro" [settings]="dropdownSettingsType" (onSelect)="getBranchData()"
+                      (onDeSelect)="onItemDeSelect('ro')" [(ngModel)]="ro">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.ro.errors " class="ValidationError">
+                      <div *ngIf="formControls.ro.errors.required">Please Select Regional Office!
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label>Branch</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="BranchData"
+                      formControlName="branch" [settings]="dropdownSettingsType"
+                       (onDeSelect)="onItemDeSelect('Branch')"
+                      [(ngModel)]="selectedBranch">
+                    </ng-multiselect-dropdown>
+                    <!-- <div *ngIf="isSubmitted && formControls.branch.errors " class="ValidationError">
+                      <div *ngIf="formControls.branch.errors.required">Please Select Branch!
+                      </div>
+                    </div> -->
+                  </div>
+
+                  <div class="col-md-4">
+                    <label>Service Location</label>
+                    <input class="form-control" type="text" placeholder=  "Enter Service Location"
+                      formControlName="Servicelocation" [(ngModel)]="Selected_location">
+                    <div *ngIf="isSubmitted && formControls.Servicelocation.errors " class="ValidationError">
+                      <div *ngIf="formControls.Servicelocation.errors.required">Please Enter Service Location!
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label for="Current_Tier">Tier</label>
+
+
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="Current_Tier"
+                      formControlName="Current_Tier" [settings]="dropdownSettingsType"
+                      [(ngModel)]="Current_Tier_Val">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.Current_Tier.errors " class="ValidationError">
+                      <div *ngIf="formControls.Current_Tier.errors.required">Please Select Tier!
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-10">&nbsp;</div>
+                    <div class="col-md-2 actionButtons" style="margin-bottom: 5px;">
+                      <!-- <button class="btn btn-primary save-click" (click)="AddEmployee()" type="submit">Submit</button> -->
+                    
+                        <button class="btn btn-primary save-click" (click)="AddEmployee(Id)" type="submit">
+                          {{ Id ? 'Update' : 'Submit' }}
+                        </button>
+                      
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+    </form>
+    
+</div>

@@ -1,0 +1,40 @@
+<div>
+ 
+      <div class="modal-top">
+        <h4 class="modal-title">Upload Profile</h4>
+      </div>
+    
+      <!-- <div class="col-md-1">
+        <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+      </div> -->
+
+    <form (ngSubmit)="submit()" [formGroup]="UploadProfile"  id="form-1">
+  
+        <div class="popup-content-body">
+  
+           
+            <div class="popup-form">  
+               <div class="row">
+                <div class="col-md-12">
+                  <label for="state">Upload Photo</label>
+                  <input type="file" class="form-control" formControlName="uploadProfilephoto"
+                      (change)="UploadDocs($event,'uploadProfilephoto')">
+                  <div *ngIf="isSubmitted && formControls.uploadProfilephoto.errors" class="ValidationError">
+                      <div *ngIf="formControls.uploadProfilephoto.errors.required">Please Choose Photo</div>
+                  </div>
+              </div>
+               </div>
+            </div>
+        </div>
+  
+            <footer class="modal-ftr">
+              <button class="btn pull-right" (click)="CloseModel()" type="button">Close</button>
+              <button class="btn btn-primary nextBtn pull-right" style="margin-right: 5px;" type="submit">Submit</button>
+            </footer>
+            
+       
+    </form>
+  
+  
+</div>
+  

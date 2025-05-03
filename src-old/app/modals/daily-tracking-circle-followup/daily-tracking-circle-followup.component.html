@@ -1,0 +1,116 @@
+<form class="form" [formGroup]="FollowupForm" (ngSubmit)="SubmitFollowupAction()">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="text-align: center;">Activity Tracker
+          <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <!-- <div class="row" style="margin-top: 10px;" *ngIf="showTab == 'Yes'">
+            <div class="col-sm-12">
+              <input type="hidden" value="Business Call" formControlName="CircleType">
+               <select class="form-control" formControlName="CircleType">
+                  <option value="" selected disabled>--Interaction Purpose--</option>
+                  <option value="Business Call">Business Call</option>
+               </select>
+              </div>
+          </div> -->
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <label>Interaction Type* : </label>
+              <select class="form-control" formControlName="ActionType">
+                <option value="" selected disabled>--Interaction Type--</option>
+                <option value="Follow Up">Virtual</option>
+                <!-- <option value="Visit">Visit</option> -->
+                <option value="Reject" *ngIf="showTab != 'Yes'">Reject</option>
+              </select>
+              <div *ngIf="isSubmitted && formControls.ActionType.errors " class="ValidationError">
+                <div *ngIf="formControls.ActionType.errors.required">Please choose interaction type!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;" *ngIf="FollowupForm.value['ActionType'] == 'Visit'">
+            <div class="col-sm-12">
+              <label>Upload Selfie* : </label>
+              <label class="form-control btn fileUpload btn-default"
+                [ngClass]="(this.Other_image==1 ? 'ImageUploaded' : 'else' )" name="button" value="Alternate_policy">
+                <input type="file" (change)="checkFileType($event,'Camera')" formControlName="Camera"
+                  accept="image/png, image/jpeg" style="display:none;" />
+                <span class="fas fa-user-alt"><b>Upload Image</b></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;"
+            *ngIf="FollowupForm.value['ActionType'] == 'Follow Up' || FollowupForm.value['ActionType'] == 'Visit'">
+            <div class="col-sm-12">
+              <label>Need follow Up* : </label>
+              <select class="form-control" formControlName="FollowUpType">
+                <option value="" selected disabled>-- Need follow up ? --</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;"
+            *ngIf="(FollowupForm.value['ActionType'] == 'Visit' || FollowupForm.value['ActionType'] == 'Follow Up')">
+            <div class="col-sm-12">
+              <label>Follow Up Remarks* : </label>
+              <select class="form-control" formControlName="FollowUpRemark">
+                <option value="" selected disabled>--Select Follow Up Remarks--</option>
+                <option value="Agent don't want to work in insurance segment">Agent don't want to work in insurance
+                  segment</option>
+                <option value="Payout Issue">Payout Issue</option>
+                <option value="Service Issue">Service Issue</option>
+                <option value="Part Time Business">Part Time Business</option>
+                <option value="Unable to connect with Agent">Unable to connect with Agent</option>
+                <option value="Need Product Training">Need Product Training</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;"
+            *ngIf="FollowupForm.value['FollowUpType'] == 'Yes' && (FollowupForm.value['ActionType'] == 'Visit' || FollowupForm.value['ActionType'] == 'Follow Up')">
+            <div class="col-sm-6">
+              <label>Next Follow Up Date(If Any) : </label>
+              <!-- <input type="datetime-local" class="form-control" formControlName="FollowUpDate"> -->
+              <input type="text" placeholder="Choose date" formControlName="FollowUpDate" class="form-control"
+                bsDatepicker [bsConfig]="{ isAnimated: true }">
+            </div>
+
+            <div class="col-sm-6">
+              <timepicker [(ngModel)]="mytime" formControlName="FollowUpTime"></timepicker>
+            </div>
+          </div>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Remarks* : </label>
+          <textarea class="form-control" formControlName="Remark"></textarea>
+          <div *ngIf="isSubmitted && formControls.Remark.errors " class="ValidationError">
+            <div *ngIf="formControls.Remark.errors.required">Please enter remark!</div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+
+</form>

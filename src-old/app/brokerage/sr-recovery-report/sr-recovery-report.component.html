@@ -1,0 +1,98 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    
+  <!-- Main content -->
+  <section class="content">
+  
+  <!-- SELECT2 EXAMPLE -->
+  <div class="box box-default">
+    <div class="box-body">
+      
+      <div class="box-header">
+        <h3 class="box-title">Recovery Reports</h3>
+      </div>
+
+      
+       <!--begin::Button--> 
+       <a (click)="Add()" href="javascript:;" class="btn btn-primary font-weight-bolder"> 
+        <span class="svg-icon svg-icon-md"> 
+               <i class="icon-xl fas fa-search"></i>
+              </span> Search </a> 
+              <!--end::Button--> 
+             
+          <div class=""> 
+            <!--begin: Datatable-->
+        <div style="overflow-x:auto;">
+           <table datatable [dtOptions]="dtOptions" class="row-border hover table table-bordered table-hover table-checkable" id="kt_datatable" style="margin-top: 13px !important">
+          <thead>
+          <tr>
+            <th>S.No</th>
+             
+             <th>Remark</th>
+             <th>Recovery Date</th>
+             <th>Net Premium</th>
+             
+            <th>LOB</th>
+            <th>File Type</th>
+            <th>Customer Name</th>
+            <th>RM</th>
+            <th>Reg No</th>
+            <th>Policy No</th>
+            <th>Insurance Co</th>
+            <th>Mode of Payment</th>
+            <th>Payment Favour</th>
+    
+            
+            
+             
+          </tr>
+          </thead>
+          <tbody *ngIf="dataAr?.length != 0">
+            <tr *ngFor="let row of dataAr">
+              <td>{{ row.SR_No }}</td>
+              
+              <td>{{ row.SR_Current_Remark }}</td>
+              <td>{{ row.Add_Stamp }}</td>
+              <td>{{ row.Net_Premium }}</td>
+              
+              <td>{{ row.LOB_Id }}</td>
+              <td>{{ row.File_Type }}</td>
+              <td>{{ row.Customer_Name }}</td>
+              
+              <td>{{ row.RM_Name }}  ({{ row.RM_Emp_Code }})</td>
+              
+              <td>{{ row.Registration_No }}</td>
+              <td>{{ row.Policy_No }}</td>
+              
+              <td>{{ row.InsCompanyName }}</td>
+               
+              <td>{{ row.Mode_Of_Payment }}</td>
+              <td>{{ row.Payment_Towards }}</td>
+               
+             
+              
+            </tr>
+          </tbody>
+          <tbody *ngIf="dataAr?.length == 0">
+          <tr>
+            <td colspan="13" align="center">No data available !</td>
+          </tr>
+          <tbody>
+          </table>
+        </div>
+         
+   
+            <!--end: Datatable--> 
+          </div>
+
+
+
+
+    </div>
+    <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+  </section>
+  <!-- /.content -->
+
+</div> 

@@ -1,0 +1,73 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+                            <div>FAQ's
+                                <button class="btn btn-primary d_flex" routerLink="/WebsiteSection/FAQs-veiw"
+                                    style="float:right; padding:2px;"><i class="fa fa-arrow-left" aria-hidden="true"
+                                        style="padding-top:1px;"></i>
+                                    &nbsp;&nbsp;Back&nbsp;</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+                        <form [formGroup]="Faq_form" (ngSubmit)="Faqform()">
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <!-- <ng-multiselect-dropdown class="form-control" [data]="url" formControlName="url_val"
+                                    [settings]="dropdownSettingsType" [(ngModel)]="urlblank">
+                                </ng-multiselect-dropdown> -->
+                                <input type="text" class="form-control" formControlName="url_val">
+                                <div *ngIf="isSubmitted && formControls.url_val.errors" class="ValidationError">
+                                    <div *ngIf="formControls.url_val.errors.required">Please Enter Url</div>
+                                </div>
+                            </div>
+
+                            <div formArrayName="questions">
+                                <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i"
+                                    class="row" [ngClass]="{'formarray': i == 1 }">
+                                    <button *ngIf="i != 0" class="close_btn"
+                                        type="button"><i class="fa fa-close" (click)="removeQuestion(i)"></i></button>
+                                    <div class="col-md-6">
+                                        <label for="question">Question {{ i + 1 }}</label>
+                                        <textarea type="text" class="form-control" formControlName="question"
+                                            placeholder="Enter Question" ></textarea>
+                                        <div *ngIf="isSubmitted && question.get('question').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="question.get('question').errors.required">Please Enter Question
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" [ngClass]="{'answer': i != 0}">
+                                        <label for="answer">Answer {{ i + 1 }}</label>
+                                        <textarea type="text" class="form-control" formControlName="answer"
+                                            placeholder="Enter Answer" ></textarea>
+                                        <div *ngIf="isSubmitted && question.get('answer').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="question.get('answer').errors.required">Please Enter Answer
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div style="float:right;">
+                                &nbsp;&nbsp;<button class="btn btn-success" type="submit">{{this.Id !== null ? 'Update'
+                                    : 'Submit'}}</button>
+                            </div>
+                        </form>
+
+                        <button *ngIf="this.Id == null" style="float:right;" class="btn btn-primary"
+                            (click)="AddMore_Que()">Add More</button>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

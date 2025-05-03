@@ -1,0 +1,482 @@
+<div class="row">
+    <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+</div>
+
+<div class="main_card_form ">
+    <div class="main_header">
+        <div class="header_title">Business Dump</div>
+    </div>
+    <div class="main_body main_card_height_scroll_withoutfooter">
+        <div class="btn_list_group">
+            <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+ 
+                    <div class="panel-body sub-form">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div id="close">
+                                                <div class="category_list">
+                                                    <ng-multiselect-dropdown
+                                                        class="form-control"
+                                                        [data]="Status_Ar"
+                                                        formControlName="Status"
+                                                        [settings]="dropdownSettingSingleSelect">
+                                                    </ng-multiselect-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <input type="text" formControlName="GlobalSearch" placeholder="Search Policy/Registration/Engine/Chassis"
+                                              class="form-control">
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <input type="submit" class="btn btn-info" value="Search">
+                                            &nbsp;&nbsp;
+                                            <input (click)="ClearSearch()" type="button"
+                                                class="btn btn-danger" value="Reset">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+
+            <div class="col-md-12">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="All">
+                        <div class="box-body">
+                            <div class="mydiv">
+                                <table datatable [dtOptions]="dtOptions" id="Table2" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Status</th>
+                                            <th>Policy No</th>
+                                            <th>Registration No</th>
+                                            <th>Engine No</th>
+                                            <th>Chassis No</th>
+                                            <th>Net Premium</th>
+                                            <th>Estimated Gross Premium</th>
+                                            <th>Sum Insured</th>
+                                            <th>NCB</th>
+                                        </tr>
+                                    </thead>
+                                
+                               
+                                    <tbody *ngIf="dataAr?.length > 0">
+                                        <tr *ngFor="let row of dataAr; let i = index;">
+                                            <td>{{ row.sno }}</td>
+                                            <td>
+                                                <label [ngClass]="{
+                                                    'label-warning': row.Status == 'Pending',
+                                                    'label-success': row.Status == 'Review',
+                                                    'label-danger': row.Status == 'Incompleted' || row.Status == 'Not-Matched',
+                                                    'label-info': row.Status == 'Duplicated'
+                                                }" class="label">{{ row.Status }}</label>
+
+                                          
+                                                <a href="javascript:;" (click)="viewDumpSR(row.id)">
+                                                    <span style="margin-right: 5px;" class="label label-primary label-inline mr-2">View Dump</span>
+                                                </a>
+                                            </td>
+                                            <td>{{ row.Policy_No }}</td>
+                                            <td>{{ row.Registration_No }}</td>
+                                            <td>{{ row.Engine_No }}</td>
+                                            <td>{{ row.Chasis_No }}</td>
+                                            <td>{{ row.Net_Premium }}</td>
+                                            <td>{{ row.Estimated_Gross_Premium }}</td>
+                                            <td>{{ row.Sum_Insured }}</td>
+                                            <td>{{ row['NCB'] }}</td>
+                                           
+                                        </tr>
+                                    </tbody>
+                                
+                              
+                                    <tbody *ngIf="dataAr?.length == 0">
+                                        <tr>
+                                            <td colspan="10" align="center">No data Available!</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+
+        
+        <hr>
+
+        <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+            <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                    <thead>
+                        <tr>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+
+                <!-- ======= Refer Table  =========-->
+                <ul class="responsive-table">
+                    <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+                        <span [ngClass]="{
+                            'label-warning': row.Status == 'Pending',
+                            'label-success': row.Status == 'Review',
+                            'label-already-reviewed': row.Status == 'Already-Reviewed',
+                            'label-danger': row.Status == 'Incompleted' || row.Status == 'Not-Matched',
+                            'label-info': row.Status == 'Duplicated'
+                        }" class="addon_tag_name">{{ row.Status }}</span>
+
+                        <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                            <div class="agents_data agents_data1">
+                                <div class="icon_re_cl">{{row.sno}}</div>
+                                <div class="agent_name_mobile">
+                                    <div class="agent_data">
+                                        <div>Policy No</div>
+                                        <strong class="fs_18 text-bold">{{row.Policy_No}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="agents_data agents_data3">
+                                <div class="agent_name_mobile">
+                                    <div class="agent_data">
+                                        <strong>Registration No - </strong><b>{{row.Registration_No}}</b>
+                                           <br>
+                                            <button type="button" class="btn btn-danger" style="font-size: 14px !important;padding: 2px;
+                                            height: 25px;
+                                            width: 25px;"
+                                                (click)="deleteExcelBulkRecord(row.id)"><i
+                                                class="fa fa-trash"></i> 
+                                            </button>
+                                            <a href="javascript:;" (click)="viewDumpSR(row.id)">
+                                                <span style="margin-right: 5px;" class="label label-primary label-inline mr-2">View Dump</span>
+                                            </a>
+                                            <a href="javascript:;" *ngIf="row.SR_Id" (click)="SrPopup(1,row.SR_Id)">
+                                                <span style="margin-right: 5px;" class="label label-primary label-inline mr-2">Details</span>
+                                            </a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="last_row_div mt10" style="margin-top:10px;">
+                            <div class="label_chips finance_lob">
+                                <span>Engine No - {{row.Engine_No}}</span>
+                            </div>
+
+                            <div class="label_chips non_motor_lob">
+                                <span>Chassis No - {{row.Chasis_No}}</span>
+                            </div>
+
+
+                            <div class="label_chips health_lob">
+                                <span>Net Premium - {{row.Net_Premium}}</span>
+                            </div>
+
+                            <div class="label_chips life_lob">
+                                <span>Estimated Gross Premium - {{row.Estimated_Gross_Premium}}</span>
+                            </div>
+
+                            <div class="label_chips motor_lob">
+                                <span>Sum Insured- {{row.Sum_Insured}}</span>
+                            </div>
+
+                            <div class="label_chips mutual_fund_lob">
+                                <span>NCB - {{row['NCB']}}</span>
+                            </div>
+
+                        </div>
+
+                    </li>
+                </ul>
+                <!--======= Refer Table END ========= -->
+
+                <div class="row" *ngIf="dataAr?.length == 0">
+                    <div class="col-md-12">
+                        <div class="no_data_found">
+                            <span><img src="assets/image/no_data_banner.jpg"></span>
+                            <small>No data available !</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+<ng-template #viewDumpSRPopup>
+    <div class="row">
+      <button (click)="CloseModelSRDumpView()" type="button" class="close closeModelButton">&times;</button>
+    </div>
+    <div class="main_card_form">
+      <div class="main_header">
+        <div class="header_title">Business Dump View SR</div>
+      </div>
+    </div>
+    <div class="main_body main_card_height_scroll_withoutfooter viewDumpSRPopupBusinessDump">
+      <div class="btn_list_group">
+        <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="panel panel-default">
+            <div class="view_more_cases">
+                <div class="case_table_de">
+                    <div class="status_row" [ngClass]="{
+                        'warnings': viewDumpSRDetails.Status == 'Pending',
+                        'successs': viewDumpSRDetails.Status == 'Review',
+                        'success': viewDumpSRDetails.Status == 'Already-Reviewed',
+                        'dangers': viewDumpSRDetails.Status == 'Incompleted' || viewDumpSRDetails.Status == 'Not-Matched',
+                        'secondarys': viewDumpSRDetails.Status == 'Duplicated'
+                    }">
+                        <div class="number_row_text">SR Mapped Excel Records</div>
+                        <div class="cs_status_sr">
+                            <label class="btn" [ngClass]="{
+                                'warnings': viewDumpSRDetails.Status == 'Pending',
+                                'successs': viewDumpSRDetails.Status == 'Review',
+                                'success': viewDumpSRDetails.Status == 'Already-Reviewed',
+                                'dangers': viewDumpSRDetails.Status == 'Incompleted' || viewDumpSRDetails.Status == 'Not-Matched',
+                                'secondarys': viewDumpSRDetails.Status == 'Duplicated'
+                            }">{{ viewDumpSRDetails.Status }}</label>
+                            
+                        </div>                                           
+                    </div>
+                    <ul>
+                        <li>
+                            <span>Full SR No.</span>
+                            <strong>{{ viewDumpSRDetails.Full_SR_No ? viewDumpSRDetails.Full_SR_No: 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Policy No.</span>
+                            <strong>{{ viewDumpSRDetails.Policy_No ? viewDumpSRDetails.Policy_No: 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Registration No.</span>
+                            <strong>{{ viewDumpSRDetails.Registration_No ? viewDumpSRDetails.Registration_No : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Engine No.</span>
+                            <strong>{{ viewDumpSRDetails.Engine_No ? viewDumpSRDetails.Engine_No : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Chassis No.</span>
+                            <strong>{{ viewDumpSRDetails.Chasis_No ? viewDumpSRDetails.Chasis_No: 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Product</span>
+                            <strong>{{ viewDumpSRDetails.Product_Id ? viewDumpSRDetails.Product_Id :'N/A' }}</strong>
+                        </li>
+                    
+                        <li>
+                            <span>Sub Product</span>
+                            <strong>{{ viewDumpSRDetails.SubProduct_Id ? viewDumpSRDetails.SubProduct_Id : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Segment</span>
+                            <strong>{{ viewDumpSRDetails.Segment_Id ? viewDumpSRDetails.Segment_Id : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Plan type</span>
+                            <strong>{{ viewDumpSRDetails.Plan_Type ? viewDumpSRDetails.Plan_Type : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Make</span>
+                            <strong>{{ viewDumpSRDetails.Make_Id ? viewDumpSRDetails.Make_Id : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Model</span>
+                            <strong>{{ viewDumpSRDetails.Model_Id ? viewDumpSRDetails.Model_Id : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Variant</span>
+                            <strong>{{ viewDumpSRDetails.Variant_Id ? viewDumpSRDetails.Variant_Id : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Body Type</span>
+                            <strong>{{ viewDumpSRDetails.Body_Type ? viewDumpSRDetails.Body_Type : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Fuel Type</span>
+                            <strong>{{ viewDumpSRDetails.Fuel_Type ? viewDumpSRDetails.Fuel_Type : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Net Premium</span>
+                            <strong>{{ viewDumpSRDetails.Net_Premium ? viewDumpSRDetails.Net_Premium : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Gross Premium</span>
+                            <strong>{{ viewDumpSRDetails.Estimated_Gross_Premium ?  viewDumpSRDetails.Estimated_Gross_Premium : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Basic OD</span>
+                            <strong>{{ viewDumpSRDetails.Basic_OD ? viewDumpSRDetails.Basic_OD: 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Basic TP</span>
+                            <strong>{{ viewDumpSRDetails.Basic_TP ? viewDumpSRDetails.Basic_TP : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Other TP</span>
+                            <strong>{{ viewDumpSRDetails.Other_TP ? viewDumpSRDetails.Other_TP : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Discount</span>
+                            <strong>{{ viewDumpSRDetails.Discount ? viewDumpSRDetails.Discount : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>NCB</span>
+                            <strong>{{ viewDumpSRDetails['NCB'] ? viewDumpSRDetails['NCB']: 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>IDV</span>
+                            <strong>{{ viewDumpSRDetails['IDV'] ? viewDumpSRDetails['IDV'] : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>SUM Insured</span>
+                            <strong>{{ viewDumpSRDetails.Sum_Insured ? viewDumpSRDetails.Sum_Insured : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>PA Owner Premium</span>
+                            <strong>{{ viewDumpSRDetails.PA_Owner_Premium ? viewDumpSRDetails.PA_Owner_Premium  : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>PA Owner</span>
+                            <strong>{{ viewDumpSRDetails.PA_Owner ? viewDumpSRDetails.PA_Owner : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>PA Owner Tenure</span>
+                            <strong>{{ viewDumpSRDetails.PA_Owner_Tenure ? viewDumpSRDetails.PA_Owner_Tenure : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Seating Capacity</span>
+                            <strong>{{ viewDumpSRDetails.Seating_Capacity ? viewDumpSRDetails.Seating_Capacity : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>File Type</span>
+                            <strong>{{ viewDumpSRDetails.File_Type ? viewDumpSRDetails.File_Type : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>GVW/CC</span>
+                            <strong>{{ viewDumpSRDetails['GVW_CC'] ? viewDumpSRDetails['GVW_CC'] : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>TPPD</span>
+                            <strong>{{ viewDumpSRDetails['TPPD'] ? viewDumpSRDetails['TPPD']  : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Purchase Date</span>
+                            <strong>{{ viewDumpSRDetails['Purchase_Date'] ? (viewDumpSRDetails['Purchase_Date'] | date: 'dd/MM/yyyy') : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Manufacture Date</span>
+                            <strong>{{ viewDumpSRDetails['Manufacture_Date'] ? viewDumpSRDetails['Manufacture_Date'] : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Manufacture Year</span>
+                            <strong>{{ viewDumpSRDetails['Manufacture_Year'] ? viewDumpSRDetails['Manufacture_Year'] : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Customer Name</span>
+                            <strong>{{ viewDumpSRDetails['Customer_Name'] ? viewDumpSRDetails['Customer_Name'] : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Customer Mobile</span>
+                            <strong>{{ viewDumpSRDetails['Customer_Mobile'] ? viewDumpSRDetails['Customer_Mobile'] : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Customer Email</span>
+                            <strong>{{ viewDumpSRDetails['Customer_Email'] ? viewDumpSRDetails['Customer_Email'] : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Customer Address</span>
+                            <strong>{{ viewDumpSRDetails['Customer_Address'] ? viewDumpSRDetails['Customer_Address'] : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Pincode</span>
+                            <strong>{{ viewDumpSRDetails['pincode'] ? viewDumpSRDetails['pincode'] : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Policy Start Date OD</span>
+                            <strong>{{ viewDumpSRDetails['Policy_Start_Date_OD'] ? (viewDumpSRDetails['Policy_Start_Date_OD'] | date: 'dd/MM/yyyy') : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Policy End Date OD</span>
+                            <strong>{{ viewDumpSRDetails['Policy_End_Date_OD'] ? (viewDumpSRDetails['Policy_End_Date_OD'] | date: 'dd/MM/yyyy') : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Policy Start Date TP</span>
+                            <strong>{{ viewDumpSRDetails['Policy_End_Date_TP'] ? (viewDumpSRDetails['Policy_End_Date_TP'] | date: 'dd/MM/yyyy') : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Policy End Date TP</span>
+                            <strong>{{ viewDumpSRDetails['Policy_End_Date_TP'] ? (viewDumpSRDetails['Policy_End_Date_TP'] | date: 'dd/MM/yyyy') : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Add Stamp</span>
+                            <strong>{{ viewDumpSRDetails['Add_Stamp'] ? (viewDumpSRDetails['Add_Stamp'] | date: 'dd/MM/yyyy h:mm a') : 'N/A' }}</strong>
+                        </li>
+                        <li>
+                            <span>Excel Response</span>
+                            <strong>
+                                <!-- <label title="Download">
+                                    <i class="fa fa-cloud-download"></i></label> 
+                                    &nbsp; -->
+                                <label title="Details" (click)="openJSONInNewTab(viewDumpSRDetails['Dump_Response'],'Excel Dump')"><i class="fa fa-info-circle"></i>
+                                </label>
+                            </strong>
+                        </li>
+                        <li>
+                            <span>SR Mapping with Excel Columns</span>
+                            <strong>
+                                <label title="Details"  (click)="openJSONInNewTab(viewDumpSRDetails['Dump_Field_Map_Json'],'Uploaded Dump Columns')"><i class="fa fa-info-circle"></i>
+                                </label>
+                            </strong>
+                        </li>
+                       
+                        <li>
+                            <span>Auto QC Matched Fields</span>
+                            <strong>
+                                <label title="Details"  (click)="openJSONInNewTab(viewDumpSRDetails['QC_Matched_Json'],'Auto QC Matched Fields')"><i class="fa fa-info-circle"></i>
+                                </label>
+                            </strong>
+                        </li>
+                        <li>
+                            <span>Completed AutoQC Logs</span>
+                            <strong>
+                                <label title="Details"  (click)="openJSONInNewTab(viewDumpSRDetails['SR_Post_Log_Data'],'Auto QC Completed')"><i class="fa fa-info-circle"></i>
+                                </label>
+                            </strong>
+                        </li>
+                        <li class="remarkrowfull">
+                            <span>Remark</span>
+                            <strong>{{ viewDumpSRDetails['Remark'] ? viewDumpSRDetails['Remark'] : 'N/A' }}</strong>
+                        </li>
+                    </ul>
+                </div>
+               
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</ng-template>
+ 

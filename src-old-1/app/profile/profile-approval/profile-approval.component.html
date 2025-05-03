@@ -1,0 +1,155 @@
+<div class="row">
+    <div class="modal-header" style="text-align: center;">
+        <h4 class="modal-title">Details
+            <button type="button" (click)="CloseModel()" class="btn btn-box-tool" style="float: right;"><i
+                    class="fa fa-close" style="font-size:17px"></i></button>
+        </h4>
+    </div>
+
+</div>
+
+
+<div>
+
+
+    <form class="form" (ngSubmit)="submit()" [formGroup]="profileform">
+        <table class="table table-bordered table-hover" formArrayName="quantities">
+
+            <tbody class="container-fluid" id="divshow">
+                <!-- *ngIf="this.currentUrl == '/profile/profile-manager'  &&  " -->
+
+                <tr>
+                    <td><b>SR No.</b></td>
+                    <td><b>Agent Code</b></td>
+                    <td><b>Column Name</b></td>
+                    <td><b>Old Value</b></td>
+                    <td><b>New Value</b></td>
+                    <td><b>Approve</b></td>
+                    <td><b>Deny</b></td>
+                    <td><b>Remark</b></td>
+                    <td><b>Manager Remark</b></td>
+                    <td><b>Account Remark</b></td>
+                    <td><b>Status</b></td>
+                </tr>
+
+                <tr *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+
+                    <td>{{dataArr[i]['srno']}}</td>
+                    <td> {{dataArr[i]['agentcode']}}</td>
+                    <td>{{dataArr[i]['columnname']}} </td>
+                    
+                    <td>
+                        <label (click)="ViewDocument(dataArr[i]['oldcolumnvalue'])" class="form-control"  *ngIf="dataArr[i]['columnname'] == 'pancard_image' || dataArr[i]['columnname'] == 'aadharcard_image' || dataArr[i]['columnname'] == 'aadharcard_image_back' || dataArr[i]['columnname'] == 'qualification_image' || dataArr[i]['columnname'] == 'cheque_image' || dataArr[i]['columnname'] == 'image'  || dataArr[i]['columnname'] == 'signature_image' || dataArr[i]['columnname'] == 'gst_certificate' || dataArr[i]['columnname'] == 'gst_agreement'">
+                            View </label>
+                            <label *ngIf="dataArr[i]['columnname'] != 'pancard_image' || dataArr[i]['columnname'] != 'aadharcard_image' || dataArr[i]['columnname'] != 'aadharcard_image_back' || dataArr[i]['columnname'] != 'qualification_image' || dataArr[i]['columnname'] != 'cheque_image' || dataArr[i]['columnname'] != 'image'  || dataArr[i]['columnname'] != 'signature_image' || dataArr[i]['columnname'] != 'gst_certificate'">
+                                {{dataArr[i]['oldcolumnvalue']}}</label>
+                    </td>
+                    <td>
+                        <label (click)="ViewDocument(dataArr[i]['columnvalue'])" class="form-control"  *ngIf="dataArr[i]['columnname'] == 'pancard_image' || dataArr[i]['columnname'] == 'aadharcard_image' || dataArr[i]['columnname'] == 'aadharcard_image_back' || dataArr[i]['columnname'] == 'qualification_image' || dataArr[i]['columnname'] == 'cheque_image' || dataArr[i]['columnname'] == 'image'  || dataArr[i]['columnname'] == 'signature_image' || dataArr[i]['columnname'] == 'gst_certificate' || dataArr[i]['columnname'] == 'gst_agreement' ">
+                            View </label>
+                            <label *ngIf="dataArr[i]['columnname'] != 'pancard_image' || dataArr[i]['columnname'] != 'aadharcard_image' || dataArr[i]['columnname'] != 'aadharcard_image_back' || dataArr[i]['columnname'] != 'qualification_image' || dataArr[i]['columnname'] != 'cheque_image' || dataArr[i]['columnname'] != 'image'  || dataArr[i]['columnname'] != 'signature_image' || dataArr[i]['columnname'] != 'gst_certificate' ">
+                                {{dataArr[i]['columnvalue']}} </label>
+                    </td>
+                    <td>
+                        <input
+                            *ngIf="(this.currentUrl == '/profile/profile-manager' && dataArr[i]['statuscheck'] == 1 && dataArr[i]['QC_Status_Manager'] == 0) || (this.currentUrl == '/profile/profile-banking' && dataArr[i]['statuscheck'] == 2 && dataArr[i]['QC_Status_Banking'] == 0) 
+                        || (this.currentUrl == '/profile/profile-account' && dataArr[i]['statuscheck'] == 3 && dataArr[i]['QC_Status_Account'] == 0)"
+                            required type="button" style="margin-left: 20px;" formControlName="checkvalue" type="radio"
+                            value="1" class="btn btn-primary approved">
+                        <!-- <div *ngIf="isSubmitted && formControls.checkvalue.errors " class="ValidationError">
+                            <div *ngIf="formControls.checkvalue.errors.required">Please
+                              Select !</div>
+                          </div> -->
+                    </td>
+                    <td>
+                        <input
+                            *ngIf="(this.currentUrl == '/profile/profile-manager' && dataArr[i]['statuscheck'] == 1 && dataArr[i]['QC_Status_Manager'] == 0) || (this.currentUrl == '/profile/profile-banking' && dataArr[i]['statuscheck'] == 2 && dataArr[i]['QC_Status_Banking'] == 0) 
+                        || (this.currentUrl == '/profile/profile-account' && dataArr[i]['statuscheck'] == 3 && dataArr[i]['QC_Status_Account'] == 0)"
+                            required type="button" style="margin-left: 20px;" formControlName="checkvalue" type="radio"
+                            value="0" class="btn btn-primary deny"> 
+                        <!-- <div *ngIf="isSubmitted && formControls.checkvalue.errors " class="ValidationError">
+                            <div *ngIf="formControls.checkvalue.errors.required">Please
+                              Select !</div>
+                          </div> -->
+                    </td>
+
+                    <td>
+                        <textarea
+                            *ngIf="(this.currentUrl == '/profile/profile-manager' && dataArr[i]['statuscheck'] == 1 && dataArr[i]['QC_Status_Manager'] == 0) || (this.currentUrl == '/profile/profile-banking' && dataArr[i]['statuscheck'] == 2 && dataArr[i]['QC_Status_Banking'] == 0) 
+                        || (this.currentUrl == '/profile/profile-account' && dataArr[i]['statuscheck'] == 3 && dataArr[i]['QC_Status_Account'] == 0)"
+                            required class="form-control" formControlName="remarks" style="height: 35px;"></textarea>
+
+                        <!-- <div *ngIf="isSubmitted && formControls.remarks.errors " class="ValidationError">
+                            <div *ngIf="formControls.remarks.errors.required">Please
+                              Select Remarks!</div>
+                          </div> -->
+
+                    </td>
+
+                    <td>
+                        <label *ngIf="dataArr[i]['manager_Remark'] != ''">
+                        {{dataArr[i]['manager_Remark']}}
+                        </label>
+                        <label *ngIf="dataArr[i]['manager_Remark'] == ''">
+                            -
+                            </label>
+                    </td>
+
+                    <td>
+                        <label *ngIf="dataArr[i]['account_Remark'] != ''">
+                        {{dataArr[i]['account_Remark']}}
+                        </label>
+                        <label *ngIf="dataArr[i]['account_Remark'] == ''">
+                            -
+                            </label>
+                    </td>
+
+
+
+                    <td>
+                        <label class="label label-info"
+                            *ngIf="dataArr[i]['statuscheck'] == 1 && dataArr[i]['QC_Status_Manager'] == 0">Pending For
+                            Manager</label>
+                        <label class="label label-warning"
+                            *ngIf="dataArr[i]['statuscheck'] == 2 && dataArr[i]['QC_Status_Banking'] == 0">Pending For
+                            Banking</label>
+                        <label class="label label-warning"
+                            *ngIf="dataArr[i]['statuscheck'] == 3 && dataArr[i]['QC_Status_Account'] == 0">Pending For
+                            Account</label>
+                        <label class="label label-success" *ngIf="dataArr[i]['statuscheck'] == 4">complete</label>
+                        <span class="label label-danger btn btn-danger"
+                            *ngIf="(dataArr[i]['QC_Status_Manager'] == 2 &&  dataArr[i]['statuscheck'] == 1)  ||  (dataArr[i]['QC_Status_Banking'] == 2 && dataArr[i]['statuscheck'] == 2) || (dataArr[i]['QC_Status_Account'] == 2 &&  dataArr[i]['statuscheck'] == 3)">Reject</span>
+                   
+                   
+                   
+                   
+                    </td>
+
+                    <!-- <input  style="margin-left: 20px;" formControlName="itemvalue" value="1"> -->
+
+                </tr>
+
+            </tbody>
+
+            <!-- <div *ngIf="isSubmitted && formControls.remarks.errors" class="ValidationError">
+                <div *ngIf="formControls.remarks.errors.required">Please enter Remark!</div>
+                </div>
+                <div *ngIf="isSubmitted && formControls.checkvalue.errors" class="ValidationError">
+                <div *ngIf="formControls.checkvalue.errors.required">Please Choose CheckValue!</div>
+                </div> -->
+
+        </table>
+
+
+
+
+        <div class="row">
+            <div class="col-md-10">&nbsp;</div>
+            <div class="col-md-2 actionButtons pull-right" style="margin-top: 10px; margin-bottom: 5px;">
+                <button class="btn btn-primary save-click" type="submit">Submit</button>
+            </div>
+        </div>
+
+    </form>
+
+</div>

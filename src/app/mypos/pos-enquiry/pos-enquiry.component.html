@@ -1,0 +1,255 @@
+<section class="inner_page_css main_dashboard_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">
+              <!-- title  -->
+              <div *ngIf="ActivePage == 'Default'">View Leads</div>
+              <a style="color:white; margin-top:10px;" class=" pull-right btn btn-primary btn-info" data-toggle="modal"
+                data-target="#referal_link_modal"> <i class="fa fa-plus"></i>Referral Link</a>
+
+              <!-- <li class="dropdown messages-menu training_label">
+                <a href="javascript:void(0)"   data-target="#referal_link_modal"  >
+                  <i class="fa fa-plus" aria-hidden="true"></i> Referral Link
+                </a>
+              </li> -->
+
+            </div>
+          </div>
+
+          <div *ngIf="!hasAccess" class="error-message">
+            <div class="container" style="text-align: center;">
+              <img src="assets/Authorised.png" alt="">
+              <h4>{{ errorMessage }}</h4>
+            </div>
+
+          </div>
+
+          <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+            <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+              <div class="row">
+                <div class="col-sm-4">
+                  <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                    formControlName="DateOrDateRange" bsDaterangepicker
+                    [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                  <span *ngIf="isSubmitted && formControls.DateOrDateRange.errors" class="ValidationError">
+                    <span *ngIf="formControls.DateOrDateRange.errors.required">Date is required</span></span>
+                </div>
+                <div class="col-sm-2"><input type="text" formControlName="SearchValue" name="SearchValue"
+                    class="form-control" placeholder="Search"></div>
+                <div class="col-sm-2" style="text-align: right;">
+                  <!-- <input *ngIf="(Is_Export==1)" (click)="ExportExcel()" type="button" class="btn btn-success"
+                    value="Export">
+                  &nbsp;&nbsp; -->
+                  <!-- <input type="submit" class="btn btn-info" value="Search"> -->
+                  <button type="submit" class="btn btn-info" style="font-size: small;" value="Search">
+                    <i class="fa fa-search">
+                      Search</i></button>
+                  &nbsp;&nbsp;
+                  <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                    value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                </div>
+              </div>
+
+              <!-- <hr> -->
+              <!-- <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>LOB</th>
+                    <th>Total Policy</th>
+                    <th>Total Premium</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row1 of FilterData; let i=index;">
+                    <td><b>{{row1.LOB}}</b></td>
+                    <td>{{row1.TotalFiles}}</td>
+                    <td>{{row1.TotalPremium}}</td>
+                  </tr>
+                </tbody>
+              </table> -->
+
+            </form>
+
+            <hr>
+
+            <!-- <div class=" mydiv table-responsive">
+              <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Referal ID</th>
+                    <th> Email</th>
+                    <th> Mobile</th>
+                    <th>Refer Date</th>
+                    <th>POS Status</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{row.SrNo}}</td>
+                    <td> {{row.ReferalCode}}</td>
+                    <td>{{row.Email}}</td>
+                    <td>{{row.Mobile}}</td>
+                    <td> {{row.CreateDate}}</td>
+                    <td>
+                      <label *ngIf="row.PosStatus == 0" class="label label-primary">Pending</label>
+                      <label *ngIf="row.PosStatus == 1" class="label label-warning">Verified</label>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div> -->
+
+
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+
+                <!-- ======= Refer Table  =========-->
+                <ul class="responsive-table">
+                  <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+
+                    <p class="life_status_label" *ngIf="row.PosStatus == 0">
+                      <span *ngIf="row.PosStatus == 0" class="btn btn-primary">Pending</span>
+                      <span *ngIf="row.PosStatus == 1" class="btn btn-warning">Verified</span>
+                    </p>
+
+                    <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{row.SrNo}}</div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Referal ID</div>
+                            <strong class="fs_18"><span>{{row.ReferalCode}}</span></strong>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Refer Date</div>
+                            <strong class="fs_18" id="emailToCopy">{{row.CreateDate}}</strong>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="last_row_div mt10">
+                      <div class="d_flex custon-234">
+                        <div class="label_chips finance_lob" style="width: auto;" *ngIf="row.Email != ''">
+                          <span>Email - {{row.Email}}</span>
+                        </div>
+
+                        <div class="label_chips non_motor_lob" style="width: auto;" *ngIf="row.Mobile != ''">
+                          <span>Mobile - {{row.Mobile}}</span>&nbsp;&nbsp;
+                        </div>
+                      </div>
+                    </div>
+
+                  </li>
+                </ul>
+                <!--======= Refer Table END ========= -->
+
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+<!-- /.content-wrapper -->
+<div class="modal fade" id="referal_link_modal" role="dialog">
+  <div class="modal-dialog" style="max-width:800px !important; max-height:200px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Share Referral Link</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-10">
+            <textarea id="w3review" class="col-sm-12" name="w3review" rows="1"
+              disabled>{{this.PosEnquiryUrl}}</textarea>
+          </div>
+          <div class="col-sm-2 ">
+            <button (click)="CopyText(this.PosEnquiryUrl)" type="button" id="submitt_btnxx"
+              class="btn btn-primary ">Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <form class="form" (ngSubmit)="AddPosEnquirySubmit()" [formGroup]="AddPosEnquiryForm">
+          <div class="row">
+            <div class="col-sm-4">
+              <label>Mobile </label>
+              <input name='mobilex' type="text" formControlName="mobilex" maxlength="10" id="refer_mobile"
+                class="form-control form-control-inverse">
+              <div *ngIf="isSubmitted && Fc.mobilex.errors " class="ValidationError">
+                <div *ngIf="Fc.mobilex.errors.required"> Please Fill Mobile
+                </div>
+                <div *ngIf="Fc.mobilex.errors.pattern">
+                  Please Fill valid Mobile Number </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label>Email </label>
+              <input name="emailx" type="text" formControlName="emailx" id="refer_email"
+                class="form-control form-control-inverse">
+              <div *ngIf="isSubmitted && Fc.emailx.errors " class="ValidationError">
+                <div *ngIf="Fc.emailx.errors.required"> Please Fill mail address
+                </div>
+                <div *ngIf="Fc.emailx.errors.pattern">
+                  Please Fill valid email </div>
+              </div>
+            </div>
+            <div class="col-sm-4 right-btn">
+              <button type="submit" id="submitt_btnxx" class="btn btn-primary">Share</button>
+              <button type="button" id="close_referal_link_modal" data-dismiss="modal"
+                class="btn btn-default">Close</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

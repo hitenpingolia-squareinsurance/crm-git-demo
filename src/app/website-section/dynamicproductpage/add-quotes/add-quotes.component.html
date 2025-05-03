@@ -1,0 +1,119 @@
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="inner_page_css">
+    <div class="container-fluid">
+      <div class="row">
+  
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title" *ngIf="this.id == '' ">Add Quotes</div>
+              <div class="header_title" *ngIf="this.id != '' ">Edit Quotes</div>
+  
+              <button class="btn btn-primary nextBtn pull-right" routerLink="/WebsiteSection/products/view-quotes" 
+              style="margin-top: -27px;">Back To View</button>
+            </div>
+  
+            <form class="form" (ngSubmit)="submit()" [formGroup]="Addquotes">
+              <div class="main_body main_card_height_scroll">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form_sub_title"><i class="fa fa-link mr_5"></i>Details</div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="CustomerName">Page Name</label>
+                      <ng-multiselect-dropdown class="form-control" [data]="Page" formControlName="pagename"
+                            [settings]="dropdownSettingsType" [(ngModel)]="pagename">
+                        </ng-multiselect-dropdown>
+                      <span *ngIf="isSubmitted && formControls.pagename.errors" class="ValidationError">
+                        <span *ngIf="formControls.pagename.errors.required">pagename is
+                          required</span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="CustomerEmailId">Logo & Image</label>
+                      <input type="file" class="form-control" formControlName="logoimage"
+                      (change)="UploadDocs($event,'logoimage')">
+                        <span *ngIf="isSubmitted && formControls.logoimage.errors" class="ValidationError">
+                          <span *ngIf="formControls.logoimage.errors.required">Please Select logoimage !</span>
+                        </span>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="CustomerMobileNo">Company Name</label>
+                      <input type="text" class="form-control" formControlName="companyname">
+                        <span *ngIf="isSubmitted && formControls.companyname.errors" class="ValidationError">
+                          <span *ngIf="formControls.companyname.errors.required">companyname is
+                            required</span>
+                        </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="CustomerName">Comprehensive Price</label>
+                      <div class="position_relative">
+                        <input type="number" class="form-control" formControlName="Comprehensiveprice"
+                        placeholder="Enter Price">
+                      </div>
+                      <span *ngIf="isSubmitted && formControls.Comprehensiveprice.errors" class="ValidationError">
+                        <span *ngIf="formControls.Comprehensiveprice.errors.required">Please enter Comprehensiveprice !</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="CustomerName">Third Party Price</label>
+                      <div class="position_relative">
+                        <input type="number" class="form-control" formControlName="thirdpartyprice"
+                        placeholder="Enter Third Party Price">
+                      </div>
+                      <span *ngIf="isSubmitted && formControls.thirdpartyprice.errors" class="ValidationError">
+                        <span *ngIf="formControls.thirdpartyprice.errors.required">Please enter thirdpartyprice !</span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="CustomerName">Standalone Own Damage</label>
+                      <div class="position_relative">
+                        <input type="number" class="form-control" formControlName="owndamageprice"
+                        placeholder="Enter Standalone Own Damage Price">
+                      </div>
+                      <span *ngIf="isSubmitted && formControls.owndamageprice.errors" class="ValidationError">
+                        <span *ngIf="formControls.owndamageprice.errors.required">Please enter owndamageprice !</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="main_footer">
+                <button type="submit" *ngIf="this.id == '' " class="Save_click">Submit Request</button>
+                <button type="submit" *ngIf="this.id != '' " class="Save_click">Edit Request</button>
+              </div>
+  
+            </form>
+  
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

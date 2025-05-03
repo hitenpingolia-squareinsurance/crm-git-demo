@@ -1,0 +1,681 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+  <!-- Main content -->
+  <section class="content">
+
+
+    <div class="row" *ngIf="row?.length != 0">
+
+
+      <div class="col-md-5">
+        <!-- USERS LIST -->
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title"><b>{{Ticket_Id}}</b></h3>
+
+            <div class="box-tools pull-right">
+
+              <a *ngIf="row.Status == '1'"><span class="label label-default">Pending</span></a>
+
+              <a *ngIf="row.Status == '2'"><span class="label label-warning">In Process</span></a>
+
+              <a *ngIf="row.Status == '3'"><span class="label label-success">Completed</span></a>
+            </div>
+          </div>
+          <!-- /.box-header -->
+
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+              <tbody>
+                <tr>
+                  <th colspan="2">Ticket Type</th>
+                  <th colspan="2">
+
+                    <span style="font-weight: bold;" *ngIf="row.TicketType == '1'">Payment done policy not
+                      received</span>
+                    <span style="font-weight: bold;" *ngIf="row.TicketType == '2'">Make model update</span>
+                    <span style="font-weight: bold;" *ngIf="row.TicketType == '3'">Hypothecation Update</span>
+
+                    <span style="font-weight: bold;" *ngIf="row.TicketType == '4'">Quote not reflecting</span>
+
+                    <span style="font-weight: bold;" *ngIf="row.TicketType == '5'">Error during policy issuance</span>
+                    <span style="font-weight: bold;" *ngIf="row.TicketType == '6'">Other</span>
+
+                    <span style="font-weight: bold;" *ngIf="row.TicketType == '7'">Claim</span>
+                    <span style="font-weight: bold;" *ngIf="row.TicketType == '8'">Survey</span>
+                    <span style="font-weight: bold;" *ngIf="row.TicketType == '9'">Offline-Quote</span>
+                    <span style="font-weight: bold;" *ngIf="row.TicketType == '10'">Cancellation</span>
+                    <span style="font-weight: bold;" *ngIf="row.TicketType == '11'">Endorsement</span>
+                    <span style="font-weight: bold;" *ngIf="row.TicketType == '12'">POS-Related-Quer</span>
+                    <span style="font-weight: bold;" *ngIf="row.TicketType == '13'">Payout/Commision
+                      Related-Query</span>
+
+                  </th>
+
+                </tr>
+
+                <tr
+                  *ngIf="row.TicketType == '1' || row.TicketType == '4' || row.TicketType == '5' || row.TicketType == '7'|| row.TicketType == '8'|| row.TicketType == '9'|| row.TicketType == '10'|| row.TicketType == '11'">
+                  <th colspan="2">Quotation Id</th>
+
+
+
+                  <th colspan="2"
+                    *ngIf="row.TicketType == '7' || row.TicketType == '8' || row.TicketType == '9' ||  row.TicketType == '11' ">
+                    <a href="javascript:void" (click)="ViewDetailsPoupup(row.Quotation_Id,row.TicketType)">
+                      <p class="filename">
+                        {{row.Quotation_Id}}
+                      </p>
+                    </a>
+                  </th>
+
+
+                  <th colspan="2"
+                    *ngIf="row.TicketType == '1' || row.TicketType == '4' || row.TicketType == '10' || row.TicketType == '5' ">
+                    {{ row.Quotation_Id }}</th>
+                </tr>
+
+                <tr *ngIf="row.TicketType == '5'">
+                  <th colspan="2">Page Type</th>
+                  <th colspan="2">{{ row.PageType }}</th>
+
+                </tr>
+
+                <tr *ngIf="row.TicketType == '5'">
+                  <th colspan="2">Page Url</th>
+                  <!-- <th colspan="2">{{ row.PageUrl }}</th> -->
+                  <th colspan="2"><a href='{{row.PageUrl}}'>Click To
+                      View</a></th>
+                </tr>
+
+
+                <tr *ngIf="row.TicketType == '2'">
+                  <th colspan="2">Vehicle Type</th>
+                  <th colspan="2">{{ row.VehicleType }}</th>
+
+                </tr>
+
+                <tr *ngIf="row.TicketType == '2'">
+                  <th colspan="2">Make</th>
+                  <th colspan="2">{{ row.Make }}</th>
+
+                </tr>
+
+                <tr *ngIf="row.TicketType == '2'">
+                  <th colspan="2">Model</th>
+                  <th colspan="2">{{ row.Model }}</th>
+
+                </tr>
+
+                <tr *ngIf="row.TicketType == '2'">
+                  <th colspan="2">Variant</th>
+                  <th colspan="2">{{ row.Variant }}</th>
+
+                </tr>
+
+                <tr *ngIf="row.TicketType == '2'">
+                  <th colspan="2">Cubic Cpacity</th>
+                  <th colspan="2">{{ row.CubicCpacity }}</th>
+
+                </tr>
+
+                <tr *ngIf="row.TicketType == '2'">
+                  <th colspan="2">Seating Capicaty</th>
+                  <th colspan="2">{{ row.SeatingCapicaty }}</th>
+
+                </tr>
+                <tr *ngIf="row.TicketType == '2' && row.VehicleType == 'Gcv'">
+                  <th colspan="2">GVW</th>
+                  <th colspan="2">{{ row.Gvw }}</th>
+
+                </tr>
+
+                <tr *ngIf="row.TicketType == '3'">
+                  <th colspan="2">Financer Name</th>
+                  <th colspan="2">{{ row.Insurer_Name }}</th>
+
+                </tr>
+
+                <tr *ngIf="row.TicketType == '3'">
+                  <th colspan="2">City Name</th>
+                  <th colspan="2">{{ row.City_Name }}</th>
+
+                </tr>
+
+                <!-- <tr>
+                  <th colspan="2">Remarks</th>
+                  <th colspan="2">{{ row.Remark }}</th>
+
+                </tr> -->
+
+
+
+                <tr *ngIf="row.TicketType != '13'">
+                  <th colspan="2">Remarks</th>
+                  <th colspan="2">{{ row.Remark }}</th>
+
+                </tr>
+
+                <tr *ngIf="row.TicketType == '13' && row.fileMissing">
+                  <th colspan="2">File Missing</th>
+                  <th colspan="2">{{ row.fileMissing }}</th>
+
+                </tr>
+                <tr *ngIf="row.TicketType == '13' && row.payoutDifference">
+                  <th colspan="2">Payout Difference</th>
+                  <th colspan="2">{{ row.payoutDifference }}</th>
+
+                </tr>
+                <tr *ngIf="row.TicketType == '13' && row.payoutNotReceived">
+                  <th colspan="2">Payout Not Recieved</th>
+                  <th colspan="2">{{ row.payoutNotReceived }}</th>
+
+                </tr>
+
+                <tr *ngIf="row.TicketType == '1' || row.TicketType == '4' || row.TicketType == '5' ">
+                  <th colspan="2">User Quotation Details</th>
+                  <th colspan="2"><a href="javascript:void(0)" (click)="ShowQuotationDetails(row.Quotation_Id)">Click To
+                      View</a></th>
+
+                </tr>
+
+                <tr
+                  *ngIf="row.TicketType == '4' && this.RedicrctBackYypes=='all-tickets-assign' && row.BusinessType == 'Motor' ">
+                  <th colspan="2">Mapping Details</th>
+                  <th colspan="2"><a href="javascript:void(0)" (click)="ShowMappingDetails(row.Quotation_Id)">Click To
+                      View</a></th>
+
+                </tr>
+
+                <!--
+					<tr>
+					  <th colspan="2">Add Stamp</th>
+					  <th colspan="2">{{ row.Add_Stamp }}</th>
+
+					</tr> -->
+
+                <tr *ngIf="row.Status == '2' || row.TicketType == '3'">
+                  <th colspan="2">Status</th>
+                  <th colspan="2">TimeStamp</th>
+
+                </tr>
+
+                <tr *ngFor="let Updates of row.StatusTableData;">
+                  <th colspan="2" *ngIf="Updates.Status=='1'">Pending</th>
+                  <th colspan="2" *ngIf="Updates.Status=='2'">In Process</th>
+                  <th colspan="2" *ngIf="Updates.Status=='3'">Completed</th>
+                  <th colspan="2">{{Updates.Timestamp}}</th>
+
+                </tr>
+
+
+                <tr *ngIf="ShowUpdateStatusLabels">
+                  <td colspan="4">
+                    <select class="form-control" (change)="UpdateClaimStatus($event)">
+
+                      <option value="" selected *ngIf="CurrentTicketStatus!='3'">Change Status</option>
+
+                      <option value="2" *ngIf="CurrentTicketStatus=='1'">In Process</option>
+                      <option value="3" *ngIf="CurrentTicketStatus=='2'">Completed</option>
+                      <option value="3" *ngIf="CurrentTicketStatus=='3'" selected disabled>Ticket is Closed</option>
+                    </select>
+                  </td>
+
+
+                </tr>
+
+
+                <tr
+                  *ngIf="row.TicketType == '1' || row.TicketType == '2' || row.TicketType == '5'  || row.TicketType == '3'">
+                  <th colspan="2">Document</th>
+                  <th colspan="2">View</th>
+
+                </tr>
+                <tr *ngFor="let doc of row.Document;">
+                  <td colspan="2">{{doc.Document_Type}}</td>
+                  <td colspan="2"><a (click)="ViewDocument(doc.Download_Url)" href="javascript:void(0)">View</a></td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+          <!-- /.box-body -->
+          <div class="box-footer text-center">
+            <a routerLink="/ticket/{{ RedicrctBackYypes }}" class="uppercase">back to ticket requests</a>
+          </div>
+          <!-- /.box-footer -->
+        </div>
+        <!--/.box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-7">
+        <!-- DIRECT CHAT -->
+        <div class="box box-info direct-chat direct-chat-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">Ticket Discussion</h3>
+
+            <div class="box-tools pull-right">
+              <!--<span data-toggle="tooltip" title="3 New Messages" class="badge bg-yellow">3</span>-->
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+              </button>
+
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <!-- Conversations are loaded here -->
+            <div id="directmessages" class="direct-chat-messages" style="height: 64vh;">
+
+              <div *ngFor="let m of Messages;" class="direct-chat-msg {{m.MainClassName}}">
+                <div class="direct-chat-info clearfix">
+                  <span class="direct-chat-name pull-{{m.ClassName}}">{{m.Name}}</span>
+                  <span class="direct-chat-timestamp pull-{{m.DateTimeClassName}}">{{m.DateTime}}</span>
+                </div>
+                <!-- /.direct-chat-info -->
+                <img class="direct-chat-img" src="assets/dist/img/user2-160x160.png">
+                <!-- /.direct-chat-img -->
+                <div *ngIf="m.Message != ''" class="direct-chat-text">
+                  {{m.Message}}
+                </div>
+
+                <div *ngIf="m.Is_Attachement == '1'" class="attachment">
+                  <h6>Attachments:</h6>
+
+                  <a href="javascript:void" (click)="ViewDocument(m.Attachment_Url)">
+                    <p class="filename">
+                      {{m.Attachment_Name}}
+                    </p>
+                  </a>
+                  <!--<div class="pull-right">
+							<button type="button" (click)="ViewDocument(m.Attachment_Url)" class="btn btn-primary btn-sm btn-flat">Open</button>
+						  </div>-->
+                </div>
+                <!-- /.direct-chat-text -->
+              </div>
+            </div>
+            <!--/.direct-chat-messages-->
+
+            <!-- Contacts are loaded here -->
+
+            <!-- /.direct-chat-pane -->
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer" *ngIf="CurrentTicketStatus!='3'">
+            <form [formGroup]="ChatForm" (ngSubmit)="Send()" method="post"
+              *ngIf="LoginUserId==row.CreateUser_Id || LoginUserId==row.CurrentUser_Id">
+              <div class="input-group">
+                <input type="text" formControlName="Message" placeholder="type message..." class="form-control">
+                <span class="input-group-btn">
+                  <label for="file-input">
+                    <a type="button" class="btn">
+                      <input id="file-input" (change)="UploadAttachment($event)" style="display: none;" type="file">
+                      <i class="fa fa-paperclip"></i></a></label>
+
+                  <!--<label for="file-input">
+							<button type="button" class="btn">
+								<input id="file-input" style="display: none;" type="file">
+									<i class="fa fa-paperclip"></i>
+							</button>
+							</label>-->
+
+                  <button type="submit" class="btn btn-info btn-flat">Send</button>
+                </span>
+              </div>
+            </form>
+          </div>
+          <!-- /.box-footer-->
+        </div>
+        <!--/.direct-chat -->
+      </div>
+      <!-- /.col -->
+
+    </div>
+
+  </section>
+  <!-- /.content -->
+
+  <div> <button style="display:none;" type="button" id="QuoteIdBtn" class="btn btn-info btn-lg" data-toggle="modal"
+      data-target="#myModal">Open Modal</button>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog"
+      *ngIf="row.TicketType=='1' || row.TicketType=='4' || row.TicketType=='5'">
+      <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">User Quotation Details</h4>
+          </div>
+          <div class="modal-body">
+            <div class="col-sm-12">
+              <h6>Quotation Id {{ row.Quotation_Id }}</h6>
+              <table class="table table-bordered">
+
+                <tbody *ngIf="row.BusinessType=='Motor'">
+
+                  <tr colspan="6" *ngIf="row.TicketType=='1' || row.TicketType=='5'">
+
+                    <td colspan="2"><b>Company</b>: {{row.Quotation_Details.company}}</td>
+                    <td colspan="2"><b>Risk Start Date</b>: {{row.Claim_Intimated_By}}</td>
+                    <td colspan="2"><b>Risk End Date </b>: {{row.Intimation_Date_Time}}</td>
+                  </tr>
+
+
+                  <tr colspan="6" *ngIf="row.TicketType=='1' || row.TicketType=='5' ">
+
+                    <td colspan="2"><b>Gross Premium</b>: {{row.Quotation_Details.premium}}</td>
+                    <td colspan="2"><b>Net Premium</b>: {{row.Quotation_Details.tax}}</td>
+                    <td colspan="2"><b>Premium </b>: {{ row.Quotation_Details.net_premium}}</td>
+
+                  </tr>
+
+                  <tr colspan="6">
+
+                    <td colspan="2"><b>Vehicle Type</b>: <span *ngIf="row.Quotation_Details.gadi_type=='1'">Two
+                        wheeler</span>
+                      <span *ngIf="row.Quotation_Details.gadi_type=='2'">Private Car</span>
+                      <span *ngIf="row.Quotation_Details.gadi_type=='3'">PCV</span>
+                      <span *ngIf="row.Quotation_Details.gadi_type=='4'">GCV</span>
+                    </td>
+
+                    <td colspan="2"><b>Policy Type</b>: <span *ngIf="row.Quotation_Details.tp_only=='0'">Rollover</span>
+                      <span *ngIf="row.Quotation_Details.tp_only=='1'">Third Party</span>
+                      <span *ngIf="row.Quotation_Details.tp_only=='2'">SAOD</span>
+                    </td>
+
+                    <td colspan="6"><b>Reg No. </b>: {{ row.Quotation_Details.registration_no}}</td>
+                  </tr>
+                  <tr colspan="6">
+                    <td colspan="2"><b>Login Details</b>: {{row.CreatedUserIdRole}}</td>
+                    <td colspan="2" *ngIf="row.MapData!=''"><b> Map Details</b>: {{row.MapData}}</td>
+                    <td colspan="2"><b>Source </b>: {{ row.Quotation_Details.source}}</td>
+                  </tr>
+
+                  <tr colspan="6">
+                    <td colspan="2"><b>Make</b>: {{row.Quotation_Details.make}}</td>
+                    <td colspan="2"><b> Model</b>: {{row.Quotation_Details.model}}</td>
+                    <td colspan="1"><b>Variant </b>: {{ row.Quotation_Details.variant}}</td>
+                  </tr>
+
+                  <tr colspan="6">
+                    <td colspan="2"><b>Reg Date</b>: {{row.Quotation_Details.registration_date }}</td>
+                    <td colspan="2"><b> Manufacture Date</b>: {{row.Quotation_Details.manufacture_date}}</td>
+                    <td colspan="2"><b>Purchase Date </b>: {{ row.Quotation_Details.purchase_date}}</td>
+                  </tr>
+
+                  <tr colspan="6">
+                    <td colspan="2"><b>Pev. Policy Expiery Date</b>: <span
+                        *ngIf="row.Quotation_Details.dont_know=='1'">Dont know</span>
+                      <span *ngIf="row.Quotation_Details.dont_know=='0' || row.Quotation_Details.dont_know==''">{{
+                        row.Quotation_Details.policy_expiery_date }}</span>
+                    </td>
+
+                    <td colspan="2"><b>Fuel Type</b>: {{row.Quotation_Details.fuel_type}}</td>
+                    <td colspan="2"><b>Vehicle Owned By</b>: {{ row.Quotation_Details.vehicle_owned_by}}</td>
+                  </tr>
+
+                  <tr colspan="5">
+                    <td colspan="2"><b>Quotation Time</b>: {{row.Quotation_Details.current_datetime }}</td>
+                    <td colspan="2"><b> Previous Insurer</b>: {{row.Quotation_Details.previous_insurer}}</td>
+                    <td colspan="2"><b>NCB </b>: Cur. {{ row.Quotation_Details.curr_ncb }} <br>Old. {{
+                      row.Quotation_Details.ncb_old }}</td>
+                  </tr>
+
+
+                  <tr colspan="6" *ngIf="row.Quotation_Details.tp_only=='2'">
+                    <td colspan="2"><b>Saod Tp End Date</b>: {{row.Quotation_Details.tp_policy_expire_date }}</td>
+                    <td colspan="2"><b> Saod Tp Com.</b>: {{row.Quotation_Details.tp_expire_policy_cpmpany}}</td>
+                    <td colspan="2"><b>Saod Tp Policy Num. </b>: {{ row.Quotation_Details.tp_expire_policy_number }}
+                    </td>
+                  </tr>
+
+
+                  <tr *ngIf="row.TicketType=='1'" align="center">
+
+                    <th colspan="6" style="text-align: center;" align="center">Proposer Details</th>
+                  </tr>
+
+                  <tr colspan="6" *ngIf="row.TicketType=='1' || row.TicketType=='5'">
+                    <td colspan="2"><b>Proposer Name</b>: {{ row.Quotation_Details.salutation }} {{
+                      row.Quotation_Details.first_name }} {{
+                      row.Quotation_Details.middle_name }} {{ row.Quotation_Details.last_name }}</td>
+
+                    <td colspan="2"><b>Mobile </b>: {{row.Quotation_Details.mobile_proposal }}</td>
+                    <td colspan="2"><b> Email</b>: {{row.Quotation_Details.email_proposal }}</td>
+                  </tr>
+
+
+                  <tr colspan="6" *ngIf="row.TicketType=='1' || row.TicketType=='5'">
+
+                    <td colspan="2"><b>Gender</b>: {{ row.Quotation_Details.gender }}</td>
+                    <td colspan="2"><b> DOB</b>: {{row.Quotation_Details.dob }}</td>
+                    <td colspan="2"><b>Marital Status </b>: {{ row.Quotation_Details.marital_status }}</td>
+                  </tr>
+
+                  <tr colspan="6" *ngIf="row.TicketType=='1' || row.TicketType=='5'">
+                    <td colspan="2"><b>Occupation</b>: {{row.Quotation_Details.occupation }}</td>
+                    <td colspan="2"><b> Engine no</b>: {{row.Quotation_Details.engine_no }}</td>
+                    <td colspan="2"><b>Chassies no </b>: {{row.Quotation_Details.chassies_no }}</td>
+                  </tr>
+
+
+                  <tr colspan="6" *ngIf="row.TicketType=='1' || row.TicketType=='5'">
+                    <td colspan="2"><b>Address1</b>: {{row.Quotation_Details.registration_address1}}</td>
+                    <td colspan="2"><b> Address2</b>: {{row.Quotation_Details.registration_address2 }}</td>
+                    <td colspan="2"><b>Address3 </b>: {{row.Quotation_Details.registration_address3 }}</td>
+                  </tr>
+
+
+                  <tr colspan="6" *ngIf="row.TicketType=='1' || row.TicketType=='5'">
+                    <td colspan="2"><b>State</b>: {{row.Quotation_Details.state}}</td>
+                    <td colspan="2"><b> City</b>: {{row.Quotation_Details.city }}</td>
+                    <td colspan="2"><b>Pincode </b>: {{row.Quotation_Details.pincode}}</td>
+                  </tr>
+
+
+                  <tr colspan="6" *ngIf="row.TicketType=='1' || row.TicketType=='5'">
+                    <td colspan="2"><b>Nominee Name</b>: {{row.Quotation_Details.nominee_name}}</td>
+                    <td colspan="2"><b> DOB</b>: {{row.Quotation_Details.nominee_dob }}</td>
+                    <td colspan="2"><b>Gender & Relat. </b>: {{ row.Quotation_Details.nominee_relation }} <br>{{
+                      row.Quotation_Details.nominee_gender }}</td>
+                  </tr>
+
+
+                  <tr colspan="6"
+                    *ngIf="(  row.TicketType=='1' || row.TicketType=='5') &&  row.Quotation_Details.hypothecation=='1'">
+                    <td colspan="2"><b>Financer Name</b>: {{row.Quotation_Details.financier_name}}</td>
+                    <td colspan="2"><b> Financer Name</b>: {{ row.Quotation_Details.financier_city }}</td>
+                  </tr>
+                </tbody>
+
+
+                <tbody *ngIf="row.BusinessType=='Health'">
+
+                  <tr colspan="6" *ngIf="row.TicketType=='1' || row.TicketType=='5'">
+                    <td colspan="2"><b>Company</b>: {{row.Quotation_Details.SelectedCompany}}</td>
+                    <td colspan="2"><b> Plan</b>: {{row.Quotation_Details.plan_name }}</td>
+                    <td colspan="2"></td>
+                  </tr>
+                  <tr colspan="6" *ngIf="row.TicketType=='1' || row.TicketType=='5'">
+                    <td colspan="2"><b>Gross Premium</b>: {{row.Quotation_Details.final_gross_premium}}</td>
+                    <td colspan="2"><b> Net Premium</b>: {{row.Quotation_Details.final_tax_premium }}</td>
+                    <td colspan="2"><b> Premium</b>: {{row.Quotation_Details.final_net_premium }}</td>
+                  </tr>
+
+                  <tr colspan="6">
+                    <td colspan="2"><b>Login Details</b>: {{row.CreatedUserIdRole }}</td>
+                    <td colspan="2" *ngIf="row.MapData!=''"><b> Map Details</b>: {{ row.MapData }}</td>
+                    <td colspan="2"><b> Source</b>: {{ row.Quotation_Details.platform }}</td>
+                  </tr>
+
+                  <tr colspan="6">
+                    <td colspan="2"><b>Plan Type</b>: {{row.Quotation_Details.Individual_OR_float }}</td>
+                    <td colspan="2"><b> Sum Insured</b>: {{ row.Quotation_Details.sumInsured }}</td>
+                    <td colspan="2"><b> Medical History</b>: {{ row.Quotation_Details.medical_history }}</td>
+                  </tr>
+                  <tr colspan="6">
+                    <td colspan="2"><b>Pincode</b>: {{row.Quotation_Details.pincode }}</td>
+                    <td colspan="2"><b>Tenure</b>: <span *ngIf="row.Quotation_Details.policy_period==''">1 Year</span>
+                      <span *ngIf="row.Quotation_Details.policy_period!=''">{{ row.Quotation_Details.policy_period }}
+                        Year</span>
+                    </td>
+                    <td colspan="2"><b>Quotation Time</b>: {{ row.Quotation_Details.date }}</td>
+                  </tr>
+
+                  <tr>
+
+
+                    <td>Quote Member Det.</td>
+                    <td colspan="5">
+
+
+                      <table class="table table-bordered">
+                        <tbody>
+                          <tr colspan="6" *ngFor="let rowsMem of row.QuoteMemberDetail | keyvalue;">
+
+                            <td colspan="2"><b>Relation</b>: {{rowsMem.value.Relation }}</td>
+                            <td colspan="2"><b>Age</b>: {{ rowsMem.value.Age }} </td>
+                            <td colspan="2"><b>D.O.B</b>: {{rowsMem.value.Dob }}</td>
+
+                          </tr>
+
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+
+
+                  <tr *ngIf="row.TicketType=='1' || row.TicketType=='5'">
+
+
+                    <th colspan="6">Insured Details</th>
+
+                  </tr>
+                  <tr>
+                    <td colspan="6">
+
+
+                      <table class="table table-bordered">
+                        <tbody>
+                          <tr *ngFor="let rows of row.DecodeHealthData.insured | keyvalue;">
+                            <td>Name<br>
+                              {{ rows.value.title }}
+                              {{ rows.value.first_name }}
+                            </td>
+                            <td>Gender<br>
+                              {{ rows.value.gender }}</td>
+
+                            <td>DOB<br>
+                              {{ rows.value.dob }}</td>
+
+                            <td>Marital<br>
+                              {{ rows.value.marital_status }}</td>
+
+                            <td>Occuption<br>
+                              {{ rows.value.occuption }}</td>
+
+                            <td>Weight(KG)<br>
+                              {{ rows.value.weight }}</td>
+
+                            <td>Height(CM)<br>
+                              {{ rows.value.height }}</td>
+
+                          </tr>
+
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <tr *ngIf="row.TicketType=='1' || row.TicketType=='5'">
+
+
+                    <th colspan="6" align="center">Proposer Details</th>
+
+
+                  </tr>
+                  <tr>
+                    <td colspan="6">
+
+
+                      <table class="table table-bordered">
+                        <tbody>
+
+
+                          <tr colspan="6">
+
+                            <td colspan="2"><b>Proposar Name</b>:{{ row.DecodeHealthData.proposar.proposer_title }} {{
+                              row.DecodeHealthData.proposar.proposer_first_name }}</td>
+                            <td colspan="2"><b>DOB</b>: {{ row.DecodeHealthData.proposar.proposer_dob }} </td>
+                            <td colspan="2"><b>Marital Status</b>:
+                              {{row.DecodeHealthData.proposar.proposer_marital_status }}</td>
+
+                          </tr>
+
+                          <tr colspan="6">
+                            <td colspan="2"><b>Gender</b>:{{ row.DecodeHealthData.proposar.gender_proposor }}</td>
+                            <td colspan="2"><b>Nominee Name</b>: {{ row.DecodeHealthData.proposar.nomineeName }} </td>
+                            <td colspan="2"><b>Nominee Relation</b>: {{row.DecodeHealthData.proposar.nominee_relation }}
+                            </td>
+
+                          </tr>
+
+                          <tr colspan="6">
+                            <td colspan="2"><b> Nominee Gender</b>:{{row.DecodeHealthData.proposar.nomineeGender }}</td>
+                            <td colspan="2"><b>Nominee DOB</b>: {{ row.DecodeHealthData.proposar.nomineeDob }} </td>
+                            <td colspan="2"><b> Aponitee Name </b>: {{row.DecodeHealthData.proposar.aponiteeName }}</td>
+
+                          </tr>
+
+                          <tr colspan="6">
+                            <td colspan="2"><b> Apointee
+                                relation</b>:{{row.DecodeHealthData.proposar.apointee_relation}}</td>
+                            <td colspan="2"><b>Plat</b>: {{ row.DecodeHealthData.proposar.plat }} </td>
+                            <td colspan="2"><b> Building </b>: {{row.DecodeHealthData.proposar.building }}</td>
+
+                          </tr>
+
+
+                          <tr colspan="6">
+                            <td colspan="2"><b> Street</b>:{{row.DecodeHealthData.proposar.street}}</td>
+                            <td colspan="2"><b>Address1</b>: {{ row.DecodeHealthData.proposar.address1 }} </td>
+                            <td colspan="2"><b> Pincode </b>: {{row.DecodeHealthData.proposar.pincode }}</td>
+
+                          </tr>
+                          <tr colspan="6">
+                            <td colspan="2"><b> Email</b>:{{row.DecodeHealthData.proposar.email }}</td>
+                            <td colspan="2"><b>Mobile</b>: {{ row.DecodeHealthData.proposar.mobile }} </td>
+                            <td colspan="2"><b> Pincode </b>: {{row.DecodeHealthData.proposar.pincode }}</td>
+
+                          </tr>
+
+                          <tr colspan="6">
+                            <td colspan="2"><b> Montly Income</b>:{{row.DecodeHealthData.proposar.montlyIncome }}</td>
+                            <td colspan="2"><b>Mobile</b>: {{ row.DecodeHealthData.proposar.mobile }} </td>
+                            <td colspan="2"><b> Pan card </b>: {{row.DecodeHealthData.proposar.pan_card }}</td>
+
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>

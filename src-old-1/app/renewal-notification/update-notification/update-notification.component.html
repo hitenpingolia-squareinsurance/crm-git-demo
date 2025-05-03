@@ -1,0 +1,82 @@
+
+
+
+<div class="row">
+
+
+    <div class="modal-header" style="text-align: center;">
+      <h4 class="modal-title">Update Notification
+        <button type="button" (click)="CloseModel()" class="btn btn-box-tool" style="float: right;"><i class="fa fa-close" style="font-size:17px"></i></button>
+      </h4>
+    </div>
+  </div>
+  
+  
+              <form (ngSubmit)="submit()" [formGroup]="updateNotify">
+                <div class="popup-content-body">
+                  <div class="row popup-form">
+              
+              
+                    <div class="col-md-6">
+                      <label for="state">Type</label>
+                      <select name="type" formControlName="type" class="form-control"
+                        data-parsley-required="true">
+                        <option value="">Select</option>
+                        <option value="employee">Employee</option>
+                        <option value="agent">Agent</option>
+                        <option value="user">User</option>
+                        <option value="sp">SP</option>
+                      </select>
+                      <div *ngIf="isSubmitted && formControls.type.errors" class="Validationerrors">
+                        <div *ngIf="formControls.type.errors.required"><span style="color: red;">Please select
+                            Type!</span></div>
+                      </div>
+                    </div>
+            
+
+                    <div class="col-md-6 next">
+                      <label for="state">Is best deal</label>
+                      <select name="type" formControlName="bestDeal" class="form-control"
+                      data-parsley-required="true">
+                      <option  value="no">No</option>
+                      <option value="yes">Yes</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 next">
+                      <label for="state">File</label>
+                      <input type="file" class="form-control" (change)="UploadDocs($event,'file')" formControlName="file">
+                    </div>    
+            
+            
+            
+                    <div class="col-md-12 next">
+                      <label for="state">Title</label>
+                      <textarea class="form-control" formControlName="title"></textarea>
+                      <div *ngIf="isSubmitted && formControls.title.errors" class="Validationerrors">
+                        <div *ngIf="formControls.title.errors.required"><span style="color: red;">Please enter
+                            title!</span></div>
+                      </div>
+                    </div>
+              
+                    <div class="col-md-12 next">
+                      <label for="state">Message</label>
+                       <textarea class="form-control" formControlName="message"></textarea>
+                      <div *ngIf="isSubmitted && formControls.message.errors" class="Validationerrors">
+                        <div *ngIf="formControls.message.errors.required"><span style="color: red;">Please enter
+                            message!</span></div>
+                      </div>
+                    </div>
+              
+              
+                    <div class="clearfix"></div>
+                    <div class="button-div-yes-no next" align="right" style="margin-top: 10px; margin-right: 17px;">
+                      <button type="submit" class="btn btn-primary">Send</button>&nbsp;
+                    </div>
+              
+                  </div>
+              
+                </div>
+              </form>
+    
+
+

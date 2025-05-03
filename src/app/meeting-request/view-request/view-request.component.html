@@ -1,0 +1,226 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+  <div class="container-fluid">
+    <div class="main_card_form ">
+      <div class="main_header">
+        <div class="header_title">View Meeting Request</div>
+      </div>
+      <div class="main_body main_card_height_scroll_withoutfooter">
+        <div class="btn_list_group">
+          <div aria-multiselectable="true" class="panel-group" id="accordion" role="tablist">
+            <div class="panel panel-default">
+              <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                  <div class="dsr-fillter">
+
+                    <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                      data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <a role="button" class="fa fa-filter"><span>Filters</span><i
+                          class="fa fa-angle-down pull-right"></i></a>
+                    </button>
+
+                    <button class="btn btn-info3" *ngIf="urlSegment == 'view_request'"
+                      routerLink="/meeting_request/add_request">
+                      <a role="button" class="fa fa-plus"><span>Add Meeting Request</span></a>
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+              <div aria-labelledby="headingOne" class="panel-collapse collapse" id="collapseOne" role="tabpanel"
+                aria-expanded="false" style="height: 0px;">
+                <div class="panel-body">
+                  <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="urlSegment == 'view_request' ">
+          <div class="col-md-12">
+            <div class="tab-content">
+              <div class="tab-pane fade in active" id="All" role="tabpanel">
+                <div class="custom_table">
+                  <ul class="responsive-table">
+                    <cdk-virtual-scroll-viewport #scroller itemSize="72" class="content mt_0">
+                      <mat-list>
+                        <ng-container *cdkVirtualFor="let row of this.post; let i=index">
+                          <mat-list-item>
+                            <li class="table-row">
+                              <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                                <div class="agents_data agents_data1">
+                                  <div class="icon_re_cl">{{ i + 1 }}</div>
+                                  <div class="agent_name_mobile">
+                                    <div class="agent_data" *ngIf="urlSegment != 'manager_request' ">
+                                      <div>Meeting Topic</div>
+                                      <strong class="fs_18">{{ row.meeting_topic }}</strong>
+                                    </div>
+                                    <div class="agent_data" *ngIf="urlSegment == 'manager_request'">
+                                      <div *ngIf="urlSegment == 'manager_request' ">Meeting Request By</div>
+                                      <strong class="fs_18" *ngIf="urlSegment == 'manager_request' ">{{ row.requested_by
+                                        }} - {{ row.requested_by_empcode }}</strong>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="agents_data agents_data2">
+                                  <div class="agent_name_mobile">
+                                    <div class="agent_name_mobile">
+                                      <div class="agent_data" *ngIf="urlSegment == 'manager_request' ">
+                                        <div>Meeting Topic</div>
+                                        <strong class="fs_18">{{ row.meeting_topic }}</strong>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="agents_data agents_data3">
+                                  <div class="agent_name_mobile">
+                                    <div class="agent_data">
+                                      <div>Status</div>
+                                      <strong class="fs_18">
+                                        <label class="label label-warning"
+                                          *ngIf="row.meeting_status == 'Pending' ">{{row.meeting_status}}</label>
+                                        <label class="label label-info"
+                                          *ngIf="row.meeting_status == 'Approved' && (row.meeting_close_status == '0' || row.meeting_close_status == '')">{{row.meeting_status}}</label>
+                                        <label class="label label-success"
+                                          *ngIf="row.meeting_close_status == '1'">Completed</label>
+                                      </strong>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="last_row_div">
+                                <div class="d_flex">
+                                  <div class="label_chips motor_lob dark">
+                                    <span>Meeting Date : {{ row.meeting_date }} </span>
+                                  </div>
+
+                                  <div class="label_chips non_motor_lob">
+                                    <span>Meeting Time : {{row.meeting_time}} </span>
+                                  </div>
+
+                                  <div class="label_chips non_motor_lob">
+                                    <span>Meeting Url : {{row.meeting_url}}&nbsp;<button *ngIf="row.meeting_url != '' "
+                                        class="copybtn" (click)="CopyText(row.meeting_url)" value="click to copy"> <span
+                                          class="fa fa-copy"></span></button> </span>
+                                  </div>
+
+                                </div>
+                              </div>
+
+                              <div class="last_row">
+                                <div class="d_flex effective_date">
+                                  <span>Remark : {{row.remark}} </span>
+                                </div>
+
+                                <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                                  <a *ngIf="urlSegment == 'manager_request' && (row.manager_id == 0 || row.manager_id == '' || row.manager_id == null) "
+                                    (click)="AcceptManager('Accept',row.id)">Accept</a>
+
+                                  <a *ngIf="urlSegment == 'manager_request' && row.manager_id != 0 && row.meeting_status == 'Pending'"
+                                    routerLink="/meeting/add-square-meet/{{row.id}}">Add Meeting</a>
+
+                                  <a
+                                    *ngIf="urlSegment == 'manager_request' && row.manager_id != 0 && row.meeting_status == 'Approved'">Meeting
+                                    Added</a>
+
+                                </div>
+
+                              </div>
+                            </li>
+
+                            <mat-divider></mat-divider>
+                          </mat-list-item>
+                        </ng-container>
+
+                        <div class="spinner-item" *ngIf="loading" style="display: block;margin: auto; width: 50px;">
+                          <mat-progress-spinner [mode]="'indeterminate'" [diameter]="50"></mat-progress-spinner>
+                        </div>
+
+
+                        <ul class="responsive-table" *ngIf="this.loading == false && post.length == 0">
+                          <li class="table-row">
+                            <div class="no_data_found">No data available !</div>
+                          </li>
+                        </ul>
+                      </mat-list>
+                    </cdk-virtual-scroll-viewport>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row" *ngIf="urlSegment == 'manager_request' ">
+          <div class="col-md-12">
+            <div class="tab-content">
+              <div class="tab-pane fade in active" id="All" role="tabpanel">
+                <div class="custom_table">
+                  <ul class="responsive-table">
+                    <cdk-virtual-scroll-viewport #scroller itemSize="72" class="content mt_0">
+                      <mat-list>
+                        <ng-container *cdkVirtualFor="let row of this.post; let i=index">
+                          <mat-list-item>
+                            <li class="table-row">
+                              <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                                <div class="agents_data agents_data1">
+                                  <div class="icon_re_cl">{{ i + 1 }}</div>
+                                  <div class="agent_name_mobile">
+                                    <div class="agent_data">
+                                      <div>Meeting Topic</div>
+                                      <strong class="fs_18">{{ row.meeting_topic }}</strong>
+                                    </div>
+
+                                  </div>
+                                </div>
+                                <div class="agents_data agents_data2">
+                                  <div class="agent_name_mobile">
+                                    <div class="agent_name_mobile">
+
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="last_row_div">
+                                <div class="d_flex">
+                                  <div class="label_chips motor_lob dark">
+                                    <span (click)="ViewReq(row.meeting_topic)">Requested : {{ row.request }} </span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="last_row">
+                                <div class="d_flex effective_date">
+                                  <!-- <span>Remark : {{row.remark}} </span> -->
+                                </div>
+                                <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                </div>
+                              </div>
+                            </li>
+                            <mat-divider></mat-divider>
+                          </mat-list-item>
+                        </ng-container>
+                        <div class="spinner-item" *ngIf="loading" style="display: block;margin: auto; width: 50px;">
+                          <mat-progress-spinner [mode]="'indeterminate'" [diameter]="50"></mat-progress-spinner>
+                        </div>
+                        <ul class="responsive-table" *ngIf="this.loading == false && post.length == 0">
+                          <li class="table-row">
+                            <div class="no_data_found">No data available !</div>
+                          </li>
+                        </ul>
+                      </mat-list>
+                    </cdk-virtual-scroll-viewport>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

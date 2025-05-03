@@ -1,0 +1,182 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">Assets Form</div>
+                    </div>
+                    <div class="main_body main_card_height_scroll">
+                        <div class="row">
+                            <form class="form" [formGroup]="assetUserform">
+
+                                <!-- <div class="col-md-4 col-sm-6">
+                                    <div class="input_group">
+                                        <label for="Category">Category</label>
+                                        <div class="d_flex">
+                                            <ng-multiselect-dropdown class="form_control_ng w_100"
+                                                placeholder="--Select--" [data]="Category" formControlName="Category"
+                                                [settings]="dropdownSettingsType"
+                                                (onSelect)="onItemSelect($event,'Category')"
+                                                (onDeSelect)="onItemDeSelect($event,'Category')">
+                                            </ng-multiselect-dropdown>
+                                            <button type="button" title="Add Category" class="add_btn"
+                                                (click)="CategoryAdd('')"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                        <div *ngIf="isSubmitted && formControls.Category.errors"
+                                            class="ValidationError">
+                                            <div *ngIf="formControls.Category.errors.required">required..!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="input_group">
+                                        <label>Item Name</label>
+                                        <input type="text" name="Asset-title" formControlName="ItemName"
+                                            class="form_control">
+                                    </div>
+                                    <div *ngIf="isSubmitted && formControls.ItemName.errors" class="ValidationError">
+                                        <div *ngIf="formControls.ItemName.errors.required">required..!
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="input_group">
+                                        <label>Model Name</label>
+                                        <input type="text" name="Asset-title" formControlName="ModelName"
+                                            class="form_control">
+                                    </div>
+                                    <div *ngIf="isSubmitted && formControls.ModelName.errors" class="ValidationError">
+                                        <div *ngIf="formControls.ModelName.errors.required">required..!
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="input_group">
+                                        <label>Serial No.</label>
+                                        <input type="text" name="Asset-title" formControlName="SerialNo"
+                                            class="form_control">
+                                    </div>
+                                    <div *ngIf="isSubmitted && formControls.SerialNo.errors" class="ValidationError">
+                                        <div *ngIf="formControls.SerialNo.errors.required">required..!
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-4 col-sm-6">
+                                    <div class="input_group">
+                                        <label>Quantity</label>
+
+
+                                        <select formControlName="Quantity" class="form-control">
+                                            <option [value]='0'>Select Quantity</option>
+
+                                            
+                                            <option *ngFor="let Quantity of QuantityValue" value='{{Quantity}}'>{{Quantity}}</option>
+
+                                        </select>
+
+                                    </div>
+                                    <div *ngIf="isSubmitted && formControls.Quantity.errors" class="ValidationError">
+                                        <div *ngIf="formControls.Quantity.errors.required">required..!
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <div class="col-md-8  col-sm-6">
+                                    <div class="input_group">
+                                        <label for="Remarks">Item Notes</label>
+                                        <textarea class="form_control" formControlName="Remarks"></textarea>
+                                        <div *ngIf="isSubmitted && formControls.Remarks.errors" class="ValidationError">
+                                            <div *ngIf="formControls.Remarks.errors.required">Please enter remarks.!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="input_group">
+                                        <label>Purchase Price</label>
+                                        <input type="text" name="Asset-title" formControlName="Purchase_Price"
+                                            class="form_control">
+                                    </div>
+                                    <div *ngIf="isSubmitted && formControls.Purchase_Price.errors"
+                                        class="ValidationError">
+                                        <div *ngIf="formControls.Purchase_Price.errors.required">required..!
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="input_group">
+                                        <label>Purchase Date</label>
+                                        <input type="Date" name="Asset-title" formControlName="Purchase_Date"
+                                            class="form_control">
+                                    </div>
+                                    <div *ngIf="isSubmitted && formControls.Purchase_Date.errors"
+                                        class="ValidationError">
+                                        <div *ngIf="formControls.Purchase_Date.errors.required">required..!
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                            <form [formGroup]="sampleform">
+                                <div class="col-md-4 col-sm-6" *ngFor="let formData of FieldFetch" [ngSwitch]="true">
+                                    <div class="input_group">
+
+
+                                        <label for="{{formData.Name}}">{{formData.Name}}</label>
+
+
+                                        <input type="{{formData.FieldType}}" name="{{formData.Name}}"
+                                            class="form-control" *ngSwitchDefault [formControlName]="formData.Name"
+                                            placeholder="{{formData.placeholder}}">
+
+                                        <select [id]="formData.Name" [formControlName]="formData.Name"
+                                            *ngSwitchCase="formData.FieldType === 'list'" class="form-control">
+
+                                            <option [value]='0'>Select State</option>
+                                            <option *ngFor="let opt of formData.FieldVal" [value]="opt">
+                                                {{opt}}</option>
+                                        </select>
+
+
+
+                                        <!-- <div *ngSwitchCase="formData.f_Type === 'select'">
+                                                <div class="error-txt-msg mb-2"
+                                                    *ngIf="sampleform.controls[formData.Name].value == '0'"
+                                                    style="color: red;">Required field.</div>
+                                            </div> -->
+
+                                        <!-- <div class="error-txt-msg mb-2"
+                                                *ngIf="sampleform.controls[formData.f_Name].hasError('required')"
+                                                style="color: red;">Required field.</div>
+                                            <div class="error-txt-msg mb-2"
+                                                *ngIf="sampleform.controls[formData.f_Name].hasError('pattern')"
+                                                style="color: red;">Incorrect format.</div> -->
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="main_footer">
+                        <button class="Save_click" (click)="onSubmit()" type="submit"> Save Asset</button>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

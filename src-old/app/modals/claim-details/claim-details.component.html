@@ -1,0 +1,153 @@
+<table>
+
+  <tr>
+    <td colspan="2" align="center">
+      <b>Claim NO : {{row.Claim_Id}}</b>
+
+    </td>
+
+
+    <td *ngIf="row.claimType != '' " colspan="2" align="center">
+      <b>Claim Type : {{row.claimType}}</b>
+    </td>
+
+
+
+    <td colspan="4" align="center">
+      <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+    </td>
+  </tr>
+
+
+
+  <tbody>
+
+
+
+    <tr class="ValueTD">
+      <td colspan="6">Customer Details</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><b>Customer Mail</b>: {{row.Customer_email}}</td>
+      <td colspan="2"><b>Customer Mobile</b>: {{row.Customer_mobile}}</td>
+      <td colspan="2"><b>Reg No.</b>: {{row.registration_no}}</td>
+    </tr>
+
+  </tbody>
+  <tbody>
+
+
+
+    <tr class="ValueTD">
+      <td colspan="6">Intimator Details</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><b>Intimated To Insurer</b>: {{row.Intimated_To_Insurer}}</td>
+      <td colspan="2"><b>Claim Intimated By </b>: {{row.Claim_Intimated_By}}</td>
+      <td colspan="2"><b>Intimation Date Time </b>: {{row.Intimation_Date_Time}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Claim Intimation No </b>: {{row.Claim_Intimation_No}}</td>
+      <td colspan="2"><b>Intimator Name </b>: {{row.Intimator_Name}}</td>
+      <td colspan="2"><b>Intimator Contact No </b>: {{row.Intimator_Contact_No}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Alternate No</b>: {{row.Alternate_No}}</td>
+      <td colspan="2"><b>WhatsApp No </b>: {{row.WhatsApp_No}}</td>
+      <td colspan="2"><b>Mail Id </b>: {{row.Mail_Id}}</td>
+    </tr>
+
+  </tbody>
+  <tbody>
+
+    <tr class="ValueTD">
+      <td colspan="6">Accidental Details</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><b>Loss Type</b>: {{row.LossType}}</td>
+      <td colspan="2"><b>Cause Of Loss Type</b>: {{row.CauseOfLossType}}</td>
+      <td colspan="2"><b>Date Time Lose </b>: {{row.Date_Time_Lose}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Estimated Amount </b>: {{row.Estimated_Amount}}</td>
+      <td colspan="2"><b>Accident Garage Name </b>: {{row.Accident_Garage_Name}}</td>
+      <td colspan="2"><b>Accident Near LandMark </b>: {{row.Accident_Garage_Near_LandMark}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Garage Pincode</b>: {{row.Garage_Pincode}}</td>
+      <td colspan="2"><b>Garage State </b>: {{row.Garage_State_Id}}</td>
+      <td colspan="2"><b>Garage District </b>: {{row.Garage_District_Id}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Garage City</b>: {{row.Garage_City_Id}}</td>
+      <td colspan="2"><b>Fir Status </b>: {{row.Fir_Status}}</td>
+      <td colspan="2"><b>Tp Loss</b>: {{row.Tp_Status}}</td>
+    </tr>
+    <tr class="ValueTD">
+      <td colspan="6"><b>Fir Remark </b>: {{row.Fir_Remark}} </td>
+    </tr>
+    <tr class="ValueTD">
+      <td colspan="6"><b>Tp Remark </b>: {{row.Tp_Remark}} </td>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="row.LossType == 'OD'">
+
+    <tr class="ValueTD">
+      <td colspan="6">Driver Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Driver Name</b>: {{row.Driver_Name}}</td>
+      <td colspan="2"><b>Driver Contact No.</b>: {{row.Driver_Contact_No}}</td>
+      <td colspan="2"><b>Driver DL No. </b>: {{row.Driver_DL_No}}</td>
+    </tr>
+
+  </tbody>
+
+  <tbody>
+    <tr class="ValueTD">
+      <td colspan="6">Spot Survey Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Spot Survey Status</b>: {{row.Spot_Survey_Status}}</td>
+      <td colspan="2"><b>Spot Date Time.</b>: {{row.Spot_Survey_Date}} {{row.Spot_Survey_Time}}</td>
+      <td colspan="2"><b>Spot Survey Name </b>: {{row.Spot_Surveyor_Name}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Spot Survey Mobile</b>: {{row.Spot_Surveyor_Mobile}}</td>
+      <td colspan="2"><b>Spot Survey location</b>: {{row.Spot_Surveyor_location}}</td>
+      <td colspan="2"><b>Spot Pincode </b>: {{row.Spot_Pincode}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b> City </b>: {{row.Spot_City_Id}}</td>
+      <td colspan="2"><b> District</b>: {{row.Spot_District_Id}}</td>
+      <td colspan="2"><b>State</b>: {{row.Spot_State_Id}}</td>
+    </tr>
+  </tbody>
+
+  <tbody>
+    <tr class="ValueTD">
+      <td colspan="6">Survey Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Survey Status</b>: {{row.Survey_Status}}</td>
+      <td colspan="2"><b>Survey Type</b>: {{row.Survey_Type}}</td>
+      <td colspan="2"><b>Date-Time</b>: {{row.Survey_Date_Time}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Surveyor Name </b>: {{row.Surveyor_Name}}</td>
+      <td colspan="2"><b>Surveyor Mobile</b>: {{row.Surveyor_Mobile}}</td>
+      <td colspan="2"><b>Surveyor Mail </b>: {{row.Survey_Mail_Id}}</td>
+    </tr>
+
+  </tbody>
+
+  <tbody *ngIf="row.Reason_Delay_Intimation != '' || row.Reason_Delay_Intimation != null ">
+    <tr class="ValueTD">
+      <td colspan="6"><b>Reason Of deley Intimation </b>: {{row.Reason_Delay_Intimation}} </td>
+    </tr>
+  </tbody>
+</table>

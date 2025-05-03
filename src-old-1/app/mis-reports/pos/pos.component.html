@@ -1,0 +1,314 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">View POSP Report</div>
+          </div>
+
+          <div *ngIf="!hasAccess" class="error-message">
+            <div class="container" style="text-align: center;">
+              <img src="assets/Authorised.png" alt="">
+              <h4>{{ errorMessage }}</h4>
+            </div>
+
+          </div>
+
+          <div class="main_body main_card_height_scroll_withoutfooter"  *ngIf="hasAccess">
+            <div>
+              <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <a role="button" class="fa fa-filter"><span>Filters</span><i
+                      class="fa fa-angle-down pull-right"></i></a>
+                </button>
+              </div>
+            </div>
+
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+                <!-- filter  -->
+                <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+              </div>
+            </div>
+
+            <hr>
+            <!-- <div class="row">
+              <div class="col-sm-2">
+                <b>Total Record - </b>
+              </div>
+              <div class="col-sm-2">
+                <b> {{ this.Total}}</b>
+              </div>
+
+
+            </div> -->
+            
+            <!-- <div class=" mydiv table-responsive">
+
+              <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+
+                    <th>S.No</th>
+                    <th>Status</th>
+                    <th>POS ID</th>
+                    <th>Name / Mobile / Email</th>
+                    <th>RM Name</th>
+                    <th>POSP Location</th>
+                    <th>Create/Modified Date</th>
+                    <th>System Login Date</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{row.SrNo}}</td>
+                    <td>
+                      <label *ngIf="(row.Status =='0')" class="label label-success">New</label>
+                      <label *ngIf="(row.Status =='1')" class="label label-success">Verified</label>
+                      <label *ngIf="(row.Status =='2')" class="label label-success">Certified POS</label>
+                      <label *ngIf="(row.Status =='3')" class="label label-pending">Incomplete</label>
+                      <label *ngIf="(row.Status =='4')" class="label label-info">Under Training</label>
+                      <label *ngIf="(row.Status =='6')" class="label label-danger">Rejected</label>
+                      <br>
+                      <br>
+                      <label *ngIf="(row.BabpName !='0')" class="label label-success">{{row.BabpName}}</label>
+                      <br> -->
+
+
+                      <!-- previous commented already
+                      <div *ngIf="(row.Status =='2')">
+                                <a  href="javascript:void(0)" (click)="ViewGemsDetails(row.Id)" *ngIf="row.BmsUserPrime_Status==0 || row.BmsUserPrime_Status==2 || row.BmsUserPrime_Status==1">
+                                  <span style="width:100px;margin-top: 10px;background-color: #c2b3b3;" class="label label-success label-inline mr-2">Gems Status</span>
+                                </a>
+                                <br>
+                                <a  *ngIf="row.BmsUserPrime_Status==0" href="javascript:void(0)" (click)="AddPrimeRequest(row.BmsUserId)">
+                                  <span style="width:150px;margin-top: 10px;" class="label label-primary label-inline mr-2"> Prime Request </span>
+                                </a>
+          
+                                <a   *ngIf="row.BmsUserPrime_Status==2" >
+                                  <span style="width:150px;margin-top: 10px;" class="label label-danger label-inline mr-2">Prime Req. Rejected </span>
+                                </a>
+          
+                                <a   *ngIf="row.BmsUserPrime_Status==1">
+                                  <span style="width:150px;margin-top: 10px;" class="label label-info label-inline mr-2">Prime Req Pedning </span>
+                                </a>
+          
+                                <a   *ngIf="row.BmsUserPrime_Status==3" >
+                                  <span style="width:150px;margin-top: 10px;" class="label label-success label-inline mr-2">Prime Req Approved </span>
+                                </a>
+                              </div> previous commented already -->
+
+
+
+                    <!-- </td>
+                    <td> {{row.AgentId}} </td>
+                    <td> <b>Name - </b> {{row.Name}}<br> <b>Mobile - </b> {{row.Mobile_No}} <br> <b>Email
+                        -</b>{{row.Email}} <br>
+
+
+                      <b *ngIf="row.LSP != ''">LSP&nbsp;-&nbsp;<br></b>{{row.LSP}}
+                      <b *ngIf="row.SSOID != ''">SSOID&nbsp;-&nbsp;<br></b>{{row.SSOID}}
+                      <a *ngIf="WhatsAppCheck==false" href="https://web.whatsapp.com/send?phone={{row.Mobile_No}}&text="
+                        title="Share on whatsapp" target="_blank"><label _ngcontent-sqe-c9=""
+                          class="label label-success"><i _ngcontent-sqe-c9="" class="fa fa-whatsapp"></i> WhatsApp
+                        </label></a>
+
+
+                      <a *ngIf="WhatsAppCheck==true" href="whatsapp://send?phone={{row.Mobile_No}}&text="
+                        title="Share on whatsapp"><label _ngcontent-sqe-c9="" class="label label-success"><i
+                            _ngcontent-sqe-c9="" class="fa fa-whatsapp"></i> WhatsApp </label></a>
+
+                    </td>
+
+                    <td> {{row.Employee}}</td>
+
+                    <td> <b>State - </b> {{row.StateName}}<br> <b>City - </b> {{row.CityName}} <br> <b>Pincode
+                        -</b>{{row.PinCode}} <br></td>
+
+                    <td> <b>Create Date - </b> {{row.CreateDate}}<br> <b>Last Modified Date - </b>
+                      {{row.LastModifiedDate}}</td>
+
+                    <td>{{row.LastLogin | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                    <td>
+                      <a (click)="PospDetails(row.Id,'agent')"> <label class="label label-info">Details</label></a>
+
+                      <a *ngIf="row.Status === '2'" style="color:white;" class=" pull-right btn btn-primary btn-info"
+                        (click)="getdata(row.AgentId)" data-toggle="modal" data-target="#PospReportingDetails"> POSP
+                        Reporting</a>
+                      <br>
+
+ -->
+
+                      <!--  previous commented already
+                      <a *ngIf="row.Status == 2" (click)="PoliciesData(row.Id,'agent')"> <label
+                                    class="label label-info">Policy Data</label></a> //previous commented already-->
+
+
+<!-- 
+                    </td>
+
+                  </tr>
+
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+
+              </table>
+            </div> -->
+
+
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="custom_table tables_layout_design">
+
+                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+                <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                  <li class="table-row tablerow{{(i % 10) + 1}}" *ngFor="let row of dataAr; let i=index;">
+
+                    <!-- <span class="addon_tag_name">{{row.LOB_Name }}</span> -->
+
+                    <p class="life_status_label">
+                      <span>
+                        <a *ngIf="(row.Status =='0')" class="label label-success">New</a>
+                        <a  *ngIf="(row.Status =='1')" class="label label-success">Verified</a>
+                        <a  *ngIf="(row.Status =='2')" class="label label-success">Certified POS</a>
+                        <a  *ngIf="(row.Status =='3')" class="label label-pending">Incomplete</a>
+                        <a  *ngIf="(row.Status =='4')" class="label label-info">Under Training</a>
+                        <a  *ngIf="(row.Status =='6')" class="label label-danger">Rejected</a>
+
+                      </span>
+                    </p>
+
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15 mt_15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{row.SrNo}}</div>
+
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+
+                            <div>POSP</div>
+
+                            <strong class="fs_18"><span>{{row.Name}} {{row.AgentId ? '(' + row.AgentId + ')' : ''}}</span></strong>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Email</div>
+                            <strong class="fs_18" id="emailToCopy">{{row.Email}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Mobile</div>
+                            <strong class="fs_18">{{row.Mobile_No}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+                        <div class="label_chips mutual_fund_lob" *ngIf="row.Employee != ''">
+                          <span>RM - {{row.Employee}}</span>
+                        </div>
+                        <div class="label_chips real_estate_lob" *ngIf="row.StateName != ''">
+                          <span>State : {{row.StateName}}</span>
+                        </div>
+                        <div class="label_chips mutual_fund_lob" *ngIf="row.CityName != ''">
+                          <span>City - {{row.CityName}}</span>
+                        </div>
+                        <div class="label_chips mutual_fund_lob" *ngIf="row.PinCode != ''">
+                          <span>Pincode - {{row.PinCode}}</span>
+                        </div>
+                        <div class="label_chips mutual_fund_lob" *ngIf="row.CreateDate != ''">
+                          <span>Create Date -  {{row.CreateDate}}</span>
+                        </div>
+                        <div class="label_chips mutual_fund_lob" *ngIf="row.LastModifiedDate != ''">
+                          <span>Last Modified Date - {{row.LastModifiedDate}}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="last_row_div" style="border: 0px;" *ngIf="row.LSP != '' || row.SSOID != ''">
+                      <div class="d_flex custon-234">
+                        <div class="label_chips health_lob" *ngIf="row.LSP != ''">
+                          <span>LSP - {{row.LSP}}</span>
+                        </div>
+                        <div class="label_chips life_lob" *ngIf="row.SSOID != ''">
+                          <span>SSO ID- {{row.SSOID}}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="last_row">
+                      <div class="effective_date">
+                        <div class="d_flex">
+                          <a *ngIf="WhatsAppCheck==false" href="https://web.whatsapp.com/send?phone={{row.Mobile_No}}&text=" class="btn btnsuccess" title="Share on whatsapp" target="_blank"><i class="fa fa-whatsapp"></i><span>Share on whatsapp</span></a>
+                          <a *ngIf="WhatsAppCheck==true" href="whatsapp://send?phone={{row.Mobile_No}}&text=" class="btn btnsuccess" title="Share on whatsapp"><i class="fa fa-whatsapp"></i><span>Share on whatsapp</span></a>
+                          <label *ngIf="(row.BabpName !='0')" class="label label-success" style="height: 25px;"><span style="position: relative; top: 6px;">{{row.BabpName}}</span></label>
+                        </div>
+                      </div>
+
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                          <button class="btn btn-success" (click)="PospDetails(row.Id,'agent')" style="padding: 2px 10px; margin-right: 5px;">Details</button>
+                          <button class="btn btn-info" *ngIf="row.Status === '2'" (click)="getdata(row.AgentId)" data-toggle="modal" data-target="#PospReportingDetails" style="padding: 2px 10px;">POSP Reporting</button>
+                      </div>
+
+                    </div>
+                  </li>
+                </ul>
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="PospReportingDetails" tabindex="-1" role="dialog" aria-labelledby="PospReportning"
+    aria-hidden="true">
+    <div class="modal-dialog pos-modal-dialog" role="document">
+      <div class="pos-align">
+        <!-- <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Change POSP RM</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div> -->
+        <div [innerHTML]="dataArra">
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>

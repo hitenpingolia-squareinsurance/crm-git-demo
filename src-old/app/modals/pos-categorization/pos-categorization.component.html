@@ -1,0 +1,33 @@
+<form [formGroup]="AddForm" (ngSubmit)="SubmitForm()">
+  <table class="table table-bordered">
+    <thead>
+     <tr>
+      <th style="text-align: center;">
+        Apply to Aspirant/Prospect
+        <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+      </th>
+     </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+            <ng-multiselect-dropdown class="form-control" name="Category" placeholder="Select Circle" [data]="CircleAr" formControlName="Category" [settings]="dropdownSettings" > </ng-multiselect-dropdown>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <textarea class="form-control" formControlName="Remark"></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+
+  </form>

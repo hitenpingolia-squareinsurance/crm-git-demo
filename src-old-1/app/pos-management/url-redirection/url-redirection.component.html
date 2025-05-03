@@ -1,0 +1,280 @@
+<div class="close_lead_btn"><button (click)="CloseModel11()" type="button"
+    class="close closeModelButton">&times;</button>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav_tabs">
+      <li class="breadcrumb_item">Become ePartner</li>
+      <li class="breadcrumb-item button_li">
+        <a href="javascript:void(0);" (click)="MailLogs()" class="btn btn-primary mr-2">Mail Logs</a>&nbsp;&nbsp;
+        <a href="javascript:void(0);" *ngIf="this.type == 1" (click)="SendAgreementMail(this.id,this.agentCode)"
+          class="btn btn-success">Resend Mail</a>
+      </li>
+    </ul>
+    <form (ngSubmit)="submit()" [formGroup]="UrlRedirectionForm">
+      <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+        <div class="tabs_form">
+          <div class="row_cs_new">
+            <div class="col_row_cs">
+              <div class="input_group">
+                <label class="form_control d_flex flex_Center flex_Middel fileUpload_btn"
+                  [ngClass]="(this.agreementmail==1 ? 'ImageUploaded' : 'else' )">
+                  <span class="label label-info" *ngIf="this.agreementDocument != '' ">
+                    <a style="color: white;" href="{{this.agreementDocument}}" target="_blank"> View Agreement</a>
+                  </span>
+                  <input type="file" formControlName="agreementDoc" (change)="UploadDocs($event,'agreement')"
+                    style="display:none;">
+                  <i class="fas fa-user-alt"><b>Upload Agreement</b></i>
+                </label>
+                <div *ngIf="isSubmitted && formControls.agreementDoc.errors" class="Validationerrors">
+                  <div *ngIf="formControls.agreementDoc.errors.required"><span style="color: red;">Please choose
+                      file!</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="col_row_cs">
+              <div class="input_group">
+                <label for="CustomerName">Agreement Tenure</label>
+                <div class="position_relative">
+                  <span class="custom_radio_button">
+                    <input id="1" type="radio" value="1" name="agreementYear" formControlName="agreementYear">
+                    <label for="1">1 Y</label>
+                  </span>
+                  <span class="custom_radio_button">
+                    <input id="2" type="radio" value="2" name="agreementYear" formControlName="agreementYear">
+                    <label for="2">2 Y</label>
+                  </span>
+                  <span class="custom_radio_button">
+                    <input id="3" type="radio" value="3" name="agreementYear" formControlName="agreementYear">
+                    <label for="3">3 Y</label>
+                  </span>
+                </div>
+                <div *ngIf="isSubmitted && formControls.agreementYear.errors" class="Validationerrors">
+                  <div *ngIf="formControls.agreementYear.errors.required"><span style="color: red;">Please select
+                      agreement year !</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col_row_cs">
+              <div class="input_group">
+                <label for="state">Agreement Start Date</label>
+                <input type="date" formControlName="agreementDate" class="form_control" placeholder="Select Date">
+                <div *ngIf="isSubmitted && formControls.agreementDate.errors" class="Validationerrors">
+                  <div *ngIf="formControls.agreementDate.errors.required"><span style="color: red;">Please select
+                      date!</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col_row_cs">
+              <div class="input_group">
+                <div class="input_group">
+                  <label for="CustomerName">Reward Type</label>
+                  <div class="position_relative">
+                    <span class="custom_radio_button">
+                      <input id="NOPO" type="radio" value="NOPO" name="type" formControlName="type">
+                      <label for="NOPO">NO-PO</label>
+                    </span>
+
+                    <span class="custom_radio_button">
+                      <input id="IRDA" type="radio" value="IRDA" name="type" formControlName="type">
+                      <label for="IRDA">IRDA</label>
+                    </span>
+                    <span class="custom_radio_button">
+                      <input id="INFRA" type="radio" value="INFRA" name="type" formControlName="type">
+                      <label for="INFRA">INFRA</label>
+                    </span>
+
+                    
+                    <span class="custom_radio_button">
+                      <input id="PO" type="radio" value="PO" name="type" formControlName="type">
+                      <label for="PO">PO</label>
+                    </span>
+                    <span class="custom_radio_button">
+                      <input id="Lead Generation" type="radio" value="Lead Generation" name="type"
+                        formControlName="type">
+                      <label for="Lead Generation">Lead Generation</label>
+                    </span>
+                  </div>
+                  <div *ngIf="isSubmitted && formControls.type.errors" class="Validationerrors">
+                    <div *ngIf="formControls.type.errors.required"><span style="color: red;">Please select type !</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+            <div class="col_row_cs">
+              <div class="input_group">
+                <label for="CustomerName">Header Visibility</label>
+                <div class="position_relative">
+                  <span class="custom_radio_button">
+                    <input id="yes1" type="radio" value="0" name="headerVisible" formControlName="headerVisible">
+                    <label for="yes1">Yes</label>
+                  </span>
+                  <span class="custom_radio_button">
+                    <input id="no1" type="radio" value="1" name="headerVisible" formControlName="headerVisible">
+                    <label for="no1">No</label>
+                  </span>
+                </div>
+                <div *ngIf="isSubmitted && formControls.headerVisible.errors" class="Validationerrors">
+                  <div *ngIf="formControls.headerVisible.errors.required"><span style="color: red;">Please choose header
+                      visibility!</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col_row_cs">
+              <div class="input_group">
+                <label for="state">Title</label>
+                <input type="text" formControlName="title" class="form_control" placeholder="Enter Title">
+                <div *ngIf="isSubmitted && formControls.title.errors" class="Validationerrors">
+                  <div *ngIf="formControls.title.errors.required"><span style="color: red;">Please enter
+                      title !</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col_row_cs">
+              <div class="input_group">
+                <label for="state">Confirm Margin</label>
+                <input type="text" formControlName="confirmMargin" class="form_control" placeholder="Enter Margin">
+                <div *ngIf="isSubmitted && formControls.confirmMargin.errors" class="Validationerrors">
+                  <div *ngIf="formControls.confirmMargin.errors.required"><span style="color: red;">Please enter
+                      confirm margin!</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col_row_cs">
+              <div class="input_group">
+                <label for="state">Quote Api</label>
+                <input type="text" formControlName="quoteApi" class="form_control" placeholder="Enter URL">
+                <div *ngIf="isSubmitted && formControls.quoteApi.errors" class="Validationerrors">
+                  <div *ngIf="formControls.quoteApi.errors.required">
+                    <span style="color: red;">Please enter Quote api!</span>
+                  </div>
+                  <div *ngIf="formControls.quoteApi.errors.pattern">
+                    <span style="color: red;">Please enter Valid Url!</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col_row_cs">
+              <div class="input_group">
+                <label for="state">Policy Details Api</label>
+                <input type="text" class="form_control" formControlName="policyDetailsApi">
+                <div *ngIf="isSubmitted && formControls.policyDetailsApi.errors" class="Validationerrors">
+                  <div *ngIf="formControls.policyDetailsApi.errors.pattern"><span style="color: red;">Please enter
+                      Valid Url!</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="col_row_cs">
+              <div class="input_group">
+                <div class="input_group">
+                  <label for="CustomerName">API Key</label>
+                  <div class="position_relative">
+                    <span class="custom_radio_button">
+                      <input id="yes" type="radio" value="yes" name="apikeyyesorno" formControlName="apikeyyesorno"
+                        [checked]="apikeyvalue !== '' ">
+                      <label for="yes">Yes</label>
+                    </span>
+                    <span class="custom_radio_button">
+                      <input id="no" type="radio" value="no" name="apikeyyesorno" (click)="ChangeStatus()"
+                        formControlName="apikeyyesorno" [checked]="apikeyvalue === '' ">
+                      <label for="no">No</label>
+                    </span>
+                  </div>
+                  <div *ngIf="isSubmitted && formControls.apikeyyesorno.errors" class="Validationerrors">
+                    <div *ngIf="formControls.apikeyyesorno.errors.required"><span style="color: red;">Please select type
+                        !</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col_row_cs">
+              <div class="input_group">
+                <label for="state">Portal Url</label>
+                <input type="text" formControlName="source" class="form_control" placeholder="Enter URL">
+                <div *ngIf="isSubmitted && formControls.source.errors" class="Validationerrors">
+                  <div *ngIf="formControls.source.errors.pattern"><span style="color: red;">Please enter
+                      Valid Url!</span></div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col_row_cs" *ngIf="this.UrlRedirectionForm.value['apikeyyesorno'] === 'yes'">
+              <div class="input_group">
+                <label for="state">Api Key Value</label>
+                <input type="text" formControlName="apiKey" class="form_control" placeholder="API Key Value">
+                <div *ngIf="isSubmitted && formControls.apiKey.errors" class="Validationerrors">
+                  <div *ngIf="formControls.apiKey.errors.required"><span style="color: red;">Please enter
+                      Quote api!</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col_row_cs">
+              <div class="input_group">
+                <label for="state">Content Type</label>
+                <ng-multiselect-dropdown class="form-control" [data]="content" formControlName="contenttype"
+                  [(ngModel)]="contentType" [settings]="dropdownSettingsType">
+                </ng-multiselect-dropdown>
+                <!-- <div *ngIf="isSubmitted && formControls.contenttype.errors" class="Validationerrors">
+                  <div *ngIf="formControls.contenttype.errors.required"><span style="color: red;">Please enter
+                      Quote api!</span>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+
+
+            <div class="col_row_cs">
+              <div class="input_group">
+                <label for="CustomerName">OTP Required</label>
+                <div class="position_relative">
+                  <span class="custom_radio_button">
+                    <input id="otprequiredyes" type="radio" value="1" name="otprequired" formControlName="otprequired">
+                    <label for="otprequiredyes">Yes</label>
+                  </span>
+                  <span class="custom_radio_button">
+                    <input id="otprequiredno" type="radio" value="0" name="otprequired" formControlName="otprequired">
+                    <label for="otprequiredno">No</label>
+                  </span>
+                </div>
+                <!-- <div *ngIf="isSubmitted && formControls.otprequired.errors" class="Validationerrors">
+                  <div *ngIf="formControls.otprequired.errors.required"><span style="color: red;">Please choose header
+                      visibility!</span>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+
+
+
+
+          </div>
+        </div>
+        <div class="d_flex flex_End">
+          <button type="submit" class="btn btn-primary mr-2">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

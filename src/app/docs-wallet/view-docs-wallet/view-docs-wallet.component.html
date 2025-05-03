@@ -1,0 +1,131 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header d_flex flex_Equal flex_Middel">
+            <div class="header_title">Doc's Wallet</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div class="btn_list_group">
+              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                  <div class="row">
+                    <div class="col-md-9">&nbsp;</div>
+                    <div class="col-md-3">
+                      <div class="dsr-fillter">
+                        <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                          data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          <a role="button" class="fa fa-filter"><span>Filters</span><i
+                              class="fa fa-angle-down pull-right"></i></a>
+                        </button>
+                        <button class=" btn btn-info2" (click)="AddProductDetailsComponent('Add',0)">
+                          <a role="button" class="fa fa-plus" style="margin-right: 2px;">&nbsp;&nbsp;<span>Add
+                              Doc's</span></a>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+
+                      <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+                      <!-- <button type="submit" class="btn btn-info" id="search" style="font-size: small;" value="Search"
+                       (click)="onSearch"> <i class="fa fa-search">
+                        Search</i> </button> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+                <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                  <li class="table-row" *ngFor="let row of dataAr">
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{row.SrNo}}</div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Type </div>
+                            <strong class="fs_18">{{row.type}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Policy No.</div>
+                            <strong class="fs_18">{{row.policyno}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Vehicle No.</div><strong class="fs_18">{{row.vehicleno}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+                        <div class="label_chips finance_lob">
+                          <span>Policy Expiry : {{row.expirydate}}</span>
+                        </div>
+                        <div class="label_chips non_motor_lob">
+                          <span>Client Name : {{ row.clientname }}</span>&nbsp;&nbsp;
+                        </div>
+                        <div class="label_chips motor_lob">
+                          <span>Client Contact : {{ row.clientcontact }}</span>&nbsp;&nbsp;
+                        </div>
+
+                        <div class="label_chips motor_lob">
+                          <span>Created date : {{ row.insert_date}}</span>
+                        </div>
+                      </div>
+                    </div>
+                       
+
+                    <div class="last_row">
+                      <div class="d_flex effective_date">
+                        <div class="date_text">
+                          <span class="fs_12">Engine/Chassis No. </span>
+                          <span class="fs_12">{{row.engineno}}</span>
+                        </div>
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                        <a style="cursor: pointer;" (click)="AddProductDetailsComponent('Edit',row.Id)"
+                          class=" mr_5 btn-bg">Edit</a>
+                        <a style="cursor: pointer;" (click)="AddProductDetailsComponent('Document',row.Id)"
+                          class=" mr_5 btn-bg1">View</a>
+                        <a style="cursor: pointer;" (click)="DeleteRequest(row.Id, row.delete_status)"
+                          class=" mr_5 btn-bg2">Delete</a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

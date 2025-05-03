@@ -1,0 +1,41 @@
+
+
+
+
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th colspan="2"><p>Are you sure that you want to Cancle SR? #{{SR_No}}</p></th>
+        
+      </tr>
+    </thead>
+    <tbody> 
+		
+	<tr>
+        <td colspan="2"><input type="text" [(ngModel)]="CancelRemark" class="form-control" placeholder="Cancel Remark"></td>
+      </tr>
+	  
+	  
+      <tr>
+        <td><input type="text" [(ngModel)]="Emp_Id" class="form-control" placeholder="Employee Code"></td>
+         <td><input type="password" [(ngModel)]="Emp_Pass" class="form-control" placeholder="Employee Password"></td>
+      </tr>
+	  
+      <tr>
+		<td>
+			<label>
+			<input type="checkbox" [(ngModel)]="Is_Remember" name="remember"> Remember me
+		  </label>
+		</td>
+		
+        <td> 
+			<input (click)="VerifyAndUpdate()" type="button" class="btn btn-info" value="Verify & Update">
+			&nbsp;&nbsp;
+				<input (click)="CloseModel()" type="button" class="btn btn-danger" value="Cancel">
+				
+		</td>
+      </tr>
+    
+    </tbody>
+  </table>
+  

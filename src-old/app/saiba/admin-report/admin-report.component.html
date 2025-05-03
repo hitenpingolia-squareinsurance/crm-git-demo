@@ -1,0 +1,186 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">{{ActivePage}}
+                        </div>
+                        <div *ngIf="this.urlSegment === 'admin-report'">
+                            <a class="btn btn-info" data-toggle="modal" data-target="#exampleModalbAbp">Add File
+                                Report</a>
+                            <a class="btn btn-info" data-toggle="modal" data-target="#BabpModelUpdatesync">Add Sync
+                                Report</a>
+                        </div>
+                    </div>
+
+
+
+                    <div class="main_body main_card_height_scroll_withoutfooter"
+                        *ngIf="this.urlSegment === 'admin-report'">
+                        <hr>
+                        <!--begin: Datatable-->
+                        <div class="table-responsive mysrdiv" id="mydiv">
+                            <table datatable [dtOptions]="dtOptions"
+                                class="row-border hover table table-bordered table-hover table-checkable table-responsive"
+                                id="kt_datatable" style="margin-top: 13px !important">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 5%;">Sr.No.</th>
+                                        <th style="width: 15%;">Download Uploaded File</th>
+                                        <th style="width: 15%;">Download Generated File</th>
+                                        <th style="width: 15%;">Download Date/Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr; let i=index;">
+                                        <td>{{ row.SrNo }}.</td>
+                                        <!-- <td>{{ row.user_Name }}</td> -->
+                                        <td><a [href]="row.uploaded_file" target="_blank">click to Download Uploaded
+                                                File</a></td>
+                                        <td><a [href]="row.generated_file" target="_blank">click to Download Generated
+                                                File</a></td>
+                                        <td>{{ row.created_date }}</td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="5" align="center">No data available !</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+                        <!--end: Datatable-->
+                        <!-- /.col -->
+                    </div>
+
+
+                    <div class="main_body main_card_height_scroll_withoutfooter"
+                        *ngIf="this.urlSegment === 'admin-business-report'">
+                        <hr>
+                        <!--begin: Datatable-->
+                        <div class="table-responsive mysrdiv" id="mydiv">
+                            <table datatable [dtOptions]="dtOptions"
+                                class="row-border hover table table-bordered table-hover table-checkable table-responsive"
+                                id="kt_datatable" style="margin-top: 13px !important">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 5%;">Sr.No.</th>
+                                        <th style="width: 15%;">Download Uploaded File</th>
+                                        <th style="width: 15%;">Download Generated File</th>
+                                        <th style="width: 15%;">Download Date/Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr; let i=index;">
+                                        <td>{{ row.SrNo }}.</td>
+                                        <!-- <td>{{ row.user_Name }}</td> -->
+                                        <td><a [href]="row.uploaded_file" target="_blank">click to Download Uploaded
+                                                File</a></td>
+                                        <td><a [href]="row.generated_file" target="_blank">click to Download Generated
+                                                File</a></td>
+                                        <td>{{ row.created_date }}</td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="5" align="center">No data available !</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+                        <!--end: Datatable-->
+                        <!-- /.col -->
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</section>
+
+
+<div class="modal fade" id="exampleModalbAbp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>Update Mapping</b></h5>
+                <button type="button" id="close_pop" class="close closeModelButton" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="submit()" [formGroup]="AddRegulartyForm">
+                    <div class="popup-content-body">
+                        <div class="row popup-form">
+                            <div class="col-md-6 next" style="margin-top:25px">
+                                <a class=" form-control  btn btn-primary" style="cursor:pointer;"
+                                    href="https://crmapi.squareinsurance.in/uploads/report/UploadRegulartyReport.csv"
+                                    download="">Download</a>
+                            </div>
+                            <div class="col-md-6 next">
+                                <label for="state">File</label>
+                                <input type="file" class="form-control" (change)="UploadDocs($event,'file')"
+                                    formControlName="file">
+                                <div *ngIf="isSubmitted && formControls.file.errors" class="Validationerrors">
+                                    <div *ngIf="formControls.file.errors.required"><span style="color: red;">Please
+                                            Choose
+                                            file!</span></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="button-div-yes-no next" align="right" style="margin-top: 10px;">
+                                <button type="button" class="btn btn-danger">Close</button>&nbsp;
+                                <button type="submit" class="btn btn-primary">Submit</button>&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal -->
+<div class="modal fade" id="BabpModelUpdatesync" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>Update Sync Mapping</b></h5>
+                <button type="button" id="close_pop" class="close closeModelButton" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="submit_sync_request()" [formGroup]="AddRegulartyFormSecoundary">
+                    <div class="popup-content-body">
+                        <div class="row popup-form">
+                            <div class="col-sm-12">
+                                <input type="text" placeholder="Date OR Date-Range" class="form-control"
+                                    formControlName="DateOrDateRange" bsDaterangepicker
+                                    [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }" required>
+                                <span *ngIf="isSubmitted && formControlsSync.DateOrDateRange.errors"
+                                    class="ValidationError">
+                                    <span *ngIf="formControlsSync.DateOrDateRange.errors.required">Date is
+                                        required</span></span>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="button-div-yes-no next" align="right" style="margin-top: 10px;">
+                                <button type="button" class="btn btn-danger">Close</button>&nbsp;
+                                <button type="submit" class="btn btn-primary">Submit</button>&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

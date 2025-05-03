@@ -1,0 +1,32 @@
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #2b2a2a;
+  text-align: left;
+  padding: 8px;
+}
+ .TDHeading{
+	background-color: #dddddd;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+    border: 1px solid #2b2a2a;
+}
+
+i.fa.fa-plus{
+  float: right;
+    font-size: 18px;
+    color: #337ab7;
+}
+
+i.fa.fa-minus{
+  float: right;
+    font-size: 18px;
+    color: #337ab7;
+}

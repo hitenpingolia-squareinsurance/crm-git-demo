@@ -1,0 +1,407 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+  <!-- Main content -->
+  <section class="content">
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <!-- USERS LIST -->
+        <div class="box box-info" style="margin-bottom: 20px;">
+          <div class="box-header with-border">
+            <h3 class="box-title">{{surveyDetails.surveyId}}</h3>
+            <div class="box-tools pull-right btn-right-side">
+              <a (click)="openDialog(surveyDetails.surveyId)"><span class="label label-Details">Details</span></a>
+            </div>
+          </div>
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-bordered ">
+              <thead>
+                <tr>
+                  <th colspan="5" class="ValueTD" style="text-align: center;"><b>Product And Vehicle Details</b></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="2"><b>Purpose For Pre-Inspection</b>: {{surveyDetails.surveyType}}</td>
+                  <td colspan="2"><b>Policy/Sr/Vehicle Number</b>: {{surveyDetails.policySrNo}}</td>
+                  <td colspan="1"><b>Product</b>: {{surveyDetails.product}}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>Make</b>: {{surveyDetails.make}}</td>
+                  <td colspan="2"><b>Model</b>: {{surveyDetails.model}}</td>
+                  <td colspan="1"><b>Variant</b>: {{surveyDetails.variant}}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>Registrastion Number</b>: {{surveyDetails.registrationNo}}</td>
+                  <td colspan="2"><b>Rto</b>: {{surveyDetails.rto}}</td>
+                  <td colspan="1"><b>Manufacture Year</b>: {{surveyDetails.manufactureYear}}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>Engine Nnumber</b>: {{surveyDetails.engineNo}}</td>
+                  <td colspan="2"><b>Chassis Number</b>: {{surveyDetails.chassisNo}}</td>
+                  <td colspan="1"><b>Remarks</b>: {{surveyDetails.remarks}}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>Creation Date</b>: {{surveyDetails.insert_date}}</td>
+                  <td colspan="2"><b>Insurance Company</b>: {{CompanyName}}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Self img Show  -->
+
+            <div class="row mt_20" *ngIf="surveyDetails.inspectionMode=='Self'">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>View Image</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="Details.front_car_image !=null">
+                    <td>front_car_image</td>
+                    <td><strong class="fs_18"><span class="link"></span><label class="label label-info">
+                          <a style="color: white;"
+                            href="{{'https://squarebweb-documents.s3.ap-south-1.amazonaws.com/'+Details.front_car_image}}"
+                            target="_blank">
+                            View</a></label></strong></td>
+                  </tr>
+                  <tr *ngIf="Details.car_left_image !=null">
+                    <td>car_left_image</td>
+                    <td><strong class="fs_18"><span class="link"></span><label class="label label-info">
+                          <a style="color: white;"
+                            href="{{'https://squarebweb-documents.s3.ap-south-1.amazonaws.com/'+Details.car_left_image}}"
+                            target="_blank">
+                            View</a></label></strong></td>
+                  </tr>
+                  <tr *ngIf="Details.car_right_image !=null">
+                    <td>car_right_image</td>
+                    <td><strong class="fs_18"><span class="link"></span><label class="label label-info">
+                          <a style="color: white;"
+                            href="{{'https://squarebweb-documents.s3.ap-south-1.amazonaws.com/'+Details.car_right_image}}"
+                            target="_blank">
+                            View</a></label></strong></td>
+                  </tr>
+                  <tr *ngIf="Details.car_back_image !=null">
+                    <td>car_back_image</td>
+                    <td><strong class="fs_18"><span class="link"></span><label class="label label-info">
+                          <a style="color: white;"
+                            href="{{'https://squarebweb-documents.s3.ap-south-1.amazonaws.com/'+Details.car_back_image}}"
+                            target="_blank">
+                            View</a></label></strong></td>
+                  </tr>
+                  <tr *ngIf="Details.vehicle_chassis !=null">
+                    <td>vehicle_chassis</td>
+                    <td><strong class="fs_18"><span class="link"></span><label class="label label-info">
+                          <a style="color: white;"
+                            href="{{'https://squarebweb-documents.s3.ap-south-1.amazonaws.com/'+Details.vehicle_chassis}}"
+                            target="_blank">
+                            View</a></label></strong></td>
+                  </tr>
+                  <tr *ngIf="Details.vehicle_engine_department !=null">
+                    <td>vehicle_engine_department</td>
+                    <td><strong class="fs_18"><span class="link"></span><label class="label label-info">
+                          <a style="color: white;"
+                            href="{{'https://squarebweb-documents.s3.ap-south-1.amazonaws.com/'+Details.vehicle_engine_department}}"
+                            target="_blank">
+                            View</a></label></strong></td>
+                  </tr>
+                  <tr *ngIf="Details.undercarriage !=null">
+                    <td>undercarriage</td>
+                    <td><strong class="fs_18"><span class="link"></span><label class="label label-info">
+                          <a style="color: white;"
+                            href="{{'https://squarebweb-documents.s3.ap-south-1.amazonaws.com/'+Details.undercarriage}}"
+                            target="_blank">
+                            View</a></label></strong></td>
+                  </tr>
+                  <tr *ngIf="Details.front_mirror !=null">
+                    <td>front_mirror</td>
+                    <td><strong class="fs_18"><span class="link"></span><label class="label label-info">
+                          <a style="color: white;"
+                            href="{{'https://squarebweb-documents.s3.ap-south-1.amazonaws.com/'+Details.front_mirror}}"
+                            target="_blank">
+                            View</a></label></strong></td>
+                  </tr>
+                  <tr *ngIf="Details.inside_mirror !=null">
+                    <td>inside_mirror</td>
+                    <td><strong class="fs_18"><span class="link"></span><label class="label label-info">
+                          <a style="color: white;"
+                            href="{{'https://squarebweb-documents.s3.ap-south-1.amazonaws.com/'+Details.inside_mirror}}"
+                            target="_blank">
+                            View</a></label></strong></td>
+                  </tr>
+                  <tr *ngIf="Details.vehicle_meter !=null">
+                    <td>vehicle_meter</td>
+                    <td><strong class="fs_18"><span class="link"></span><label class="label label-info">
+                          <a style="color: white;"
+                            href="{{'https://squarebweb-documents.s3.ap-south-1.amazonaws.com/'+Details.vehicle_meter}}"
+                            target="_blank">
+                            View</a></label></strong></td>
+                  </tr>
+                  <tr *ngIf="Details.myself_and_car !=null">
+                    <td>myself_and_car</td>
+                    <td><strong class="fs_18"><span class="link"></span><label class="label label-info">
+                          <a style="color: white;"
+                            href="{{'https://squarebweb-documents.s3.ap-south-1.amazonaws.com/'+Details.myself_and_car}}"
+                            target="_blank">
+                            View</a></label></strong></td>
+                  </tr>
+                  <tr *ngIf="Details.One_minute_car_video !=null">
+                    <td>One_minute_car_video</td>
+                    <td><strong class="fs_18"><span class="link"></span><label class="label label-info">
+                          <a style="color: white;"
+                            href="{{'https://squarebweb-documents.s3.ap-south-1.amazonaws.com/'+Details.One_minute_car_video}}"
+                            target="_blank">
+                            View</a></label></strong></td>
+                  </tr>
+                  <tr *ngIf="Details.last_meter !=null">
+                    <td>last_meter</td>
+                    <td><strong class="fs_18"><span class="link"></span><label class="label label-info">
+                          <a style="color: white;"
+                            href="{{'https://squarebweb-documents.s3.ap-south-1.amazonaws.com/'+Details.last_meter}}"
+                            target="_blank">
+                            View</a></label></strong></td>
+                  </tr>
+                  <tr *ngIf="Details.RC_photo !=null">
+                    <td>RC_photo</td>
+                    <td><strong class="fs_18"><span class="link"></span><label class="label label-info">
+                          <a style="color: white;"
+                            href="{{'https://squarebweb-documents.s3.ap-south-1.amazonaws.com/'+Details.RC_photo}}"
+                            target="_blank">
+                            View</a></label></strong></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+        <!--/.box -->
+      </div>
+      <!-- /.col -->
+
+      <div class="col-md-6">
+        <!-- USERS LIST -->
+        <div class="box box-info" style="margin-bottom: 20px;">
+          <div class="box-header with-border">
+            <h3 class="box-title">{{surveyDetails.surveyId}}</h3>
+            <div class="box-tools pull-right btn-right-side">
+              <!-- <a (click)="openDialog(surveyDetails.surveyId)"><span class="label label-Details">Details</span></a> -->
+            </div>
+          </div>
+          <div class="box-body table-responsive no-padding">
+
+            <table class="table table-hover">
+              <tbody>
+                <tr>
+                  <td><strong>Inspection Mode</strong></td>
+                  <td>{{surveyDetails.inspectionMode}} </td>
+                </tr>
+                <tr *ngIf="rcFrontUrl != ''">
+                  <td><strong>Rc Front</strong></td>
+                  <td><a (click)="ViewDocument(rcFrontUrl)" href="javascript:;">Click to View</a> </td>
+                </tr>
+
+                <tr *ngIf="rcBackUrl != ''">
+                  <td><strong>Rc Back</strong></td>
+                  <td><a (click)="ViewDocument(rcBackUrl)" href="javascript:;">Click to View</a> </td>
+                </tr>
+
+                <tr *ngIf="quotationDocUrl != ''">
+                  <td><strong>Quotation Document</strong></td>
+                  <td><a (click)="ViewDocument(quotationDocUrl)" href="javascript:;">Click to View</a> </td>
+                </tr>
+
+                <tr *ngIf="InspectionReportUrl != ''">
+                  <td><strong>Inspection Report</strong></td>
+                  <td><a (click)="ViewDocument(InspectionReportUrl)" href="javascript:;">Click to View</a> </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Current Status </strong></td>
+                  <td>
+                    <span class="btn btn-primaryx" style="color: white;" *ngIf="(curStatus == 'Pending')">Pending</span>
+                    <span class="btn btn-warningx" style="color: white;" *ngIf="(curStatus == 'In Process')">In
+                      Process</span>
+                    <span class="btn btn-successx" style="color: white;"
+                      *ngIf="(curStatus == 'Recommended')">Recommended</span>
+                    <span class="btn btn-dangerx" style="color: white;"
+                      *ngIf="(curStatus == 'Rejected')">Rejected</span>
+                    <span class="btn btn-dangerx" style="color: white;"
+                      *ngIf="(curStatus == 'Not-Recommended')">Not-Recommended</span>
+
+                    <span class="btn btn-primaryx" style="color: white;" *ngIf="(curStatus == 'Refer To Insurer')">Refer
+                      To Insurer</span>
+
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Current Remarks </strong></td>
+                  <td>{{currentRemark}}</td>
+                </tr>
+
+                <tr>
+                  <td><strong>Creation Date/Time</strong></td>
+                  <td>{{row.lastActionDate}}</td>
+                </tr>
+
+
+              </tbody>
+            </table>
+
+          </div>
+
+        </div>
+        <!--/.box -->
+      </div>
+      <!-- /.col -->
+
+
+
+      <div class="col-md-6">
+        <!-- DIRECT CHAT -->
+        <div class="box box-info direct-chat direct-chat-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">Inspection Discussion</h3>
+
+            <div class="box-tools pull-right">
+
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <!-- Conversations are loaded here -->
+            <div #scrollframe id="directmessages" class="direct-chat-messages frame" (scroll)="scrolled($event)"
+              style="height: 76vh;">
+
+              <div *ngFor="let m of Messages;" class="direct-chat-msg {{m.MainClassName}} item" #item>
+                <div class="direct-chat-info clearfix">
+                  <span class="direct-chat-name pull-{{m.ClassName}}">{{m.Name}}</span>
+                  <span class="direct-chat-timestamp pull-{{m.DateTimeClassName}}">{{m.DateTime}}</span>
+                </div>
+                <!-- /.direct-chat-info -->
+                <img class="direct-chat-img" src="assets/dist/img/user2-160x160.png">
+                <!-- /.direct-chat-img -->
+                <!-- <div *ngIf="m.Message != ''" class="direct-chat-text">
+                  {{m.Message}}
+                </div> -->
+                <div *ngIf="m.Message != ''" class="direct-chat-text" [innerHTML]="m.Message">
+                </div>
+                <div *ngIf="m.Is_Attachement == '1'" class="attachment">
+                  <h6>Attachments:</h6>
+
+                  <a href="javascript:void" (click)="ViewDocument(m.Attachment_Url)">
+                    <p class="filename">
+                      {{m.Attachment_Name}}
+                    </p>
+                  </a>
+                </div>
+                <!-- /.direct-chat-text -->
+              </div>
+            </div>
+
+          </div>
+
+
+
+
+
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <form *ngIf="(row.Status != '8') &&  (row.CurrentUser_Id != '0') &&  (row.Status != '5')"
+              [formGroup]="ChatForm" (ngSubmit)="Send()" method="post">
+              <div class="input-group">
+                <input type="text" formControlName="Message" placeholder="type message..." class="form-control">
+                <span class="input-group-btn">
+                  <label for="file-input">
+                    <a type="button" class="btn">
+                      <input id="file-input" (change)="UploadAttachment($event)" style="display: none;" type="file">
+                      <i class="fa fa-paperclip"></i></a></label>
+
+
+                  <button type="submit" class="btn btn-info btn-flat">Send</button>
+                </span>
+              </div>
+            </form>
+          </div>
+          <!-- /.box-footer-->
+        </div>
+        <!--/.direct-chat -->
+      </div>
+      <!-- /.col -->
+
+      <div class="col-sm-6" *ngIf="formType == 'Edit' && (curStatus == 'Pending' || curStatus == 'In Process' )">
+        <!-- <div class="col-sm-6" > -->
+        <div class="box box-info" style="margin-top: 0;">
+          <form class="form" [formGroup]="statusUpdateForm" (ngSubmit)="updateRequestStatus()">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="status">Update Status </label>
+                <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="statusData"
+                  formControlName="status" (onSelect)="showHideDocUploadDiv($event)" [settings]="dropdownSettingsType1">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.status.errors " class="ValidationError">
+                  <div *ngIf="formControls.status.errors.required">Please Update Status! </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="showInspectionModeDiv == 'show'">
+              <div class="col-sm-6">
+                <label for="status">Inspection Mode </label>
+                <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="inspectionModeData"
+                  formControlName="inspectionMode" [settings]="dropdownSettingsType1"></ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.inspectionMode.errors " class="ValidationError">
+                  <div *ngIf="formControls.inspectionMode.errors.required">Please Choose Inspection Mode! </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <label class="form-control-label pull-left">Remarks</label>
+                <small class="text-muted"> &nbsp;(Max 250 characters)</small>
+                <textarea class="form-control" name="Remark" formControlName="statusRemarks" placeholder="Remarks"
+                  maxlength="250"></textarea>
+              </div>
+            </div>
+
+
+
+            <div class="row" *ngIf="showDocUploadDiv == 'show'">
+              <div class="col-sm-6 Vineet old_1 doctype_OLD">
+                <label class="form-control-label pull-left">Inspection Report</label>
+                <label class="form-control btn fileUpload btn-default" [ngClass]="(this.endosement_copy_define==1 ? 'ImageUploaded' : 'else' )" name="button"
+                  value="Endorsement_Copy">
+                  <input type="file" (change)="checkFileType($event,'Endorsement_Copy')" id="file"
+                    formControlName="endorsementCopy" accept="image/png, image/gif, image/jpeg" style="display:none;" />
+                  <span class="fas fa-user-alt"> <b>Upload</b> </span> </label>
+                <div *ngIf="isSubmitted && formControls.endorsementCopy.errors " class="ValidationError">
+                  <div *ngIf="formControls.endorsementCopy.errors.required">Please Upload Inspection Report! </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-2 actionButtons" style="margin-top: 45px;">
+                <button class="btn btn-primary save-click" type="submit">Submit</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+
+  </section>
+  <!-- /.content -->
+
+  <div>

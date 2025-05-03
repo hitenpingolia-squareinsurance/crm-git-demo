@@ -1,0 +1,47 @@
+<div class="row">
+  <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+</div>
+
+<table class="table table-bordered">
+
+  <thead>
+    <tr>
+      <th colspan="6" style="text-align: center; background-color: #2cb2b3; color: white;">Salary Update Time Period</th>
+    </tr>
+
+    <tr>
+      <th colspan="6"> </th>
+    </tr>
+
+    <tr style="background-color: #2cb2b3; color: white;">
+      <th>Sr&nbsp;No</th>
+      <th>Organization&nbsp;Name</th>
+      <th>Start Day</th>
+      <th>End Day</th>
+      <th>End Time</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody *ngIf="dataAr?.length != 0">
+    <tr *ngFor="let row of dataAr; let i=index;">
+      <td>{{row.SrNo}} </td>
+      <td>{{row.OrganizationName}}</td>
+      <td>{{row.StartDate}}</td>
+      <td>{{row.EndDate}}</td>
+      <td>{{row.EndTime}}</td>
+
+      <td>
+        <span style="margin-right: 5px; cursor: pointer; " class="label label-primary" (click)="SalaryUpdateDate(row.Id)">Update</span>
+      </td>
+
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="dataAr?.length == 0">
+  <tr>
+    <td colspan="6" align="center">No data Available !</td>
+  </tr>
+  <tbody>
+
+</table>

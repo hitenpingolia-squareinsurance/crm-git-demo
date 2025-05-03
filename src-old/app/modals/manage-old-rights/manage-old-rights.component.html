@@ -1,0 +1,189 @@
+<form [ngClass]="(IsNewMenuItem==1)?'rv_form':''" [formGroup]="AddMenuForm" (ngSubmit)="AddMenuItems()">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th style="text-align: left;">
+					<h2>Rights Management</h2>
+				</th>
+				<th style="text-align: right;">
+					<a (click)="AddMenuItem()" class="btn btn-primary font-weight-bolder">
+						<span class="svg-icon svg-icon-md">
+							<i class="icon-xl fas fa-plus"></i>
+						</span> Add Menu Item </a>
+				</th>
+			</tr>
+		</thead>
+		<tbody *ngIf="IsNewMenuItem==1">
+
+
+			<tr>
+				<td>Menu Type</td>
+				<td>
+					<select formControlName="Menu_Type" class="form-control">
+						<option disabled selected value="">--Select Menu Type--</option>
+						<option value="1">Master Menu</option>
+						<option value="2">Sub Menu</option>
+					</select>
+				</td>
+			</tr>
+
+
+
+			<tr *ngIf="AddMenuForm.value['Menu_Type'] == 2">
+				<td>Select Master Menu</td>
+				<td>
+					<select formControlName="Master_Menu_Id" class="form-control">
+						<option disabled selected value="">--Select Master Menu--</option>
+						<option *ngFor="let row of MasterMenus;" value="{{row.Id}}">{{row.Name}}</option>
+					</select>
+				</td>
+			</tr>
+
+			<tr *ngIf="AddMenuForm.value['Menu_Type'] == 1">
+				<td>Platform Type</td>
+				<td>
+					<select formControlName="Platform_Type" class="form-control">
+						<option disabled selected value="">--Select Platform Type--</option>
+						<option value="1">BMS</option>
+						<option value="2">CRM</option>
+						<option value="3">BOTH</option>
+					</select>
+				</td>
+			</tr>
+
+			<tr *ngIf="AddMenuForm.value['Menu_Type'] == 2">
+				<td>Select Menu Action Type</td>
+				<td>
+					<select formControlName="Menu_Action_Type" class="form-control">
+						<option disabled selected value="">--Select Menu Action Type--</option>
+						<option value="1">Create</option>
+						<option value="2">View/Report</option>
+						<option value="3">Manage Request</option>
+					</select>
+				</td>
+			</tr>
+
+			<tr *ngIf="AddMenuForm.value['Menu_Type'] == 1 || AddMenuForm.value['Menu_Type'] == 2">
+				<td>Menu Name</td>
+				<td><input formControlName="Menu_Name" type="text" class="form-control" /></td>
+			</tr>
+
+			<tr *ngIf="AddMenuForm.value['Menu_Type'] == 2">
+				<td>Router Link</td>
+				<td><input formControlName="RouterLink" type="text" class="form-control" /></td>
+			</tr>
+
+			<tr *ngIf="AddMenuForm.value['Menu_Type'] == 2">
+				<td>Actions</td>
+				<td>
+					<label style="margin-right: 4%;" class="checkbox">
+						<input formControlName="Is_Add" type="checkbox">Add<span></span>
+					</label>
+					<label style="margin-right: 4%;" class="checkbox">
+						<input formControlName="Is_Edit" type="checkbox">Edit<span></span>
+					</label>
+					<label style="margin-right: 4%;" class="checkbox">
+						<input formControlName="Is_Export" type="checkbox">Export<span></span>
+					</label>
+				</td>
+			</tr>
+
+			<tr *ngIf="AddMenuForm.value['Menu_Type'] == 2">
+				<td>Additonal Action</td>
+				<td>
+					<select formControlName="Additonal_Action" class="form-control">
+						<option disabled selected value="">--Select Additonal Action--</option>
+						<option value="Yes">Yes</option>
+						<option value="No">No</option>
+					</select>
+				</td>
+			</tr>
+
+			<tr *ngIf="AddMenuForm.value['Additonal_Action'] == 'Yes'">
+				<td colspan="2"><input formControlName="Additonal_Action_Json" type="text"
+						placeholder="Please add a comma separated values" class="form-control" /></td>
+			</tr>
+
+			<tr>
+				<td style="text-align: right;" colspan="2">
+					<input type="button" (click)="CancelMenuItem()" class="btn btn-default" value="Cancel" />
+					<input type="submit" class="btn btn-success" value="Submit" />
+
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</form>
+
+
+<div *ngIf="IsNewMenuItem==0" style="width: 100%;">
+	<iframe [src]="urlSafe" frameBorder="0" scrolling="no" style="width: 100% !important;height: 100vh;"></iframe>
+</div>
+<!--
+<form *ngIf="IsNewMenuItem==0" [formGroup]="AddForm" (ngSubmit)="UpdateRights()">
+ <ul formArrayName="employees" class="main-ul">
+   
+  <li *ngFor="let employee of employees().controls; let empIndex=index" [formGroupName]="empIndex" class="li-border-blog">
+	<label class="checkbox">
+		<input formControlName="Menu_Status" type="checkbox"/>{{row[empIndex]['Menu_Name']}}<span></span>	 
+	</label>
+		<input formControlName="Menu_Id" type="hidden"/>
+    <ul class="ul-li-blog" formArrayName="Submenus" [ngClass]="AddForm.value['employees'][empIndex]['Menu_Status']==false?'HideSubMenu':'ShowSubMenu'"> 
+	  
+      <li *ngFor="let submenu of employeeSkills(empIndex).controls; let skillIndex=index" [formGroupName]="skillIndex">
+			 
+			<label class="checkbox" style="width: 150px;">
+				<input formControlName="Sub_Menu_Status" type="checkbox"/>
+				     {{row[empIndex]['Submenus'][skillIndex]['Sub_Name']}}
+				<span></span> 
+			</label> 
+			 
+			<span style="margin-left: 20px;">
+			
+				<label style="margin-left: 10px;" class="radio"><input formControlName="Sub_Report_View" id="Type_{{empIndex}}_{{skillIndex}}" value="All" type="radio"/>All <span></span></label>
+				<label style="margin-left: 10px;" class="radio"><input formControlName="Sub_Report_View" id="Type_{{empIndex}}_{{skillIndex}}" value="Hierarchy" type="radio"/>Hierarchy <span></span></label>
+				<label style="margin-left: 10px;" class="radio"><input formControlName="Sub_Report_View" id="Type_{{empIndex}}_{{skillIndex}}" value="Self" type="radio"/>Self <span></span></label>
+				
+				
+				<label style="margin-left: 10px;" class="checkbox">
+					<input formControlName="Sub_Add" type="checkbox"/>Add
+				<span></span> 
+				</label> 
+				<label style="margin-left: 10px;" class="checkbox">
+					<input formControlName="Sub_Edit" type="checkbox"/>Edit
+				<span></span> 
+				</label> 
+				
+				<label style="margin-left: 10px;" [ngClass]="row[empIndex]['Submenus'][skillIndex]['Sub_Action_Type']==2?'ShowSubMenuExport':'HideSubMenu'" class="checkbox">
+					<input formControlName="Sub_Report_Export" type="checkbox"/>Export
+				<span></span> 
+				</label> 
+				      
+				<label style="margin-left: 10px;" [ngClass]="row[empIndex]['Submenus'][skillIndex]['Additonal_Action']=='Yes'?'ShowSubMenuAction':'HideSubMenu'">
+				   <ng-multiselect-dropdown formControlName="Sub_Additonal_Action_Ar_Selected" placeholder="Additonal Actions"
+					     [data]="row[empIndex]['Submenus'][skillIndex]['Sub_Additonal_Action_Ar']"
+						 [settings]="dropdownSettings">
+					</ng-multiselect-dropdown>	
+				</label>  
+			</span>
+			  
+			<input formControlName="Sub_Menu_Id" type="hidden"/>
+			<input formControlName="Sub_Name" type="hidden"/>
+			<input formControlName="Sub_Action_Type" type="hidden"/>
+	  </li>
+         
+    </ul> 
+	 
+  </li>
+  <li class="li-border-blog">
+		<button type="submit" class="btn btn-primary mr-2">Submit</button>
+  </li>
+ 
+</ul>
+ </form>
+ -->
+
+<!--
+<pre>
+ {{AddForm.value | json}}
+ </pre>-->

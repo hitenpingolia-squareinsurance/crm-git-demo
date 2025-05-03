@@ -1,0 +1,152 @@
+<div class="modal_header d_flex flex_Equal flex_Middel">
+    <div class="modal_title">Add Recruitment</div>
+    <button type="button" (click)="CloseModel()" class="close_btn"><i class="fa fa-close"></i></button>
+  </div>
+  <!-- <form  id="form-1"> -->
+  <div class="modal_body py_15">
+    <div class="row">
+      <div class="col-md-12">
+        <form [formGroup]="editForm">
+          <div class="row">
+            <div class="col-md-4">
+                <label for="state">Profile </label>
+                <input type="text" class="form-control" formControlName="Title">
+                <div *ngIf="isSubmitted && formControls.Title.errors" class="ValidationError">
+                  <div *ngIf="formControls.Title.errors.required">Please Enter Title</div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label for="state">NO. Of Position</label>
+                <input type="text" class="form-control" formControlName="RequiredCandidate">
+                <div *ngIf="isSubmitted && formControls.RequiredCandidate.errors" class="ValidationError">
+                  <div *ngIf="formControls.RequiredCandidate.errors.required">Please Enter Required Candidate</div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label for="state">Last Date Of Submission</label>
+                <input class="form-control" type="date" name="Pypexpirydate" bsDatepicker id="Pypexpirydate"
+                formControlName="Pypexpirydate" placeholder="YYYY/MM/DD">     
+                   <div *ngIf="isSubmitted && formControls.Pypexpirydate.errors" class="ValidationError">
+                  <div *ngIf="formControls.Pypexpirydate.errors.required">Please Enter Last Date Of Submission</div>
+                </div>
+              </div>
+            <div class="col-md-4">
+                <label for="state">Location</label>
+                <input type="text" class="form-control" formControlName="Location">
+                <div *ngIf="isSubmitted && formControls.Location.errors" class="ValidationError">
+                    <div *ngIf="formControls.Location.errors.required">Please Enter Location</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+              <div class="col-md-4">
+                <label for="state">Package</label>
+                <input type="text" class="form-control" formControlName="CTC">
+                <div *ngIf="isSubmitted && formControls.CTC.errors" class="ValidationError">
+                  <div *ngIf="formControls.CTC.errors.required">Please Enter CTC</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label for="state">Min. Experience</label>
+                <input type="text" class="form-control" formControlName="Experiance">
+                <div *ngIf="isSubmitted && formControls.Experiance.errors" class="ValidationError">
+                  <div *ngIf="formControls.Experiance.errors.required">Please Enter Experiance</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label for="state">Job Short Description</label>
+                <textarea type="text" class="form-control" formControlName="Job_description"> </textarea>
+                <div *ngIf="isSubmitted && formControls.Job_description.errors" class="ValidationError">
+                  <div *ngIf="formControls.Job_description.errors.required">Please Enter Job Description</div>
+                </div>
+              </div>
+            
+        </div>
+      <!-- <div class="row" formArrayName="ExpForm">
+            <h4>Experience</h4>
+            <div class="col-md-3" *ngFor="let field of formControls.ExpForm.controls; let i=index" [formGroupName]="i">
+                <div class="category_list">
+                    <span class="d_flex flex_Equal flex_Middel"><small class="fs_16">Experience: - {{i}} </small>
+                        <button *ngIf="i != 0 " class="close_btn" type="button" (click)="RemoveAddedField(i)"><i
+                            class="fa fa-close"></i></button>
+                        <button class="close_btn" type="button" (click)="AddFormField()"><i class="fa fa-plus"></i></button>
+                    </span>
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <input id="field-name" formControlName="ExpFieldName" autofocus="autofocus" type="text" class="form-control">
+                                <div *ngIf="isSubmitted && formControls.ExpForm.errors" class="ValidationError">
+                                    <div *ngIf="formControls.ExpForm.errors.required">required..</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>  
+       <div class="row" formArrayName="TechSkillForm">
+            <h4>Technical Skills</h4>
+            <div class="col-md-3" *ngFor="let field of formControls.TechSkillForm.controls; let i=index" [formGroupName]="i">
+                <div class="category_list">
+                    <span class="d_flex flex_Equal flex_Middel"><small class="fs_16">Technical Skills : - {{i}} </small>
+                        <button *ngIf="i != 0 " class="close_btn" type="button" (click)="RemoveTechField(i)"><i
+                            class="fa fa-close"></i></button>
+                        <button class="close_btn" type="button" (click)="AddTechFormField()"><i class="fa fa-plus"></i></button>
+                    </span>
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <input id="field-name" formControlName="TechFieldName" autofocus="autofocus" type="text" class="form-control">
+                                <div *ngIf="isSubmitted && formControls.TechSkillForm.errors" class="ValidationError">
+                                    <div *ngIf="formControls.TechSkillForm.errors.required">required..</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>  
+        <div class="row" formArrayName="DesiredForm">
+            <h4>Desired Profile</h4>
+            <div class="col-md-3" *ngFor="let field of formControls.DesiredForm.controls; let i=index" [formGroupName]="i">
+                <div class="category_list">
+                    <span class="d_flex flex_Equal flex_Middel"><small class="fs_16">Desired Profile : - {{i}} </small>
+                        <button *ngIf="i != 0 " class="close_btn" type="button" (click)="RemoveDesiredField(i)"><i
+                            class="fa fa-close"></i></button>
+                        <button class="close_btn" type="button" (click)="AddDesiredFormField()"><i class="fa fa-plus"></i></button>
+                    </span>
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <input id="field-name" formControlName="DesFieldName" autofocus="autofocus" type="text" class="form-control">
+                                <div *ngIf="isSubmitted && formControls.DesiredForm.errors" class="ValidationError">
+                                    <div *ngIf="formControls.DesiredForm.errors.required">required..</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>  
+   -->
+  
+  
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- 
+    <div class="main_footer">
+      <button class="Save_click" type="submit"> Save Asset</button>
+    </div>
+     -->
+  
+  <div class="modal_footer ">
+    <button class="btn btn-primary nextBtn pull-right" (click)="onSubmit()" type="submit">Submit</button>
+  </div>

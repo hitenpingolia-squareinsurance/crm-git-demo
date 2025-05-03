@@ -1,0 +1,28 @@
+.qr-code{
+	text-align: center;
+
+}
+
+.qr-code img{
+	 border: 1px solid #b0b0b0;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px #909090;
+}
+
+.row-m-t{
+	margin-top: 15px;
+}
+
+.share-url textarea{
+	width: 100%;
+	border-radius: 5px;
+}
+
+.btn-copy button{
+	width: 100%;
+	padding: 5px 0px;
+}
+
+.mat-dialog-container {
+    border-radius: 10px !important;
+    }

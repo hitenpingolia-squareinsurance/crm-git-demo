@@ -1,0 +1,62 @@
+<div class="row">
+
+
+  <div class="modal-header" style="text-align: center;">
+    <h4 class="modal-title">Add Hospital list</h4>
+  </div>
+</div>
+
+<div class="popup-content-body">
+  <div class="row popup-form">
+    <form [formGroup]="Addposter" id="form-1">
+
+
+      <div class="col-md-6">
+        <label for="state">Lob</label>
+        <ng-multiselect-dropdown class="form-control" formControlName="lob" [data]="lob"
+          (onSelect)="FetchCompany($event)" [settings]="dropdownSingleSettingsType">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.lob.errors" class="ValidationError">
+          <div *ngIf="formControls.lob.errors.required">Please enter lob</div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6">
+        <label for="state">Insurer</label>
+        <ng-multiselect-dropdown class="form-control" formControlName="Company" [data]="Company"
+          [settings]="dropdownSingleSettingsType">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.Company.errors" class="ValidationError">
+          <div *ngIf="formControls.Company.errors.required">Please enter Company</div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="state">File</label>
+        <input type="file" class="form-control" formControlName="File"
+          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          (change)="UploadDocs($event,'PosterImage')">
+        <div *ngIf=" isSubmitted && formControls.File.errors" class="ValidationError">
+          <div *ngIf="formControls.File.errors.required">Please upload a file</div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6">
+        <label for="block">Block status </label>
+        <div>
+          <input type="checkbox" formControlName="isBlock" id="block">
+
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="button-div-yes-no">
+  <button type="button" (click)="CloseModel()" class="btn btn-danger">Close </button>
+  <button type="submit" (click)="submit()" class="btn btn-primary">Submit </button>
+</div>

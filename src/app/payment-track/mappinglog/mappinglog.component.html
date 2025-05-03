@@ -1,0 +1,184 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="box-title">Mapping Log </h3>
+                            </div>
+                            <div class="col-md-6">&nbsp;</div>
+
+                        </div>
+                    </div>
+                    <div class="box-body">
+
+                        <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+
+                            <div class="row"  >
+
+                                <div class="col-sm-3">
+                                    <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                                        formControlName="DateOrDateRange" bsDaterangepicker
+                                        [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+
+                                    <span *ngIf="isSubmitted && formControls.DateOrDateRange.errors"
+                                        class="ValidationError">
+                                        <span *ngIf="formControls.DateOrDateRange.errors.required">Date is
+                                            required</span></span>
+
+                                    <span *ngIf="custommessage" class="ValidationError">
+                                        Max 2 days is allowed</span>
+
+
+
+                                </div>
+
+
+
+
+                                <div class="col-sm-3">
+                                    <ng-multiselect-dropdown class="form-control" name="Insurer"
+                                        placeholder="Select Insurer" [data]="InsurerData" formControlName="Insurer"
+                                        [settings]="dropdownSettingsmultiselect">
+                                    </ng-multiselect-dropdown>
+                                </div>
+
+
+                                <div class="col-sm-3">
+                                    <ng-multiselect-dropdown class="form-control" name="Product"
+                                        placeholder="Select Product" [data]="ProductData" formControlName="Product"
+                                        [settings]="dropdownSettingsmultiselect">
+                                    </ng-multiselect-dropdown>
+                                </div>
+
+                                <div class="col-sm-3" style="display:none;">
+                                    <ng-multiselect-dropdown class="form-control" name="Error"
+                                        placeholder="Select Error Type" [data]="ErrorData" formControlName="ErrorType"
+                                        [settings]="dropdownSettingsingleselect">
+                                    </ng-multiselect-dropdown>
+                                </div>
+
+
+
+                                <div class="col-sm-3"><input type="text" formControlName="SearchValue"
+                                        name="SearchValue" class="form-control" placeholder="Search"></div>
+                            </div>
+                            <div class="row"  >
+
+                                <div class="col-sm-3">
+
+
+                                    <input type="submit" class="btn btn-info" value="Search">
+                                    &nbsp;&nbsp;
+                                    <button (click)="ClearSearch()" type="button" style="font-size: small;"
+                                        class="btn btn-danger" value="Reset"> <i class="fa fa-close"> Reset</i>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                            <hr>
+                            <div class="row">
+
+                                <div class="col-sm-2">
+                                    Total Record - <b> {{ this.Total}}</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    Total Mapped - <b> {{ this.TotalMapped}}</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    Total Data Not In Insured - <b> {{ this.Totalnot}}</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    Total Other Issue - <b> {{ this.TotalOther}}</b>
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                        <div class="mydiv">
+                            <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th *ngIf="ConditonId==381"></th>
+                                        <th>Insurer</th>
+                                        <th>Quotation Id</th>
+                                        <th>Date Time</th>
+                                        <th>Error Log</th>
+                                        <th>Veh. Det.</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr">
+
+                                        <td *ngIf="ConditonId==381">
+                                            <br>
+                                            <a target="_blank" href="{{ row.url }}">Mapping</a>
+
+
+                                        </td>
+                                        <td>{{row.Company}}</td>
+                                        <td>{{row.QuotationId}}</td>
+                                        <td>{{row.Time}}</td>
+                                        <td>{{row.error_text}}</td>
+                                        <td>
+                                            Make &nbsp;&nbsp;<b>{{row.make}}</b><br>
+                                            Model &nbsp;&nbsp;<b>{{row.model}}</b><br>
+                                            Variant &nbsp;&nbsp;<b>{{row.variant}}</b><br>
+
+                                        </td>
+                                        <td *ngIf="ConditonId==381">
+
+                                            <a *ngIf="row.updates!==''" class="btn btn-success customsss">{{ row.updates
+                                                }}</a>
+
+                                            <span *ngIf="row.updates==''">
+                                                <button
+                                                    (click)="updateDatas(row.make,row.model,row.variant,row.Company,'mapping')"
+                                                    type="button" class="btn btn-info">Mapping Update</button><br>
+                                                <button
+                                                    (click)="updateDatas(row.make,row.model,row.variant,row.Company,'not')"
+                                                    type="button" class="btn btn-warning">Not Found</button><br>
+                                                <button
+                                                    (click)="updateDatas(row.make,row.model,row.variant,row.Company,'other')"
+                                                    type="button" class="btn btn-warning">Other</button><br>
+                                            </span>
+                                        </td>
+                                        <td *ngIf="ConditonId!=381">
+
+                                            <a *ngIf="row.updates!==''" class="btn btn-success customsss">{{ row.updates
+                                                }}</a>
+
+
+                                        </td>
+
+
+
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="14" align="center">No data available!</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>

@@ -1,0 +1,228 @@
+<section class="custom-scrool">
+  <div class="">
+    <div class="main_card_form ">
+      <div class="main_header">
+        <h4 class="header_title">Form</h4>
+        <button type="button" (click)="CloseModel()" class="close closeModelButton"><i class="fa fa-close"></i></button>
+        <div class="call-precess" id="callProcess" style="display:none;">
+          <div class="call-align">
+            <img src="assets/image/calling.gif" alt="">
+          </div>
+          <div class="heading-call">Call in Progress....</div>
+        </div>
+      </div>
+
+      <div class="modal_body py_15">
+
+        <div class="row">
+          <form [formGroup]="AddFieldForm" id="click">
+
+            <div class="col-md-4">
+              <div class="category_list">
+                <label>LOB</label>
+                <ng-multiselect-dropdown class="form-control" placeholder="LOB" [data]="LOBdata" formControlName="LOB"
+                  [settings]="dropdownSettingsmultiselect" (onSelect)="getCompany($event)">
+                </ng-multiselect-dropdown>
+                <div
+                  *ngIf="AddFieldForm.get('LOB').hasError('required') && (AddFieldForm.get('LOB').touched ||AddFieldForm.dirty)"
+                  class="text-danger"> Select the LOB
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="category_list">
+                <label>Company</label>
+                <ng-multiselect-dropdown class="form-control company-w" placeholder="Company" [data]="companyData"
+                  [settings]="dropdownSettingsmultiselect" formControlName="Company" (onSelect)="getPlan($event)">
+                </ng-multiselect-dropdown>
+                <div
+                  *ngIf="AddFieldForm.get('Company').hasError('required') && (AddFieldForm.get('Company').touched ||AddFieldForm.dirty)"
+                  class="text-danger"> Select the Company
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="category_list">
+                <label>Plan Type</label>
+                <ng-multiselect-dropdown class="form-control company-w" placeholder="Plan Type" [data]="PlanOption"
+                  [settings]="dropdownSettingsmultiselect" formControlName="PlanType" (onSelect)="getSunPlan($event)">
+                </ng-multiselect-dropdown>
+                <div
+                  *ngIf="AddFieldForm.get('PlanType').hasError('required') && (AddFieldForm.get('PlanType').touched ||AddFieldForm.dirty)"
+                  class="text-danger"> Select the Plan Type
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="category_list">
+                <label>Sub Plan</label>
+                <ng-multiselect-dropdown class="form-control company-w" placeholder="Sub Plan" [data]="SubPlan"
+                  [settings]="dropdownmultiselect" formControlName="SubPlan">
+                </ng-multiselect-dropdown>
+                <div
+                  *ngIf="AddFieldForm.get('SubPlan').hasError('required') && (AddFieldForm.get('SubPlan').touched ||AddFieldForm.dirty)"
+                  class="text-danger"> Select the Sub Plan
+                </div>
+              </div>
+            </div>
+          </form>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-4" *ngFor="let row of dataAr; let i = index">
+            <input type="checkbox" (change)="onCheckboxChange(i,row.Categories)">
+            <label>{{ row.Categories }}</label>
+          </div>
+        </div>
+
+        <hr>
+        <div class="row">
+
+
+
+          <form [formGroup]="sampleform" (ngSubmit)="SubBtn()">
+            <div *ngFor="let formData of dataAr" [ngSwitch]="true">
+
+              <div *ngIf="formData.status == true ">
+
+                <div class="col-md-4" *ngIf="formData.input == 'text'">
+                  <label for="{{formData.Categories}}">{{formData.Categories}}</label>
+                  <input type="text" name="{{formData.Categories}}" class="form-control"
+                    [formControlName]="formData.Categories" placeholder="{{formData.Categories}}">
+                  <div
+                    *ngIf="sampleform.get(formData.Categories).hasError('required') && (sampleform.get(formData.Categories).touched || sampleform.dirty)"
+                    class="text-danger">
+                    This Field is required.
+                  </div>
+                </div>
+
+                <div class="col-md-3" *ngIf="formData.input == 'Yes?No'">
+                  <div class="category_list">
+                    <label for="{{formData.Categories}}">{{formData.Categories}}</label>
+                    <div class="d_flex flex_Middel">
+                      <div>
+                        <input type="radio" [value]="true" name="{{formData.Categories}}"
+                          formControlName="{{formData.Categories}}">
+                        <label for="yesTax">Yes</label>
+                      </div>
+                      <div>
+                        <input type="radio" [value]="false" name="{{formData.Categories}}"
+                          formControlName="{{formData.Categories}}">
+                        <label for="noTax">No</label>
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="sampleform.get(formData.Categories).hasError('required') && (sampleform.get(formData.Categories).touched || sampleform.dirty)"
+                      class="text-danger">
+                      This Field is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3" *ngIf="formData.input == 'Term?Investigation'">
+                  <div class="category_list">
+                    <label for="{{formData.Categories}}">{{formData.Categories}}</label>
+                    <div class="d_flex flex_Middel">
+                      <div>
+                        <input type="radio" value="Terms" name="{{formData.Categories}}"
+                          formControlName="{{formData.Categories}}">
+                        <label for="yesTax">Terms</label>
+                      </div>
+                      <div>
+                        <input type="radio" value="Investigation" name="{{formData.Categories}}"
+                          formControlName="{{formData.Categories}}">
+                        <label for="noTax">Investigation</label>
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="sampleform.get(formData.Categories).hasError('required') && (sampleform.get(formData.Categories).touched || sampleform.dirty)"
+                      class="text-danger">
+                      This Field is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4" *ngIf="formData.input == 'number'">
+                  <div class="category_list">
+                    <label for="{{formData.Categories}}">{{formData.Categories}}</label>
+                    <input type="number" name="{{formData.Categories}}" class="form-control"
+                      [formControlName]="formData.Categories" placeholder="{{formData.Categories}}">
+                    <div
+                      *ngIf="sampleform.get(formData.Categories).hasError('required') && (sampleform.get(formData.Categories).touched || sampleform.dirty)"
+                      class="text-danger">
+                      This Field is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4" *ngIf="formData.input == 'textArea'">
+                  <div class="category_list">
+                    <label for="state">{{formData.Categories}}</label>
+                    <textarea type="text" class="form-control" id="field-name" [formControlName]="formData.Categories"
+                      placeholder="{{formData.Categories}}"></textarea>
+                    <div
+                      *ngIf="sampleform.get(formData.Categories).hasError('required') && (sampleform.get(formData.Categories).touched || sampleform.dirty)"
+                      class="text-danger">
+                      This Field is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="formData.input === 'multiple-title/description'" class="col-md-12">
+                  <div class="row" formArrayName="{{formData.Categories}}">
+                    <h4>{{formData.Categories}}</h4>
+                    <div class="col-md-3"
+                      *ngFor="let quantity of AddExpField(formData.Categories).controls; let i=index"
+                      [formGroupName]="i">
+                      <div class="category_list">
+                        <span class="d_flex flex_Equal flex_Middel"><small class="fs_16">{{formData.Categories}} : -
+                            {{i + 1}}
+                          </small>
+                          <button *ngIf="i != 0 " class="close_btn" type="button"
+                            (click)="RemoveAddedField(i, formData.Categories)"><i class="fa fa-close"></i></button>
+                          <button class="close_btn" type="button" (click)="AddFormField(formData.Categories)"><i
+                              class="fa fa-plus"></i></button>
+                        </span>
+                        <div class="panel">
+                          <div class="panel-body">
+                            <div class="form-group">
+                              <input id="field-name" formControlName="title" autofocus="autofocus" type="text"
+                                placeholder="Title" class="form-control">
+                            </div>
+                            <div class="form-group">
+                              <input id="field-name" formControlName="description" autofocus="autofocus" type="text"
+                                placeholder="Description" class="form-control">
+                            </div>
+                          </div>
+                          <div
+                            *ngIf="sampleform.get(formData.Categories).hasError('required') && (sampleform.get(formData.Categories).touched || sampleform.dirty)"
+                            class="text-danger">
+                            This Field is required.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <button type="submit" class="btn btn_primary btn-success">Submit</button>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,610 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="main_card_form">
+            <div class="main_header">
+                <div class="header_title">
+
+                    <div *ngIf="this.url_segment == 'visit_data'">Purpose Of Visit</div>
+                    <div *ngIf="this.url_segment == 'mode_data'">Travel Mode</div>
+                    <div *ngIf="this.url_segment == 'guestHouse_data'">Guest House</div>
+                    <div *ngIf="this.url_segment == 'TA-DA_data'">TA&DA Master</div>
+                    <div *ngIf="this.url_segment == 'Local-conveyance_data'">Local Conveyance Claim</div>
+                    <div *ngIf="this.url_segment == 'Mis-claim_data'">Miscellaneous Claim</div>
+
+                </div>
+            </div>
+
+            <div *ngIf="!hasAccess" class="error-message">
+                <div class="container" style="text-align: center;">
+                    <img src="assets/Authorised.png" alt="">
+                </div>
+            </div>
+
+            <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+
+                <div>
+                    <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                        <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                            data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                            aria-controls="collapseOne">
+                            <a role="button" class="fa fa-filter"><span>Filters</span><i
+                                    class="fa fa-angle-down pull-right"></i></a>
+                        </button>
+
+                        <button class="btn btn-info1" (click)="AddMasters()"
+                            *ngIf="this.url_segment == 'visit_data' || this.url_segment == 'mode_data' || this.url_segment == 'guestHouse_data' || this.url_segment == 'TA-DA_data' || this.url_segment == 'Local-conveyance_data' || this.url_segment == 'Mis-claim_data'   "
+                            data-toggle="modal" data-target="#exampleModal"><a
+                                role="button"><span>Add</span>&nbsp;&nbsp;<i class="fa fa-plus-circle"
+                                    aria-hidden="true"></i></a>
+                        </button>
+
+                    </div>
+                </div>
+
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panelbody">
+                        <form [formGroup]="RequestData">
+                            <div class="row">
+
+                                <div class="col-sm-3">
+
+                                    <input type="text" class="form-control" placeholder="Search"
+                                        formControlName="SearchVal">
+                                </div>
+                                <div class="col-sm-3">
+
+                                    <input (click)="SearchData()" class="btn btn-info" value="Search"
+                                        style="padding:4px 0px;"> &nbsp;&nbsp;
+                                    <button (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset">
+                                        <i class="fa fa-close"> </i> Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;"
+                    *ngIf="this.url_segment == 'guestHouse_data' || this.url_segment == 'mode_data' || this.url_segment == 'visit_data' || this.url_segment == 'TA-DA_data' || this.url_segment == 'Local-conveyance_data' || this.url_segment == 'Mis-claim_data'">
+                    <div class="custom_table tables_layout_design">
+                        <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <!-- ======= Refer Table  =========-->
+                        <ul class="responsive-table">
+                            <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+
+                                <p class="life_status_label">
+                                    <span [ngClass]="row.Status == 'Active' ? 'btn btn-success' : 'btn btn-danger'">{{
+                                        row.Status }}</span>
+                                </p>
+
+                                <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                                    <div class="agents_data agents_data1 mb_5">
+                                        <div class="icon_re_cl">{{row.SrNo}}</div>
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data">
+                                                <div>{{this.url_segment == 'mode_data' ? 'Travel Type' :
+                                                    (this.url_segment ==
+                                                    'guestHouse_data' ? 'Guest House' : (this.url_segment ==
+                                                    'TA-DA_data' ?
+                                                    'Travel Allowance' :
+                                                    this.url_segment == 'Local-conveyance_data' || this.url_segment ==
+                                                    'Mis-claim_data' ? 'Conveyance Type' : 'Purpose
+                                                    Of Visit'))}}</div>
+
+                                                <strong class="fs_18"><span>{{this.url_segment == 'mode_data' ?
+                                                        row.Travel_type : (this.url_segment ==
+                                                        'guestHouse_data' ? row.GuestHouse : (this.url_segment ==
+                                                        'TA-DA_data' ? row.Travel_Allowance :
+                                                        this.url_segment == 'Local-conveyance_data' || this.url_segment
+                                                        == 'Mis-claim_data' ? row.Name :
+                                                        row.Purpose_Of_Visit))}}</span></strong>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="agents_data agents_data2" *ngIf="this.url_segment == 'TA-DA_data'">
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data">
+                                                <div>Daily Allowance</div>
+                                                <strong class="fs_18" id="emailToCopy">{{row.Daily_Allowance}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="agents_data agents_data3" *ngIf="this.url_segment == 'TA-DA_data'">
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data">
+                                                <div>Create Date</div>
+                                                <strong class="fs_18" id="emailToCopy">{{row.AddStamp}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="last_row_div mt10">
+                                    <div class="d_flex custon-234">
+                                        <div class="label_chips finance_lob" style="width: auto;"
+                                            *ngIf="this.url_segment == 'guestHouse_data' || this.url_segment == 'mode_data'">
+                                            <span>{{this.url_segment == 'mode_data' ? 'Travel Mode' : (this.url_segment
+                                                ==
+                                                'guestHouse_data' ? 'State' : '')}} - {{this.url_segment == 'mode_data'
+                                                ? row.Travel_mode :
+                                                (this.url_segment ==
+                                                'guestHouse_data' ? row.State : '')}}</span>
+                                        </div>
+
+                                        <div class="label_chips non_motor_lob" style="width: auto;"
+                                            *ngIf="this.url_segment == 'mode_data' || this.url_segment == 'Local-conveyance_data' || this.url_segment == 'Mis-claim_data'">
+                                            <span>{{this.url_segment == 'mode_data' ? 'Fare/Km' : this.url_segment ==
+                                                'Local-conveyance_data' || this.url_segment == 'Mis-claim_data' ? 'Fare
+                                                (INR)'
+                                                : ''}} - {{row.Fare}}</span>&nbsp;&nbsp;
+                                        </div>
+
+                                        <div class="label_chips motor_lob" style="width: auto;"
+                                            *ngIf="this.url_segment == 'guestHouse_data'">
+                                            <span>City- {{row.City}}</span>&nbsp;&nbsp;
+                                        </div>
+
+                                        <div class="label_chips health_lob" style="width: auto;"
+                                            *ngIf="this.url_segment == 'guestHouse_data'">
+                                            <span>Address - {{row.GuestHouse_Address}}</span>&nbsp;&nbsp;
+                                        </div>
+
+                                        <div class="label_chips life_lob" style="width: auto;"
+                                            *ngIf="this.url_segment == 'guestHouse_data'">
+                                            <span>Contact - {{row.GuestHouse_Contact}}</span>&nbsp;&nbsp;
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="last_row">
+                                    <div class="d_flex effective_date">
+                                        <div class="date_text" *ngIf="this.url_segment != 'TA-DA_data'">
+                                            <span class="fs_12">Create Date : </span>
+                                            <span class="fs_12">{{ row.AddStamp }}</span>
+                                        </div>
+
+                                        <div class="date_text" *ngIf="this.url_segment == 'TA-DA_data'">
+                                            <span class="fs_12">Profile : </span>
+                                            <span class="fs_12">{{ row.Profile }}</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                        <button class="btn btn-info" data-toggle="modal" data-target="#exampleModal"
+                                            (click)="GetUpdateData(row.Id)" style="padding: 2px 5px;">
+                                            Edit&nbsp;<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                            </li>
+                        </ul>
+                        <!--======= Refer Table END ========= -->
+
+                        <div class="row" *ngIf="dataAr?.length == 0">
+                            <div class="col-md-12">
+                                <div class="no_data_found">
+                                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                                    <small>No data available !</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_header">
+                            <div class="header_title" *ngIf="this.url_segment == 'visit_data'">
+                                {{this.UpdateId ? 'Update Purpose Of Visit' : 'Purpose Of Visit'}}
+                            </div>
+                            <div class="header_title" *ngIf="this.url_segment == 'mode_data'">
+                                {{this.UpdateId ? 'Update Travel Mode' : 'Travel Mode'}}
+                            </div>
+                            <div class="header_title" *ngIf="this.url_segment == 'guestHouse_data'">
+                                {{this.UpdateId ? 'Update Guest House' : 'Guest House'}}
+                            </div>
+                            <div class="header_title" *ngIf="this.url_segment == 'TA-DA_data'">
+                                {{this.UpdateId ? 'Update TA&DA Master Update' : 'TA&DA Master'}}
+                            </div>
+                            <div class="header_title" *ngIf="this.url_segment == 'Local-conveyance_data'">
+                                {{this.UpdateId ? 'Update Local Conveyance Claim' : 'Local Conveyance Claim'}}
+                            </div>
+                            <div class="header_title" *ngIf="this.url_segment == 'Mis-claim_data'">
+                                {{this.UpdateId ? 'Update Miscellaneous Claim' : 'Miscellaneous Claim'}}
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="TravelRequest_purpose" *ngIf="this.url_segment == 'visit_data'">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="Purpose_of_visit">Purpose Of Visit</label>
+                                        <input type="text" class="form-control" formControlName="Purpose_of_visit"
+                                            [(ngModel)]="PurposeOfVisit">
+                                        <div *ngIf="isSubmitted && TravelRequest_purpose.get('Purpose_of_visit').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_purpose.get('Purpose_of_visit').errors.required">
+                                                Please Enter
+                                                Purpose Of Visit</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="Status">Status</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="Status_data"
+                                            formControlName="Status" [settings]="dropdownSettingsType"
+                                            [(ngModel)]="Selected_Status">
+                                        </ng-multiselect-dropdown>
+
+                                        <div *ngIf="isSubmitted && TravelRequest_purpose.get('Status').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_purpose.get('Status').errors.required">Please
+                                                Select Status
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form [formGroup]="TravelRequest_Mode" *ngIf="this.url_segment == 'mode_data'">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="Travel_mode">Select Travel Mode</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="Travel_modeData"
+                                            formControlName="Travel_mode" [settings]="dropdownSettingsType"
+                                            [(ngModel)]="SelectedTravel_mode">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && TravelRequest_Mode.get('Travel_mode').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_Mode.get('Travel_mode').errors.required">Please
+                                                Select Travel
+                                                Mode</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="Travel_transport">Travel Transport</label>
+                                        <input type="text" class="form-control" formControlName="Travel_transport"
+                                            [(ngModel)]="Travel_transportData">
+                                        <div *ngIf="isSubmitted && TravelRequest_Mode.get('Travel_transport').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_Mode.get('Travel_transport').errors.required">
+                                                Please Enter
+                                                Travel Transport</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="FareSelect">Select Fare</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="FareSelected"
+                                            formControlName="FareSelect" [settings]="dropdownSettingsType"
+                                            [(ngModel)]="Selected_Fare">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && TravelRequest_Mode.get('FareSelect').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_Mode.get('FareSelect').errors.required">Please
+                                                Select Fare
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12" *ngIf="this.FareYes == 'Yes'">
+                                        <label for="Fare">Fare/km {{this.FareYes}}</label>
+                                        <input type="number" class="form-control" formControlName="Fare"
+                                            [(ngModel)]="Fare_Data">
+                                        <div *ngIf="isSubmitted && TravelRequest_Mode.get('Fare').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_Mode.get('Fare').errors.required">Please Enter
+                                                Fare paid /km</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="Status">Status</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="Status_data"
+                                            formControlName="Status" [settings]="dropdownSettingsType"
+                                            [(ngModel)]="Selected_Status">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && TravelRequest_Mode.get('Status').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_Mode.get('Status').errors.required">Please Select
+                                                Status</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form [formGroup]="TravelRequest_GuestHouse" *ngIf="this.url_segment == 'guestHouse_data'">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="State">Select State</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="StateData"
+                                            formControlName="State" [settings]="dropdownSettingsType"
+                                            [(ngModel)]="Selected_State">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && TravelRequest_GuestHouse.get('State').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_GuestHouse.get('State').errors.required">Please
+                                                Select State
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="City">Select City</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="CityData"
+                                            formControlName="City" [settings]="dropdownSettingsType"
+                                            [(ngModel)]="Selected_City">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && TravelRequest_GuestHouse.get('City').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_GuestHouse.get('City').errors.required">Please
+                                                Select City
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="Guest_house">Guest House</label>
+                                        <input type="text" class="form-control" formControlName="Guest_house"
+                                            [(ngModel)]="GuestHouse">
+                                        <div *ngIf="isSubmitted && TravelRequest_GuestHouse.get('Guest_house').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_GuestHouse.get('Guest_house').errors.required">
+                                                Please Enter
+                                                Guest House</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="Guest_house_address">Guest House Address</label>
+                                        <input type="text" class="form-control" formControlName="Guest_house_address"
+                                            [(ngModel)]="GuestHouse_Address">
+                                        <div *ngIf="isSubmitted && TravelRequest_GuestHouse.get('Guest_house_address').errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="TravelRequest_GuestHouse.get('Guest_house_address').errors.required">
+                                                Please
+                                                Enter Guest House Address
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="Contact">Contact No.</label>
+                                        <input type="text" class="form-control" formControlName="Contact"
+                                            [(ngModel)]="GuestHouse_Contact" maxlength="10">
+                                        <div *ngIf="isSubmitted && TravelRequest_GuestHouse.get('Contact').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_GuestHouse.get('Contact').errors.required">Please
+                                                Enter
+                                                Contact Details</div>
+                                            <div *ngIf="TravelRequest_GuestHouse.get('Contact').errors.pattern">Invalid
+                                                Contact No.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="Status">Status</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="Status_data"
+                                            formControlName="Status" [settings]="dropdownSettingsType"
+                                            [(ngModel)]="Selected_Status">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && TravelRequest_GuestHouse.get('Status').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_GuestHouse.get('Status').errors.required">Please
+                                                Select Status
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+
+
+                            <form [formGroup]="TravelRequest_Profile" *ngIf="this.url_segment == 'TA-DA_data'">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="Profile">Select Profile Type</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="ProfileData"
+                                            formControlName="Profile" [settings]="dropdownSettingsMultiselect"
+                                            [(ngModel)]="Selected_Profile">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && TravelRequest_Profile.get('Profile').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_Profile.get('Profile').errors.required">Please
+                                                Select Profile
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="TA_DA">Select Type</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="TA_DA_Data"
+                                            formControlName="TA_DA" [settings]="dropdownSettingsType"
+                                            [(ngModel)]="Selected_TA_DA_Data">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && TravelRequest_Profile.get('TA_DA').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_Profile.get('TA_DA').errors.required">Please
+                                                Select Type</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12"
+                                        *ngIf="SelectedAllowence == 3 || SelectedAllowence == 1">
+                                        <label for="TA">Travel Allowence (INR)</label>
+                                        <input type="number" class="form-control" formControlName="TA" [(ngModel)]="TA">
+                                        <div *ngIf="isSubmitted && TravelRequest_Profile.get('TA').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_Profile.get('TA').errors.required">Please Enter
+                                                Travel
+                                                Allowence</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12"
+                                        *ngIf="SelectedAllowence == 3 || SelectedAllowence == 2">
+                                        <label for="DA">Daily Allowence (INR)</label>
+                                        <input type="number" class="form-control" formControlName="DA" [(ngModel)]="DA">
+                                        <div *ngIf="isSubmitted && TravelRequest_Profile.get('DA').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_Profile.get('DA').errors.required">Please Enter
+                                                Daily
+                                                Allowence</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="Status">Status</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="Status_data"
+                                            formControlName="Status" [settings]="dropdownSettingsType"
+                                            [(ngModel)]="Selected_Status">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && TravelRequest_Profile.get('Status').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_Profile.get('Status').errors.required">Please
+                                                Select Status
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+
+                            <form [formGroup]="TravelRequest_Conveyance"
+                                *ngIf="this.url_segment == 'Local-conveyance_data'">
+                                <div class="row">
+
+                                    <div class="form-group col-md-12">
+                                        <label for="Conveyance">Select Type</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="Conveyance_Data1"
+                                            formControlName="Conveyance" [settings]="dropdownSettingsType"
+                                            [(ngModel)]="Selected_Conveyance_Data1">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && TravelRequest_Conveyance.get('Conveyance').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_Conveyance.get('Conveyance').errors.required">
+                                                Please Select
+                                                Type</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="Local_Conveyance">Local Conveyance Claim Fare (INR)</label>
+                                        <input type="number" class="form-control" formControlName="Local_Conveyance"
+                                            [(ngModel)]="Local_Conveyance">
+                                        <div *ngIf="isSubmitted && TravelRequest_Conveyance.get('Local_Conveyance').errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="TravelRequest_Conveyance.get('Local_Conveyance').errors.required">
+                                                Please
+                                                Enter Local Conveyance
+                                                Fare</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="Status">Status</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="Status_data"
+                                            formControlName="Status" [settings]="dropdownSettingsType"
+                                            [(ngModel)]="Selected_Status">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && TravelRequest_Conveyance.get('Status').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_Conveyance.get('Status').errors.required">Please
+                                                Select Status
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form [formGroup]="TravelRequest_Conveyance_Misc"
+                                *ngIf="this.url_segment == 'Mis-claim_data'">
+                                <div class="row">
+
+                                    <div class="form-group col-md-12">
+                                        <label for="Conveyance">Select Type</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="Conveyance_Data2"
+                                            formControlName="Conveyance" [settings]="dropdownSettingsType"
+                                            [(ngModel)]="Selected_Conveyance_Data2">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && TravelRequest_Conveyance_Misc.get('Conveyance').errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="TravelRequest_Conveyance_Misc.get('Conveyance').errors.required">
+                                                Please Select
+                                                Type</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="Miscellaneous_Conveyance">Miscellaneous Claim Fare (INR)</label>
+                                        <input type="number" class="form-control"
+                                            formControlName="Miscellaneous_Conveyance"
+                                            [(ngModel)]="Miscellaneous_Conveyance">
+                                        <div *ngIf="isSubmitted && TravelRequest_Conveyance_Misc.get('Miscellaneous_Conveyance').errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="TravelRequest_Conveyance_Misc.get('Miscellaneous_Conveyance').errors.required">
+                                                Please Enter Miscellaneous Conveyance
+                                                Fare</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="Status">Status</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="Status_data"
+                                            formControlName="Status" [settings]="dropdownSettingsType"
+                                            [(ngModel)]="Selected_Status">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && TravelRequest_Conveyance_Misc.get('Status').errors"
+                                            class="ValidationError">
+                                            <div *ngIf="TravelRequest_Conveyance_Misc.get('Status').errors.required">
+                                                Please
+                                                Select Status
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="closeModel()"
+                                id="close">Close</button>
+                            <button type="button" class="btn btn-success" (click)="Save()">{{this.UpdateId ? 'Update' :
+                                'Submit'}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

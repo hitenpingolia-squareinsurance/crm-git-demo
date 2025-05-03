@@ -1,0 +1,254 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Create Knowledge Form <a style="color:white;"
+                class=" pull-right btn btn-primary btn-info" data-toggle="modal" data-target="#AddCatSubCat"
+                data-backdrop="static" data-keyboard="false"> <i class="fa fa-plus"></i>Add Category</a> </div>
+
+
+          </div>
+          <form class="form" (ngSubmit)="Submit()" [formGroup]="KnowledgeBaseForm">
+            <div class="main_body main_card_height_scroll">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i> Basic Details</div>
+
+
+                </div>
+                <div class="col-md-4">
+                  <div class="input_group">
+                    <label for="CustomerName">User Type
+                      <span *ngIf="isSubmitted && formControls.UserType.errors" class="ValidationError">
+                        <span *ngIf="formControls.UserType.errors.required">User Type is required</span>
+                      </span>
+                    </label>
+                    <div class="position_relative">
+                      <ng-multiselect-dropdown class="form-control" name="UserType" placeholder="Select User Type"  [(ngModel)]="EditUserType" 
+                        [data]="UserType" formControlName="UserType" [settings]="dropdownMultiSelectSettingsType"> 
+                      </ng-multiselect-dropdown>
+                      <!-- <div class="input_icon1"><i class="fa fa-user-o"></i></div> -->
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="input_group">
+                    <label for="CustomerName">Category
+                      <span *ngIf="isSubmitted && formControls.Category.errors" class="ValidationError">
+                        <span *ngIf="formControls.Category.errors.required">Category is required</span>
+                      </span>
+                    </label>
+                    <div class="position_relative">
+                      <ng-multiselect-dropdown class="form-control" name="Category" placeholder="Select Category"
+                        [(ngModel)]="EditCat" (onSelect)="onItemSelect($event,'Category')"
+                        (onDeSelect)="onItemDeSelect($event,'Category')" [data]="CategoryData"
+                        formControlName="Category" [settings]="dropdownSingleSettingsType">
+                      </ng-multiselect-dropdown>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="input_group">
+                    <label for="CustomerName">Sub Category
+                      <span *ngIf="isSubmitted && formControls.SubCategory.errors" class="ValidationError">
+                        <span *ngIf="formControls.SubCategory.errors.required">SubCategory is required</span>
+                      </span>
+                    </label>
+                    <div class="position_relative">
+                      <ng-multiselect-dropdown class="form-control" name="SubCategory" placeholder="Select SubCategory"
+                        [(ngModel)]="EditSubCat" [data]="SubCategoryData" formControlName="SubCategory"
+                        [settings]="dropdownSingleSettingsType">
+                      </ng-multiselect-dropdown>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i> Other Details</div>
+                </div>
+                <div class="col-md-4">
+                  <div class="input_group">
+                    <label for="CustomerName">Title
+                      <span *ngIf="isSubmitted && formControls.Title.errors" class="ValidationError">
+                        <span *ngIf="formControls.Title.errors.required">Title is required</span>
+                      </span>
+                    </label>
+                    <div class="position_relative">
+                      <input class="form_control icon_cs" type="text" formControlName="Title" name="Title" id="Title"
+                        placeholder="Enter Title">
+                      <div class="input_icon"><i class="fa-solid fa-heading"></i> </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="input_group">
+                    <label for="CustomerName">File Type
+                      <span *ngIf="isSubmitted && formControls.FileType.errors" class="ValidationError">
+                        <span *ngIf="formControls.FileType.errors.required">File Type is required</span>
+                      </span>
+                    </label>
+                    <div class="position_relative">
+                      <ng-multiselect-dropdown class="form-control" name="FileType"  [(ngModel)]="EditFileTypeData"
+                        (onSelect)="onItemSelect($event,'FileType')" (onDeSelect)="onItemDeSelect($event,'FileType')"
+                         placeholder="Select File Type" [data]="FileTypeData"
+                        formControlName="FileType" [settings]="dropdownSingleSettingsType">
+                      </ng-multiselect-dropdown>
+                       <!-- <div class="input_icon1"><i class="fa fa-file-o"></i>  </div> -->
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4" *ngIf="FileTypeVal == 'URL'">
+                  <div class="input_group">
+                    <label for="CustomerName">URL
+                      <span *ngIf="isSubmitted && formControls.FileValue.errors" class="ValidationError">
+                        <span *ngIf="formControls.FileValue.errors.required">Url is required</span>
+                        <!-- <span *ngIf="formControls.FileValue.errors.required">Please submit Youtube Url</span> -->
+                      </span>
+                    </label>
+                    <div class="position_relative">
+                      <input class="form_control icon_cs" type="text" formControlName="FileValue" name="FileValue"
+                        id="FileValue" placeholder="Enter FileValue">
+
+                      <div class="input_icon"><i class="fa fa-website"></i></div>
+                    </div>
+                    <!-- pattern="/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/" -->
+                  </div>
+                </div>
+                <div class="col-md-4" *ngIf="FileTypeVal == 'Document'">
+                  <div class="input_group">
+                    <label for="CustomerName">Select Document
+                      <span *ngIf="isSubmitted && formControls.FileValue.errors" class="ValidationError">
+                        <span *ngIf="formControls.FileValue.errors.required">Document is required</span>
+                      </span>
+                    </label>
+                    <div class="position_relative">
+                      <input class="form_control icon_cs" type="file" formControlName="FileValue"
+                        (change)="UploadDocs($event,'Document')" name="FileValue" id="FileValue"
+                        placeholder="Enter FileValue">
+                      <div class="input_icon"><i class="fa fa-envelope-o"></i></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-md-4" *ngIf="FileTypeVal == 'Video'">
+                  <div class="input_group">
+                    <label for="CustomerName">Select Video
+                      <span *ngIf="isSubmitted && formControls.FileValue.errors" class="ValidationError">
+                        <span *ngIf="formControls.FileValue.errors.required">Video is required</span>
+                      </span>
+                    </label>
+                    <div class="position_relative">
+                      <input class="form_control icon_cs" type="file" formControlName="FileValue" (change)="UploadDocs($event,'Video')" name="FileValue"
+                        id="FileValue" placeholder="Enter File Value">
+                      <div class="input_icon"><i class="fa fa-envelope-o"></i></div>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="col-md-12">
+                  <div class="input_group">
+                    <label for="CustomerName">Description
+                      <span *ngIf="isSubmitted && formControls.Description.errors" class="ValidationError">
+                        <span *ngIf="formControls.Description.errors.required">Description is required</span>
+                      </span>
+                    </label>
+                    <div class="position_relative">
+                      <ckeditor formControlName="Description" [(ngModel)]="EditDescription"></ckeditor>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="main_footer">
+              <button type="submit" class="Save_click">Submit Request</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<div id="AddCatSubCat" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title">Add Form</div>
+            </div>
+            <form class="form" (ngSubmit)="SubmitCat()" [formGroup]="AddCatForm">
+              <div class="main_body main_card_height_scroll">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i> Basic Details</div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="input_group">
+                      <label for="CustomerName">Type
+                        <span *ngIf="isSubmitted1 && formControls2.Type.errors" class="ValidationError">
+                          <span *ngIf="formControls2.Type.errors.required">Type is required</span>
+                        </span>
+                      </label>
+                      <div class="position_relative">
+                        <ng-multiselect-dropdown class="form-control" name="Type" placeholder="Select Type"
+                          (onSelect)="onItemSelect($event,'Type')" (onDeSelect)="onItemDeSelect($event,'Type')"
+                          [data]="TypeData" formControlName="Type" [settings]="dropdownSingleSettingsType">
+                        </ng-multiselect-dropdown>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12" *ngIf="TypeVal == 'SubCategory'">
+                    <div class="input_group">
+                      <label for="CustomerName">Category
+                        <span *ngIf="isSubmitted1 && formControls2.Category.errors" class="ValidationError">
+                          <span *ngIf="formControls2.Category.errors.required">Category is required</span>
+                        </span>
+                      </label>
+                      <div class="position_relative">
+                        <ng-multiselect-dropdown class="form-control" name="Category" placeholder="Select Category"
+                          [data]="CategoryData" formControlName="Category" [settings]="dropdownSingleSettingsType">
+                        </ng-multiselect-dropdown>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="input_group">
+                      <label for="CustomerName">Title
+                        <span *ngIf="isSubmitted1 && formControls2.Title.errors" class="ValidationError">
+                          <span *ngIf="formControls2.Title.errors.required">Title is required</span>
+                        </span>
+                      </label>
+                      <div class="position_relative">
+                        <input class="form_control icon_cs" type="text" formControlName="Title" name="Title" id="Title"
+                          placeholder="Enter Title">
+                        <div class="input_icon"><i class="fa fa-envelope-o"></i></div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+
+              </div>
+              <div class="main_footer">
+                <button type="button" id="ClosePOUPUP" class="mr_5 btn-danger Save_click"
+                  data-dismiss="modal">Close</button>
+                <button type="submit" class="Save_click">Add</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

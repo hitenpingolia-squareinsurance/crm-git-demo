@@ -1,0 +1,51 @@
+<form class="form" [formGroup]="EditTargetForm" (ngSubmit)="UpdateProjectionTarget()">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="text-align: center; background-color: #2cb2b3; color: white;">Add Projection Target
+          <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <div class="row" style="margin-top: 10px;">
+
+            <div class="col-sm-12">
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Status" [data]="Work_Status_Array"
+                formControlName="Work_Status" (onSelect)="UpdateValidation()" [settings]="dropdownSettingSingleSelect">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.Work_Status.errors " class="ValidationError">
+                <div *ngIf="formControls.Work_Status.errors.required">Please Select Status!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-12"
+              *ngIf="(EditTargetForm.value['Work_Status'].length > 0 && EditTargetForm.value['Work_Status'][0]['Id'] == 'Working')">
+              <span>Note : Enter complete target.<br>
+                Example : If target is 10 Lakh then enter 1000000 not just 10.
+              </span><br>
+              <label>Enter Projection Target : </label>
+              <input type="text" placeholder="Minimum target is 5000." formControlName="TargetValue"
+                class="form-control">
+              <div *ngIf="isSubmitted && formControls.TargetValue.errors " class="ValidationError">
+                <div *ngIf="formControls.TargetValue.errors.required">Please Enter Target!</div>
+                <div *ngIf="formControls.TargetValue.errors.pattern">Please Enter Numeric Value!</div>
+                <div *ngIf="formControls.TargetValue.errors.min">Minimum target is 5000!</div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

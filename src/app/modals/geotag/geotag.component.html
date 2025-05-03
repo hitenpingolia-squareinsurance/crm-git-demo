@@ -1,0 +1,283 @@
+<div class="modal-top" style="text-align: center;">
+    <h4 class="modal-title">Geo Tag</h4>
+    <button type="button" (click)="CloseModel()" class="close closeModelButton"><i
+            class="fa fa-times"></i></button>&nbsp;
+
+    <button type="button" class="btn btn-info" *ngIf="this.geoTag == 1" (click)="showForm = !showForm"><span>Re-Send
+            Link</span></button>
+</div>
+
+<form *ngIf="showForm || this.geoTag == 0" (ngSubmit)="submit()" [formGroup]="AddGeoTag">
+
+    <div class="popup-content-body">
+
+        <ul class="ul-geo">
+            <li [ngClass]="(active_tab == 'Mobile' ? 'active' : '')">
+                <a data-toggle="tab" href="#1a" (click)="SetActiveTab('Mobile')" class="untouched-active">
+                    <span>Mobile</span>
+                </a>
+            </li>
+            <li [ngClass]="(active_tab == 'Whatsapp' ? 'active' : '')">
+                <a data-toggle="tab" href="#2a" (click)="SetActiveTab('Whatsapp')" class="pending-active">
+                    <span>WhatsApp</span>
+                </a>
+            </li>
+            <li [ngClass]="(active_tab == 'Email' ? 'active' : '')">
+                <a data-toggle="tab" href="#3a" (click)="SetActiveTab('Email')" class="followup-active">
+                    <span>Email</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <input type="text" class="form-control" formControlName="tabval" [(ngModel)]="tabval" readonly>
+            </div>
+
+            <div class="col-md-12">
+                <div class="button-div-yes-no next" align="right" style="margin-top: 10px; margin-bottom: 10px;">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<!-- 
+<table *ngIf="this.GeoTagDetails != '' ">
+    <thead>
+        <tr>
+            <th colspan="5">Geo Details
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><b>Latitude : </b> {{GeoTagDetails.latitude}} </td>
+            <td><b>Longtitude : </b> {{GeoTagDetails.longitude}} </td>
+            <td><b>Add Stamp : </b> {{GeoTagDetails.add_stamp}} </td>
+            <td><img [src]="GeoTagDetails.image" alt="Image description" height="100px" width="100px" /> </td>
+        </tr>
+        </tbody>
+</table>
+-->
+
+
+<div class=" mydiv table-responsive">
+    <table *ngIf="this.Dataresult != '' " id="Table1" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Sr No.</th>
+                <th>Type</th>
+                <th>Value</th>
+                <th>Time</th>
+                <th>OTP Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of Dataresult; let i=index;">
+                <td>{{row.SRNo}}</td>
+                <td> {{row.Type}}</td>
+                <td> {{row.value}}</td>
+                <td>{{row.insert_date}}</td>
+                <td>
+                    <span class="btn label-warning" *ngIf="row.otp_verified_status == 0">Not Verified</span>
+                    <span class="btn label-info" *ngIf="row.otp_verified_status == 1">Verified</span>
+                </td>
+                <td><span class="btn label-warning" *ngIf="row.status == 0">Pending</span>
+                    <span class="btn label-info" *ngIf="row.status == 1">Verified</span>
+                    <span class="btn label-success" (click)="GetGeoTagDetails(row.id,1)"
+                        *ngIf="row.status == 2">Submitted</span>
+                    <span class="btn label-danger" *ngIf="row.status == 3">Expired</span>&nbsp;&nbsp;&nbsp;
+                    <button type="button" *ngIf="row.status == 2 && row.approval_status == 0" class="btn btn-primary"
+                        data-toggle="modal" data-target="#exampleModal" (click)="setRowId(row.id)">
+                        Action
+                    </button>
+                    <button type="button" *ngIf="row.status == 2 && row.approval_status == 1" class="btn btn-success"
+                        data-toggle="modal" data-target="#exampleModal2"
+                        (click)="GetRowData(row.id,row.approval_status)">
+                        Approve
+                    </button>
+                    <button type="button" *ngIf="row.status == 2 && row.approval_status == 2" class="btn btn-danger"
+                        data-toggle="modal" data-target="#exampleModal2"
+                        (click)="GetRowData(row.id,row.approval_status)">
+                        Deny
+                    </button><br>
+                    <button type="button" *ngIf="row.status == 2 && row.approval_status == 1" class="btn btn-warning"
+                        (click)="DownloadPdf(row.id)">
+                        Download PDF
+                    </button>
+                    <!-- <span class="label label-danger"  click="GeoTagApproval()">Action</span> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Geo Tag Approval</h5>
+                <button type="button" class="close closeModelButton" id="closeModelSet" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="geoTagForm" (ngSubmit)="AddGeoTagApproval()" class="working_day">
+                    <div class="dropdown_day">
+                        <div class="geo-list geo-pro">
+
+                            <ul>
+                                <li>
+                                    <label>Remark</label>
+                                    <textarea type="text" class="form-control" formControlName="remark"></textarea>
+                                    <span *ngIf="isSubmitted && formControls2.remark.errors" class="ValidationError">
+                                        <span *ngIf="formControls2.remark.errors.required">Please enter remark!</span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <abbr class="status-view">
+                                        <label>Approve</label>
+                                        <input formControlName="checkvalue" type="radio" value="1" required>
+                                    </abbr>
+                                    <abbr class="status-view">
+                                        <label>Deny</label>
+                                        <input formControlName="checkvalue" type="radio" value="2" required>
+                                    </abbr>
+                                    <br>
+                                    <span *ngIf="isSubmitted && formControls2.checkvalue.errors"
+                                        class="ValidationError">
+                                        <span *ngIf="formControls2.checkvalue.errors.required">Please select radio
+                                            button!</span>
+                                    </span>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer custom-footer">
+                        <button type="submit" class="btn btn-info">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" *ngIf="getRowdat == true" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">Action Details</h5>
+                <button type="button" class="close closeModelButton" id="closeModelSet" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="dropdown_day">
+                    <div class="geo-list">
+
+                        <ul>
+                            <li>
+                                <div class="list-details">
+                                    <abbr>Action By :</abbr>
+                                    <span>{{GeoApprovalDenyDetails.action_by}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="list-details">
+                                    <abbr>Remark :</abbr>
+                                    <span>{{GeoApprovalDenyDetails.remark}}</span>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="list-details">
+                                    <abbr>Date :</abbr>
+                                    <span>{{GeoApprovalDenyDetails.date}}</span>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="geo-details" *ngIf="this.checkclick == true ">
+    <h4>Geo Tag Details</h4>
+    <ul>
+        <li>
+            <div class="list-details">
+                <abbr>Latitude:</abbr>
+                <span>{{GeoTagDetails.latitude}}</span>
+            </div>
+        </li>
+        <li>
+            <div class="list-details">
+                <abbr>Longitude:</abbr>
+                <span>{{GeoTagDetails.longitude}}</span>
+            </div>
+        </li>
+        <li>
+            <div class="list-details">
+                <abbr>Video:</abbr>
+                <span>
+                    <!-- <img [src]="GeoTagDetails.image" alt="Image description" class="img-responsive"
+                        (click)="openImageInIframe(GeoTagDetails.image)"> -->
+
+                        <video *ngIf="GeoTagDetails.image" [src]="GeoTagDetails.image" controls class="img-responsive">
+                            Your browser does not support the video tag.
+                        </video>
+                        
+                    </span>
+            </div>
+        </li>
+        <li>
+            <div class="list-details">
+                <abbr>IP Address:</abbr>
+                <span>{{GeoTagDetails.ip_address}}</span>
+            </div>
+        </li>
+        <li>
+            <div class="list-details">
+                <abbr>Geo Tagging Time:</abbr>
+                <span>{{GeoTagDetails.update_stamp}}</span>
+            </div>
+        </li>
+        <li>
+            <div class="list-details">
+                <abbr>Location:</abbr>
+                <span><a target="_blank" href="{{GeoTagDetails.googleurl}}">View on Map</a></span>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+
+

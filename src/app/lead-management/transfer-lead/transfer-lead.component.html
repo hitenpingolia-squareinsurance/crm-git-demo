@@ -1,0 +1,29 @@
+<form class="form" [formGroup]="TransferForm" (ngSubmit)="TransferFormS()">
+    <div style="text-align: left !important;font-size: 18px;color: #554489;font-weight: 600;margin-bottom: 15px;">
+        Transfer Leads</div> 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input_group">
+                <ng-multiselect-dropdown class="form_control_ng" placeholder="Select Employee Name/Code" [data]="assignedEmployeeData"
+                formControlName="Emp_Id" [settings]="dropdownSettingsmultiselect"> </ng-multiselect-dropdown>
+                <span *ngIf="isSubmitted && FC.Emp_Id.errors" class="form-text text-muted">
+                    <span *ngIf="FC.Emp_Id.errors.required" style="color:red;">Field is required..!</span>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="input_group">
+                <textarea type="text" formControlName="Remarks" class="form_control" maxlength="1000" style="height: 80px; padding-top: 12px;" placeholder="Remarks"></textarea>
+                <span *ngIf="isSubmitted && FC.Remarks.errors" class="form-text text-muted">
+                <span *ngIf="FC.Remarks.errors.required" style="color:red;">Field is required..!</span>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="buttons_leads">
+                <button type="button" (click)="CloseModel()" class="btn btn-default pull-right">Cancel</button>
+                <button style="margin-right: 1%;" type="submit" class="btn btn-info pull-right">Update</button>
+            </div>
+        </div>
+    </div>
+</form>

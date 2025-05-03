@@ -1,0 +1,374 @@
+<section class="inner_page_css fire_form_page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Request For Quote Calculation Form 
+            </div>
+          </div>
+
+          <form class="form main_body main_card_height_scroll_withoutfooter" (ngSubmit)="submit()"
+            [formGroup]="FireForms" enctype="multipart/form-data">
+            <div class="row">
+              <div *ngIf="Divshow == 1">
+                <div class="col-md-12">
+                  <div class="form_sub_title"><i class="fa fa-link mr_5"></i> Mapping Details</div>
+                </div>
+
+                <div class="col-md-3 mb_15">
+                  <div class="input_group">
+                    <label for="CustomerName">Quote Source</label>
+                    <ng-multiselect-dropdown class="form-control" name="QuoteSource" placeholder="Select Quote Source"
+                      [data]="QuoteSourceData" formControlName="QuoteSource"
+                      [settings]="dropdownSettingsingleselect">
+                    </ng-multiselect-dropdown>
+                  </div>
+                </div>
+
+                <div class="col-md-3 mb_15">
+                  <div class="input_group">
+                    <label for="CustomerEmailId">Mapping Type</label>
+                    <ng-multiselect-dropdown class="form-control" name="login_role_type"
+                      placeholder="Select Mapping Type" (onSelect)="onItemSelect($event,'login_role_type')"
+                      [data]="MappingType" formControlName="login_role_type" [settings]="dropdownSettingsingleselect">
+                    </ng-multiselect-dropdown>
+                  </div>
+                </div>
+
+                <div class="col-md-3 mb_15" *ngIf="this.empType == 'employee'">
+                  <div class="input_group">
+                    <label for="CustomerEmailId">Employee</label>
+                    <ng-multiselect-dropdown class="form-control" name="login_role_type"
+                      placeholder="Select Mapping Type" (onSelect)="onItemSelect($event,'login_role_type')"
+                      (onDeSelect)="onItemDeSelect($event,'login_role_type')" [data]="MappingType1"
+                      formControlName="login_role_type" [settings]="dropdownSettingsingleselect">
+                    </ng-multiselect-dropdown>
+                  </div>
+                </div>
+
+                <div class="col-md-3 mb_15"
+                  *ngIf="EmployeeMappingPersonval == 'Agent' || EmployeeMappingPersonval == 'Sp'">
+                  <div class="input_group">
+                    <label for="CustomerMobileNo">Select Mapping Employee</label>
+                    <ng-multiselect-dropdown class="form-control" name="EmployeeMappingPerson"
+                      placeholder="Select Mapping Employee" (onSelect)="onItemSelect($event,'EmployeeMappingPerson')"
+                      (onDeSelect)="onItemDeSelect($event,'EmployeeMappingPerson')" [data]="EmployeeMappingPersonData"
+                      formControlName="EmployeeMappingPerson" [settings]="dropdownSettingsingleselect">
+                    </ng-multiselect-dropdown>
+                  </div>
+                </div>
+
+                <div class="col-md-3 mb_15">
+                  <div class="input_group">
+                    <label for="CustomerMobileNo">Select {{EmployeeMappingPersonval}}</label>
+                    <ng-multiselect-dropdown class="form-control" name="login_role_id" placeholder="Select Mapping"
+                      [data]="MappingPerson" formControlName="login_role_id" [settings]="dropdownSettingsingleselect">
+                    </ng-multiselect-dropdown>
+                    <!-- <span *ngIf="isSubmitted && formControls.login_role_id.errors" class="ValidationError">
+                                                                          <span *ngIf="formControls.login_role_id.errors.required">{{EmployeeMappingPersonval}} is
+                                                                            required</span>
+                                                                        </span> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 ">
+                <div class="form_sub_title">
+                  <i class="fa fa-file mr_5"></i> Fire Insurance Premium
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label>Insured Name</label>
+                      <div class="">
+                        <input type="text" class="form_control" formControlName="insured_name" autocomplete="off" name="insured_name"
+                        placeholder="Insured Name">
+                        <div *ngIf="isSubmitted && formControls.insured_name.errors" class="ValidationError">
+                          <div *ngIf="formControls.insured_name.errors.required"><span class="validateErrorSize">Please
+                              required insured name !</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label>Insured Email</label>
+                      <div class="">
+                        <input type="text" class="form_control" formControlName="insured_email" autocomplete="off" name="insured_email"
+                        placeholder="Insured Email">
+                        <div *ngIf="isSubmitted && formControls.insured_email.errors" class="ValidationError">
+                          <div *ngIf="formControls.insured_email.errors.required"><span class="validateErrorSize">Please
+                              required insured email !</span></div>
+                          <div *ngIf="formControls.insured_email.errors.email"><span class="validateErrorSize">Please enter correct insured email !</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label>Insured Mobile</label>
+                      <input type="text" class="form_control" maxlength="10" formControlName="insured_mobile" autocomplete="off" name="insured_mobile"
+                        placeholder="Insured Mobile">
+                      <div *ngIf="isSubmitted && formControls.insured_mobile.errors" class="ValidationError">
+                        <div *ngIf="formControls.insured_mobile.errors.required"><span class="validateErrorSize">Please required
+                            insured mobile.!</span></div>
+                        <div *ngIf="formControls.insured_mobile.errors.pattern"><span class="validateErrorSize">Please enter only numeric mobile.!</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label>Risk Location Pincode</label>
+                      <div class="">
+                        <ng-multiselect-dropdown class="form-control" formControlName="pincode" name="pincode"
+                          (keyup)="Getpincode($event , 1)" [placeholder]="'Select pincode'" [data]="dataPincode"
+                          [settings]="dropdownSettingsingleselect" (blur)="onRiskLocationBlur()">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="isSubmitted && formControls.pincode.errors" class="ValidationError">
+                          <div *ngIf="formControls.pincode.errors.required"><span class="validateErrorSize">Please
+                              required pincode !</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label>Occupancy</label>
+                      <div class="">
+                        <ng-multiselect-dropdown class="form-control" formControlName="occupancy" name="occupancy"
+                          (keyup)="Getpincode($event, 2)" [placeholder]="'Select occupancy'" [data]="dataArr"
+                          [settings]="dropdownSettingsingleselect" (onSelect)="Getpincode($event, '0')">
+                        </ng-multiselect-dropdown>
+
+                        <div *ngIf="isSubmitted && formControls.occupancy.errors" class="ValidationError">
+                          <div *ngIf="formControls.occupancy.errors.required"><span class="validateErrorSize">Please
+                              required occupancy !</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label>Period Of Insurance ( Months )</label>
+                      <input type="text" class="form_control" formControlName="period" autocomplete="off" name="period"
+                        placeholder="12 Months">
+                      <div *ngIf="isSubmitted && formControls.period.errors" class="ValidationError">
+                        <div *ngIf="formControls.period.errors.required"><span class="validateErrorSize">Please required
+                            period of insurance</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label>Assests Sum Insured</label>
+                      <input type="text" formControlName="suminsured" autocomplete="off" name="suminsured" class="form_control"
+                        placeholder="Assests Sum Insured" />
+                      <div *ngIf="isSubmitted && formControls.suminsured.errors" class="ValidationError">
+                        <div *ngIf="formControls.suminsured.errors.required">
+                          <span class="validateErrorSize">Please required assets suminsured...!</span>
+                        </div>
+                        <div *ngIf="formControls.suminsured.errors.pattern">
+                          <span class="validateErrorSize">Only numeric values are allowed...!</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label>Floater Cover</label>
+                      <span class="custom_radio_button dark-checkbox">
+                        <input id="yes3" formControlName="floater" autocomplete="off" name="floater" type="checkbox" />
+                        <label for="yes3">Floater Cover</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-4" *ngIf="this.is_discounts == 1">
+                    <div class="input_group">
+                      <label>Discount </label>
+                      <input type="number" formControlName="discount" autocomplete="off" name="discount" class="form_control"
+                        placeholder="Discount" />
+                      <div *ngIf="isSubmitted && formControls.discount.errors" class="ValidationError">
+                        <div *ngIf="formControls.discount.errors.required"><span class="validateErrorSize">Please
+                            required discount</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label>Upload File (3)</label>
+                      <input type="file" class="form_control" formControlName="fileuplode" multiple=""
+                            (change)="onFileChange($event)">
+                        <div class="ValidationError">
+                          <div><span class="validateErrorSize"> {{this.ThDocumets}} </span></div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label>Remark</label>
+                      <input type="test" class="form_control" formControlName="remark" placeholder="remark" name="remark">
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="input_group">
+                    <button type="submit" class="btn btn-success">CALCULATE PREMIUM</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<a data-toggle="modal" data-target="#AddCatSubCat" data-backdrop="static" data-keyboard="false" id="modelOpen" hidden>
+</a>
+
+<div id="AddCatSubCat" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title">Fire Insurance Premium ( RFQ.FIP )</div>
+            </div>
+            <form class="form">
+              <div class="main_body main_card_height_scroll">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="view_more_cases">
+                      <div class="case_table_de">
+                        <div class="status_row warnings">
+                          <div class="number_row_text">1</div>
+                          <div class="cs_status_sr">
+                            <button class="btn warnings customMargins">Risk Location</button>
+                          </div>
+                        </div>
+                        <ul>
+                          <li>
+                            <span>Pincode </span><strong>{{this.pincode}}</strong>
+                          </li>
+                          <li>
+                            <span>EQ Zone </span><strong>Zone - {{this.zone}}</strong>
+                          </li>
+                          <li>
+                            <span>District </span><strong>{{this.district}}</strong>
+                          </li>
+                          <li>
+                            <span>State </span><strong>{{this.state}}</strong>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="case_table_de">
+                        <div class="status_row warnings">
+                          <div class="number_row_text">2</div>
+                          <div class="cs_status_sr">
+                            <button class="btn warnings customMargins">Occupancy</button>
+                          </div>
+                        </div>
+                        <ul>
+                          <li>
+                            <span>Occupancy </span><strong>{{this.occupancy}} </strong>
+                          </li>
+
+                        </ul>
+                      </div>
+                      <div class="case_table_de">
+                        <div class="status_row warnings">
+                          <div class="number_row_text">3</div>
+                          <div class="cs_status_sr">
+                            <button class="btn warnings customMargins">Policy Period</button>
+                          </div>
+                        </div>
+                        <ul>
+                          <li>
+                            <span>Policy Period </span><strong>{{this.period}} months </strong>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="case_table_de">
+                        <div class="status_row warnings">
+                          <div class="number_row_text">4</div>
+                          <div class="cs_status_sr">
+                            <button class="btn warnings customMargins">Sum Insured</button>
+                          </div>
+                        </div>
+                        <ul>
+                          <li>
+                            <span>Sum Insured </span><strong>{{this.suminsured}} </strong>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="case_table_de">
+                        <div class="status_row warnings">
+                          <div class="number_row_text">5</div>
+                          <div class="cs_status_sr">
+                            <button class="btn warnings customMargins">Premium Without Tex</button>
+                          </div>
+                        </div>
+                        <ul>
+                          <li>
+                            <span>Premium Without Tex </span><strong>{{this.primium_without_tax}} </strong>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="case_table_de">
+                        <div class="status_row warnings">
+                          <div class="number_row_text">6</div>
+                          <div class="cs_status_sr">
+                            <button class="btn warnings customMargins">Discount Premium</button>
+                          </div>
+                        </div>
+                        <ul>
+                          <li>
+                            <span>Discount </span><strong>{{this.discount}} %</strong>
+                          </li>
+                          <li>
+                            <span>Total GST </span><strong>{{this.total_gst}} %</strong>
+                          </li>
+                          <li>
+                            <span>Total Premium </span><strong>{{this.total_primium}}</strong>
+                          </li>
+                          <li>
+                            <span>Remark </span><strong>{{this.remark}}</strong>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="main_footer">
+                <a type="button" id="ClosePOUPUP" class="mr_5 btn-danger Save_click"
+                  data-dismiss="modal" routerLink="/rfq/offline-manage-requests">Close</a>
+                <a class="Save_click" [href]="getWhatsAppShareLink()" target="_blank"> <i class="fa fa-share"></i> Share
+                  RFQ on WhatsApp</a> &nbsp;&nbsp;&nbsp;
+
+                <a type="button" class="Save_click" id="ClosePOUPUP" data-dismiss="modal"
+                  *ngIf="this.login_role_id == this.login_id && Divshow == 1 "
+                  routerLink="/rfq/offline-manage-requests">  
+                  <i class="fa fa-shere"></i>Generate RFQ
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

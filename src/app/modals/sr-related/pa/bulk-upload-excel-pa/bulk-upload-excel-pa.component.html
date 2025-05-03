@@ -1,0 +1,67 @@
+<form class="form-blog-top" [formGroup]="ActionForm" (ngSubmit)="BulkUploadExcel()">
+  <table class="table table-bordered">
+    <thead>
+     <tr>
+      <th style="text-align: center;">Bulk Upload Employee Data
+        <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+      </th>
+     </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+            <label>Action Type *: </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select" [data]="ActionTypeArray" formControlName="Action_Type" (onSelect)="EnableDisableValidation()" (onDeSelect)="EnableDisableValidation()" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+              <span *ngIf="isSubmitted && FC_1.Action_Type.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.Action_Type.errors.required" style="color:red;">Please select Action Type !</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <label>Upload Excel *: </label>
+              <label class="form-control btn fileUpload btn-default" [ngClass]="(this.Other_image==1 ? 'ImageUploaded' : 'else' )" name="button" value="Others">
+                <input type="file" (change)="UploadDocs($event,'ExcelFile')" id="file" accept=".xlsx" formControlName="ExcelFile" style="display:none;" />
+                <span class="fas fa-user-alt"><b>Choose File</b></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;" *ngIf="(ActionForm.value['Action_Type'].length > 0 && ActionForm.value['Action_Type'][0]['Id'] == 'Bulk_Edit')">
+            <div class="col-sm-12">
+            <label>Premium Need To *: </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select" [data]="PreNeedToArray" (onSelect)="EnableDisableValidation1($event)" (onDeSelect)="EnableDisableValidation1('enable')" formControlName="PremiumNeedTo" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-6">
+              <label>Previous Premium : </label>
+              <input type="number" class="form-control" placeholder="Enter Previous Pre." formControlName="Previous_Premium" readonly>
+            </div>
+
+            <div class="col-sm-6">
+              <label>Adjustment Premium *: </label>
+              <input type="number" class="form-control" placeholder="Enter Adjustment Pre." formControlName="Extra_Premium" [readonly]="butDisabled">
+              <span *ngIf="isSubmitted && FC_1.Extra_Premium.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.Extra_Premium.errors.required" style="color:red;">Please enter Added Premium !</span>
+                <span *ngIf="FC_1.Extra_Premium.errors.pattern" style="color:red;">Enter vaild Premium(Numeric value)!</span>
+              </span>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

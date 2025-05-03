@@ -1,0 +1,207 @@
+<div class="row mb-4">
+  <div class="col text-center">
+    <h6></h6>
+    <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+  </div>
+</div>
+<form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+  <div class="row">
+
+    <!-- <div class="col-sm-2">
+      <ng-multiselect-dropdown  class="form-control" name="FinancialYear" placeholder="Financial Year"
+        [data]="SR_Session_Year" formControlName="FinancialYear" [settings]="dropdownSettingsmultiselect"
+        (onSelect)="onItemSelect($event,'FinancialYear')"
+        (onDeSelect)="onItemDeSelect($event,'FinancialYear')">
+      </ng-multiselect-dropdown>
+      <span *ngIf="isSubmitted && formControls.FinancialYear.errors" class="ValidationError">
+        <span *ngIf="formControls.FinancialYear.errors.required">Financial Year is required</span></span>
+    </div> -->
+    <div class="col-sm-2">
+      <ng-multiselect-dropdown class="form-control" name="Source" placeholder="Select Source" [data]="SRSource_Ar"
+        formControlName="Source" [settings]="dropdownSettingsmultiselect"
+        (onSelect)="onItemSelect($event,'SRSource_Ar')" (onDeSelect)="onItemDeSelect($event,'SRSource_Ar')">
+      </ng-multiselect-dropdown>
+    </div>
+    <div class="col-sm-2">
+      <ng-multiselect-dropdown class="form-control" name="Lob" placeholder="Select LOB" [data]="GlobelLOB"
+        formControlName="Lob" [settings]="dropdownSettingsmultiselect" (onSelect)="onItemSelect($event,'GlobelLOB')"
+        (onDeSelect)="onItemDeSelect($event,'GlobelLOB')">
+      </ng-multiselect-dropdown>
+
+    </div>
+
+    <div class="col-sm-2">
+      <ng-multiselect-dropdown class="form-control" name="PolicyFileType" placeholder="Business Type"
+        [data]="PolicyFileType" formControlName="PolicyFileType" [settings]="dropdownSettingsmultiselect"
+        (onSelect)="onItemSelect($event,'PolicyFileType')" (onDeSelect)="onItemDeSelect($event,'PolicyFileType')">
+      </ng-multiselect-dropdown>
+    </div>
+    <div class="col-sm-2">
+      <ng-multiselect-dropdown class="form-control" name="PolicyType" placeholder="Policy Type" [data]="PolicyType"
+        formControlName="PolicyType" [settings]="dropdownSettingsmultiselect"
+        (onSelect)="onItemSelect($event,'PolicyType')" (onDeSelect)="onItemDeSelect($event,'PolicyType')">
+      </ng-multiselect-dropdown>
+
+    </div>
+    <div class="col-sm-2">
+      <ng-multiselect-dropdown class="form-control" name="ProductType" placeholder="Product Type" [data]="ProductType"
+        formControlName="ProductType" [settings]="dropdownSettingsmultiselect"
+        (onSelect)="onItemSelect($event,'ProductType')" (onDeSelect)="onItemDeSelect($event,'ProductType')">
+      </ng-multiselect-dropdown>
+
+    </div>
+
+
+
+
+  </div>
+  <div class="row"  >
+
+    <div class="col-sm-4">
+      <input type="text" placeholder="Select Date OR Date-Range" class="form-control" formControlName="DateOrDateRange"
+        bsDaterangepicker [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+
+      <span *ngIf="isSubmitted && formControls.DateOrDateRange.errors" class="ValidationError">
+        <span *ngIf="formControls.DateOrDateRange.errors.required">Date is required</span></span>
+    </div>
+    <div class="col-sm-4">
+      <ng-multiselect-dropdown class="form-control" name="Company" placeholder="Select Insurer" [data]="Ins_Compaines"
+        formControlName="Company" [settings]="dropdownSettingsmultiselect"
+        (onSelect)="onItemSelect($event,'Ins_Compaines')" (onDeSelect)="onItemDeSelect($event,'Ins_Compaines')">
+      </ng-multiselect-dropdown>
+
+    </div>
+    <div class="col-sm-2"><input type="text" formControlName="SearchValue" name="SearchValue" class="form-control"
+        placeholder="Search"></div>
+    <div class="col-sm-2" style="text-align: right;">
+
+      <input *ngIf="(Is_Export==1)" type="button" class="btn btn-success" value="Export">
+      &nbsp;&nbsp;
+      <input type="submit" class="btn btn-info" value="Search">
+      &nbsp;&nbsp;
+      <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger" value="Reset"> <i
+          class="fa fa-close"> Reset</i> </button>
+    </div>
+
+  </div>
+
+
+</form>
+<div class="mydiv">
+
+
+  <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+
+
+
+    <thead>
+
+
+      <tr>
+
+        <th>SrNo.</th>
+
+        <th>SR_No</th>
+        <th>BookingDate</th>
+
+
+        <!-- <th>SR Status</th> -->
+
+        <th>LOB</th>
+        <th>File Type</th>
+
+        <th>Segment</th>
+        <th>Product</th>
+        <th>SubProduct</th>
+        <th>Class</th>
+
+        <th>SubClass</th>
+
+        <th>Net Premium</th>
+        <th>Gross Premium</th>
+        <th>Agent</th>
+        <th>RM</th>
+        <th style="text-align:center;">Payout Details</th>
+        <th>Customer Name</th>
+
+
+      </tr>
+    </thead>
+
+
+    <tbody *ngIf="dataAr?.length != 0">
+      <tr *ngFor="let row of dataAr; let i=index;">
+
+        <td>{{ i+1 }}.</td>
+
+        <td>{{ row.SR_No }}</td>
+
+        <td>{{ row.SR_Create_Date }}</td>
+
+
+        <!-- <td>
+        <span *ngIf="row.SR_Status == 'Complete'" class="label label-success label-inline mr-2">Booked</span>
+        <span *ngIf="row.SR_Status == 'Recovery'" class="label label-success label-inline mr-2">Recovery</span>
+      </td> -->
+
+
+
+        <td>
+
+          <label class="btn btn-success">{{row.LOB_Id}}</label>
+        </td>
+        <td>{{ row.File_Type }}</td>
+        <td>{{ row.Segment_Id }}</td>
+        <td>{{ row.Product_Id }}</td>
+        <td>{{ row.SubProduct_Id }}</td>
+        <td>{{ row.Class_Id }}</td>
+        <td>{{ row.Sub_Class_Id }}</td>
+
+
+        <td>{{ row.Net_Premium }}</td>
+        <td>{{ row.Estimated_Gross_Premium }}</td>
+        <td>{{ row.Agent_Name }}</td>
+        <td>{{ row.RM_Name }}</td>
+        <td>
+          <table class="PayoutTable">
+            <tr>
+              <td>OD%</td>
+              <td>OD AMT</td>
+              <td>TP%</td>
+              <td>TP AMT</td>
+
+              <td>Reward</td>
+              <td>Scheme</td>
+              <td>Total</td>
+            </tr>
+            <tr>
+              <td>{{row.Web_Agent_Payout_OD}}</td>
+              <td>{{row.Web_Agent_Payout_OD_Amount}}</td>
+              <td>{{row.Web_Agent_Payout_TP}}</td>
+              <td>{{row.Web_Agent_Payout_TP_Amount}}</td>
+
+              <td>{{row.Web_Agent_Reward_Amount}}</td>
+              <td>{{row.Web_Agent_Scheme_Amount}}</td>
+              <td>{{row.Web_Agent_Total_Amount}}</td>
+
+            </tr>
+
+          </table>
+        </td>
+        <td>{{ row.Customer_Name }}</td>
+
+
+
+
+      </tr>
+    </tbody>
+    <tbody *ngIf="dataAr?.length == 0">
+      <tr>
+        <td colspan="8" align="center">No data Available !</td>
+      </tr>
+    <tbody>
+
+
+  </table>
+</div>

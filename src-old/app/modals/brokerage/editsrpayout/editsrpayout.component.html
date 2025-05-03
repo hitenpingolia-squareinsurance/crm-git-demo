@@ -1,0 +1,149 @@
+ 	 
+  <div class="card-body">
+        <div class="box-header with-border">
+          <h3 class="box-title">Edit Pay-Out</h3>
+ 
+        </div> 
+
+<form [formGroup]="PayInForm" (ngSubmit)="AddPayIn()">   
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="">
+            
+			
+<div class="form-group row">		
+		 
+		<div class="col-lg-2" [ngClass]="(SR_Ar['LOB_Id']=='Motor')?'show':'hide'">
+			<label>Pay-In OD:</label>
+			<input type="number" min="1" (keyup)="PayInOD($event)" formControlName="PayInOD" class="form-control"> 		 	   
+			<span *ngIf="isSubmitted && FC.PayInOD.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayInOD.errors.required" style="color:red;">Please enter Pay-In OD !</span>
+			</span>
+			
+		</div>
+		
+		<div class="col-lg-2" [ngClass]="(SR_Ar['LOB_Id']=='Motor')?'show':'hide'">
+			<label>Pay-Out OD:</label>
+			<input type="number" min="1" formControlName="PayOutOD" class="form-control"> 	 	   
+			<span *ngIf="isSubmitted && FC.PayOutOD.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutOD.errors.required" style="color:red;">Please enter Pay-Out OD !</span>
+			</span>
+			
+		</div> 
+		
+		<div class="col-lg-2" [ngClass]="(SR_Ar['LOB_Id']=='Motor')?'show':'hide'">
+			<label>Pay-In TP:</label>
+			<input type="number" min="1" (keyup)="PayInTP($event)" formControlName="PayInTP" class="form-control"> 		 	   
+			<span *ngIf="isSubmitted && FC.PayInTP.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayInTP.errors.required" style="color:red;">Please enter Pay-In TP !</span>
+			</span>
+			
+		</div>
+		
+		<div class="col-lg-2" [ngClass]="(SR_Ar['LOB_Id']=='Motor')?'show':'hide'">
+			<label>Pay-Out TP:</label>
+			<input type="number" min="1" formControlName="PayOutTP" class="form-control"> 	 	   
+			<span *ngIf="isSubmitted && FC.PayOutTP.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutTP.errors.required" style="color:red;">Please enter Pay-Out TP !</span>
+			</span>
+			
+		</div>
+	</div>	
+
+
+		<div class="form-group row">			
+		<div class="col-sm-2">
+			<label>Pay-In Net:</label>
+			<input type="number" min="1" (keyup)="PayInNet($event)" formControlName="PayInNet" class="form-control"> 		 	   
+			<span *ngIf="isSubmitted && FC.PayInNet.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayInNet.errors.required" style="color:red;">Please enter Pay-In Net !</span>
+			</span>
+			
+		</div>
+		
+		<div class="col-sm-2">
+			<label>Pay-Out Net:</label>
+			<input type="number" min="1" formControlName="PayOutNet" [readonly]="(SR_Ar['User_Rights']['Is_NonMotor_File2FilePayIn']==1)?true:false" class="form-control"> 	 	   
+			<span *ngIf="isSubmitted && FC.PayOutNet.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutNet.errors.required" style="color:red;">Please enter Pay-Out Net !</span>
+			</span>
+			
+		</div>
+		  
+		
+		
+		 
+	</div>
+
+
+<div class="form-group row" >
+		 
+		<div class="col-lg-2" [ngClass]="(SR_Ar['LOB_Id']=='Non Motor')?'show':'hide'">
+			<label>Pay-In Terrorism:</label>
+			<input type="number" min="1" (keyup)="PayInTerrorism($event)" formControlName="PayInTerrorism" class="form-control"> 		 	   
+			<span *ngIf="isSubmitted && FC.PayInTerrorism.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayInTerrorism.errors.required" style="color:red;">Please enter Pay-In Terrorism !</span>
+			</span>
+			
+		</div> 
+		
+		<div class="col-lg-2" [ngClass]="(SR_Ar['LOB_Id']=='Non Motor')?'show':'hide'">
+			<label>Pay-Out Terrorism:</label>
+			<input type="number" min="1" formControlName="PayOutTerrorism" [readonly]="(SR_Ar['User_Rights']['Is_NonMotor_File2FilePayIn']==1)?true:false" class="form-control"> 	 	   
+			<span *ngIf="isSubmitted && FC.PayOutTerrorism.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutTerrorism.errors.required" style="color:red;">Please enter Pay-Out Terrorism !</span>
+			</span>
+		</div> 
+		 
+		 
+		 <div class="col-lg-2">
+			<label>Pay-In Reward:</label>
+			<input type="number" min="1" (keyup)="PayInReward($event)" formControlName="PayInReward" class="form-control"> 		 	   
+			<span *ngIf="isSubmitted && FC.PayInReward.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayInReward.errors.required" style="color:red;">Please enter Pay-In Reward !</span>
+			</span>
+			
+		</div>
+		
+		<div class="col-lg-2">
+			<label>Pay-Out Reward:</label>
+			<input type="number" min="1" formControlName="PayOutReward" [readonly]="(SR_Ar['User_Rights']['Is_NonMotor_File2FilePayIn']==1)?true:false" class="form-control"> 	 	   
+			<span *ngIf="isSubmitted && FC.PayOutReward.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutReward.errors.required" style="color:red;">Please enter Pay-Out Reward !</span>
+			</span>
+			
+		</div>
+	  
+		<div class="col-lg-2">
+			<label>Pay-In Scheme:</label>
+			<input type="number" min="1" (keyup)="PayInScheme($event)" formControlName="PayInScheme" class="form-control"> 		 	   
+			<span *ngIf="isSubmitted && FC.PayInScheme.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayInScheme.errors.required" style="color:red;">Please enter Pay-In Scheme !</span>
+			</span>
+			
+		</div>
+		
+		<div class="col-lg-2">
+			<label>Pay-Out Scheme:</label>
+			<input type="number" min="1" formControlName="PayOutScheme" [readonly]="(SR_Ar['User_Rights']['Is_NonMotor_File2FilePayIn']==1)?true:false" class="form-control"> 	 	   
+			<span *ngIf="isSubmitted && FC.PayOutScheme.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutScheme.errors.required" style="color:red;">Please enter Pay-Out Scheme !</span>
+			</span>
+			
+		</div>
+		
+	 
+	 
+		 
+	</div>	
+	
+	</div>	
+	</div>	
+	 <div class="box-footer">
+	 <button style="margin-right: 1%;" type="submit" class="btn btn-info pull-right">Update</button>
+			<button type="button" (click)="CloseModel()" class="btn btn-default pull-right mr_10">Cancel</button>
+			
+        </div>
+</form>	
+
+</div>

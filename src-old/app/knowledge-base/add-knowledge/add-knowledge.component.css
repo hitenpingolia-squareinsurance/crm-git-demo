@@ -1,0 +1,32 @@
+a.pull-right.btn.btn-primary.btn-info {
+  background: #4c9ac7;
+  border: 1px solid #ffffff70 !important;
+  box-shadow: 0px 0px 10px #00000026;
+}
+
+.input_group label {
+  position: relative;
+}
+
+.input_group .ValidationError {
+  font-size: 12px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.multiselect-dropdown .dropdown-btn span {
+  padding-left: 32px !important;
+}
+
+
+.input_group1 label {
+  position: relative;
+}
+
+.input_group1 .ValidationError {
+  font-size: 12px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}

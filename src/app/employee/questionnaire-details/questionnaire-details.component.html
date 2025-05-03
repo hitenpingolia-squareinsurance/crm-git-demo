@@ -1,0 +1,24 @@
+<div class="box-body">
+    <div class="mydiv">
+        <table id="Table1" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Question`s</th>
+                    <th>Answer</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="row?.length != 0">
+
+                <tr *ngFor="let aaaa of row; let i=index;">
+                    <td>{{aaaa.Question}}</td>
+                    <td>{{aaaa.answer}}</td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="row?.length == 0">
+                                    <tr>
+                                        <td colspan="8" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+        </table>
+    </div>
+</div>

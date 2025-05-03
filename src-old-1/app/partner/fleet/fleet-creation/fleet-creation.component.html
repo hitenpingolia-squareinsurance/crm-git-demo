@@ -1,0 +1,189 @@
+<section class="inner_page_css main_dashboard_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+                            <!-- title  -->
+                            Fleet Creation
+                        </div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!--begin::Card-->
+                            
+                                        <div class="card-toolbar">
+                                            <div class="example-tools justify-content-center">
+                                                <a routerLink="/partner/fleet/report"
+                                                    class="btn btn-primary font-weight-bolder">
+                                                    <i aria-hidden="true" class="fa fa-angle-left"></i>
+                                                    Back
+                                                </a>
+                                            </div>
+                                    
+                                    <!--begin::Form-->
+                            
+
+
+                                    <form class="form" [formGroup]="AddForm" (ngSubmit)="Add()">
+
+                                        <div class="card-body">
+
+                                            <div class="form_sub_title"><i class="fa fa-link mr_5"></i> Fleet Information</div>
+
+                                            <div class="form-group row">
+
+                                                <div class="col-lg-6">
+
+                                                    <label>Relationship Manager:</label>
+
+                                                    <!--<select class="form-control" (change)="onChangeRM($event)" formControlName="RM_Id">
+                                                        <option disabled>select</option>
+                                                        <option *ngFor="let row of RM_Data" value="{{row.Id}}">{{row.Name}}</option>
+                                                    </select>-->
+
+                                                    <ng-multiselect-dropdown class="form-control" name="RM_Id" formControlName="RM_Id"
+                                                        placeholder="--Select RM--" [data]="RM_Data"
+                                                        [settings]="dropdownSettings" (onSelect)="onChangeRM($event)">
+                                                    </ng-multiselect-dropdown>
+
+
+                                                    <span *ngIf="isSubmitted && formControls.RM_Id.errors"
+                                                        class="form-text text-muted">
+                                                        <span *ngIf="formControls.RM_Id.errors.required"
+                                                            style="color:red;">Please choose RM!</span>
+                                                    </span>
+
+                                                </div>
+
+
+                                                <div class="col-lg-6">
+
+                                                    <label>Select Agent:</label>
+
+                                                    <!--<select class="form-control" formControlName="Agent_Id">
+                                                        <option disabled>select</option>
+                                                        <option *ngFor="let row of Agent_Ar" value="{{row.Id}}">{{row.Name}}</option>
+                                                    </select>-->
+
+                                                    <ng-multiselect-dropdown class="form-control" name="Agent_Id" formControlName="Agent_Id"
+                                                        placeholder="--Select Agent--" [data]="Agent_Ar"
+                                                        [settings]="dropdownSettings">
+                                                    </ng-multiselect-dropdown>
+
+
+                                                    <span *ngIf="isSubmitted && formControls.Agent_Id.errors"
+                                                        class="form-text text-muted">
+                                                        <span *ngIf="formControls.Agent_Id.errors.required"
+                                                            style="color:red;">Please choose agent!</span>
+                                                    </span>
+
+                                                </div>
+
+
+
+                                            </div>
+
+                                            <div class="form-group row">
+
+                                                <div class="col-lg-4">
+                                                    <label>Fleet Name :</label>
+
+                                                    <input class="form-control" formControlName="Fleet_Name">
+
+                                                    <span *ngIf="isSubmitted && formControls.Fleet_Name.errors"
+                                                        class="form-text text-muted">
+                                                        <span *ngIf="formControls.Fleet_Name.errors.required"
+                                                            style="color:red;">Please enter fleet name!</span>
+                                                        <span *ngIf="formControls.Fleet_Name.errors.pattern"
+                                                            style="color:red;">Please enter vaild name (Numbers/Special
+                                                            Characters Not Allowed)</span>
+                                                    </span>
+
+                                                </div>
+
+                                                <div class="col-lg-4">
+                                                    <label>Mobile No. :</label>
+
+                                                    <input class="form-control" formControlName="Mobile_No">
+
+                                                    <span *ngIf="isSubmitted && formControls.Mobile_No.errors"
+                                                        class="form-text text-muted">
+                                                        <span *ngIf="formControls.Mobile_No.errors.required"
+                                                            style="color:red;">Please enter mobile no!</span>
+                                                        <span *ngIf="formControls.Mobile_No.errors.pattern"
+                                                            style="color:red;">Please enter vaild mobile no</span>
+                                                    </span>
+
+                                                </div>
+
+                                                <div class="col-lg-4">
+                                                    <label>Email :</label>
+
+                                                    <input class="form-control" formControlName="Email">
+
+                                                    <span *ngIf="isSubmitted && formControls.Email.errors"
+                                                        class="form-text text-muted">
+                                                        <span *ngIf="formControls.Email.errors.required"
+                                                            style="color:red;">Please enter email!</span>
+                                                        <span *ngIf="formControls.Email.errors.pattern"
+                                                            style="color:red;">Please enter vaild email</span>
+                                                    </span>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group row">
+
+                                                <div class="col-lg-12">
+                                                    <label>Address :</label>
+
+                                                    <input class="form-control" formControlName="Address">
+
+                                                    <span *ngIf="isSubmitted && formControls.Address.errors"
+                                                        class="form-text text-muted">
+                                                        <span *ngIf="formControls.Address.errors.required"
+                                                            style="color:red;">Please ender address!</span>
+                                                    </span>
+
+                                                </div>
+                                            </div>
+
+                                            <!-- begin: Example Code-->
+
+                                            <!-- end: Example Code-->
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+
+                                                </div>
+                                                <div class="col-lg-6 text-right">
+
+                                                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <!--end::Form-->
+                                </div>
+                                <!--end::Card-->
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

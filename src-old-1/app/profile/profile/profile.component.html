@@ -1,0 +1,1094 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">User profile</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="profilepageinnerbody">
+                  <div class="mainpdfdownloadpdfboxmain">
+                    <div class="profileeditbtn" *ngIf="this.checkType == 'employee'">
+                      <button *ngIf="this.checkType == 'employee' && this.ProfileImage == undefined"
+                        class="profilecardcoverbtn btn" (click)="ProfilePhotoRequest()" s><i class="fa fa-pencil"
+                          aria-hidden="true"></i></button>
+                      <button *ngIf="this.checkType == 'employee' && this.ProfileImage != undefined"
+                        class="profilecardcoverbtn btn" (click)="ProfilePhotoRequest()"><i class="fa fa-pencil"
+                          aria-hidden="true"></i></button>
+                    </div>
+                    <div class="profiledownloadbtn">
+                      <a (click)="downloadProfileAsPDF()" href="javascript:void(0)"><i class="fa fa-download"></i>&nbsp;Profile Card</a>
+                    </div>
+                    <div class="mainpdfdownloadpdfbox" id="contentToConvert">
+                      <div class="mainprofilecard" data-state="#about">                       
+                        <div class="profilecardheader">
+                          <div class="profilecardcover">
+                            <img *ngIf="this.ProfileImage != undefined" class="profilecardavatar" [src]="ProfileImage"
+                              alt="User profile picture">
+                            <img *ngIf="this.ProfileImage == undefined" class="profilecardavatar"
+                              src="../../assets/image/profile.svg" alt="User profile picture">
+                          </div>
+                          <div class="profileusrdetails">
+                            <h1 class="profilecardfullname">{{Profiledata.Name}} - <span
+                                *ngIf="UserLoginType != 'SubPos'">{{Profiledata.Code}}</span></h1>
+                            <h2 class="profilecardjobtitle" *ngIf="this.api.GetUserType() != 'agent'">
+                              {{Profiledata.Profile}} {{Profiledata.Designation}}</h2>
+                            <h2 class="profilecardjobtitle" *ngIf="this.api.GetUserType() != 'agent' && this.api.GetUserType() != 'sp' && this.api.GetUserType() != 'user'">DOJ -
+                              {{Profiledata.DOJ}}</h2>
+                            <h2 class="profilecardjobtitle" *ngIf="this.api.GetUserType() == 'agent'">DOB -
+                              {{Profiledata.dob}}</h2>
+                            <h2 class="profilecardjobtitle" *ngIf="this.api.GetUserType() == 'agent'">Education -
+                              {{Profiledata.Education}}</h2>
+                            <h2 class="profilecardjobtitle">{{Profiledata.Mobile}}</h2>
+                            <h2 class="profilecardjobtitle">{{Profiledata.Email}}</h2>
+                          </div>
+                        </div>
+                        <h2 class="profilecardjobvie" *ngIf="this.api.GetUserType() != 'agent' && this.api.GetUserType() != 'sp' && this.api.GetUserType() != 'user'">{{Profiledata.Address}}
+                        </h2>
+                        <h2 class="profilecardjobvie" *ngIf="this.api.GetUserType() == 'agent'">
+                          {{Profiledata.Address_1}}
+                          {{Profiledata.Address_2}} {{Profiledata.Address_3}}</h2>
+                      </div>
+                    </div>
+                    <div class="Reportingdetails"
+                      *ngIf="this.api.GetUserType() == 'agent' && ReportingManagerData != ''">
+                      <div class="Reportingtitle">Reporting Manager</div>
+                      <ul *ngFor="let row of ReportingManagerData">
+                        <strong><i class="fa fa-book margin-r-5"></i> {{row.LOB}}</strong>
+                        <li class="list-group-item" *ngIf="row.status != 2">
+                          <b>{{row.RmName}} - {{row.RmCode}}</b> <a class="pull-right high"
+                            (click)="WithdrawRmRequest(row.AgentId,row.LOB,row.RmId,62)">Withdraw</a>
+                        </li>
+                        <li class="list-group-item" *ngIf="row.status == 2">
+                          <b>{{row.RmName}} - {{row.RmCode}}</b> <a class="pull-right high">Withdraw
+                            Requested</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="profileotherinformations">
+                    <div class="profilecardcontent" *ngIf="Profiledata.UserType != 'sp' && this.api.GetUserType() != 'user'">
+                      <ul class="nav nav-tabs">
+                        <div class="tabstitle">
+                          <span [ngClass]="{'active': isDivVisibleActive}" (click)="ShowDivtabs()" ><a href="#PersonalDetails" data-toggle="tab">Information</a></span>
+                          <span [ngClass]="{'active': isEditDetailsActive}" (click)="toggleEditDetails()" *ngIf="(this.api.GetUserType() == 'agent') && Profiledata.pos_status == 2"><a href="#editDetails" data-toggle="tab">Edit Details</a></span>
+                          <span [ngClass]="{'active': isProfileStatusActive}" (click)="toggleProfileStatus()" *ngIf="(this.api.GetUserType() == 'agent')" (click)="profilestatus()"><a href="#profileStatus" data-toggle="tab">Profile Status</a></span>
+                        </div> 
+                      </ul>
+                      
+                      <div *ngIf="isDivVisible">
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#PersonalDetails" data-toggle="tab">Personal Details</a></li>
+                          <li *ngIf="(this.api.GetUserType() != 'agent')"><a href="#OfficalDetails" data-toggle="tab">Offical Details</a></li>
+                          <li *ngIf="(this.api.GetUserType() == 'agent')"><a href="#Bankdetails" data-toggle="tab">Bank Details</a></li>
+                          <li><a href="#Documentsdetails" data-toggle="tab">Documents Details</a></li>
+                        </ul>
+                      </div>       
+                      <div class="tab-content">
+                        <div class="active tab-pane" id="PersonalDetails">
+                          <div class="profilecardcontentsubtitletimeline">
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() != 'agent')">
+                              <small>Employee Type</small>
+                              <div class="profilecarditemtitle">{{Profiledata.EmployeeType}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() != 'agent')">
+                              <small>DOB</small>
+                              <div class="profilecarditemtitle">{{Profiledata.DOB}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() != 'agent')">
+                              <small>RM Name & Code</small>
+                              <div class="profilecarditemtitle">{{Profiledata.RmName}} - {{Profiledata.RmCode}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.PersonalEmail && this.api.GetUserType() != 'agent')">
+                              <small>Personal Email</small>
+                              <div class="profilecarditemtitle">{{Profiledata.PersonalEmail}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.PersonalMobile && this.api.GetUserType() != 'agent')">
+                              <small>Personal Mobile</small>
+                              <div class="profilecarditemtitle">{{Profiledata.PersonalMobile}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.EmergencyNo && this.api.GetUserType() != 'agent')">
+                              <small>Emergency Mobile</small>
+                              <div class="profilecarditemtitle">{{Profiledata.EmergencyNo}}</div>
+                            </div>                            
+                            <div class="profilecarditem" *ngIf="(Profiledata.Gender)">
+                              <small>Gender</small>
+                              <div class="profilecarditemtitle" *ngIf="this.api.GetUserType() == 'agent'"> {{Profiledata.Gender ? Profiledata.Gender[0].Name : ''}}</div>
+                              <div class="profilecarditemtitle" *ngIf="this.api.GetUserType() != 'agent'"> {{Profiledata.Gender}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.BloodGroup && this.api.GetUserType() != 'agent')">
+                              <small>Blood Group</small>
+                              <div class="profilecarditemtitle">{{Profiledata.BloodGroup}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.FatherName && this.api.GetUserType() != 'agent')">
+                              <small>Father Name</small>
+                              <div class="profilecarditemtitle">{{Profiledata.FatherName}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.Address_1 && this.api.GetUserType() == 'agent')">
+                              <small>Address 1</small>
+                              <div class="profilecarditemtitle">{{Profiledata.Address_1}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.Address_2 && this.api.GetUserType() == 'agent')">
+                              <small>Address 2</small>
+                              <div class="profilecarditemtitle">{{Profiledata.Address_2}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.Address_3 && this.api.GetUserType() == 'agent')">
+                              <small>Address 3</small>
+                              <div class="profilecarditemtitle">{{Profiledata.Address_3}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.Pincode)">
+                              <small>Pincode</small>
+                              <div class="profilecarditemtitle">{{Profiledata.Pincode}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.City ? Profiledata.City[0].Id != '' : '' && this.api.GetUserType() == 'agent')">
+                              <small>City</small>
+                              <div class="profilecarditemtitle">{{Profiledata.City ? Profiledata.City[0].Name : ''}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.State ? Profiledata.State[0].Id != '' : '' && this.api.GetUserType() == 'agent')">
+                              <small>State</small>
+                              <div class="profilecarditemtitle">{{Profiledata.State ? Profiledata.State[0].Name : ''}}</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="tab-pane" id="OfficalDetails">
+                          <div class="profilecardcontentsubtitletimeline">
+                            <div class="profilecarditem" *ngIf="(Profiledata.Extension && this.api.GetUserType() != 'agent')">
+                              <small>Extension</small>
+                              <div class="profilecarditemtitle">{{Profiledata.Extension}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.Zone ? Profiledata.Zone[0].Id != '' : '' && this.api.GetUserType() != 'agent')">
+                              <small>Zone</small>
+                              <div class="profilecarditemtitle">{{Profiledata.Zone ? Profiledata.Zone[0].Name : ''}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.RegionalOffice && this.api.GetUserType() != 'agent')">
+                              <small>Regional Office</small>
+                              <div class="profilecarditemtitle">{{Profiledata.RegionalOffice}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.Branch ? Profiledata.Branch[0].Id != '' : '' && this.api.GetUserType() != 'agent')">
+                              <small>Branch</small>
+                              <div class="profilecarditemtitle">{{Profiledata.Branch ? Profiledata.Branch[0].Name : ''}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.ServiceLocation && this.api.GetUserType() != 'agent')">
+                              <small>Service Location</small>
+                              <div class="profilecarditemtitle">{{Profiledata.ServiceLocation}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="Profiledata.BranchAddress && (this.api.GetUserType() != 'agent')">
+                              <small>Branch Address</small>
+                              <div class="profilecarditemtitle">{{Profiledata.BranchAddress}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="Profiledata.Department ? Profiledata.Department[0].Id != '' : '' && (this.api.GetUserType() != 'agent')">
+                              <small>Department</small>
+                              <div class="profilecarditemtitle">{{Profiledata.Department}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.ExperienceType && this.api.GetUserType() != 'agent')">
+                              <small>Experience Type</small>
+                              <div class="profilecarditemtitle">{{Profiledata.ExperienceType}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() != 'agent' && Profiledata.ExperienceType == 'Experience' && Profiledata.OrganizationName)">
+                              <small>Organization Name</small>
+                              <div class="profilecarditemtitle">{{Profiledata.OrganizationName}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() != 'agent' && Profiledata.ExperienceType == 'Experience' && Profiledata.LastOrganizationContact)">
+                              <small>Organization Contact</small>
+                              <div class="profilecarditemtitle">{{Profiledata.LastOrganizationContact}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() != 'agent' && Profiledata.ExperienceType == 'Experience' && Profiledata.TotalExperience)">
+                              <small>Total Experience</small>
+                              <div class="profilecarditemtitle">{{Profiledata.TotalExperience}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() != 'agent' && Profiledata.ExperienceType == 'Experience' && Profiledata.LcWorkingValidityFrom && Profiledata.LcWorkingValidityTo)">
+                              <small>Working</small>
+                              <div class="profilecarditemtitle">From {{Profiledata.LcWorkingValidityFrom |
+                                date:'dd-MM-yyyy'}} To {{Profiledata.LcWorkingValidityTo | date:'dd-MM-yyyy'}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.IsSolicitor && this.api.GetUserType() != 'agent')">
+                              <small>Solicitor Type</small>
+                              <div class="profilecarditemtitle">{{Profiledata.IsSolicitor}}</div>
+                            </div>
+                            <div class="profilecarditem"
+                              *ngIf="(Profiledata.SaibaID && this.api.GetUserType() != 'agent' && Profiledata.IsSolicitor == 'Yes')">
+                              <small>Saiba ID</small>
+                              <div class="profilecarditemtitle">{{Profiledata.SaibaID}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.BQCNumber && this.api.GetUserType() != 'agent' && Profiledata.IsSolicitor == 'Yes')">
+                              <small>BQC Number</small>
+                              <div class="profilecarditemtitle">{{Profiledata.BQCNumber}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() != 'agent' && Profiledata.IsSolicitor == 'Yes')">
+                              <small>BQC Certificate</small>
+                              <div class="profilecarditemtitle">
+                                <span class="imgnot" *ngIf="(Profiledata.BQCCertificate =='0')">Not available</span>
+                                <span class="imgview" *ngIf="(Profiledata.BQCCertificate !='0')"
+                                  (click)="ViewDocument(Profiledata.BQCCertificate)">View</span>
+                              </div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.BQCValidityFrom && Profiledata.BQCValidityTo && this.api.GetUserType() != 'agent' && Profiledata.IsSolicitor == 'Yes')">
+                              <small>Validity</small>
+                              <div class="profilecarditemtitle">From {{Profiledata.BQCValidityFrom}} To
+                                {{Profiledata.BQCValidityTo}}</div>
+                            </div>   
+                          </div>
+                        </div>
+                        <div class="tab-pane" id="Bankdetails">
+                          <div class="profilecardcontentsubtitletimeline"> 
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() == 'agent')">
+                              <small>Bank Name</small>
+                              <div class="profilecarditemtitle">{{Profiledata.Bank_Name ? Profiledata.Bank_Name[0]['Name'] : ''}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() == 'agent')">
+                              <small>Branch Location</small>
+                              <div class="profilecarditemtitle">{{Profiledata.Branch_Name}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() == 'agent')">
+                              <small>IFSC Code</small>
+                              <div class="profilecarditemtitle">{{Profiledata.Ifsc_code}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() == 'agent')">
+                              <small>Account Type</small>
+                              <div class="profilecarditemtitle">{{Profiledata.Account_Type ? Profiledata.Account_Type[0]['Name'] : ''}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() == 'agent')">
+                              <small>Account Number</small>
+                              <div class="profilecarditemtitle">{{Profiledata.Account_No}}</div>
+                            </div>                           
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() == 'agent')">
+                              <small>Cheque</small>
+                              <div class="profilecarditemtitle">
+                                <span class="imgnot" *ngIf="(Profiledata.Cheque_Image =='0')">Not available</span>
+                                <span class="imgview" *ngIf="(Profiledata.Cheque_Image !='0')" (click)="ViewDocument(Profiledata.Cheque_Image)">View</span>
+                              </div>
+                            </div>                   
+                          </div>
+                        </div>
+                        <div class="tab-pane" id="Documentsdetails">
+                          <div class="profilecardcontentsubtitletimeline">
+                            <div class="profilecarditem" *ngIf="(Profiledata.Aadhaar && this.api.GetUserType() != 'agent')">
+                              <small>Aadhaar</small>
+                              <div class="profilecarditemtitle">{{Profiledata.Aadhaar}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="this.api.GetUserType() == 'agent'">
+                              <small>Aadhar</small>
+                              <div class="profilecarditemtitle">{{Profiledata.AadhaarCard_Number}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="this.api.GetUserType() == 'agent'">
+                              <small>Aadhar Front</small>
+                              <div class="profilecarditemtitle">
+                                <span class="imgnot" *ngIf="(Profiledata.AadhaarCardFront_Image =='0')">Not available</span>
+                                <span class="imgview" *ngIf="(Profiledata.AadhaarCardFront_Image !='0')" (click)="ViewDocument(Profiledata.AadhaarCardFront_Image)">View</span>
+                              </div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="this.api.GetUserType() == 'agent'">
+                              <small>Aadhar Back</small>
+                              <div class="profilecarditemtitle">
+                                <span class="imgnot" *ngIf="(Profiledata.AadhaarCardBack_Image =='0')">Not available</span>
+                                <span class="imgview" *ngIf="(Profiledata.AadhaarCardBack_Image !='0')" (click)="ViewDocument(Profiledata.AadhaarCardBack_Image)">View</span>
+                              </div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.PanCard && this.api.GetUserType() != 'agent')">
+                              <small>PanCard</small>
+                              <div class="profilecarditemtitle">{{Profiledata.PanCard}}</div>
+                            </div>                           
+                            <div class="profilecarditem" *ngIf="(Profiledata.GSTStatus ? Profiledata.GSTStatus[0].Id == 'Yes' : '') && this.api.GetUserType() == 'agent'">
+                              <small>GST Number</small>
+                              <div class="profilecarditemtitle">{{Profiledata.gstno}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(Profiledata.GSTStatus ? Profiledata.GSTStatus[0].Id == 'Yes' : '') && this.api.GetUserType() == 'agent'">
+                              <small>Gst Address</small>
+                              <div class="profilecarditemtitle">{{Profiledata.GstAddress}}</div>
+                            </div>                            
+                            <div class="profilecarditem" *ngIf="this.api.GetUserType() == 'agent'">
+                              <small>Pancard</small>
+                              <div class="profilecarditemtitle">{{Profiledata.Pancard_number}}</div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="this.api.GetUserType() == 'agent'">
+                              <small>Pancard View</small>
+                              <div class="profilecarditemtitle">
+                                <span class="imgnot" *ngIf="(Profiledata.Pancard_Image =='0')">Not available</span>
+                                <span class="imgview" *ngIf="(Profiledata.Pancard_Image !='0')"
+                                  (click)="ViewDocument(Profiledata.Pancard_Image)">View</span>
+                              </div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() == 'agent')">
+                              <small>Graduation</small>
+                              <div class="profilecarditemtitle">
+                                <span class="imgnot" *ngIf="(Profiledata.Graduation_Image =='0')">Not available</span>
+                                <span class="imgview" *ngIf="(Profiledata.Graduation_Image !='0')"
+                                  (click)="ViewDocument(Profiledata.Graduation_Image)">View</span>
+                              </div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() == 'agent')">
+                              <small>Profile</small>
+                              <div class="profilecarditemtitle">
+                                <span class="imgnot" *ngIf="(Profiledata.Profile_Image =='0')">Not available</span>
+                                <span class="imgview" *ngIf="(Profiledata.Profile_Image !='0')"
+                                  (click)="ViewDocument(Profiledata.Profile_Image)">View</span>
+                              </div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() == 'agent')">
+                              <small>Signature</small>
+                              <div class="profilecarditemtitle">
+                                <span class="imgnot" *ngIf="(Profiledata.Signature_Image =='0')">Not available</span>
+                                <span class="imgview" *ngIf="(Profiledata.Signature_Image !='0')"
+                                  (click)="ViewDocument(Profiledata.Signature_Image)">View</span>
+                              </div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() == 'agent')">
+                              <small>GST Certificate</small>
+                              <div class="profilecarditemtitle">
+                                <span class="imgnot" *ngIf="(Profiledata.GSTCertificate =='0')">Not available</span>
+                                <span class="imgview" *ngIf="(Profiledata.GSTCertificate !='0')"
+                                  (click)="ViewDocument(Profiledata.GSTCertificate)">View</span>
+                              </div>
+                            </div>
+                            <div class="profilecarditem" *ngIf="(this.api.GetUserType() == 'agent')">
+                              <small>GST Agreement</small>
+                              <div class="profilecarditemtitle">
+                                <span class="imgnot" *ngIf="(Profiledata.GSTAgreement =='0')">Not available</span>
+                                <span class="imgview" *ngIf="(Profiledata.GSTAgreement !='0')"
+                                  (click)="ViewDocument(Profiledata.GSTAgreement)">View</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="tab-pane agenteditform" id="editDetails">
+                          <form class="form-horizontal" [formGroup]="ProfileForm" (ngSubmit)="UpdateProfile()">
+                            <div class="forminnerscroller">
+                              <div class="row">
+
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Title</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit" (click)="enableInputFieldsValue('title')"
+                                    aria-hidden="true" *ngIf="!isInputEnabled['title']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit" (click)="disableInputFieldValue('title')"
+                                    aria-hidden="true" *ngIf="isInputEnabled['title']"></i>
+                                  <input type="text" class="formcontrol" formControlName="title" [(ngModel)]="titleVal">
+                                  <span *ngIf="isSubmitted && FC.title.errors" class="ValidationError">
+                                    <span *ngIf="FC.title.errors.required">Title is required .</span>
+                                    <span *ngIf="FC.title.errors.CustomValidator">Same Title error.</span>
+                                  </span>
+                                </div>
+                                
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Email</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit" (click)="enableInputFieldsValue('Email')"
+                                    aria-hidden="true" *ngIf="!isInputEnabled['Email']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit" (click)="disableInputFieldValue('Email')"
+                                    aria-hidden="true" *ngIf="isInputEnabled['Email']"></i>
+                                  <input type="text" class="formcontrol" formControlName="Email" [(ngModel)]="EmailVal">
+                                  <span *ngIf="isSubmitted && FC.Email.errors" class="ValidationError">
+                                    <span *ngIf="FC.Email.errors.required">Email is required .</span>
+                                    <span *ngIf="FC.Email.errors.pattern">Enter valid Email.</span>
+                                    <span *ngIf="FC.Email.errors.CustomValidator">Same Email error.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Mobile</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit" (click)="enableInputFieldsValue('Mobile')"
+                                    aria-hidden="true" *ngIf="!isInputEnabled['Mobile']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit" (click)="disableInputFieldValue('Mobile')"
+                                    aria-hidden="true" *ngIf="isInputEnabled['Mobile']"></i>
+
+                                  <input type="text" maxlength="10" class="formcontrol" formControlName="Mobile"
+                                    [(ngModel)]="MobileVal">
+                                  <span *ngIf="isSubmitted && FC.Mobile.errors" class="ValidationError">
+                                    <span *ngIf="FC.Mobile.errors.required"> Mobile is required</span>
+                                    <span *ngIf="FC.Mobile.errors.pattern">Enter valid Mobile Number.</span>
+                                    <span *ngIf="FC.Mobile.errors.CustomValidator">Same Mobile error.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Address 1</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('Address_1')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['Address_1']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit" (click)="disableInputFieldValue('Address_1')"
+                                    aria-hidden="true" *ngIf="isInputEnabled['Address_1']"></i>
+
+                                  <input type="text" class="formcontrol" formControlName="Address_1"
+                                    [(ngModel)]="Address_1Val">
+                                  <span *ngIf="isSubmitted && FC.Address_1.errors" class="ValidationError">
+                                    <span *ngIf="FC.Address_1.errors.required"> Address is required</span>
+                                    <span *ngIf="FC.Address_1.errors.pattern">Enter valid Address.</span>
+                                    <span *ngIf="FC.Address_1.errors.CustomValidator">Same Address error.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Address 2</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('Address_2')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['Address_2']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit" (click)="disableInputFieldValue('Address_2')"
+                                    aria-hidden="true" *ngIf="isInputEnabled['Address_2']"></i>
+
+                                  <input type="text" class="formcontrol" formControlName="Address_2"
+                                    [(ngModel)]="Address_2Val">
+                                  <span *ngIf="isSubmitted && FC.Address_2.errors" class="ValidationError">
+                                    <span *ngIf="FC.Address_2.errors.required"> Address is required</span>
+                                    <span *ngIf="FC.Address_2.errors.pattern">Enter valid Address.</span>
+                                    <span *ngIf="FC.Address_2.errors.CustomValidator">Same Address error.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Address 3</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('Address_3')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['Address_3']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit" (click)="disableInputFieldValue('Address_3')"
+                                    aria-hidden="true" *ngIf="isInputEnabled['Address_3']"></i>
+
+                                  <input type="text" class="formcontrol" formControlName="Address_3"
+                                    [(ngModel)]="Address_3Val">
+                                  <span *ngIf="isSubmitted && FC.Address_3.errors" class="ValidationError">
+                                    <span *ngIf="FC.Address_3.errors.required"> Address is required</span>
+                                    <span *ngIf="FC.Address_3.errors.pattern">Enter valid Address.</span>
+                                    <span *ngIf="FC.Address_3.errors.CustomValidator">Same Address error.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Pincode</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit" (click)="enableInputFieldsValue('Pincode')"
+                                    aria-hidden="true" *ngIf="!isInputEnabled['Pincode']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit" (click)="disableInputFieldValue('Pincode')"
+                                    aria-hidden="true" *ngIf="isInputEnabled['Pincode']"></i>
+
+                                  <input type="text" class="formcontrol" maxlength="6" formControlName="Pincode"
+                                    [(ngModel)]="PincodeVal">
+                                  <span *ngIf="isSubmitted && FC.Pincode.errors" class="ValidationError">
+                                    <span *ngIf="FC.Pincode.errors.required"> Pincode is required</span>
+                                    <span *ngIf="FC.Pincode.errors.pattern">Enter valid Pincode.</span>
+                                    <span *ngIf="FC.Pincode.errors.CustomValidator">Same Pincode error.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">State</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit" (click)="enableInputFieldsValue('State')"
+                                    aria-hidden="true" *ngIf="!isInputEnabled['State']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit" (click)="disableInputFieldValue('State')"
+                                    aria-hidden="true" *ngIf="isInputEnabled['State']"></i>
+
+                                  <ng-multiselect-dropdown [disabled]="StateDisable" class="formcontrol" name="State"
+                                    placeholder="Select State" [data]="State" formControlName="State"
+                                    [settings]="dropdownSettingsType" [(ngModel)]="StateVal">
+                                  </ng-multiselect-dropdown>
+                                  <span *ngIf="isSubmitted && FC.State.errors" class="ValidationError">
+                                    <span *ngIf="FC.State.errors.required"> State is required</span>
+                                    <span *ngIf="FC.State.errors.pattern">Enter valid State.</span>
+                                    <span *ngIf="FC.State.errors.CustomValidator">Same State error.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">City</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit" (click)="enableInputFieldsValue('City')"
+                                    aria-hidden="true" *ngIf="!isInputEnabled['City']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit" (click)="disableInputFieldValue('City')"
+                                    aria-hidden="true" *ngIf="isInputEnabled['City']"></i>
+
+                                  <ng-multiselect-dropdown [disabled]="CityDisable" class="formcontrol" name="City"
+                                    placeholder="Select City" [data]="Citys" formControlName="City"
+                                    [settings]="dropdownSettingsType" [(ngModel)]="CityVal">
+                                  </ng-multiselect-dropdown>
+                                  <span *ngIf="isSubmitted && FC.City.errors" class="ValidationError">
+                                    <span *ngIf="FC.City.errors.required"> City is required</span>
+                                    <span *ngIf="FC.City.errors.pattern">Enter valid City.</span>
+                                    <span *ngIf="FC.City.errors.CustomValidator">Same City error.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Gender</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit" (click)="enableInputFieldsValue('Gender')"
+                                    aria-hidden="true" *ngIf="!isInputEnabled['Gender']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit" (click)="disableInputFieldValue('Gender')"
+                                    aria-hidden="true" *ngIf="isInputEnabled['Gender']"></i>
+
+                                  <ng-multiselect-dropdown [disabled]="GenderDisable" class="formcontrol" name="Gender"
+                                    placeholder="Select Gender" [data]="Gender" formControlName="Gender"
+                                    [settings]="dropdownSettingsType" [(ngModel)]="GenderVal">
+                                  </ng-multiselect-dropdown>
+                                  <span *ngIf="isSubmitted && FC.Gender.errors" class="ValidationError">
+                                    <span *ngIf="FC.Gender.errors.required"> Gender is required</span>
+                                    <span *ngIf="FC.Gender.errors.pattern">Enter valid Gender.</span>
+                                    <span *ngIf="FC.Gender.errors.CustomValidator">Same Gender error.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Bank Name</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('Bank_Name')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['Bank_Name']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit" (click)="disableInputFieldValue('Bank_Name')"
+                                    aria-hidden="true" *ngIf="isInputEnabled['Bank_Name']"></i>
+
+                                  <ng-multiselect-dropdown [disabled]="BankDisable" class="formcontrol" name="Bank_Name"
+                                    placeholder="Select Bank" [data]="Bank" formControlName="Bank_Name"
+                                    [settings]="dropdownSettingsType" [(ngModel)]="BankVal">
+                                  </ng-multiselect-dropdown>
+                                  <span *ngIf="isSubmitted && FC.Bank_Name.errors" class="ValidationError">
+                                    <span *ngIf="FC.Bank_Name.errors.required"> Bank_Name is required</span>
+                                    <span *ngIf="FC.Bank_Name.errors.pa ttern">Enter valid Bank_Name.</span>
+                                    <span *ngIf="FC.Bank_Name.errors.CustomValidator">Same Bank_Name error.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Branch Name</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('Branch_Name')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['Branch_Name']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit"
+                                    (click)="disableInputFieldValue('Branch_Name')" aria-hidden="true"
+                                    *ngIf="isInputEnabled['Branch_Name']"></i>
+
+                                  <input type="text" class="formcontrol" formControlName="Branch_Name"
+                                    [(ngModel)]="Branch_NameVal">
+                                  <span *ngIf="isSubmitted && FC.Branch_Name.errors" class="ValidationError">
+                                    <span *ngIf="FC.Branch_Name.errors.required"> Branch Name is required</span>
+                                    <span *ngIf="FC.Branch_Name.errors.pattern">Enter valid Branch Name.</span>
+                                    <span *ngIf="FC.Branch_Name.errors.CustomValidator">Same Branch name error.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Account Type</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('Account_Type')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['Account_Type']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit"
+                                    (click)="disableInputFieldValue('Account_Type')" aria-hidden="true"
+                                    *ngIf="isInputEnabled['Account_Type']"></i>
+
+                                  <ng-multiselect-dropdown [disabled]="AccountTypeDisable" class="formcontrol"
+                                    name="Account_Type" placeholder="Select Account Type" [data]="AccountType"
+                                    [(ngModel)]="AccountTypeVal" formControlName="Account_Type"
+                                    [settings]="dropdownSettingsType">
+                                  </ng-multiselect-dropdown>
+                                  <span *ngIf="isSubmitted && FC.Account_Type.errors" class="ValidationError">
+                                    <span *ngIf="FC.Account_Type.errors.required"> Account Type is required</span>
+                                    <span *ngIf="FC.Account_Type.errors.pattern">Enter valid Account Type.</span>
+                                    <span *ngIf="FC.Account_Type.errors.CustomValidator">Same Account Type error.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Account No.</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('Account_No')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['Account_No']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit"
+                                    (click)="disableInputFieldValue('Account_No')" aria-hidden="true"
+                                    *ngIf="isInputEnabled['Account_No']"></i>
+
+                                  <input type="text" class="formcontrol" formControlName="Account_No"
+                                    [(ngModel)]="Account_NoVal">
+                                  <span *ngIf="isSubmitted && FC.Account_No.errors" class="ValidationError">
+                                    <span *ngIf="FC.Account_No.errors.required"> Account No is required</span>
+                                    <span *ngIf="FC.Account_No.errors.pattern">Enter valid Account No.</span>
+                                    <span *ngIf="FC.Account_No.errors.CustomValidator">Same Account No. error.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">IFSC</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('Ifsc_code')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['Ifsc_code']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit" (click)="disableInputFieldValue('Ifsc_code')"
+                                    aria-hidden="true" *ngIf="isInputEnabled['Ifsc_code']"></i>
+
+                                  <input type="text" class="formcontrol" formControlName="Ifsc_code"
+                                    [(ngModel)]="Ifsc_codeVal">
+                                  <span *ngIf="isSubmitted && FC.Ifsc_code.errors" class="ValidationError">
+                                    <span *ngIf="FC.Ifsc_code.errors.required"> Ifsc Code is required</span>
+                                    <span *ngIf="FC.Ifsc_code.errors.pattern">Enter valid Ifsc Code.</span>
+                                    <span *ngIf="FC.Ifsc_code.errors.CustomValidator">Same IFSC Code error.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName"> Cheque/ Passbook/ Statement</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('ChequeImage')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['ChequeImage']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit"
+                                    (click)="disableInputFieldValue('ChequeImage')" aria-hidden="true"
+                                    *ngIf="isInputEnabled['ChequeImage']"></i>
+                                  <input type="file" class="formcontrol" (change)="UploadDocs($event,'ChequeImage')"
+                                    formControlName="ChequeImage">
+                                  <span *ngIf="isSubmitted && FC.ChequeImage.errors" class="ValidationError">
+                                    <span *ngIf="FC.ChequeImage.errors.required"> Cheque Image is required</span>
+                                    <span *ngIf="FC.ChequeImage.errors.pattern">Enter valid Image.</span>
+                                  </span>
+                                </div>
+                                <!-- ---------------------------------FOR EMITRA--------------------------------- -->
+                                <div class="col-sm-4 formgroup"
+                                  *ngIf="this.Profiledata.PartnerData == 'emitra' && Profiledata.AadhaarCard_Number == ''">
+                                  <label for="inputName">Aadhar No.</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('Emitra_AadharNo')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['Emitra_AadharNo']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit"
+                                    (click)="disableInputFieldValue('Emitra_AadharNo')" aria-hidden="true"
+                                    *ngIf="isInputEnabled['Emitra_AadharNo']"></i>
+                                  <input type="text" class="formcontrol" formControlName="Emitra_AadharNo"
+                                    [(ngModel)]="Emitra_AadharNo_Val" [maxlength]="12">
+                                  <span *ngIf="isSubmitted && FC.Emitra_AadharNo.errors" class="ValidationError">
+                                    <span *ngIf="FC.Emitra_AadharNo.errors.required">Aadhar Number Required</span>
+                                    <span *ngIf="FC.Emitra_AadharNo.errors.pattern">Enter valid Aadhar Number.</span>
+                                    <span *ngIf="FC.Emitra_AadharNo.errors.CustomValidator">Same Aadhar Number
+                                      error.</span>
+                                  </span>
+                                </div>
+                                <!-- --------------------------------- // FOR EMITRA //--------------------------------- -->
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Upload Pancard</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('PancardImage')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['PancardImage']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit"
+                                    (click)="disableInputFieldValue('PancardImage')" aria-hidden="true"
+                                    *ngIf="isInputEnabled['PancardImage']"></i>
+
+                                  <input type="file" class="formcontrol" (change)="UploadDocs($event,'PancardImage')"
+                                    formControlName="PancardImage" id="fileInput">
+                                  <span *ngIf="isSubmitted && FC.PancardImage.errors" class="ValidationError">
+
+                                    <span *ngIf="FC.PancardImage.errors.required"> Pancard Image is required</span>
+                                    <span *ngIf="FC.PancardImage.errors.pattern">Enter valid Image.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Upload Aadhaar Front</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('AadhaarCardFrontImage')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['AadhaarCardFrontImage']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit"
+                                    (click)="disableInputFieldValue('AadhaarCardFrontImage')" aria-hidden="true"
+                                    *ngIf="isInputEnabled['AadhaarCardFrontImage']"></i>
+
+                                  <input type="file" class="formcontrol"
+                                    (change)="UploadDocs($event,'AadhaarCardFrontImage')"
+                                    formControlName="AadhaarCardFrontImage" id="fileInput">
+                                  <span *ngIf="isSubmitted && FC.AadhaarCardFrontImage.errors" class="ValidationError">
+                                    <span *ngIf="FC.AadhaarCardFrontImage.errors.required"> Aadhaar Card Image is
+                                      required</span>
+                                    <span *ngIf="FC.AadhaarCardFrontImage.errors.pattern">Enter valid Image.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Upload AadhaarCard Back</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('AadhaarCardBackImage')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['AadhaarCardBackImage']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit"
+                                    (click)="disableInputFieldValue('AadhaarCardBackImage')" aria-hidden="true"
+                                    *ngIf="isInputEnabled['AadhaarCardBackImage']"></i>
+
+                                  <input type="file" class="formcontrol"
+                                    (change)="UploadDocs($event,'AadhaarCardBackImage')"
+                                    formControlName="AadhaarCardBackImage" id="fileInput">
+                                  <span *ngIf="isSubmitted && FC.AadhaarCardBackImage.errors" class="ValidationError">
+                                    <span *ngIf="FC.AadhaarCardBackImage.errors.required"> Aadhaar Card Image is
+                                      required</span>
+                                    <span *ngIf="FC.AadhaarCardBackImage.errors.pattern">Enter valid Image.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">10th / 12th / Graduation</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('GraduationImage')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['GraduationImage']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit"
+                                    (click)="disableInputFieldValue('GraduationImage')" aria-hidden="true"
+                                    *ngIf="isInputEnabled['GraduationImage']"></i>
+
+                                  <input type="file" class="formcontrol" (change)="UploadDocs($event,'GraduationImage')"
+                                    formControlName="GraduationImage" id="fileInput">
+                                  <span *ngIf="isSubmitted && FC.GraduationImage.errors" class="ValidationError">
+                                    <span *ngIf="FC.GraduationImage.errors.required"> Graduation Image is required</span>
+                                    <span *ngIf="FC.GraduationImage.errors.pattern">Enter valid Image.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Profile Image</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('ProfileImage')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['ProfileImage']"> </i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit"
+                                    (click)="disableInputFieldValue('ProfileImage')" aria-hidden="true"
+                                    *ngIf="isInputEnabled['ProfileImage']"> </i>
+
+                                  <input type="file" class="formcontrol" (change)="UploadDocs($event,'ProfileImage')"
+                                    formControlName="ProfileImage" id="fileInput">
+                                  <span *ngIf="isSubmitted && FC.ProfileImage.errors" class="ValidationError">
+                                    <span *ngIf="FC.ProfileImage.errors.required"> Profile Image is required</span>
+                                    <span *ngIf="FC.ProfileImage.errors.pattern">Enter valid Image.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Signature Image</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('SignatureImage')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['SignatureImage']"> </i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit"
+                                    (click)="disableInputFieldValue('SignatureImage')" aria-hidden="true"
+                                    *ngIf="isInputEnabled['SignatureImage']"> </i>
+
+                                  <input type="file" class="formcontrol" (change)="UploadDocs($event,'SignatureImage')"
+                                    formControlName="SignatureImage" id="fileInput">
+                                  <span *ngIf="isSubmitted && FC.SignatureImage.errors" class="ValidationError">
+                                    <span *ngIf="FC.SignatureImage.errors.required"> Signature Image is required</span>
+                                    <span *ngIf="FC.SignatureImage.errors.pattern">Enter valid Image.</span>
+                                  </span>
+                                </div>
+                                <div class="col-sm-4 formgroup">
+                                  <label for="inputName">Gst</label>
+                                  <i class="fa fa-pencil-square-o fa-fa-edit"
+                                    (click)="enableInputFieldsValue('GSTStatus')" aria-hidden="true"
+                                    *ngIf="!isInputEnabled['GSTStatus']"></i>
+                                  <i class="fa fa-times-circle-o fa-fa-edit" (click)="disableInputFieldValue('GSTStatus')"
+                                    aria-hidden="true" *ngIf="isInputEnabled['GSTStatus']"></i>
+
+                                  <ng-multiselect-dropdown class="formcontrol" name="GSTStatus" [disabled]="GSTDisabled"
+                                    placeholder="Select GST" [data]="GstData" (onSelect)="onItemSelect($event)"
+                                    formControlName="GSTStatus" [settings]="dropdownSettingsType" [(ngModel)]="GSTVal">
+                                  </ng-multiselect-dropdown>
+                                  <span *ngIf="isSubmitted && FC.GSTStatus?.errors" class="ValidationError">
+                                    <span *ngIf="FC.GSTStatus?.errors.required"> GST is required</span>
+                                    <span *ngIf="FC.GSTStatus.errors.CustomValidator">Same GST Status error.</span>
+
+                                  </span>
+                                </div>
+                                <div *ngIf="GSTSelectVal">
+                                  <div class="col-sm-4 formgroup">
+                                    <label for="inputName">GST Number</label>
+                                    <i class="fa fa-pencil-square-o fa-fa-edit" (click)="enableInputFieldsValue('gstno')"
+                                      aria-hidden="true" *ngIf="!isInputEnabled['gstno']"></i>
+                                    <i class="fa fa-times-circle-o fa-fa-edit" (click)="disableInputFieldValue('gstno')"
+                                      aria-hidden="true" *ngIf="isInputEnabled['gstno']"></i>
+                                    <input type="text" class="formcontrol" formControlName="gstno" [(ngModel)]="gstnoVal">
+                                    <span *ngIf="isSubmitted && FC.gstno.errors" class="ValidationError">
+                                      <span *ngIf="FC.gstno.errors.required"> GST No. is required</span>
+                                      <span *ngIf="FC.gstno.errors.pattern">Enter Valid GST No.</span>
+                                      <span *ngIf="FC.gstno.errors.CustomValidator">Same GST No. error.</span>
+                                    </span>
+                                  </div>
+                                  <div class="col-sm-4 formgroup">
+                                    <label for="inputName">GST Address</label>
+                                    <i class="fa fa-pencil-square-o fa-fa-edit"
+                                      (click)="enableInputFieldsValue('GstAddress')" aria-hidden="true"
+                                      *ngIf="!isInputEnabled['GstAddress']"></i>
+                                    <i class="fa fa-times-circle-o fa-fa-edit"
+                                      (click)="disableInputFieldValue('GstAddress')" aria-hidden="true"
+                                      *ngIf="isInputEnabled['GstAddress']"></i>
+
+                                    <input type="text" class="formcontrol" formControlName="GstAddress"
+                                      [(ngModel)]="GstAddressVal">
+                                    <span *ngIf="isSubmitted && FC.GstAddress.errors" class="ValidationError">
+                                      <span *ngIf="FC.GstAddress.errors.required"> GST Address is required</span>
+                                      <span *ngIf="FC.GstAddress.errors.CustomValidator">Same GST Address error.</span>
+                                    </span>
+                                  </div>
+                                  <div class="col-sm-4 formgroup">
+                                    <label for="inputName">GST Certificate</label>
+                                    <i class="fa fa-pencil-square-o fa-fa-edit"
+                                      (click)="enableInputFieldsValue('GST_Certificate')" aria-hidden="true"
+                                      *ngIf="!isInputEnabled['GST_Certificate']"></i>
+                                    <i class="fa fa-times-circle-o fa-fa-edit"
+                                      (click)="disableInputFieldValue('GST_Certificate')" aria-hidden="true"
+                                      *ngIf="isInputEnabled['GST_Certificate']"></i>
+                                    <input type="file" class="formcontrol" (change)="UploadDocs($event,'GST_Certificate')"
+                                      formControlName="GST_Certificate" id="fileInput">
+                                    <span *ngIf="isSubmitted && FC.GST_Certificate.errors" class="ValidationError">
+                                      <span *ngIf="FC.GST_Certificate.errors.required"> GST Certificate is required</span>
+                                      <span *ngIf="FC.GST_Certificate.errors.pattern">Enter valid Image.</span>
+                                      <span *ngIf="FC.GST_Certificate.errors.CustomValidator">Same GST Certificate
+                                        error.</span>
+                                    </span>
+                                  </div>
+                                  <div class="col-sm-4 formgroup">
+                                    <label for="inputName">GST Agreement</label>
+                                    <i class="fa fa-pencil-square-o fa-fa-edit"
+                                      (click)="enableInputFieldsValue('gstAgreement')" aria-hidden="true"
+                                      *ngIf="!isInputEnabled['gstAgreement']"></i>
+                                    <i class="fa fa-times-circle-o fa-fa-edit"
+                                      (click)="disableInputFieldValue('gstAgreement')" aria-hidden="true"
+                                      *ngIf="isInputEnabled['gstAgreement']"></i>
+                                    <input type="file" class="formcontrol" (change)="UploadDocs($event,'gstAgreement')"
+                                      formControlName="gstAgreement" id="fileInput">
+                                    <span *ngIf="isSubmitted && FC.gstAgreement.errors" class="ValidationError">
+                                      <span *ngIf="FC.gstAgreement.errors.required"> GST Agreement is required</span>
+                                      <span *ngIf="FC.gstAgreement.errors.pattern">Enter valid Image.</span>
+                                      <span *ngIf="FC.gstAgreement.errors.CustomValidator">Same GST Agreement
+                                        error.</span>
+                                    </span>
+                                  </div>
+                                </div>                               
+                              </div>
+                            </div>
+                            <div class="col-sm-12 sub-btn-bottom text-right">
+                              <button type="button" [ngClass]="{'btn-primary': verifyOtpVal === '0', 'btn-success': verifyOtpVal === '1'}"
+                                (click)="SendOtp()" [disabled]="verifyOtpVal === '1'" *ngIf="Aadhar_Verify"
+                                style="margin-top: 5px;">
+                                <span *ngIf="verifyOtpVal === '0'">
+                                  Verify Aadhar&nbsp;</span>
+                                <span *ngIf="verifyOtpVal === '1'">
+                                  Verified&nbsp;</span>
+                              </button>&nbsp;&nbsp;
+                              <button type="submit" [disabled]="buttonDisable"
+                                class="btn btn-primary submit-btn-profile" style="margin-top: 5px;">Submit</button>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="tab-pane agenteditform" id="profileStatus">
+                          <table class="table table-bordered table-hover">
+                            <tbody class="container-fluid">
+                              <tr>
+                                <td><b>SR No.</b></td>
+                                <td><b>Request Id</b></td>
+                                <td><b>Status</b></td>
+                              </tr>
+                              <tr *ngFor="let row of dataArr; let i=index">
+                                <td>{{row['srno']}}</td>
+                                <td role="button" tabindex="0" data-toggle="modal" data-target="#profilestatus"
+                                  (click)="profilestatus(row['requestid'])" class="btn-like"> {{row['requestid']}}
+                                </td>
+                                <td>
+                                  <label class="label label-info"
+                                    *ngIf="row['statuscheck'] == 1 && row['QC_Status_Manager'] == 0">Pending For
+                                    Manager</label>
+                                  <label class="label label-warning"
+                                    *ngIf="row['statuscheck'] == 2 && row['QC_Status_Banking'] == 0">Pending For
+                                    Banking</label>
+                                  <label class="label label-warning"
+                                    *ngIf="row['statuscheck'] == 3 && row['QC_Status_Account'] == 0">Pending For
+                                    Account</label>
+                                  <label class="label label-success" *ngIf="row['statuscheck'] == 4">complete</label>
+                                  <span class="label label-danger btn btn-danger"
+                                    *ngIf="(row['QC_Status_Manager'] == 2 &&  row['statuscheck'] == 1)  ||  (row['QC_Status_Banking'] == 2 && row['statuscheck'] == 2) || (row['QC_Status_Account'] == 2 &&  row['statuscheck'] == 3)">Reject</span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>                     
+                      <div class="pospdownload" *ngIf="Profiledata.PoscCertificate != ''">
+                        <a *ngIf="(Profiledata.PoscCertificate !='')" (click)="initiateDownload('send')"
+                          href="javascript:void(0)"><i class="fa fa-download"></i>&nbsp;&nbsp;Certificate<span
+                            *ngIf="Profiledata.LifeStatus == '1'">Certificate</span></a>
+                      </div>
+                      <div class="pospdownload2" *ngIf="this.checkType == 'employee' && Profiledata.ResignationRequestId == '' " >
+                        <button class="btn btndangernew" type="submit" data-toggle="modal" data-target="#exampleModal" (click)="LabelForForm('Resign','')">Mark Resign</button>
+                      </div>
+                      <div class="pospdownload2" *ngIf="this.checkType == 'employee' && Profiledata.ResignationRequestId !='' && Profiledata.ResignationRequestRevoked == 0">
+                        <button class="btn btndangernew" type="submit" data-toggle="modal" data-target="#exampleModal" (click)="LabelForForm('Revoke',Profiledata.ResignationRequestId)">Revoke</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<button type="button" class="btn btn-primary" id="OpenOtpModel" data-toggle="modal" data-target="#OtpChack"></button>
+<div class="modal fade" id="OtpChack" tabindex="-1" aria-labelledby="OtpChackLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="padding: 20px !important; border-radius: 10px;">
+      <div class="login-box-body">
+        <button id="ClodeOtpModel" data-dismiss="modal" aria-label="Close" type="button"
+          class="close closeModelButton">&times;</button>
+        <div class="row">
+          <div class="col-sm-12" style="text-align: center;padding-bottom: 20px;">
+            <a href="javascrpit:void(0)"><img _ngcontent-ncn-c7="" class="img-fluid" src="assets/dist/img/forget.png" style="opacity: 0.8;"></a>
+          </div>
+          <div class="col-sm-12">
+            <div class=" has-feedback" style="display:block;">
+              <div>
+                <div clas="verify-pass form-group">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="has-feedback otp">
+                        <div class="form-group has-feedback">
+                          <input type="text" [(ngModel)]="enteredOTP" class="form-control" maxlegnth="4" minlegnth="4"
+                            placeholder="Enter OTP">
+                          <span class="form-control-feedback">
+                          </span>
+                        </div>
+                        <div class="otp-col">
+                          <div>
+                            <button [disabled]="ResendOtpButton" (click)="initiateDownload('Resend')" type="button"
+                              id="ResendOtpButton" class="btn btn-info btn-block btn-flat login-button forgot"></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <button (click)="verifyOTP()" type="submit" class="btn btn-primary btn-block btn-flat">verify
+                    OTP</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><b>{{LabelForFormType}} Request Form</b></h5>
+        <button id="CloseModel" type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="false">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form" [formGroup]="ResignForm">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="Remark">Remark</label>
+              <textarea class="form-control" type="text" formControlName="Remark" name="Remark" id="Remark"
+                placeholder="Enter Remark"></textarea>
+              <span *ngIf="isSubmitted && FormC.Remark.errors" class="ValidationError">
+                <span *ngIf="FormC.Remark.errors.required">Remark required!</span>
+              </span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button *ngIf="LabelForFormType == 'Revoke'" (click)="Revoke_Form()" type="submit"
+              class="btn btn-success">Submit</button>
+            <button *ngIf="LabelForFormType == 'Resign'" (click)="Resign_Form()" type="submit"
+              class="btn btn-success">Submit</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- --------------------Aadhar Verificaion Model----------- -->
+
+<div class="modal fade" id="Otp_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><b>Aadhar Verification</b></h5>
+        <button id="CloseModel" type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="false">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form" (ngSubmit)="AadharOtp_Form()" [formGroup]="AadharOtp">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="OTP">OTP</label>
+              <input class="form-control" type="text" formControlName="OTP" name="OTP" id="OTP" placeholder="Enter OTP"
+                maxlength="6" minlength="6">
+              <span *ngIf="isSubmitted_otp && Form_C.OTP.errors" class="ValidationError">
+                <span *ngIf="Form_C.OTP.errors.required">OTP required!</span>
+              </span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" style="padding:3px;" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success" style="padding:3px;">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ------------------Profile Status Modal------------------------- -->
+
+<div class="modal fade bd-example-modal-lg" id="profilestatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><b>Details</b></h5>
+        <button id="CloseModel" type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close" (click)="profilestatus('')">
+          <span aria-hidden="false">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="responsive-table">
+          <table class="table table-bordered table-hover">
+            <tbody class="container-fluid">
+              <tr>
+                <td><b>SR No.</b></td>
+                <td><b>Agent Code</b></td>
+                <td><b>Column Name</b></td>
+                <td><b>Old Value</b></td>
+                <td><b>New Value</b></td>
+                <td><b>Manager Remark</b></td>
+                <td><b>Account Remark</b></td>
+                <td><b>Status</b></td>
+              </tr>
+              <tr *ngFor="let row of dataArr; let i=index">
+                <td>{{row['srno']}}</td>
+                <td> {{row['agentcode']}}</td>
+                <td>{{row['columnname']}} </td>
+                <td>
+                  <label (click)="ViewDocument_2(row['oldcolumnvalue'])" class="form-control"
+                    *ngIf="row['columnname'] == 'pancard_image' || row['columnname'] == 'aadharcard_image' || row['columnname'] == 'aadharcard_image_back' || row['columnname'] == 'qualification_image' || row['columnname'] == 'cheque_image' || row['columnname'] == 'image'  || row['columnname'] == 'signature_image' || row['columnname'] == 'gst_certificate' || row['columnname'] == 'gst_agreement'">
+                    View </label>
+                  <label style="word-break: break-all;"
+                    *ngIf="row['columnname'] != 'pancard_image' || row['columnname'] != 'aadharcard_image' || row['columnname'] != 'aadharcard_image_back' || row['columnname'] != 'qualification_image' || row['columnname'] != 'cheque_image' || row['columnname'] != 'image'  || row['columnname'] != 'signature_image' || row['columnname'] != 'gst_certificate'">
+                    {{row['oldcolumnvalue']}}</label>
+                </td>
+                <td>
+                  <label (click)="ViewDocument_2(row['columnvalue'])" class="form-control"
+                    *ngIf="row['columnname'] == 'pancard_image' || row['columnname'] == 'aadharcard_image' || row['columnname'] == 'aadharcard_image_back' || row['columnname'] == 'qualification_image' || row['columnname'] == 'cheque_image' || row['columnname'] == 'image'  || row['columnname'] == 'signature_image' || row['columnname'] == 'gst_certificate' || row['columnname'] == 'gst_agreement' ">
+                    View </label>
+                  <label style="word-break: break-all;"
+                    *ngIf="row['columnname'] != 'pancard_image' || row['columnname'] != 'aadharcard_image' || row['columnname'] != 'aadharcard_image_back' || row['columnname'] != 'qualification_image' || row['columnname'] != 'cheque_image' || row['columnname'] != 'image'  || row['columnname'] != 'signature_image' || row['columnname'] != 'gst_certificate' ">
+                    {{row['columnvalue']}} </label>
+                </td>
+                <td>
+                  <label *ngIf="row['manager_Remark'] != ''">
+                    {{row['manager_Remark']}}
+                  </label>
+                  <label *ngIf="row['manager_Remark'] == ''">
+                    -
+                  </label>
+                </td>
+                <td>
+                  <label *ngIf="row['account_Remark'] != ''">
+                    {{row['account_Remark']}}
+                  </label>
+                  <label *ngIf="row['account_Remark'] == ''">
+                    -
+                  </label>
+                </td>
+                <td>
+                  <label class="label label-info"
+                    *ngIf="row['statuscheck'] == 1 && row['QC_Status_Manager'] == 0">Pending For
+                    Manager</label>
+                  <label class="label label-warning"
+                    *ngIf="row['statuscheck'] == 2 && row['QC_Status_Banking'] == 0">Pending For
+                    Banking</label>
+                  <label class="label label-warning"
+                    *ngIf="row['statuscheck'] == 3 && row['QC_Status_Account'] == 0">Pending For
+                    Account</label>
+                  <label class="label label-success" *ngIf="row['statuscheck'] == 4">complete</label>
+                  <span class="label label-danger btn btn-danger"
+                    *ngIf="(row['QC_Status_Manager'] == 2 &&  row['statuscheck'] == 1)  ||  (row['QC_Status_Banking'] == 2 && row['statuscheck'] == 2) || (row['QC_Status_Account'] == 2 &&  row['statuscheck'] == 3)">Reject</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

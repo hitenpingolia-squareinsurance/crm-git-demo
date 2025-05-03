@@ -1,0 +1,125 @@
+<div class="row">
+
+
+
+    <div class="col-lg-12 col-md-12">
+        <h3 class="box-title text_center fw_600">Business Report</h3>
+
+    </div>
+    <div class="col-lg-{{Class}} col-md-12">
+        <div class="main_card">
+            <div class="main_card_body">
+                <div class="count_box">
+                    <div class="count_title text_center">{{TotalNetPremiumToDate}}
+                    </div>
+                    <p class="count_tag text_center fw_600">{{ToDateValue}}</p>
+                    <div style="display: block">
+                        <canvas baseChart [datasets]="ToDateBusinessChart"
+                            [labels]="ToDateChartValue" [options]="barChartOptions"
+                            [legend]="barChartLegend" [chartType]="PolicyChartType">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-{{Class}} col-md-12">
+        <div class="main_card">
+            <div class="main_card_body">
+                <div class="count_box">
+                    <div class="count_title text_center">{{TotalNetPremiumFromDate}}
+                    </div>
+                    <p class="count_tag text_center fw_600">{{FromDateValue}}</p>
+                    <div style="display: block">
+                        <canvas baseChart [datasets]="FromDateBusinessChart"
+                            [labels]="FromDateChartValue" [options]="barChartOptions"
+                            [legend]="barChartLegend" [chartType]="PolicyChartType">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <h3 class="box-title text_center fw_600">Policy Report</h3>
+    </div>
+    <div class="col-lg-{{Class}} col-md-12">
+        <div class="main_card">
+            <div class="main_card_body">
+                <div class="count_box">
+                    <div class="count_title text_center">{{TotalNopToDate}}</div>
+                    <p class="count_tag text_center fw_600">{{ToDateValue}}</p>
+                    <div style="display: block">
+                        <canvas baseChart [datasets]="ToDateNopChart"
+                            [labels]="ToDateChartValue" [options]="barChartOptions"
+                            [legend]="barChartLegend" [chartType]="PolicyChartType">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-{{Class}} col-md-12">
+        <div class="main_card">
+            <div class="main_card_body">
+                <div class="count_box">
+                    <div class="count_title text_center">{{TotalNopFromDate}}</div>
+                    <p class="count_tag text_center fw_600">{{FromDateValue}}</p>
+                    <div style="display: block">
+                        <canvas baseChart [datasets]="FromDateNopChart"
+                            [labels]="FromDateChartValue" [options]="barChartOptions"
+                            [legend]="barChartLegend" [chartType]="PolicyChartType">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <h3 class="box-title text_center fw_600">Revenue Report</h3>
+    </div>
+    <div class="col-lg-{{Class}} col-md-12">
+        <div class="main_card">
+            <div class="main_card_body">
+                <div class="count_box">
+                    <div class="count_title text_center">{{TotalRevenueToDate}}</div>
+                    <p class="count_tag text_center fw_600">{{ToDateValue}}</p>
+                    <div style="display: block">
+                        <canvas baseChart [datasets]="ToDateRevenueChart"
+                            [labels]="ToDateChartValue" [options]="barChartOptions"
+                            [legend]="barChartLegend" [chartType]="PolicyChartType">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-{{Class}} col-md-12">
+        <div class="main_card">
+            <div class="main_card_body">
+                <div class="count_box">
+                    <div class="count_title text_center">{{TotalRevenueFromDate}}</div>
+                    <p class="count_tag text_center fw_600">{{FromDateValue}}</p>
+                    <div style="display: block">
+                        <canvas baseChart [datasets]="FromDateRevenueChart"
+                            [labels]="FromDateChartValue" [options]="barChartOptions"
+                            [legend]="barChartLegend" [chartType]="PolicyChartType">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

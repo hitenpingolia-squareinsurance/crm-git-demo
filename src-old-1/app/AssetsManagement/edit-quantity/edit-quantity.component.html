@@ -1,0 +1,135 @@
+<div class="row">
+
+
+    <div class="modal-header" style="text-align: center;">
+        <h4 class="modal-title">Add Quantity
+            <button type="button" (click)="CloseModel()" class="btn btn-box-tool" style="float: right;"><i
+                    class="fa fa-close" style="font-size:17px"></i></button>
+        </h4>
+    </div>
+</div>
+
+
+<form (ngSubmit)="submit()" [formGroup]="updateQuantity" style="margin-top: 10px;" id="form-1">
+    <div class="box-body">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <label for="item">Quantity</label>
+                <input type="text" class="form-control" formControlName="quantity" (keyup)="onSearchChange()">
+                <div *ngIf="isSubmitted && formControls.quantity.errors" class="ValidationError">
+                    <div *ngIf="formControls.quantity.errors.required">Please enter quantity</div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <label for="item">Amount</label>
+                <input type="text" class="form-control" formControlName="amount" (keyup)="onSearchChange()">
+                <div *ngIf="isSubmitted && formControls.amount.errors" class="ValidationError">
+                    <div *ngIf="formControls.amount.errors.required">Please enter amount</div>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+                <label for="item">Total Amount</label>
+                <input type="text" class="form-control" readonly formControlName="totamount">
+            </div>
+
+
+            <div class="col-md-3">
+                <label for="item">Remark</label>
+                <input type="text" class="form-control" formControlName="remark">
+                <div *ngIf="isSubmitted && formControls.remark.errors" class="ValidationError">
+                    <div *ngIf="formControls.remark.errors.required">Please enter remark</div>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+        <div style="margin-top: 15px;">
+            <footer>
+                <button *ngIf="this.stock != 0" class="btn btn-warning nextBtn pull-right"
+                    routerLink="/Inventory/Create-Item/{{id}}" (click)="CloseModel()">Add
+                    Item {{stock}}</button>
+                &nbsp;&nbsp;
+
+                <button class="btn btn-primary nextBtn pull-right" type="submit">Submit</button> &nbsp;&nbsp;
+
+
+                <!-- <label *ngIf="row.Status == 3 && this.stock != 0" class="label label-danger"
+                    routerLink="/Inventory/Create-Item/{{row.CategoryId}}" (click)="CloseModel()">Add
+                    Item({{stock}})</label> -->
+            </footer>
+        </div>
+
+    </div>
+</form>
+
+
+
+<table class="table table-bordered table-hover" style="margin-top: 15px;">
+    <tr class="ValueTD">
+        <td colspan="5" align="center">
+            <div class="col-md-11" align="center">
+
+            </div>
+            <div class="box-tools pull-right btn-right-side">
+
+            </div>
+        </td>
+    </tr>
+    <table id="Table1" class="table table-bordered table-hover">
+
+
+
+        <thead>
+
+            <tr>
+                <th>S.No</th>
+                <th>Inventory Id</th>
+                <th>Category</th>
+                <th>Total Quantity</th>
+                <th>Total Amount</th>
+                <th>Add Stamp</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="dataArr?.length != 0">
+            <tr *ngFor="let row of dataArr; let i=index;">
+                <td>{{row.SrNo}}</td>
+                <td>{{row.InventoryId}}</td>
+                <td>{{row.Categoryname}}</td>
+                <td>{{row.TotalQuantity}}</td>
+                <td>{{row.TotalAmount}}</td>
+                <td>{{row.Add_stamp}}</td>
+                <td>
+                    <label (click)="ForApproval(row.Id,row.Categoryname)" class="label label-info">View Log</label>
+                    <br>
+                    <label *ngIf="row.Status == 1" class="label label-primary">Pending For Manager</label>
+                    <label *ngIf="row.Status == 2" class="label label-info">Pending For Accounts</label>
+                    <label *ngIf="row.Status == 3" class="label label-success">Completed</label>
+                    <label *ngIf="row.Status == 0" class="label label-danger">Rejected</label>
+                    <!-- <label *ngIf="row.Status == 3 && this.stock != 0" class="label label-danger"
+                        routerLink="/Inventory/Create-Item/{{row.CategoryId}}" (click)="CloseModel()">Add
+                        Item({{stock}})</label> -->
+                </td>
+
+            </tr>
+        </tbody>
+        <tbody *ngIf="dataArr?.length == 0">
+            <tr>
+                <td colspan="8" align="center">No data Available !</td>
+            </tr>
+        <tbody>
+
+
+    </table>
+
+</table>

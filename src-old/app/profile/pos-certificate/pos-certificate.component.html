@@ -1,0 +1,163 @@
+<div class="export_download_btn">
+    <a (click)="downloadAsPDF()"><img src="../../../assets/image/ExportDownload.gif"></a>
+</div>
+
+<!DOCTYPE html>
+
+<html>
+
+
+<head>
+    <title>Appointment Certificate of POS
+    </title>
+    <style>
+        table,
+        th,
+        td {
+            color: #1b1b1b;
+            line-height: 20px;
+        }
+
+        td {
+            font-weight: 500;
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body style="font-family: Arial, Helvetica, sans-serif; text-align: left; width: 700px; ">
+    <div id="contentToConvertCertificate"
+        style="width: 700px;padding: 20px;border: 3px solid #056496;margin: auto;background-image: url(https://www.squareinsurance.in/assets/img/pdfLogo.png);background-repeat: no-repeat;background-position: 50% 55%;background-size: 400px;">
+        <table>
+            <tr>
+                <th colspan="4" style="text-align: left;">
+                    <img src="https://www.squareinsurance.in/assets/img/Square_2020.png" alt="logo"
+                        style="width: 200px;">
+                </th>
+                <td colspan="8" style="text-align: left;">
+                    <div style="text-align: left;font-size: 15px;font-weight: 600;">Square Insurance Brokers Private
+                        Limited</div>
+                    <div style="text-align: left;font-size: 14px;">506, 5th floor, Trimurty V-Jai City Point Ahinsa
+                        Circle, C Scheme, Jaipur, Rajasthan 302001</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="12" style="height: 18px;"></td>
+            </tr>
+            <tr>
+                <td colspan="12" style="border-top: 3px solid #056496;height: 30px;"></td>
+            </tr>
+            <tr>
+                <th colspan="12" style="text-align: center; font-size: 16px;font-weight: 600;">Appointment
+                    Certificate
+                    of
+                    POS</th>
+            </tr>
+            <tr>
+                <td colspan="12" style="height: 20px;"></td>
+            </tr>
+            <tr>
+                <th colspan="10" style="text-align: left !important;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="text-align: left !important;">Mr./Mrs. :</td>
+                            <td style="text-align: left !important;">{{POSCData.Name}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left !important;">POS ID :</td>
+                            <td style="text-align: left !important;">{{POSCData.Code}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left !important;">Address :</td>
+                            <td style="text-align: left !important;">{{POSCData.Address}},
+                                {{POSCData.Pincode}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left !important;">Date :</td>
+                            <td style="text-align: left !important;">{{POSCData.Date}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="12" style="text-align: left !important;font-size: 15px;padding-top: 30px;">
+                                This
+                                is in
+                                reference to the application made by you for enrolling yourself to act as Point of
+                                Sale
+                                Person.</td>
+                        </tr>
+                    </table>
+                </th>
+                <th colspan="2" style="text-align: right !important;" align="center">
+                    <img src="{{POSCData.imageurl}}" alt="logo" style="width: 180px;">
+                </th>
+            </tr>
+            <tr>
+                <td colspan="12" style="height: 20px;"></td>
+            </tr>
+            <tr>
+                <td colspan="12" style=" font-size: 15px;padding-bottom: 10px; text-align: justify  !important;">
+                    This is
+                    to
+                    confirm that
+                    you have successfully completed the prescribed training and have also passed the examination
+                    specified for Point of Sales examination conducted by Square Insurance Brokers Private Limited
+                    under
+                    the Guidelines on Point of Sales Person {{POSCData.lifeline}}. Your personal details are
+                    as under.</td>
+            </tr>
+            <tr>
+                <td colspan="12" style="text-align: justify  !important; font-size: 15px;padding-bottom: 10px;  ">
+                    Aadhar
+                    Number:
+                    {{POSCData.AadhaarCard_Number}} / Pancard Number: {{POSCData.Pancard_number}}</td>
+            </tr>
+            <tr>
+                <td colspan="12" style="text-align: justify  !important;  font-size: 15px;padding-bottom: 30px;">
+                    This
+                    letter
+                    authorizes
+                    you to act as Point of Sales Person for Square Insurance Brokers Private Limited to market
+                    products
+                    categorized and identified under the Guidelines only.</td>
+            </tr>
+            <tr>
+                <td colspan="12" style=" font-size: 15px;padding-bottom: 30px; text-align: justify  !important;">ln
+                    case
+                    you
+                    wish to work
+                    for another company, you are required to obtain a fresh letter from the new insurer/ insurance
+                    intermediary in order to act as Point of Sales Person for that entity.</td>
+            </tr>
+            <tr>
+                <td colspan="12" style=" font-size: 15px; text-align: left !important;">Yours truly,</td>
+            </tr>
+            <tr>
+                <td colspan="12" style=" font-size: 15px;padding-bottom: 40px; text-align: left !important;">For
+                    Square
+                    Insurance
+                    Brokers Private Limited</td>
+            </tr>
+            <tr>
+                <th colspan="12" style=" font-size: 15px;padding-bottom: 5px; text-align: left !important;">Rakesh
+                    Kumar
+                </th>
+            </tr>
+            <tr>
+                <th colspan="12" style=" font-size: 15px;padding-bottom: 5px; text-align: left !important;">
+                    Principal
+                    Officer</th>
+            </tr>
+            <tr>
+                <th colspan="12" style=" font-size: 15px;padding-bottom: 5px; text-align: left !important;">
+                    Authorized
+                    Signatory</th>
+            </tr>
+            <tr>
+                <th colspan="12" style="font-size: 15px; text-align: left !important;"><img
+                        src="https://www.squareinsurance.in/assets/img/signature.jpg" alt="logo" style="width: 100px;">
+                </th>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

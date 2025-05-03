@@ -1,0 +1,414 @@
+<mat-dialog-content class="mat-typography ">
+  <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+  <div id="exTab1" class="">
+    <ul class="nav nav-pills">
+      <li class="active">
+        <a href="#1a" data-toggle="tab">Business</a>
+      </li>
+      <li><a href="#2a" data-toggle="tab">DSR</a>
+      </li>
+      <li><a href="#3a" data-toggle="tab">Offline Quote</a>
+      </li>
+      <li><a href="#4a" data-toggle="tab">Gems</a>
+      </li>
+    </ul>
+
+    <div class="tab-content clearfix">
+      <div class="tab-pane active" id="1a">
+        <div class="datalist">
+
+          <div class="data-view data-label">
+            <ul>
+              <li><strong></strong></li>
+              <li><strong>Motor</strong></li>
+              <li><strong>Non Motor</strong></li>
+              <!-- <li><strong>Health</strong></li> -->
+              <li><strong>Health(Including PA/Travel)</strong></li>
+              <li><strong>Life</strong></li>
+              <!-- <li><strong>Personal Accident</strong></li>
+              <li><strong>Travel</strong></li> -->
+              <li><strong>Finance</strong></li>
+              <li><strong>Mutual Fund</strong></li>
+              <!-- <li><strong>Real Estate</strong></li> -->
+              <li><strong>Credit Card</strong></li>
+            </ul>
+          </div>
+
+          <div class="data-view">
+            <ul>
+              <li class="first-col"><abbr>Current Year Till Date</abbr></li>
+              <li>
+                <aside class="elite" *ngIf="cfy.motor_club == 'Elite'">{{cfy.motor_club}}</aside>
+                <aside class="maker" *ngIf="cfy.motor_club == 'Maker'">{{cfy.motor_club}}</aside>
+                <aside class="novel" *ngIf="cfy.motor_club == 'Novel'">{{cfy.motor_club}}</aside>
+                <aside class="aspirant" *ngIf="cfy.motor_club == 'Aspirant'">{{cfy.motor_club}}</aside>
+
+                <abbr>{{cfy.motor_string}}</abbr>
+                <button type="button" class="btn btn-up"
+                  *ngIf="check_int.motor_int_type == 'PositiveNumber'">{{growth_rate.motor_growth}}<i
+                    class="fa fa-long-arrow-up" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-down"
+                  *ngIf="check_int.motor_int_type == 'NegativeNumber'">{{growth_rate.motor_growth}}<i
+                    class="fa fa-long-arrow-down" aria-hidden="true"></i></button>
+              </li>
+
+              <li>
+                <aside class="elite" *ngIf="cfy.non_motor_club == 'Elite'">{{cfy.non_motor_club}}</aside>
+                <aside class="maker" *ngIf="cfy.non_motor_club == 'Maker'">{{cfy.non_motor_club}}</aside>
+                <aside class="novel" *ngIf="cfy.non_motor_club == 'Novel'">{{cfy.non_motor_club}}</aside>
+                <aside class="aspirant" *ngIf="cfy.non_motor_club == 'Aspirant'">{{cfy.non_motor_club}}</aside>
+                <abbr>{{cfy.non_motor_string}}</abbr>
+                <button type="button" class="btn btn-up"
+                  *ngIf="check_int.non_motor_int_type == 'PositiveNumber'">{{growth_rate.non_motor_growth}}<i
+                    class="fa fa-long-arrow-up" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-down"
+                  *ngIf="check_int.non_motor_int_type == 'NegativeNumber'">{{growth_rate.non_motor_growth}}<i
+                    class="fa fa-long-arrow-down" aria-hidden="true"></i></button>
+              </li>
+
+              <!-- <li>
+                <aside class="elite" *ngIf="cfy.health_club == 'Elite'">{{cfy.health_club}}</aside>
+                <aside class="maker" *ngIf="cfy.health_club == 'Maker'">{{cfy.health_club}}</aside>
+                <aside class="novel" *ngIf="cfy.health_club == 'Novel'">{{cfy.health_club}}</aside>
+                <aside class="aspirant" *ngIf="cfy.health_club == 'Aspirant'">{{cfy.health_club}}</aside>
+                <abbr>{{cfy.health_string}}</abbr>
+                <button type="button" class="btn btn-up"
+                  *ngIf="check_int.health_int_type == 'PositiveNumber'">{{growth_rate.health_growth}}<i
+                    class="fa fa-long-arrow-up" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-down"
+                  *ngIf="check_int.health_int_type == 'NegativeNumber'">{{growth_rate.health_growth}}<i
+                    class="fa fa-long-arrow-down" aria-hidden="true"></i></button>
+              </li> -->
+
+              <li>
+                <aside class="elite" *ngIf="cfy.health_pa_travel_club == 'Elite'">{{cfy.health_pa_travel_club}}</aside>
+                <aside class="maker" *ngIf="cfy.health_pa_travel_club == 'Maker'">{{cfy.health_pa_travel_club}}</aside>
+                <aside class="novel" *ngIf="cfy.health_pa_travel_club == 'Novel'">{{cfy.health_pa_travel_club}}</aside>
+                <aside class="aspirant" *ngIf="cfy.health_pa_travel_club == 'Aspirant'">{{cfy.health_pa_travel_club}}</aside>
+                <abbr>{{cfy.health_pa_travel_string}}</abbr>
+                <button type="button" class="btn btn-up"
+                  *ngIf="check_int.health_pa_travel_int_type == 'PositiveNumber'">{{growth_rate.health_pa_travel_growth}}<i
+                    class="fa fa-long-arrow-up" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-down"
+                  *ngIf="check_int.health_pa_travel_int_type == 'NegativeNumber'">{{growth_rate.health_pa_travel_growth}}<i
+                    class="fa fa-long-arrow-down" aria-hidden="true"></i></button>
+              </li>
+
+              <li>
+                <aside class="elite" *ngIf="cfy.life_club == 'Elite'">{{cfy.life_club}}</aside>
+                <aside class="maker" *ngIf="cfy.life_club == 'Maker'">{{cfy.life_club}}</aside>
+                <aside class="novel" *ngIf="cfy.life_club == 'Novel'">{{cfy.life_club}}</aside>
+                <aside class="aspirant" *ngIf="cfy.life_club == 'Aspirant'">{{cfy.life_club}}</aside>
+                <abbr>{{cfy.life_string}}</abbr>
+                <button type="button" class="btn btn-up"
+                  *ngIf="check_int.life_int_type == 'PositiveNumber'">{{growth_rate.life_growth}}<i
+                    class="fa fa-long-arrow-up" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-down"
+                  *ngIf="check_int.life_int_type == 'NegativeNumber'">{{growth_rate.life_growth}}<i
+                    class="fa fa-long-arrow-down" aria-hidden="true"></i></button>
+              </li>
+
+              <!-- <li>
+                <aside class="elite" *ngIf="cfy.pa_club == 'Elite'">{{cfy.pa_club}}</aside>
+                <aside class="maker" *ngIf="cfy.pa_club == 'Maker'">{{cfy.pa_club}}</aside>
+                <aside class="novel" *ngIf="cfy.pa_club == 'Novel'">{{cfy.pa_club}}</aside>
+                <aside class="aspirant" *ngIf="cfy.pa_club == 'Aspirant'">{{cfy.pa_club}}</aside>
+                <abbr>{{cfy.pa_string}}</abbr>
+                <button type="button" class="btn btn-up"
+                  *ngIf="check_int.pa_int_type == 'PositiveNumber'">{{growth_rate.pa_growth}}<i
+                    class="fa fa-long-arrow-up" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-down"
+                  *ngIf="check_int.pa_int_type == 'NegativeNumber'">{{growth_rate.pa_growth}}<i
+                    class="fa fa-long-arrow-down" aria-hidden="true"></i></button>
+              </li> -->
+
+              <!-- <li>
+                <aside class="elite" *ngIf="cfy.travel_club == 'Elite'">{{cfy.travel_club}}</aside>
+                <aside class="maker" *ngIf="cfy.travel_club == 'Maker'">{{cfy.travel_club}}</aside>
+                <aside class="novel" *ngIf="cfy.travel_club == 'Novel'">{{cfy.travel_club}}</aside>
+                <aside class="aspirant" *ngIf="cfy.travel_club == 'Aspirant'">{{cfy.travel_club}}</aside>
+                <abbr>{{cfy.travel_string}}</abbr>
+                <button type="button" class="btn btn-up"
+                  *ngIf="check_int.travel_int_type == 'PositiveNumber'">{{growth_rate.travel_growth}}<i
+                    class="fa fa-long-arrow-up" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-down"
+                  *ngIf="check_int.travel_int_type == 'NegativeNumber'">{{growth_rate.travel_growth}}<i
+                    class="fa fa-long-arrow-down" aria-hidden="true"></i></button>
+              </li> -->
+
+              <li>
+                <aside class="elite" *ngIf="cfy.finance_club == 'Elite'">{{cfy.finance_club}}</aside>
+                <aside class="maker" *ngIf="cfy.finance_club == 'Maker'">{{cfy.finance_club}}</aside>
+                <aside class="novel" *ngIf="cfy.finance_club == 'Novel'">{{cfy.finance_club}}</aside>
+                <aside class="aspirant" *ngIf="cfy.finance_club == 'Aspirant'">{{cfy.finance_club}}</aside>
+                <abbr>{{cfy.finance_string}}</abbr>
+                <button type="button" class="btn btn-up"
+                  *ngIf="check_int.finance_int_type == 'PositiveNumber'">{{growth_rate.finance_growth}}<i
+                    class="fa fa-long-arrow-up" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-down"
+                  *ngIf="check_int.finance_int_type == 'NegativeNumber'">{{growth_rate.finance_growth}}<i
+                    class="fa fa-long-arrow-down" aria-hidden="true"></i></button>
+              </li>
+
+              <li>
+                <aside class="elite" *ngIf="cfy.mutual_fund_club == 'Elite'">{{cfy.mutual_fund_club}}</aside>
+                <aside class="maker" *ngIf="cfy.mutual_fund_club == 'Maker'">{{cfy.mutual_fund_club}}</aside>
+                <aside class="novel" *ngIf="cfy.mutual_fund_club == 'Novel'">{{cfy.mutual_fund_club}}</aside>
+                <aside class="aspirant" *ngIf="cfy.mutual_fund_club == 'Aspirant'">{{cfy.mutual_fund_club}}</aside>
+                <abbr>{{cfy.mutual_fund_string}}</abbr>
+                <button type="button" class="btn btn-up"
+                  *ngIf="check_int.mutual_fund_int_type == 'PositiveNumber'">{{growth_rate.mutual_fund_growth}}<i
+                    class="fa fa-long-arrow-up" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-down"
+                  *ngIf="check_int.mutual_fund_int_type == 'NegativeNumber'">{{growth_rate.mutual_fund_growth}}<i
+                    class="fa fa-long-arrow-down" aria-hidden="true"></i></button>
+              </li>
+
+              <!-- <li>
+                <aside class="elite" *ngIf="cfy.real_estate_club == 'Elite'">{{cfy.real_estate_club}}</aside>
+                <aside class="maker" *ngIf="cfy.real_estate_club == 'Maker'">{{cfy.real_estate_club}}</aside>
+                <aside class="novel" *ngIf="cfy.real_estate_club == 'Novel'">{{cfy.real_estate_club}}</aside>
+                <aside class="aspirant" *ngIf="cfy.real_estate_club == 'Aspirant'">{{cfy.real_estate_club}}</aside>
+                <abbr>{{cfy.real_estate_string}}</abbr>
+                <button type="button" class="btn btn-up"
+                  *ngIf="check_int.real_estate_int_type == 'PositiveNumber'">{{growth_rate.real_estate_growth}}<i
+                    class="fa fa-long-arrow-up" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-down"
+                  *ngIf="check_int.real_estate_int_type == 'NegativeNumber'">{{growth_rate.real_estate_growth}}<i
+                    class="fa fa-long-arrow-down" aria-hidden="true"></i></button>
+              </li> -->
+
+              <li>
+                <aside class="elite" *ngIf="cfy.credit_card_club == 'Elite'">{{cfy.credit_card_club}}</aside>
+                <aside class="maker" *ngIf="cfy.credit_card_club == 'Maker'">{{cfy.credit_card_club}}</aside>
+                <aside class="novel" *ngIf="cfy.credit_card_club == 'Novel'">{{cfy.credit_card_club}}</aside>
+                <aside class="aspirant" *ngIf="cfy.credit_card_club == 'Aspirant'">{{cfy.credit_card_club}}</aside>
+                <abbr>{{cfy.credit_card_string}}</abbr>
+                <button type="button" class="btn btn-up"
+                  *ngIf="check_int.credit_card_int_type == 'PositiveNumber'">{{growth_rate.credit_card_growth}}<i
+                    class="fa fa-long-arrow-up" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-down"
+                  *ngIf="check_int.credit_card_int_type == 'NegativeNumber'">{{growth_rate.credit_card_growth}}<i
+                    class="fa fa-long-arrow-down" aria-hidden="true"></i></button>
+              </li>
+
+            </ul>
+          </div>
+
+          <div class="data-view">
+            <ul>
+              <li class="first-col"><abbr>Last Year Till Date</abbr></li>
+              <li>
+                <aside class="elite" *ngIf="lfy.motor_club == 'Elite'">{{lfy.motor_club}}</aside>
+                <aside class="maker" *ngIf="lfy.motor_club == 'Maker'">{{lfy.motor_club}}</aside>
+                <aside class="novel" *ngIf="lfy.motor_club == 'Novel'">{{lfy.motor_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy.motor_club == 'Aspirant'">{{lfy.motor_club}}</aside>
+                <span>{{lfy.motor_string}}</span>
+              </li>
+
+              <li>
+                <aside class="elite" *ngIf="lfy.non_motor_club == 'Elite'">{{lfy.non_motor_club}}</aside>
+                <aside class="maker" *ngIf="lfy.non_motor_club == 'Maker'">{{lfy.non_motor_club}}</aside>
+                <aside class="novel" *ngIf="lfy.non_motor_club == 'Novel'">{{lfy.non_motor_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy.non_motor_club == 'Aspirant'">{{lfy.non_motor_club}}</aside>
+                <abbr>{{lfy.non_motor_string}}</abbr>
+              </li>
+
+              <!-- <li>
+                <aside class="elite" *ngIf="lfy.health_club == 'Elite'">{{lfy.health_club}}</aside>
+                <aside class="maker" *ngIf="lfy.health_club == 'Maker'">{{lfy.health_club}}</aside>
+                <aside class="novel" *ngIf="lfy.health_club == 'Novel'">{{lfy.health_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy.health_club == 'Aspirant'">{{lfy.health_club}}</aside>
+                <abbr>{{lfy.health_string}}</abbr>
+              </li> -->
+
+              <li>
+                <aside class="elite" *ngIf="lfy.health_pa_travel_club == 'Elite'">{{lfy.health_pa_travel_club}}</aside>
+                <aside class="maker" *ngIf="lfy.health_pa_travel_club == 'Maker'">{{lfy.health_pa_travel_club}}</aside>
+                <aside class="novel" *ngIf="lfy.health_pa_travel_club == 'Novel'">{{lfy.health_pa_travel_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy.health_pa_travel_club == 'Aspirant'">{{lfy.health_pa_travel_club}}</aside>
+                <abbr>{{lfy.health_pa_travel_string}}</abbr>
+              </li>
+
+              <li>
+                <aside class="elite" *ngIf="lfy.life_club == 'Elite'">{{lfy.life_club}}</aside>
+                <aside class="maker" *ngIf="lfy.life_club == 'Maker'">{{lfy.life_club}}</aside>
+                <aside class="novel" *ngIf="lfy.life_club == 'Novel'">{{lfy.life_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy.life_club == 'Aspirant'">{{lfy.life_club}}</aside>
+                <abbr>{{lfy.life_string}}</abbr>
+              </li>
+
+              <!-- <li>
+                <aside class="elite" *ngIf="lfy.pa_club == 'Elite'">{{lfy.pa_club}}</aside>
+                <aside class="maker" *ngIf="lfy.pa_club == 'Maker'">{{lfy.pa_club}}</aside>
+                <aside class="novel" *ngIf="lfy.pa_club == 'Novel'">{{lfy.pa_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy.pa_club == 'Aspirant'">{{lfy.pa_club}}</aside>
+                <abbr>{{lfy.pa_string}}</abbr>
+              </li> -->
+
+              <!-- <li>
+                <aside class="elite" *ngIf="lfy.travel_club == 'Elite'">{{lfy.travel_club}}</aside>
+                <aside class="maker" *ngIf="lfy.travel_club == 'Maker'">{{lfy.travel_club}}</aside>
+                <aside class="novel" *ngIf="lfy.travel_club == 'Novel'">{{lfy.travel_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy.travel_club == 'Aspirant'">{{lfy.travel_club}}</aside>
+                <abbr>{{lfy.travel_string}}</abbr>
+              </li> -->
+
+              <li>
+                <aside class="elite" *ngIf="lfy.finance_club == 'Elite'">{{lfy.finance_club}}</aside>
+                <aside class="maker" *ngIf="lfy.finance_club == 'Maker'">{{lfy.finance_club}}</aside>
+                <aside class="novel" *ngIf="lfy.finance_club == 'Novel'">{{lfy.finance_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy.finance_club == 'Aspirant'">{{lfy.finance_club}}</aside>
+                <abbr>{{lfy.finance_string}}</abbr>
+              </li>
+
+              <li>
+                <aside class="elite" *ngIf="lfy.mutual_fund_club == 'Elite'">{{lfy.mutual_fund_club}}</aside>
+                <aside class="maker" *ngIf="lfy.mutual_fund_club == 'Maker'">{{lfy.mutual_fund_club}}</aside>
+                <aside class="novel" *ngIf="lfy.mutual_fund_club == 'Novel'">{{lfy.mutual_fund_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy.mutual_fund_club == 'Aspirant'">{{lfy.mutual_fund_club}}</aside>
+                <abbr>{{lfy.mutual_fund_string}}</abbr>
+              </li>
+
+              <!-- <li>
+                <aside class="elite" *ngIf="lfy.real_estate_club == 'Elite'">{{lfy.real_estate_club}}</aside>
+                <aside class="maker" *ngIf="lfy.real_estate_club == 'Maker'">{{lfy.real_estate_club}}</aside>
+                <aside class="novel" *ngIf="lfy.real_estate_club == 'Novel'">{{lfy.real_estate_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy.real_estate_club == 'Aspirant'">{{lfy.real_estate_club}}</aside>
+                <abbr>{{lfy.real_estate_string}}</abbr>
+              </li> -->
+
+              <li>
+                <aside class="elite" *ngIf="lfy.credit_card_club == 'Elite'">{{lfy.credit_card_club}}</aside>
+                <aside class="maker" *ngIf="lfy.credit_card_club == 'Maker'">{{lfy.credit_card_club}}</aside>
+                <aside class="novel" *ngIf="lfy.credit_card_club == 'Novel'">{{lfy.credit_card_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy.credit_card_club == 'Aspirant'">{{lfy.credit_card_club}}</aside>
+                <abbr>{{lfy.credit_card_string}}</abbr>
+              </li>
+
+            </ul>
+          </div>
+
+          <div class="data-view">
+            <ul>
+              <li class="first-col"><abbr>Last&nbsp;Year&nbsp;Total</abbr></li>
+              <li>
+                <aside class="elite" *ngIf="lfy_total.motor_club == 'Elite'">{{lfy_total.motor_club}}</aside>
+                <aside class="maker" *ngIf="lfy_total.motor_club == 'Maker'">{{lfy_total.motor_club}}</aside>
+                <aside class="novel" *ngIf="lfy_total.motor_club == 'Novel'">{{lfy_total.motor_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy_total.motor_club == 'Aspirant'">{{lfy_total.motor_club}}</aside>
+                <abbr>{{lfy_total.motor_string}}</abbr>
+              </li>
+
+              <li>
+                <aside class="elite" *ngIf="lfy_total.non_motor_club == 'Elite'">{{lfy_total.non_motor_club}}</aside>
+                <aside class="maker" *ngIf="lfy_total.non_motor_club == 'Maker'">{{lfy_total.non_motor_club}}</aside>
+                <aside class="novel" *ngIf="lfy_total.non_motor_club == 'Novel'">{{lfy_total.non_motor_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy_total.non_motor_club == 'Aspirant'">{{lfy_total.non_motor_club}}
+                </aside>
+                <abbr>{{lfy_total.non_motor_string}}</abbr>
+              </li>
+
+              <!-- <li>
+                <aside class="elite" *ngIf="lfy_total.health_club == 'Elite'">{{lfy_total.health_club}}</aside>
+                <aside class="maker" *ngIf="lfy_total.health_club == 'Maker'">{{lfy_total.health_club}}</aside>
+                <aside class="novel" *ngIf="lfy_total.health_club == 'Novel'">{{lfy_total.health_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy_total.health_club == 'Aspirant'">{{lfy_total.health_club}}</aside>
+                <abbr>{{lfy_total.health_string}}</abbr>
+              </li> -->
+
+              <li>
+                <aside class="elite" *ngIf="lfy_total.health_pa_travel_club == 'Elite'">{{lfy_total.health_pa_travel_club}}</aside>
+                <aside class="maker" *ngIf="lfy_total.health_pa_travel_club == 'Maker'">{{lfy_total.health_pa_travel_club}}</aside>
+                <aside class="novel" *ngIf="lfy_total.health_pa_travel_club == 'Novel'">{{lfy_total.health_pa_travel_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy_total.health_pa_travel_club == 'Aspirant'">{{lfy_total.health_pa_travel_club}}</aside>
+                <abbr>{{lfy_total.health_pa_travel_string}}</abbr>
+              </li>
+
+              <li>
+                <aside class="elite" *ngIf="lfy_total.life_club == 'Elite'">{{lfy_total.life_club}}</aside>
+                <aside class="maker" *ngIf="lfy_total.life_club == 'Maker'">{{lfy_total.life_club}}</aside>
+                <aside class="novel" *ngIf="lfy_total.life_club == 'Novel'">{{lfy_total.life_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy_total.life_club == 'Aspirant'">{{lfy_total.life_club}}</aside>
+                <abbr>{{lfy_total.life_string}}</abbr>
+              </li>
+
+              <!-- <li>
+                <aside class="elite" *ngIf="lfy_total.pa_club == 'Elite'">{{lfy_total.pa_club}}</aside>
+                <aside class="maker" *ngIf="lfy_total.pa_club == 'Maker'">{{lfy_total.pa_club}}</aside>
+                <aside class="novel" *ngIf="lfy_total.pa_club == 'Novel'">{{lfy_total.pa_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy_total.pa_club == 'Aspirant'">{{lfy_total.pa_club}}</aside>
+                <abbr>{{lfy_total.pa_string}}</abbr>
+              </li> -->
+
+              <!-- <li>
+                <aside class="elite" *ngIf="lfy_total.travel_club == 'Elite'">{{lfy_total.travel_club}}</aside>
+                <aside class="maker" *ngIf="lfy_total.travel_club == 'Maker'">{{lfy_total.travel_club}}</aside>
+                <aside class="novel" *ngIf="lfy_total.travel_club == 'Novel'">{{lfy_total.travel_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy_total.travel_club == 'Aspirant'">{{lfy_total.travel_club}}</aside>
+                <abbr>{{lfy_total.travel_string}}</abbr>
+              </li> -->
+
+              <li>
+                <aside class="elite" *ngIf="lfy_total.finance_club == 'Elite'">{{lfy_total.finance_club}}</aside>
+                <aside class="maker" *ngIf="lfy_total.finance_club == 'Maker'">{{lfy_total.finance_club}}</aside>
+                <aside class="novel" *ngIf="lfy_total.finance_club == 'Novel'">{{lfy_total.finance_club}}</aside>
+                <aside class="aspirant" *ngIf="lfy_total.finance_club == 'Aspirant'">{{lfy_total.finance_club}}</aside>
+                <abbr>{{lfy_total.finance_string}}</abbr>
+              </li>
+
+              <li>
+                <aside class="elite" *ngIf="lfy_total.mutual_fund_club == 'Elite'">{{lfy_total.mutual_fund_club}}
+                </aside>
+                <aside class="maker" *ngIf="lfy_total.mutual_fund_club == 'Maker'">{{lfy_total.mutual_fund_club}}
+                </aside>
+                <aside class="novel" *ngIf="lfy_total.mutual_fund_club == 'Novel'">{{lfy_total.mutual_fund_club}}
+                </aside>
+                <aside class="aspirant" *ngIf="lfy_total.mutual_fund_club == 'Aspirant'">{{lfy_total.mutual_fund_club}}
+                </aside>
+                <abbr>{{lfy_total.mutual_fund_string}}</abbr>
+              </li>
+
+              <!-- <li>
+                <aside class="elite" *ngIf="lfy_total.real_estate_club == 'Elite'">{{lfy_total.real_estate_club}}
+                </aside>
+                <aside class="maker" *ngIf="lfy_total.real_estate_club == 'Maker'">{{lfy_total.real_estate_club}}
+                </aside>
+                <aside class="novel" *ngIf="lfy_total.real_estate_club == 'Novel'">{{lfy_total.real_estate_club}}
+                </aside>
+                <aside class="aspirant" *ngIf="lfy_total.real_estate_club == 'Aspirant'">{{lfy_total.real_estate_club}}
+                </aside>
+                <abbr>{{lfy_total.real_estate_string}}</abbr>
+              </li> -->
+
+              <li>
+                <aside class="elite" *ngIf="lfy_total.real_estate_club == 'Elite'">{{lfy_total.real_estate_club}}
+                </aside>
+                <aside class="maker" *ngIf="lfy_total.real_estate_club == 'Maker'">{{lfy_total.real_estate_club}}
+                </aside>
+                <aside class="novel" *ngIf="lfy_total.real_estate_club == 'Novel'">{{lfy_total.real_estate_club}}
+                </aside>
+                <aside class="aspirant" *ngIf="lfy_total.real_estate_club == 'Aspirant'">{{lfy_total.real_estate_club}}
+                </aside>
+                <abbr>{{lfy_total.real_estate_string}}</abbr>
+              </li>
+
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tab-pane coming-soon" id="2a">
+        <h3>Comming Soon. We are working on it to provide you with more assistance in serving your clients.</h3>
+      </div>
+      <div class="tab-pane coming-soon" id="3a">
+        <h3>Comming Soon. We are working on it to provide you with more assistance in serving your clients.</h3>
+      </div>
+      <div class="tab-pane coming-soon" id="4a">
+        <h3>Comming Soon. We are working on it to provide you with more assistance in serving your clients.</h3>
+      </div>
+    </div>
+  </div>
+
+</mat-dialog-content>

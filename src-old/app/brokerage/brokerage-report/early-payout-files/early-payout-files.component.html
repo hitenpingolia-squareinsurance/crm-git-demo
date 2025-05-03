@@ -1,0 +1,194 @@
+ 
+<div class="custom-scrool">
+    <div class="main_card_form">
+        <div class="header_title">View Detailed Early Payout Wallet</div>
+        <button class="close closeModelButton" type="button"><i class="fa fa-close"></i></button>
+
+        <hr>
+        <div class="modal_body ">
+            <div class="row"> 
+                <div class="mydiv table-responsive mt-gap" *ngIf="tablerow?.length != 0">
+                    <table  class="table row-border hover table table-bordered table-hover table-checkable" id="">
+                        <thead>
+                        <tr>
+                            <th colspan="3">Files</th>
+                            <th colspan="4">Amount</th> 
+                        </tr>
+                        <tr>
+                            <th>Total</th>
+                            <th>Apporved </th>
+                            <th>Rejected </th>
+                            <th>Total</th>
+                            <th>Apporved </th>
+                            <th>Rejected </th>
+                            <th>Requested PO </th>
+                        </tr>
+                        </thead>
+                        <tbody *ngIf="tablerow?.length != 0">
+                            <tr *ngFor="let row of tablerow; let i=index;">
+                                <td>{{row.total_files}}</td>
+                                <td>{{row.approved_files}}</td>
+                                <td>{{row.rejected_files}}</td>
+                                <td>{{row.total_po}}</td>
+                                <td>{{row.approved_po}}</td>
+                                <td>{{row.rejected_po}}</td>
+                                <td>{{row.request_po}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-control" [(ngModel)]="search_status"> 
+                        <option value="" disabled>--Select Status--</option>
+                        <option value="0">Pending</option>
+                        <option value="1">Approved</option>
+                        <option value="2">Rejected</option>
+                    </select>
+                </div>
+                
+                <div class="col-sm-4">
+                    <input type="button" (click)="Search()" class="btn btn-info" value="Search">
+                    &nbsp;&nbsp;
+                    <input (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset">
+                </div>
+            
+            
+            </div>
+            
+            
+            <div *ngIf="checkedList?.length>0" class="row" >
+            
+                <div class="col-sm-2">
+                    <select class="form-control" [(ngModel)]="status"> 
+                        <option value="" disabled>--Select Type--</option>
+                        <option value="1">Approve</option>
+                        <option value="2">Reject</option>
+                    </select>
+                </div>
+                
+                <div class="col-sm-4">
+                    <input type="button" (click)="Transfer()" class="btn btn-info" value="Submit">
+                    &nbsp;&nbsp;
+                    <input (click)="CancelTransfer()" type="button" class="btn btn-danger" value="Cancel">
+                </div>
+            
+            
+            </div>
+            
+            
+            
+            
+            
+           
+            
+            
+            <!--begin: Datatable-->
+             <div class="mydiv table-responsive mt-gap">
+                <table datatable [dtOptions]="dtOptions"
+                    class=" table row-border hover table table-bordered table-hover table-checkable" id="kt_datatable">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">No</th>
+                            <th rowspan="2" *ngIf="isAccounts_manager==1">
+                                <input *ngIf="Type=='accounts'" type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()">
+                            </th>
+                            <th rowspan="2">Remark</th>
+                            <th rowspan="2">Status</th>
+                            <th rowspan="2">LOB</th>
+                            <th rowspan="2">Reg. No.</th>
+                            <th rowspan="2">Policy No.</th>
+                            <th rowspan="2">Company</th>
+                            <th rowspan="2">Issue Date</th>
+                            <!-- <th rowspan="2">Payout</th> -->
+                            
+                            <th colspan="4">Premium Details</th>
+                            <th colspan="7">Payout Details</th>
+            
+                            <th rowspan="2">Request Date/Time</th>
+                        </tr>
+            
+                        <tr>
+                            <th>OD</th>
+                            <th>TP </th>
+                            <th>Terriosm </th>
+                            <th>Net </th>
+                            
+                            
+            
+                            <th>OD</th>
+                            <th>TP </th>
+                            <th>Net </th>
+                            <th>Terriosm </th>
+                            <th>Reward </th>
+                            <th>Scheme </th>
+                            <th>Total PO</th>
+                        </tr>
+            
+                    </thead>
+                    <tbody *ngIf="dataAr?.length != 0">
+                        <tr *ngFor="let row of dataAr; let i=index;">
+            
+                            <td>{{ row.SrNo }}.</td>
+                            <td *ngIf="isAccounts_manager==1">
+                                <input *ngIf="Type=='accounts' && row.status==0" type="checkbox" [(ngModel)]="row.isSelected" name="list_name" value="{{row.id}}" (change)="isAllSelected()">
+                            </td>
+            
+                            <td>
+                                <span *ngIf="row.status==1 || row.status==2">{{row.remark}}</span>
+            
+                                <input [disabled]="(row.isSelected?false:true)" name="remark" (keyup)="updateRemark(row.id,i,$event)" *ngIf="Type=='accounts' && row.status==0 && isAccounts_manager==1" type="text" placeholder="Enter remark here" class="form-control" style="width: 150px;">
+            
+                            </td>
+                             
+                            <td> 
+                                <a title="SR-Actions" href="javascript:;" (click)="SrPopup(1,row.sr_id)">
+                                    <span style="margin-bottom: 5px;"
+                                        class="label label-info label-inline mr-2">Details</span>
+                                </a>
+                                <span *ngIf="row.status==0" style="margin-top: 5px;width:100%; display: block;" class="label label-warning label-inline mr-2">
+                                    Pending
+                                </span>
+                                <span *ngIf="row.status==1" style="margin-top: 5px;width:100%; display: block;" class="label label-success label-inline mr-2">
+                                    Approved
+                                </span>
+                                <span *ngIf="row.status==2" style="margin-top: 5px;width:100%; display: block;" class="label label-danger label-inline mr-2">
+                                    Rejected
+                                </span>   
+                            </td>
+            
+                            <td>
+                                    {{row.LOB_Id}}
+                                <!-- <a href="javascript:void(0);">SR Details</a> -->
+                            </td>
+                            <td>{{row.Registration_No}}</td>
+                            <td>{{row.Policy_No}}</td>
+                            <td>{{row.Ins_Name}}</td>
+                            <td>{{row.Policy_Issued_On}}</td>
+                            <!-- <td>{{row.request_amt}}</td> -->
+                            <td>{{row.Basic_OD}}</td>
+                            <td>{{row.Basic_TP}}</td>
+                            <td>{{row.Terrorism_Premium}}</td>
+                            <td>{{row.Net_Premium}}</td>
+                            <td>{{row.Agent_Payout_OD_Amount}}</td>
+                            <td>{{row.Agent_Payout_TP_Amount}}</td>
+                            <td>{{row.Agent_Terrorism_Payout_Amount}}</td>
+                            <td>{{row.Agent_Payout_Net_Amount}}</td>
+                            <td>{{row.Agent_Reward_Amount}}</td>
+                            <td>{{row.Agent_Scheme_Amount}}</td>
+                            <td>{{row.Web_Agent_Total_Amount}}</td>
+                            <td>{{row.add_stamp}}</td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="dataAr?.length == 0">
+                        <tr>
+                            <td colspan="5" align="center">No data available !</td>
+                        </tr>
+                    <tbody>
+                </table>
+            </div>
+            
+            
+            <!--end: Datatable-->
+        </div>
+    </div>
+</div>

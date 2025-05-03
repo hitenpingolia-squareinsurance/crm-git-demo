@@ -1,0 +1,260 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+    <div class="container-fluid">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <div class="header_title">Pincode Master</div>
+            </div>
+
+            <div *ngIf="!hasAccess" class="error-message">
+                <div class="container" style="text-align: center;">
+                    <img src="assets/Authorised.png" alt="">
+                </div>
+            </div>
+
+            <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+                <div class="btn_list_group">
+                    <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="dsr-fillter">
+                                        <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">Filters
+                                        </button>
+                                        <button class="btn btn-info1" (click)="dailog()"><span>Add
+                                                Pincode</span></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingOne">
+                                <div class="panel-body sub-form">
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <form [formGroup]="AddFieldForm" (ngSubmit)="SearchData()">
+
+                                                <div class="row">
+                                                    <div class="col-md-4" id="close">
+                                                        <div class="category_list">
+                                                            <label>State
+                                                                Name</label>
+                                                            <ng-multiselect-dropdown class="form-control"
+                                                                placeholder="State Name" [data]="stateAr"
+                                                                formControlName="state"
+                                                                [settings]="dropdownSettingsmultiselect"
+                                                                (ngModelChange)="getDistrict($event)">
+                                                            </ng-multiselect-dropdown>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4" id="close">
+                                                        <div class="category_list">
+                                                            <label>District
+                                                                Name</label>
+                                                            <ng-multiselect-dropdown class="form-control"
+                                                                placeholder="District" [data]="districtAr"
+                                                                formControlName="district"
+                                                                [settings]="dropdownSettingsmultiselect"
+                                                                (ngModelChange)="getCity($event)">
+                                                            </ng-multiselect-dropdown>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4" id="close">
+                                                        <div class="category_list">
+                                                            <label>City
+                                                                Name</label>
+                                                            <ng-multiselect-dropdown class="form-control"
+                                                                placeholder="Select City" [data]="cityAr"
+                                                                formControlName="city"
+                                                                [settings]="dropdownSettingsmultiselect"
+                                                                (ngModelChange)="getArea($event)">
+                                                            </ng-multiselect-dropdown>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+
+                                                    <div class="col-md-4" id="close">
+                                                        <div class="category_list">
+                                                            <label>Area
+                                                                Name</label>
+                                                            <ng-multiselect-dropdown class="form-control"
+                                                                placeholder="Select Area" [data]="areaAr"
+                                                                formControlName="area"
+                                                                [settings]="dropdownSettingsmultiselect">
+                                                            </ng-multiselect-dropdown>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4" id="close">
+                                                        <div class="category_list">
+                                                            <label>Pincode</label>
+                                                            <input type="text" class="form-control"
+                                                                formControlName="pincode" placeholder="Pincode"
+                                                                minlength="6" maxlength="6"
+                                                                (keypress)="onlyAllowNumbers($event)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" style="margin-top: 10px;">
+                                                    <div class="col-sm-3">
+                                                        <input type="submit" class="btn btn-info" value="Search">
+                                                        &nbsp;&nbsp;
+                                                        <input (click)="ClearSearch()" type="button"
+                                                            class="btn btn-danger" value="Reset">
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="All">
+                                <div class="box-body">
+                                    <div class="mydiv">
+
+                                        <table datatable [dtOptions]="dtOptions" id="Table1"
+                                            class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>SNo.</th>
+                                                    <th>State Name</th>
+                                                    <th>Distict Name</th>
+                                                    <th>City Name</th>
+                                                    <th>Area Name</th>
+                                                    <th>Area Pincode</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of dataAr">
+                                                    <td>{{row.sno}}</td>
+                                                    <td>{{row.state}}</td>
+                                                    <td>{{row.district}}</td>
+                                                    <td>{{row.city}}</td>
+                                                    <td>{{row.area}}</td>
+                                                    <td>{{row.pincode}}</td>
+                                                    <td>
+                                                        <button class=" btn btn-info1"
+                                                            (click)="update(row.id)"><span>Update</span>
+                                                        </button>
+                                                        <button class=" btn btn-danger"
+                                                            (click)="deleteItem(row.id)"><span>Trash</span>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody *ngIf="dataAr?.length == 0">
+                                                <tr>
+                                                    <td colspan="11" align="center">No data
+                                                        available !</td>
+                                                </tr>
+                                            <tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <hr>
+
+                <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                    <div class="custom_table tables_layout_design">
+                        <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <!-- ======= Refer Table  =========-->
+                        <ul class="responsive-table">
+                            <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+
+                                <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                                    <div class="agents_data agents_data1">
+                                        <div class="icon_re_cl">{{row.sno}}</div>
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data">
+                                                <div>State</div>
+                                                <strong class="fs_18 text-bold">{{row.state}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="last_row_div mt10" style="margin-top:10px;">
+                                    <div class="label_chips finance_lob" *ngIf="row.district != ''">
+                                        <span>District - {{row.district}}</span>
+                                    </div>
+
+                                    <div class="label_chips non_motor_lob" *ngIf="row.city != ''">
+                                        <span>City - {{row.city}}</span>
+                                    </div>
+
+
+                                    <div class="label_chips health_lob" *ngIf="row.area != ''">
+                                        <span>Area - {{row.area}}</span>
+                                    </div>
+
+                                    <div class="label_chips life_lob" *ngIf="row.pincode != ''">
+                                        <span>Pincode - {{row.pincode}}</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="last_row">
+                                    <div class="effective_date"></div>
+                                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                        <button type="button" class="btn btn-primary" (click)="update(row.id)"
+                                            style="padding: 3px;">
+                                            <strong style="color: #fff;">Update &nbsp;<i class="fa fa-pencil-square-o"
+                                                    aria-hidden="true"></i></strong>
+                                        </button>&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-danger" (click)="deleteItem(row.id)"
+                                            style="padding: 3px;">
+                                            <strong style="color: #fff;">Delete &nbsp;<i class="fa fa-trash"
+                                                    aria-hidden="true"></i></strong>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+                        <!--======= Refer Table END ========= -->
+
+                        <div class="row" *ngIf="dataAr?.length == 0">
+                            <div class="col-md-12">
+                                <div class="no_data_found">
+                                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                                    <small>No data available !</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</section>

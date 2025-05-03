@@ -1,0 +1,162 @@
+
+*
+{
+box-sizing: border-box;
+}
+body
+{
+font-family: Verdana, sans-serif;
+}
+
+.image-sliderfade
+{
+display: none;
+}
+
+
+.image-sliderfade_class
+{
+display: none;
+}
+
+img
+{
+vertical-align: middle;
+}
+
+/* Slideshow container */
+.container
+{
+max-width: 1000px;
+position: relative;
+margin: auto;
+}
+
+/* Caption text */
+.text
+{
+color: #f2f2f2;
+font-size: 15px;
+padding: 20px 15px;
+position: absolute;
+right: 10px;
+bottom: 10px;
+width: 40%;
+background: rgba(0, 0, 0, .7);
+text-align: left;
+}
+
+/* The dots/bullets/indicators */
+.dot
+{
+height: 0px;
+width: 0px;
+margin: 0 0px;
+background-color: transparent;
+border-color: #ddd;
+border-width: 5 px;
+border-style: solid;
+border-radius: 50%;
+display: inline-block;
+transition: border-color 0.6s ease;
+}
+
+.active
+{
+border-color: #666;
+}
+
+/* Animation */
+.fade
+{
+-webkit-animation-name: fade-image;
+-webkit-animation-duration: 1.5s;
+animation-name: fade-image;
+animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade-image
+{
+from {opacity: .4}
+to {opacity: 1}
+}
+
+@keyframes fade-image
+{
+from {opacity: .4}
+to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px)
+{
+.text {font-size: 11px}
+}
+
+
+
+.mat-dialog-container {
+  display: block;
+  padding: 0px !important;
+}
+
+.mat-dialog-container {
+  box-shadow: 0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14%), 0 9px 46px 8px rgb(0 0 0 / 12%);
+  background: #fff0 !important;
+  color: rgba(0,0,0,.87);
+}
+
+.mobile_menus{
+  width:950px;
+  height:400px;
+}
+
+mat-dialog-container#mat-dialog-0 {
+  background: white !important;
+}
+
+.popup_img img{
+  width: 100%;
+}
+
+
+.left_blog_details{
+  margin: 20px 0px;
+  text-align: center;
+
+}
+
+.left_blog_details p{
+    font-size: 20px;
+    color: #233862;
+    font-weight: 600;
+
+}
+
+
+.left_blog_details input{
+  padding: 7px 25px;
+    font-size: 18px;
+    margin: 20px 0px;
+}
+
+/* .cdk-overlay-dark-backdrop {
+  background: rgb(0 0 0 / 85%) !;
+} */
+.mat-dialog-container{
+  background-image: url('/assets/dist/img/life-training-bg.png') !important;
+  background-repeat: no-repeat;
+  background-attachment: unset;
+}
+
+
+  @media (min-device-width: 992px) and (max-device-width: 1199px){}
+  @media (min-device-width: 768px) and (max-device-width:991px){}
+  @media (max-width: 767px){
+
+    .mobile_menus{
+      width:100% !important;
+      height:auto !important;
+    }
+  }
+

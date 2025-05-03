@@ -1,0 +1,1300 @@
+<!-- <a class="btn btn-primary" (click)="SendMail()">Send Mail</a> -->
+<div *ngIf="ShowCoreLine !=''" class="btn btn-info">CORELINE: {{ShowCoreLine}}</div>
+<!--==== PROFILE TARGET DETAILS START=====-->
+<table border="0" *ngIf="Is_Sales == 1"
+  style="width: 100%;border-collapse: collapse; border: 1px solid #c8c8c8;padding:0px; table-layout:fixed;">
+  <tr>
+    <td style="background: #275b7a;color: aliceblue;font-size: 18px;
+    padding-left: 70px !important;" colspan="41" align="left">
+      <strong style="margin-left: 60px;">PROFILE TARGET</strong>
+      <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+    </td>
+  </tr>
+</table>
+
+<div style="position: relative;" *ngIf="Is_Sales == 1">
+  <div [ngClass]="(ShowLoader2=='Yes'?'custom_loader_one d_block_two':'custom_loader_one d_none_two')">
+    <div class="rotate_loader">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <table border="0"
+    style="width: 100%;border-collapse: collapse; border: 1px solid #c8c8c8;padding:0px; table-layout:fixed;margin-bottom: 30px;">
+    <tr>
+      <td colspan="6" rowspan="6" style="padding: 0; box-shadow: 8px 0px 10px 0px #000000a1 !important;"
+        [ngClass]="(ShowLoader1=='Yes'?'fixed_table filter_blur':'fixed_table')">
+        <table border="0" style="border:none;">
+          <tr>
+            <th class="th_bg" rowspan="7">GWP</th>
+            <th class="th_bg" rowspan="1" align="bottom"></th>
+            <th class="th_right_bg" rowspan="1">LOB</th>
+            <th class="th_right_bg" rowspan="1">Target (CP)</th>
+            <th class="th_right_bg" rowspan="1">YTD Ach.</th>
+            <th class="th_right_bg" rowspan="1">YTD Ach.%</th>
+          </tr>
+
+          <tr>
+            <th class="th_bg" rowspan="6" align="bottom">{{ CompleteTarget }}<br>{{ NewCompleteTarget }}</th>
+            <td class="th_bg">Motor</td>
+            <td class="year_bg_color">{{ MotorTotal }}<br>{{ NewMotorTotal }}</td>
+            <td class="year_bg_color_2">{{ MotorYTD }}<br>{{ NewMotorYTD }}</td>
+            <td class="year_bg_color_3">{{ MotorYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <td class="th_bg">Non Motor</td>
+            <td class="year_bg_color">{{ NonMotorTotal }}<br>{{ NewNonMotorTotal }}</td>
+            <td class="year_bg_color_2">{{ NonMotorYTD }}<br>{{ NewNonMotorYTD }}</td>
+            <td class="year_bg_color_3">{{ NonMotorYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <td class="th_bg">Health</td>
+            <td class="year_bg_color">{{ HealthTotal }}<br>{{ NewHealthTotal }}</td>
+            <td class="year_bg_color_2">{{ HealthYTD }}<br>{{ NewHealthYTD }}</td>
+            <td class="year_bg_color_3">{{ HealthYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <td class="th_bg">Life</td>
+            <td class="year_bg_color">{{ LifeTotal }}<br>{{ NewLifeTotal }}</td>
+            <td class="year_bg_color_2">{{ LifeYTD }}<br>{{ NewLifeYTD }}</td>
+            <td class="year_bg_color_3">{{ LifeYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <td class="th_bg">Others</td>
+            <td class="year_bg_color">{{ OthersTotal }}<br>{{ NewOthersTotal }}</td>
+            <td class="year_bg_color_2">{{ OthersYTD }}<br>{{ NewOthersYTD }}</td>
+            <td class="year_bg_color_3">{{ OthersYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <td class="th_bg">Total</td>
+            <td class="year_bg_color">{{ Total }}<br>{{ NewTotal }}</td>
+            <td class="year_bg_color_2">{{ TotalYTD }}<br>{{ NewTotalYTD }}</td>
+            <td class="year_bg_color_3">{{ TotalYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <th class="th_bg" colspan="2">POS</th>
+            <td class="th_bg">POS Target</td>
+            <td class="year_bg_color">{{ PosTotal }}</td>
+            <td class="year_bg_color_2">{{ PosYTD }}</td>
+            <td class="year_bg_color_3">{{ PosYTDPercent }}</td>
+          </tr>
+
+        </table>
+      </td>
+
+      <td style="padding: 0; border-left: none;"
+        [ngClass]="(ShowLoader1=='Yes'?'scroll_table filter_blur':'scroll_table')">
+        <table border="0" style="border:none;">
+          <tr>
+            <th class="th_right_bg">April</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.%</th>
+            <th class="th_right_bg">May</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.%</th>
+            <th class="th_right_bg">June</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.%</th>
+            <th class="th_right_bg">July</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.%</th>
+            <th class="th_right_bg">August</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.%</th>
+            <th class="th_right_bg">September</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.%</th>
+            <th class="th_right_bg">October</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.%</th>
+            <th class="th_right_bg">November</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.%</th>
+            <th class="th_right_bg">December</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.%</th>
+            <th class="th_right_bg">January</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.%</th>
+            <th class="th_right_bg">Feburary</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.%</th>
+            <th class="th_right_bg">March</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.</th>
+            <th class="th_right_bg">MTD&nbsp;Ach.%</th>
+          </tr>
+
+          <tr *ngFor="let mainarr of datas;let main_i = index;">
+            <ng-container *ngIf="ProfileLobsArray[main_i]=='Motor'">
+              <ng-container *ngFor="let mainarrs of datas[main_i].Motor; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_1':'bg_color_second_month_1')">{{ mainarrs.Value }}<br>{{
+                  mainarrs.NewValue }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_2':'bg_color_second_month_2')">{{ mainarrs.TotalAchivement
+                  }}<br>{{ mainarrs.NewTotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_3':'bg_color_second_month_3')">{{ mainarrs.AchivementPercent
+                  }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+
+          <tr *ngFor="let mainarr of datas;let main_i = index;">
+            <ng-container *ngIf="ProfileLobsArray[main_i]=='Non-Motor'">
+              <ng-container *ngFor="let mainarrs of datas[main_i].Non_Motor; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_1':'bg_color_second_month_1')">{{ mainarrs.Value }}<br>{{
+                  mainarrs.NewValue }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_2':'bg_color_second_month_2')">{{ mainarrs.TotalAchivement
+                  }}<br>{{ mainarrs.NewTotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_3':'bg_color_second_month_3')">{{ mainarrs.AchivementPercent
+                  }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+
+          <tr *ngFor="let mainarr of datas;let main_i = index;">
+            <ng-container *ngIf="ProfileLobsArray[main_i]=='Health'">
+              <ng-container *ngFor="let mainarrs of datas[main_i].Health; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_1':'bg_color_second_month_1')">{{ mainarrs.Value }}<br>{{
+                  mainarrs.NewValue }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_2':'bg_color_second_month_2')">{{ mainarrs.TotalAchivement
+                  }}<br>{{ mainarrs.NewTotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_3':'bg_color_second_month_3')">{{ mainarrs.AchivementPercent
+                  }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+
+          <tr *ngFor="let mainarr of datas;let main_i = index;">
+            <ng-container *ngIf="ProfileLobsArray[main_i]=='Life'">
+              <ng-container *ngFor="let mainarrs of datas[main_i].Life; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_1':'bg_color_second_month_1')">{{ mainarrs.Value }}<br>{{
+                  mainarrs.NewValue }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_2':'bg_color_second_month_2')">{{ mainarrs.TotalAchivement
+                  }}<br>{{ mainarrs.NewTotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_3':'bg_color_second_month_3')">{{ mainarrs.AchivementPercent
+                  }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+
+          <tr *ngFor="let mainarr of datas;let main_i = index;">
+            <ng-container *ngIf="ProfileLobsArray[main_i]=='Others'">
+              <ng-container *ngFor="let mainarrs of datas[main_i].Others; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_1':'bg_color_second_month_1')">{{ mainarrs.Value }}<br>{{
+                  mainarrs.NewValue }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_2':'bg_color_second_month_2')">{{ mainarrs.TotalAchivement
+                  }}<br>{{ mainarrs.NewTotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_3':'bg_color_second_month_3')">{{ mainarrs.AchivementPercent
+                  }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+
+          <tr *ngFor="let mainarr of datas;let main_i = index;">
+            <ng-container *ngIf="ProfileLobsArray[main_i]=='Total'">
+              <ng-container *ngFor="let mainarrs of datas[main_i].Total; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_1':'bg_color_second_month_1')">{{ mainarrs.Value }}<br>{{
+                  mainarrs.NewValue }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_2':'bg_color_second_month_2')">{{ mainarrs.TotalAchivement
+                  }}<br>{{ mainarrs.NewTotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_3':'bg_color_second_month_3')">{{ mainarrs.AchivementPercent
+                  }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+
+          <tr *ngIf="PosData.length > 0">
+            <ng-container>
+              <ng-container *ngFor="let mainarrs2 of PosData[0].PosTarget; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_1':'bg_color_second_month_1')">{{ mainarrs2.Value }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_2':'bg_color_second_month_2')">{{ mainarrs2.TotalAchivement }}
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_3':'bg_color_second_month_3')">{{ mainarrs2.AchivementPercent
+                  }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+<!--==== PROFILE TARGET DETAILS END=====-->
+
+<!--==== ALLOCATED TARGET DETAILS START=====-->
+<table border="0"
+  style="width: 100%;border-collapse: collapse; border: 1px solid #c8c8c8;padding:0px; table-layout:fixed;">
+  <tr>
+    <td style="background: #275b7a;color: aliceblue;font-size: 18px;
+    padding-left: 70px !important;" colspan="41" align="left">
+      <strong style="margin-left: 60px;">ALLOCATED TARGET</strong>
+      <button *ngIf="Is_Sales == 0" (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+    </td>
+  </tr>
+</table>
+
+<div style="position: relative;">
+  <div [ngClass]="(ShowLoader2=='Yes'?'custom_loader_two d_block_two':'custom_loader_two d_none_two')">
+    <div class="rotate_loader">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <table border="0"
+    style="width: 100%;border-collapse: collapse; border: 1px solid #c8c8c8;padding:0px; table-layout:fixed; margin-bottom: 30px;">
+    <tr>
+      <td colspan="6" rowspan="9" style="padding: 0; box-shadow: 8px 0px 10px 0px #000000a1 !important;"
+        [ngClass]="(ShowLoader2=='Yes'?'fixed_table filter_blur':'fixed_table')">
+        <table border="0" style="border:none;">
+          <tr>
+            <th class="th_bg" rowspan="9">GWP</th>
+            <th class="th_bg" rowspan="1" align="bottom"></th>
+
+            <th class="th_right_bg" rowspan="1">LOB</th>
+            <th class="th_right_bg" rowspan="1">Target (CP)</th>
+            <th class="th_right_bg" rowspan="1">YTD Ach.</th>
+            <th class="th_right_bg" rowspan="1">YTD Ach.%</th>
+          </tr>
+          <tr>
+            <th class="th_bg" rowspan="8" align="bottom">{{ AllocatedCompleteTarget }}<br>{{ NewAllocatedCompleteTarget
+              }}</th>
+            <td class="th_bg">Motor</td>
+            <td class="year_bg_color">{{ AllocatedMotorTotal }}<br>{{ NewAllocatedMotorTotal }}</td>
+            <td class="year_bg_color_2">{{ AllocatedMotorYTD }}<br>{{ NewAllocatedMotorYTD }}</td>
+            <td class="year_bg_color_3">{{ AllocatedMotorYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <td class="th_bg">Non Motor</td>
+            <td class="year_bg_color">{{ AllocatedNonMotorTotal }}<br>{{ NewAllocatedNonMotorTotal }}</td>
+            <td class="year_bg_color_2">{{ AllocatedNonMotorYTD }}<br>{{ NewAllocatedNonMotorYTD }}</td>
+            <td class="year_bg_color_3">{{ AllocatedNonMotorYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <td class="th_bg">Health Retail</td>
+            <td class="year_bg_color">{{ AllocatedHealthRetailTotal }}<br>{{ NewAllocatedHealthRetailTotal }}</td>
+            <td class="year_bg_color_2">{{ AllocatedHealthRetailYTD }}<br>{{ NewAllocatedHealthRetailYTD }}</td>
+            <td class="year_bg_color_3">{{ AllocatedHealthRetailYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <td class="th_bg">Health Group</td>
+            <td class="year_bg_color">{{ AllocatedHealthGroupTotal }}<br>{{ NewAllocatedHealthGroupTotal }}</td>
+            <td class="year_bg_color_2">{{ AllocatedHealthGroupYTD }}<br>{{ NewAllocatedHealthGroupYTD }}</td>
+            <td class="year_bg_color_3">{{ AllocatedHealthGroupYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <td class="th_bg">Life Retail</td>
+            <td class="year_bg_color">{{ AllocatedLifeRetailTotal }}<br>{{ NewAllocatedLifeRetailTotal }}</td>
+            <td class="year_bg_color_2">{{ AllocatedLifeRetailYTD }}<br>{{ NewAllocatedLifeRetailYTD }}</td>
+            <td class="year_bg_color_3">{{ AllocatedLifeRetailYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <td class="th_bg">Life Group</td>
+            <td class="year_bg_color">{{ AllocatedLifeGroupTotal }}<br>{{ NewAllocatedLifeGroupTotal }}</td>
+            <td class="year_bg_color_2">{{ AllocatedLifeGroupYTD }}<br>{{ NewAllocatedLifeGroupYTD }}</td>
+            <td class="year_bg_color_3">{{ AllocatedLifeGroupYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <td class="th_bg">Others</td>
+            <td class="year_bg_color">{{ AllocatedOthersTotal }}<br>{{ NewAllocatedOthersTotal }}</td>
+            <td class="year_bg_color_2">{{ AllocatedOthersYTD }}<br>{{ NewAllocatedOthersYTD }}</td>
+            <td class="year_bg_color_3">{{ AllocatedOthersYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <td class="th_bg">Total</td>
+            <td class="year_bg_color">{{ AllocatedTotal }}<br>{{ NewAllocatedTotal }}</td>
+            <td class="year_bg_color_2">{{ AllocatedTotalYTD }}<br>{{ NewAllocatedTotalYTD }}</td>
+            <td class="year_bg_color_3">{{ AllocatedTotalYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <th class="th_bg" colspan="2" rowspan="2">POS</th>
+            <th class="th_bg" colspan="1">POS Target</th>
+            <td class="year_bg_color">{{ AllocatedPosTotal }}</td>
+            <td class="year_bg_color_2">{{ AllocatedPosYTD }}</td>
+            <td class="year_bg_color_3">{{ AllocatedPosYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <th style="padding: 0 !important;font-size: 10px;text-align: center;" class="th_bg">Total Mapped POS<label
+                style="border-top: 1px solid #000;width: 100%;font-size: 12px;margin: 0; font-weight: normal !important;">
+                {{ ActivePosTotal }}</label></th>
+            <td class="year_bg_color">{{ TotalActiveTarget }}</td>
+            <td class="year_bg_color_2">{{ ActivePosYTD }}</td>
+            <td class="year_bg_color_3">{{ ActivePosYTDPercent }}</td>
+          </tr>
+        </table>
+      </td>
+      <td style="padding: 0; border-left: none;"
+        [ngClass]="(ShowLoader2=='Yes'?'scroll_table filter_blur':'scroll_table')">
+        <table border="0" style="border:none;">
+          <tr>
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">April</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">April</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD&nbsp;Ach.</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD&nbsp;Ach.%</th>
+            <!--=== APRIL SECTION END===-->
+
+            <!--=== MAY SECTION START===-->
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">May</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">May</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== MAY SECTION END ===-->
+
+            <!--=== JUNE SECTION START ===-->
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">June</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">June</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== JUNE SECTION END ===-->
+
+            <!--=== JULY SECTION START ===-->
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">July</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">July</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== July SECTION END ===-->
+
+            <!--=== August SECTION START ===-->
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">August</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">August</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== AUGUST SECTION END ===-->
+
+            <!--=== SEPTEMBER SECTION START ===-->
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">September</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">September</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== SEPTEMBER SECTION END ===-->
+
+            <!--=== OCTOBER SECTION START ===-->
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">October</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">October</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== OCTOBER SECTION END ===-->
+
+            <!--=== NOVEMBER SECTION START ===-->
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">November</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">November</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== NOVEMBER SECTION END ===-->
+
+            <!--=== DECEMBER SECTION START ===-->
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">December</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">December</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== DECEMBER SECTION END ===-->
+
+            <!--=== JANUARY SECTION START ===-->
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">January</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">January</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== JANUARY SECTION END ===-->
+
+            <!--=== FEBURARY SECTION START ===-->
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">February</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">Feburary</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== FEBURARY SECTION END ===-->
+
+            <!--=== MARCH SECTION START ===-->
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">March</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;" class="th_right_bg" colspan="2" *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;" class="bg_color_table">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;">Team</th>
+                  <th style="height: 25.5px !important;">Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">March</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th class="th_right_bg" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== MARCH SECTION END ===-->
+          </tr>
+
+          <!--===== IF PROFILE TYPE IS NOT RELATIONSHIP MANAGER START======-->
+
+          <!--===== MOTOR TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Motor' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Motor; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_1':'bg_color_other_second_month_1')">{{ mainarrs.Value
+                  }}<br>{{ mainarrs.NewValue }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }}
+                  <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes' && Coreline != 'Motor'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Motor_Target','Self','Upper')"></span>
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_3':'bg_color_other_second_month_3')">{{
+                  mainarrs.TotalAchivement }}<br>{{ mainarrs.NewTotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_5':'bg_color_other_second_month_5')">{{
+                  mainarrs.AchivementPercent }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== MOTOR TARGETS END =====-->
+
+          <!--===== NON MOTOR TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Non-Motor' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Non_Motor; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_1':'bg_color_other_second_month_1')">{{
+                  mainarrs.Value}}<br>{{ mainarrs.NewValue }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }}
+                  <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes' && Coreline != 'Non Motor'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Non_Motor_Target','Self','Upper')"></span>
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_3':'bg_color_other_second_month_3')">{{
+                  mainarrs.TotalAchivement }}<br>{{ mainarrs.NewTotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_5':'bg_color_other_second_month_5')">{{
+                  mainarrs.AchivementPercent }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== NON MOTOR TARGETS END =====-->
+
+          <!--===== HEALTH RETAIL TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Health-Retail' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Health_Retail; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_1':'bg_color_other_second_month_1')">{{ mainarrs.Value
+                  }}<br>{{ mainarrs.NewValue }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }}
+                  <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes' && Coreline != 'Health'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Health_Target','Self','Upper')"></span>
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_3':'bg_color_other_second_month_3')">{{
+                  mainarrs.TotalAchivement }}<br>{{ mainarrs.NewTotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_5':'bg_color_other_second_month_5')">{{
+                  mainarrs.AchivementPercent }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== HEALTH RETAIL TARGETS END =====-->
+
+          <!--===== HEALTH GROUP TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Health-Group' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Health_Group; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_1':'bg_color_other_second_month_1')">{{ mainarrs.Value
+                  }}<br>{{ mainarrs.NewValue }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }}
+                  <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes' && Coreline != 'Health'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Health_Group_Target','Self','Upper')"></span>
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_3':'bg_color_other_second_month_3')">{{
+                  mainarrs.TotalAchivement }}<br>{{ mainarrs.NewTotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_5':'bg_color_other_second_month_5')">{{
+                  mainarrs.AchivementPercent }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== HEALTH GROUP TARGETS END =====-->
+
+          <!--===== LIFE RETAIL TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Life-Retail' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Life_Retail; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_1':'bg_color_other_second_month_1')">{{ mainarrs.Value
+                  }}<br>{{ mainarrs.NewValue }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }}
+                  <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes' && Coreline != 'Life'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Life_Target','Self','Upper')"></span>
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_3':'bg_color_other_second_month_3')">{{
+                  mainarrs.TotalAchivement }}<br>{{ mainarrs.NewTotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_5':'bg_color_other_second_month_5')">{{
+                  mainarrs.AchivementPercent }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== LIFE RETAIL TARGETS END =====-->
+
+          <!--===== LIFE RETAIL TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Life-Group' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Life_Group; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_1':'bg_color_other_second_month_1')">{{ mainarrs.Value
+                  }}<br>{{ mainarrs.NewValue }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }}
+                  <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes' && Coreline != 'Life'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Life_Group_Target','Self','Upper')"></span>
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_3':'bg_color_other_second_month_3')">{{
+                  mainarrs.TotalAchivement }}<br>{{ mainarrs.NewTotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_5':'bg_color_other_second_month_5')">{{
+                  mainarrs.AchivementPercent }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== LIFE RETAIL TARGETS END =====-->
+
+          <!--===== OTHER TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Others' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Others; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_1':'bg_color_other_second_month_1')">{{ mainarrs.Value
+                  }}<br>{{ mainarrs.NewValue }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }}
+                  <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Others_Target','Self','Upper')"></span>
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_3':'bg_color_other_second_month_3')">{{
+                  mainarrs.TotalAchivement }}<br>{{ mainarrs.NewTotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_5':'bg_color_other_second_month_5')">{{
+                  mainarrs.AchivementPercent }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== OTHER TARGETS END =====-->
+
+          <!--===== TOTAL TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Total' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Total; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_1':'bg_color_other_second_month_1')">{{ mainarrs.Value
+                  }}<br>{{ mainarrs.NewValue }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }}
+                  <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes' && mainarrs.TotalEditAllowed == 'Yes'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Total_Target','Self','Upper')"></span>
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_3':'bg_color_other_second_month_3')">{{
+                  mainarrs.TotalAchivement }}<br>{{ mainarrs.NewTotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_5':'bg_color_other_second_month_5')">{{
+                  mainarrs.AchivementPercent }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== TOTAL TARGETS END =====-->
+
+          <tr *ngFor="let mainarr1 of AllocatedPosData;let main_i2 = index;">
+            <ng-container *ngIf="BelowArrays[main_i2]=='PosTarget' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs2 of AllocatedPosData[main_i2].PosTarget;  let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_1':'bg_color_other_second_month_1')">{{ mainarrs2.Value
+                  }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs2.SelfTarget }}<span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs2.EditAllowed == 'Yes'"
+                    (click)="EditTargetModal(mainarrs2.Value,mainarrs2.MonthName,'Pos_Target','Self','Upper')"></span>
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_3':'bg_color_other_second_month_3')">{{
+                  mainarrs2.TotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs2.TotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_5':'bg_color_other_second_month_5')">{{
+                  mainarrs2.AchivementPercent }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs2.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+
+          <tr *ngFor="let mainarr1 of AllocatedPosData;let main_i2 = index;">
+            <ng-container *ngIf="BelowArrays[main_i2]=='ActivePos' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs2 of AllocatedPosData[main_i2].ActivePos;  let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_1':'bg_color_other_second_month_1')">{{ mainarrs2.Value
+                  }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs2.SelfTarget }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_3':'bg_color_other_second_month_3')">{{
+                  mainarrs2.TotalAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs2.TotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_5':'bg_color_other_second_month_5')">{{
+                  mainarrs2.AchivementPercent }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs2.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== IF PROFILE TYPE IS NOT RELATIONSHIP MANAGER END======-->
+
+          <!--===== IF PROFILE TYPE IS RELATIONSHIP MANAGER START======-->
+
+          <!--===== MOTOR TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Motor' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Motor; let main_x = index;">
+
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }}
+                  <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit_RM == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes' && Coreline != 'Motor'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Motor_Target','Self','RM')"></span>
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== MOTOR TARGETS END =====-->
+
+          <!--===== NON MOTOR TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Non-Motor' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Non_Motor; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }}
+                  <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit_RM == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes' && Coreline != 'Non Motor'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Non_Motor_Target','Self','RM')"></span>
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== NON MOTOR TARGETS END =====-->
+
+          <!--===== HEALTH RETAIL TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Health-Retail' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Health_Retail; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }} <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit_RM == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes' && Coreline != 'Health'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Health_Target','Self','RM')"></span>
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== HEALTH RETAIL TARGETS END =====-->
+
+          <!--===== HEALTH GROUP TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Health-Group' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Health_Group; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }} <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit_RM == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes' && Coreline != 'Health'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Health_Group_Target','Self','RM')"></span>
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== HEALTH GROUP TARGETS END =====-->
+
+          <!--===== LIFE RETAIL TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Life-Retail' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Life_Retail; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }}
+                  <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit_RM == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes' && Coreline != 'Life'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Life_Target','Self','RM')"></span>
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== LIFE RETAIL TARGETS END =====-->
+
+          <!--===== LIFE GROUP TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Life-Group' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Life_Group; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }}
+                  <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit_RM == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes' && Coreline != 'Life'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Life_Group_Target','Self','RM')"></span>
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== LIFE GROUP TARGETS END =====-->
+
+          <!--===== OTHER TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Others' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Others; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }}
+                  <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit_RM == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Others_Target','Self','RM')"></span>
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== OTHER TARGETS END =====-->
+
+          <!--===== TOTAL TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Total' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Total; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs.SelfTarget }}<br>{{ mainarrs.NewSelfTarget }}
+                  <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit_RM == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs.EditAllowed == 'Yes' && mainarrs.TotalEditAllowed == 'Yes'"
+                    (click)="EditTargetModal(mainarrs.SelfTarget,mainarrs.MonthName,'Total_Target','Self','RM')"></span>
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs.TotalSelfAchivement }}<br>{{ mainarrs.NewTotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== TOTAL TARGETS END =====-->
+
+          <tr *ngFor="let mainarr1 of AllocatedPosData;let main_i2 = index;">
+            <ng-container *ngIf="BelowArrays[main_i2]=='PosTarget' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs2 of AllocatedPosData[main_i2].PosTarget;  let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs2.SelfTarget }}
+                  <span class="fa fa-pencil-square-o"
+                    *ngIf="Is_Edit_RM == 'Yes' && UrlSegment == 'EmployeeTarget' && mainarrs2.EditAllowed == 'Yes'"
+                    (click)="EditTargetModal(mainarrs2.Value,mainarrs2.MonthName,'Pos_Target','Self','RM')"></span>
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs2.TotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs2.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+
+          <tr *ngFor="let mainarr1 of AllocatedPosData;let main_i2 = index;">
+            <ng-container *ngIf="BelowArrays[main_i2]=='ActivePos' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs2 of AllocatedPosData[main_i2].ActivePos;  let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_2':'bg_color_other_second_month_2')">{{
+                  mainarrs2.SelfTarget }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_4':'bg_color_other_second_month_4')">{{
+                  mainarrs2.TotalSelfAchivement }}</td>
+                <td [ngClass]="(main_x % 2 == 0?'bg_color_other_6':'bg_color_other_second_month_6')">{{
+                  mainarrs2.SelfAchivementPercent }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== IF PROFILE TYPE IS RELATIONSHIP MANAGER END======-->
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+<!--==== ALLOCATED TARGET DETAILS END=====-->

@@ -1,0 +1,222 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header d_flex flex_Equal flex_Middel">
+            <div class="header_title">Incentive Report</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div class="btn_list_group">
+              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                <div class="panel panel-default">
+                  <div class="row">
+
+                    <div class="col-md-9"> </div>
+
+                    <div class="col-md-3">
+                      <div class="dsr-fillter">
+                        <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                          data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          <a role="button" class="fa fa-filter"><span>Filters</span><i
+                              class="fa fa-angle-down pull-right"></i></a>
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body loader_inner_data">
+                      <!-- <div [ngClass]="(ShowDashboardLoader == 'Yes'?'inner_cs_loader show_loader_on':'show_loader_on')">
+                        <div class="loader_box">
+                          <img src="https://www.squareinsurance.in/images/loadernew.gif">
+                        </div>
+                      </div> -->
+                      <form [formGroup]="SearchForm" style="padding: 0 15px;">
+
+                        <div class="row">
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Financial Year"
+                              [data]="Year_Ar" [(ngModel)]="SelectedYear" formControlName="Financial_Year"
+                              [settings]="dropdownSettingsingleselect">
+                            </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3" *ngIf="(LoginProfileName == 'MD' || LoginProfileName == 'CEO')">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select President"
+                              [data]="President_Ar" formControlName="President_Id"
+                              [settings]="dropdownSettingsingleselect1" (onSelect)="GetVerticalData()"
+                              (onDeSelect)="SearchComponentsData()"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Vertical"
+                              [data]="Vertical_Ar" formControlName="Vertical_Id"
+                              [settings]="dropdownSettingsingleselect1" (onSelect)="GetEmployees()"
+                              (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Service Location"
+                              [data]="Region_Ar" formControlName="Region_Id" [settings]="dropdownSettingsmultiselect"
+                              (onSelect)="GetEmployees()" (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" name="Emp_Id" placeholder="Select Employee"
+                              [data]="Emps_Ar" formControlName="Emp_Id" [settings]="dropdownSettingsingleselect1"
+                              (onSelect)="GetEmployeeExtraData('0')" (onDeSelect)="GetEmployeeExtraData('0')">
+                            </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Report Type"
+                              [data]="ReportTypeData" [(ngModel)]="SelectedReportType" formControlName="Report_Type"
+                              [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Month" [data]="MonthArray"
+                              [(ngModel)]="SelectedCurrentMonth" formControlName="Month_Name"
+                              [settings]="dropdownSettingsingleselect1"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Incentive Status"
+                              [data]="IncentiveStatusAr" formControlName="Incentive_Status"
+                              [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <input type="text" formControlName="SearchValue" placeholder="Search Name/Emp. Id/Mobile"
+                              class="form-control">
+                          </div>
+
+                          <div class="col-sm-3">
+
+                            <input (click)="SearchBtn()" type="button" class="btn btn-info" value="Search">&nbsp;&nbsp;
+                            <input (click)="ClearSearch()" type="button" class="btn btn-danger"
+                              value="Reset">&nbsp;&nbsp;
+
+                            <!-- <input *ngIf="api.GetUserData('Code') == 'SIB282' || api.GetUserData('Code') == 'SIB101'"
+                              (click)="ExportReport()" type="button" class="btn btn-warning" value="Export"
+                              style="padding: 6px !important;"> -->
+
+                          </div>
+                        </div>
+
+
+                      </form>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+
+                <!--======= SINGLE MONTH RELATED SECTION START =========-->
+                <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                  <li class="table-row" *ngFor="let row of dataAr; let i=index;">
+
+                    <span class="addon_tag_name" *ngIf="row.ResignStatus == 0 && row.Status == 1">Active</span>
+                    <span class="addon_tag_name1" *ngIf="row.ResignStatus == 0 && row.Status == 0">Blocked</span>
+                    <span class="addon_tag_name2" *ngIf="row.ResignStatus == 1">Resigned</span>
+
+                    <p class="life_status_label">
+                      <span *ngIf="row.Is_Sales == 0" class="btn btn-warning">Non Sales</span>
+                      <span *ngIf="row.Is_Sales == 1" class="btn btn-success">Sales</span>
+                    </p>
+
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{ row.SrNo }}</div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Employee Name & Code </div>
+                            <strong class="fs_18">{{ row.Name }}</strong>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Employee Mobile No.</div>
+                            <strong class="fs_18">{{row.Mobile}}</strong>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Reporting Manager & Code</div><strong class="fs_18">{{ row.RM_Name }}</strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+
+                        <div class="label_chips finance_lob">
+                          <span>Joining Date : {{ row.DOJ }}</span>
+                        </div>
+
+                        <div class="label_chips non_motor_lob" *ngIf="row.ResignStatus == '1'">
+                          <span>Resign Date : {{ row.ResignDate }}</span>&nbsp;&nbsp;
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="last_row">
+                      <div class="d_flex effective_date">
+                        <div class="date_text">
+                          <span class="fs_12">Profile : </span>
+                          <span class="fs_12">{{row.NewProfile}}</span>
+                        </div>
+                      </div>
+
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                        <a style="cursor: pointer;" (click)="TargetAchievementDetails(i)" class="mr_5 btn-bg1">
+                          Reports >></a>
+                      </div>
+
+                    </div>
+                  </li>
+                </ul>
+                <!--======= SINGLE MONTH RELATED SECTION END =========-->
+
+
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

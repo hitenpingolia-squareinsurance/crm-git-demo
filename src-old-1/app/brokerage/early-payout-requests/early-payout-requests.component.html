@@ -1,0 +1,99 @@
+ 
+<!-- Content Wrapper. Contains page content -->
+<div class="inner_page_css knowlage_details_page">
+    <!-- Main content -->
+  <section class="container-fluid">
+    
+    <!-- SELECT2 EXAMPLE -->
+  <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form ">
+          <div class="main_header">
+            <div class="header_title">Early Payout Requests</div>
+          </div>
+   <div class="main_body main_card_height_scroll_withoutfooter">
+     <!--begin: Datatable-->
+                      <div class=" table-responsive">
+                          <table datatable [dtOptions]="dtOptions"
+                              class="table row-border hover table table-bordered table-hover table-checkable" id="kt_datatable"
+                              style="margin-top: 10px !important">
+                              <thead>
+                                <tr>
+                                  <th rowspan="2">No</th>
+                                  <th rowspan="2">Request-Id</th>
+                                  <th colspan="3">Files</th>
+                                  <th colspan="4">Amount</th>
+                                  <th rowspan="2">Parnter Name/Code</th>
+                                  <th rowspan="2">RM Name/Code</th>
+                                  <th rowspan="2">Request Date/Time</th>
+                              </tr>
+                              <tr>
+                                  <th>Total</th>
+                                  <th>Apporved </th>
+                                  <th>Rejected </th>
+                                  <th>Total</th>
+                                  <th>Apporved </th>
+                                  <th>Rejected </th>
+                                  <th>Requested PO </th>
+                              </tr> 
+                              </thead>
+                              <tbody *ngIf="dataAr?.length != 0">
+                                  <tr *ngFor="let row of dataAr; let i=index;">
+                                      <td>{{ row.SrNo }}</td>
+                                      <td>{{row.request_id}}
+                                        <a class="labelpro" href="javascript:void(0)" (click)="ViewFiles(row.request_id)">
+                                          <span class="label label-danger label-inline mr-2">
+                                            View Detailed
+                                          </span>
+                                        </a>
+                                        <a class="labelpro" *ngIf="row.request_status==0" href="javascript:void(0)" (click)="PostData(row.id,row.request_id,row.posting_status)">
+                                          <span class="label label-success label-inline mr-2">
+                                            Post
+                                          </span>
+                                        </a>
+                                        <a class="labelpro" *ngIf="row.request_status==0" href="javascript:void(0)" (click)="rejectRequest(row.id,row.request_id)">
+                                          <span class="label label-warning label-inline mr-2">
+                                            Reject
+                                          </span>
+                                        </a>
+                                        <!-- <span *ngIf="row.request_status==0" style="margin-top: 5px;width:100%;" class="label label-warning label-inline mr-2">
+                                          Pending
+                                        </span> -->
+                                        <span *ngIf="row.request_status==1"  class="label label-success label-inline mr-2 labelpro">
+                                            Approved
+                                        </span>
+                                        <span *ngIf="row.request_status==2"  class="label label-danger label-inline mr-2 labelpro">
+                                            Rejected
+                                        </span>
+                                      </td>
+                                      <td>{{row.total_files}}</td>
+                                      <td>{{row.approved_files}}</td>
+                                      <td>{{row.rejected_files}}</td>
+                                      <td>{{row.total_po}}</td>
+                                      <td>{{row.approved_po}}</td>
+                                      <td>{{row.rejected_po}}</td>
+                                      <td>{{row.request_po}}</td>
+                                      <td>{{row.Agent_Name}}</td>
+                                      <td>{{row.RM_Name}}</td>
+                                      <td>{{row.add_stamp}}</td>
+                                  </tr>
+                              </tbody>
+                              <tbody *ngIf="dataAr?.length == 0">
+                                  <tr>
+                                      <td colspan="5" align="center">No data available !</td>
+                                  </tr>
+                              <tbody>
+                          </table>
+                      </div>
+  
+  
+                      <!--end: Datatable-->
+   </div>
+                     
+        </div>
+       
+        </div>
+  
+      </div>
+  
+  </section>

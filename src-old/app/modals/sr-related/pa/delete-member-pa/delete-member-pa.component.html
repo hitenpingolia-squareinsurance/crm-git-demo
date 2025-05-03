@@ -1,0 +1,35 @@
+<form class="form-blog-top" [formGroup]="ActionForm" (ngSubmit)="DeleteEmployee()">
+  <table class="table table-bordered">
+    <thead>
+     <tr>
+      <th style="text-align: center;">Delete Employee Data
+        <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+      </th>
+     </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <label>Adjustment Premium *: </label>
+              <input type="number" class="form-control" placeholder="Enter Adjustment Premium" formControlName="Extra_Premium">
+              <span *ngIf="isSubmitted && FC_1.Extra_Premium.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.Extra_Premium.errors.required" style="color:red;">Please enter Adjustment Premium !</span>
+                <span *ngIf="FC_1.Extra_Premium.errors.pattern" style="color:red;">Enter vaild Premium(Numeric value)!</span>
+              </span>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-danger" value="Delete">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

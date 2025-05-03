@@ -1,0 +1,13 @@
+table.srdetails    {table-layout:fixed; width:100%;}/*Setting the table width is important!*/
+table.srdetails   th {overflow:hidden;}/*Hide text outside the cell.*/
+
+table.srdetails   th:nth-of-type(1) {width:400px;height:100px;}
+table.srdetails   th:nth-of-type(2) {width:400px;}
+table.srdetails   th:nth-of-type(3) {width:100px;}
+
+.form-blog-top{
+    box-shadow: 1px 1px 10px #0000000d;
+     padding: 10px 10px;
+     margin-bottom: 25px;
+     border: 1px solid #0000002b;
+ }

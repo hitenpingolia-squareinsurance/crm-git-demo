@@ -1,0 +1,40 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Assets Form </div>
+          </div>
+          <form class="form" (ngSubmit)="submit()" [formGroup]="assetUserform">
+            <div class="main_body main_card_height_scroll">
+              <div class="row clearfix" style="margin-top: 10px;">
+                <div class="col-md-12">
+                  <div class="col-md-6">
+                    <label for="Category">Category</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="Category"
+                      formControlName="Category" [settings]="dropdownSettingsType">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.Category.errors" class="ValidationError">
+                      <div *ngIf="formControls.Category.errors.required">Please select Category!</div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="Item">Remark</label>
+                    <textarea class="form-control" formControlName="remarks" style="height: 35px;"></textarea>
+                    <div *ngIf="isSubmitted && formControls.remarks.errors" class="ValidationError">
+                      <div *ngIf="formControls.remarks.errors.required">Please enter remarks.!</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="main_footer">
+              <button type="submit" class="Save_click">Submit Request</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

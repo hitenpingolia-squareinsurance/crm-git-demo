@@ -1,0 +1,178 @@
+<section class="inner_page_css main_dashboard_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">SP-POS Conversion Report</div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+
+                        <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                            <!--begin::Button-->
+
+                            <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                aria-controls="collapseOne">
+                                <a role="button" class="fa fa-filter"><span>Filters</span><i
+                                        class="fa fa-angle-down pull-right"></i></a>
+                            </button>
+                        </div>
+
+
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <!-- filter  -->
+                                <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn(0)">
+
+                                    <div class="row">
+
+                                        <div class="col-sm-3">
+                                            <ng-multiselect-dropdown class="form-control" placeholder="Select Vertical" [data]="Vertical_Ar"
+                                                formControlName="Vertical_Id" [settings]="dropdownSettingsmultiselect"
+                                                (onSelect)="GetEmployees()" (onDeSelect)="GetEmployees()">
+                                            </ng-multiselect-dropdown>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <ng-multiselect-dropdown class="form-control" placeholder="Select Branch" [data]="Region_Ar"
+                                                formControlName="Region_Id" [settings]="dropdownSettingsmultiselect"
+                                                (onSelect)="GetSubBranches()" (onDeSelect)="GetSubBranches()">
+                                            </ng-multiselect-dropdown>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <ng-multiselect-dropdown class="form-control" placeholder="Select Service Location"
+                                                [data]="Sub_Branch_Ar" formControlName="Sub_Region_Id"
+                                                [settings]="dropdownSettingsmultiselect" (onSelect)="GetEmployees()"
+                                                (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <ng-multiselect-dropdown class="form-control" name="Emp_Id" placeholder="Select Employee"
+                                                [data]="Emps_Ar" formControlName="Emp_Id"
+                                                [settings]="dropdownSettingsmultiselect" (onSelect)="GetAgents('1')"
+                                                (onDeSelect)="GetAgents('1')"> </ng-multiselect-dropdown>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-top: 1%;">
+                                        <div class="col-sm-2">
+                                            <ng-multiselect-dropdown class="form-control" placeholder="Report Type" [data]="ReportTypeData"
+                                                formControlName="RM_Search_Type"
+                                                [settings]="dropdownSettingsingleselect" (onSelect)="SetReportType()"
+                                                (onDeSelect)="SetReportType()" [(ngModel)]="reportTypeVal"
+                                                [disabled]="ReportTypeDisable">
+                                            </ng-multiselect-dropdown>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <ng-multiselect-dropdown class="form-control" name="Emp_Id" placeholder="Select Agents"
+                                                [data]="Agents_Ar" formControlName="Agents_Id"
+                                                [settings]="dropdownSettingsmultiselect"> </ng-multiselect-dropdown>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <input type="text" placeholder="Select Date OR Date-Range"
+                                                class="form-control" formControlName="DateOrDateRange" bsDaterangepicker
+                                                [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <input type="text" placeholder="Search" class="form-control"
+                                                formControlName="SearchValue">
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                           <div class="pull-right">
+                                            <input type="submit" class="btn btn-info" value="Search">&nbsp;&nbsp;
+                                            <input (click)="ClearSearch()" type="button" class="btn btn-danger"
+                                                value="Reset">
+                                           </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class=" mydiv table-responsive" data-loader="TableLoader">
+
+                            <table datatable [dtOptions]="dtOptions" id="Table1"
+                                class="table table-bordered table-hover">
+                                <!--====== FOR BUSINESS CALL AND CLUB DATA START ======-->
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Details</th>
+                                        <th>Agent&nbsp;Name</th>
+                                        <th>RM&nbsp;Name</th>
+                                        <th>Merge&nbsp;Code&nbsp;1&nbsp;/&nbsp;Date</th>
+                                        <th>Merge&nbsp;Code&nbsp;2&nbsp;/&nbsp;Date</th>
+                                        <th>Merge&nbsp;Code&nbsp;3&nbsp;/&nbsp;Date</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr; let i=index;">
+                                        <td>
+                                            {{ row.SrNo }}.
+                                        </td>
+
+                                        <td>
+                                            <a href="javascript:void(0);">
+                                                <span (click)="ViewDetails(row.Id)"
+                                                    class="label label-primary label-inline mr-2">Details</span>
+                                            </a>&nbsp;
+                                        </td>
+
+                                        <td>{{ row.Name }}-{{ row.Agent_Id }}</td>
+
+                                        <td>{{ row.RM_Name }} ({{ row.RM_Emp_Id }})</td>
+                                        <td>
+                                            <span *ngIf="row.MergeCode1 != 0">{{ row.MergeCode1 }}</span>
+                                            <span *ngIf="row.MergeDate1 != ''"><br>{{ row.MergeDate1 }}</span>
+
+                                            <span *ngIf="row.MergeCode1 == 0">NA</span>
+                                        </td>
+
+                                        <td>
+                                            <span *ngIf="row.MergeCode2 != 0">{{ row.MergeCode2 }}</span>
+                                            <span *ngIf="row.MergeDate2 != ''"><br>{{ row.MergeDate2 }}</span>
+
+                                            <span *ngIf="row.MergeCode2 == 0">NA</span>
+                                        </td>
+
+                                        <td>
+                                            <span *ngIf="row.MergeCode3 != 0">{{ row.MergeCode3 }}</span>
+                                            <span *ngIf="row.MergeDate3 != ''"><br>{{ row.MergeDate3 }}</span>
+
+                                            <span *ngIf="row.MergeCode3 == 0">NA</span>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                                <!--====== FOR BUSINESS CALL AND CLUB DATA END ======-->
+
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="7" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</section>

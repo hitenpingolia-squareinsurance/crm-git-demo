@@ -1,0 +1,201 @@
+<!-- <div id="AddCatSubCatOOOO" class="modal fade" role="dialog" style="z-index: 1042 !important;"> -->
+<div class="modal-dialog cs_table_data custom-modal-dailog-data">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">{{ AgentName }}</div>
+                    </div>
+                    <div class="cs_modal_body" style="height: calc(100vh - 166px);overflow-y: scroll;">
+                        <div class="view_more_cases">
+                            <app-agent-renewal-filter (postCreated)="SearchData1($event)"></app-agent-renewal-filter>
+                            <cdk-virtual-scroll-viewport #scroller1 itemSize="72" class="content">
+
+
+                                <mat-list>
+                                    <ng-container *cdkVirtualFor="let rows of postNested; let i=index;">
+                                        <mat-list-item>
+                                            <div class="case_table_de">
+
+                                                <div class="status_row warnings">
+                                                    <div class="number_row_text">{{ rows.SrNo }}</div>
+
+
+                                                    <div class="cs_status_sr" *ngIf="rows.Status == 'Pending'">
+                                                        <button class="btn warnings customMargins"
+                                                            (click)="ChangeStatusRenewals(rows.Status ,rows.Id,'Button')">{{
+                                                            rows.Status }}</button>
+                                                    </div>
+
+                                                    <div class="cs_status_sr" *ngIf="rows.Status == 'Renewed'">
+                                                        <button class="btn successs customMargins"
+                                                            (click)="ChangeStatusRenewals(rows.Status ,rows.Id,'Button')">{{
+                                                            rows.Status }}</button>
+                                                    </div>
+
+                                                    <div class="cs_status_sr" *ngIf="rows.Status == 'Follow Up'">
+
+                                                        <button class="btn secondarys customMargins"
+                                                            (click)="ChangeStatusRenewals(rows.Status ,rows.Id,'Button')">{{
+                                                            rows.Status }}</button>
+
+                                                    </div>
+
+                                                    <div class="cs_status_sr" *ngIf="rows.Status == 'Missed'">
+
+                                                        <button class="btn darks customMargins"
+                                                            (click)="ChangeStatusRenewals(rows.Status ,rows.Id,'Button')">{{
+                                                            rows.Status }}</button>
+
+                                                    </div>
+
+                                                    <div class="cs_status_sr" *ngIf="rows.Status == 'Lost'">
+
+                                                        <button class="btn dangers customMargins"
+                                                            (click)="ChangeStatusRenewals(rows.Status ,rows.Id,'Button')">{{
+                                                            rows.Status }}</button>
+
+                                                    </div>
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>LOB & Product</span>
+                                                        <strong>{{rows.LOB}} - {{rows.ProductName}}</strong>
+                                                    </li>
+                                                    <li>
+                                                        <span>Expiry In</span>
+                                                        <strong>{{ rows.ExpiryDays }} Days</strong>
+                                                    </li>
+                                                    <li>
+                                                        <span>SR NO.</span>
+                                                        <strong>{{ rows.FullSRNo }}</strong>
+                                                    </li>
+                                                    <li *ngIf="rows.Status == 'Renewed'">
+                                                        <span> SR NO. Against Renewed</span>
+                                                        <strong>{{ rows.renewed_full_sr_no }}</strong>
+                                                    </li>
+                                                    <li>
+                                                        <span>Customer Name</span>
+                                                        <strong>{{ rows.CustomerName }}</strong>
+                                                    </li>
+                                                    <li>
+                                                        <!-- <span><a class="label label-info">Upload Notice</a></span> -->
+                                                        <span
+                                                            *ngIf="(rows.CustomerMobile != '' || rows.CustomerMobile  !='null') && rows.Agent_Mobile == rows.CustomerMobile  ">Agent
+                                                            Mobile No. <span class="green-dot"></span></span>
+                                                        <span
+                                                            *ngIf="rows.Agent_Mobile != rows.CustomerMobile  ">Customer
+                                                            Mobile No.</span>
+                                                        <!-- <strong *ngIf="MaskingAgentMobile =='Mobile'+i" (click)="ShowMaskingField('TempMobile')"></strong> -->
+                                                        <strong *ngIf="MaskingAgentMobile != 'Mobile'+i"
+                                                            (click)="ShowMaskingField('Mobile'+i)"> <span
+                                                                *ngIf="rows.CustomerMobile != 'null' && rows.CustomerMobile != ''">{{
+                                                                rows.CustomerMobile.substring(0, 3) + '*****' +
+                                                                rows.CustomerMobile.substring(rows.CustomerMobile.length
+                                                                - 1) }}</span><span
+                                                                *ngIf="rows.CustomerMobile == 'null' || rows.CustomerMobile == ''">****</span></strong>
+
+
+                                                        <input type="text" (keypress)="onKeyPress($event)"
+                                                            [value]="rows.CustomerMobile !== '' && rows.CustomerMobile !== 'null' ? rows.CustomerMobile : ''"
+                                                            *ngIf="MaskingAgentMobile == 'Mobile'+i && showinputmobile"
+                                                            [id]="'mobile_'+rows.Id"
+                                                            (keyup.enter)="handleMobileEnter(rows.Id,rows.CustomerMobile,'mobile_'+rows.Id,i)">
+
+                                                    </li>
+                                                    <li>
+                                                        <span>Vehicle No.</span>
+                                                        <strong>{{ rows.Vehicle_No }}</strong>
+                                                    </li>
+                                                    <li *ngIf="loginType == 'employee'">
+                                                        <span>Notice</span>
+                                                        <strong><a href="javascript:void(0)"
+                                                                (click)="showRenewalNotoces(rows.Id)"
+                                                                class="label label-info">Upload Notice</a></strong>
+                                                    </li>
+                                                    <li>
+                                                        <span>Policy No.</span>
+                                                        <strong>{{ rows.Policy_No }}</strong>
+                                                    </li>
+                                                    <li>
+                                                        <span>Insurer Name</span>
+                                                        <strong>{{ rows.Company_Name }}</strong>
+                                                    </li>
+                                                    <li>
+                                                        <span>Gross Premium</span>
+                                                        <strong>{{rows.GrossPremium}}</strong>
+                                                    </li>
+                                                    <li>
+                                                        <span>Net Premium</span>
+                                                        <strong>{{rows.NetPremium}}</strong>
+                                                    </li>
+                                                    <li>
+                                                        <span>Download & Details</span>
+                                                        <strong>
+                                                            <label title="Download" *ngIf="rows.Download_Url != ''"
+                                                                (click)="ViewDocument(rows.Download_Url)"><i
+                                                                    class="fa fa-cloud-download"></i></label>
+                                                            &nbsp;<label title="Details"
+                                                                (click)="SrPopup(1,rows.SrId)"><i
+                                                                    class="fa fa-info-circle"></i></label>
+                                                        </strong>
+                                                    </li>
+                                                    <li style="width: auto !important;">
+                                                        <strong>
+                                                            <a *ngIf="rows.LOB == 'Motor' && rows.Source == 'Online' && rows.Status != 'Renewed' "
+                                                                (click)="CreateQuickRenewalQuote(rows.Quotation_Id,'quote',rows.File_Type,rows.Vehicle_No)"
+                                                                class="label label-primary mr_5">Proceed</a>
+                                                            <a *ngIf=" rows.LOB == 'Motor' && rows.Source == 'Offline' && rows.Status != 'Renewed'"
+                                                                (click)="CreateNewQuoteofflinePolicy(rows.SrId,rows.File_Type, rows.Vehicle_No,rows.Product_Id)"
+                                                                class="label label-primary mr_5">Renew now</a>
+
+                                                            <a *ngIf="rows.Status != 'Renewed'"
+                                                                class="label label-primary mr_5" (click)="
+                                    ShowEmailPopups(rows.Id, rows.ExpiryDays,rows.Agent_Mobile_Alert,rows.Agent_Email_Alert,rows.Customer_Mobile_Alert,rows.Customer_Email_Alert,rows.LOB)
+                                  ">Send Alert</a>
+                                                            <a *ngIf="
+                                    rows.LOB == 'Motor' && 
+                                    rows.Source == 'Online'
+                                    && rows.Status != 'Renewed'
+                                  " (click)="
+                                  CreateQuickRenewalQuote(
+                                    rows.Quotation_Id,
+                                    'review',
+                                    rows.File_Type,
+                                    rows.Vehicle_No
+                                  )
+                                " class="label label-primary mr_5">QuickRenewal</a>
+                                                            <a *ngIf=" rows.LOB !='Non Motor' && urlSegmentSub !== 'manage-renewal-lost-request' "
+                                                                (click)="CreateNewSr(rows.SrId,rows.FullSRNo,rows.LOB)"
+                                                                class="label label-primary mr_5">Create New SR</a>
+                                                        </strong>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <mat-divider></mat-divider>
+                                        </mat-list-item>
+                                    </ng-container>
+
+                                    <div class="spinner-item" style="display: block;margin: auto; width: 50px;">
+                                        <mat-progress-spinner [mode]="'indeterminate'"
+                                            [diameter]="50"></mat-progress-spinner>
+                                    </div>
+
+                                </mat-list>
+
+                            </cdk-virtual-scroll-viewport>
+
+                        </div>
+                    </div>
+                    <div class="main_footer">
+                        <button type="button" id="ClosePOUPUP" class="mr_5 btn-danger Save_click" (click)="CloseModel()"
+                            data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- </div> -->

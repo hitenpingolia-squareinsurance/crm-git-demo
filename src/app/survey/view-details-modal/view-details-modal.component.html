@@ -1,0 +1,193 @@
+<table>
+  <thead>
+    <tr>
+      <td colspan="1" align="center">
+        <b>Inspection Id :</b> {{surveyDetails.surveyId}}
+        <br>
+        <!-- <b *ngIf="(row.Source=='Web')">Quotation Id : Dummy</b> -->
+      </td>
+
+
+
+
+      <td colspan="2" align="center" *ngIf="ManegerDetails != ''">
+        <span>
+          <b>Manager Details:</b> {{ManegerDetails}}
+        </span>
+      </td>
+
+      <td colspan="2" align="center">
+        <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+      </td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr class="ValueTD">
+      <th colspan="5"><b>Customer Details</b></th>
+    </tr>
+
+    <tr>
+      <td colspan="2"><b>Customer Name</b>: {{surveyDetails.customerName}}</td>
+      <td colspan="2"><b>Customer Email</b>: {{surveyDetails.customerEmail}}</td>
+      <td colspan="1"><b>Customer Alternate Email</b>: {{surveyDetails.customerEmailAlt}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><b>Customer Mobile</b>: {{surveyDetails.customerMobile}}</td>
+      <td colspan="2"><b>Customer Alternate Mobile </b>: {{surveyDetails.customerMobileAlt}}</td>
+      <td colspan="1"><b>Customer Address</b>: {{surveyDetails.customerAddress}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><b>Pincode</b>: {{surveyDetails.pincode}}</td>
+      <td colspan="2"><b>City</b>: {{surveyDetails.city}}</td>
+      <td colspan="1"><b>State</b>: {{surveyDetails.state}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><b>Vehicle Location</b>: {{surveyDetails.vehicleLocation}}</td>
+    </tr>
+
+  </tbody>
+
+</table>
+
+<!-- <table class="table table-bordered" *ngIf="surveyDetails.employeeName != 'Direct'">
+  <thead>
+    <tr>
+      <th colspan="5" class="ValueTD" style="text-align: center;"><b>Employee And Partner Details</b></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="2"><b>Employee Name</b>: {{surveyDetails.employeeName}}</td>
+      <td *ngIf="surveyDetails.employeeMobile != ''" colspan="2"><b>Employee Mobile</b>:
+        {{surveyDetails.employeeMobile}}</td>
+      <td *ngIf="surveyDetails.agentName != ''" colspan="1"><b>Agent Name</b>: {{surveyDetails.agentName}}</td>
+    </tr>
+    <tr>
+      <td *ngIf="surveyDetails.agentMobile != ''" colspan="2"><b>Agent Name</b>: {{surveyDetails.agentMobile}}</td>
+    </tr>
+
+  </tbody>
+</table> -->
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th colspan="5" class="ValueTD" style="text-align: center;"><b>Product And Vehicle Details</b></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr>
+      <td colspan="2"><b>Purpose For Pre-Inspection</b>: {{surveyDetails.surveyType}}</td>
+      <td colspan="2"><b>Policy/Sr/Vehicle Number</b>: {{surveyDetails.policySrNo}}</td>
+      <td colspan="1"><b>Product</b>: {{surveyDetails.product}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Make</b>: {{surveyDetails.make}}</td>
+      <td colspan="2"><b>Model</b>: {{surveyDetails.model}}</td>
+      <td colspan="1"><b>Variant</b>: {{surveyDetails.variant}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><b>Registrastion Number</b>: {{surveyDetails.registrationNo}}</td>
+      <td colspan="2"><b>Rto</b>: {{surveyDetails.rto}}</td>
+      <td colspan="1"><b>Manufacture Year</b>: {{surveyDetails.manufactureYear}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Engine Nnumber</b>: {{surveyDetails.engineNo}}</td>
+      <td colspan="2"><b>Chassis Number</b>: {{surveyDetails.chassisNo}}</td>
+      <td colspan="1"><b>Remarks</b>: {{surveyDetails.remarks}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Creation Date</b>: {{surveyDetails.insert_date}}</td>
+      <td colspan="2"><b>Insurer</b>: {{CompanyName}}</td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+<table class="table table-bordered"
+  *ngIf="rcFrontUrl != '' || rcBackUrl != '' || quotationDocUrl != '' || inspectionReportDoc != ''">
+
+  <thead>
+    <tr>
+      <th colspan="4" class="ValueTD" style="text-align: center;"><b>Document Details</b></th>
+    </tr>
+
+    <tr>
+      <th>Document Name</th>
+      <th>Document View</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr *ngIf="rcFrontUrl != ''">
+      <td>Rc Front</td>
+      <td><a (click)="ViewDocument(rcFrontUrl)" href="javascript:;">Click to View</a> </td>
+    </tr>
+
+    <tr *ngIf="rcBackUrl != ''">
+      <td>Rc Back</td>
+      <td><a (click)="ViewDocument(rcBackUrl)" href="javascript:;">Click to View</a> </td>
+    </tr>
+
+    <tr *ngIf="quotationDocUrl != ''">
+      <td>Quotation Doc</td>
+      <td><a (click)="ViewDocument(quotationDocUrl)" href="javascript:;">Click to View</a> </td>
+      <!-- <td><input [disabled]="IsDisabled" type="file" class="form-control" (change)="UploadDocs($event,r.Document_Type)"  accept=".png,.jpg,.pdf"></td>
+      <td><span *ngIf="r.Document_File_Name!=''">{{r.Upload_Date_Format}}</span></td> -->
+    </tr>
+
+    <tr *ngIf="inspectionReportDoc != ''">
+      <td>Recommended Survey </td>
+      <td><a (click)="ViewDocument(inspectionReportDoc)" href="javascript:;">Click to View</a> </td>
+    </tr>
+  </tbody>
+
+</table>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th colspan="5" class="ValueTD" style="text-align: center;"><b>Action Updates</b></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr>
+      <td colspan="2"><b>Status</b>: {{curStatus}}</td>
+      <td colspan="3"><b>Remarks</b>: {{currentRemark}}</td>
+    </tr>
+
+
+
+
+  </tbody>
+</table>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th colspan="5" class="ValueTD" style="text-align: center;"><b>Mapping Details</b></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr>
+      <td colspan="2"><b>Added By</b>: {{addedBy}}</td>
+      <td colspan="3"><b>Mapped To</b>: {{mappedTo}}</td>
+    </tr>
+
+
+
+  </tbody>
+</table>

@@ -1,0 +1,85 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">View Agent Retention</div>
+                    </div>
+
+                    <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="FilterData()">
+
+                        <div class="row"  >
+
+                            <div class="col-sm-2">
+                                <select class="form-control" formControlName="Year">
+                                    <option value="0" selected disabled>Year</option>
+                                    <option *ngFor="let Year of MonthsYear_Ar" value="{{Year}}">{{Year}}
+                                    </option>
+
+                                </select>
+                            </div>
+
+                            <div class="col-lg-3" style="text-align: right;">
+
+                                <input type="submit" class="btn btn-info" value="Search">
+                                &nbsp;&nbsp;
+                                <input type="button" class="btn btn-info" value="Download" (click)="downloadAsPDF()">
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                    <hr>
+
+                    <div class="main_body main_card_height_scroll_withoutfooter" id="contentToConvert">
+                        <div class=" mydiv table-responsive">
+                            <table id="Table1" class="table table-bordered table-hover">
+                                <thead>
+
+
+
+                                    <tr>
+                                        <!-- <th>S.No</th> -->
+                                        <th>Month</th>
+                                        <th>Total Agent</th>
+                                        <th>New Add</th>
+                                        <th>Total Agent Active</th>
+                                        <th>Old Agent Active</th>
+                                        <th>New Agent Active</th>
+
+
+                                    </tr>
+                                </thead>
+
+
+                                <tbody *ngIf="LeadSrData?.length != 0">
+                                    <tr *ngFor="let row of LeadSrData; let i=index;">
+                                        <td>{{row.Month}}</td>
+                                        <td>{{row.TotalAgent}} </td>
+                                        <td>{{row.NewAddPosp}}</td>
+                                        <td>{{row.TotalAgentActive}}</td>
+                                        <td>{{row.OldAgentActive}}</td>
+                                        <td>{{row.NewAgentActive}}</td>
+
+
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="LeadSrData?.length == 0">
+                                    <tr>
+                                        <td colspan="8" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

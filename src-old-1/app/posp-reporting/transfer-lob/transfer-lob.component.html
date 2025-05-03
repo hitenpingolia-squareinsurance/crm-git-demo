@@ -1,0 +1,124 @@
+<table class="table table-bordered" *ngIf="Action =='Details'">
+    <thead>
+        <tr>
+            <th colspan="5" style="text-align: center;">
+                <span>{{row.Name}} ({{row.Emp_Id}})</span>
+                <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th colspan="5" style="text-align: left;">Personal Information</th>
+        </tr>
+        <tr>
+            <td><b>Name :</b> {{row.Salutation_Type}} {{row.Name}}</td>
+            <td><b>Code :</b> {{row.Emp_Id}}</td>
+            <td><b>Category :</b> {{row.Agent_Category}}</td>
+            <td><b>DOB :</b> {{row.DOB}}</td>
+            <td><b>Gender :</b> {{row.Gender}}</td>
+        </tr>
+        <tr>
+            <td><b>Mobile :</b> {{row.Mobile}} </td>
+            <td><b>Email :</b> {{row.Email}} </td>
+            <td><b>Qualification :</b> {{row.Qualification}}</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th colspan="5" style="text-align: left;">RM Deatils</th>
+        </tr>
+        <tr>
+            <td colspan="1"><b>Name :</b> {{row.RM_Details['Name']}} ({{row.RM_Details['Emp_Id']}}) </td>
+            <td colspan="1"><b>Mobile No :</b> {{row.RM_Details['Mobile']}} </td>
+            <td colspan="3"></td>
+        </tr>
+
+        <tr *ngIf="row.Agent_Category=='Institution' && row.Type=='SP'">
+            <td colspan="5" style="text-align: left;">
+                <b>Contact Person Details : </b>&nbsp;
+                <b>Name:</b>{{row.ContactPerson_Name}},
+                <b>Email:</b>{{row.ContactPerson_Email}},
+                <b>Mobile:</b>{{row.ContactPerson_Mobile}}
+            </td>
+        </tr>
+
+        <tr>
+            <th colspan="5" style="text-align: left;">Address Information</th>
+        </tr>
+        <tr>
+            <td colspan="5"><b>Address :</b> {{row.Addres_Line_1}}, {{row.Addres_Line_2}}</td>
+        </tr>
+
+        <tr>
+            <td><b>State :</b> {{row.State_Id}}</td>
+            <td><b>District :</b> {{row.District_Id}}</td>
+            <td><b>City :</b> {{row.City_Id}}</td>
+            <td><b>Pincode :</b> {{row.Pincode_Id}}</td>
+            <td></td>
+        </tr>
+
+        <tr
+            *ngIf="row.Type=='POS' || row.Type=='SP' || row.Type == 'Dealer' || row.Type == 'ORC' || row.Type == 'Franchisee'">
+            <th colspan="5" style="text-align: left;">KYC Details</th>
+        </tr>
+
+        <tr
+            *ngIf="row.Type=='POS' || row.Type=='SP' || row.Type == 'Dealer' || row.Type == 'ORC' || row.Type == 'Franchisee'">
+            <td><b>GST No :</b> {{row.GST_No}}</td>
+            <td><b>Aadhar Card No :</b> {{row.AadharCard_No}}</td>
+            <td><b>Pan Card No :</b> {{row.PanCard_No}}</td>
+            <td></td>
+            <td></td>
+        </tr>
+
+        <tr *ngIf="row.Type=='POS' || row.Type=='SP' || row.Type == 'Dealer' || row.Type == 'Franchisee'">
+            <th colspan="5" style="text-align: left;">Bank Account Details</th>
+        </tr>
+
+        <tr *ngIf="row.Type=='POS' || row.Type=='SP' || row.Type == 'Dealer' || row.Type == 'Franchisee'">
+            <td><b>Account No :</b> {{row.Account_No}}</td>
+            <td><b>IFSC Code :</b> {{row.IFSC_Code}}</td>
+            <td><b>Bank Name :</b> {{row.Bank_Name}}</td>
+            <td><b>Branch Address :</b> {{row.Branch_Address}}</td>
+            <td></td>
+        </tr>
+        <tr *ngIf="row.Type=='POS' || row.Type=='SP' || row.Type == 'Dealer' || row.Type == 'Franchisee'">
+            <td><b>State :</b> {{row.Branch_State_Id}}</td>
+            <td><b>District :</b> {{row.Branch_District_Id}}</td>
+            <td><b>City :</b> {{row.Branch_City_Id}}</td>
+            <td><b>Pincode :</b> {{row.Branch_Pincode_Id}}</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- <form  id="form-1"> -->
+<div class="modal_body py_15" *ngIf="Action =='Action'">
+    <div class="row">
+        <div class="col-md-12">
+            <form [formGroup]="AddFieldForm">
+                <div class="row horizontal_scroll_popup" id="margin">
+                    <div class="col-md-6">
+                        <div class="category_list">
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <div>
+                                        <label for="field-name">Select Employee</label>
+                                        <ng-multiselect-dropdown class="form-control" id="margin"
+                                            placeholder="please select" [data]="EmpDaataAr" formControlName="EmpData"
+                                            [settings]="dropdownSettingsType"> </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal_footer " *ngIf="Action =='Action'">
+    <button class="btn btn-primary nextBtn pull-right" (click)="Submit()" type="submit">Submit</button>
+    <button class="btn btn-danger nextBtn pull-right" (click)="CloseModel()">Close</button>
+</div>

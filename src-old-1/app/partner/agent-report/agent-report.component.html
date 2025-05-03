@@ -1,0 +1,549 @@
+<section class="inner_page_css main_dashboard_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">Client Report</div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+
+                        <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                            <!--begin::Button-->
+                            <a routerLink="/partner/creation" class="btn btn-primary font-weight-bolder">
+                                <span class="svg-icon svg-icon-md">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </span> Add Client</a>
+                          
+                            <a routerLink="/partner/fleet/report" class="btn btn-warning font-weight-bolder">
+                                <span class="svg-icon svg-icon-md">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                </span> Fleet </a>
+                          
+                            <!--<a *ngIf="UserRights['Is_POS_Club']==1" routerLink="/reports/pos-club" class="btn btn-success font-weight-bolder">
+                                                    <span class="svg-icon svg-icon-md">
+                                                    <i class="icon-xl fas fa-star"></i>
+                                                    </span>POS Categorization</a>-->
+
+                            <a routerLink="/partner/sp-pos-conversion-report"
+                                class="btn btn-success font-weight-bolder">
+                                <span class="svg-icon svg-icon-md"> <i class="fa fa-star" aria-hidden="true"></i>
+                                </span>SP POS Conversion
+                            </a>
+                            <!--end::Button-->
+                            <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                aria-controls="collapseOne">
+                                <a role="button" class="fa fa-filter"><span>Filters</span><i
+                                        class="fa fa-angle-down pull-right"></i></a>
+                            </button>
+                        </div>
+
+
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <!-- filter  -->
+                                <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn('0')">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <select (change)="GetEmployees()" formControlName="Vertical_Id"
+                                                class="form-control">
+                                                <option selected value="0">Select Vertical</option>
+                                                <option *ngFor="let r of Vertical_Ar;" value="{{r.Id}}">{{r.Name}}
+                                                </option>
+                                            </select>
+                                            </div>
+                                           
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <select (change)="GetSubBranches($event)" formControlName="Region_Id"
+                                                class="form-control">
+                                                <option selected value="0">Select Region</option>
+                                                <option value="0">None</option>
+                                                <option *ngFor="let r of Region_Ar;" value="{{r.id}}">{{r.text}}
+                                                </option>
+                                            </select>
+                                            </div>
+                                           
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <select (change)="GetEmployees()" formControlName="Sub_Region_Id"
+                                                class="form-control">
+                                                <option selected value="0">Select Region-Branch</option>
+                                                <option value="0">None</option>
+                                                <option *ngFor="let r of Sub_Branch_Ar;" value="{{r.id}}">{{r.text}}
+                                                </option>
+                                            </select>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <ng-multiselect-dropdown class="form-control" name="Emp_Id" [placeholder]="Employee_Placeholder"
+                                                [data]="Emps_Ar" formControlName="Emp_Id" [settings]="dropdownSettings">
+                                            </ng-multiselect-dropdown>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <select *ngIf="UserRights['Agent_QC']==0" formControlName="AgentType"
+                                                class="form-control">
+                                                <option selected value="0">Agent Type</option>
+                                                <option value="All">All</option>
+                                                <option value="POS">POS</option>
+                                                <option value="Merged">Merged</option>
+                                                <option value="SP">SP</option>
+                                                <option value="SPC">SPC</option>
+                                                <option value="Dealer">Dealer</option>
+                                            </select>
+
+                                            <select *ngIf="UserRights['Agent_QC']==1" formControlName="AgentType"
+                                                class="form-control">
+                                                <option selected value="0">Agent Type</option>
+                                                <option value="All">All</option>
+                                                <option value="SP">SP</option>
+                                                <option value="Dealer">Dealer</option>
+                                                <option *ngIf="UserRights['Is_Agent_Report_View']=='All'" value="SPC">
+                                                    SPC</option>
+                                                <option *ngIf="UserRights['Is_Agent_Report_View']=='All'" value="POS">
+                                                    POS</option>
+
+                                            </select>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="row" >
+
+                                        <!-- *ngIf="UserRights['Is_Sales']==1" -->
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <select formControlName="RM_Search_Type" class="form-control">
+                                                    <option selected value="0">Report Type</option>
+                                                    <option value="Self">Self</option>
+                                                    <option value="Hierarchy">Hierarchy</option>
+                                                </select>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <select formControlName="AgentStatus" class="form-control">
+                                                    <option selected value="0">Agent Status</option>
+                                                    <option value="All">All</option>
+                                                    <option value="PendingForQC">PendingForQC</option>
+                                                    <option value="PendingForReQC">PendingForReQC</option>
+                                                    <option value="PendingForKYC">PendingForKYC</option>
+                                                    <option value="PendingForBanking">PendingForBanking</option>
+                                                    <option value="RejectByQC">RejectByQC</option>
+                                                    <option value="RejectByAccounts">RejectByAccounts</option>
+                                                    <option value="Approved">Approved</option>
+                                                    <option value="Blocked">Blocked</option>
+                                                </select>
+                                            </div>
+                                         
+                                        </div>
+
+
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Select Date OR Date-Range"
+                                                class="form-control" formControlName="DateOrDateRange" bsDaterangepicker
+                                                [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <ng-multiselect-dropdown class="form-control" [data]="AgentStatus_Ar"
+                                                formControlName="AgentPoStatus" placeholder="Select Priority Status"
+                                                [settings]="dropdownSettingsSingleselect1">
+                                            </ng-multiselect-dropdown>
+                                            </div>
+                                           
+                                        </div>
+
+                                        <div class="col-sm-3" >
+                                            <div class="pull-right">
+                                                <input type="submit" class="btn btn-info" value="Search">
+                                            &nbsp;&nbsp;
+                                            <input *ngIf="UserRights['Is_Agent_Report_Excel_Export']==1 && Is_Export==1"
+                                                (click)="ExportExcel()" type="button" class="btn btn-success"
+                                                value="Export">
+                                            &nbsp;&nbsp;
+                                            <input (click)="ClearSearch()" type="button" class="btn btn-danger"
+                                                value="Reset">
+                                            </div>
+                                            
+                                        </div>
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                  
+
+                        <!-- <table class="row-border hover table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Priority 1</th>
+                                    <th>Priority 2</th>
+                                    <th>Priority 3</th>
+                                </tr>
+                            </thead>
+                           <tbody>
+                            <tr>
+                                <td>{{Priroity_1}}</td>
+                                <td>{{Priroity_2}}</td>
+                                <td>{{Priroity_3}}</td>
+                            </tr>
+                           </tbody>
+                           
+                        </table> -->
+
+                    
+
+                        <div class="">
+                            <form [formGroup]="SearchForm1">
+                                <div class="row">
+                                    <div class="col-sm-9"></div>
+                                    <div class="col-sm-3 ">
+                                        <div class="input-group align mb-3">
+                                            <input type="text" formControlName="GlobalSearch" placeholder="Search Agent/RM/Mobile/Acc No."
+                                            class="form-control"
+                                            [ngClass]="(isSubmitted1 && FC1.GlobalSearch.errors && FC1.GlobalSearch.errors.required?'form-control errorMsgg':'form-control')">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-info" type="button" (click)="SearchBtn('1')"><span
+                                                    class="fa fa-search"></span></button>
+                                        </div>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+
+                            </form>
+					    </div>
+
+					    <hr>
+                        <form *ngIf="checkedList?.length>0" [formGroup]="SearchForm2" (ngSubmit)="submit()">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <ng-multiselect-dropdown class="form-control" [data]="ActionType_Ar" formControlName="ActionType"
+                                        placeholder="Select Action Type" [settings]="dropdownSettingsSingleselect1"
+                                        (onSelect)="UpdateValidation()" (onDeSelect)="UpdateValidation()">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="isSubmitted2 && formControls2.ActionType.errors" class="Validationerrors">
+                                        <div *ngIf="formControls2.ActionType.errors.required"><span style="color: red;">Please select Action
+                                                Type!</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2"
+                                    *ngIf="SearchForm2.value['ActionType'].length > 0 && SearchForm2.value['ActionType'][0]['id'] == 'Add'">
+                                    <ng-multiselect-dropdown class="form-control" [data]="Priority_Ar" formControlName="priroity" placeholder="Select Priority"
+                                        [settings]="dropdownSettingsSingleselect1">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="isSubmitted2 && formControls2.priroity.errors" class="Validationerrors">
+                                        <div *ngIf="formControls2.priroity.errors.required"><span style="color: red;">Please
+                                                select
+                                                Priority!</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                            <hr>
+                        </form>
+
+                        <!--Datatable -->
+                        <div class=" mydiv table-responsive" data-loader="TableLoader">
+                                <table datatable [dtOptions]="dtOptions" id="Table1"
+                                    class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th><input [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()"
+                                                    type="checkbox"></th>
+                                            <th>Actions</th>
+                                            <th>Status</th>
+                                            <th>PO Priority</th>
+                                            <th>Agreement-Status</th>
+                                            <th>AgentId</th>
+                                            <th>MergeCode</th>
+        
+                                            <th>AgentName</th>
+                                            <th>RM</th>
+                                            <th>Location</th>
+        
+                                            <th>Mobile</th>
+                                            <th>Email</th>
+        
+                                            <th>Last Modify</th>
+        
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="dataAr?.length != 0">
+                                        <tr *ngFor="let row of dataAr; let i=index;">
+                                            <td>
+                                                <input type="checkbox" [(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}"
+                                                    (change)="isAllSelected()" *ngIf="(api.GetUserData('User_Id_Dec')==row.POS_RM_Id)">
+                                            </td>
+        
+        
+        
+                                            <td>
+                                                <!--<a *ngIf="row.Type!='SPC'" href="javascript:;"  (click)="ViewDocuments(row.Id)">
+                                                <span class="label label-success label-inline mr-2">Docs</span>
+                                                </a>-->
+        
+                                                <a class="space"  href="javascript:;" (click)="ViewDetails(row.Id)">
+                                                    <span class="label label-success label-inline mr-2">View</span>
+                                                </a>
+        
+                                                <a class="space" style="display: none;"  *ngIf="(row.Type=='POS' || row.Type=='SP')" href="javascript:;" (click)="ORCModal(row.Id)">
+                                                    <span style="margin: 5px 0px 5px 0px;" class="label label-warning label-inline mr-2">ORC</span>
+                                                </a>
+        
+                                                <a class="d-block space" *ngIf="(UserRights['Is_Merging']==1 && row.Type=='POS')" href="javascript:;"
+                                                    (click)="MergeCode(row.Id)">
+                                                    <span style="margin: 5px 0px 5px 0px; background: #4CAF50;"
+                                                        class="label label-warning label-inline mr-2">MergeCode</span>
+                                                </a>
+        
+        
+                                                <a class="d-block space" *ngIf="(UserRights['Is_Agent_Status_Action']==1)" href="javascript:;"
+                                                    (click)="AgentStatusActions(row.Id)">
+                                                    <span style="margin: 5px 0px 5px 0px; background: #7a1221;"
+                                                        class="label label-danger label-inline mr-2">UpdateStatus</span>
+                                                </a>
+        
+                                                <a class="d-block space" *ngIf="( (row.Type=='SP' || row.Type=='SPC' || row.Type=='Dealer') && (row.Is_Edit==0 || row.Status==3 || row.Status==4) && (api.GetUserData('User_Id_Dec')==row.POS_RM_Id) )"
+                                                    routerLink="/partner/rm/edit-agent/{{row.Id}}">
+                                                    <span style="margin: 5px 0px 5px 0px;"
+                                                        class="label label-danger label-inline mr-2">Edit&nbsp;&nbsp;</span>
+                                                </a>
+        
+        
+                                                <a class="d-block space" *ngIf="(UserRights['Is_Brokerage']==1)" href="javascript:;"  (click)="FranchiseRightsActions(row.Id)">
+                                                    <span style="margin: 5px 0px 5px 0px; background: #0988cb;width: 110px" class="label label-danger label-inline mr-2">Franchise Right</span>
+                                                </a>
+        
+        
+                                            </td>
+        
+        
+                                            <td>
+        
+                                                <div *ngIf="row.Type == 'POS'">
+        
+                                                    <!--<span *ngIf="row.Status==1" class="label label-success label-inline mr-2">Approved</span>
+                                    <span *ngIf="row.Status==0" class="label label-warning label-inline mr-2">Pending</span>
+                                    <span *ngIf="row.Status==2" class="label label-danger label-inline mr-2">Reject</span>-->
+        
+                                                    <span *ngIf="row.Status==0" class="label label-warning label-inline mr-2 d-block space">PendingForQC</span>
+                                                    <span *ngIf="row.Status==1" class="label label-warning label-inline mr-2 d-block space">PendingForKYC</span>
+                                                    <span *ngIf="row.Status==2" class="label label-warning label-inline mr-2 d-block space">PendingForBanking</span>
+                                                    <span *ngIf="row.Status==3" class="label label-danger label-inline mr-2 d-block space">RejectByQC</span>
+                                                    <span *ngIf="row.Status==4" class="label label-danger label-inline mr-2 d-block space">RejectByAccounts</span>
+                                                    <span *ngIf="row.Status==5" class="label label-success label-inline mr-2 d-block space">Approved</span>
+                                                    <span *ngIf="row.Status==6" class="label label-danger label-inline mr-2 d-block space">Blocked</span>
+                                                    <span *ngIf="row.Status==7" class="label label-warning label-inline mr-2 d-block space">FollowUp</span>
+                                                    <span *ngIf="row.Status==8" class="label label-warning label-inline mr-2 d-block space">PendingForReQC</span>
+                                                    <span *ngIf="row.Status==9"
+                                                        class="label label-danger label-inline mr-2">Blocked-Permanently</span>
+        
+        
+        
+                                                    <span  *ngIf="(api.GetUserData('User_Id_Dec')==row.POS_RM_Id || api.GetUserData('User_Id_Dec')==8107)">
+                                                        <a class="d-block space" href="javascript:void(0)" (click)="ViewGemsDetails(row.Id)"
+                                                            *ngIf="row.Prime_Status==0 || row.Prime_Status==2 || row.Prime_Status==1">
+                                                            <span style="width:100px;margin-top: 10px;background-color: #c2b3b3;"
+                                                                class="label label-success label-inline mr-2">Gems Status</span>
+                                                        </a>
+        
+                                                        <a class="d-block space" *ngIf="row.Prime_Status==0" href="javascript:void(0)" (click)="PrimeRequests(row.Id)">
+                                                            <span style="width:150px;margin-top: 10px;" class="label label-primary label-inline mr-2">
+                                                                Prime Request </span>
+                                                        </a>
+        
+                                                        <a class="d-block space" *ngIf="row.Prime_Status==2">
+                                                            <span style="width:150px;margin-top: 10px;" class="label label-danger label-inline mr-2">Prime
+                                                                Req. Rejected </span>
+                                                        </a>
+        
+                                                        <a class="d-block space" *ngIf="row.Prime_Status==1">
+                                                            <span style="width:150px;margin-top: 10px;" class="label label-info label-inline mr-2">Prime
+                                                                Req Pending</span>
+                                                        </a>
+        
+                                                        <a class="d-block space" *ngIf="row.Prime_Status==3">
+                                                            <span style="width:150px;margin-top: 10px;"
+                                                                class="label label-success label-inline mr-2">Prime Req Approved </span>
+                                                        </a>
+                                                    </span>
+                                                </div>
+        
+        
+                                                <div *ngIf="row.Type=='SP' || row.Type=='SPC' || row.Type=='Dealer'">
+                                                    <span *ngIf="row.Status==0" class="label label-warning label-inline mr-2">PendingForQC</span>
+                                                    <span *ngIf="row.Status==1" class="label label-warning label-inline mr-2">PendingForKYC</span>
+                                                    <span *ngIf="row.Status==2" class="label label-warning label-inline mr-2">PendingForBanking</span>
+                                                    <span *ngIf="row.Status==3" class="label label-danger label-inline mr-2">RejectByQC</span>
+                                                    <span *ngIf="row.Status==4" class="label label-danger label-inline mr-2">RejectByAccounts</span>
+                                                    <span *ngIf="row.Status==5" class="label label-success label-inline mr-2">Approved</span>
+                                                    <span *ngIf="row.Status==6" class="label label-danger label-inline mr-2">Blocked</span>
+                                                    <span *ngIf="row.Status==7" class="label label-warning label-inline mr-2">FollowUp</span>
+                                                    <span *ngIf="row.Status==8" class="label label-warning label-inline mr-2">PendingForReQC</span>
+                                                    <span *ngIf="row.Status==9"
+                                                        class="label label-danger label-inline mr-2">Blocked-Permanently</span>
+                                                </div>
+        
+        
+                                                <a *ngIf="(row.Type=='SP' || row.Type=='Dealer') && (row.Status!=6)" href="javascript:;">
+                                                    <span *ngIf="row.ExpriyDays>0"
+                                                        style="margin: 5px 0px 5px 0px; background-color: #c90c20ed;width: 90px;"
+                                                        class="label label-danger label-inline mr-2">
+                                                        <span *ngIf="row.ExpriyDays==1">{{row.ExpriyDays}} Day left</span>
+                                                        <span *ngIf="row.ExpriyDays>1">{{row.ExpriyDays}} Days left</span>
+                                                    </span>
+                                                </a>
+        
+        
+                                            </td>
+        
+                                            <td>
+                                                <span style="margin-bottom: 5px; width:50px !important;" *ngIf="row.Priroity_level==1"
+                                                    class="label label-success label-inline mr-2">POP 1</span>
+                                                <span style="margin-bottom: 5px; width:55px !important;" *ngIf="row.Priroity_level==2"
+                                                    class="label label-warning label-inline mr-2">POP 2</span>
+                                                <span style="margin-bottom: 5px; width:55px !important;" *ngIf="row.Priroity_level==3"
+                                                    class="label label-danger label-inline mr-2">POP 3</span>
+        
+                                                <a *ngIf="row.ShowLogs == 'Yes'" style="cursor:pointer;" (click)="PriorityLogs(row.Id)"
+                                                    class="label label-primary label-inline mr-2">Logs</a>
+                                            </td>
+        
+                                            <td>
+        
+                                                <a class="d-block space" *ngIf="(row.Agreement_Status>0)" href="javascript:;">
+                                                    <span style="margin: 5px 0px 5px 0px;" class="label label-warning label-inline mr-2"
+                                                        *ngIf="row.Agreement_Status==1">PendingForUpload</span>
+                                                    <span style="margin: 5px 0px 5px 0px;" class="label label-warning label-inline mr-2"
+                                                        *ngIf="row.Agreement_Status==2">UploadBySales</span>
+                                                    <span style="margin: 5px 0px 5px 0px;" class="label label-success label-inline mr-2"
+                                                        *ngIf="row.Agreement_Status==3">Active</span>
+                                                    <span style="margin: 5px 0px 5px 0px;" class="label label-danger label-inline mr-2"
+                                                        *ngIf="row.Agreement_Status==4">Reject</span>
+                                                    <span style="margin: 5px 0px 5px 0px;" class="label label-danger label-inline mr-2"
+                                                        *ngIf="row.Agreement_Status==5">Expired</span>
+                                                </a>
+        
+                                                <a class="d-block space" *ngIf="row.Agreement_Status==0" href="javascript:;">
+                                                    <span style="margin: 5px 0px 5px 0px;width: 100px;"
+                                                        class="label label-warning label-inline mr-2">Not Available</span>
+                                                </a>
+        
+                                                <a class="d-block space" *ngIf="(row.Agreement_Status == 0 && UserRights.Is_Brokerage == 1)" href="javascript:;"
+                                                    (click)="AgreementGenerate(row.Id, row.RM_Emp_Id,0,'Generate')">
+                                                    <span style="margin: 5px 0px 5px 0px;"
+                                                        class="label label-warning label-inline mr-2">Generate</span>
+                                                </a>
+                                                <a class="d-block space" *ngIf="(row.Agreement_Status>0 && UserRights.Is_Brokerage == 1)" href="javascript:;"
+                                                    (click)="AgreementGenerate(row.Id, row.RM_Emp_Id,0,'Generate')">
+                                                    <span style="margin: 5px 0px 5px 0px;"
+                                                        class="label label-warning label-inline mr-2">Re-Generate</span>
+                                                </a>
+        
+                                                <a class="d-block space" *ngIf="(row.Agreement_Status == 1 && (UserRights.Is_Sales == 1 || UserRights.Is_Operation == 1)) && (api.GetUserData('User_Id_Dec')==row.POS_RM_Id)"
+                                                    href="javascript:;" (click)="AgreementGenerate(row.Id, row.RM_Emp_Id,row.Agreement_Id,'Upload')">
+                                                    <span style="margin: 5px 0px 5px 0px;" class="label label-warning label-inline mr-2">Upload</span>
+                                                </a>
+        
+                                                <a class="d-block space" *ngIf="( (row.Agreement_Status == 1 || row.Agreement_Status == 2) && UserRights.Is_Accounts == 1)"
+                                                    href="javascript:;" (click)="AgreementGenerate(row.Id, row.RM_Emp_Id,row.Agreement_Id,'Upload')">
+                                                    <span style="margin: 5px 0px 5px 0px;" class="label label-warning label-inline mr-2">Upload</span>
+                                                </a>
+        
+        
+                                                <a class="d-block space" *ngIf="row.Agreement_Status != 0 " href="javascript:void(0)"
+                                                    (click)="DownloadAgreement(row.Agreement_URL)"><span style="margin: 5px 0px 5px 0px;"
+                                                        class="label label-warning label-inline mr-2">Download</span>
+                                                </a>
+        
+        
+                                                <a class="d-block space" *ngIf="(row.Agreement_Status == 3)">
+                                                    <span style="margin: 5px 0px 5px 0px;width: 150px;" class="label label-danger label-inline mr-2">
+                                                    Valid Upto {{row.Agreement_ExpireDate}}
+                                                    </span>
+                                                </a>
+        
+        
+        
+        
+                                            </td>
+        
+                                            <td>{{ row.Agent_Id }}</td>
+        
+                                            <td>
+        
+                                                <span *ngIf="row.MergeStatus==1">
+                                                    {{ row.MergeName_And_Code }}
+        
+                                                    <a (click)="ViewDetails(row.Merge_Id)">
+                                                        <span style="margin: 5px 0px 5px 0px;" class="label label-danger label-inline mr-2">View</span>
+                                                    </a>
+                                                </span>
+        
+                                            </td>
+        
+        
+                                            <td>{{ row.Name }} - {{ row.Type }}</td>
+        
+                                            <td>{{ row.RM_Name }} ({{ row.RM_Emp_Id }})</td>
+                                            <td> <b>State - </b> {{row.StateName}}<br> <b>City - </b> {{row.CityName}} <br> <b>Pincode
+                                                    -</b>{{row.PinCode}} <br></td>
+        
+        
+        
+                                            <td>{{ row.Mobile }}</td>
+                                            <td>{{ row.Email }}</td>
+                                            <td>{{ row.Update_Stamp }}</td>
+        
+        
+        
+                                        </tr>
+                                    </tbody>
+                                    <tbody *ngIf="dataAr?.length == 0">
+                                        <tr>
+                                            <td colspan="12" align="center">No data Available !</td>
+                                        </tr>
+                                    <tbody>
+                                </table>
+
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</section>

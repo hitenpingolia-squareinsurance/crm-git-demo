@@ -1,0 +1,226 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header d_flex flex_Equal flex_Middel">
+            <div class="header_title">Mail Template</div>
+            <div class="header_title">
+              
+            </div>
+          </div>
+          
+          <div *ngIf="!hasAccess" class="error-message">
+            <div class="container" style="text-align: center;">
+              <img src="assets/Authorised.png" alt="">
+              <h4>{{ errorMessage }}</h4>
+            </div>
+            
+          </div>
+
+          <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+
+                <div class="filterquotesrow">
+                  <div class="row">
+                    <div class="col-md-12" style="text-align: end;">
+                      <button class="btn btn-info" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                        href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="margin-right: 10px;"><a role="button" style="color: white;"><i
+                        class="fa fa-filter"></i><span>Filters</span><i class="fa fa-angle-down"></i></a></button>
+                      <a [routerLink]="['/mail/add_templates']" class="btn btn-info" type="button">Add Mail <i class="fa fa-plus"></i></a>
+                    </div>
+                      
+                  </div>
+                  
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panelbody">
+                    <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+
+                      <div class="row" style="margin-top: 2%;">
+    
+                        <div class="col-sm-2">
+                          <select formControlName="source" class="form-control">
+                            <option value="">Select Source</option>
+                            <option value="web">WEB</option>
+                            <option value="crm">CRM</option>
+                            <option value="bms">BMS</option>
+                          </select>
+                        </div>
+    
+    
+                        <div class="col-sm-2">
+                          <input type="text" class="form-control" formControlName="templateName"
+                            placeholder="Template Name">
+                        </div>
+    
+                        <div class="col-sm-2">
+                          <input type="text" class="form-control" formControlName="subject" placeholder="Subject">
+                        </div>
+    
+    
+                        <div class="col-sm-2" style="text-align: right;">
+                          <input type="submit" class="btn btn-info" value="Search"> &nbsp;&nbsp;
+                          <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                            value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                        </div>
+    
+                      </div>
+                      <div class="row" style="margin-top: 2%;"> </div>
+                    </form>
+                  </div>
+                </div>
+                
+
+
+                
+
+                <div>
+
+
+
+
+
+                  <div class="custom_table tables_layout_design">
+                    <table datatable [dtOptions]="dtOptions" id="Table1" class="row-border table">
+                      <thead>
+                        <tr>
+                          <th></th>
+                        </tr>
+                      </thead>
+                    </table>
+                    <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                      <li class="table-row tablerow" *ngFor="let row of dataAr" [ngClass]="{'activestatus': row.status == '1' , 'inactivestatus': row.status == '2' }">
+                        <!-- <span class="addon_tag_name" style="background: rgba(44, 178, 179, 1);" *ngIf="row.source == 'web'">WEB</span>
+                        <span class="addon_tag_name" style="background-color: #00a65a;" *ngIf="row.source == 'crm'">CRM</span>
+                        <span class="addon_tag_name" style="background-color: #f39c12;" *ngIf="row.source == 'bms'">BMS</span> -->
+                        
+                        <!-- <span class="addon_tag_name">{{row.source}}</span> -->
+                        <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15" style="margin-top: 15px;">
+                          <div class="agents_data agents_data1">
+                            <div class="icon_re_cl">{{row.SrNo}}.</div>
+                              <div class="agent_name_mobile">
+                                <div class="agent_data">
+                                  <div>Template Name</div>
+                                  <strong class="fs_18"><span>
+                                    {{row.templatename}}
+                                  </span></strong>
+                                  
+                                </div>
+    
+                                
+    
+                              </div>
+                          </div>
+                          <div class="agents_data agents_data2">
+                            <div class="agent_name_mobile">
+                              <div class="agent_data" *ngIf="row.source != ''">
+                                <div>Source</div>
+                                <strong class="fs_18"><span>{{row.source}}</span></strong>
+                              </div>
+                            </div>
+                            
+                            
+                          </div>
+                          <div class="agents_data agents_data3">
+                            <div class="agent_name_mobile">
+                              <div class="agent_data" *ngIf="row.AddStamp != ''">
+                                <div>Created At</div>
+                                <strong class="fs_18"><span>{{row.create_date}}</span></strong>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="last_row_div">
+                          <div class="d_flex custon-234">
+    
+                            <div class="label_chips growth_positive">
+                              <span>From Mail - {{row.from_mail}}</span>&nbsp;&nbsp;
+                            </div>
+    
+                            <div class="label_chips motor_lob">
+                              <span>To Mail - {{row.to_mail}}</span>&nbsp;&nbsp;
+                            </div>
+                           
+                            <div class="label_chips non_motor_lob">
+                              <span>CC Mail - {{row.cc_mail}}</span>&nbsp;&nbsp;
+                            </div>
+
+                            <div class="label_chips finance_lob">
+                              <span>Subject - {{row.subject}}</span>&nbsp;&nbsp;
+                            </div>
+
+                            <div class="label_chips life_lob">
+                              <span>Action Type - {{row.action_type}}</span>&nbsp;&nbsp;
+                            </div>
+
+                            <div class="label_chips mutual_fund_lob">
+                              <span>Attachment - {{row.attachment}}</span>&nbsp;&nbsp;
+                            </div>
+
+                            <!-- <div class="label_chips real_estate_lob" type="button" data-toggle="modal"
+                            [attr.data-target]="'#myModal'+ row.SrNo" (click)="HtmlFormat(row.mail_body)">
+                              <span>Mail Body</span>&nbsp;&nbsp;
+                            </div> -->
+                          </div>
+                        </div>
+                        
+                        <div class="last_row">
+                          <div class="effective_date">
+                            <div class="d_flex">
+                             
+                            </div>
+                          </div>
+                          <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                            <div class="row">
+                              <button class="btn btn-warning" style="padding:3px 10px; margin-right:10px;" type="button" data-toggle="modal"
+                              [attr.data-target]="'#myModal'+ row.SrNo" (click)="HtmlFormat(row.mail_body)">Mail Body</button>
+                              <button *ngIf="row.status == 1" class="btn btn-success" style="padding:3px 10px; margin-right:10px;"
+                                (click)="ActiveInactive(row.Id, 0, 'mail_template')">Active</button>
+                              <button *ngIf="row.status == 0" class="btn btn-danger" style="padding:3px 10px; margin-right:10px;"
+                                (click)="ActiveInactive(row.Id, 1, 'mail_template')">Inactive</button>
+                              <button [routerLink]="['/mail/edit_template/',row.Id]" class="btn btn-info" style="padding:3px 10px; margin-right:10px;">Edit</button>
+                              <!-- <label class="label label-info"
+                                  (click)="AddProductDetailsComponent('Edit',row.Id)">Edit</label> -->
+                              &nbsp;
+                              
+                            </div>
+                            
+                          </div>
+
+                          <div id="myModal{{row.SrNo}}" height="300px" width="500px" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+  
+                              <!-- Modal content-->
+  
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body" [innerHtml]="htmlvalue">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                    <div class="row" *ngIf="dataAr?.length == 0">
+                      <div class="col-md-12">
+                        <div class="no_data_found">
+                          <span><img src="assets/image/no_data_banner.jpg"></span>
+                          <small>No data available !</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- <app-square-filter (postCreated)="SearchData($event)"></app-square-filter> -->
+                  
+                </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,129 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    
+    <!-- Main content -->
+    <section class="content">
+    
+    <!-- SELECT2 EXAMPLE -->
+    <div class="box box-default">
+      <div class="box-body">
+        
+        <div class="box-header">
+          <h3 class="box-title">Pay In RMA </h3>
+        </div>
+
+        <!--begin::Button-->
+        <div class="d_flex flex_End flex_Middel">
+            <a routerLink="/pay-in/add-agent-rma" href="javascript:void(0);" class="btn btn-primary font-weight-bolder"><i class="fa fa-plus mr_5"></i>Add New</a>
+        </div>
+    <!--end::Button-->
+  
+        
+        <div class="card-body">
+
+            <!--begin: Datatable-->
+            <div class="table table-responsive">
+                <table datatable [dtOptions]="dtOptions"
+                    class="row-border hover table table-bordered table-hover table-checkable" id="kt_datatable"
+                    style="margin-top: 13px !important">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+
+                            <th>Actions</th>
+                            <th>Effective Date</th>
+                            <th>Add Date</th>
+                            <th>RMA-Type</th>
+                            <th>LOB</th>
+                            <th>Products</th>
+                            <th>Sub-Products</th>
+
+                            <!--<th>RMA %:</th>
+                            <th>Slab (From)</th>
+
+                            <th>Slab (Upto)</th>
+                            -->
+
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="dataAr?.length != 0">
+                        <tr *ngFor="let row of dataAr">
+                            <td>{{ row.SrNo }}</td>
+
+                            <td> 
+                                <div class="d_flex flex_Start flex_column flex_wrap">
+                                <a (click)="ViewDetails(row.RMA_Id)" href="javascript:void(0)"> 
+                                    <span class="label label-info label-inline mr-2 ng-star-inserted">View</span>
+                                </a>
+ 
+                                <a  *ngIf="row.Status==1" href="javascript:void(0)"> 
+                                    <span style="margin-top: 5%;"
+                                        class="label label-success label-inline mr-2 ng-star-inserted">Active</span>
+                                </a>
+
+                                <a *ngIf="row.Status==1 || row.Status==2" (click)="DeleteRMAuthority(row.RMA_Id)" href="javascript:void(0)">
+                                    <span style="margin-top: 5%;"
+                                        class="label label-danger label-inline mr-2 ng-star-inserted">Delete</span>
+                                </a>
+
+                                <a *ngIf="row.Status==1" (click)="DisableRMAuthority(row.RMA_Id)"
+                                    href="javascript:void(0)">
+                                    <span style="margin-top: 5%;"
+                                        class="label label-warning label-inline mr-2 ng-star-inserted">Disable</span>
+                                </a>
+                                </div>
+                            </td>
+
+                            <td>
+                                <p style="width:145px;">{{row.Effective_Date}}</p>
+                            </td>
+                            <td>
+                                <p style="width:75px;">{{row.Add_Stamp}}</p>
+                            </td>
+                            <td>
+                                {{row.RMA_Type}}
+                            </td>
+                            
+                            <td>
+                               {{row.LOB}}
+                            </td>
+                             
+                            <td>
+                                <select class="form-control" style="width:195px;">
+                                    <option *ngFor="let l of row.Products">{{l.Name}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" style="width:195px;">
+                                    <option *ngFor="let l of row.Sub_Products">{{l.Name}}
+                                    </option>
+                                </select>
+                            </td>
+                            <!--<td>{{row.RMA}}</td>
+                            <td>{{row.Slab_From}}</td>
+
+                            <td>{{row.Slab_UpTo}}</td>-->
+                          
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="dataAr?.length == 0">
+                        <tr>
+                            <td colspan="9" align="center">No data available !</td>
+                        </tr>
+                    <tbody>
+                </table>
+            </div>
+
+
+            <!--end: Datatable-->
+        </div>
+  
+      </div>
+      <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </section>
+    <!-- /.content -->
+  
+  </div> 

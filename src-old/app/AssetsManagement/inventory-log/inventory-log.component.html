@@ -1,0 +1,51 @@
+<table class="table table-bordered table-hover" style="margin-top: 15px;">
+    <tr class="ValueTD">
+        <td colspan="5" align="center">
+            <h4 class="modal-title">View Details
+                <button type="button" (click)="CloseModel()" class="btn btn-box-tool" style="float: right;"><i
+                        class="fa fa-close" style="font-size:17px"></i></button>
+            </h4>
+            <div class="box-tools pull-right btn-right-side">
+
+            </div>
+        </td>
+    </tr>
+    <table id="Table1" class="table table-bordered table-hover">
+
+
+
+        <thead>
+
+            <tr>
+                <th>S.No</th>
+                <th>Category</th>
+                <th>Item</th>
+                <th>Total Quantity</th>
+                <th>Total Amount</th>
+                <th>Add Stamp</th>
+                <!-- <th>Action</th> -->
+            </tr>
+        </thead>
+
+        <tbody *ngIf="dataAr?.length != 0">
+            <tr *ngFor="let row of dataAr; let i=index;">
+                <td>{{row.SrNo}}</td>
+                <td>{{row.Categoryname}}</td>
+                <td>{{row.Itemname}} </td>
+                <td>{{row.TotalQuantity}}</td>
+                <td>{{row.TotalAmount}}</td>
+                <td>{{row.Add_stamp}}</td>
+                <!-- <td><a (click)="ForApproval(row.Id)" class="fa fa-info" >View Log</a></td> -->
+
+            </tr>
+        </tbody>
+        <tbody *ngIf="dataAr?.length == 0">
+            <tr>
+                <td colspan="8" align="center">No data Available !</td>
+            </tr>
+        <tbody>
+
+
+    </table>
+
+</table>

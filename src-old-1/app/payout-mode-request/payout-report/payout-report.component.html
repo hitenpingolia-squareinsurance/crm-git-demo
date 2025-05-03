@@ -1,0 +1,206 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+    <div class="container-fluid">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <div class="header_title">PO Mode</div>
+            </div>
+
+            <div class="main_body main_card_height_scroll_withoutfooter">
+                <div class="btn_list_group">
+                    <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="dsr-fillter">
+                                        <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            Filters
+                                        </button>
+                                        <button class="btn btn-info1" (click)="dailog()"><span>Add</span></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingOne">
+                                <div class="panel-body sub-form">
+                                    <form [formGroup]="AddFieldForm" (ngSubmit)="SearchData()">
+                                        <div class="row" >
+                                            <div class="col-sm-4" *ngIf="User_Code =='SIB282' && type !== 'agent'">
+                                                <div class="category_list" >
+                                                    <ng-multiselect-dropdown class="form-control"
+                                                        placeholder="--Select RM Name--" [data]="RMAr"
+                                                        formControlName="RM" [settings]="dropdownLOB"
+                                                        (ngModelChange)="getPartner($event)">
+                                                    </ng-multiselect-dropdown>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4" *ngIf="type !== 'agent'">
+                                                <div class="category_list">
+                                                    <ng-multiselect-dropdown class="form-control"
+                                                        placeholder="--Select Partner Name--" [data]="PartnerAr"
+                                                        formControlName="partner" [settings]="dropdownLOB">
+                                                    </ng-multiselect-dropdown>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="category_list">
+                                                    <ng-multiselect-dropdown class="form-control"
+                                                        placeholder="LOB" [data]="LOBdata" formControlName="LOB"
+                                                        [settings]="dropdownSettingsmultiselect"
+                                                        (onSelect)="GetProducts()">
+                                                    </ng-multiselect-dropdown>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-sm-4">
+                                                <div class="category_list">
+                                                    <ng-multiselect-dropdown class="form-control"
+                                                        placeholder="Select Product" [data]="product"
+                                                        formControlName="product"
+                                                        [settings]="dropdownSettingsmultiselect"
+                                                        (onSelect)="GetSubProduct()">
+                                                    </ng-multiselect-dropdown>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="category_list">
+                                                    <ng-multiselect-dropdown class="form-control"
+                                                        placeholder="Sub Product" [data]="SubProduct"
+                                                        formControlName="subProduct"
+                                                        [settings]="dropdownSettingsmultiselect">
+                                                    </ng-multiselect-dropdown>
+                                                </div>
+                                            </div>    
+
+                                            <div class="col-sm-4">
+                                                <div class="category_list">
+                                                    <ng-multiselect-dropdown class="form-control"
+                                                        placeholder="--PayOut Mode--" [data]="payout"
+                                                        formControlName="payout" [settings]="dropdownLOB">
+                                                    </ng-multiselect-dropdown>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="category_list">
+                                                    <input type="text" placeholder="Date OR Date-Range"
+                                                        class="form-control" formControlName="fromdate"
+                                                        bsDaterangepicker
+                                                        [bsConfig]="{dateInputFormat: 'DD-MM-YYYY', isAnimated: true }">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12" style="text-align: right">
+                                                <input type="submit" class="btn btn-info" value="Search">
+                                                <input (click)="ClearSearch()" type="button"
+                                                    class="btn btn-danger" value="Reset">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="All">
+
+                                <div>
+                                    <div class="mydiv">
+                                        
+                                        <table datatable [dtOptions]="dtOptions" id="Table1"
+                                            class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>SNo.</th>
+                                                    <th>View</th>
+                                                    <th>RM</th>
+                                                    <th>Partner</th>
+                                                    <th>LOB</th>
+                                                    <th>Effective Date</th>
+                                                     <!-- <th>To Date</th> -->
+                                                    <th>Pay Out Mode</th>
+                                                    <th>Status</th>
+
+                                                    <th>Add Stamp</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of dataAr">
+                                                    <td>{{row.sno}}</td>
+                                                    <td>
+                                                        <button class=" btn btn-info1" (click)="view(row.Id)"><span>View
+                                                                Details</span>
+                                                        </button>
+                                                    </td>
+                                                  
+                                                    <td>
+                                                        <div class="form-group"></div>
+                                                        <select *ngIf="row.RM.length > 1" class="form-control" style="width: auto;">
+                                                          <option *ngFor="let rm of row.RM" [value]="rm">{{ rm }}</option>
+                                                        </select>
+                                                        <span *ngIf="row.RM.length === 1">{{ row.RM[0] }}</span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group"></div>
+                                                        <select *ngIf="row.Agent.length > 1" class="form-control" style="width: auto;">
+                                                          <option *ngFor="let Agent of row.Agent" [value]="Agent">{{ Agent }}</option>
+                                                        </select>
+                                                        <span *ngIf="row.Agent.length === 1">{{ row.Agent[0] }}</span>
+                                                    </td>
+                                                 
+                                                    <td>{{row.LOB}}</td>
+                                                    <td>{{row.from_date}}</td>
+                                                     <!--<td>{{row.to_date}}</td> -->
+                                                    <td>{{row.payout_mode}}</td>
+                                                    <td>
+                                                        <span *ngIf="row.status==0 && rights == true">
+                                                            <form [formGroup]="StatusForm">
+                                                                <select class="form-control" style="width: auto;" formControlName="status"
+                                                                    (change)="onSelect(row.Id)">
+                                                                    <option value="0">Pending</option>
+                                                                    <option value="1">Active</option>
+                                                                    <option value="2">Rejected</option>
+                                                                </select>
+                                                            </form>
+                                                        </span>
+
+                                                        <span *ngIf="row.status != 0 || rights != true">
+                                                            <span *ngIf="row.status==0"
+                                                                class="label label-warning">Pending</span>
+                                                            <span *ngIf="row.status==1"
+                                                                class="label label-success">Active</span>
+                                                            <span *ngIf="row.status==2"
+                                                                class="label label-danger">Rejected</span>
+                                                        </span>
+                                                    </td>
+                                                    <td>{{row.add_stamp}}</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody *ngIf="dataAr?.length == 0">
+                                                <tr>
+                                                    <td colspan="21" align="center">No data available !</td>
+                                                </tr>
+                                            <tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

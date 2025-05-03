@@ -1,0 +1,74 @@
+<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+<form class="form" [formGroup]="SearchForm">
+  <table class="table" style="border: 0px solid transparent !important;text-align: left;margin-bottom: 0px !important;">
+    <thead>
+      <tr>
+        <th
+          style="text-align: left !important;border-bottom:0px solid transparent !important;font-size: 18px;color: #554489;">
+          Expense Details</th>
+        <th
+          style="text-align: center !important;border-bottom:0px solid transparent !important;font-size: 18px;color: #554489;">
+          {{emp_name}}
+        </th>
+        <th style="text-align: right !important;border-bottom:0px solid transparent !important;">
+          <!-- form_control_ng -->
+          <div class="input_group" style="margin-bottom: 0px !important;">
+            <select class="form_control" style="width: 120px;" formControlName="financial_year"
+              (change)="GetEmployeeExpenseDetails()" [(ngModel)]="selected_year">
+              <option value="2023">2023-24</option>
+              <!-- <option value="2024">2024-25</option> -->
+            </select>
+          </div>
+        </th>
+      </tr>
+    </thead>
+
+  </table>
+  <div class="gridtable">
+    <table class="table table-striped" style="margin-bottom: 0px !important;" id="capture">
+      <thead>
+        <tr>
+          <th style="text-align:center;">Particuler</th>
+          <th style="text-align:center;">Apr</th>
+          <th style="text-align:center;">May</th>
+          <th style="text-align:center;">Jun</th>
+          <th style="text-align:center;">Jul</th>
+          <th style="text-align:center;">Aug</th>
+          <th style="text-align:center;">Sept</th>
+          <th style="text-align:center;">Oct</th>
+          <th style="text-align:center;">Nov</th>
+          <th style="text-align:center;">Dec</th>
+          <th style="text-align:center;">Jan</th>
+          <th style="text-align:center;">Feb</th>
+          <th style="text-align:center;">Mar</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="dataAr?.length != 0" class="tbody_cs">
+        <tr *ngFor="let row of dataAr; let i=index;">
+
+          <td
+            style="border: 0px solid transparent !important;padding:8px 5px !important;font-size: 10px !important;font-weight:600 !important;">
+            {{
+            row.type }}</td>
+          <td *ngFor="let mon of row['months']; let a=index;"
+            style="border: 0px solid transparent !important;padding:8px 5px !important;font-size: 10px !important;font-weight:600 !important;">
+            {{mon.val_string}}</td>
+
+        </tr>
+
+      </tbody>
+      <thead class="footer_head">
+        <tr>
+          <th colspan="13">
+            <button type="button" title="PDF" (click)="GeneratePdf()"><img
+                src="../../../../../assets/image/expense/download_pdf.svg" alt="PDF"></button>
+            <!-- <button type="button" title="Mail"><img src="../../../../../assets/image/expense/email.svg"
+                alt="Mail"></button> -->
+            <!-- <button type="button" title="Copy" (click)="screenshot()"><img
+                src="../../../../../assets/image/expense/layer.svg" alt="Copy"></button> -->
+          </th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</form>

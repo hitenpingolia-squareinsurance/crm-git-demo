@@ -1,0 +1,110 @@
+ 
+<form *ngIf="popupType=='Generate'" (ngSubmit)="submit()" [formGroup]="agreementForm">
+  <div class="">
+    <div class="row" style="margin-bottom: 15px;">
+      <div class="col-md-6">
+        <label for="">Activation Start Date</label>
+        <input formControlName="startDate"  class="form-control" type="date">
+        <!-- <input type="date" class="form-control" formControlName="startDate"> -->
+        <div *ngIf="isSubmitted && formControls.startDate.errors" class="Validationerrors">
+          <div *ngIf="formControls.startDate.errors.required"><span style="color: red;">Please select
+              start date!</span></div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="">Activation End Date</label>
+        <input formControlName="endDate" (click)="onKeyUpEvent()"
+            class="form-control" type="date" min="{{minDate}}" >
+        <!-- <input type="date" class="form-control" formControlName="endDate"> -->
+        <div *ngIf="isSubmitted && formControls.endDate.errors" class="Validationerrors">
+          <div *ngIf="formControls.endDate.errors.required"><span style="color: red;">Please select
+              end date!</span></div>
+        </div>
+      </div>
+
+      </div>
+
+      <div class="row" style="margin-bottom: 15px;"> 
+
+
+      <div class="col-md-12">
+        <ckeditor [config]="ckconfig" [(ngModel)]="MessageBody" formControlName="Message"></ckeditor>
+        <div *ngIf="isSubmitted && formControls.Message.errors" class="Validationerrors">
+          <div *ngIf="formControls.Message.errors.required"><span style="color: red;">Please insert some text
+              !</span></div>
+        </div>
+      </div>
+
+       </div>
+
+       <div class="row" style="margin-bottom: 15px;"> 
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          &nbsp;&nbsp;
+          <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>
+        </div>
+      </div>
+
+    
+  </div>
+</form>
+
+<form *ngIf="popupType=='Upload'" (ngSubmit)="UploadAgreementPDF()" [formGroup]="agreementUploadForm">
+  <div class="">
+    <div class="row" style="margin-bottom: 15px;">
+      <div class="col-md-12">
+        <label for="">Upload</label>
+        <input formControlName="pdfFile" (change)="UploadDocs($event)" class="form-control" type="file">
+         
+        <div *ngIf="isSubmitted1 && formControls1.pdfFile.errors" class="Validationerrors">
+          <div *ngIf="formControls1.pdfFile.errors.required"><span style="color: red;">
+            Please upload!</span></div>
+        </div>
+      </div>
+
+      </div>
+
+
+      <div class="row" *ngIf="Is_Accounts==1" style="margin-bottom: 15px;"> 
+
+        <div class="col-md-12">
+          <label for="">Status</label>
+          <select class="form-control" formControlName="Status">
+            <option selected disabled value="">--select--</option>
+            <option value="3">Approve</option>
+            <option value="4">Reject</option>
+          </select>
+         
+          <div *ngIf="isSubmitted1 && formControls1.Status.errors" class="Validationerrors">
+            <div *ngIf="formControls1.Status.errors.required"><span style="color: red;">Please choose status!</span></div>
+          </div>
+        </div>
+  
+        </div>
+
+      <div class="row" style="margin-bottom: 15px;"> 
+
+      <div class="col-md-12">
+        <label for="">Remark</label>
+        <textarea formControlName="Remark" class="form-control"></textarea>
+       
+        <div *ngIf="isSubmitted1 && formControls1.Remark.errors" class="Validationerrors">
+          <div *ngIf="formControls1.Remark.errors.required"><span style="color: red;">Please enter remark!</span></div>
+        </div>
+      </div>
+
+      </div>
+ 
+
+       <div class="row" style="margin-bottom: 15px;"> 
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          &nbsp;&nbsp;
+          <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>
+        </div>
+      </div>
+
+    
+  </div>
+</form>

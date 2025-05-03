@@ -1,0 +1,78 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+    <div class="container-fluid">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <div class="header_title">Busniess Master Log</div>
+            </div>
+
+            <div class="main_body main_card_height_scroll_withoutfooter">
+                <div class="btn_list_group">
+                    <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="dsr-fillter">
+                                        <!-- <button class="btn btn-info1" (click)="dailog()"><span>Add Broker</span></button> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingOne">
+                                <div class="panel-body sub-form">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="All">
+                                <div class="box-body">
+                                    <div class="mydiv">
+
+                                        <table datatable [dtOptions]="dtOptions" id="Table1"
+                                            class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>SNo.</th>
+                                                    <th>User Id</th>
+                                                    <th>Referance Id</th>
+                                                    <th>Referance Table Name</th>
+                                                    <!-- <th>Log Type</th> -->
+                                                    <th>Log Data</th>
+                                                    <th>Add Stamp</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of dataAr">
+                                                    <td>{{row.sno}}</td>
+                                                    <td>{{row.user_id}}</td>
+                                                    <td>{{row.referance_id}}</td>
+                                                    <td>{{row.referance_table_name}}</td>
+                                                    <!-- <td>{{row.log_type}}</td> -->
+                                                    <td>{{row.log_data}}</td>
+                                                    <td>{{row.add_stamp}}</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody *ngIf="dataAr?.length == 0">
+                                                <tr>
+                                                  <td colspan="11" align="center">No data available !</td>
+                                                </tr>
+                                              <tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

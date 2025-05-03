@@ -1,0 +1,205 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+    <div class="container-fluid">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <div class="header_title">Business Commitment</div>
+            </div>
+
+            <div class="main_body main_card_height_scroll_withoutfooter">
+                <div class="btn_list_group">
+                    <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="dsr-fillter">
+                                        <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">Filters
+                                        </button>
+                                        <!-- <button class="btn btn-info1" (click)="export()"><span>Export</span></button> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingOne">
+                                <div class="panel-body sub-form">
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <select (change)="GetEmployees()" formControlName="Vertical_Id"
+                                                            class="form-control">
+                                                            <option value="0">Select Vertical</option>
+                                                            <option *ngFor="let r of Vertical_Ar" value="{{ r.Id }}">
+                                                                {{ r.Name }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <select (change)="GetSubBranches($event)"
+                                                            formControlName="Region_Id" class="form-control">
+                                                            <option value="0">Select Region</option>
+                                                            <option value="0">None</option>
+                                                            <option *ngFor="let r of Region_Ar" value="{{ r.id }}">
+                                                                {{ r.text }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <select (change)="GetEmployees()"
+                                                            formControlName="Sub_Region_Id" class="form-control">
+                                                            <option value="0">Select Region-Branch</option>
+                                                            <option value="0">None</option>
+                                                            <option *ngFor="let r of Sub_Branch_Ar" value="{{ r.id }}">
+                                                                {{ r.text }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <ng-multiselect-dropdown [settings]="dropdownSettings"
+                                                            name="Emp_Id" [placeholder]="Employee_Placeholder"
+                                                            [data]="Emps_Ar" formControlName="Emp_Id"
+                                                            class="form-control">
+                                                        </ng-multiselect-dropdown>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <select formControlName="year" class="form-control">
+                                                            <option value="">Select Year</option>
+                                                            <option *ngFor="let r of Year_Ar" value="{{ r }}">
+                                                                {{ r }}
+                                                            </option>
+                                                        </select>
+                                                        <div *ngIf="isSubmitted && formControls.year.errors"
+                                                            class="Validationerrors">
+                                                            <div *ngIf="formControls.year.errors.required">
+                                                                <span style="color: red">Please Select From Date</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <select formControlName="fromDate" class="form-control">
+                                                            <option value="">Starting From</option>
+                                                            <option *ngFor="let r of MonthsYear_Ar['Months']" value="{{ r }}">
+                                                                {{ r }}
+                                                            </option>
+                                                        </select>
+                                                        <div *ngIf="isSubmitted && formControls.fromDate.errors"
+                                                            class="Validationerrors">
+                                                            <div *ngIf="formControls.fromDate.errors.required">
+                                                                <span style="color: red">Please Select Starting Month</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <select formControlName="toDate" class="form-control">
+                                                            <option value="">End To</option>
+                                                            <option *ngFor="let r of MonthsYear_Ar['Months']" value="{{ r }}">
+                                                                {{ r }}
+                                                            </option>
+                                                        </select>
+                                                        <div *ngIf="isSubmitted && formControls.toDate.errors"
+                                                            class="Validationerrors">
+                                                            <div *ngIf="formControls.toDate.errors.required">
+                                                                <span style="color: red">Please Select End Month</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+
+                                                <div class="row">
+
+                                                    <div class="col-lg-12" style="text-align: right">
+                                                        <input *ngIf="Is_Export == 1" (click)="export()" type="button"
+                                                            class="btn btn-success" value="Export" />
+                                                        &nbsp;&nbsp;
+                                                        <input type="submit" class="btn btn-info" value="Search" />
+                                                        &nbsp;&nbsp;
+                                                        <input (click)="ClearSearch()" type="button"
+                                                            class="btn btn-danger" value="Reset" />
+                                                    </div>
+
+                                                </div>
+                                            </form>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="All">
+                                <div class="box-body">
+                                    <div class="mydiv">
+
+                                        <table datatable [dtOptions]="dtOptions" id="Table1"
+                                            class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>SNo.</th>
+                                                    <th>Actions</th>
+                                                    <th>RM Name</th>
+                                                    <th>LOB</th>
+                                                    <th>Company Name</th>
+                                                    <th>Business Month</th>
+                                                    <th>Business Commitment</th>
+                                                    <th>Remark</th>
+                                                    <th>Effective Date</th>
+                                                    <th>Request Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of dataAr">
+                                                    <td>{{row.SrNo}}</td>
+                                                    <td>
+                                                        <a href="javascript:void(0);"
+                                                            (click)="ViewPayoutRequest(row.Id,'ViewRequest')">View</a>
+                                                    </td>
+                                                    <td>{{row.RM_Name}}</td>
+                                                    <td>{{row.LOB}}</td>
+                                                    <td>{{row.Company}}</td>
+                                                    <td>{{row.Business_Month}}</td>
+                                                    <td>{{row.Bussiness_Commitment}}</td>
+                                                    <td>{{row.Remark}}</td>
+                                                    <td>{{row.Effective_Date}}</td>
+                                                    <td>{{row.Add_Stamp}}</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody *ngIf="dataAr?.length == 0">
+                                                <tr>
+                                                    <td colspan="11" align="center">No data available !</td>
+                                                </tr>
+                                            <tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

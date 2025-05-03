@@ -1,0 +1,108 @@
+<div class="box-default">
+    <div class="box-header with-border">
+
+        <h3 class="box-title">New Vehicle Renewal</h3>
+
+        <div class="box-tools pull-right">
+
+            <button type="button" (click)="CloseModel(0,'')" class="btn btn-box-tool"><i
+                    class="fa fa-remove"></i></button>
+        </div>
+    </div>
+
+    <form [formGroup]="UpdateFollowForm" (ngSubmit)="UpdateFollowFormS()" *ngIf="Status!='fixed'">
+
+        <div class="box-body">
+            <div class="row">
+
+
+                <div class="form-group row">
+
+
+                    <div class="col-lg-6">
+                        <label>Reg. No.</label>
+                        <input type="text" maxlength="11" formControlName="RegNo" class="form-control">
+                        <span *ngIf="isSubmitted && FC.RegNo.errors" class="form-text text-muted">
+                            <span *ngIf="FC.RegNo.errors.required" style="color:red;">Field is required..!</span>
+                            <span *ngIf="FC.RegNo.errors.pattern" style="color:red;">Invalid Reg. No. .!</span>
+                            <span *ngIf="FC.RegNo.errors.minlength" style="color:red;">Invalid Reg. No. .!</span>
+                        </span>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <label>Make</label>
+
+
+                        <ng-multiselect-dropdown class="form-control" name="QuoteMake" placeholder="Select Manufacturer"
+                        [data]="SelectMake" formControlName="QuoteMake" (onSelect)="onItemSelect($event,'Make')" (onDeSelect)="onItemDeSelect($event,'Make')" (keyup)="GetMake($event)"
+                        [settings]="dropdownSettingsingleselect">
+                      </ng-multiselect-dropdown>
+
+
+
+                        <span *ngIf="isSubmitted && FC.QuoteMake.errors" class="form-text text-muted">
+                            <span *ngIf="FC.QuoteMake.errors.required" style="color:red;">Field is required..!</span>
+                            <span *ngIf="FC.QuoteMake.errors.pattern" style="color:red;">Invalid Reg. No. .!</span>
+                            <span *ngIf="FC.QuoteMake.errors.minlength" style="color:red;">Invalid Reg. No. .!</span>
+                        </span>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <label>Model</label>
+                        
+                        <ng-multiselect-dropdown class="form-control" name="QuoteModel" placeholder="Select Model"
+                          [data]="SelectModel" formControlName="QuoteModel" (onSelect)="onItemSelect($event,'Model')" (onDeSelect)="onItemDeSelect($event,'Model')" (keyup)="GetModel($event)"
+                          [settings]="dropdownSettingsingleselect">
+                        </ng-multiselect-dropdown>
+
+                        <span *ngIf="isSubmitted && FC.QuoteModel.errors" class="form-text text-muted">
+                            <span *ngIf="FC.QuoteModel.errors.required" style="color:red;">Field is required..!</span>
+                            <span *ngIf="FC.QuoteModel.errors.pattern" style="color:red;">Invalid Reg. No. .!</span>
+                            <span *ngIf="FC.QuoteModel.errors.minlength" style="color:red;">Invalid Reg. No. .!</span>
+                        </span>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <label>Fuel Type</label>
+
+                            <ng-multiselect-dropdown class="form-control" name="QuoteFuel" placeholder="Select Fuel"
+                          [data]="SelectFuel" formControlName="QuoteFuel" (onSelect)="onItemSelect($event,'Fuel')" (onDeSelect)="onItemDeSelect($event,'Fuel')" (keyup)="GetFuel($event)"
+                          [settings]="dropdownSettingsingleselect">
+                        </ng-multiselect-dropdown>
+                                                <span *ngIf="isSubmitted && FC.QuoteFuel.errors" class="form-text text-muted">
+                            <span *ngIf="FC.QuoteFuel.errors.required" style="color:red;">Field is required..!</span>
+                            <span *ngIf="FC.QuoteFuel.errors.pattern" style="color:red;">Invalid Reg. No. .!</span>
+                            <span *ngIf="FC.QuoteFuel.errors.minlength" style="color:red;">Invalid Reg. No. .!</span>
+                        </span>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <label>Variant</label>
+                        <ng-multiselect-dropdown class="form-control" name="QuoteVariantValue" placeholder="Select Variant"
+                        [data]="SelectVariant" formControlName="QuoteVariantValue" (keyup)="GetVariant($event)"
+                        [settings]="dropdownSettingsingleselect">
+                      </ng-multiselect-dropdown>
+                      
+                      <span *ngIf="isSubmitted && FC.QuoteVariantValue.errors" class="form-text text-muted">
+                            <span *ngIf="FC.QuoteVariantValue.errors.required" style="color:red;">Field is required..!</span>
+                            <span *ngIf="FC.QuoteVariantValue.errors.pattern" style="color:red;">Invalid Reg. No. .!</span>
+                            <span *ngIf="FC.QuoteVariantValue.errors.minlength" style="color:red;">Invalid Reg. No. .!</span>
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+        <div class="box-footer">
+            <button type="button" (click)="CloseModel(0,'')" class="btn btn-default pull-right">Cancel</button>
+            <button style="margin-right: 1%;" type="submit" class="btn btn-info pull-right">Update</button>
+        </div>
+    </form>
+
+
+</div>

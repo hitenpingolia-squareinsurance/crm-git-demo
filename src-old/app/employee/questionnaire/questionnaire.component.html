@@ -1,0 +1,139 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Questionnaire</h3>
+                    </div>
+
+                    <div class="box-body">
+                        <!-- <square-filter (postCreated)="SearchData($event)"></square-filter> -->
+                        <form class="form-blog-top" [formGroup]="searchForm" (ngSubmit)="SearchData()">
+
+                            <div class="row"  >
+
+                                <div class="col-sm-3"><input type="text" formControlName="SearchValue"
+                                        name="SearchValue" class="form-control" placeholder="Search"></div>
+
+                                <div class="col-sm-3">
+                                    <input type="submit" class="btn btn-info" value="Search"> &nbsp;&nbsp;
+                                    <button (click)="ClearSearch()" type="button" style="font-size: small;"
+                                        class="btn btn-danger" value="Reset"> <i class="fa fa-close"> Reset</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="row">
+                            <div class="col-sm-12" style="margin-bottom: 10px; text-align: right">
+                                <a style="color:white;" class=" pull-right btn btn-primary btn-info" data-toggle="modal"
+                                    data-target="#AddCatSubCat" data-backdrop="static" data-keyboard="false"> <i
+                                        class="fa fa-plus"></i>Share Link</a>
+                            </div>
+                        </div>
+
+                        <div class="mydiv">
+                            <table datatable [dtOptions]="dtOptions" id="Table1"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Referance Id</th>
+                                        <th>Referance Mail</th>
+                                        <th>Add Stamp</th>
+                                        <!-- ] -->
+                                        <th>View/Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="dataAr?.length != 0">
+
+                                    <tr *ngFor="let row of dataAr; let i=index;">
+                                        <td>{{row.Sno}}</td>
+                                        <td>{{row['AllData'].referance_id}}</td>
+                                        <td>{{row['AllData'].referance_mail}}</td>
+                                        <td>{{row['AllData'].add_stamp}}</td>
+
+                                        <td>
+                                            <label class="label label-danger1"
+                                                *ngIf="(row.Status == '0')">Pending</label>
+
+                                            <label class="label label-success" *ngIf="(row.Status == '1') "
+                                                (click)="QuestionnaireShowPoupup(row['AllData'].referance_id)">Completed</label>
+                                            &nbsp;&nbsp;
+
+
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="8" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+
+
+
+<div id="AddCatSubCat" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_header">
+                            <div class="header_title">Send Mail Form</div>
+                        </div>
+                        <form class="form" (ngSubmit)="SubmitCat()" [formGroup]="AddCatForm">
+                            <div class="main_body main_card_height_scroll">
+                                <div class="row">
+
+                                    <div class="col-md-12">
+                                        <div class="input_group">
+                                            <label for="CustomerName">Email
+                                                <span *ngIf="isSubmitted1 && formControls2.Mobile.errors"
+                                                    class="ValidationError">
+                                                    <span *ngIf="formControls2.Mobile.errors.required">Email is
+                                                        required</span>
+                                                    <span *ngIf="formControls2.Mobile.errors.pattern">Email is
+                                                        required</span>
+                                                </span>
+                                            </label>
+                                            <div class="position_relative">
+                                                <input class="form_control icon_cs" type="text" formControlName="Mobile"
+                                                    name="Mobile" id="Mobile" placeholder="Enter Email">
+                                                <div class="input_icon"><i class="fa fa-envelope-o"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="main_footer">
+                                <button type="button" id="ClosePOUPUP" class="mr_5 btn-danger Save_click"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="Save_click">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

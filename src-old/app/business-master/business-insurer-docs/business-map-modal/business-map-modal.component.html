@@ -1,0 +1,107 @@
+<div class="main_card_form">
+    <div class="main_header">
+      <div class="header_title">Mapping Dump</div>
+    </div>
+    <button (click)="closeMappingDialog()" type="button" class="close closeModelButton">&times;</button>
+    <form class="form" (ngSubmit)="SubmitMappedRecords()"  [formGroup]="AddMappingForm">
+        <div class="main_body main_card_height_scroll">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form_sub_title">
+                    <i class="fa fa-smile-o mr_5"></i>Mapping 
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input_group">
+                        <label for="CustomerName"> Company *:</label>
+                        <div class="position_relative">
+                            <ng-multiselect-dropdown 
+                                class="form-control"
+                                placeholder="Select Company" 
+                                [data]="CompanyArr"
+                                formControlName="company"
+                                [settings]="dropdownSettingsingleselect"
+                                (ngModelChange)="onMasterCompanyChange($event)">
+                            </ng-multiselect-dropdown>
+
+                            <div *ngIf="isSubmitted && FC.company.errors" class="ValidationError">
+                                <div *ngIf="FC.company.errors.required">Please Select Company!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:20px;">
+                <div class="col-md-12">
+                    <div class="form_sub_title">
+                        <i class="fa fa-smile-o mr_5"></i>Product MAP 
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Groups Section -->
+            <div formArrayName="productMapGroups">
+                <div *ngFor="let group of productMapGroupsNew; let i = index" [formGroupName]="i">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="input_group">
+                                <label>Master *:</label>
+                                <div class="position_relative">
+                                    <ng-multiselect-dropdown
+                                        class="form-control"
+                                        placeholder="Select Product"
+                                        [data]="CompanyArr"
+                                        formControlName="product_master"
+                                        [settings]="dropdownSettingsingleselect">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="isSubmitted && group.get('product_master').errors" class="ValidationError">
+                                        <div *ngIf="group.get('product_master').errors.required">Please Select Product Master!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="col-md-5">
+                            <div class="input_group">
+                                <label>Product *:</label>
+                                <div class="position_relative">
+                                    <ng-multiselect-dropdown
+                                        class="form-control"
+                                        placeholder="Select Product"
+                                        [data]="CompanyArr"
+                                        formControlName="product_values"
+                                        [settings]="dropdownSettingsingleselect">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="isSubmitted && group.get('product_values').errors" class="ValidationError">
+                                        <div *ngIf="group.get('product_values').errors.required">Please Select Product Values!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <!-- Remove Button -->
+                        <div class="col-md-2">
+                            <div class="input_group" style="margin-top:28px;">
+                                <button type="button" *ngIf="i ==0" (click)="addProductMapGroup()" class="btn btn-primary">Add More</button>
+
+                                <button type="button" *ngIf="i >0" (click)="removeProductMapGroup(i)" class="btn btn-danger">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="main_footer">
+            <button type="button" id="ClosePOUPUP" class="mr_5 btn-danger Save_click"
+              data-dismiss="modal" (click)="closeMappingDialog()">Close</button>
+            <button type="submit" class="Save_click" >Submit</button>
+        </div>
+
+    </form>
+</div>

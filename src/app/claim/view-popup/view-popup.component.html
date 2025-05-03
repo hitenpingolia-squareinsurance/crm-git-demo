@@ -1,0 +1,105 @@
+<!-- Main content -->
+<!-- <section class="content"> -->
+<!-- <div class="dataArr">
+    <div class="col-md-6">
+        <div class="box box-info" style="margin-bottom: 20px;">
+            <div class="box-header with-border">
+                <div class="box-body table-responsive no-padding">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- </section> -->
+<table class="table table-hover">
+
+    <tbody>
+        <tr>
+            <td colspan="4" align="center">
+                <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+            </td>
+        </tr>
+        <tr>
+            <th>Lob Type</th>
+            <th>Claim Id</th>
+            <th>Date/Time Lose</th>
+        </tr>
+        <tr>
+            <td>{{dataArr.lob}}</td>
+            <td>{{dataArr.Claim_Id}}</td>
+            <td>{{dataArr.date}}</td>
+
+        </tr>
+        <tr>
+            <th>Policy No</th>
+            <th>Mobile No</th>
+            <th>Mail Id</th>
+        </tr>
+        <tr>
+            <td>{{dataArr.PolicyNo}}</td>
+            <td>{{dataArr.mobileNo}}</td>
+            <td>{{dataArr.mailId}}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+        </tr>
+        <tr>
+            <td>{{dataArr.name}}</td>
+        </tr>
+        <tr>
+            <th>Number</th>
+            <th>Claim type </th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>{{dataArr.number}}</td>
+            <td>{{dataArr.type}}</td>
+            <td>{{dataArr.Description}}</td>
+        </tr>
+        <tr>
+            <th>EffectiveDateMember</th>
+            <th>EffectiveDatePolicy</th>
+            <th>Address</th>
+        </tr>
+        <tr>
+            <td>{{dataArr.effectiveDateMember}}</td>
+            <td>{{dataArr.effectiveDatePolicy}}</td>
+            <td>{{dataArr.loaction}}</td>
+        </tr>
+        <tr>
+            <th>Date Of claim</th>
+        </tr>
+        <tr>
+            <!-- <td>{{ formatDateFunction(dataArr.addstamp, 'dd/MM/yyyy HH:mm:ss') }}</td> -->
+            <td>{{ dataArr.addstamp | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+        </tr>
+        <!-- <td>{{dataArr.addstamp}}</td> -->
+        <!-- <div *ngIf="lobDtata =='Motor'"> -->
+
+    </tbody>
+</table>
+<table class="table table-hover" *ngIf="lobDtata =='Motor' && dataArr.Motorvalue">
+    <tbody>
+        <!-- <div *ngIf="lobDtata =='Motor' && dataArr && dataArr.Motorvalue"> -->
+        <tr>
+            <th>Driver Licences</th>
+            <th>Accidentical Short Dec</th>
+            <th>Work Shop Address</th>
+        </tr>
+        <tr>
+            <td>{{dataArr.Motorvalue.DriverLicences}}</td>
+            <td>{{dataArr.Motorvalue.AccidenticalShortDec}}</td>
+            <td>{{dataArr.Motorvalue.WorkShopAddress}}</td>
+        </tr>
+        <tr>
+            <th>Surveyar Name</th>
+            <th>Surveyar Email</th>
+        </tr>
+        <tr>
+            <td>{{dataArr.Motorvalue.SurveyarName}}</td>
+            <td>{{dataArr.Motorvalue.SurveyarEmail}}</td>
+        </tr>
+        <!-- </div> -->
+    </tbody>
+</table>

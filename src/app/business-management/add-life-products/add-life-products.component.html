@@ -1,0 +1,102 @@
+<form class="form" [formGroup]="ProductForm" (ngSubmit)="AddEditProduct()">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="text-align: center;">{{ HeaderTitle }}
+          <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngIf="ActionType == 'Add' && row_id == 0">
+        <td>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-6">
+              <label>Insured* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Insurer" [data]="insurer_ar"
+                formControlName="insurer_id" [settings]="dropdownSettingsingleselect">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.insurer_id.errors " class="ValidationError">
+                <div *ngIf="formControls.insurer_id.errors.required">Insurer required!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label>Policy Type* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Policy Type" [data]="policy_type_ar"
+                formControlName="policy_type" [settings]="dropdownSettingsingleselect1">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.policy_type.errors " class="ValidationError">
+                <div *ngIf="formControls.policy_type.errors.required">Policy type required!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-6">
+              <label>Plan Type* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Plan Type" [data]="plan_type_ar"
+                formControlName="plan_type" [settings]="dropdownSettingsingleselect1">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.plan_type.errors " class="ValidationError">
+                <div *ngIf="formControls.plan_type.errors.required">Plan type required!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label>Plan Name* : </label>
+              <input type="text" placeholder="Enter Plan Name" class="form-control" formControlName="plan_name">
+              <div *ngIf="isSubmitted && formControls.plan_name.errors " class="ValidationError">
+                <div *ngIf="formControls.plan_name.errors.required">Plan name required!</div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-6">
+              <label>1st Year Gst* : </label>
+              <input type="text" placeholder="1st Year Gst" class="form-control" formControlName="year_1_gst">
+              <div *ngIf="isSubmitted && formControls.year_1_gst.errors " class="ValidationError">
+                <div *ngIf="formControls.year_1_gst.errors.required">1st year gst required!</div>
+                <div *ngIf="formControls.year_1_gst.errors.pattern">Invalid Value!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label>2nd Year Gst* : </label>
+              <input type="text" placeholder="2st Year Gst" class="form-control" formControlName="year_2_gst">
+              <div *ngIf="isSubmitted && formControls.year_2_gst.errors " class="ValidationError">
+                <div *ngIf="formControls.year_2_gst.errors.required">2nd year gst required!</div>
+                <div *ngIf="formControls.year_2_gst.errors.pattern">Invalid Value!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-6">
+              <label>Effective Date* : </label>
+              <input type="text" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}"
+                formControlName="effective_date">
+              <div *ngIf="isSubmitted && formControls.effective_date.errors " class="ValidationError">
+                <div *ngIf="formControls.effective_date.errors.required">1st year gst required!</div>
+                <div *ngIf="formControls.effective_date.errors.pattern">Invalid Value!</div>
+              </div>
+            </div>
+          </div>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Save" style="margin-right: 5px;">
+          <input type="button" class="btn btn-warning" (click)="CloseModel()" value="Cancel">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

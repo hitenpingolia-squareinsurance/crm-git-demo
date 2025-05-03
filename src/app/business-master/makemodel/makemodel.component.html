@@ -1,0 +1,196 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+    <div class="container-fluid">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <div class="header_title">Make & Model</div>
+            </div>
+
+            <div *ngIf="!hasAccess" class="error-message">
+                <div class="container" style="text-align: center;">
+                    <img src="assets/Authorised.png" alt="">
+                </div>
+            </div>
+
+            <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+                <div class="btn_list_group">
+                    <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="dsr-fillter">
+                                       
+                                        <button class="btn btn-info1" (click)="dailog()"><span>Add</span></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingOne">
+                                <div class="panel-body sub-form">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="All">
+                                <div class="box-body">
+                                    <div class="mydiv">
+
+                                        <table datatable [dtOptions]="dtOptions"  class="table table-bordered table-hover" id="Table1" >
+                                            <thead>
+                                              <tr>
+                                                <th>Sr.No</th>
+                                          
+                                                <th>Sub-Class</th>
+                                                <th>Make</th>
+                                                <th>Model</th>
+                                                <th>Variant</th>
+                                                <th>Fuel Type</th>
+                                                <th>Cubic Capacity</th>
+                                                <th>Seating Capacity</th>
+                                                <th>Body Type</th>
+                            
+                                                <th>Action</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody *ngIf="dataAr?.length != 0">
+                                              <tr *ngFor="let row of dataAr">
+                                                <td>{{ row.SrNo }}.</td>
+                                             
+                                                <td>{{ row.Sub_Class }}</td>
+                                                <td>{{ row.Make }}</td>
+                                                <td>{{ row.Model }}</td>
+                                                <td>{{ row.Variant }}</td>
+                                                <td>{{ row.Fuel_Type }}</td>
+                                                <td>{{ row.Cubic_Capacity }}</td>
+                                                <td>{{ row.Seating_Capacity }}</td>
+                                                <td>{{ row.Body_Type }}</td>
+                            
+                            
+                                                <td>
+                                                    
+                                                  <a title="Delete" (click)="Is_Delete(row.Id)"><i class="fa fa-trash text-danger mr-5"></i></a>
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                            <tbody *ngIf="dataAr?.length == 0">
+                                              <tr>
+                                                <td colspan="11" align="center">No data available !</td>
+                                              </tr>
+                                            <tbody>
+                                          </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <hr>
+
+                <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                    <div class="custom_table tables_layout_design">
+                        <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <!-- ======= Refer Table  =========-->
+                        <ul class="responsive-table">
+                            <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+
+                                <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                                    <div class="agents_data agents_data1">
+                                        <div class="icon_re_cl">{{row.SrNo}}</div>
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data">
+                                                <div>Sub Class</div>
+                                                <strong class="fs_18 text-bold">{{row.Sub_Class}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="agents_data agents_data2">
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data" *ngIf="row.Fuel_Type != ''">
+                                                <div> Fuel Type </div>
+                                                <strong>
+                                                    {{row.Fuel_Type }}
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+
+
+                                <div class="last_row_div mt10" style="margin-top:10px;">
+                                    <div class="label_chips finance_lob" *ngIf="row.Make != ''">
+                                        <span>Make - {{row.Make}}</span>
+                                    </div>
+
+                                    <div class="label_chips non_motor_lob" *ngIf="row.Model != ''">
+                                        <span>Model - {{row.Model}}</span>
+                                    </div>
+
+
+                                    <div class="label_chips health_lob" *ngIf="row.Variant != ''">
+                                        <span>Variant - {{row.Variant}}</span>
+                                    </div>
+
+                                    <div class="label_chips life_lob" *ngIf="row.Cubic_Capacity != ''">
+                                        <span>Cubic Capacity - {{row.Cubic_Capacity}}</span>
+                                    </div>
+
+                                    <div class="label_chips motor_lob" *ngIf="row.Seating_Capacity != ''">
+                                        <span>Seating Capacity - {{row.Seating_Capacity}}</span>
+                                    </div>
+
+                                    <div class="label_chips mutual_fund_lob" *ngIf="row.Body_Type != ''">
+                                        <span>Body Type - {{row.Body_Type}}</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="last_row">
+                                    <div class="effective_date"></div>
+                                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                        <button type="button" class="btn btn-danger" (click)="Is_Delete(row.Id)"
+                                            style="padding: 3px;">
+                                            <strong style="color: #fff;">Delete &nbsp;<i class="fa fa-trash"
+                                                    aria-hidden="true"></i></strong>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+                        <!--======= Refer Table END ========= -->
+
+                        <div class="row" *ngIf="dataAr?.length == 0">
+                            <div class="col-md-12">
+                                <div class="no_data_found">
+                                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                                    <small>No data available !</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

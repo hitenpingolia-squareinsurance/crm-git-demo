@@ -1,0 +1,204 @@
+<section class="inner_page_css main_dashboard_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">Fleet Report</div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+
+                        <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                            <!--begin::Button-->
+                            <a routerLink="/partner/fleet/creation" class="btn btn-primary font-weight-bolder">
+                                <span class="svg-icon svg-icon-md">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </span> Add Fleet</a>
+                            <!--end::Button-->
+                            <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                aria-controls="collapseOne">
+                                <a role="button" class="fa fa-filter"><span>Filters</span><i
+                                        class="fa fa-angle-down pull-right"></i></a>
+                            </button>
+                        </div>
+
+
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <!-- filter  -->
+                                <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+                                    <div class="row">
+
+                                        <div class="col-sm-4">
+
+                                            <select (change)="GetEmployees()" formControlName="Vertical_Id"
+                                                class="form-control">
+                                                <option selected value="0">Select Vertical</option>
+                                                <option *ngFor="let r of Vertical_Ar;" value="{{r.Id}}">{{r.Name}}
+                                                </option>
+                                            </select>
+
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <select (change)="GetSubBranches($event)" formControlName="Region_Id"
+                                                class="form-control">
+                                                <option selected value="0">Select Region</option>
+                                                <option value="0">None</option>
+                                                <option *ngFor="let r of Region_Ar;" value="{{r.id}}">{{r.text}}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <select (change)="GetEmployees()" formControlName="Sub_Region_Id"
+                                                class="form-control">
+                                                <option selected value="0">Select Region-Branch</option>
+                                                <option value="0">None</option>
+                                                <option *ngFor="let r of Sub_Branch_Ar;" value="{{r.id}}">{{r.text}}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-sm-4">
+
+                                            <ng-multiselect-dropdown class="form-control" name="Emp_Id" [placeholder]="Employee_Placeholder"
+                                                [data]="Emps_Ar" formControlName="Emp_Id" [settings]="dropdownSettings">
+                                            </ng-multiselect-dropdown>
+
+
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="row" style="margin-top: 1%;">
+
+
+
+                                        <div *ngIf="UserRights['Is_Sales']==1" class="col-sm-2">
+                                            <select formControlName="RM_Search_Type" class="form-control">
+                                                <option selected value="0">Report Type</option>
+                                                <option value="Self">Self</option>
+                                                <option value="Hierarchy">Hierarchy</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <select formControlName="AgentStatus" class="form-control">
+                                                <option selected value="0">Agent Status</option>
+                                                <option value="All">All</option>
+                                                <option value="PendingForQC">PendingForQC</option>
+                                                <option value="RejectByQC">RejectByQC</option>
+                                                <option value="Approved">Approved</option>
+                                            </select>
+                                        </div>
+
+
+                                        <div class="col-sm-3">
+                                            <input type="text" placeholder="Select Date OR Date-Range"
+                                                class="form-control" formControlName="DateOrDateRange" bsDaterangepicker
+                                                [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                                        </div>
+
+                                        <div class="col-sm-5" style="text-align: right;">
+
+                                            <input type="submit" class="btn btn-info" value="Search">
+                                            &nbsp;&nbsp;
+
+                                            <input (click)="ClearSearch()" type="button" class="btn btn-danger"
+                                                value="Reset">
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class=" mydiv table-responsive" data-loader="TableLoader">
+
+                            <table datatable [dtOptions]="dtOptions" id="Table1"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Actions</th>
+                                        <th>Status</th>
+                                        <th>Fleet Name</th>
+                                        <th>Reference Agent</th>
+                                        <th>RM</th>
+                                        <th>Mobile</th>
+                                        <th>Email</th>
+                                        <th>Last Modify</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr; let i=index;">
+                                        <td>{{ row.SrNo }}.</td>
+
+
+                                        <td>
+                                            <select *ngIf="UserRights['Fleet_QC']=='1' && (row.Status==0)"
+                                                style="width: 20vh;" (change)="QC_Status_Update($event,row.Id)"
+                                                class="form-control">
+                                                <option selected value="0">QC Status</option>
+                                                <option value="0">PendingForQC</option>
+                                                <option value="2">RejectByQC</option>
+                                                <option value="1">Approve</option>
+                                            </select>
+                                        </td>
+
+                                        <td>
+                                            <span *ngIf="row.Status==0"
+                                                class="label label-warning label-inline mr-2">PendingForQC</span>
+
+                                            <span *ngIf="row.Status==2"
+                                                class="label label-danger label-inline mr-2">RejectByQC</span>
+
+                                            <span *ngIf="row.Status==1"
+                                                class="label label-success label-inline mr-2">Approved</span>
+                                        </td>
+
+                                        <td>{{ row.Name }} ({{ row.Emp_Id }})</td>
+
+
+                                        <td>{{ row.Agent_Name }}</td>
+
+
+                                        <td>{{ row.RM_Name }} ({{ row.RM_Emp_Id }})</td>
+
+
+                                        <td>{{ row.Mobile }}</td>
+                                        <td>{{ row.Email }}</td>
+                                        <td>{{ row.Update_Stamp }}</td>
+
+
+
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="9" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</section>

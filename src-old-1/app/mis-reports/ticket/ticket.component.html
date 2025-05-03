@@ -1,0 +1,231 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Tickets Report</div>
+          </div>
+
+          <div *ngIf="!hasAccess" class="error-message">
+            <div class="container" style="text-align: center;">
+              <img src="assets/Authorised.png" alt="">
+              <h4>{{ errorMessage }}</h4>
+            </div>
+
+          </div>
+
+          <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+            <div>
+              <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <a role="button" class="fa fa-filter"><span>Filters</span><i
+                      class="fa fa-angle-down pull-right"></i></a>
+                </button>
+              </div>
+            </div>
+
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+                <!-- filter  -->
+                <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+              </div>
+            </div>
+
+            <hr>
+            <!-- <div class=" mydiv table-responsive">
+     
+              <table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+
+                    <th>S.No</th>
+                    <th>Status</th>
+                    <th>Ticket Id</th>
+                    <th>Ticket Type</th>
+                    <th>Ticket Creator</th>
+                    <th>Ticket Manager</th>
+                    <th>TimeStamp</th>
+
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{row.SrNo}}.</td>
+                    <td>
+                      <a *ngIf="row.Status == '1'" routerLink="/ticket/all-tickets-user/{{row.Ticket_Id}}"><span
+                          class="label label-default">Pending</span></a>
+                      <a *ngIf="row.Status == '2'" routerLink="/ticket/all-tickets-user/{{row.Ticket_Id}}"><span
+                          class="label label-primary">In Process</span></a>
+                      <a *ngIf="row.Status == '3'" routerLink="/ticket/all-tickets-user/{{row.Ticket_Id}}"><span
+                          class="label label-success">Completed</span>
+                        <br> <span style="font-size:11px;">
+                          {{ row.Completed_Timestamp }}
+                        </span></a>
+
+                    </td>
+
+                    <td>{{row.Ticket_Id}}</td>
+                    <td>
+                      <span style="font-weight: bold;" *ngIf="row.TicketType == '1'">Payment done policy not
+                        received</span>
+                      <span style="font-weight: bold;" *ngIf="row.TicketType == '2'">Make model update</span>
+                      <span style="font-weight: bold;" *ngIf="row.TicketType == '3'">Hypothecation Update</span>
+                      <span style="font-weight: bold;" *ngIf="row.TicketType == '4'">Quote not reflecting</span>
+                      <span style="font-weight: bold;" *ngIf="row.TicketType == '5'">Error during policy issuance</span>
+                      <span style="font-weight: bold;" *ngIf="row.TicketType == '6'">Other</span>
+                      <span style="font-weight: bold;" *ngIf="row.TicketType == '7'">Claim</span>
+                      <span style="font-weight: bold;" *ngIf="row.TicketType == '8'">Survey</span>
+                      <span style="font-weight: bold;" *ngIf="row.TicketType == '9'">Offline-Quote</span>
+                      <span style="font-weight: bold;" *ngIf="row.TicketType == '10'">Cancellation</span>
+                      <span style="font-weight: bold;" *ngIf="row.TicketType == '11'">Endorsement</span>
+                      <span style="font-weight: bold;" *ngIf="row.TicketType == '12'">POS-Related-Quer</span>
+                      <span style="font-weight: bold;" *ngIf="row.TicketType == '13'">Payout/Commision
+                        Related-Query</span>
+                      <span
+                        *ngIf="row.TicketType == '1' || row.TicketType == '4' || row.TicketType == '5'"><br>{{row.Quotation_Id}}</span>
+                    </td>
+                    <td>{{row.Ticket_Creator}}</td>
+
+                    <td>{{row.Ticket_Manager}}</td>
+                    <td>
+
+                      <span *ngFor="let Timess of row.Status_Data;">
+                        <span *ngIf="Timess.Status=='1'">Pend.</span>
+                        <span *ngIf="Timess.Status=='2'">Process.</span>
+                        <span *ngIf="Timess.Status=='3'">Comp.</span>
+                        <b style="font-size:12px;"> {{Timess.Timestamp }} </b>
+                        <br>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+              </table>
+
+            </div> -->
+
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+
+                <!--======= Refer Table  =========-->
+                <ul class="responsive-table">
+                  <li class="table-row" *ngFor="let row of dataAr; let i = index;" routerLink="/ticket/all-tickets-user/{{row.Ticket_Id}}">
+                    <p class="life_status_label">
+                      <span>
+                        <a *ngIf="row.Status == '1'" routerLink="/ticket/all-tickets-user/{{row.Ticket_Id}}">
+                          <span class="label label-default">Pending</span>
+                        </a>
+                        <a *ngIf="row.Status == '2'" routerLink="/ticket/all-tickets-user/{{row.Ticket_Id}}">
+                          <span class="label label-primary">In Process</span>
+                        </a>
+                        <a *ngIf="row.Status == '3'" routerLink="/ticket/all-tickets-user/{{row.Ticket_Id}}">
+                          <span class="label label-success">Completed</span>
+                          <br>
+                          
+                        </a>
+                        <a *ngIf="row.Status == '1' && (row.CurrentUser_Id == '' || row.CurrentUser_Id == 0) && RequestTypesFilter"
+                           >
+                          <span class="label btn-primary">Accept</span>
+                        </a>
+                        <!-- <a *ngIf="row.Status == '1' && (row.CurrentUser_Id == '' || row.CurrentUser_Id == 0) && RequestTypesFilter"
+                           (click)="AcceptRequest(row.Ticket_Id)">
+                          <span class="label btn-primary">Accept</span>
+                        </a> -->
+                      </span>
+                    </p>
+                
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{ row.SrNo }}</div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <!-- <div>Ticket Type</div> -->
+                            <strong class="fs_18 text-bold">{{ row.ticket_type }}</strong>
+                            <div *ngIf="row.TicketType == '1' || row.TicketType == '4' || row.TicketType == '5'">
+                              {{ row.Quotation_Id }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>{{ row.Completed_Timestamp }}</div>
+                            <!-- <strong class="fs_18">{{ row.Completed_Timestamp }}</strong> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+                        <div class="label_chips finance_lob" style="width: auto;">
+                          <span>Ticket Id : {{ row.Ticket_Id }}</span>
+                        </div>
+
+                        <div class="label_chips non_motor_lob" style="width: auto;" *ngIf="row.Ticket_Creator && row.Ticket_Creator != ''">
+                          <span>Ticket Creator : {{ row.Ticket_Creator }}</span>&nbsp;&nbsp;
+                        </div>
+
+                        <div class="label_chips motor_lob" style="width: auto;" *ngIf="row.Ticket_Manager && row.Ticket_Manager != ''">
+                          <span>Ticket Manager : {{ row.Ticket_Manager }}</span>&nbsp;&nbsp;
+                        </div>
+          
+                      </div>
+                    </div>
+                
+                    <div class="last_row">
+                      <div class="d_flex effective_date">
+                        <div class="date_text" *ngFor="let Timess of row.Status_Data;">
+                          <div *ngIf="Timess.Status == '1'">
+                            <span class="fs_12">Pending : </span>
+                            <span class="fs_12">{{ Timess.Timestamp }}</span>
+                          </div>
+                          <div *ngIf="Timess.Status == '2'">
+                            <span class="fs_12">In Process : </span>
+                            <span class="fs_12">{{ Timess.Timestamp }}</span>
+                          </div>
+                          <div *ngIf="Timess.Status == '3'">
+                            <span class="fs_12">Completed : </span>
+                            <span class="fs_12">{{ Timess.Timestamp }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                                <!--======= Refer Table END =========-->
+
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

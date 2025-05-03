@@ -1,0 +1,1290 @@
+<section class="inner_page_css fire_form_page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">Create Request For Quote-Online <a style="color:white;"routerLink="/rfq/products" class=" pull-right btn btn-primary btn-info"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Back To Request For Quote</a></div>
+                    </div>
+                    <form class="form" (ngSubmit)="RfqFormSubmit()" [formGroup]="FireForm">
+                        <div class="main_body main_card_height_scroll">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form_sub_title"><i class="fa fa-link mr_5"></i> {{FirePlanName}} </div>
+                                </div>
+                                <div class="col-md-12 mb_15">
+                                    <fieldset>
+                                        <div class="form_sub_title border_none pl_25 mb_0">Product Type
+                                            <div *ngIf="isSubmitted && formControls.FireProduct.errors"
+                                                class="ValidationError">
+                                                <div *ngIf="formControls.FireProduct.errors.required">Please Select
+                                                    Product !
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <!-- changeValidation(4) -->
+                                        <div class="radio">
+                                            <div class="col-md-12">
+                                                <span class="custom_radio_button" data-spanid="1" *ngIf="GenerateOName === 'Dwellings' || GenerateOName === 'Dwellings: Cooperative Society'">
+                                                    <input autocomplete="off" id="product_1" formControlName="FireProduct" name="FireProduct" type="radio"
+                                                        (click)="ChangeProductType('Bharat Griha Raksha Policy');" value="1" [(ngModel)]="FireProductV">
+                                                    <label for="product_1">Dwelling and Housing Society</label>
+                                                </span> 
+                                                <span class="custom_radio_button " data-spanid="2" *ngIf="GenerateOName !== 'Dwellings' && GenerateOName !== 'Dwellings: Cooperative Society'">
+                                                    <input autocomplete="off" id="product_2" formControlName="FireProduct" name="FireProduct" type="radio"
+                                                        (click)="ChangeProductType('Bharat Sookshma Udyam Suraksha');" value="2" [(ngModel)]="FireProductV">
+                                                    <label for="product_2">Business upto 5 Cr</label>
+                                                </span>
+                                                <span class="custom_radio_button" data-spanid="3" *ngIf="GenerateOName !== 'Dwellings' && GenerateOName !== 'Dwellings: Cooperative Society'">
+                                                    <input autocomplete="off" id="product_3"  formControlName="FireProduct"  name="FireProduct" type="radio"
+                                                        (click)="ChangeProductType('Bharat Laghu Udyam Suraksha');" value="3" [(ngModel)]="FireProductV">
+                                                    <label for="product_3">Business Above 5 Cr upto 50 Cr</label>
+                                                </span>
+                                                <span class="custom_radio_button" data-spanid="4" *ngIf="GenerateOName !== 'Dwellings' && GenerateOName !== 'Dwellings: Cooperative Society'">
+                                                    <input autocomplete="off" id="product_4"  formControlName="FireProduct" name="FireProduct" type="radio"
+                                                        (click)="ChangeProductType('Standard Fire and Special Perils'); " value="4" [(ngModel)]="FireProductV">
+                                                    <label for="product_4">Above 50 CR</label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-12 mb_15">
+                                    <fieldset>
+                                        <div class="col-md-6 mb_15">
+                                            <div class="form_sub_title border_none pl_25 mb_0">Policy Type <div
+                                                    class="tooltip_cs"><i class="fa fa-question"></i>
+                                                    <p class="tooltiptext_cs">Buildings that have a
+                                                        construction that is permanent in nature.For
+                                                        instance, they have walls/roofs made of stronger
+                                                        materials such asbricks, cement, concrete,
+                                                        timber and the like.</p>
+                                                </div>
+                                                <div *ngIf="isSubmitted && formControls.FirePolicy.errors"
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.FirePolicy.errors.required">Please Select
+                                                        Policy !</div>
+                                                </div>
+                                            </div>
+                                            <div class="radio">
+                                                <div class="col-md-12">
+                                                    <span class="custom_radio_button" data-spanid="1">
+                                                        <!-- <i>Note : select karne par  Previous Insurer Details ko hide karna hai</i> -->
+                                                        <input autocomplete="off" id="policy_1" formControlName="FirePolicy"
+                                                            (click)="FireFormSet('New Business')" name="FirePolicy"
+                                                            type="radio" value="New Business" [(ngModel)]="FirePolicyV">
+                                                        <label for="policy_1">New Business </label>
+                                                    </span>
+                                                    <span class="custom_radio_button " data-spanid="2">
+                                                        <!-- <i>Note : select karne par  Previous Insurer Details ko show with validation karna hai</i> -->
+                                                        <input autocomplete="off" id="policy_2" formControlName="FirePolicy"
+                                                            (click)="FireFormSet('Rollover')" name="FirePolicy"
+                                                            type="radio" value="Rollover" [(ngModel)]="FirePolicyV">
+                                                        <label for="policy_2">Rollover </label>
+                                                    </span>
+                                                    <span class="custom_radio_button" data-spanid="3">
+                                                        <!-- <i>Note : select karne par  Previous Insurer Details ko show with validation karna hai</i> -->
+                                                        <input autocomplete="off" id="policy_3" formControlName="FirePolicy"
+                                                            (click)="FireFormSet('Renewal')" name="FirePolicy"
+                                                            type="radio" value="Renewal" [(ngModel)]="FirePolicyV">
+                                                        <label for="policy_3"> Renewal </label>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb_15">
+                                            <div class="form_sub_title border_none pl_25 mb_0">Ownership Type <div
+                                                    *ngIf="isSubmitted && formControls.FireOwnershipType.errors"
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.FireOwnershipType.errors.required">Please
+                                                        Select Ownership !</div>
+                                                </div>
+                                            </div>
+                                            <div class="radio">
+                                                <div class="col-md-12">
+                                                    <span class="custom_radio_button" data-spanid="1">
+                                                        <input autocomplete="off" id="ownerShip_1" formControlName="FireOwnershipType"
+                                                            name="FireOwnershipType" type="radio" value="Individual" [(ngModel)]="FireOwnershipTypeV">
+                                                        <label for="ownerShip_1">Individual</label>
+                                                    </span>
+                                                    <span class="custom_radio_button " data-spanid="2">
+                                                        <input autocomplete="off" id="ownerShip_2" formControlName="FireOwnershipType"
+                                                            name="FireOwnershipType" type="radio" value="Corporate" [(ngModel)]="FireOwnershipTypeV">
+                                                        <label for="ownerShip_2">Corporate <div class="tooltip_cs"><i
+                                                                    class="fa fa-question"></i>
+                                                                <p class="tooltiptext_cs">Buildings that have a
+                                                                    construction that is permanent in nature.For
+                                                                    instance, they have walls/roofs made of stronger
+                                                                    materials such asbricks, cement, concrete,
+                                                                    timber and the like.</p>
+                                                            </div></label>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                        
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row multi_locations">
+                                        <div class="col-md-12">
+                                            <div class="add_mores_btns">
+                                                <div class="fs_14 text_blue fw_500">Location - Form </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-12" id="Occupancy_1"
+                                            *ngIf="FireForm.get('FireProduct').value === '1'">
+                                            <div class="input_group">
+                                                <label>Occupancy Type</label>
+                                                <ng-multiselect-dropdown class="form-control dropdownhidden"
+                                                    formControlName="Occupancy_Type" name="Occupancy_Type"
+                                                    placeholder="Select Occupancy" [data]="occupancyToData"
+                                                    [settings]="dropdownSingleSettingsTypeNew" [disabled]="true"
+                                                    [(ngModel)]="GenerateOccupancy">
+                                                </ng-multiselect-dropdown>
+                                                <div *ngIf="isSubmitted && formControls.Occupancy_Type.errors"
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.Occupancy_Type.errors.required">Please Select Occupancy Type...!</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-12" id="Occupancy_2"
+                                            *ngIf="FireForm.get('FireProduct').value >= 2 && FireForm.get('FireProduct').value <= 4">
+                                            <div class="input_group ">
+                                                <label>Occupancy Type </label>
+                                                <ng-multiselect-dropdown class="form-control dropdownhidden"
+                                                    formControlName="Occupancy_Type" name="Occupancy_Type" 
+                                                    (keyup)="Getpincode($event , 1)" placeholder="Select Occupancy" [disabled]="true"
+                                                    [data]="occupancyAllData" [settings]="dropdownSingleSettingsTypeNew"
+                                                    [(ngModel)]="GenerateOccupancy">
+                                                </ng-multiselect-dropdown>
+                                                <div *ngIf="isSubmitted && formControls.Occupancy_Type.errors"
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.Occupancy_Type.errors.required">Please Select Policy !</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-6 col-12">
+                                            <div class="input_group">
+                                                <label>Type of Construction 
+                                                    <div class="tooltip_cs"><i class="fa fa-question"></i><p class="tooltiptext_cs">
+                                                        Buildings that have a construction that is permanent in nature.Forinstance, they have walls/roofs made of stronger materials such asbricks, cement, concrete, timber and the like.</p>
+                                                    </div>
+                                                </label>
+                                                <span class="custom_radio_button" data-spanid="1">
+                                                    <input autocomplete="off" id="Pucca" name="Type_of_Construction" formControlName="Type_of_Construction" type="radio" value="Pucca" [(ngModel)]="Type_of_ConstructionV">
+                                                    <label for="Pucca">Pucca </label>
+                                                </span>
+                                                <span class="custom_radio_button" data-spanid="1">
+                                                    <input autocomplete="off" id="Kutcha" name="Type_of_Construction" formControlName="Type_of_Construction" type="radio" value="Kutcha" [(ngModel)]="Type_of_ConstructionV">
+                                                    <label for="Kutcha">Kutcha </label>
+                                                </span>                                                <div *ngIf="isSubmitted && formControls.Type_of_Construction.errors"
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.Type_of_Construction.errors.required">Please Select Construction Type...!</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-6 col-12">
+                                            <div class="input_group">
+                                                <label>Is Basement Exposed?</label>
+                                                <span class="custom_radio_button" data-spanid="1">
+                                                    <input autocomplete="off" id="yes" name="Basement_Exposed" (click)="BasementExposed('Yes')"
+                                                        formControlName="Basement_Exposed" type="radio" value="Yes" [(ngModel)]="Basement_ExposedV">
+                                                    <label for="yes">Yes</label>
+                                                </span>
+                                                <span class="custom_radio_button" data-spanid="1">
+                                                    <input autocomplete="off" id="OnlyParking" name="Basement_Exposed"
+                                                        (click)="BasementExposed('Only Parking')"
+                                                        formControlName="Basement_Exposed" type="radio"
+                                                        value="Only Parking" [(ngModel)]="Basement_ExposedV">
+                                                    <label for="OnlyParking">Only Parking</label>
+                                                </span>
+                                                <span class="custom_radio_button" data-spanid="1">
+                                                    <input autocomplete="off" id="No" name="Basement_Exposed" (click)="BasementExposed('No')"
+                                                        formControlName="Basement_Exposed" type="radio" value="No" [(ngModel)]="Basement_ExposedV">
+                                                    <label for="No">No</label>
+                                                </span>
+
+                                                <div *ngIf="FireForm.get('Basement_Exposed').value == 'Yes'">
+                                                    <label>Basement Exposed Details</label>
+                                                    <input autocomplete="off" id="field-name" formControlName="Basement_Exposed_Details"
+                                                        autofocus="autofocus" type="text"
+                                                        placeholder="Basement Exposed Details" class="form_control" [(ngModel)]="Basement_Exposed_DetailsV">
+                                                    <!-- Display validation errors -->
+                                                    <div *ngIf="isSubmitted && formControls.Basement_Exposed_Details.errors"
+                                                        class="ValidationError">
+                                                        <div *ngIf="formControls.Basement_Exposed_Details.errors.required">Please Enter Basement Exposed Details !</div>
+                                                    </div>
+                                                </div>
+
+                                                <div *ngIf="isSubmitted && formControls.Basement_Exposed.errors"
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.Basement_Exposed.errors.required"> Please Select Basement Exposed...!</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-md-6 col-sm-6 col-12">
+                                            <div class="input_group">
+                                                <label>Which Fire Fighting Arrangements are
+                                                    Available?</label>
+                                                <span class="check_box_custom">
+                                                    <label for="FireExtinguisher">
+                                                        <input autocomplete="off" type="checkbox" 
+                                                            formControlName="Fire_Fighting_Extinguisher"
+                                                            value="Fire Extinguisher" id="FireExtinguisher" (change)="updateValidation()" [(ngModel)]="Fire_Fighting_AV">
+                                                        <span class="check_mark">
+                                                            <i class="fa fa-check"></i>
+                                                            Fire Extinguisher
+                                                        </span>
+                                                    </label>
+                                                </span>
+                                                <span class="check_box_custom">
+                                                    <label for="Hydrants">
+                                                        <input autocomplete="off" type="checkbox" 
+                                                            formControlName="Fire_Fighting_Arrangements"
+                                                            value="Hydrants" id="Hydrants" (change)="updateValidation()" [(ngModel)]="Fire_Fighting_AV">
+                                                        <span class="check_mark">
+                                                            <i class="fa fa-check"></i>
+                                                            Hydrants
+                                                        </span>
+                                                    </label>
+                                                </span>
+                                                <span class="check_box_custom">
+                                                    <label for="Sprinklers">
+                                                        <input autocomplete="off" type="checkbox" 
+                                                            formControlName="Fire_Fighting_Arrangements"
+                                                            value="Sprinklers" id="Sprinklers" (change)="updateValidation()" [(ngModel)]="Fire_Fighting_AV">
+                                                        <span class="check_mark">
+                                                            <i class="fa fa-check"></i>
+                                                            Sprinklers
+                                                        </span>
+                                                    </label>
+                                                </span>
+                                                <span class="check_box_custom">
+                                                    <label fot="None">
+                                                        <input autocomplete="off" type="checkbox"
+                                                            formControlName="Fire_Fighting_Arrangements" value="None"
+                                                            id="None" (change)="updateValidation()" [(ngModel)]="Fire_Fighting_AV">
+                                                        <span class="check_mark">
+                                                            <i class="fa fa-check"></i>
+                                                            None
+                                                        </span>
+                                                    </label>
+                                                </span>
+                                                <div *ngIf="isSubmitted && formControls.Fire_Fighting_Arrangements.errors" class="ValidationError">
+                                                    <div *ngIf="formControls.Fire_Fighting_Arrangements.errors.required">Please Select Fire Fighting Arrangements...!</div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                         
+                                        <div class="col-md-6 col-sm-6 col-12">
+                                            <div class="input_group">
+                                                <label>Which Fire Fighting Arrangements are Available?</label>
+                                                <span class="check_box_custom">
+                                                    <label for="FireExtinguisher">
+                                                        <input autocomplete="off" type="checkbox"
+                                                            [formControl]="FireForm.controls['Fire_Fighting_Arrangements']"
+                                                            [value]="'Fire Extinguisher'" id="FireExtinguisher"
+                                                            (change)="Checkboxfacingvalue($event)" [checked]="Fire_Fighting_AV1 == 'Fire Extinguisher'">
+                                                        <span class="check_mark">
+                                                            <i class="fa fa-check"></i>
+                                                            Fire Extinguisher
+                                                        </span>
+                                                    </label>
+                                                </span>
+                                                <span class="check_box_custom">
+                                                    <label for="Hydrants">
+                                                        <!-- <input autocomplete="off" type="checkbox"
+                                                            [formControl]="FireForm.controls['Fire_Fighting_Arrangements']"
+                                                            [value]="'Hydrants'" id="Hydrants"
+                                                            [checked]="FireForm.get('Fire_Fighting_Arrangements').value.includes('Hydrants')"
+                                                            (change)="toggleCheckbox($event.target.checked, 'Hydrants')"> -->
+                                                        <input autocomplete="off" type="checkbox"
+                                                            [formControl]="FireForm.controls['Fire_Fighting_Arrangements']"
+                                                            [value]="'Hydrants'" id="Hydrants"
+                                                            (change)="Checkboxfacingvalue($event)" [checked]="Fire_Fighting_AV2 == 'Hydrants'">
+                                                        <span class="check_mark">
+                                                            <i class="fa fa-check"></i>
+                                                            Hydrants
+                                                        </span>
+                                                    </label>
+                                                </span>
+                                                <span class="check_box_custom">
+                                                    <label for="Sprinklers">
+                                                        <input autocomplete="off" type="checkbox"
+                                                            [formControl]="FireForm.controls['Fire_Fighting_Arrangements']"
+                                                            [value]="'Sprinklers'" id="Sprinklers"
+                                                            (change)="Checkboxfacingvalue($event)" [checked]="Fire_Fighting_AV3 == 'Sprinklers'">
+                                                        <span class="check_mark">
+                                                            <i class="fa fa-check"></i>
+                                                            Sprinklers
+                                                        </span>
+                                                    </label>
+                                                </span>
+                                                <span class="check_box_custom">
+                                                    <label for="None">
+                                                        <input autocomplete="off" type="checkbox"
+                                                            [formControl]="FireForm.controls['Fire_Fighting_Arrangements']"
+                                                            [value]="'None'" id="None"
+                                                            (change)="Checkboxfacingvalue($event)" [checked]="Fire_Fighting_AV4 == 'None'">
+                                                        <span class="check_mark">
+                                                            <i class="fa fa-check"></i>
+                                                            None
+                                                        </span>
+                                                    </label>
+                                                </span>
+                                                <!-- <div *ngIf="isSubmitted && FireForm.get('Fire_Fighting_Arrangements').errors" class="ValidationError">
+                                                    <div *ngIf="FireForm.get('Fire_Fighting_Arrangements').errors.required">
+                                                        Please Select Fire Fighting Arrangements...!
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <div class="col-md-3 col-sm-6 col-12">
+                                            <div class="input_group">
+                                                <label>Floor Number</label>
+                                                <select class="form_control" name="Floor_Number"
+                                                    formControlName="Floor_Number" [(ngModel)]="Floor_NumberV">
+                                                    <option value="">--SELECT--</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                    <option value="10">10</option>
+                                                    <option value="10 +">10 +</option>
+                                                </select>
+                                                <div *ngIf="isSubmitted && formControls.Floor_Number.errors"
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.Floor_Number.errors.required">Please Select Floor Number !</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-12">
+                                            <div class="input_group">
+                                                <label>Number of floors to be covered <div class="tooltip_cs"><i
+                                                            class="fa fa-question"></i>
+                                                        <p class="tooltiptext_cs" style="right:0 !important;">
+                                                            Buildings that have a
+                                                            construction that is permanent in nature.For
+                                                            instance, they have walls/roofs made of stronger
+                                                            materials such asbricks, cement, concrete,
+                                                            timber and the like.</p>
+                                                    </div>(Optional) </label>
+                                                <select class="form_control" name="Number_of_floors"
+                                                    formControlName="Number_of_floors" [(ngModel)]="Number_of_floorsV">
+                                                    <option value="">--SELECT--</option>
+                                                    <option value="1-5">1-5</option>
+                                                    <option value="5-10">5-10</option>
+                                                    <option value="10-20">10-20</option>
+                                                    <option value="20-30">20-30 </option>
+                                                    <option value="30-40">30-40</option>
+                                                    <option value="40-50">40-50</option>
+                                                    <option value="50-60">50-60 </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-12">
+                                            <div class="input_group">
+                                                <label>Build Up Year</label>
+                                                <select class="form_control" name="Build_Up_Year"
+                                                    formControlName="Build_Up_Year" aria-placeholder="--SELECT--" [(ngModel)]="Build_Up_YearV">
+                                                    <option value="">--SELECT--</option>
+                                                    <option value="1-5 Years">1-5 Years</option>
+                                                    <option value="5-10 Years">5-10 Years</option>
+                                                    <option value="10-20 Years">10-20 Years</option>
+                                                    <option value="20-30 Years">20-30 Years </option>
+                                                    <option value="30-40 Years">30-40 Years</option>
+                                                    <option value="40-50 Years">40-50 Years</option>
+                                                    <option value="50-60 Years">50-60 Years </option>
+                                                </select>
+                                                <div *ngIf="isSubmitted && formControls.Build_Up_Year.errors"
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.Build_Up_Year.errors.required">Please Enter Build Up Year...!</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-12">
+                                            <div class="input_group">
+                                                <label>Address</label>
+                                                <input autocomplete="off" id="field-name" formControlName="Address"  autofocus="autofocus"
+                                                    type="text"
+                                                    placeholder="Door number, Apartment, Street address, Landmark etc…"
+                                                    class="form_control" [(ngModel)]="Addres">
+                                                <div *ngIf="isSubmitted && formControls.Address.errors"
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.Address.errors.required">Please Enter Address...!</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-12">
+                                            <div class="input_group  ">
+                                                <label>Pincode</label>
+                                                <ng-multiselect-dropdown class="form-control dropdownhidden" formControlName="Pincode"
+                                                    name="Pincode" (keyup)="Getpincode($event , 1)" 
+                                                    placeholder="Select Pincode" [data]="PincodeAllData" [disabled]="true"
+                                                    [settings]="dropdownSingleSettingsTypeNew" [(ngModel)]="Pincode">
+                                                </ng-multiselect-dropdown>
+                                                <div *ngIf="isSubmitted && formControls.Pincode.errors"
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.Pincode.errors.required">Please Select Pincode !</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5 col-sm-6 col-12"
+                                            *ngIf="FireForm.get('FireProduct').value >= 2 && FireForm.get('FireProduct').value <= 4">
+                                            <div class="input_group">
+                                                <label>Base for Sum Insured valuation</label>
+                                                <span class="custom_radio_button" data-spanid="1">
+                                                    <input autocomplete="off" id="ReinstatementValue" name="SumInsured_valuation"
+                                                        formControlName="SumInsured_valuation" type="radio"
+                                                        value="Reinstatement Value Clause" [(ngModel)]="SumInsured_valuationV">
+                                                    <label for="ReinstatementValue">Reinstatement Value
+                                                        Clause</label>
+                                                </span>
+
+                                                <span class="custom_radio_button" data-spanid="2">
+                                                    <input autocomplete="off" id="MarketValueBasis" name="SumInsured_valuation"
+                                                        type="radio" formControlName="SumInsured_valuation"
+                                                        value="Market Value Basis" [(ngModel)]="SumInsured_valuationV">
+                                                    <label for="MarketValueBasis">Market Value Basis</label>
+                                                </span>
+                                                <div *ngIf="isSubmitted && formControls.SumInsured_valuation.errors"
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.SumInsured_valuation.errors.required">Please Select SumInsured_valuation...!</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-6 col-12"
+                                            *ngIf="FireForm.get('FireProduct').value >= 2 && FireForm.get('FireProduct').value <= 4">
+                                            <div class="input_group">
+                                                <label>Description of property (Optional)</label>
+                                                <input autocomplete="off" id="field-name" formControlName="Description_property"
+                                                    autofocus="autofocus" type="text"
+                                                    placeholder="Enter property description" class="form_control" [(ngModel)]="Description_propertyV">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-12">
+                                            <div class="input_group">
+                                                <label>Hypothecated to (Optional)</label>
+                                                <input autocomplete="off" id="field-name" formControlName="Hypothecated"
+                                                    autofocus="autofocus" type="text" placeholder="Enter bank name"
+                                                    class="form_control" [(ngModel)]="HypothecatedV">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-6 col-12"
+                                            *ngIf="FireForm.get('FireProduct').value === '1'">
+                                            <div class="input_group">
+                                                <label>Carpet Area in Sq. Ft. <div class="tooltip_cs"><i
+                                                            class="fa fa-question"></i>
+                                                        <p class="tooltiptext_cs" style="right:0 !important;">
+                                                            Buildings that have a
+                                                            construction that is permanent in nature.For
+                                                            instance, they have walls/roofs made of stronger
+                                                            materials such asbricks, cement, concrete,
+                                                            timber and the like.</p>
+                                                    </div>(Optional) </label>
+                                                <input autocomplete="off" id="field-name" formControlName="Carpet_Area_sq"
+                                                    formControlName="Carpet_Area_sq" autofocus="autofocus"
+                                                    (keyup)="onInput13Change()" type="text"
+                                                    placeholder="Enter area in Sq. Ft." class="form_control" [(ngModel)]="Carpet_Area_sqV">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-6 col-12"
+                                            *ngIf="FireForm.get('FireProduct').value === '1'">
+                                            <div class="input_group">
+                                                <label>Rate per Sq.Ft <div class="tooltip_cs"><i
+                                                            class="fa fa-question"></i>
+                                                        <p class="tooltiptext_cs" style="right:0 !important;">
+                                                            Buildings that have a
+                                                            construction that is permanent in nature.For
+                                                            instance, they have walls/roofs made of stronger
+                                                            materials such asbricks, cement, concrete,
+                                                            timber and the like.</p>
+                                                    </div>(Optional) </label>
+                                                <input autocomplete="off" id="field-name" formControlName="Rate_per_Sq"
+                                                    formControlName="Rate_per_Sq" autofocus="autofocus"
+                                                    (keyup)="onInput13Change()" type="text"
+                                                    placeholder="Enter rate per Sq. Ft" class="form_control" [(ngModel)]="Rate_per_SqV">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <!-- Dwelling and Housing Society -->
+                                    <div class="custom_table" *ngIf="FireForm.get('FireProduct').value === '1'">
+                                        <div class="d_flex flex_Start">
+                                            <div class="coverages_side_bar">
+                                                <ul>
+                                                    <li>Base Coverages</li>
+                                                    <li>Building, Plinth & Foundation <div class="tooltip_cs"><i
+                                                        class="fa fa-question"></i>                                                                
+                                                        <p class="tooltiptext_cs">Buildings that have a
+                                                        construction that is permanent in nature.For
+                                                        instance, they have walls/roofs made of stronger
+                                                        materials such asbricks, cement, concrete,
+                                                        timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>Home Contents <div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>                                                                
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>Furniure & Fixtures <div class="tooltip_cs"><i
+                                                        class="fa fa-question"></i>                                                                
+                                                    <p class="tooltiptext_cs">Buildings that have a
+                                                        construction that is permanent in nature.For
+                                                        instance, they have walls/roofs made of stronger
+                                                        materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>Electric/Electronic Item<div class="tooltip_cs"><i
+                                                        class="fa fa-question"></i>                                                                
+                                                        <p class="tooltiptext_cs">Buildings that have a
+                                                        construction that is permanent in nature.For
+                                                        instance, they have walls/roofs made of stronger
+                                                        materials such asbricks, cement, concrete,
+                                                        timber and the like.</p>
+                                                        </div>
+                                                    </li>
+
+
+                                                    <li>Other Property <div class="tooltip_cs"><i
+                                                        class="fa fa-question"></i>                                                                
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>Cover for Valuable Contents <div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>Max Sum Insured Per Item<div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>Total Max Sum Insured<div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <!-- <li>Total ₹ <div class="tooltip_cs"><i class="fa fa-question"></i> 
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                                
+                                                        </div>
+                                                         
+                                                    </li> -->
+                                                    <li><b>Other Coverages</b>
+                                                        <div class="tooltip_cs"><i class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>STFI <div class="tooltip_cs"><i class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>Earthquake <div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>Terrorism <div class="tooltip_cs"><i class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+
+                                                    <li *ngIf="this.Terrorism == 'true' || showInput">Terrorism Sum Insured <div class="tooltip_cs">
+                                                            <i class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="right_bar_scroll_location">
+                                                <div class="coverages_location">
+                                                    <ul>
+                                                        <li>Location&nbsp;
+                                                            <input autocomplete="off" type="text" class="border_none w_100" readonly
+                                                                name="Pincode" formControlName="Pincode"
+                                                                [value]="this.Pincode[0]['Id']"> 
+                                                        </li>
+
+                                                        <li>₹<input autocomplete="off" type="number" name="total" formControlName="total" 
+                                                            value="{{this.Suminsured}}"
+                                                            placeholder="0" readonly class="border_none w_100">
+                                                                
+                                                        </li>
+
+                                                        <li><input autocomplete="off" type="number" name="HomeContents"
+                                                                formControlName="HomeContents" placeholder="0"
+                                                                class="border_none w_100" [(ngModel)]="HomeContentsV">
+                                                        </li>
+
+                                                        <li><input autocomplete="off" type="number" name="furnitureandFixtures"
+                                                                formControlName="furnitureandFixtures" placeholder="0"
+                                                                class="border_none w_100" [(ngModel)]="furnitureandFixturesV">
+                                                        </li>
+
+                                                        <li><input autocomplete="off" type="number" name="ElectricElectronicItem"
+                                                                formControlName="ElectricElectronicItem" placeholder="0"
+                                                                class="border_none w_100" [(ngModel)]="ElectricElectronicItemV">
+                                                        </li>
+                                                        <li><input autocomplete="off" type="number" name="OtherProperty"
+                                                                formControlName="OtherProperty" placeholder="0"
+                                                                class="border_none w_100" [(ngModel)]="OtherPropertyV">
+                                                        </li>
+
+                                                        <li><input autocomplete="off" type="number" name="CoverValuableContents"
+                                                                formControlName="CoverValuableContents" placeholder="0"
+                                                                class="border_none w_100" [(ngModel)]="CoverValeVs"></li>
+                                                        <li><input autocomplete="off" type="number" name="MaxSumInsuredperitem" value="{{this.MaxSum3V}}" formControlName="MaxSumInsuredperitem"
+                                                              placeholder="0"
+                                                                class="border_none w_100" [(ngModel)]="MaxSumInsuredperitemV"></li>
+                                                        <li><input autocomplete="off" type="number" [(ngModel)]="stock" name="stock" 
+                                                            formControlName="stock" (input)="stockValueAddInTotal()"
+                                                            placeholder="0" class="border_none w_100"></li>
+                                                       
+                                                       
+                                                        <li></li>
+                                                        <li>
+                                                            <span class="check_box_custom">
+                                                                <label for="checked1">
+                                                                    <input autocomplete="off" type="checkbox" id="checked1" name="STFI"
+                                                                        formControlName="STFI" checked>
+                                                                    <span class="check_mark">
+                                                                        <i class="fa fa-check"></i>
+                                                                    </span>
+                                                                </label>
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="check_box_custom">
+                                                                <label for="checked2">
+                                                                    <input autocomplete="off" type="checkbox" id="checked2"
+                                                                        name="Earthquake" formControlName="Earthquake"
+                                                                        checked>
+                                                                    <span class="check_mark">
+                                                                        <i class="fa fa-check"></i>
+                                                                    </span>
+                                                                </label>
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="check_box_custom">
+                                                                <label for="checked3">
+                                                                    <input autocomplete="off" type="checkbox" id="checked3"
+                                                                        name="Terrorism" formControlName="Terrorism"
+                                                                        (change)="toggleInputVisibility($event)">
+                                                                    <span class="check_mark" >
+                                                                        <i class="fa fa-check"></i>
+                                                                    </span>
+                                                                </label>
+                                                            </span>
+                                                        </li>
+                                                        <li *ngIf="this.Terrorism == 'true' || showInput">
+                                                            <input autocomplete="off" type="text" name="terrorismsumtotal"
+                                                                formControlName="terrorismsumtotal" placeholder="Terrorism"
+                                                                class="border_none w_100"> <!--value="{{this.TotalMax23V2}}"-->
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Business upto 5 cr / Business Above 5 Cr --> 
+                                    <div class="custom_table" *ngIf="FireForm.get('FireProduct').value === '2' || FireForm.get('FireProduct').value === '3'">
+                                        <div class="d_flex flex_Start">
+                                            <div class="coverages_side_bar">
+                                                <ul>
+                                                    <li>Base Coverages </li>
+                                                    <li>Building/Structure Including Plinth, basements, and additional structure                                                     
+                                                    </li>
+                                                    <li>Plant and Machinery <div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>Furniture & Fixtures  <div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>Cover for Valuable contents <div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>Other contents<div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li><b>Stock</b>
+                                                        <div class="tooltip_cs"><i class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>Total ₹ <div class="tooltip_cs"><i class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li><b>Other Coverages</b>
+                                                        <div class="tooltip_cs"><i class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    
+
+                                                    <li>STFI <div class="tooltip_cs"><i class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>Earthquake <div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>Terrorism <div class="tooltip_cs"><i class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+
+
+                                                    <li *ngIf="this.Terrorism == 'true' || showInput">Terrorism Sum Insured <div class="tooltip_cs">
+                                                            <i class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="right_bar_scroll_location">
+                                                <div class="coverages_location">
+                                                    <ul>
+                                                        <li>Location&nbsp;
+                                                            <input autocomplete="off" type="text" class="border_none w_100" readonly
+                                                                name="Pincode" formControlName="Pincode"
+                                                                [value]="this.Pincode[0]['Id']">
+                                                        </li>
+                                                        <li>
+                                                            <input autocomplete="off" type="number" class="border_none w_100"
+                                                                name="building_structure" formControlName="building_structure"
+                                                                 (input)="multiplyAndSetValues3()" [(ngModel)]="building_structure"
+                                                                placeholder="0">
+                                                        </li>
+                                                        <li><input autocomplete="off" type="number" name="plant_machinery"
+                                                                formControlName="plant_machinery" placeholder="0" [(ngModel)]="plant_machinery"
+                                                                class="border_none w_100" (input)="multiplyAndSetValues3()"></li>
+                                                        <li><input autocomplete="off" type="number" name="furniture_fixtures" [(ngModel)]="furniture_fixtures"
+                                                                formControlName="furniture_fixtures" placeholder="0" (input)="multiplyAndSetValues3()"
+                                                                class="border_none w_100"></li>
+                                                        <li><input autocomplete="off" type="number" name="BusinessCoverValuableContents"
+                                                                formControlName="BusinessCoverValuableContents" (input)="multiplyAndSetValues3()"
+                                                                placeholder="0" [(ngModel)]="BusinessCoverValuableContents"
+                                                                class="border_none w_100"></li>
+                                                        <li><input autocomplete="off" type="number" name="other_contents"
+                                                                formControlName="other_contents" (input)="multiplyAndSetValues3()"
+                                                                placeholder="0" [(ngModel)]="other_contents"
+                                                                class="border_none w_100">
+                                                        </li>
+                                                        <li><input autocomplete="off" type="text" name="stock"
+                                                            formControlName="stock" (input)="multiplyAndSetValues3()"
+                                                            placeholder="0" [(ngModel)]="stock"
+                                                            class="border_none w_100">
+                                                        </li>
+                                                        <li>₹<input autocomplete="off" type="text" name="total" formControlName="total"
+                                                                placeholder="0.00" readonly class="border_none w_100" [(ngModel)]="Suminsured" value="{{this.Suminsured}}">
+                                                        </li>
+                                                        <li></li>
+                                                        <li>
+                                                            <span class="check_box_custom">
+                                                                <label for="checked1">
+                                                                    <input autocomplete="off" type="checkbox" id="checked1" name="STFI"
+                                                                        formControlName="STFI" checked disabled>
+                                                                    <span class="check_mark">
+                                                                        <i class="fa fa-check"></i>
+                                                                    </span>
+                                                                </label>
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="check_box_custom">
+                                                                <label for="checked2">
+                                                                    <input autocomplete="off" type="checkbox" id="checked2"
+                                                                        name="Earthquake" formControlName="Earthquake"
+                                                                        checked disabled>
+                                                                    <span class="check_mark">
+                                                                        <i class="fa fa-check"></i>
+                                                                    </span>
+                                                                </label>
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="check_box_custom">
+                                                                <label for="checked3">
+                                                                    <input autocomplete="off" type="checkbox" id="checked3"
+                                                                        name="Terrorism" formControlName="Terrorism" [(ngModel)]="Terrorism"
+                                                                        (change)="toggleInputVisibility($event)">
+                                                                    <span class="check_mark">
+                                                                        <i class="fa fa-check"></i>
+                                                                    </span>
+                                                                </label>
+                                                            </span>
+                                                        </li>
+                                                        <li *ngIf="this.Terrorism == 'true' || showInput">
+                                                            <input autocomplete="off" type="text" name="terrorismsumtotal"
+                                                                formControlName="terrorismsumtotal" [(ngModel)]="terrorismsm" placeholder="0"
+                                                                class="border_none w_100"> <!-- [(ngModel)]="terrorismsm"-->
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div *ngIf="building_structureErrors" class="ValidationError">
+                                                    {{ building_structureErrors }}
+                                                  </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- / upto 50 Cr Above 50 CR  -->
+                                    <div class="custom_table" *ngIf="FireForm.get('FireProduct').value === '4'">
+                                        <div class="d_flex flex_Start">
+                                            <div class="coverages_side_bar">
+                                                <ul>
+                                                    <li>Base Coverages </li>
+                                                    <li>Building</li>
+                                                    <li>Plinth & Foundation 
+                                                        <div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>Plant and Machinery <div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>Furniture & Fixtures<div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>Other Property <div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>Stock <div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>Total ₹ <div class="tooltip_cs"><i class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li><b>Other Coverages</b>
+                                                        <div class="tooltip_cs"><i class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>STFI <div class="tooltip_cs"><i class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>Earthquake <div class="tooltip_cs"><i
+                                                                class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>Terrorism <div class="tooltip_cs"><i class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+
+
+                                                    <li *ngIf="showInput">Terrorism Sum Insured <div class="tooltip_cs">
+                                                            <i class="fa fa-question"></i>
+                                                            <p class="tooltiptext_cs">Buildings that have a
+                                                                construction that is permanent in nature.For
+                                                                instance, they have walls/roofs made of stronger
+                                                                materials such asbricks, cement, concrete,
+                                                                timber and the like.</p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="right_bar_scroll_location">
+                                                <div class="coverages_location">
+                                                    <ul>
+                                                        <li>Location&nbsp;
+                                                            <input autocomplete="off" type="text" class="border_none w_100" readonly
+                                                                name="Pincode" formControlName="Pincode"
+                                                                [value]="this.Pincode[0]['Id']">
+                                                        </li>
+                                                        <li>
+                                                            <input autocomplete="off" type="number" class="border_none w_100" 
+                                                                name="building_structure" formControlName="building_structure" 
+                                                                (input)="multiplyAndSetValues3()"
+                                                                placeholder="0">
+
+                                                                
+                                                        </li>
+                                                        <li><input autocomplete="off" type="number" name="plant_machinery"
+                                                                formControlName="plant_machinery" placeholder="0"
+                                                                (input)="multiplyAndSetValues3()"
+                                                                class="border_none w_100"></li>
+                                                        <li><input autocomplete="off" type="text" name="furniture_fixtures"
+                                                                formControlName="furniture_fixtures" 
+                                                                (input)="multiplyAndSetValues3()"
+                                                                placeholder="0"
+                                                                class="border_none w_100"></li>
+                                                        <li><input autocomplete="off" type="text" name="BusinessCoverValuableContents"
+                                                                formControlName="BusinessCoverValuableContents"
+                                                                placeholder="0"
+                                                                (input)="multiplyAndSetValues3()"
+                                                                class="border_none w_100">
+                                                        </li>
+                                                        <li><input autocomplete="off" type="text" name="other_contents"
+                                                                formControlName="other_contents"
+                                                                (input)="multiplyAndSetValues3()"
+                                                                placeholder="0"
+                                                                class="border_none w_100">
+                                                        </li>
+                                                        <li><input autocomplete="off" type="text" name="stock"
+                                                                formControlName="stock" [(ngModel)]="stock"
+                                                                placeholder="0" (input)="multiplyAndSetValues3()"
+                                                                class="border_none w_100">
+                                                        </li>
+                                                        <li>₹<input autocomplete="off" type="text" name="total" formControlName="total"
+                                                                placeholder="0.00" readonly class="border_none w_100" [(ngModel)]="Suminsured" value="{{this.Suminsured}}">
+                                                        
+                                                        </li>
+                                                        <li></li>
+                                                        <li>
+                                                            <span class="check_box_custom">
+                                                                <label for="checked1">
+                                                                    <input autocomplete="off" type="checkbox" id="checked1" name="STFI"
+                                                                        formControlName="STFI" checked disabled>
+                                                                    <span class="check_mark">
+                                                                        <i class="fa fa-check"></i>
+                                                                    </span>
+                                                            </label>
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="check_box_custom">
+                                                                <label for="checked2">
+                                                                    <input autocomplete="off" type="checkbox" id="checked2"
+                                                                        name="Earthquake" formControlName="Earthquake"
+                                                                        checked disabled>
+                                                                    <span class="check_mark">
+                                                                        <i class="fa fa-check"></i>
+                                                                    </span>
+                                                                </label>
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="check_box_custom">
+                                                                <label for="checked3">
+                                                                    <input autocomplete="off" type="checkbox" id="checked3"
+                                                                        name="Terrorism" formControlName="Terrorism" [(ngModel)]="Terrorism"
+                                                                        (change)="toggleInputVisibility($event)">
+                                                                    <span class="check_mark">
+                                                                        <i class="fa fa-check"></i>
+                                                                    </span>
+                                                                </label>
+                                                            </span>
+                                                        </li>
+                                                        <li *ngIf="showInput">
+                                                            <input autocomplete="off" type="text" name="terrorismsumtotal"
+                                                                formControlName="terrorismsumtotal" placeholder="0"
+                                                                class="border_none w_100"> <!--[(ngModel)]="Suminsured" value="{{this.Suminsured}}"-->
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="building_structureErrors" class="ValidationError">
+                                                {{ building_structureErrors }}
+                                              </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" *ngIf="FireForm.get('FirePolicy').value === 'Rollover' || FireForm.get('FirePolicy').value === 'Renewal'">
+                                <div class="col-md-12 mt_20">
+                                    <div class="form_sub_title"><i class="fa fa-file mr_5"></i> Previous Insurer
+                                        Details</div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="input_group">
+                                                <label for="Insurers">Previous Insurers</label>
+                                                <ng-multiselect-dropdown [settings]="dropdownSettingsMultiselect" class="form_control_ng" name="FireExpiring"
+                                                    placeholder="Select Insurer" [data]="Company" formControlName="FireExpiring"
+                                                     [(ngModel)]="FireExpiringV">
+                                                </ng-multiselect-dropdown>
+                                                <div *ngIf="isSubmitted && formControls.FireExpiring.errors"
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.FireExpiring.errors.required">Please Select Fire Expiring...!</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input_group">
+                                                <label>Previous policy Number</label>
+                                                <input autocomplete="off" type="text" class="form_control" name="FirePreviousPolicyNo"
+                                                    formControlName="FirePreviousPolicyNo"
+                                                    placeholder="Previous policy number" [(ngModel)]="FirePreviousPolicyNoV" />
+                                                    <div *ngIf="isSubmitted && formControls.FirePreviousPolicyNo.errors"
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.FirePreviousPolicyNo.errors.required">Please Select Fire Previous Policy No...!</div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input_group">
+                                                <label>Expiry Date(DD/MM/YYYY)</label>
+                                                <input autocomplete="off" type="date" name="FireExpiryDate" class="form_control"
+                                                    formControlName="FireExpiryDate"
+                                                    placeholder="Expiry Date(DD/MM/YYYY)" [(ngModel)]="FireExpiryDateV" />
+                                                    <div *ngIf="isSubmitted && formControls.FireExpiryDate.errors"
+                                                        class="ValidationError">
+                                                        <div *ngIf="formControls.FireExpiryDate.errors.required">Please Select Fire Expiry Date...!</div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input_group">
+                                                <label>Any Past Loss Experiences?</label>
+                                                <span class="custom_radio_button" data-spanid="1">
+                                                    <input autocomplete="off" id="yes3" formControlName="PastLossExperiences"
+                                                        name="PastLossExperiences" type="radio" value="Yes" [(ngModel)]="PastLossExperiencesV">
+                                                    <label for="yes3">Yes</label>
+                                                </span>
+                                                <span class="custom_radio_button" data-spanid="1">
+                                                    <input autocomplete="off" id="yes2" formControlName="PastLossExperiences"
+                                                        name="PastLossExperiences" type="radio" value="No">
+                                                    <label for="yes2">No</label>
+                                                </span>
+
+                                                <div *ngIf="isSubmitted && formControls.PastLossExperiences.errors"
+                                                class="ValidationError">
+                                                <div *ngIf="formControls.PastLossExperiences.errors.required">Please Select PastLoss Experiences...!</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" id="PolcyDurection">
+                                <div class="col-md-12 mt_20">
+                                    <div class="form_sub_title"><i class="fa fa-file mr_5"></i> Policy Duration</div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="input_group">
+                                                <label>Policy Duration (Months)</label>
+                                                <input autocomplete="off" type="text" name="PolicyDuration" readonly
+                                                    formControlName="PolicyDuration" value="12" class="form_control"
+                                                    placeholder="12 Months" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input_group">
+                                                <label>Policy Start Date</label>
+                                                <input autocomplete="off" type="date" name="PolicyRiskStartDate"
+                                                    formControlName="PolicyRiskStartDate" class="form_control" (change)="PolicyRiskStart($event.target.value)" [(ngModel)]="PolicyRiskStartDateV" />
+                                                <div *ngIf="isSubmitted && formControls.PolicyRiskStartDate.errors"
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.PolicyRiskStartDate.errors.required">
+                                                        Please Enter Policy Start Date Type !
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input_group">
+                                                <label>Policy End Date</label>
+                                                <input autocomplete="off" type="date" name="PolicyRiskEndDate"
+                                                    formControlName="PolicyRiskEndDate" readonly class="form_control" [(ngModel)]="PolicyRiskEndDateV" />
+                                                <div *ngIf="isSubmitted && formControls.PolicyRiskEndDate.errors "
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.PolicyRiskEndDate.errors.required">
+                                                        Please Enter Policy End Date Type !
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="main_footer">
+                            <button type="submit" class="Save_click">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

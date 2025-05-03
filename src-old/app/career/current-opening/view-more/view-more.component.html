@@ -1,0 +1,26 @@
+
+<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+<p class="TDHeading" style="padding:8px;">Experience</p>
+<div class="row">
+    <div class="col-md-12">
+        <div class="view_data_css">
+            <p *ngFor="let rVALUE of data.exp;"><strong>{{rVALUE.ExpFieldName}}</strong></p>
+        </div>
+    </div>
+</div>
+<p class="TDHeading" style="padding:8px;">Technical Skills</p>
+<div class="row">
+    <div class="col-md-12">
+        <div class="view_data_css">
+            <p *ngFor="let rVALUE of data.tech;"><strong>{{rVALUE.TechFieldName}}</strong></p>
+        </div>
+    </div>
+</div>
+<p class="TDHeading" style="padding:8px;">Desired Profile</p>
+<div class="row">
+    <div class="col-md-12">
+        <div class="view_data_css">
+            <p *ngFor="let rVALUE of data.desired;"><strong>{{rVALUE.DesFieldName}}</strong></p>
+        </div>
+    </div>
+</div>

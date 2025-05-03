@@ -1,0 +1,466 @@
+<div class="modal-dialog cs_table_data custom-modal-dailog-data">
+    <div>
+        <div class="modal-body" style="height: calc(100vh - 155px) !important; overflow-y: auto;">
+
+            <button class="btn btn-primary d_flex" style="padding:3px; position: fixed; top: 84px; right: 35px;"
+                (click)="CloseModel()">
+                <i aria-hidden="true" class="fa fa-arrow-left" style="padding-top:1px;"></i>&nbsp;Back
+            </button>
+
+
+            <div *ngFor="let row of dataAr;">
+                <div class=" doc-required">
+                    <div class="form_sub_doc">
+                        Employee Details
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="claim_status">
+                                <span>Employee Name</span>
+                                <abbr>{{row.journeyDetails.employeeName}}</abbr>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="claim_status">
+                                <span>Employee Id</span>
+                                <abbr>{{row.journeyDetails.employeeId}}</abbr>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="claim_status">
+                                <span>Designation</span>
+                                <abbr>{{row.journeyDetails.employeeDesignation}}</abbr>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="claim_status">
+                                <span>Profile</span>
+                                <abbr>{{row.journeyDetails.employeeProfile}}</abbr>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="claim_status">
+                                <span>Vertical </span>
+                                <abbr>{{row.journeyDetails.employeeDepartment}}</abbr>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="claim_status">
+                                <span>Reporting Manager</span>
+                                <abbr>{{row.journeyDetails.employeeRM}}</abbr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" doc-required" *ngIf="row.claimType == 'Miscellaneous'">
+                    <div class="form_sub_doc">Claim Details
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="claim_status">
+                                <span>Claim From Date</span>
+                                <abbr>{{row.claimFromDate | date:'dd-MM-yyyy'}}</abbr>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="claim_status">
+                                <span>Claim To Date</span>
+                                <abbr>{{row.claimToDate | date:'dd-MM-yyyy'}}</abbr>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="claim_status">
+                                <span>Claim Amount (INR)</span>
+                                <abbr>{{row.claimAmount}}</abbr>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class=" doc-required" *ngIf="row.claimType == 'Miscellaneous'">
+                    <div class="form_sub_doc">Remark
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="claim_status">
+                                <abbr>{{row.remark}}</abbr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" doc-required" *ngIf="row.claimType == 'Miscellaneous' && row.document != ''">
+                    <div class="form_sub_doc">Document
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4" *ngFor="let image of row.document; let i = index">
+                            <div class="claim_status">
+                                <span>Document {{ i + 1 }}</span>
+                                <abbr><a href="javascript:void(0)" (click)="ViewDocument(image)">Click to
+                                        View</a></abbr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="row.claimType == 'Miscellaneous'">
+                    <div class=" doc-required" *ngIf="row.status != 0 && row.journeyDetails.managerRemark != ''">
+                        <div class="form_sub_doc">Action Details
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6"
+                                *ngIf="row.journeyDetails.managerRemark && row.journeyDetails.managerRemark != ''">
+                                <div class="claim_status">
+                                    <span>Claim Approved by RM</span>
+                                    <abbr>{{row.journeyDetails.managerAmount ? row.journeyDetails.managerAmount :
+                                        0}}</abbr>
+                                </div>
+                            </div>
+                            <div class="col-md-6"
+                                *ngIf="row.journeyDetails.managerRemark && row.journeyDetails.managerRemark != ''">
+                                <div class="claim_status">
+                                    <span>RM Remark</span>
+                                    <abbr>{{row.journeyDetails.managerRemark}}</abbr>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6"
+                                *ngIf="row.journeyDetails.hodRemark && row.journeyDetails.hodRemark != ''">
+                                <div class="claim_status">
+                                    <span>Claim Approved by HOD</span>
+                                    <abbr>{{row.journeyDetails.hodAmount ? row.journeyDetails.hodAmount : 0}}</abbr>
+                                </div>
+                            </div>
+                            <div class="col-md-6"
+                                *ngIf="row.journeyDetails.hodRemark && row.journeyDetails.hodRemark != ''">
+                                <div class="claim_status">
+                                    <span>HOD Remark</span>
+                                    <abbr>{{row.journeyDetails.hodRemark}}</abbr>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6"
+                                *ngIf="row.journeyDetails.claimRemark && row.journeyDetails.claimRemark != ''">
+                                <div class="claim_status">
+                                    <span>Claim Approved by Claim Manager.</span>
+                                    <abbr>{{row.journeyDetails.claimAmount ? row.journeyDetails.claimAmount : 0}}</abbr>
+                                </div>
+                            </div>
+                            <div class="col-md-6"
+                                *ngIf="row.journeyDetails.claimRemark && row.journeyDetails.claimRemark != ''">
+                                <div class="claim_status">
+                                    <span>Claim Manager Remark</span>
+                                    <abbr>{{row.journeyDetails.claimRemark}}</abbr>
+                                </div>
+                            </div>
+                            <div class="col-md-6"
+                                *ngIf="row.journeyDetails.accountRemark && row.journeyDetails.accountRemark != ''">
+                                <div class="claim_status">
+                                    <span>Claim Approved by Finance</span>
+                                    <abbr>{{row.journeyDetails.accountAmount ? row.journeyDetails.accountAmount :
+                                        0}}</abbr>
+                                </div>
+                            </div>
+                            <div class="col-md-6"
+                                *ngIf="row.journeyDetails.accountRemark && row.journeyDetails.accountRemark != ''">
+                                <div class="claim_status">
+                                    <span>Finance Remark</span>
+                                    <abbr>{{row.journeyDetails.accountRemark}}</abbr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- -------------------------------------------------------PREVIOUS WITH AMOUNT INPUT------------------------------------------- -->
+            <!-- <div *ngFor="let row of dataAr;">
+                <div *ngIf="row.claimType == 'Local Conveyance'">
+                    <form class="form" [formGroup]="ClaimUpdateForm">
+                        <div class="modal-body">
+                            <h5 class="title-h5">Journey Details</h5>
+                            <table class="table-claim table-bordered table-hover" id="Table1"
+                                style="width: -webkit-fill-available;">
+                                <thead>
+                                    <th>SrNo.</th>
+                                    <th>Departure Start Point</th>
+                                    <th>Arrival Start Point</th>
+                                    <th>Date Range</th>
+                                    <th>Purpose Of Visit</th>
+                                    <th>Distance</th>
+                                    <th>Document</th>
+                                    <th>Remark</th>
+                                    <th>Requested Amount</th>
+
+                                    <th
+                                        *ngIf="(row.status == 0 && urlSegment == 'localClaim-manager' && this.ModalAction == 'Approve' ) || LocalData[0].managerAmount != null">
+                                        Manager Amount</th>
+                                    <th
+                                        *ngIf="(row.status == 1 && urlSegment == 'localClaim-hod'  && this.ModalAction == 'Approve') || LocalData[0].hodAmount != null">
+                                        HOD Amount</th>
+
+                                    <th
+                                        *ngIf="(row.status == 2 && urlSegment == 'localClaim-claim'  && this.ModalAction == 'Approve') || LocalData[0].claimAmount != null">
+                                        Claim Amount</th>
+
+                                    <th
+                                        *ngIf="(row.status == 3 && urlSegment == 'localClaim-account'  && this.ModalAction == 'Approve') || LocalData[0].accountAmount != null">
+                                        Account Amount</th>
+                                </thead>
+
+                                <tbody *ngFor="let row of LocalData">
+                                    <td>{{ row.Id + 1}}</td>
+                                    <td>{{row.DepartureStartPoint}}</td>
+                                    <td>{{row.ArrivalStartPoint}}</td>
+                                    <td>{{row.DepartureDate | date:'dd-MM-yyyy'}} TO {{row.ArrivalDate |
+                                        date:'dd-MM-yyyy'}}</td>
+                                    <td>{{row.PurposeOfVisit ? row.PurposeOfVisit[0].Name : ''}}</td>
+                                    <td>{{row.Distance}}</td>
+                                    <td>
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#claimdocs"
+                                            (click)="ViewClaimDocs(row.JourneyFile)">View</button>
+                                    </td>
+                                    <td>{{row.Remark}}</td>
+                                    <td>{{row.EmployeeAmount}}</td>
+                                    <td
+                                        *ngIf="this.Status == 0 && urlSegment == 'localClaim-manager'  && this.ModalAction == 'Approve'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.Id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.Id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.Id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.Id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.managerAmount != null">
+                                        {{row.managerAmount}}
+                                    </td>
+                                    <td
+                                        *ngIf="this.Status == 1 && urlSegment == 'localClaim-hod' && this.ModalAction == 'Approve'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.Id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.Id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.Id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.Id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.hodAmount != null">
+                                        {{row.hodAmount}}
+                                    </td>
+                                    <td
+                                        *ngIf="this.Status == 2 && urlSegment == 'localClaim-claim' && this.ModalAction == 'Approve'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.Id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.Id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.Id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.Id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.claimAmount != null">
+                                        {{row.claimAmount}}
+                                    </td>
+                                    <td
+                                        *ngIf="this.Status == 3 && urlSegment == 'localClaim-account' && this.ModalAction == 'Approve'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.Id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.Id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.Id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.Id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.accountAmount != null">
+                                        {{row.accountAmount}}
+                                    </td>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+
+
+                    <form class="form" [formGroup]="ClaimForm"
+                        *ngIf="this.Status == 0 && urlSegment == 'localClaim-manager' && this.ModalAction == 'Approve' || this.Status == 1 && urlSegment == 'localClaim-hod' && this.ModalAction == 'Approve' || this.Status == 2 && urlSegment == 'localClaim-claim' && this.ModalAction == 'Approve' || this.Status == 3 && urlSegment == 'localClaim-account' && this.ModalAction == 'Approve'">
+
+                        <div class="modal-body ">
+                            <div class="form-group">
+                                <label for="Remark">Remark</label>
+                                <textarea class="form-control" type="text" formControlName="Remark" name="Remark"
+                                    id="Remark" placeholder="Enter Remark"></textarea>
+                                <span *ngIf="claimSubmit && FormClaim.Remark.errors" class="ValidationError">
+                                    <span *ngIf="FormClaim.Remark.errors.required">Remark required!</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" (click)="claim_Form()" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
+                    <div class="remark">
+                        <h5 *ngIf="row.journeyDetails.managerRemark && this.Status != 0" class="remark-text">
+                            <abbr>Manager Remark</abbr><span>{{row.journeyDetails.managerRemark}}</span></h5>
+                        <h5 *ngIf="row.journeyDetails.hodRemark && (this.Status != 0 || this.Status != 1)"
+                            class="remark-text"><abbr>HOD Remark</abbr><span>{{row.journeyDetails.hodRemark}}</span>
+                        </h5>
+                        <h5 *ngIf="row.journeyDetails.claimRemark && (this.Status != 0 && this.Status != 1 && this.Status != 2)"
+                            class="remark-text"><abbr>Claim Manager
+                                Remark</abbr><span>{{row.journeyDetails.claimRemark}}</span></h5>
+                        <h5 *ngIf="row.journeyDetails.accountRemark && (this.Status != 0 && this.Status != 1 && this.Status != 2 && this.Status != 3)"
+                            class="remark-text"><abbr>Account
+                                Remark</abbr><span>{{row.journeyDetails.accountRemark}}</span></h5>
+                    </div>
+
+                </div>
+            </div>  -->
+
+            <div *ngIf=" dataAr ? dataAr[0].claimType == 'Local Conveyance' : ''">
+                <div class="Journey_details" *ngFor="let row of LocalData;">
+                    <div class="Journey_details_1">
+                        <div class="details_1">
+                            <div class="details_number">{{ row.Id + 1}}</div>
+                            <div class="details_name">{{row.DepartureStartPoint}} <i class="fa fa-long-arrow-right"
+                                    aria-hidden="true"></i> {{row.ArrivalStartPoint}}</div>
+                            <!-- <img src="https://crm.squareinsurance.in/assets/image/product_icon/car.svg"/> -->
+                        </div>
+                        <div class="details_2">
+                            <div class="details_2_1">
+                                <p class="light_p">Distance (KM)</p>
+                                <p class="dark_p">{{row.Distance}}</p>
+                            </div>
+                            <div class="details_2_1">
+                                <p class="light_p">Date Range</p>
+                                <p class="dark_p">{{row.DepartureDate | date:'dd-MM-yyyy'}} TO {{row.ArrivalDate |
+                                    date:'dd-MM-yyyy'}}</p>
+                            </div>
+
+                            <div class="details_2_1">
+                                <button *ngIf="row.JourneyFile != ''" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#claimdocs" (click)="ViewClaimDocs(row.JourneyFile)">View</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="Journey_details_2">
+                        <ul>
+                            <li><span>Purpose Of Visit:</span>{{row.PurposeOfVisit ? row.PurposeOfVisit[0].Name : ''}}
+                            </li>
+                            <li><span>Requested Amount (INR):</span>{{row.EmployeeAmount}}</li>
+                            <li><span>Mode:</span>{{row.PurposeOfVisit ? row.Travelmode[0].Name : ''}}</li>
+                        </ul>
+                        <div class="remark_area"><span>Remark:</span>{{row.Remark}}</div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div *ngIf=" dataAr ? dataAr[0].claimType == 'Local Conveyance' : ''">
+                <div class=" doc-required"  >
+                    <div class="form_sub_doc">Action Details
+                    </div>
+                    <div class="row" *ngFor="let row of dataAr;">
+                        <div class="col-md-6" *ngIf="row.journeyDetails.managerRemark && this.Status != 0">
+                            <div class="claim_status">
+                                <span>Fare Approved by RM</span>
+                                <abbr>{{row.journeyDetails.managerAmount ? row.journeyDetails.managerAmount : 0}}</abbr>
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="row.journeyDetails.managerRemark && this.Status != 0">
+                            <div class="claim_status">
+                                <span>RM Remark</span>
+                                <abbr>{{row.journeyDetails.managerRemark}}</abbr>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6" *ngIf="row.journeyDetails.hodRemark && this.Status != 0">
+                            <div class="claim_status">
+                                <span>Fare Approved by HOD</span>
+                                <abbr>{{row.journeyDetails.hodAmount ? row.journeyDetails.hodAmount : 0}}</abbr>
+                            </div>
+                        </div>
+                        <div class="col-md-6"
+                            *ngIf="row.journeyDetails.hodRemark && (this.Status != 0 || this.Status != 1)">
+                            <div class="claim_status">
+                                <span>HOD Remark</span>
+                                <abbr>{{row.journeyDetails.hodRemark}}</abbr>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6" *ngIf="row.journeyDetails.claimRemark && this.Status != 0">
+                            <div class="claim_status">
+                                <span>Fare Approved by Claim Manager.</span>
+                                <abbr>{{row.journeyDetails.claimAmount ? row.journeyDetails.claimAmount : 0}}</abbr>
+                            </div>
+                        </div>
+                        <div class="col-md-6"
+                            *ngIf="row.journeyDetails.claimRemark && (this.Status != 0 && this.Status != 1 && this.Status != 2)">
+                            <div class="claim_status">
+                                <span>Claim Manager Remark</span>
+                                <abbr>{{row.journeyDetails.claimRemark}}</abbr>
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="row.journeyDetails.accountRemark && this.Status != 0">
+                            <div class="claim_status">
+                                <span>Fare Approved by Finance</span>
+                                <abbr>{{row.journeyDetails.accountAmount ? row.journeyDetails.accountAmount : 0}}</abbr>
+                            </div>
+                        </div>
+                        <div class="col-md-6"
+                            *ngIf="row.journeyDetails.accountRemark && (this.Status != 0 && this.Status != 1 && this.Status != 2 && this.Status != 3)">
+                            <div class="claim_status">
+                                <span>Finance Remark</span>
+                                <abbr>{{row.journeyDetails.accountRemark}}</abbr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ---------------------------------CLAIM DOCS-------------------------- -->
+<div class="modal fade" id="claimdocs" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="false">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content" style="width:600px;">
+            <div class="modal-header">
+                <h5 class="modal-title-h2 " id="exampleModalLabel">Claim Docs</h5>
+                <button id="CloseModel" type="button" class="close closeModelButton" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="doc_one" *ngFor="let doc of selectedImages; let i = index">
+                    <h5>Document {{i + 1}}</h5>
+                    <button class="btn btn-primary" (click)="ViewDocument(doc)">
+                        View
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

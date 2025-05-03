@@ -1,0 +1,142 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+
+          <div class="box-header">
+            <div class="header_title" *ngIf="ActivePage == 'Default'"> Manage Offline Requests <a style="color:white;"
+                routerLink="/rfq/products" class=" pull-right btn btn-primary btn-info"> <i class="fa fa-plus"></i> Add
+                Request For Quote</a>
+            </div>
+          </div> <!-- /.box-header -->
+          <div class="box-body">
+            <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+            <hr>
+            
+            <div class=" mydiv table-responsive">
+              <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <!-- <th>LOB / Type </th> -->
+                    <th>Quotation</th>
+                    <th>Construction Type</th>
+                    <th>Occupancy Type</th>
+                    <th>Customer Details</th>
+                    <th>Status</th>
+                    <th>Creator Details</th>
+                    <th>Create Date</th>
+                    <th style="width: 22%;">TAT</th>
+                  </tr>
+
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{row.SrNo}}</td>
+
+                    <td>
+                    
+
+
+                      <button style="margin-top:4px;" type="button"
+                      *ngIf="(row.AssignUserId == '') && this.currentUrl == '/rfq/offline-manage-requests'"  (click)="AcceptAssignQuote(row.Quotation_Id)" class=" ul-last-btn btn btn-info">Accept</button>
+
+                       <a *ngIf="(row.AssignUserId != '' && (row.CustomerName == null || row.CustomerMobile == null) ) && this.currentUrl == '/rfq/offline-manage-requests'"  routerLink="/rfq/Fire-Form/{{row.Quotation_Id}}" ><span
+                          class="label label-default">{{row.Quotation_Id}}</span></a> <br>
+
+                          <a *ngIf="(row.AssignUserId != '' && (row.CustomerName != null || row.CustomerMobile != null) ) && this.currentUrl == '/rfq/offline-manage-requests'"  routerLink="/rfq/view-offline-quote/{{row.Quotation_Id}}" ><span
+                            class="label label-default">{{row.Quotation_Id}}</span></a> <br>
+
+                          <a  *ngIf="(row.AssignUserId == '' &&  (row.CustomerName == null || row.CustomerMobile == null) )"  routerLink="/rfq/view-offline-quote/{{row.Quotation_Id}}"><span
+                            class="label label-default">{{row.Quotation_Id}}</span></a> <br>
+
+                      <!-- <a routerLink="/rfq/view-offline-quote/{{row.Quotation_Id}}" ><span
+                          class="label label-default">{{row.Quotation_Id}}</span></a> <br> -->
+  
+                      <!-- <a routerLink="/rfq/Fire-Form/{{row.Quotation_Id}}" *ngIf="(row.AssignUsertype == 'employee')"><span
+                          class="label label-default">{{row.Quotation_Id}}</span></a> <br>
+
+                      <a routerLink="/rfq/view-offline-quote/{{row.Quotation_Id}}" *ngIf="(row.CustomerName != null || row.CustomerMobile = null) && (row.AssignUsertype != 'employee')"><span
+                          class="label label-default">{{row.Quotation_Id}}</span></a> <br>
+
+                      <button style="margin-top:4px;" type="button"
+                        *ngIf="(row.AssignUsertype != 'employee')"  (click)="AcceptAssignQuote(row.Quotation_Id)" class=" ul-last-btn btn btn-info">Accept</button>
+
+                      <br> -->
+
+                      <label *ngIf="row.QueryTotalTime != ''"> {{row.QueryTotalTime}} </label>
+
+
+                    </td>
+                    <td>{{row.TypeConstruction}}</td>
+                    <td>{{row.Occupancy_Type}}</td>
+                    <td> <b>Name - </b> {{row.CustomerName}}<br> <b>Mobile - </b> {{row.CustomerMobile}}<br> <b>Email -
+                      </b> {{row.CustomerEmail}}</td>
+                    <td *ngIf="row.RejectedStatus != 1"> <label class="label label-warning">{{row.Status}}</label> <br>
+                      <label class="label label-info"
+                        (click)="ViewOfflineQuoteDetails(row.Quotation_Id)">Details</label>
+                    </td>
+                    <td *ngIf="row.RejectedStatus == 1"> <label class="label label-danger">Rejected</label> <br> <label
+                        class="label label-info" (click)="ViewOfflineQuoteDetails(row.Quotation_Id)">Details</label><br>
+                      <span><b> Rejected Remarks => </b> {{row.RejectedRemarks}} </span> <br>
+
+                    </td>
+                    <td> {{row.Creator_Details}}</td>
+                    <td>{{row.CreateDate}}</td>
+
+
+                    <td>
+                      <table class=" PayoutTable">
+
+                        <tr *ngIf="row.QuoteAccpt != ''">
+                          <td>Create - Accept</td>
+                          <td> <label *ngIf="row.QuoteAccpt != ''"> {{row.QuoteAccpt}} </label> </td>
+                        </tr>
+
+
+                        <tr *ngIf="row.QuoteRelashed != ''">
+                          <td>Accept - Release</td>
+                          <td> <label *ngIf="row.QuoteRelashed != ''"> {{row.QuoteRelashed}} </label> </td>
+                        </tr>
+
+
+                        <tr *ngIf="row.AccptSharedQuote != ''">
+                          <td>Release - Accept Shared Quote</td>
+                          <td> <label *ngIf="row.AccptSharedQuote != ''"> {{row.AccptSharedQuote}} </label> </td>
+                        </tr>
+
+                        <tr *ngIf="row.PaymentTime != ''">
+                          <td>Accept - Release</td>
+                          <td> <label *ngIf="row.PaymentTime != ''"> {{row.PaymentTime}} </label> </td>
+                        </tr>
+
+                        <tr *ngIf="row.policyCompletedTime != ''">
+                          <td>Payment URL Shared - Completed</td>
+                          <td> <label *ngIf="row.policyCompletedTime != ''"> {{row.policyCompletedTime}} </label> </td>
+                        </tr>
+
+
+                      </table>
+
+                    </td>
+                    <!-- <td><a href="{{row.Action}}"><label class="btn btn-primary">Proceed</label> </a>  </td>  -->
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div> <!-- /.box-body -->
+          </div>
+        </div> <!-- /.box -->
+      </div> <!-- /.col -->
+    </div> <!-- /.row -->
+  </section> <!-- /.content -->
+</div><!-- /.content-wrapper -->

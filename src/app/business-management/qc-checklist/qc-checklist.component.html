@@ -1,0 +1,129 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+    <div class="container-fluid">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <div class="header_title"> QC Checklist</div>
+            </div>
+
+            <!-- <div *ngIf="!hasAccess" class="error-message">
+                <div class="container" style="text-align: center;">
+                    <img src="assets/Authorised.png" alt="">
+                </div>
+            </div> -->
+
+            <div class="main_body main_card_height_scroll_withoutfooter">
+                <div class="btn_list_group">
+                    <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <ul class="nav nav-tabs">
+                                      <li [class.active]="selectedType === 'Online'"><a href="#PersonalDetails" class="followup-active" data-toggle="tab"  (click)="loadData('Online')">Online</a></li>
+                                      <li [class.active]="selectedType === 'Offline'"><a href="#OfficalDetails" data-toggle="tab" class="close-active"  (click)="loadData('Offline')">Offline</a></li>
+                                    </ul>
+                                  </div>
+                                <div class="col-md-4">
+                                    <div class="dsr-fillter">
+                                        <button class="btn btn-info1" (click)="dailog('add','')"><span>Add
+                                                Check List</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                    <div class="custom_table tables_layout_design">
+                        <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <!-- ======= Refer Table  =========-->
+                        <ul class="responsive-table">
+                            <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+
+                                <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                                    <div class="agents_data agents_data1">
+                                        <div class="icon_re_cl" >{{row.Sno}}</div>
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data">
+                                                <div>Name </div>
+                                                <strong class="fs_18">{{row.name}}</strong>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="agents_data agents_data2">
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data" *ngIf="row.add != ''">
+                                                <div>Created At</div>
+                                                <strong class="fs_18">
+                                                    {{row.created_at}}
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="agents_data agents_data3">
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data" *ngIf="row.update != ''">
+                                                <div>Updated At </div>
+                                                        <strong class="fs_18">
+                                                            {{row.updated_at }}
+                                                        </strong>
+                                                </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="last_row_div">
+                                    
+                                    <div class="d_flex custon-234">
+                                        <div class="effective_date">
+                                            <div class="icon_re_cl" [innerHTML]="row.content"></div>
+                                        </div>
+                                    </div>
+                                   
+                                   
+                                    
+                                </div>
+                                <div class="last_row" >
+                                        <div style="margin-right: 900px; display: flex; justify-content: space-between; align-items: center;">
+                                            <div style="display: flex; align-items: center;">
+                                                <strong>Added By:&nbsp;</strong> 
+                                                <span>{{ row.addedBy }}</span>
+                                            </div>
+                                        </div>
+                                    
+                                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                        <button type="button" class="btnbg1active" (click)="dailog('update',row.id)"><i class="fa fa-pencil-square-o"
+                                            aria-hidden="true"></i> Update</button>&nbsp;&nbsp;
+                                        <button type="button" class="btnbg3resign" (click)="DeleteRequest(row.id,row.status)">Delete</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <!--======= Refer Table END ========= -->
+
+                        <div class="row" *ngIf="dataAr?.length == 0">
+                            <div class="col-md-12">
+                                <div class="no_data_found">
+                                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                                    <small>No data available !</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

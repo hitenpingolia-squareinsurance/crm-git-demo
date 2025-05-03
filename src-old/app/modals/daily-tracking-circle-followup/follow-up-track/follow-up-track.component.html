@@ -1,0 +1,99 @@
+<div class="table-responsive mydiv">
+
+  <div class="row">
+    <div class="col-sm-4">
+      <h1 class="heading_popup">Activity Reports</h1>
+    </div>
+    <div class="col-sm-8">
+      <div style="text-align: right;margin-bottom: 10px;">
+        <a style="margin-right:5px;" [ngClass]="(activeTab == row?'btn btn-active':'btn btn-primary')"
+          *ngFor="let row of CircleAr; let i=index;" (click)="GetData(row, '1')">
+
+          <span *ngIf="row == 'LI'">Life</span>
+          <span *ngIf="row != 'LI'">{{ row}}</span>
+
+
+        </a>
+
+      </div>
+    </div>
+
+    <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+        <div class="row"  >
+          <div class="col-sm-3">
+            <ng-multiselect-dropdown class="form-control" placeholder="Interaction Type" [data]="InteractionTypeArray"
+              formControlName="Interaction_Type" [settings]="dropdownSettingsingleselect">
+            </ng-multiselect-dropdown>
+          </div>
+
+          <div class="col-sm-3">
+            <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+              formControlName="DateOrDateRange" bsDaterangepicker
+              [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+          </div>
+
+          <div class="col-sm-4">
+            <input type="submit" class="btn btn-info" value="Search">&nbsp;&nbsp;
+            <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+              value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <hr>
+
+  <table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th style="text-align:center;">SNo</th>
+        <th style="text-align:center;">InteractionType</th>
+        <th style="text-align:center;">FollowUp </th>
+        <th style="text-align:center;">NextFollowUpDate</th>
+        <th style="text-align:center;">Image</th>
+        <th style="text-align:center;">FollowupRemark</th>
+        <th style="text-align:center;">Remarks(If Any)</th>
+        <th style="text-align:center;">ActivityDate</th>
+        <th style="text-align:center;">ActivityBy</th>
+      </tr>
+    </thead>
+
+    <tbody *ngIf="dataAr?.length != 0">
+      <tr *ngFor="let row of dataAr; let i=index;">
+        <td>{{row.SrNo}} </td>
+        <td>{{row.Action_Type}} </td>
+        <td>{{row.FollowUp_Type}} </td>
+
+        <td>
+          <span *ngIf="row.Action_Type == 'Virtual'">{{row.FollowUp_Date}}</span>
+          <span *ngIf="row.Action_Type == 'Visit'">{{row.VisitDate_Time}}</span>
+        </td>
+
+        <td><a *ngIf="row.Camera_Image!='' && row.Camera_Image!=null" (click)="ViewDocument(row.Camera_Image)"
+            href="javascript:;" class="label label-primary label-inline mr-2">View</a> </td>
+        <td>{{row.FollowUp_Remark}} </td>
+        <td>{{row.Remarks}} </td>
+        <td>{{row.Add_Stamp}} </td>
+        <td>{{row.FollowUpBy}} </td>
+      </tr>
+    </tbody>
+
+    <tbody *ngIf="dataAr?.length == 0">
+      <tr>
+        <td colspan="9" align="center" *ngIf="showTab == 'Yes'">No data Available !</td>
+        <td colspan="9" align="center" *ngIf="showTab == 'No'">No data Available !</td>
+      </tr>
+    <tbody>
+  </table>
+</div>

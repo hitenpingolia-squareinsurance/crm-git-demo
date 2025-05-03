@@ -1,0 +1,1167 @@
+<div class="inner_page_css knowlage_details_page main_dashboard_css">
+  <section class="container-fluid">
+    <div class="main_card_form">
+      <div class="">
+        <div class="">
+          <div class="main_header">
+            <div class="header_title">Inspection Details Form</div>
+          </div>
+          <form class="main_body main_card_height_scroll_withoutfooter" [formGroup]="createSurveyForm" (ngSubmit)="CreateSurvey()">
+            <div class="row" *ngIf="Divshow == 1">
+              <div class="col-md-12">
+                <div class="form_sub_title"><i class="fa fa-link mr_5"></i> Mapping Details</div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="CustomerName">Quote Source</label>
+                  <ng-multiselect-dropdown class="form-control" name="QuoteSource" placeholder="Select Quote Source"
+                    [data]="QuoteSourceData" formControlName="QuoteSource" [settings]="dropdownSettingsType">
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="CustomerEmailId">Mapping Type</label>
+                  <ng-multiselect-dropdown class="form-control" name="login_role_type" placeholder="Select Mapping Type"
+                    (onSelect)="onItemSelect($event,'login_role_type')"
+                    (onDeSelect)="onItemDeSelect($event,'login_role_type')" [data]="MappingType"
+                    formControlName="login_role_type" [settings]="dropdownSettingsType">
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+
+              <div class="col-md-3" *ngIf="EmployeeMappingPersonval == 'Agent' || EmployeeMappingPersonval == 'Sp'">
+                <div class="form-group">
+                  <label for="CustomerMobileNo">Select Mapping Employee</label>
+                  <ng-multiselect-dropdown class="form-control" name="EmployeeMappingPerson"
+                    placeholder="Select Mapping Employee" (onSelect)="onItemSelect($event,'EmployeeMappingPerson')"
+                    (onDeSelect)="onItemDeSelect($event,'login_role_type')" [data]="EmployeeMappingPersonData"
+                    formControlName="EmployeeMappingPerson" [settings]="dropdownSettingsType">
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="CustomerMobileNo">Select {{EmployeeMappingPersonval}}</label>
+                  <ng-multiselect-dropdown class="form-control" name="login_role_id" placeholder="Select Mapping"
+                    [data]="MappingPerson" formControlName="login_role_id" [settings]="dropdownSettingsType" (onSelect)="EmailGet()" >
+                  </ng-multiselect-dropdown>
+                  <span *ngIf="isSubmitted && formControls.login_role_id.errors" class="ValidationError">
+                    <span *ngIf="formControls.login_role_id.errors.required">{{EmployeeMappingPersonval}} is
+                      required</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+
+            <!--             
+            <div *ngIf="Divshow == 1">
+              <div class="box box-primary box-solid doc-required">
+                <div class="box-header with-border">
+                  <h3 class="lead box-title" align="center">Mapping Details</h3>
+                </div>
+                <div class="box-body">
+                  <div class="row">
+
+                    <div class="row clearfix" style="margin-top: 10px;">
+                      <div class="col-md-12">
+
+                        <div class="col-md-4">
+                          <div class="input_group">
+                            <label for="CustomerName">Quote Source</label>
+                            <ng-multiselect-dropdown class="form-control" name="QuoteSource"
+                              placeholder="Select Quote Source" [data]="QuoteSourceData" formControlName="QuoteSource"
+                              [settings]="dropdownSettingsType1">
+                            </ng-multiselect-dropdown>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="input_group">
+                            <label for="CustomerEmailId">Mapping Type</label>
+                            <ng-multiselect-dropdown class="form-control" name="login_role_type"
+                              placeholder="Select Mapping Type" (onSelect)="onItemSelect($event,'login_role_type')"
+                              (onDeSelect)="onItemDeSelect($event,'login_role_type')" [data]="MappingType"
+                              formControlName="login_role_type" [settings]="dropdownSettingsType1">
+                            </ng-multiselect-dropdown>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="input_group">
+                            <label for="CustomerMobileNo">Select Mapping</label>
+                            <ng-multiselect-dropdown class="form-control" name="login_role_id"
+                              placeholder="Select Mapping" [data]="MappingPerson" formControlName="login_role_id"
+                              [settings]="dropdownSettingsType1">
+                            </ng-multiselect-dropdown>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div> -->
+
+            <!----====== CUSTOMER DETAILS START ========----------->
+
+
+            <div>
+              <div class=" doc-required">
+                <div class="">
+                  <div class="form_sub_title"><i class="fa fa-link mr_5"></i>Registration Details</div>
+                </div>
+                <div class="row clearfix">
+                  <div class="col-md-4 mb_15">
+                    <div class="input_group">
+                      <label for="RegistrationNumber">Registration Number</label>
+                      <div class="form_control" id="register_number">
+                        <input class="myinput AutoUppercase" id="Registration_State_Code"
+                          formControlName="Registration_State_Code" type="text"
+                          (keyup)="AutoTabRegistrationNo($event,2,'Registration_District_Code')" maxlength="2"
+                          placeholder="XX">-
+                        <input class="myinput AutoUppercase" id="Registration_District_Code"
+                          formControlName="Registration_District_Code"
+                          (keyup)="AutoTabRegistrationNo($event,2,'Registration_City_Code')" placeholder="XX"
+                          type="text" appOnlynumber maxlength="2">
+                        <b>- </b>
+                        <input class="myinput AutoUppercase" placeholder="XXX" id="Registration_City_Code"
+                          formControlName="Registration_City_Code"
+                          (keyup)="AutoTabRegistrationNo($event,3,'Registration_Code')" type="text" maxlength="3">
+                        <b>- </b>
+                        <input class="myinput AutoUppercase" id="Registration_Code" formControlName="Registration_Code"
+                          type="text" placeholder="XXXX" appOnlynumber maxlength="4">
+                      </div>
+                      <button type="button" class="  btn btn-success" (click)="GetVehicleDetails()">Get Vehicle
+                        Details</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+
+
+            <div>
+              <div class=" doc-required">
+                <div class="">
+                  <div class="form_sub_title"><i class="fa fa-link mr_5"></i>Customer Details</div>
+                </div>
+                <div class="row clearfix">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="CustomerName">Customer Name</label>
+                      <input class="form-control" type="text" formControlName="customerName"
+                        [(ngModel)]="SelectedCustomername" placeholder="Enter Customer Name" maxlength="30"
+                        value="{{ surveyData.customerName}}">
+                      <div *ngIf="isSubmitted && formControls.customerName.errors " class="ValidationError">
+                        <div *ngIf="formControls.customerName.errors.required">Please Enter Customer Name!</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="CustomerEmailId">Customer Email</label>
+                      <input class="form-control" type="text" formControlName="customerEmail"
+                        placeholder="Enter Customer Email" [(ngModel)]="SelectedCustomeremail" required>
+                      <div *ngIf="isSubmitted && formControls.customerEmail.errors " class="ValidationError">
+                        <div *ngIf="formControls.customerEmail.errors.required">Please Enter Customer Email ID!
+                        </div>
+                        <div *ngIf="formControls.customerEmail.errors.pattern">Enter valid Email ID.</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="customerEmailAlt">Customer Alternate Email</label>
+                      <input class="form-control" type="text" formControlName="customerEmailAlt"
+                        placeholder="Enter Customer Alternate Email">
+                      <div *ngIf="isSubmitted && formControls.customerEmailAlt.errors " class="ValidationError">
+                        <div *ngIf="formControls.customerEmailAlt.errors.pattern">Enter valid Email ID.</div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="CustomerMobileNo">Customer Contact Number</label>
+                      <input class="form-control" type="text" placeholder="Enter Customer Contact Number"
+                        formControlName="customerMobileNo" maxlength="10" required>
+                      <div *ngIf="isSubmitted && formControls.customerMobileNo.errors " class="ValidationError">
+                        <div *ngIf="formControls.customerMobileNo.errors.required">Please Enter Mobile no.!</div>
+                        <div *ngIf="formControls.customerMobileNo.errors.pattern">Enter valid Mobile Number.</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="customerMobileNoAlt">Customer Alternate Contact Number</label>
+                      <input class="form-control" type="text" placeholder="Enter Customer Alternate Contact Number"
+                        formControlName="customerMobileNoAlt" maxlength="10">
+                      <div *ngIf="isSubmitted && formControls.customerMobileNoAlt.errors " class="ValidationError">
+                        <div *ngIf="formControls.customerMobileNoAlt.errors.pattern">Enter valid Mobile Number.
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="customerAddress">Customer Address</label>
+                      <input class="form-control" type="text" formControlName="customerAddress"
+                        placeholder="Enter Customer Address">
+                      <div *ngIf="isSubmitted && formControls.customerAddress.errors " class="ValidationError">
+                        <div *ngIf="formControls.customerAddress.errors.required">Please
+                          Enter Customer Address!</div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="customerPincode">Pincode</label>
+                      <ng-multiselect-dropdown class="form-control" name="Pincode" placeholder="--Select--"
+                        [data]="pincodeData" formControlName="customerPincode" [settings]="dropdownSettingsType"
+                        [(ngModel)]="selectedPincode" (keyup)="searchPincodes($event, 1)"
+                        (onSelect)="getStateCityDetails($event)" maxlength="6">
+                      </ng-multiselect-dropdown>
+
+                      <div *ngIf="isSubmitted && formControls.customerPincode.errors " class="ValidationError">
+                        <div *ngIf="formControls.customerPincode.errors.required">Please
+                          Enter Customer Pincode!</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="customerState">State</label>
+                      <input type='text' class="form-control" value='qweee' formControlName="customerState" readonly>
+
+                      <div *ngIf="isSubmitted && formControls.customerState.errors" class="ValidationError">
+                        <div *ngIf="formControls.customerState.errors.required">Please Select State!
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="customerCity">City</label>
+                      <input type='text' class="form-control" value='qweee' formControlName="customerCity" readonly>
+
+                      <div *ngIf="isSubmitted && formControls.customerCity.errors " class="ValidationError">
+                        <div *ngIf="formControls.customerCity.errors.required">Please Select City!
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="vehicleLocation">Vehicle Location</label>
+                      <input class="form-control" type="text" formControlName="vehicleLocation"
+                        placeholder="Enter Vehicle Location">
+                      <div *ngIf="isSubmitted && formControls.vehicleLocation.errors " class="ValidationError">
+                        <div *ngIf="formControls.vehicleLocation.errors.required">Please
+                          Enter Customer Address!</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-4">
+                    <!-- *ngIf="enable_value == 1" -->
+                    <div class="form-group">
+                      <label for="customerPincode">Inspection Mode</label>
+                      <ng-multiselect-dropdown class="form-control" name="Pincode" placeholder="--Select--"
+                        [data]="inspectionModeData" formControlName="inspectionMode" [settings]="dropdownSettingsType"
+                        (ngModelChange)="onDropdownChange($event)">
+                      </ng-multiselect-dropdown>
+                      <div *ngIf="isSubmitted && formControls.inspectionMode.errors " class="ValidationError">
+                        <div *ngIf="formControls.inspectionMode.errors.required">Please Select Inspection Mode!
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+
+
+
+
+              </div>
+            </div>
+            <!----====== CUSTOMER DETAILS END ========----------->
+
+            <!----====== EMPLOYEE AND PARTNER DETAILS START ========----------->
+            <!-- <div
+              *ngIf="(rightType == 'All' || rightType == 'Hierarchy' || loginType == 'admin' || loginType == 'employee') && quoteId == '' && endorsementId == ''">
+
+              <div class="box box-primary box-solid doc-required">
+                <div class="box-header with-border">
+                  <h3 class="lead box-title" align="center">Employee and Partner Details</h3>
+                </div>
+                <div class="box-body">
+                  <div class="row">
+
+                    <div class="row clearfix" style="margin-top: 10px;">
+                      <div class="col-md-12">
+
+                        <div class="col-md-4">
+                          <label for="employeeName">Employee Name & Code</label>
+                          <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="employeeData"
+                            formControlName="employeeName" [settings]="dropdownSettingsType"
+                            (keyup)="searchEmployee($event, 1)" (onSelect)="searchAgents('', 0)"
+                            (onDeSelect)="onItemDeSelect($event,'employee')">
+                          </ng-multiselect-dropdown>
+                          <div *ngIf="isSubmitted && formControls.employeeName.errors " class="ValidationError">
+                            <div *ngIf="formControls.employeeName.errors.required">Please Select Employee Name!
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <label for="employeeMobileNo">Employee Contact Number</label>
+                          <input class="form-control" type="text" placeholder="Enter Employee Contact Number" value=""
+                            maxlength="10" formControlName="employeeMobileNo">
+                          <div *ngIf="isSubmitted && formControls.employeeMobileNo.errors " class="ValidationError">
+                            <div *ngIf="formControls.employeeMobileNo.errors.required">Please Enter Employee Contact
+                              Number!</div>
+                            <div *ngIf="formControls.employeeMobileNo.errors.pattern">Please Enter Valid Number!</div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <label for="agentName">Agent Name & Code</label>
+                          <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="agentData"
+                            formControlName="agentName" [settings]="dropdownSettingsType" [disabled]="butDisabled"
+                            (keyup)="searchAgents($event, 1)" (onSelect)="getAgentDetails()">
+                          </ng-multiselect-dropdown>
+                         <div *ngIf="isSubmitted && formControls.agentName.errors " class="ValidationError">
+                            <div *ngIf="formControls.agentName.errors.required">Please Select Agent Name!
+                            </div>
+                          </div>  
+                        </div>
+
+                        <div class="col-md-4">
+                          <label for="agentMobileNo">Agent Contact Number</label>
+                          <input class="form-control" type="text" placeholder="Enter Agent Contact Number"
+                            formControlName="agentMobileNo">
+                          <div *ngIf="isSubmitted && formControls.agentMobileNo.errors " class="ValidationError">
+                            <div *ngIf="formControls.agentMobileNo.errors.pattern">Please Enter Valid No.!
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>   -->
+            <!----====== EMPLOYEE AND PARTNER DETAILS END ========----------->
+            <!----====== PRODUCT AND VEHICLE DETAILS START========----------->
+            <div>
+              <div class="doc-required">
+                <div class="">
+                  <h3 class="form_sub_title"><i class="fa fa-link mr_5"></i>Product and Vehicle Details</h3>
+                </div>
+
+                <div class="row clearfix">
+
+                  <div *ngIf="showPolicySrBox == 'Policy'">
+                    <!--======== INSPECTION TYPE POLICY ISSUANCE SECTION START=======-->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="product">Product</label>
+                        <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="productData"
+                          formControlName="product" [settings]="dropdownSettingsType"
+                          [(ngModel)]="SelecteVechileTypeData" (onSelect)="searchMakes('')"
+                          (onDeSelect)="onItemDeSelect($event,'product')">
+                          <!-- [(ngModel)]="SelecteVechileTypeData" -->
+                          <!-- [(ngModel)]="selectedProduct" -->
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="isSubmitted && formControls.product.errors " class="ValidationError">
+                          <div *ngIf="formControls.product.errors.required">Please Select Product!
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="make">Make</label>
+                        <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="makeData"
+                          formControlName="make" [settings]="dropdownSettingsType" [(ngModel)]="SelectedmakeName"
+                          (onSelect)="searchModels($event)" (onDeSelect)="onItemDeSelect($event,'make')">
+                          <!-- [(ngModel)]="SelectedmakeName" -->
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="isSubmitted && formControls.make.errors " class="ValidationError">
+                          <div *ngIf="formControls.make.errors.required">Please Select Make!
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="model">Model</label>
+                        <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="modelData"
+                          formControlName="model" [settings]="dropdownSettingsType" [(ngModel)]="SelectedmodalName"
+                          (onSelect)="searchFuel($event)" (onDeSelect)="onItemDeSelect($event,'model')">
+                          <!-- [(ngModel)]="selectedModel" -->
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="isSubmitted && formControls.model.errors " class="ValidationError">
+                          <div *ngIf="formControls.model.errors.required">Please Select Model!
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="fuel">Fuel</label>
+                        <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="fuelData"
+                          formControlName="fuel" [settings]="dropdownSettingsType" [(ngModel)]="SelectedfuleType"
+                          (onSelect)="searchVariants($event)" (onDeSelect)="onItemDeSelect($event,'fuel')">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="isSubmitted && formControls.fuel.errors " class="ValidationError">
+                          <div *ngIf="formControls.fuel.errors.required">Please Select Fuel!
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="variant">Variant</label>
+                        <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="variantData"
+                          formControlName="variant" [settings]="dropdownSettingsType" [(ngModel)]="selectedVariant">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="isSubmitted && formControls.variant.errors " class="ValidationError">
+                          <div *ngIf="formControls.variant.errors.required">Please Select Variant!
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="insurerName">Insurer Name</label>
+                        <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="insurerData"
+                          formControlName="insurerName" [settings]="dropdownSettingsType"
+                          [(ngModel)]="SelectedPreviousinsurar">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="isSubmitted && formControls.insurerName.errors " class="ValidationError">
+                          <div *ngIf="formControls.insurerName.errors.required">Please Select Insurer Name!
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <!-- <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="employeeName">Registration Number</label>
+                        <input class="form-control" type="text" formControlName="registrationNo"
+                          (keyup)="getRtoNo($event)" placeholder="Enter Registration Number" maxlength="12">
+                        <div *ngIf="isSubmitted && formControls.registrationNo.errors " class="ValidationError">
+                          <div *ngIf="formControls.registrationNo.errors.required">Please Enter Registration Number!
+                          </div>
+                          <div *ngIf="formControls.registrationNo.errors.pattern">Please Enter Valid Details!</div>
+                        </div>
+                      </div>
+                    </div> -->
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="rto">RTO</label>
+                        <input class="form-control" type="text" formControlName="rto" placeholder="Enter RTO"
+                          maxlength="5" readonly>
+                      </div>
+
+
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="variant">Manufacture Year</label>
+                        <ng-multiselect-dropdown class="form-control" placeholder="--Select--"
+                          [data]="manufactureYearData" formControlName="manufactureYear" [(ngModel)]="selectedMF"
+                          [settings]="dropdownSettingsType">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="isSubmitted && formControls.manufactureYear.errors " class="ValidationError">
+                          <div *ngIf="formControls.manufactureYear.errors.required">Please Select Manufacture Year!
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="engineNo">Engine No</label>
+                        <input class="form-control" type="text" formControlName="engineNo"
+                          placeholder="Enter Engine Number">
+                        <div *ngIf="isSubmitted && formControls.engineNo.errors " class="ValidationError">
+                          <div *ngIf="formControls.engineNo.errors.required">Please Enter Engine Number!</div>
+                          <div *ngIf="formControls.engineNo.errors.pattern">Please Enter Valid Engine Number!</div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="chassisNo">Chassis Number</label>
+                        <input class="form-control" type="text" formControlName="chassisNo"
+                          placeholder="Enter Chassis Number">
+                        <div *ngIf="isSubmitted && formControls.chassisNo.errors " class="ValidationError">
+                          <div *ngIf="formControls.chassisNo.errors.required">Please Enter Chassis Number! </div>
+                          <div *ngIf="formControls.chassisNo.errors.pattern">Please Enter Valid Chassis Number!
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <!--======== INSPECTION TYPE POLICY ISSUANCE SECTION END=======-->
+                  <!--======== INSPECTION TYPE ENDOSMENT SECTION START=======-->
+
+                  <div *ngIf="showPolicySrBox == 'Endosment'">
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="product">Product</label>
+                        <input class="form-control" type="text" formControlName="product"
+                          placeholder="Enter Product Name" readonly>
+                        <div *ngIf="isSubmitted && formControls.product.errors " class="ValidationError">
+                          <div *ngIf="formControls.product.errors.required">Please Enter Product Name!</div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="make">Make</label>
+                        <input class="form-control" type="text" formControlName="make" placeholder="Enter Make"
+                          readonly>
+                        <div *ngIf="isSubmitted && formControls.make.errors " class="ValidationError">
+                          <div *ngIf="formControls.make.errors.required">Please Enter Make!</div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="model">Model</label>
+                        <input class="form-control" type="text" formControlName="model" placeholder="Enter Model"
+                          readonly>
+                        <div *ngIf="isSubmitted && formControls.model.errors " class="ValidationError">
+                          <div *ngIf="formControls.model.errors.required">Please Enter Model!</div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="variant">Variant</label>
+                        <input class="form-control" type="text" formControlName="variant" placeholder="Enter Variant"
+                          readonly>
+                        <div *ngIf="isSubmitted && formControls.variant.errors " class="ValidationError">
+                          <div *ngIf="formControls.variant.errors.required">Please Enter Variant!</div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="insurerName">Insurer Name</label>
+                        <input class="form-control" type="text" formControlName="insurerName"
+                          placeholder="Enter Insurer Name" readonly>
+                        <div *ngIf="isSubmitted && formControls.insurerName.errors " class="ValidationError">
+                          <div *ngIf="formControls.insurerName.errors.required">Please Enter Insurer Name!</div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="registrationNo">Registration Number</label>
+                        <input class="form-control" type="text" formControlName="registrationNo"
+                          placeholder="Enter Registration Number" maxlength="30" readonly>
+                        <div *ngIf="isSubmitted && formControls.registrationNo.errors " class="ValidationError">
+                          <div *ngIf="formControls.registrationNo.errors.required">Please Registration Number!</div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="rto">RTO</label>
+                        <input class="form-control" type="text" formControlName="rto" placeholder="Enter RTO"
+                          maxlength="4" readonly>
+                        <div *ngIf="isSubmitted && formControls.rto.errors " class="ValidationError">
+                          <div *ngIf="formControls.rto.errors.required">Please Enter RTO!</div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="manufactureYearData">Manufacture Year</label>
+                        <input class="form-control" type="text" formControlName="manufactureYear"
+                          placeholder="Enter Manufacture Year" maxlength="30" readonly>
+                        <div *ngIf="isSubmitted && formControls.manufactureYear.errors " class="ValidationError">
+                          <div *ngIf="formControls.manufactureYear.errors.required">Please Enter Manufacture Year!
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="engineNo">Engine Number</label>
+                        <input class="form-control" type="text" formControlName="engineNo"
+                          placeholder="Enter Engine Number" maxlength="50" readonly>
+                        <div *ngIf="isSubmitted && formControls.engineNo.errors " class="ValidationError">
+                          <div *ngIf="formControls.engineNo.errors.required">Please Enter Engine Number!</div>
+                          <div *ngIf="formControls.engineNo.errors.pattern">Please Enter Valid Engine Number!</div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="chassisNo">Chassis Number</label>
+                        <input class="form-control" type="text" formControlName="chassisNo"
+                          placeholder="Enter Chassis Number" maxlength="50" readonly>
+                        <div *ngIf="isSubmitted && formControls.chassisNo.errors " class="ValidationError">
+                          <div *ngIf="formControls.chassisNo.errors.required">Please Enter Chassis Number!</div>
+                          <div *ngIf="formControls.chassisNo.errors.pattern">Please Enter Valid Chassis Number!
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <!--======== INSPECTION TYPE ENDOSMENT SECTION END=======-->
+
+
+                </div>
+
+
+              </div>
+            </div>
+            <!----====== PRODUCT AND VEHICLE DETAILS END========----------->
+            <!----====== DOCUMENTS DETAILS START========----------->
+
+            <div class=" doc-required">
+              <div class="">
+                <h3 class="form_sub_title"><i class="fa fa-link mr_5"></i>Documents</h3>
+              </div>
+              <div class="" id="filecontainer" style="margin-top: 20px;;">
+                <div class="row">
+
+                  <div class="form-group col-md-3 Vineet old_1 doctype_OLD">
+                    <label class="form-control btn fileUpload btn-default"
+                      [ngClass]="(this.RC_Motor_Front_image==1 ? 'ImageUploaded' : 'else' )" name="button"
+                      value="RC_Front">
+                      <input type="file" (change)="checkFileType($event,'RC_Motor_Front')" id="file"
+                        formControlName="RcFront" accept="image/png, image/gif, image/jpeg, application/pdf"
+                        style="display:none;" />
+                      <span class="fas fa-user-alt">
+                        <b>RC Front </b>
+                      </span>
+                    </label>
+                    <div *ngIf="isSubmitted && formControls.RcFront.errors " class="ValidationError">
+                      <div *ngIf="formControls.RcFront.errors.required">Please Select RcFront!</div>
+                      <div *ngIf="formControls.RcFront.errors.pattern">Please Select RcFront!!</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-md-3 Vineet old_1 doctype_OLD">
+                    <label class="form-control btn fileUpload btn-default"
+                      [ngClass]="(this.RC_Motor_Back_image==1 ? 'ImageUploaded' : 'else' )" name="button"
+                      value="RC_Back">
+                      <input type="file" (change)="checkFileType($event,'RC_Motor_Back')" id="file"
+                        formControlName="RcBack" accept="image/png, image/gif, image/jpeg, application/pdf"
+                        style="display:none;" />
+                      <span class="fas fa-user-alt">
+                        <b>RC Back </b>
+                      </span>
+                    </label>
+                    <div *ngIf="isSubmitted && formControls.RcBack.errors " class="ValidationError">
+                      <div *ngIf="formControls.RcBack.errors.required">Please Select RcBack!</div>
+                      <div *ngIf="formControls.RcBack.errors.pattern">Please Select RcBack!!</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group Vineet old_2 col-md-3 doctype_OLD">
+                    <label class="form-control btn fileUpload btn-default"
+                      [ngClass]="(this.Quotation_Doc_image==1 ? 'ImageUploaded' : 'else' )" name="button"
+                      value="quotationDoc">
+                      <input type="file" (change)="checkFileType($event,'Quotation_Doc')" id="file"
+                        accept="image/png, image/gif, image/jpeg ,application/pdf" formControlName="quotationDoc"
+                        style="display:none;" />
+                      <span class="fas fa-user-alt">
+                        <b>Quotation</b>
+                      </span>
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4 ">
+                  <div class="form-group">
+                    <label class="form-control-label pull-left">Remarks</label>
+                    <small class="text-muted"> &nbsp;(Max 250 characters)</small>
+                    <textarea class="form-control" name="Remark" formControlName="remarks" placeholder="Remarks"
+                      maxlength="250"></textarea>
+                    <div *ngIf="isSubmitted && formControls.remarks.errors " class="ValidationError">
+                      <div *ngIf="formControls.remarks.errors.required">Please Enter Remarks!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+            <!----====== DOCUMENTS DETAILS END========----------->
+
+            <!----====== ACTION DETAILS START========----------->
+            <div class="row">
+              <div class="col-md-12 actionButtons">
+                <button class="btn btn-primary save-click" type="submit">Submit</button>
+              </div>
+            </div>
+            <!----====== ACTION DETAILS END========----------->
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<!-- <button data-toggle="modal" data-target="#exampleModal" id="Self_model"></button> -->
+
+<!-- self mode  -->
+<div class="modal fade fade_coustam" id="showimg" tabindex="-1" aria-labelledby="showimgLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="showimgLabel">Image && Video</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="Chack_video_photo == 1">
+          <video ngif controls width="400" height="300" #videoPlayer>
+            <source [src]="mymeenimage_url" type="video/mp4">
+          </video>
+        </div>
+        <div *ngIf="Chack_video_photo == 0">
+          <img class="bannersimg" style="width: 100%;" [src]="mymeenimage_url" alt="Selected Image" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+
+<a data-toggle="modal" data-target="#AddCatSubCat" id="Self_model" data-backdrop="static" data-keyboard="false" hidden>
+</a>
+
+<div id="AddCatSubCat" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <!-- <div class="main_header">
+              <div class="header_title">Documents</div>
+            </div> -->
+            <div class="modal-body">
+            <form [formGroup]="ImageForm" (ngSubmit)="CreateSurvey()">
+              <div class="row">
+                <div class="col-md-12 mt_20" id="filecontainer">
+                  <div class="form_sub_title"><i class="fa fa-book mr_5"></i> Documents</div>
+    
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="front_car_image" [ngClass]="(this.front_car_image_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+    
+                        <input type="file" id="front_car_image" name="front_car_image"
+                          (change)="UploadDocs($event,'front_car_image')" multiselected formControlName="front_car_image"
+                          ngModel>
+                        <i class="fas fa-user-alt"><b>Front</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="front_car_image_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',front_car_image_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+    
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="car_left_image" [ngClass]="(this.car_left_image_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+    
+                        <input type="file" id="car_left_image" name="car_left_image"
+                          (change)="UploadDocs($event,'car_left_image')" multiselected formControlName="car_left_image"
+                          ngModel>
+                        <i class="fas fa-user-alt"><b>Front Left</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="car_left_image_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',car_left_image_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="car_right_image" [ngClass]="(this.car_right_image_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="car_right_image" name="car_right_image"
+                          (change)="UploadDocs($event,'car_right_image')" multiselected formControlName="car_right_image"
+                          ngModel>
+                        <i class="fas fa-user-alt"><b>Front Right</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="car_right_image_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',car_right_image_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+    
+    
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="car_back_image" [ngClass]="(this.car_back_image_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+    
+                        <input type="file" id="car_back_image" name="car_back_image"
+                          (change)="UploadDocs($event,'car_back_image')" multiselected formControlName="car_back_image"
+                          ngModel>
+                        <i class="fas fa-user-alt"><b>Back</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="car_back_image_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',car_back_image_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+    
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="vehicle_chassis" [ngClass]="(this.vehicle_chassis_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+    
+                        <input type="file" id="vehicle_chassis" name="vehicle_chassis"
+                          (change)="UploadDocs($event,'vehicle_chassis')" multiselected formControlName="vehicle_chassis"
+                          ngModel>
+                        <i class="fas fa-user-alt"><b>Chassis No.</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="vehicle_chassis_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',vehicle_chassis_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+    
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="vehicle_engine_department"
+                        [ngClass]="(this.vehicle_engine_department_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="vehicle_engine_department" name="vehicle_engine_department"
+                          (change)="UploadDocs($event,'vehicle_engine_department')" multiselected
+                          formControlName="vehicle_engine_department" ngModel>
+                        <i class="fas fa-user-alt"><b>Engine</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="vehicle_engine_department_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',vehicle_engine_department_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+    
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="undercarriage" [ngClass]="(this.undercarriage_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="undercarriage" name="undercarriage"
+                          (change)="UploadDocs($event,'undercarriage')" multiselected formControlName="undercarriage"
+                          ngModel>
+                        <i class="fas fa-user-alt"><b>Under Carriage</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="undercarriage_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',undercarriage_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="front_mirror" [ngClass]="(this.front_mirror_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="front_mirror" name="front_mirror"
+                          (change)="UploadDocs($event,'front_mirror')" multiselected formControlName="front_mirror" ngModel>
+                        <i class="fas fa-user-alt"><b>Windshield Outside</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="front_mirror_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',front_mirror_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+    
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="inside_mirror" [ngClass]="(this.inside_mirror_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="inside_mirror" name="inside_mirror"
+                          (change)="UploadDocs($event,'inside_mirror')" multiselected formControlName="inside_mirror"
+                          ngModel>
+                        <i class="fas fa-user-alt"><b>Windshield Inside</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="inside_mirror_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',inside_mirror_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+    
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="vehicle_meter" [ngClass]="(this.vehicle_meter_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="vehicle_meter" name="vehicle_meter"
+                          (change)="UploadDocs($event,'vehicle_meter')" multiselected formControlName="vehicle_meter"
+                          ngModel>
+                        <i class="fas fa-user-alt"><b>Meter</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="vehicle_meter_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',vehicle_meter_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+    
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="myself_and_car" [ngClass]="(this.myself_and_car_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="myself_and_car" name="myself_and_car"
+                          (change)="UploadDocs($event,'myself_and_car')" multiselected formControlName="myself_and_car"
+                          ngModel>
+                        <i class="fas fa-user-alt"><b>Selfie</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="myself_and_car_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',myself_and_car_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+    
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="One_minute_car_video"
+                        [ngClass]="(this.One_minute_car_video_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="One_minute_car_video" name="One_minute_car_video"
+                          (change)="UploadDocs($event,'One_minute_car_video')" multiselected
+                          formControlName="One_minute_car_video" ngModel>
+                        <i class="fas fa-user-alt"><b>Capture Video(keep engine start during video)</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="One_minute_car_video_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('1',One_minute_car_video_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="last_meter" [ngClass]="(this.last_meter_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="last_meter" name="last_meter" (change)="UploadDocs($event,'last_meter')"
+                          multiselected formControlName="last_meter" ngModel>
+                        <i class="fas fa-user-alt"><b>last meter</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="last_meter_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',last_meter_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+    
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="RC_photo" [ngClass]="(this.RC_photo_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="RC_photo" name="RC_photo" (change)="UploadDocs($event,'RC_photo')"
+                          multiselected formControlName="RC_photo" ngModel>
+                        <i class="fas fa-user-alt"><b>RC's photo</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="RC_photo_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',RC_photo_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+    
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="Left" [ngClass]="(this.Left_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="Left" name="Left" (change)="UploadDocs($event,'Left')"
+                          multiselected formControlName="Left" ngModel>
+                        <i class="fas fa-user-alt"><b>Left</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="Left_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',Left_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="Right" [ngClass]="(this.Right_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="Right" name="Right" (change)="UploadDocs($event,'Right')"
+                          multiselected formControlName="Right" ngModel>
+                        <i class="fas fa-user-alt"><b>Right</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="Right_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',Right_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+    
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="Back_left" [ngClass]="(this.Back_left_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="Back_left" name="Back_left" (change)="UploadDocs($event,'Back_left')"
+                          multiselected formControlName="Back_left" ngModel>
+                        <i class="fas fa-user-alt"><b>Back left</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="Back_left_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',Back_left_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="Back_Right" [ngClass]="(this.Back_Right_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="Back_Right" name="Back_Right" (change)="UploadDocs($event,'Back_Right')"
+                          multiselected formControlName="Back_Right" ngModel>
+                        <i class="fas fa-user-alt"><b>Back Right</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="Back_Right_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',Back_Right_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="Cabin" [ngClass]="(this.Cabin_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="Cabin" name="Cabin" (change)="UploadDocs($event,'Cabin')"
+                          multiselected formControlName="Cabin" ngModel>
+                        <i class="fas fa-user-alt"><b>Cabin</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="Cabin_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',Cabin_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="Open_dicky" [ngClass]="(this.Open_dicky_color==1 ? 'ImageUploaded' : 'else' )"
+                        class="form_control fileUpload_btn d_flex flex_Center flex_Middel">
+                        <input type="file" id="Open_dicky" name="Open_dicky" (change)="UploadDocs($event,'Open_dicky')"
+                          multiselected formControlName="Open_dicky" ngModel>
+                        <i class="fas fa-user-alt"><b>Open Dicky</b></i>
+                      </label>
+                    </div>
+                    <div *ngIf="Open_dicky_color == '1'" style="width: 25%; height: 20px;">
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#showimg"
+                        (click)="Imagedateview('0',Open_dicky_ImageUrl)">View Image</a>
+                    </div>
+                  </div>
+    
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>&nbsp;&nbsp;
+                <button class="btn btn-danger" data-dismiss="modal" id="ClosePOUPUP">Close</button>
+               
+              </div>
+            </form></div>
+          </div>
+        </div>
+      </div>
+    </div>
+ </div>
+</div>
+  

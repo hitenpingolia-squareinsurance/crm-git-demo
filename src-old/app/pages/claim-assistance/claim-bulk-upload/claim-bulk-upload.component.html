@@ -1,0 +1,387 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 *ngIf="ActivePage == 'Default'" class="box-title">Bulk Upload Claim</h3>
+          </div>
+
+          <div class="box-body">
+            <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+              <div class="row"  >
+                <div class="col-sm-3">
+                  <input type="text" formControlName="SearchValue" name="SearchValue" class="form-control"
+                    placeholder="Search">
+                </div>
+
+                <div class="col-sm-9">
+                  <button type="submit" class="btn btn-info" style="font-size: small;" value="Search"> <i
+                      class="fa fa-search">Search</i> </button>
+                  &nbsp;&nbsp;
+                  <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                    value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                  &nbsp;&nbsp;
+                  <button class="btn btn-info" type="button" data-toggle="modal" data-target="#AddClaimDataForm"
+                    (click)="AddClaimDataForm()">Add Claim</button> &nbsp;&nbsp;
+
+                  <button class="btn btn-info" type="button" data-toggle="modal" data-target="#AddClaimMasterData"
+                    (click)="AddClaimMasterData()">Add
+                    Claim Master</button>
+                </div>
+              </div>
+            </form>
+
+            <hr>
+            <div class="mydiv table-responsive ">
+              <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Session Year</th>
+                    <th>Product</th>
+                    <th>Company Name</th>
+                    <th>Claim No</th>
+                    <th>Policy No</th>
+                    <th>Reg No</th>
+                    <th>Loss Date</th>
+                    <th>Intimation Date</th>
+                    <th>Estimate Amount</th>
+                    <th>Claim Type </th>
+                    <th>Claim Status </th>
+                    <th>Loss Type </th>
+                    <th>Insured Contact No </th>
+                    <th>Paid Amount </th>
+                    <th>Claim Settled Date </th>
+                    <th>Surveyor Name </th>
+                    <th>Create Date</th>
+                    <th>Action</th>
+                  </tr>
+                  
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{row.SrNo}}</td>
+                    <td>{{row.session_year}} </td>
+                    <td>{{row.product}} </td>
+                    <td>{{row.company_name}}</td>
+                    <td>{{row.claim_no}}</td>
+                    <td>{{row.policy_no}}</td>
+                    <td>{{row.reg_no}}</td>
+                    <td>{{row.loss_date}}</td>
+                    <td>{{row.intimation_date}}</td>
+                    <td>{{row.estimate_amount}}</td>
+                    <td>{{row.claim_type}}</td>
+                    <td>
+
+                      <a *ngIf="row.claim_status == '1'"><span class="label label-default">Pending</span></a>
+                      <a *ngIf="row.claim_status == '2'"><span class="label label-primary">In Process</span></a>
+                      <a *ngIf="row.claim_status == '3'"><span class="label label-success">Approve</span></a>
+                      <a *ngIf="row.claim_status == '4'"><span class="label label-danger">Close</span></a>
+                      <a *ngIf="row.claim_status == '5'"><span class="label label-danger">Rejected</span></a>
+                      <a *ngIf="row.claim_status == '6'"><span class="label label-warning">Re-open</span></a>
+                      <a *ngIf="row.claim_status == '7'"><span class="label label-warning">Partially-Settled</span></a>
+                      <a *ngIf="row.claim_status == '8'"><span class="label label-warning">Settled</span></a>
+
+
+
+                    </td>
+                    <td>{{row.loss_type}}</td>
+                    <td>{{row.insured_contact_no}}</td>
+                    <td>{{row.paid_amount}}</td>
+                    <td>{{row.claim_settled_date}}</td>
+                    <td>{{row.surveyor_name}}</td>
+                    <td>{{row.insert_date}}</td>
+                    <td>
+                      <button class="btn btn-info btn-sm" type="button" data-toggle="modal"
+                        [attr.data-target]="'#modelId' + row.SrNo">View Details</button>
+                      <div class="modal fade claim_bulk_popup_css" [attr.id]="'modelId' + row.SrNo" tabindex="-1"
+                        role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Details</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <div class="view_data_css">
+                                    <p *ngFor="let rVALUE of row.log_data;"><span>{{rVALUE.Name}}
+                                        :-</span><strong>{{rVALUE.Value}}</strong></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <label *ngIf="row.status == '1'"
+                          (click)="ChangeStatusRenewals(2 ,row.Id,'Button',row.AssignerId)" class="label label-primary">
+                          Pending
+                        </label>
+                        <label *ngIf="row.status == '2' "
+                          (click)="ChangeStatusRenewals(2 ,row.Id,'Button',row.AssignerId)" class="label label-info">
+                          Follow Up
+                        </label>
+                        <label *ngIf="row.status == '3' "
+                          (click)="ChangeStatusRenewals(3 ,row.Id,'Button',row.AssignerId)" class="label label-warning">
+                          Converted
+                        </label>
+                        <label *ngIf="row.status == '0' "
+                          (click)="ChangeStatusRenewals(0 ,row.Id,'Button',row.AssignerId)" class="label label-danger">
+                          Lost
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="AddClaimDataForm" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Bulk Claim Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-blog-top" [formGroup]="Claimform">
+
+          <div class="row"  >
+
+            <div class="col-sm-4">
+              <label for="lob">Session Year</label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Session Year" [data]="SessionYearData"
+                formControlName="SessionYear" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+
+              <span *ngIf="isSubmitted2 && formControls.SessionYear.errors" class="ValidationError">
+                <span *ngIf="formControls.SessionYear.errors.required"> Session Year is required</span>
+              </span>
+            </div>
+
+
+
+            <div class="col-sm-4">
+              <label for="lob">LOB</label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select LOB" [data]="LobData"
+                formControlName="lob" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+
+              <span *ngIf="isSubmitted2 && formControls.lob.errors" class="ValidationError">
+                <span *ngIf="formControls.lob.errors.required"> LOB is required</span>
+              </span>
+            </div>
+
+            <div class="col-sm-4">
+              <label for="lob">Select Company</label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Company" [data]="CompanyData"
+                formControlName="Company" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+
+              <span *ngIf="isSubmitted2 && formControls.Company.errors" class="ValidationError">
+                <span *ngIf="formControls.Company.errors.required"> Company is required</span>
+              </span>
+            </div>
+
+            <div class="col-sm-4">
+              <label for="lob">Select File</label>
+              <input type="file" name="File" (change)="UploadDocs($event,'file')" formControlName="File"
+                class="form-control">
+              <span *ngIf="isSubmitted2 && formControls.File.errors" class="ValidationError">
+                <span *ngIf="formControls.File.errors.required"> File is required</span>
+              </span>
+            </div>
+            <div class="col-sm-2">
+              <label>&nbsp;</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-info form-control" style="font-size: small;" (click)="Submit()">Add Data
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+
+
+      <table id="Table1" class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>LOB</th>
+            <th>Company</th>
+            <th>File</th>
+            <th>Action User</th>
+
+          </tr>
+
+        </thead>
+        <tbody *ngIf="ClaimBulkData?.length != 0">
+
+          <tr *ngFor="let row of ClaimBulkData; let i=index;">
+            <td>{{row.key_name}} </td>
+            <td>{{row.Company}} </td>
+            <td>
+              <span class="label label-default" (click)="ViewDocument(row.key_value)">View</span>
+            </td>
+            <td>{{row.EmployeeName}} - {{row.EmployeeCode}}</td>
+
+          </tr>
+        </tbody>
+        <tbody *ngIf="ClaimBulkData?.length == 0">
+          <tr>
+            <td colspan="8" align="center">No data Available !</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="modal fade" id="AddClaimMasterData" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Claim Master Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-blog-top" [formGroup]="ClaimMasterForm">
+          <div class="row"  >
+            <div class="col-sm-4">
+              <label for="lob">Select Company</label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Company" [data]="CompanyData"
+                formControlName="Company" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+
+              <span *ngIf="isSubmitted3 && formControls2.Company.errors" class="ValidationError">
+                <span *ngIf="formControls2.Company.errors.required"> Company is required</span>
+              </span>
+            </div>
+
+            <div class="col-sm-4">
+              <label for="lob">Claim Status</label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Claim Status" [data]="ClaimStatus"
+                formControlName="Claimstatus" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+
+              <span *ngIf="isSubmitted3 && formControls2.Claimstatus.errors" class="ValidationError">
+                <span *ngIf="formControls2.Claimstatus.errors.required"> Claim status is required</span>
+              </span>
+            </div>
+
+
+            <div class="col-sm-4">
+              <label for="lob">Enter New Claim Status</label>
+
+              <input type="text" name="File" formControlName="ClaimStatusName" placeholder="Enter New Claim Status"
+                class="form-control">
+
+              <span *ngIf="isSubmitted3 && formControls2.ClaimStatusName.errors" class="ValidationError">
+                <span *ngIf="formControls2.ClaimStatusName.errors.required"> Claim status name is required</span>
+              </span>
+            </div>
+            <div class="col-sm-2">
+              <label>&nbsp;</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-info form-control" style="font-size: small;" (click)="AddMaster()">Add
+          Data</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+
+
+
+      <div class="box-body">
+        <form class="form-blog-top" [formGroup]="SearchForm2" (ngSubmit)="AddClaimMasterData()">
+          <div class="row"  >
+            <div class="col-sm-3">
+              <input type="text" formControlName="SearchValue" name="SearchValue" class="form-control"
+                placeholder="Search">
+            </div>
+
+            <div class="col-sm-9">
+              <button type="submit" class="btn btn-info" style="font-size: small;" value="Search"> <i
+                  class="fa fa-search">Search</i> </button>
+
+
+            </div>
+          </div>
+        </form>
+
+        <hr>
+        <div class="mydiv table-responsive ">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Insurer Status</th>
+                <th>Company Name</th>
+                <th>Claim Status </th>
+                <th>Create Date</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="ClaimMasterData?.length != 0">
+              <tr *ngFor="let row of ClaimMasterData; let i=index;">
+                <td>{{row.SrNo}}</td>
+                <td>{{row.key_name}} </td>
+                <td>{{row.company_name}}</td>
+                <td>
+                  <a *ngIf="row.key_value == '1'"><span class="label label-default">Pending</span></a>
+                  <a *ngIf="row.key_value == '2'"><span class="label label-primary">In Process</span></a>
+                  <a *ngIf="row.key_value == '3'"><span class="label label-success">Approve</span></a>
+                  <a *ngIf="row.key_value == '4'"><span class="label label-danger">Close</span></a>
+                  <a *ngIf="row.key_value == '5'"><span class="label label-danger">Rejected</span></a>
+                  <a *ngIf="row.key_value == '6'"><span class="label label-warning">Re-open</span></a>
+                  <a *ngIf="row.key_value == '7'"><span class="label label-warning">Partially-Settled</span></a>
+                  <a *ngIf="row.key_value == '8'"><span class="label label-warning">Settled</span></a>
+                </td>
+                <td>{{row.insert_date}}</td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="ClaimMasterData?.length == 0">
+              <tr>
+                <td colspan="8" align="center">No data Available !</td>
+              </tr>
+            <tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

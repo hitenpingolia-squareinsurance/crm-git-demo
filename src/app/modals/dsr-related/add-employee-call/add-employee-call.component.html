@@ -1,0 +1,122 @@
+<form class="form" [formGroup]="FollowupForm" (ngSubmit)="SubmitFollowupAction()">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="text-align: center;">Activity Tracker
+          <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td *ngIf="action_type == 'Call'">
+
+          <div class="row" style="margin-top: 10px;">
+
+            <div class=" col-sm-12">
+              <label>Search Employee* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Search Employee" [data]="employee_ar"
+                formControlName="employee" [settings]="dropdownSettingMultipleSelect">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.employee.errors " class="ValidationError">
+                <div *ngIf="formControls.employee.errors.required">Field required*!</div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <label>Remarks* : </label>
+              <textarea class="form-control" placeholder="Please enter remarks" formControlName="remark"></textarea>
+            </div>
+          </div>
+
+        </td>
+
+
+        <td *ngIf="action_type == 'Meeting'">
+
+          <div class="row" style="margin-top: 10px;">
+
+            <div class=" col-sm-12">
+              <label>Search Employee* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Search Employee" [data]="employee_ar"
+                formControlName="employee" [settings]="dropdownSettingMultipleSelect">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.employee.errors " class="ValidationError">
+                <div *ngIf="formControls.employee.errors.required">Field required*!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class=" col-sm-6">
+              <label>Search Service Location* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Search Service Location"
+                [data]="service_location_ar" formControlName="service_location"
+                [settings]="dropdownSettingsingleselect">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.service_location.errors " class="ValidationError">
+                <div *ngIf="formControls.service_location.errors.required">Field required*!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label>Meeting Date : </label>
+              <input type="text" placeholder="Choose date" formControlName="meeting_date" class="form-control"
+                bsDatepicker [bsConfig]="{ isAnimated: true }">
+              <div *ngIf="isSubmitted && formControls.meeting_date.errors " class="ValidationError">
+                <div *ngIf="formControls.meeting_date.errors.required">Please choose date!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-6">
+              <label>Start Time : </label>
+              <timepicker [(ngModel)]="mytime" formControlName="start_time"></timepicker>
+              <div *ngIf="isSubmitted && formControls.start_time.errors " class="ValidationError">
+                <div *ngIf="formControls.start_time.errors.required">Please choose start time</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label>End Time : </label>
+              <timepicker [(ngModel)]="mytime1" formControlName="end_time"></timepicker>
+              <div *ngIf="isSubmitted && formControls.end_time.errors " class="ValidationError">
+                <div *ngIf="formControls.end_time.errors.required">Please choose end time</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class=" col-sm-12">
+              <label>Meeting Venue* : </label>
+              <input type="text" class="form-control" placeholder="Please enter meeting venue"
+                formControlName="meeting_venue">
+
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <label>Remarks* : </label>
+              <textarea class="form-control" placeholder="Please enter remarks" formControlName="remark"></textarea>
+            </div>
+          </div>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit Activity">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+
+</form>

@@ -1,0 +1,415 @@
+<script>
+  var autoBlur = true;
+  var noPrint = true;
+  var noCopy = true;
+  var noScreenshot = true;
+</script>
+<script type="text/javascript" src="src/assets/js/noprint.js"></script>
+
+
+<header class="main-header hide-search">
+
+
+  <!-- Logo -->
+  <a routerLink="/dashboard" class="logo">
+    <!-- mini logo for sidebar mini 50x50 pixels -->
+    <span class="logo-mini"> <img class="img-fluid" src="assets/dist/img/crm-logo.png"> </span>
+    <!-- logo for regular state and mobile devices -->
+    <span class="logo-lg"><img class="img-fluid" src="assets/image/square_full_logo.svg"> </span>
+  </a>
+
+  <!-- Header Navbar: style can be found in header.less -->
+  <nav class="navbar navbar-static-top">
+    <!-- <input type="text" class="input-group-text form-control" placeholder="Search" id="dropdownMenuButton"
+      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+    <input type="text" class="input-group-text form-control" placeholder="Search" id="dropdownMenuButton"
+      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (input)="filterItems($event.target.value)"
+      autocomplete="off">
+    <div class="dropdown-menu search-list" aria-labelledby="dropdownMenuButton">
+      <div class="search-data">
+        <div class="product-view">
+          <ul>
+            <li><a (click)="RedirectToWEbs('https://www.squareinsurance.in/health-insurance')">Health</a></li>
+            <li><a (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/bike-insurance')">Bike</a>
+            </li>
+            <li><a (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/car-insurance')">Car</a>
+            </li>
+            <li><a
+                (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/commercial-vehicle-insurance/passenger-carrying')"><label>New</label>PCV</a>
+            </li>
+            <li><a
+                (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/commercial-vehicle-insurance/goods-carrying')">GCV</a>
+            </li>
+            <li><a (click)="RedirectToWEbs('https://www.squareinsurance.in/travel-insurance')">Travel</a></li>
+            <li><a (click)="RedirectToWEbs('https://www.squareinsurance.in/life-insurance')">Life</a></li>
+
+          </ul>
+        </div>
+        <div class="Search-view">
+          <label>Services</label>
+          <!-- <ul>
+            <li *ngFor="let item of filteredItems">
+              <abbr>Offline Quote</abbr>
+                <div class="list-data">
+                  <a [routerLink]="item.Route">{{ item.Name }}</a>
+                  <a [routerLink]="item.Route">{{ item.Name }}</a>
+                </div>
+            </li>
+          </ul> -->
+
+
+          <ul>
+            <li *ngFor="let item of filteredItems">
+              <abbr *ngIf="item.subMenu.length == 0"> <a [routerLink]="item.Route">{{ item.Name }}</a></abbr>
+              <abbr *ngIf="item.subMenu.length > 0">{{ item.Menuname }}</abbr>
+              <div class="list-data" *ngIf="item.subMenu.length > 0">
+                <div class="list-data-div" *ngFor="let subItem of item.subMenu">
+                  <a [routerLink]="subItem.Route">{{ subItem.Name }}</a>
+
+                </div>
+              </div>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- 
+    <input type="text" class="input-group-text form-control" placeholder="Search" id="dropdownMenuButton"
+       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+       (input)="filterItems($event.target.value)">
+      <div class="dropdown-menu search-list" aria-labelledby="dropdownMenuButton">
+        <div class="search-data">
+          <div class="product-view">
+            <ul>
+              <li *ngFor="let item of filteredItems">
+                <a [routerLink]="item.Route">
+                  {{ item.Name }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div> -->
+
+
+
+    <div class="navbar-custom-menu" >
+      <ul class="nav navbar-nav">
+
+        <li class="dropdown messages-menu training_label li1 attendance" *ngIf="LoginType =='employee' && DepartmentIdLoginUser == 12 ">
+          <a class="dropdown-toggle " data-toggle="dropdown" href="javascript:void(0)" aria-expanded="false" (click)="markAttendance()">
+            <i class="fa fa-clock-o" aria-hidden="true"></i><span class="span-none">Attendance({{attendanceMarkButtonText}})</span>
+          </a><abbr>
+            {{attendanceInTime}} 
+            <span *ngIf="attendanceOutTime"> - {{attendanceOutTime}}</span>
+          </abbr>
+        </li>
+        
+        <li class="dropdown messages-menu training_label li1" *ngIf="(LoginType =='employee' || LoginType =='agent') && Partner != 'emitra'"
+          [class.active]="activevalue === 'contest' " (click)="setActive('contest')">
+          <a href="javascript:void(0)" routerLink="/contest/contest-view">
+            <i class="fa fa-trophy" aria-hidden="true"></i>Contest
+          </a>
+        </li>
+
+        <!-- <li *ngIf="LoginType =='employee'" class="li2">
+          <div class="spl_runs" data-toggle="modal" data-target="#apl_score_board"><img src="assets/image/spl-logo.png"
+              alt="spl">SPL</div>
+        </li> -->
+        <!-- <li *ngIf="LoginType =='agent'" class="dropdown messages-menu menu_label li3">
+          <a (click)="ClickMyRmTeleRm()">
+            <i class="fa fa-headphones" aria-hidden="true"></i> <span>My RM & Tele RM</span>
+          </a>
+        </li> -->
+        <li class="dropdown messages-menu menu_label li4" *ngIf="HeaderStatus==1">
+          <a href="javascript:void(0)" id="ExamDivLabelTraining" *ngIf="HeaderLifeTrainngLabel=='Contiune to exam'"
+            (click)="ClicksLifeTraining('exam')">
+            <i class="fa fa-book" aria-hidden="true"></i>{{ HeaderLifeTrainngLabel }}
+          </a>
+          <a href="javascript:void(0)" id="TrainingDivLabelTraining"
+            *ngIf="HeaderLifeTrainngLabel=='Contiune to training'" (click)="ClicksLifeTraining('training')">
+            <i class="fa fa-repeat" aria-hidden="true"></i>{{ HeaderLifeTrainngLabel }}
+          </a>
+          <a href="javascript:void(0)" *ngIf="HeaderLifeTrainngLabel==''" (click)="ClicksLifeTraining('')">
+            <i class="fa fa-repeat" aria-hidden="true"></i>{{ HeaderLifeTrainngLabel }}
+          </a>
+        </li>
+        <li class="dropdown messages-menu li5">
+          <!-- <a href="javascript:void(0)" class="dropdown-toggle" (click)="ShareUrl()"><i class="fa fa-share-alt" aria-hidden="true"></i></a>  -->
+          <a href="javascript:void(0)" (click)="ShareUrl()" class="dropdown-toggle" data-toggle="dropdown"><i
+              class="fa fa-share-alt" aria-hidden="true"></i>Share</a>
+          <div class="dropdown-menu share-view">
+            <div class="qr-code">
+              <img style="text-align: center;"
+              src="https://quickchart.io/qr?text={{ShareUrlDATAaRR}}" id="qr_code_d">
+            </div>
+            <div class="row">
+              <div class="col-md-12 ">
+                <div class="share-url">
+                  <textarea id="w3review" name="w3review" rows="2" disabled>{{ShareUrlDATAaRR}}</textarea>
+                </div>
+                <ul class="share-ul">
+                  <li>
+                    <button type="button" id="submitt_btnxx" class="btn btn-primary"
+                      (click)="CopyText(ShareUrlDATAaRR)">Copy</button>
+                  </li>
+                  <li>
+                    <button type="button" id="submitt_btnxx" class="btn btn-danger ">Close</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="support-in " *ngIf="LoginType === 'agent'">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-phone" aria-hidden="true"></i> Support
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" *ngFor="let lob of lobData; let i = index">
+                <div *ngIf="lob.lob == 'LI' " class="name-pro">
+                  LIFE <a *ngIf="WhatsAppCheck==false" class="listicons-new "  href="https://web.whatsapp.com/send?phone={{lob.Mobile}}&text=" title="Share on whatsapp"
+                  target="_blank"><i 
+                      class="fa fa-whatsapp"></i></a>
+                  
+                  <a *ngIf="WhatsAppCheck==true"  class="listicons-new " href="whatsapp://send?phone={{lob.Mobile}}&text="
+                    title="Share on whatsapp"><i   class="fa fa-whatsapp"></i></a>
+                </div>
+                <div *ngIf="lob.lob != 'LI' " class="name-pro">
+                  {{ lob.lob }}
+                  <a *ngIf="WhatsAppCheck==false" class="listicons-new "  href="https://web.whatsapp.com/send?phone={{lob.Mobile}}&text=" title="Share on whatsapp"
+                  target="_blank"><i 
+                      class="fa fa-whatsapp"></i></a>
+                  
+                  <a *ngIf="WhatsAppCheck==true"  class="listicons-new " href="whatsapp://send?phone={{lob.Mobile}}&text="
+                    title="Share on whatsapp"><i   class="fa fa-whatsapp"></i></a>
+                </div>
+
+                <abbr>{{ lob.RmName }} +91-{{ lob.Mobile }}</abbr>
+                
+              </a>
+
+            </div>
+          </div>
+        </li>
+        <!-- <li class="dropdown messages-menu menu_label">
+          <a href="javascript:void(0)"> <img src="assets/dist/img/expand-solid.svg" class="user-image"></a>
+        </li> -->
+        <li
+          *ngIf="LoginType =='employee' && DepartmentIdLoginUser == 12 || DepartmentIdLoginUser == 7 || DepartmentIdLoginUser == 4 || DepartmentIdLoginUser == 24 || DepartmentIdLoginUser == 3"
+          class="dropdown messages-menu training_label li6">
+          <a href="javascript:void(0)" (click)="BackToEmployeePanel()">
+            <i class="fa fa-exchange" aria-hidden="true"></i>
+          </a>
+        </li>
+        <!-- <li class="dropdown messages-menu training_label">
+              <a href="javascript:void(0)" (click)="BackToPanel()">
+                <i style="padding-right: 3px;" class="fa fa-arrow-left" aria-hidden="true"></i> Back to Web
+              </a>
+            </li> -->
+        <!-- <li *ngIf="LoginType =='agent'" class="dropdown messages-menu menu_label li7">
+          <a href="javascript:void(0)" style="pointer-events: none;">
+            <i class="fa fa-book" aria-hidden="true"></i> <span *ngIf="Life_Training_Status !='1'">Non-Life POSP</span>
+            <span *ngIf="Life_Training_Status =='1'">Non-Life</span>
+             <span
+              *ngIf="Life_Training_Status =='1'"> & Life POSP </span>
+          </a>
+        </li> -->
+
+
+        <li *ngIf="Partner != 'emitra' && LoginType =='agent' && ShowGemsLabels==true && (PrimeStatus !='3' || GemsStatus == 'NA' && GemsStatus == 'null') " class="dropdown messages-menu training_label"
+          [class.active]="activevalue === 'rewards' " (click)="setActive('rewards')">
+          <a routerLink="/Wallet/gems-wallet">
+            <i class="fa fa-trophy" aria-hidden="true"></i> <span> Rewards</span>
+          </a>
+        </li>
+        <li
+          *ngIf="LoginType =='agent' && ShowGemsLabels==true && (PrimeStatus =='3' || (GemsStatus != 'NA' && GemsStatus != 'null') )"
+          class="dropdown messages-menu menu_label li8">
+          <a href="javascript:void(0)" class="notifi" style="pointer-events: none;">
+            <span *ngIf="PrimeStatus =='3'"> <i class="fa fa-book" aria-hidden="true"></i> Prime</span> <span
+              *ngIf="PrimeStatus !='3' && GemsStatus != 'NA' && GemsStatus != 'null'"> <i class="fa fa-book"
+                aria-hidden="true"></i> {{GemsStatus}} </span>
+          </a>
+        </li>
+        <li class="dropdown messages-menu li9">
+          <a (click)="GetNotifications(1)" class="dropdown-toggle notifi" data-toggle="dropdown">
+            <span class="count">{{CountNotifications}}</span>
+            <i class="fa fa-bell-o"></i>
+            <!-- <span *ngIf="CountNotifications>0" class="label label-danger">{{CountNotifications}}</span> -->
+          </a>
+          <div class="dropdown-menu">
+          <div class="innernotificationsmainprofilelist" *ngIf="NotificationsAr.length>0">
+            <div class="notificationsheader"><span>You have {{NotificationsAr.length}} notifications</span> <a routerLink="/notification/view-all-notifications">View all</a></div>
+            <ul class="mainloginnotifactiondropdownlist">
+              <li *ngFor="let n of NotificationsAr;">
+                <a [routerLink]="n.Route">
+                  <div class="notifactionmideabox">
+                    <img *ngIf="this.ProfileImage != undefined" alt="User Image" [src]="ProfileImage">
+                    <img *ngIf="this.ProfileImage == undefined" alt="User Image" src="../../assets/image/profile.svg">
+                  </div>
+                  <div class="notifactioncontentbox">
+                    <h4>{{n.Title}}</h4>
+                    <p>{{n.Message}}</p>
+                    <small><i class="fa-regular fa-clock"></i> {{n.DateTime}}</small>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+          
+        </li>
+        <li class="dropdown user user-menu li10">
+          <a class="dropdown-toggle" data-toggle="dropdown">
+            <img *ngIf="this.ProfileImage != undefined" class="user-image dash-user img-circle" alt="User Image"
+              [src]="ProfileImage">
+            <img *ngIf="this.ProfileImage == undefined" class="user-image dash-user img-circle" alt="User Image"
+              src="../../assets/image/profile.svg">
+            <!-- <img src="assets/dist/img/user2-160x160.png" class="user-image" alt="User Image"> -->
+            <span class="hidden-xs">{{api.GetUserData('Name')}}</span>
+          </a>
+          <ul class="dropdown-menu block-li">
+            <li><a routerLink="/profile/profile"><i class="fa fa-user" aria-hidden="true"></i>Profile</a></li>
+            <li *ngIf="ChangePassword == '1'"><a (click)="ForgetPassword(this.LoginType , 'Change Password')"><i
+                  class="fa fa-unlock-alt" aria-hidden="true" id="change_password"></i>Change Password</a></li>
+            <!-- *ngIf="LoginType == '1'" -->
+            <!-- <li><a (click)="CertificateDow()"><i class="fa fa-download" aria-hidden="true"></i>Download Certificate</a></li> -->
+            <li *ngIf="LoginType =='agent'"><a (click)="initiateDownload('Sent','Certificate')"><i
+                  class="fa fa-download" aria-hidden="true"></i>Download Certificate</a></li>
+            <li *ngIf="LoginType =='agent'"><a routerLink="/tds/agent-view"><i class="fa fa-sign-in"
+                  aria-hidden="true"></i>TDS Certificate</a></li>
+            <li *ngIf="LoginType =='agent'"><a (click)="initiateDownload('Sent','Agreement')"><i class="fa fa-download"
+                  aria-hidden="true"></i>Download Agreement</a></li>
+            <li *ngIf="LoginType =='agent'"> <a (click)="Conversational_Settings(this.code,this.mobile,this.email)"><i
+                  class="fa fa-sign-in" aria-hidden="true"></i>Conversational Settings</a>
+            </li>
+            <li *ngIf="LoginType =='agent' && Partner != 'emitra'"> <a routerLink="/brokerage/checkgrid"><i class="fa fa-sign-in"
+                  aria-hidden="true"></i>Checkgrid</a>
+            </li>
+            <li><a href="javascript:void(0)" routerLink="/Logoutweb"><i class="fa fa-sign-out"
+                  aria-hidden="true"></i>Sign Out</a></li>
+
+            <!-- User image -->
+            <!-- <li class="user-header">
+              <img *ngIf="this.ProfileImage != undefined" class="img-circle" alt="User Image" [src]="ProfileImage">
+              <img *ngIf="this.ProfileImage == undefined" class="img-circle" alt="User Image"
+                src="../../assets/image/profile.svg">
+              <p *ngIf="UserLoginType != 'SubPos'">
+                {{api.GetUserData('Name')}} - {{api.GetUserData('Code')}}
+              </p>
+              <p *ngIf="UserLoginType == 'SubPos'">
+                {{api.GetUserData('Name')}} - {{api.GetUserData('Mobile')}}
+              </p>
+            </li>
+            <li class="user-footer custom-user-footer">
+              <div class="pull-left">
+                <a routerLink="/profile/profile" class="btn btn-default btn-flat">Profile</a>
+              </div>
+              <div class="pull-left" *ngIf="ChangePassword == '1'">
+                <a (click)="ForgetPassword(this.LoginType , 'Change Password')" class="btn btn-default btn-flat">Change
+                  Password</a>
+              </div>
+              <div class="pull-right">
+                <a href="javascript:void(0)" routerLink="/Logoutweb" class="btn btn-default btn-flat">Sign out</a>
+              </div>
+            </li> -->
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<div id="apl_score_board" class="modal fade" role="dialog" style="background: #008eff63;     z-index: 99999;">
+  <div class="modal-dialog" style="width:100%; max-width: 900px;margin: 100px auto 30px;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_body main_body_diff main_card_height_scrollddddd">
+              <div style="width: 100%; height:65vh;overflow-y: hidden;">
+                <!-- <iframe frameBorder="0" scrolling="no" style="width: 100% !important; height: 100%;" src="https://api.policyonweb.com/API/v1/other/DJFM" title=""></iframe> -->
+                <iframe frameBorder="0" scrolling="no" style="width: 100% !important; height: 100%;"
+                  src="https://api.policyonweb.com/API/v3/other/SPL" title=""></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" id="OpenOtpModel" data-toggle="modal" data-target="#OtpChack">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="OtpChack" tabindex="-1" aria-labelledby="OtpChackLabel" aria-hidden="true">
+
+  <div class="modal-dialog modal-dialog-centered custom-width">
+    <div class="modal-content" style="padding: 20px !important; border-radius: 10px;">
+
+      <div class="login-box-body">
+        <button id="ClodeOtpModel" data-dismiss="modal" aria-label="Close" type="button"
+          class="close closeModelButton">&times;</button>
+        <div class="row">
+          <div class="col-sm-12" style="text-align: center;padding-bottom: 20px;">
+            <a href="javascrpit:void(0)"><img _ngcontent-ncn-c7="" class="img-fluid" src="assets/dist/img/forget.png"
+                style="opacity: 0.8;"></a>
+          </div>
+          <div class="col-sm-12">
+            <div class=" has-feedback" style="display:block;">
+              <div>
+                <div clas="verify-pass form-group">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="has-feedback otp">
+                        <div class="form-group has-feedback">
+                          <input type="text" [(ngModel)]="enteredOTP" class="form-control" maxlegnth="4" minlegnth="4"
+                            placeholder="Enter OTP">
+                          <span class="form-control-feedback re-feedback">
+                            <button [disabled]="ResendOtpButton" (click)="initiateDownload('Resend',this.NewSendType)"
+                              type="button" id="ResendOtpButton"
+                              class="btn btn-info btn-block btn-flat login-button forgot"></button>
+                          </span>
+                        </div>
+                        <div class="otp-col">
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <button (click)="verifyOTP()" type="submit" class="btn btn-primary btn-block btn-flat">verify
+                    OTP</button>
+                  <!-- <button (click)="verifyOTP()">Submit</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

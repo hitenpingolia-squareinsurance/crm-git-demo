@@ -1,0 +1,29 @@
+
+            <div class="modal-top">
+                <h4 class="modal-title">POSP Policy Issuance</h4>
+            </div>
+
+<!-- <form (ngSubmit)="submit()" [formGroup]="posp_right"> -->
+<div class="popup-content-body">
+    <div class="popup-form">
+                <div class=" marg">
+                    <h5>Policy Issuance</h5>
+                    <abbr>
+                        <input id="1" type="checkbox" [checked]="SelectGeneralValue == 1"
+                        (change)="updateSelectGeneralValue($event)" value="1" name="general" formControlName="general">
+                    <label for="1">General</label>
+                    </abbr>
+                    <abbr>
+                        <input id="1" type="checkbox" [checked]="SelectlifeValue == 1"
+                        (change)="updateSelectLifeValue($event)" value="1" name="life" formControlName="life">
+                    <label for="2">Life</label>
+                    </abbr>
+                    
+                </div>
+            <div class="button-div-yes-no">
+                <button type="button" (click)="CloseModel11()" class="btn btn-danger">Close</button>
+                <button type="submit" (click)="submit()" class="btn btn-primary">Submit</button>
+            </div>
+    </div>
+</div>
+<!-- </form> -->

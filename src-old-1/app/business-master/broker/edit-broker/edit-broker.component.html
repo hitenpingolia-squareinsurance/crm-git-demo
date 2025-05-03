@@ -1,0 +1,62 @@
+<section class="custom-scrool" id="click-close">
+    <div class="">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <h4 class="header_title">Add New Company Form</h4>
+                <button type="button" (click)="CloseModel()" class="close closeModelButton"><i
+                        class="fa fa-close"></i></button>
+                <div class="call-precess" id="callProcess" style="display:none;">
+                    <div class="call-align">
+                        <img src="assets/image/calling.gif" alt="">
+                    </div>
+                    <div class="heading-call">Call in Progress....</div>
+                </div>
+            </div>
+
+            <div class="modal_body py_15">
+
+                <div class="row">
+
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form [formGroup]="AddFieldForm" (ngSubmit)="SubBtn()">
+
+                            <div class="col-md-4">
+                                <label>Name</label>
+                                <input type="text" class="form-control" formControlName="name"
+                                    placeholder="Name">
+                                <div *ngIf="AddFieldForm.get('name').hasError('required') && (AddFieldForm.get('name').touched ||AddFieldForm.dirty)"
+                                    class="text-danger"> This Field is required
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="close">
+                                <div class="category_list">
+                                    <label>Status</label>
+                                    <ng-multiselect-dropdown class="form-control" placeholder="Status" [data]="active"
+                                        formControlName="status" [settings]="dropdownSettingsmultiselect">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="AddFieldForm.get('status').hasError('required') && (AddFieldForm.get('status').touched || AddFieldForm.dirty)"
+                                        class="text-danger">
+                                        This field is Required
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="logs-btn-align">
+                                    <button type="submit" class="btn btn_primary btn-success">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

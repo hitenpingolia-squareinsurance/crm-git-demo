@@ -1,0 +1,96 @@
+<form (ngSubmit)="update()" [formGroup]="Updateform">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="text-align: center;">Plan Benefit
+                    <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>Select LOB</label>
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select lob" [data]="lob"
+                                formControlName="lob" [settings]="dropdownSettingsType" [(ngModel)]="lob_name"
+                                (onSelect)="FetchCompany($event)">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="Updateform.get('lob').touched && Updateform.get('lob').invalid">
+                                <small class="text-danger">LOB is required.</small>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label>Select Insurer</label>
+                            <ng-multiselect-dropdown class="form-control" placeholder=" Select Insurer" [data]="company"
+                                formControlName="insurer" [settings]="dropdownSettingsType" [(ngModel)]="company_name"
+                                (onSelect)="FetchPlans($event)">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="Updateform.get('insurer').touched && Updateform.get('insurer').invalid">
+                                <small class="text-danger">insurer is required.</small>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Select Product/Plan Type</label>
+                            <ng-multiselect-dropdown class="form-control" placeholder="select product type"
+                                [data]="plan" formControlName="product_type" [settings]="dropdownSettingsType"
+                                [(ngModel)]="plan_name" (onSelect)="FetchSubplans($event)">
+                            </ng-multiselect-dropdown>
+                            <div
+                                *ngIf="Updateform.get('product_type').touched && Updateform.get('product_type').invalid">
+                                <small class="text-danger">product_type is required.</small>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label>Subplan type</label>
+                            <ng-multiselect-dropdown class="form-control" placeholder="Plan type" [data]="subplan"
+                                formControlName="plan_type" [settings]="dropdownSettingsType"
+                                [(ngModel)]="subplan_name">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="Updateform.get('plan_type').touched && Updateform.get('plan_type').invalid">
+                                <small class="text-danger">plan_type is required.</small>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+                        <div class="col-sm-4">
+                            <label>Plan Benefit</label>
+                            <input type="text" class="form-control" formControlName="benifit">
+                            <!-- <div
+                                *ngIf="Updateform.get('plan_benefit').touched && Updateform.get('plan_benefit').invalid">
+                                <small class="text-danger">label_name is required.</small>
+                            </div> -->
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label>Plan Benefit Description</label>
+                            <input type="text" class="form-control" formControlName="description">
+
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Features</label>
+                            <input type="text" class="form-control" formControlName="feature">
+
+                        </div>
+
+
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>

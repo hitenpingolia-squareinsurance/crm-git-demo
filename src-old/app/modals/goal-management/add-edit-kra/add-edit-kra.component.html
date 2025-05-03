@@ -1,0 +1,132 @@
+<form class="form" [formGroup]="KraMasterForm" (ngSubmit)="AddEditKraMaster()">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="text-align: center;">{{ ActionType }} KRA
+          <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngIf="ActionType != 'Edit' && row_id == 0">
+        <td>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-4">
+              <label>Department* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Department" [data]="department_ar"
+                [(ngModel)]="sel_department_ar" formControlName="Department_Id" (onSelect)="GetEmployeeList()"
+                (onDeSelect)="GetEmployeeList()" [settings]="dropdownSettingmultipleselect">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.Department_Id.errors " class="ValidationError">
+                <div *ngIf="formControls.Department_Id.errors.required">Department required!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <label>Profile Type* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Profile" [data]="profile_ar"
+                [(ngModel)]="sel_profile_ar" formControlName="Profile_Type" (onSelect)="GetEmployeeList()"
+                (onDeSelect)="GetEmployeeList()" [settings]="dropdownSettingsingleselect">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.Profile_Type.errors " class="ValidationError">
+                <div *ngIf="formControls.Profile_Type.errors.required">Profile Type required!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <label>Employee : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Employee" [data]="employee_ar"
+                [(ngModel)]="sel_employee_ar" formControlName="Employee_Id" [settings]="dropdownSettingsingleselect">
+              </ng-multiselect-dropdown>
+            </div>
+
+          </div>
+
+          <div class="row" formArrayName="kra_list" style="margin-top: 10px;">
+            <div *ngFor="let c of kra_list_func().controls; let i=index" [formGroupName]="i">
+
+
+              <div class="col-sm-1">
+                <input type="text" readonly class="form-control" value="{{i + 1}}">
+              </div>
+
+              <div class="col-sm-8">
+                <input type="text" placeholder="KRA Type" formControlName="kra_type" class="form-control">
+              </div>
+
+              <div class="col-sm-2">
+                <input type="number" placeholder="0" formControlName="weightage" class="form-control">
+              </div>
+
+              <div class="col-sm-1">
+                <button *ngIf="i==0" type="button" (click)="AddNewKra()" class="btn btn-primary">
+                  <i style="color:#fff;" class="fa fa-plus"></i></button>
+                <button *ngIf="i!=0" (click)="RemoveNewKra(i)" class="btn btn-danger">
+                  <i class="fa fa-close"></i></button>
+              </div>
+
+            </div>
+          </div>
+        </td>
+      </tr>
+
+
+      <tr *ngIf="ActionType == 'Edit' && row_id != 0">
+        <td>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-4">
+              <label>Department* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Department" [data]="department_ar"
+                [(ngModel)]="sel_department_ar" formControlName="Department_Id"
+                [settings]="dropdownSettingsingleselect">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.Department_Id.errors " class="ValidationError">
+                <div *ngIf="formControls.Department_Id.errors.required">Department required!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <label>Profile Type* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Profile" [data]="profile_ar"
+                [(ngModel)]="sel_profile_ar" formControlName="Profile_Type" [settings]="dropdownSettingsingleselect">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.Profile_Type.errors " class="ValidationError">
+                <div *ngIf="formControls.Profile_Type.errors.required">Profile Type required!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <label>Weightage* : </label>
+              <input type="text" placeholder="Weightage" class="form-control" formControlName="Weightage">
+              <div *ngIf="isSubmitted && formControls.Weightage.errors " class="ValidationError">
+                <div *ngIf="formControls.Weightage.errors.required">Weightage required!</div>
+                <div *ngIf="formControls.Weightage.errors.pattern">Invalid Value!</div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <label>Kra : </label>
+              <textarea placeholder=" Enter Kra" formControlName="Kra_Type" class="form-control"></textarea>
+              <div *ngIf="isSubmitted && formControls.Kra_Type.errors " class="ValidationError">
+                <div *ngIf="formControls.Kra_Type.errors.required">Kra required!</div>
+              </div>
+            </div>
+          </div>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Save" style="margin-right: 5px;">
+          <input type="button" class="btn btn-warning" (click)="CloseModel()" value="Cancel">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

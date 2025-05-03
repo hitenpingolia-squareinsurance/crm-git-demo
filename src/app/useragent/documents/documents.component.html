@@ -1,0 +1,135 @@
+  <div class="modal-top">
+    <h4 class="modal-title">Documents</h4>
+    <button type="button" (click)="CloseModel()" class="close closeModelButton" ><i class="fa fa-close"
+      ></i></button>
+  </div>
+  <form [formGroup]="docsForm">
+<div class=" mydiv table-responsive">
+  <table class="table table-bordered table-hover dataTable">
+    <thead>
+      <tr>
+        <th>Doc Name</th>
+        <th>View Document</th>
+        <th>Update Doc</th>
+        <th>Doc Update Date</th>
+      </tr>
+    </thead>
+      <tbody id="divshow">
+        <tr>
+          <td>Pancard</td>
+          <td>
+            <label class="label label-info"> <a style="color: white;" *ngIf="Pancard != '' " href="{{Pancard}}"
+                target="_blank">View</a></label>
+          </td>
+
+          <td style="display: flex;"> <input type="file" class="form-control" formControlName="pancardimage"
+              style="width: 60%;" required (change)="UploadDocs($event,'pancardimage')"> &nbsp;&nbsp;<button
+              class="btn btn-primary save-click" (click)="submit()" type="submit">Update</button>
+          </td>
+          <td>{{Pancarddate}} </td>
+        </tr>
+
+        <tr>
+          <td>Aadhar Card Front</td>
+          <td>
+            <label class="label label-info"> <a style="color: white;" *ngIf="AadharCard != '' " href="{{AadharCard}}"
+                target="_blank">View</a></label>
+          </td>
+
+          <td style="display: flex;"> <input type="file" class="form-control" formControlName="aadharfrontimage"
+              style="width: 60%;" (change)="UploadDocs($event,'aadharfrontimage')"> &nbsp;&nbsp;<button
+              class="btn btn-primary save-click" (click)="submit()" type="submit">Update</button>
+          </td>
+          <td>{{AadharCarddate}} </td>
+        </tr>
+
+        <tr>
+
+          <td>Aadhar Card Back</td>
+          <td>
+            <label class="label label-info"> <a style="color: white;" *ngIf="AadharBack != '' " href="{{AadharBack}}"
+                target="_blank">View</a></label>
+          </td>
+          <td style="display: flex;"> <input type="file" class="form-control" formControlName="aadharbackimage"
+              style="width: 60%;" (change)="UploadDocs($event,'aadharbackimage')"> &nbsp;&nbsp;<button
+              class="btn btn-primary save-click" (click)="submit()" type="submit">Update</button>
+          </td>
+          <td>{{AadharBackdate}} </td>
+
+        </tr>
+
+        <tr>
+          <td>Qualification Proof</td>
+          <td>
+            <label class="label label-info"> <a style="color: white;" *ngIf="Qualification != '' "
+                href="{{Qualification}}" target="_blank">View</a></label>
+          </td>
+          <td style="display: flex;"> <input type="file" class="form-control" formControlName="qualificationproofimage"
+              style="width: 60%;" (change)="UploadDocs($event,'qualificationproofimage')"> &nbsp;&nbsp;<button
+              class="btn btn-primary save-click" (click)="submit()" type="submit">Update</button>
+          </td>
+          <td>{{Qualificationdate}} </td>
+        </tr>
+
+
+        <tr>
+          <td>Cheque Image</td>
+          <td>
+            <label class="label label-info"> <a style="color: white;" *ngIf="Cheque != '' " href="{{Cheque}}"
+                target="_blank">View</a></label>
+          </td>
+          <td style="display: flex;"> <input type="file" class="form-control" formControlName="chequeimageproof"
+              style="width: 60%;" (change)="UploadDocs($event,'chequeimageproof')"> &nbsp;&nbsp;<button
+              class="btn btn-primary save-click" (click)="submit()" type="submit">Update</button>
+          </td>
+          <td>{{Chequedate}} </td>
+
+        </tr>
+
+        <tr>
+          <td>Profile Image</td>
+          <td>
+            <label class="label label-info"> <a style="color: white;" *ngIf="Profile != '' " href="{{Profile}}"
+                target="_blank">View</a></label>
+          </td>
+          <td style="display: flex;"> <input type="file" class="form-control" formControlName="prfileimage"
+              style="width: 60%;" (change)="UploadDocs($event,'prfileimage')"> &nbsp;&nbsp;<button
+              class="btn btn-primary save-click" (click)="submit()" type="submit">Update</button>
+          </td>
+          <td>{{Profiledate}} </td>
+
+        </tr>
+
+        <tr>
+          <td>Signature Image</td>
+          <td>
+            <label class="label label-info"> <a style="color: white;" *ngIf="Signature != '' " href="{{Signature}}"
+                target="_blank">View</a></label>
+          </td>
+          <td style="display: flex;"> <input type="file" class="form-control" formControlName="signatureimage"
+              style="width: 60%;" (change)="UploadDocs($event,'signatureimage')"> &nbsp;&nbsp;<button
+              class="btn btn-primary save-click" (click)="submit()" type="submit">Update</button>
+          </td>
+          <td>{{Signaturedate}} </td>
+        </tr>
+
+        <tr>
+          <td>Other Image</td>
+          <td>
+            <label class="label label-info"> <a style="color: white;" *ngIf="Other != '' " href="{{Other}}"
+                target="_blank">View</a></label>
+          </td>
+          <td style="display: flex;"> <input type="file" class="form-control" formControlName="otherimage"
+              style="width: 60%;" (change)="UploadDocs($event,'otherimage')"> &nbsp;&nbsp;<button
+              class="btn btn-primary save-click" (click)="submit()" type="submit">Update</button>
+          </td>
+          <td>{{Otherdate}} </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+</div>
+  
+
+  </form>

@@ -1,0 +1,112 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Quotations</h3>
+          </div>
+
+          <div class="box-body">
+            <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+
+
+              <div class="row"  >
+
+                <div class="col-sm-3">
+                  <input type="text" formControlName="SearchValue" name="SearchValue" class="form-control"
+                    placeholder="Search">
+                </div>
+
+
+                <div class="col-sm-3">
+                  <button type="submit" class="btn btn-info" style="font-size: small;" value="Search"> <i
+                      class="fa fa-search">Search</i> </button>
+                  &nbsp;&nbsp;
+                  <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                    value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                  &nbsp;&nbsp;
+                  <button class="btn btn-info" (click)="addleads()">Add Leads</button>
+                </div>
+
+              </div>
+
+            </form>
+
+
+            <hr>
+
+
+            <div class="mydiv table-responsive ">
+              <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Name</th>
+                    <th>email</th>
+                    <th>Mobile</th>
+                    <th>Lead Create Date</th>
+                    <th>Action</th>
+                  </tr>
+
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{row.SrNo}}</td>
+
+                    <td>{{row.Name}} </td>
+
+                    <td>{{row.Email}}</td>
+                    <td>{{row.Mobile}}</td>
+                    <td>{{row.created}}</td>
+                    <td>
+                      <label class="label label-info" (click)="ViewDetails(row.other_log_data)">view Details</label>
+
+                      <div>
+
+                        <label *ngIf="row.status == '1'"
+                          (click)="ChangeStatusRenewals(2 ,row.Id,'Button',row.AssignerId)" class="label label-primary">
+                          Pending
+                        </label>
+                        <label *ngIf="row.status == '2' "
+                          (click)="ChangeStatusRenewals(2 ,row.Id,'Button',row.AssignerId)" class="label label-info">
+                          Follow Up
+                        </label>
+                        <label *ngIf="row.status == '3' "
+                          (click)="ChangeStatusRenewals(3 ,row.Id,'Button',row.AssignerId)" class="label label-warning">
+                          Converted
+                        </label>
+                        <label *ngIf="row.status == '0' "
+                          (click)="ChangeStatusRenewals(0 ,row.Id,'Button',row.AssignerId)" class="label label-danger">
+                          Lost
+                        </label>
+
+                      </div>
+
+                    </td>
+                  </tr>
+
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+</div>

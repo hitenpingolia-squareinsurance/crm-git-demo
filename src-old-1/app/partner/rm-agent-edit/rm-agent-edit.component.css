@@ -1,0 +1,11 @@
+.example-tools{
+    display: flex;
+    justify-content: end;
+}
+.form_sub_title {
+    font-size: 14px;
+    color: #2cb2b3;
+    border-bottom: 1px solid #2cb2b3;
+    font-weight: 600;
+    margin-bottom: 20px;
+}

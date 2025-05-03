@@ -1,0 +1,927 @@
+<section class="inner_page_css main_dashboard_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">
+              <!-- title  -->
+              Client Creation
+            </div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div class="row">
+              <div class="col-lg-12">
+                <!--begin::Card-->
+                <div class="card card-custom gutter-b example example-compact">
+                
+                      <div class="example-tools justify-content-center">
+                        <a routerLink="/partner/report" class="btn btn-primary font-weight-bolder">
+                          <i class="fa fa-angle-left" aria-hidden="true"></i>
+                          Back
+                        </a>
+                      </div>
+            
+                  <!--begin::Form-->
+                  <form class="form" [formGroup]="AddForm" (ngSubmit)="Step_1()" *ngIf="StepI == '1'">
+                    <div class="card-body">
+                      <div class="form_sub_title"><i _ngcontent-kcn-c6="" class="fa fa-link mr_5"></i>
+                        Personal Information
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-lg-4">
+                          <label>RM:</label>
+
+                          <select class="form-control" formControlName="RM_Id">
+                            <option *ngFor="let row of RM_Data" value="{{ row.Id }}">
+                              {{ row.Name }}
+                            </option>
+                          </select>
+
+                          <span *ngIf="isSubmitted && formControls.RM_Id.errors" class="form-text text-muted">
+                            <span *ngIf="formControls.RM_Id.errors.required" style="color: red">Please choose RM!</span>
+                          </span>
+                        </div>
+
+                        <div class="col-lg-2">
+                          <label>Agent Type:</label>
+
+                          <select class="form-control" (change)="onChangeAgentType($event)"
+                            formControlName="Agent_Type">
+                            <!-- <option value="SP">SP</option> -->
+                            <option value="SPC">SPC</option>
+                            <!-- <option value="Dealer">Dealer</option> -->
+                          </select>
+
+                          <span *ngIf="isSubmitted && formControls.Agent_Type.errors" class="form-text text-muted">
+                            <span *ngIf="formControls.Agent_Type.errors.required" style="color: red">Please choose agent
+                              type!</span>
+                          </span>
+                        </div>
+
+                        <div class="col-lg-4">
+                          <label>Franchisee :</label>
+
+                          <select class="form-control" formControlName="Franchisee_Id">
+                            <option value="">--select--</option>
+                            <option *ngFor="let s of Franchisee_Ar" value="{{ s.Id }}">
+                              {{ s.Name }}
+                            </option>
+                          </select>
+
+                          <span *ngIf="isSubmitted && formControls.Franchisee_Id.errors" class="form-text text-muted">
+                            <span *ngIf="formControls.Franchisee_Id.errors.required" style="color: red">Please choose an
+                              option!</span>
+                          </span>
+                        </div>
+
+                        <div class="col-lg-2">
+                          <label>Agent Category:</label>
+                          <select class="form-control" (change)="onChangeAgentCategory($event)"
+                            formControlName="Agent_Category">
+                            <option value="Individual">Individual</option>
+                            <option value="Institution">Institution</option>
+                          </select>
+
+                          <span *ngIf="isSubmitted && formControls.Agent_Category.errors" class="form-text text-muted">
+                            <span *ngIf="formControls.Agent_Category.errors.required" style="color: red">Please choose
+                              agent category!</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div *ngIf="AddForm.value['Agent_Category'] == 'Institution'">
+                        <div class="form-group row">
+                          <div class="col-lg-4">
+                            <label>Institution Name:</label>
+                            <input type="text" class="form-control" formControlName="Agent_Name" />
+
+                            <span *ngIf="isSubmitted && formControls.Agent_Name.errors" class="form-text text-muted">
+                              <span *ngIf="formControls.Agent_Name.errors.required" style="color: red">Please enter your
+                                Institution name!</span>
+                              <span *ngIf="formControls.Agent_Name.errors.pattern" style="color: red">Please enter vaild
+                                name (Numbers/Special Characters
+                                Not Allowed)</span>
+                            </span>
+                          </div>
+
+                          <div *ngIf="AddForm.value['Agent_Type'] == 'SP'" class="col-lg-3">
+                            <label>Contact Person Name:</label>
+                            <input type="text" class="form-control" formControlName="ContactPerson_Name" />
+
+                            <span *ngIf="
+                                  isSubmitted && formControls.ContactPerson_Name.errors
+                                " class="form-text text-muted">
+                              <span *ngIf="
+                                    formControls.ContactPerson_Name.errors.required
+                                  " style="color: red">Please enter contact person name!</span>
+                              <span *ngIf="formControls.ContactPerson_Name.errors.pattern" style="color: red">Please
+                                enter vaild name (Numbers/Special Characters
+                                Not Allowed)</span>
+                            </span>
+                          </div>
+                          <div *ngIf="AddForm.value['Agent_Type'] == 'SP'" class="col-lg-3">
+                            <label>Contact Person Email:</label>
+                            <input type="text" (keyup)="EmailLowerCase($event, 'ContactPersonEmail')"
+                              class="form-control" formControlName="ContactPerson_Email" />
+
+                            <span *ngIf="
+                                  isSubmitted && formControls.ContactPerson_Email.errors
+                                " class="form-text text-muted">
+                              <span *ngIf="
+                                    formControls.ContactPerson_Email.errors.required
+                                  " style="color: red">Please enter contact person email!</span>
+                              <span *ngIf="
+                                    formControls.ContactPerson_Email.errors.pattern
+                                  " style="color: red">Please enter vaild contact person email</span>
+                            </span>
+                          </div>
+                          <div *ngIf="AddForm.value['Agent_Type'] == 'SP'" class="col-lg-2">
+                            <label>Contact Person Mobile:</label>
+                            <input type="text" class="form-control" formControlName="ContactPerson_Mobile" />
+
+                            <span *ngIf="
+                                  isSubmitted &&
+                                  formControls.ContactPerson_Mobile.errors
+                                " class="form-text text-muted">
+                              <span *ngIf="
+                                    formControls.ContactPerson_Mobile.errors.required
+                                  " style="color: red">Please enter contact person mobile no!</span>
+                              <span *ngIf="
+                                    formControls.ContactPerson_Mobile.errors.pattern
+                                  " style="color: red">Please enter vaild contact person mobile no</span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="AddForm.value['Agent_Category'] == 'Individual'">
+                        <div class="form-group row">
+                          <div class="col-lg-6">
+                            <label>Salutation:</label>
+                            <select class="form-control" formControlName="Salutation_Type">
+                              <option value="Mr.">Mr.</option>
+                              <option value="Mrs.">Mrs.</option>
+                              <option value="Ms.">Ms.</option>
+                            </select>
+
+                            <span *ngIf="
+                                  isSubmitted && formControls.Salutation_Type.errors
+                                " class="form-text text-muted">
+                              <span *ngIf="formControls.Salutation_Type.errors.required" style="color: red">Please
+                                choose an option!</span>
+                            </span>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <label>Agent Name:</label>
+                            <input type="text" class="form-control" formControlName="Agent_Name" />
+
+                            <span *ngIf="isSubmitted && formControls.Agent_Name.errors" class="form-text text-muted">
+                              <span *ngIf="formControls.Agent_Name.errors.required" style="color: red">Please enter your
+                                Agent name!</span>
+                              <span *ngIf="formControls.Agent_Name.errors.pattern" style="color: red">Please enter vaild
+                                name (Numbers/Special Characters
+                                Not Allowed)</span>
+                            </span>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <div class="col-lg-6">
+                            <label>Gender:</label>
+                            <select class="form-control" formControlName="Gender">
+                              <option value="Male">Male</option>
+                              <option value="Female">FeMale</option>
+                              <option value="Transgender">Transgender</option>
+                            </select>
+
+                            <span *ngIf="isSubmitted && formControls.Gender.errors" class="form-text text-muted">
+                              <span *ngIf="formControls.Gender.errors.required" style="color: red">Please choose an
+                                option!</span>
+                            </span>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <label>Father's/Husband's Name:</label>
+                            <input type="text" class="form-control" formControlName="Father_Name" />
+
+                            <span *ngIf="isSubmitted && formControls.Father_Name.errors" class="form-text text-muted">
+                              <span *ngIf="formControls.Father_Name.errors.required" style="color: red">Please enter
+                                full name!</span>
+                              <span *ngIf="formControls.Father_Name.errors.pattern" style="color: red">Please enter
+                                vaild name (Numbers/Special Characters
+                                Not Allowed)</span>
+                            </span>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <div class="col-lg-6">
+                            <label>Date of Birth:</label>
+                            <input type="text" class="form-control" bsDatepicker
+                              [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" formControlName="DOB" [bsConfig]="{ adaptivePosition: true }" />
+
+                            <span *ngIf="isSubmitted && formControls.DOB.errors" class="form-text text-muted">
+                              <span *ngIf="formControls.DOB.errors.required" style="color: red">Please enter your date
+                                of birth!</span>
+                            </span>
+
+                            <span *ngIf="DateOfBirthdayMsg != ''" class="form-text text-muted">
+                              <span style="color: red">{{ DateOfBirthdayMsg }}</span>
+                            </span>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <label>Qualification :</label>
+                            <select class="form-control" formControlName="Qualification">
+                              <option value="10th">10th</option>
+                              <option value="12th">12th</option>
+                              <option value="Graduation">Graduation</option>
+                              <option value="Post Graduation">Post Graduation</option>
+                            </select>
+                            <span *ngIf="isSubmitted && formControls.Qualification.errors" class="form-text text-muted">
+                              <span *ngIf="formControls.Qualification.errors.required" style="color: red">Please choose
+                                an option!</span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group row" style="display: none">
+                        <div class="col-lg-6">
+                          <label>Password:</label>
+                          <div class="input-group">
+                            <input [type]="fieldTextType ? 'text' : 'password'" class="form-control"
+                              formControlName="Password" />
+                            <div class="input-group-append" (click)="toggleFieldTextType()">
+                              <span class="input-group-text">
+                                <i class="icon-xl fas" [ngClass]="{
+                                      'fa-eye': !fieldTextType,
+                                      'fa-eye-slash': fieldTextType
+                                    }"></i>
+                              </span>
+                            </div>
+                          </div>
+
+                          <span *ngIf="isSubmitted && formControls.Password.errors" class="form-text text-muted">
+                            <span *ngIf="formControls.Password.errors.required" style="color: red">Please enter your
+                              Password !</span>
+
+                            <span *ngIf="formControls.Password.errors.minlength" style="color: red">
+                              Password no must be at least 6 Characters</span>
+                            <span *ngIf="formControls.Password.errors.maxlength" style="color: red">
+                              Password no must be at least 14 Characters</span>
+                          </span>
+                        </div>
+                        <div class="col-lg-6">
+                          <label>Confirm Password:</label>
+                          <div class="input-group">
+                            <input [type]="fieldTextType ? 'text' : 'password'" class="form-control"
+                              formControlName="ConfirmPassword" />
+                            <div class="input-group-append" (click)="toggleFieldTextType()">
+                              <span class="input-group-text">
+                                <i class="icon-xl fas" [ngClass]="{
+                                      'fa-eye': !fieldTextType,
+                                      'fa-eye-slash': fieldTextType
+                                    }"></i>
+                              </span>
+                            </div>
+                          </div>
+
+                          <span *ngIf="isSubmitted && formControls.ConfirmPassword.errors" class="form-text text-muted">
+                            <span *ngIf="formControls.ConfirmPassword.errors.required" style="color: red">Please enter
+                              your Confirm Password !</span>
+                            <span *ngIf="
+                                  formControls.ConfirmPassword.errors.confirmedValidator
+                                " style="color: red">
+                              Password and Confirm Password must be match.
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <!-- begin: Example Code-->
+
+                      <!-- end: Example Code-->
+                    </div>
+                    <div class="card-footer">
+                      <div class="row">
+                        <div class="col-lg-6"></div>
+                        <div class="col-lg-6 text-right">
+                          <button type="submit" class="btn btn-primary mr-2">
+                            Next
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!--end::Form-->
+
+                  <!--begin::Form-->
+                  <form class="form" [formGroup]="StepIIForm" (ngSubmit)="Step_2()" *ngIf="StepII == '1'">
+                    <div class="card-body">
+                      <div class="form_sub_title"><i _ngcontent-kcn-c6="" class="fa fa-link mr_5"></i>
+                        Address Information
+                      </div>
+                    
+
+                      <div class="form-group row">
+                        <div class="col-lg-6">
+                          <label>Addres line 1:</label>
+                          <input type="text" class="form-control" name="Addres_Line_1"
+                            formControlName="Addres_Line_1" />
+
+                          <span *ngIf="
+                                StepIIisSubmitted && fc_StepIIForm.Addres_Line_1.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepIIForm.Addres_Line_1.errors.required" style="color: red">Please enter
+                              Addres line 1!</span>
+                          </span>
+                        </div>
+                        <div class="col-lg-6">
+                          <label>Addres line 2:</label>
+                          <input type="text" class="form-control" name="Addres_Line_2"
+                            formControlName="Addres_Line_2" />
+
+                          <span *ngIf="
+                                StepIIisSubmitted && fc_StepIIForm.Addres_Line_2.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepIIForm.Addres_Line_2.errors.required" style="color: red">Please enter
+                              Addres line 2 !</span>
+                          </span>
+                        </div>
+                      </div>
+                      
+
+                      <div class="form-group row">
+                        <div class="col-lg-6">
+                          <label>State :</label>
+
+                          <!--<select class="form-control" formControlName="State_Id" (change)="District($event)">
+                        <option value=''>--select--</option>
+                        <option *ngFor="let s of States_Ar;" value="{{s.Id}}">{{s.Name}}</option>
+                      </select>-->
+
+                          <ng-multiselect-dropdown class="form-control" name="State_Id" placeholder="Select State" [data]="States_Ar"
+                            formControlName="State_Id" [settings]="DropdownSettings"
+                            (onSelect)="District($event, 'onSelect')" (onDeSelect)="District($event, 'onDeSelect')">
+                          </ng-multiselect-dropdown>
+
+                          <span *ngIf="StepIIisSubmitted && fc_StepIIForm.State_Id.errors" class="form-text text-muted">
+                            <span *ngIf="fc_StepIIForm.State_Id.errors.required" style="color: red">Please choose an
+                              option!</span>
+                          </span>
+                        </div>
+                        <div class="col-lg-6">
+                          <label>District :</label>
+                          <!--<select class="form-control" formControlName="District_Id" (change)="City($event)">
+                        <option value=''>--select--</option>
+                         <option *ngFor="let s of District_Ar;" value="{{s.Id}}">{{s.Name}}</option>
+                      </select>-->
+
+                          <ng-multiselect-dropdown class="form-control" name="District_Id" placeholder="Select District" [data]="District_Ar"
+                            formControlName="District_Id" [settings]="DropdownSettings"
+                            (onSelect)="City($event, 'onSelect')" (onDeSelect)="City($event, 'onDeSelect')">
+                          </ng-multiselect-dropdown>
+
+                          <span *ngIf="
+                                StepIIisSubmitted && fc_StepIIForm.District_Id.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepIIForm.District_Id.errors.required" style="color: red">Please choose an
+                              option!</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-lg-6">
+                          <label>City :</label>
+                          <!--<select class="form-control" formControlName="City_Id" (change)="Pincode($event)">
+                        <option value=''>--select--</option>
+                        <option *ngFor="let s of Citites_Ar;" value="{{s.Id}}">{{s.Name}}</option>
+                      </select>-->
+
+                          <ng-multiselect-dropdown class="form-control" name="City_Id" placeholder="Select City" [data]="Citites_Ar"
+                            formControlName="City_Id" [settings]="DropdownSettings"
+                            (onSelect)="Pincode($event, 'onSelect')" (onDeSelect)="Pincode($event, 'onDeSelect')">
+                          </ng-multiselect-dropdown>
+
+                          <span *ngIf="StepIIisSubmitted && fc_StepIIForm.City_Id.errors" class="form-text text-muted">
+                            <span *ngIf="fc_StepIIForm.City_Id.errors.required" style="color: red">Please choose an
+                              option!</span>
+                          </span>
+                        </div>
+                        <div class="col-lg-6">
+                          <label>Pincode:</label>
+                          <!--<select class="form-control" formControlName="Pincode">
+                        <option value=''>--select--</option>
+                        <option *ngFor="let s of Pincode_Ar;" value="{{s.Id}}">{{s.Name}}</option>				
+                      </select>-->
+
+                          <ng-multiselect-dropdown class="form-control" name="Pincode" placeholder="Select Pincode" [data]="Pincode_Ar"
+                            formControlName="Pincode" [settings]="DropdownSettings">
+                          </ng-multiselect-dropdown>
+
+                          <span *ngIf="StepIIisSubmitted && fc_StepIIForm.Pincode.errors" class="form-text text-muted">
+                            <span *ngIf="fc_StepIIForm.Pincode.errors.required" style="color: red">Please choose an
+                              option!</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-lg-4">
+                          <label>Mobile No:</label>
+                          <input type="text" class="form-control" name="Mobile" formControlName="Mobile" />
+
+                          <span *ngIf="StepIIisSubmitted && fc_StepIIForm.Mobile.errors" class="form-text text-muted">
+                            <span *ngIf="fc_StepIIForm.Mobile.errors.required" style="color: red">Please enter your
+                              mobile no !</span>
+                            <span *ngIf="fc_StepIIForm.Mobile.errors.pattern" style="color: red">Please enter vaild
+                              Mobile No</span>
+                          </span>
+                        </div>
+
+                        <div class="col-lg-4">
+                          <label>Alternate Mobile No:</label>
+                          <input type="text" class="form-control" name="Alternate_Mobile"
+                            formControlName="Alternate_Mobile" />
+                          <span *ngIf="
+                                StepIIisSubmitted &&
+                                fc_StepIIForm.Alternate_Mobile.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepIIForm.Alternate_Mobile.errors.required" style="color: red">Please enter
+                              your mobile no !</span>
+                            <span *ngIf="fc_StepIIForm.Alternate_Mobile.errors.pattern" style="color: red">Please enter
+                              vaild Mobile No</span>
+                          </span>
+                        </div>
+
+                        <div class="col-lg-4">
+                          <label>Email Id:</label>
+                          <input type="text" (keyup)="EmailLowerCase($event, 'Email')" class="form-control" name="Email"
+                            formControlName="Email" />
+
+                          <span *ngIf="StepIIisSubmitted && fc_StepIIForm.Email.errors" class="form-text text-muted">
+                            <span *ngIf="fc_StepIIForm.Email.errors.required" style="color: red">Please enter your email
+                              id !</span>
+                            <span *ngIf="fc_StepIIForm.Email.errors.pattern" style="color: red">Please enter a valid
+                              email address</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <!-- begin: Example Code-->
+
+                      <!-- end: Example Code-->
+                    </div>
+                    <div class="card-footer">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <button type="button" (click)="Previous(2)" class="btn btn-secondary mr-2">
+                            Previous
+                          </button>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                          <!--<span *ngIf="AddForm.value['Agent_Type'] == 'SPC'">
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                      </span>-->
+
+                          <!--<span *ngIf="AddForm.value['Agent_Type'] != 'SPC'">-->
+                          <button type="submit" class="btn btn-primary mr-2">
+                            Next
+                          </button>
+
+                          <!--</span>-->
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!--end::Form-->
+
+                  <!--begin::Form-->
+                  <form class="form" [formGroup]="StepIIIForm" (ngSubmit)="Step_3()" *ngIf="StepIII == '1'">
+                    <div class="card-body">
+                
+                      <div class="form_sub_title"><i _ngcontent-kcn-c6="" class="fa fa-link mr_5"></i>
+                        KYC Details
+                      </div>
+                      <div *ngIf="AddForm.value['Agent_Category'] == 'Institution'" class="form-group row">
+                        <div class="col-lg-6">
+                          <label>GST Status:</label>
+                          <select class="form-control" formControlName="GST_Status"
+                            (change)="onChangeGST_Status($event)">
+                            <option value="">--select--</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+
+                          <span *ngIf="
+                                StepIIIisSubmitted && fc_StepIIIForm.GST_Status.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepIIIForm.GST_Status.errors.required" style="color: red">Please choose an
+                              option!</span>
+                          </span>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label>GST No :</label>
+                          <input type="text" class="form-control" name="GST_No" formControlName="GST_No" />
+
+                          <span *ngIf="StepIIIisSubmitted && fc_StepIIIForm.GST_No.errors" class="form-text text-muted">
+                            <span *ngIf="fc_StepIIIForm.GST_No.errors.required" style="color: red">Please enter GST
+                              No!</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-lg-6">
+                          <label>Aadhar Card No :</label>
+                          <input type="text" class="form-control" name="AadharCard_No"
+                            formControlName="AadharCard_No" />
+
+                          <span *ngIf="
+                                StepIIIisSubmitted &&
+                                fc_StepIIIForm.AadharCard_No.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepIIIForm.AadharCard_No.errors.required" style="color: red">Please enter
+                              Aadhar Card No !</span>
+                            <span *ngIf="fc_StepIIIForm.AadharCard_No.errors.pattern" style="color: red">Please enter
+                              only vaild number.</span>
+                            <span *ngIf="fc_StepIIIForm.AadharCard_No.errors.minlength" style="color: red">
+                              Aadhar no must be at least 12 Numbers</span>
+                            <span *ngIf="fc_StepIIIForm.AadharCard_No.errors.maxlength" style="color: red">
+                              Aadhar no must be at least 12 Numbers</span>
+                          </span>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label>Pan Card No :</label>
+                          <input type="text" class="form-control" name="PanCard_No" formControlName="PanCard_No" />
+
+                          <span *ngIf="
+                                StepIIIisSubmitted && fc_StepIIIForm.PanCard_No.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepIIIForm.PanCard_No.errors.required" style="color: red">Please enter Pan
+                              Card No !</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <!-- begin: Example Code-->
+
+                      <!-- end: Example Code-->
+                    </div>
+                    <div class="card-footer">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <button type="button" (click)="Previous(3)" class="btn btn-secondary mr-2">
+                            Previous
+                          </button>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                          <button type="submit" class="btn btn-primary mr-2">
+                            Next
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!--end::Form-->
+
+                  <!--begin::Form-->
+                  <form class="form" [formGroup]="StepIVForm" (ngSubmit)="Step_4()" *ngIf="StepIV == '1'">
+                    <div class="card-body">
+                    
+                      <div class="form_sub_title"><i _ngcontent-kcn-c6="" class="fa fa-link mr_5"></i>
+                        Bank Account Details
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-lg-6">
+                          <label>Account No:</label>
+                          <input type="text" class="form-control" formControlName="Account_No" />
+
+                          <span *ngIf="
+                                StepIVisSubmitted && fc_StepIVForm.Account_No.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepIVForm.Account_No.errors.required" style="color: red">Please enter
+                              Account No!</span>
+                            <span *ngIf="fc_StepIVForm.Account_No.errors.pattern" style="color: red">Please enter only
+                              vaild number.</span>
+                          </span>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label>IFSC Code:</label>
+                          <input type="text" class="form-control" formControlName="IFSC_Code" />
+
+                          <span *ngIf="
+                                StepIVisSubmitted && fc_StepIVForm.IFSC_Code.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepIVForm.IFSC_Code.errors.required" style="color: red">Please enter IFSC
+                              Code !</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-lg-6">
+                          <label>Bank Name:</label>
+
+                          <!--<select class="form-control" formControlName="Bank_Name">
+                        <option value=''>--select--</option>
+                        <option *ngFor="let row of Banks_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+                      </select>-->
+
+                          <ng-multiselect-dropdown class="form-control" name="Bank_Name" placeholder="Select Bank" [data]="Banks_Ar"
+                            formControlName="Bank_Name" [settings]="DropdownSettings">
+                          </ng-multiselect-dropdown>
+
+                          <span *ngIf="
+                                StepIVisSubmitted && fc_StepIVForm.Bank_Name.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepIVForm.Bank_Name.errors.required" style="color: red">Please choose bank
+                              name !</span>
+                          </span>
+                        </div>
+                        <div class="col-lg-6">
+                          <label>Branch Address:</label>
+                          <input type="text" class="form-control" formControlName="Branch_Address" />
+
+                          <span *ngIf="
+                                StepIVisSubmitted && fc_StepIVForm.Branch_Address.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepIVForm.Branch_Address.errors.required" style="color: red">Please enter
+                              your Branch Address !</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-lg-6">
+                          <label>State :</label>
+                          <!--<select class="form-control" formControlName="State_Id" (change)="B_District($event)">
+                        <option value=''>--select--</option>
+                        <option *ngFor="let s of States_Ar;" value="{{s.Id}}">{{s.Name}}</option>
+                      </select>-->
+
+                          <ng-multiselect-dropdown class="form-control" name="State_Id" placeholder="Select State" [data]="States_Ar"
+                            formControlName="State_Id" [settings]="DropdownSettings"
+                            (onSelect)="B_District($event, 'onSelect')" (onDeSelect)="B_District($event, 'onDeSelect')">
+                          </ng-multiselect-dropdown>
+
+                          <span *ngIf="StepIVisSubmitted && fc_StepIVForm.State_Id.errors" class="form-text text-muted">
+                            <span *ngIf="fc_StepIVForm.State_Id.errors.required" style="color: red">Please choose an
+                              option!</span>
+                          </span>
+                        </div>
+                        <div class="col-lg-6">
+                          <label>District :</label>
+                          <!--<select class="form-control" formControlName="District_Id" (change)="B_City($event)">
+                        <option value=''>--select--</option>
+                         <option *ngFor="let s of B_District_Ar;" value="{{s.Id}}">{{s.Name}}</option>
+                      </select>-->
+
+                          <ng-multiselect-dropdown class="form-control" name="District_Id" placeholder="Select District"
+                            [data]="B_District_Ar" formControlName="District_Id" [settings]="DropdownSettings"
+                            (onSelect)="B_City($event, 'onSelect')" (onDeSelect)="B_City($event, 'onDeSelect')">
+                          </ng-multiselect-dropdown>
+
+                          <span *ngIf="
+                                StepIVisSubmitted && fc_StepIVForm.District_Id.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepIVForm.District_Id.errors.required" style="color: red">Please choose an
+                              option!</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-lg-6">
+                          <label>City :</label>
+                          <!--<select class="form-control" formControlName="City_Id" (change)="B_Pincode($event)">
+                        <option value=''>--select--</option>
+                        <option *ngFor="let s of B_Citites_Ar;" value="{{s.Id}}">{{s.Name}}</option>
+                      </select>-->
+
+                          <ng-multiselect-dropdown class="form-control" name="City_Id" placeholder="Select City" [data]="B_Citites_Ar"
+                            formControlName="City_Id" [settings]="DropdownSettings"
+                            (onSelect)="B_Pincode($event, 'onSelect')" (onDeSelect)="B_Pincode($event, 'onDeSelect')">
+                          </ng-multiselect-dropdown>
+
+                          <span *ngIf="StepIVisSubmitted && fc_StepIVForm.City_Id.errors" class="form-text text-muted">
+                            <span *ngIf="fc_StepIVForm.City_Id.errors.required" style="color: red">Please choose an
+                              option!</span>
+                          </span>
+                        </div>
+                        <div class="col-lg-6">
+                          <label>Pincode:</label>
+                          <!--<select class="form-control" formControlName="Pincode">
+                        <option value=''>--select--</option>
+                        <option *ngFor="let s of B_Pincode_Ar;" value="{{s.Id}}">{{s.Name}}</option>				
+                      </select>-->
+
+                          <ng-multiselect-dropdown class="form-control" name="Pincode" placeholder="Select Pincode" [data]="B_Pincode_Ar"
+                            formControlName="Pincode" [settings]="DropdownSettings">
+                          </ng-multiselect-dropdown>
+
+                          <span *ngIf="StepIVisSubmitted && fc_StepIVForm.Pincode.errors" class="form-text text-muted">
+                            <span *ngIf="fc_StepIVForm.Pincode.errors.required" style="color: red">Please choose an
+                              option!</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <!-- begin: Example Code-->
+
+                      <!-- end: Example Code-->
+                    </div>
+                    <div class="card-footer">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <button type="button" (click)="Previous(4)" class="btn btn-secondary mr-2">
+                            Previous
+                          </button>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                          <button type="submit" class="btn btn-primary mr-2">
+                            Next
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!--end::Form-->
+
+                  <!--begin::Form-->
+                  <form class="form" [formGroup]="StepFinalForm" (ngSubmit)="Step_Final()" *ngIf="StepFinal == '1'">
+                    <div class="card-body">
+                    
+                      <div class="form_sub_title"><i _ngcontent-kcn-c6="" class="fa fa-link mr_5"></i>
+                        Upload Documents
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-lg-6">
+                          <label>Pan Card :</label>
+                          <input type="file" class="form-control" (change)="UploadDocs($event, 'PanCard')"
+                            formControlName="Pan_Card" />
+
+                          <span *ngIf="
+                                StepFinalisSubmitted && fc_StepFinalForm.Pan_Card.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepFinalForm.Pan_Card.errors.required" style="color: red">Please upload Pan
+                              Card!</span>
+                          </span>
+                        </div>
+                        <div class="col-lg-6">
+                          <label>Aadhar Card Front :</label>
+                          <input type="file" class="form-control" (change)="UploadDocs($event, 'AadharCardFront')"
+                            formControlName="Aadhar_Card_Front" />
+
+                          <span *ngIf="
+                                StepFinalisSubmitted &&
+                                fc_StepFinalForm.Aadhar_Card_Front.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="
+                                  fc_StepFinalForm.Aadhar_Card_Front.errors.required
+                                " style="color: red">Please upload Aadhar Card Front!</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-lg-6">
+                          <label>Aadhar Card Back :</label>
+                          <input type="file" class="form-control" (change)="UploadDocs($event, 'AadharCardBack')"
+                            formControlName="Aadhar_Card_Back" />
+                          <span *ngIf="
+                                StepFinalisSubmitted &&
+                                fc_StepFinalForm.Aadhar_Card_Back.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="
+                                  fc_StepFinalForm.Aadhar_Card_Back.errors.required
+                                " style="color: red">Please upload Aadhar Card Back!</span>
+                          </span>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label>Qualification(10th,12th,Graduate,Post Graduate) :</label>
+                          <input type="file" class="form-control" (change)="UploadDocs($event, 'Qualification')"
+                            formControlName="Qualification_Doc" />
+                          <span *ngIf="
+                                StepFinalisSubmitted &&
+                                fc_StepFinalForm.Qualification_Doc.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="
+                                  fc_StepFinalForm.Qualification_Doc.errors.required
+                                " style="color: red">Please upload Qualification document!</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-lg-6">
+                          <label>Cheque :</label>
+                          <input type="file" class="form-control" (change)="UploadDocs($event, 'Cheque')"
+                            formControlName="Cheque" />
+                          <span *ngIf="
+                                StepFinalisSubmitted && fc_StepFinalForm.Cheque.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepFinalForm.Cheque.errors.required" style="color: red">Please upload
+                              Cheque!</span>
+                          </span>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label>Photo :</label>
+                          <input type="file" class="form-control" (change)="UploadDocs($event, 'Photo')"
+                            formControlName="Photo" />
+                          <span *ngIf="
+                                StepFinalisSubmitted && fc_StepFinalForm.Photo.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepFinalForm.Photo.errors.required" style="color: red">Please upload
+                              Photo!</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-lg-6">
+                          <label>Signature :</label>
+                          <input type="file" class="form-control" (change)="UploadDocs($event, 'Signature')"
+                            formControlName="Signature" />
+                          <span *ngIf="
+                                StepFinalisSubmitted &&
+                                fc_StepFinalForm.Signature.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepFinalForm.Signature.errors.required" style="color: red">Please upload
+                              Signature!</span>
+                          </span>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label *ngIf="AddForm.value['Agent_Category'] == 'Institution'">Firm Letter-head/GST
+                            Certificate/Other :</label>
+                          <label *ngIf="AddForm.value['Agent_Category'] == 'Individual'">Other :</label>
+                          <input type="file" class="form-control" (change)="UploadDocs($event, 'Other')"
+                            formControlName="Other" />
+                          <span *ngIf="
+                                StepFinalisSubmitted && fc_StepFinalForm.Other.errors
+                              " class="form-text text-muted">
+                            <span *ngIf="fc_StepFinalForm.Other.errors.required" style="color: red">Please upload other
+                              document!</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <!-- MY -->
+                      <div class="form-group row">
+                        <div class="col-lg-4">
+                          <div class="input-group">
+                            <form [formGroup]="otpForm">
+                              <label>OTP Verification :</label>
+                              <input disabled type="text" class="form-control" formControlName="otp"
+                                placeholder="Enter Your Phone Number" maxlength="10" />
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- begin: Example Code-->
+
+                      <!-- end: Example Code-->
+                    </div>
+                    <div class="card-footer">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <button type="button" (click)="Previous(5)" class="btn btn-secondary mr-2">
+                            Previous
+                          </button>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                          <button type="submit" class="btn btn-primary mr-2">
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!--end::Form-->
+                </div>
+                <!--end::Card-->
+              </div>
+            </div>
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

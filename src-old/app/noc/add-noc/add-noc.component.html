@@ -1,0 +1,144 @@
+<div class="row">
+
+
+  <div class="modal-header" style="text-align: center;">
+    <h4 class="modal-title" *ngIf="this.type=='Noc'">Add NOC Request</h4>
+    <h4 class="modal-title">Details
+      <button type="button" (click)="CloseModel()" class="btn btn-box-tool" style="float: right;"><i class="fa fa-close"
+          style="font-size:17px"></i></button>
+    </h4>
+  </div>
+</div>
+
+<form [formGroup]="nocForm" (ngSubmit)="nocData('e')">
+  <!-- <form [formGroup]="nocForm"> -->
+
+  <div class="popup-content-body">
+    <div class="row popup-form">
+
+      <div class="col-md-6" *ngIf="this.type=='Noc'">
+        <label>Request Letter:</label>
+        <input type="file" class="form-control" formControlName="nocletter" (change)="UploadDocs($event,'image')" />
+      </div>
+
+
+      <div class="col-md-6" *ngIf="this.type=='Noc'">
+        <label>Remark*:</label>
+        <input type="text" class="form-control" formControlName="reason" placeholder="Reason" />
+
+        <span *ngIf="isSubmitted && formcontrols.reason.errors" class="ValidationError">
+          <span *ngIf="formcontrols.reason.errors.required">Remark is required</span>
+        </span>
+
+      </div>
+
+
+
+      <table class="table table-bordered table-hover"
+        *ngIf="(this.url=='/noc/Action-noc-hod' && dataArr.status_check == '2'|| this.url=='/noc/Action-noc-Accounts' && dataArr.status_check == '3' ||
+            this.url=='/noc/Action-noc-Principal' && dataArr.status_check == '4' ||  this.url=='/noc/Action-noc-Pos' && dataArr.status_check == '5') && this.type == 'Details' ">
+        <thead>
+          <tr>
+            <th>Request Letter</th>
+            <th>Reason</th>
+            <th>Action</th>
+            <th>Remark</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+
+            <td>
+              <label class="label label-info"> <a style="color: white;"
+                  *ngIf="dataArr.nocletter != '' && this.editrequestletter == 0 " href="{{dataArr.nocletter}}"
+                  target="_blank">
+                  Download</a></label>
+
+              <input
+                *ngIf="(this.url=='/noc/Action-noc-hod' && dataArr.status_check == '2') && this.editrequestletter == 1 "
+                type="file" class="form-control" formControlName="nocletter" (change)="UploadDocs($event,'image')" />
+
+              <i *ngIf="(this.url=='/noc/Action-noc-hod' && dataArr.status_check == '2') && this.editrequestletter2 == 1 "
+                (click)="HodLevel('edit')" class="fa fa-edit"></i>&nbsp;
+              <i *ngIf="(this.url=='/noc/Action-noc-hod' && dataArr.status_check == '2') && this.editrequestletter2 == 0 "
+                (click)="HodLevel('remove')" class="fa fa-close"></i>
+            </td>
+
+
+            <td><input type="text" class="form-control" readonly formControlName="reason" placeholder="Reason" />
+            </td>
+
+            <td>
+              <input type="textarea" formControlName="approvedenyremark" class="form-control" placeholder="Remark">
+              <span *ngIf="isSubmitted && formcontrols.approvedenyremark.errors" class="ValidationError">
+                <span *ngIf="formcontrols.approvedenyremark.errors.required"><label style="color: red;">Remark is
+                    required</label></span>
+              </span>
+            </td>
+
+            <td>
+              <input type="button" value="Approve" (click)="nocData('approved')" class="btn btn-primary approved">&nbsp;
+              <input type="button" value="Deny" (click)="nocData('deny')" class="btn btn-danger approved">
+            </td>
+
+
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="clearfix"></div>
+      <div class="button-div-yes-no" align="right" *ngIf="this.type=='Noc'"
+        style="margin-top: 10px; margin-right: 13px;">
+        <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>&nbsp;
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+
+
+    </div>
+  </div>
+</form>
+
+
+<table *ngIf="this.type=='Details'" id="Table1" class="table table-bordered table-hover">
+
+  <tbody class="row container-fluid" id="divshow">
+
+    <tr>
+
+      <td><b>Sr No.</b></td>
+      <td><b>Pos</b></td>
+      <td><b>Name</b></td>
+      <td><b>Remark</b></td>
+      <td><b>Action Date</b></td>
+      <td><b>Status</b></td>
+    </tr>
+
+    <tr *ngFor="let row of Dataresult; let i=index;">
+      <td>{{row.SRNo}}</td>
+      <td> <b>Id:</b>{{row.agentid}} <br /> <b>Name:</b> {{row.agentname}} <br /><b>Mobile:</b> {{row.agentmobile}}</td>
+      <td> <b>Id:</b>{{row.emp_id}} <br /> <b>Name:</b> {{row.name}} <br /></td>
+
+      <td *ngIf="row.status == '1'">{{row.Reason}}</td>
+
+      <td
+        *ngIf=" row.status == '2' || row.status == '3' || row.status == '4' || row.status == '5' || row.status == '6'">
+        {{row.remark}}</td>
+      <td>{{row.Create_date}}</td>
+      <td>
+        <label *ngIf="row.Action == 'Pending' && row.status == 2" class="label label-warning label-inline mr-2">Pending For HOD</label>
+        <label *ngIf="row.Action == 'Pending' && row.status == 3" class="label label-warning label-inline mr-2">Pending For Accounts</label>
+        <label *ngIf="row.Action == 'Pending' && row.status == 4" class="label label-warning label-inline mr-2">Pending For Principal</label>
+        <label *ngIf="row.Action == 'Pending' && row.status == 5" class="label label-warning label-inline mr-2">Pending For POs Team</label>
+        <label *ngIf="row.Type == 'RM'" class="label label-warning label-inline mr-2">{{row.Action}}</label>
+
+        <!-- <label *ngIf="row.Action == 'Pending'" class="label label-warning label-inline mr-2">{{row.Action}}</label> -->
+        <label *ngIf="row.Action == 'approved'" class="label label-success label-inline mr-2">Approved</label>
+        <label *ngIf="row.Action == 'deny'" class="label label-danger label-inline mr-2">Rejected</label>
+      </td>
+    </tr>
+
+
+  </tbody>
+
+</table>

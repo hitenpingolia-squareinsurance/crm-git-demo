@@ -1,0 +1,2906 @@
+<div *ngIf="ShowCoreLine !=''" class="btn btn-info">CORELINE: {{ShowCoreLine}}</div>
+
+<!--==== TARGET DETAILS START =====-->
+<table border="0"
+  style="width: 100%;border-collapse: collapse; border: 1px solid #c8c8c8;padding:0px; table-layout:fixed;">
+  <tr>
+    <td style="background: #275b7a;color: aliceblue;font-size: 18px;
+    padding-left: 70px !important;" colspan="41" align="left">
+      <strong style="margin-left: 60px;">BUSINESS TARGETS</strong>
+      <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+    </td>
+  </tr>
+</table>
+
+<div style="position: relative;">
+  <div [ngClass]="(ShowLoader2=='Yes'?'custom_loader_two d_block_two':'custom_loader_two d_none_two')">
+    <div class="rotate_loader">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <table border="0"
+    style="width: 100%;border-collapse: collapse; border: 1px solid #c8c8c8;padding:0px; table-layout:fixed; margin-bottom: 30px;">
+    <tr>
+      <td colspan="8" rowspan="9" style="padding: 0; box-shadow: 8px 0px 10px 0px #000000a1 !important;"
+        [ngClass]="(ShowLoader2=='Yes'?'fixed_table filter_blur':'fixed_table')">
+        <table border="0" style="border:none;">
+          <tr>
+            <th class="th_bg" rowspan="9" colspan="1" style="width: 40px !important;">GWP</th>
+            <th class="th_bg" rowspan="1" colspan="1" align="bottom" style="width: 70px !important;"></th>
+            <th class="th_right_bg" rowspan="1" style="width: 60px !important;" colspan="1">LOB</th>
+            <th class="th_right_bg" rowspan="1" style="width: 70px !important;" colspan="1">Target </th>
+            <th class="th_right_bg" rowspan="1" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <th colspan="3"
+                    style="height: 26px !important;border-left:0px;border-right:0px;border-top:0px; border-color: #fff;">
+                    AA.</th>
+                </tr>
+                <tr>
+                  <th
+                    style="height: 26px !important;border-left:0px;border-bottom:0px;border-color: #fff;min-width: 75px !important;"
+                    colspan="1">
+                    YTD Ach</th>
+                  <th
+                    style="height: 26px !important;border-right:0px;border-bottom:0px;border-color: #fff;min-width: 75px !important;"
+                    colspan="1">
+                    YTD Ach%
+                  </th>
+                </tr>
+              </table>
+            </th>
+
+            <th class="th_right_bg" rowspan="1" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <th
+                    style="height: 26px !important;border-left:0px;border-right:0px;border-top:0px; border-color: #fff;"
+                    colspan="2">WA</th>
+                </tr>
+                <tr>
+                  <th
+                    style="height: 26px !important;border-left:0px;border-bottom:0px;border-color: #fff;min-width: 75px !important;"
+                    colspan="1">
+                    YTD Ach</th>
+                  <th
+                    style="height: 26px !important;border-right:0px;border-bottom:0px;border-color: #fff;min-width: 75px !important;"
+                    colspan="1">
+                    YTD Ach%
+                  </th>
+                </tr>
+              </table>
+            </th>
+          </tr>
+          <tr>
+            <th class="th_bg" rowspan="8" align="bottom" style="width: 70px !important;" colspan="1">
+              {{ CompleteTarget }}<br>{{ CompleteTargetStr }}
+            </th>
+
+            <td class="th_bg" style="width: 60px !important;" colspan="1">Motor</td>
+            <td class="year_bg_color" style="width: 70px !important;" colspan="1">{{ MotorTotalTarget }}<br>{{
+              MotorTotalTargetStr }}</td>
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;" colspan="1">
+                    {{ MotorActualYTD }}<br>{{ MotorActualYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;" colspan="1">
+                    {{ MotorActualYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;" colspan="1">
+                    {{ MotorWeightageYTD }}<br>{{ MotorWeightageYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;" colspan="1">
+                    {{ MotorWeightageYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="th_bg" style="width: 60px !important;" colspan="1">Non Motor</td>
+            <td class="year_bg_color" style="width: 70px !important;" colspan="1">{{ NonMotorTotalTarget }}<br>{{
+              NonMotorTotalTargetStr }}</td>
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;" colspan="1">
+                    {{ NonMotorActualYTD }}<br>{{ NonMotorActualYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;" colspan="1">
+                    {{ NonMotorActualYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;" colspan="1">
+                    {{ NonMotorWeightageYTD }}<br>{{ NonMotorWeightageYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;" colspan="1">
+                    {{ NonMotorWeightageYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="th_bg" style="width: 60px !important;" colspan="1">Health Retail</td>
+            <td class="year_bg_color" style="width: 70px !important;" colspan="1">{{ HealthRetailTotalTarget }}<br>{{
+              HealthRetailTotalTargetStr }}</td>
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;" colspan="1">
+                    {{ HealthRetailActualYTD }}<br>{{ HealthRetailActualYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;" colspan="1">
+                    {{ HealthRetailActualYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ HealthRetailWeightageYTD }}<br>{{ HealthRetailWeightageYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ HealthRetailWeightageYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="th_bg" style="width: 60px !important;" colspan="1">Health Group</td>
+            <td class="year_bg_color" style="width: 70px !important;" colspan="1">{{ HealthGroupTotalTarget }}<br>{{
+              HealthGroupTotalTargetStr }}</td>
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ HealthGroupActualYTD }}<br>{{ HealthGroupActualYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ HealthGroupActualYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ HealthGroupWeightageYTD }}<br>{{ HealthGroupWeightageYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ HealthGroupWeightageYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="th_bg" style="width: 60px !important;" colspan="1">Life Retail</td>
+            <td class="year_bg_color" style="width: 70px !important;" colspan="1">{{ LifeRetailTotalTarget }}<br>{{
+              LifeRetailTotalTargetStr }}</td>
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ LifeRetailActualYTD }}<br>{{ LifeRetailActualYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ LifeRetailActualYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ LifeRetailWeightageYTD }}<br>{{ LifeRetailWeightageYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ LifeRetailWeightageYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="th_bg" style="width: 60px !important;" colspan="1">Life Group</td>
+            <td class="year_bg_color" style="width: 70px !important;" colspan="1">{{ LifeGroupTotalTarget }}<br>{{
+              LifeGroupTotalTargetStr }}</td>
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ LifeGroupActualYTD }}<br>{{ LifeGroupActualYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ LifeGroupActualYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ LifeGroupWeightageYTD }}<br>{{ LifeGroupWeightageYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ LifeGroupWeightageYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="th_bg" style="width: 60px !important;" colspan="1">Others</td>
+            <td class="year_bg_color" style="width: 70px !important;" colspan="1">{{ OthersTotalTarget }}<br>{{
+              OthersTotalTargetStr }}</td>
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ OthersActualYTD }}<br>{{ OthersActualYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ OthersActualYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ OthersWeightageYTD }}<br>{{ OthersWeightageYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ OthersWeightageYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="th_bg" style="width: 60px !important;" colspan="1">Total</td>
+            <td class="year_bg_color" style="width: 70px !important;" colspan="1">{{ CompleteTarget }}<br>{{
+              CompleteTargetStr }}</td>
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ TotalActualYTD }}<br>{{ TotalActualYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ TotalActualYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+
+            <td class="year_bg_color_2" style="padding: 0px;" colspan="2">
+              <table border="0">
+                <tr>
+                  <td style="border-left:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ TotalWeightageYTD }}<br>{{ TotalWeightageYTDStr }}
+                  </td>
+                  <td style="border-right:0px;border-bottom:0px;border-top:0px;min-width: 75px !important;">
+                    {{ TotalWeightageYTDPercent }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+
+      <td style="padding: 0; border-left: none;"
+        [ngClass]="(ShowLoader2=='Yes'?'scroll_table filter_blur':'scroll_table')">
+        <table border="0" style="border:none;">
+          <tr>
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">April</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">April</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.%</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.
+            </th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.%
+            </th>
+            <!--=== APRIL SECTION END===-->
+
+            <!--=== MAY SECTION START===-->
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">May</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">May</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.%</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.
+            </th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.%
+            </th>
+            <!--=== MAY SECTION END ===-->
+
+            <!--=== JUNE SECTION START ===-->
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">June</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">June</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.%</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.
+            </th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.%
+            </th>
+            <!--=== JUNE SECTION END ===-->
+
+            <!--=== JULY SECTION START ===-->
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">July</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">July</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.%</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.
+            </th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.%
+            </th>
+            <!--=== July SECTION END ===-->
+
+            <!--=== August SECTION START ===-->
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">August</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">August</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.%</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.
+            </th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.%
+            </th>
+            <!--=== AUGUST SECTION END ===-->
+
+            <!--=== SEPTEMBER SECTION START ===-->
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">September</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">September</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.%</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.
+            </th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.%
+            </th>
+            <!--=== SEPTEMBER SECTION END ===-->
+
+            <!--=== OCTOBER SECTION START ===-->
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">October</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">October</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.%</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.
+            </th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.%
+            </th>
+            <!--=== OCTOBER SECTION END ===-->
+
+            <!--=== NOVEMBER SECTION START ===-->
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">November</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">November</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.%</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.
+            </th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.%
+            </th>
+            <!--=== NOVEMBER SECTION END ===-->
+
+            <!--=== DECEMBER SECTION START ===-->
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">December</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">December</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.%</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.
+            </th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.%
+            </th>
+            <!--=== DECEMBER SECTION END ===-->
+
+            <!--=== JANUARY SECTION START ===-->
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">January</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">January</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.%</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.
+            </th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.%
+            </th>
+            <!--=== JANUARY SECTION END ===-->
+
+            <!--=== FEBURARY SECTION START ===-->
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">February</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Feburary</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.%</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.
+            </th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.%
+            </th>
+            <!--=== FEBURARY SECTION END ===-->
+
+            <!--=== MARCH SECTION START ===-->
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">March</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Actual&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;padding: 0;" colspan="3"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="3" style="height: 25.5px !important;border: none;">Weightage&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-bottom: none;border-left: none;">Total</th>
+                  <th style="height: 25.5px !important;border-bottom: none">Self</th>
+                  <th style="height: 25.5px !important;border-right: none;border-bottom: none">Team</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">March</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Actual&nbsp;Ach.%</th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.
+            </th>
+            <th style="background-color: #7ABA78;" *ngIf="Profile_Name == 'Relationship Manager'">Weightage&nbsp;Ach.%
+            </th>
+            <!--=== MARCH SECTION END ===-->
+          </tr>
+
+          <!--===== IF PROFILE TYPE IS NOT RELATIONSHIP MANAGER START======-->
+
+          <!--===== MOTOR TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Motor' && Profile_Name != 'Relationship Manager'">
+
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Motor; let main_x = index;">
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.TotalTarget }}<br>{{ mainarrs.TotalTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.TeamTarget }}<br>{{ mainarrs.TeamTargetStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TotalActualAchivement }}<br>{{ mainarrs.TotalActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br>{{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TeamActualAchivement }}<br>{{ mainarrs.TeamActualAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TotalActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TeamActualAchivementPercent }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TotalWeightageAchivement }}<br>{{ mainarrs.TotalWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }}<br>{{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TeamWeightageAchivement }}<br>{{ mainarrs.TeamWeightageAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TotalWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TeamWeightageAchivementPercent }}
+                </td>
+
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== MOTOR TARGETS END =====-->
+
+          <!--===== NON MOTOR TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Non-Motor' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Non_Motor; let main_x = index;">
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color ':'april_color_next')">
+                  {{ mainarrs.TotalTarget }}<br>{{ mainarrs.TotalTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color ':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color ':'april_color_next')">
+                  {{ mainarrs.TeamTarget }}<br>{{ mainarrs.TeamTargetStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TotalActualAchivement }}<br>{{ mainarrs.TotalActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br>{{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TeamActualAchivement }}<br>{{ mainarrs.TeamActualAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TotalActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TeamActualAchivementPercent }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TotalWeightageAchivement }}<br>{{ mainarrs.TotalWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }}<br>{{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TeamWeightageAchivement }}<br>{{ mainarrs.TeamWeightageAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TotalWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TeamWeightageAchivementPercent }}
+                </td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== NON MOTOR TARGETS END =====-->
+
+          <!--===== HEALTH RETAIL TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Health-Retail' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Health_Retail; let main_x = index;">
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color ':'april_color_next')">
+                  {{ mainarrs.TotalTarget }}<br>{{ mainarrs.TotalTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color ':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color ':'april_color_next')">
+                  {{ mainarrs.TeamTarget }}<br>{{ mainarrs.TeamTargetStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TotalActualAchivement }}<br>{{ mainarrs.TotalActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br>{{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TeamActualAchivement }}<br>{{ mainarrs.TeamActualAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TotalActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TeamActualAchivementPercent }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TotalWeightageAchivement }}<br>{{ mainarrs.TotalWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }}<br>{{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TeamWeightageAchivement }}<br>{{ mainarrs.TeamWeightageAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TotalWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TeamWeightageAchivementPercent }}
+                </td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== HEALTH RETAIL TARGETS END =====-->
+
+          <!--===== HEALTH GROUP TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Health-Group' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Health_Group; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'april_color ':'april_color_next')">
+                  {{ mainarrs.TotalTarget }}<br>{{ mainarrs.TotalTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color ':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color ':'april_color_next')">
+                  {{ mainarrs.TeamTarget }}<br>{{ mainarrs.TeamTargetStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TotalActualAchivement }}<br>{{ mainarrs.TotalActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br>{{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TeamActualAchivement }}<br>{{ mainarrs.TeamActualAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TotalActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TeamActualAchivementPercent }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TotalWeightageAchivement }}<br>{{ mainarrs.TotalWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }}<br>{{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TeamWeightageAchivement }}<br>{{ mainarrs.TeamWeightageAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TotalWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TeamWeightageAchivementPercent }}
+                </td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== HEALTH GROUP TARGETS END =====-->
+
+          <!--===== LIFE RETAIL TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Life-Retail' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Life_Retail; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.TotalTarget }}<br>{{ mainarrs.TotalTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.TeamTarget }}<br>{{ mainarrs.TeamTargetStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TotalActualAchivement }}<br>{{ mainarrs.TotalActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br>{{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TeamActualAchivement }}<br>{{ mainarrs.TeamActualAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TotalActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TeamActualAchivementPercent }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TotalWeightageAchivement }}<br>{{ mainarrs.TotalWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }}<br>{{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TeamWeightageAchivement }}<br>{{ mainarrs.TeamWeightageAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TotalWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TeamWeightageAchivementPercent }}
+                </td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== LIFE RETAIL TARGETS END =====-->
+
+          <!--===== LIFE GROUP TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Life-Group' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Life_Group; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.TotalTarget }}<br>{{ mainarrs.TotalTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.TeamTarget }}<br>{{ mainarrs.TeamTargetStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TotalActualAchivement }}<br>{{ mainarrs.TotalActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br>{{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TeamActualAchivement }}<br>{{ mainarrs.TeamActualAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TotalActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TeamActualAchivementPercent }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TotalWeightageAchivement }}<br>{{ mainarrs.TotalWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }}<br>{{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TeamWeightageAchivement }}<br>{{ mainarrs.TeamWeightageAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TotalWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TeamWeightageAchivementPercent }}
+                </td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== LIFE GROUP TARGETS END =====-->
+
+          <!--===== OTHER TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Others' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Others; let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.TotalTarget }}<br>{{ mainarrs.TotalTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.TeamTarget }}<br>{{ mainarrs.TeamTargetStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TotalActualAchivement }}<br>{{ mainarrs.TotalActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br>{{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TeamActualAchivement }}<br>{{ mainarrs.TeamActualAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TotalActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TeamActualAchivementPercent }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TotalWeightageAchivement }}<br>{{ mainarrs.TotalWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }}<br>{{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TeamWeightageAchivement }}<br>{{ mainarrs.TeamWeightageAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TotalWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TeamWeightageAchivementPercent }}
+                </td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== OTHER TARGETS END =====-->
+
+          <!--===== TOTAL TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Total' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Total; let main_x = index;">
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.TotalTarget }}<br>{{ mainarrs.TotalTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.TeamTarget }}<br>{{ mainarrs.TeamTargetStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TotalActualAchivement }}<br> {{ mainarrs.TotalActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br> {{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.TeamActualAchivement }}<br> {{ mainarrs.TeamActualAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TotalActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.TeamActualAchivementPercent }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TotalWeightageAchivement }} <br> {{ mainarrs.TotalWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }} <br> {{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.TeamWeightageAchivement }} <br> {{ mainarrs.TeamWeightageAchivementStr }}
+                </td>
+
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TotalWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.TeamWeightageAchivementPercent }}
+                </td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== TOTAL TARGETS END =====-->
+          <!--===== IF PROFILE TYPE IS NOT RELATIONSHIP MANAGER END======-->
+
+
+
+          <!--===== IF PROFILE TYPE IS RELATIONSHIP MANAGER START======-->
+          <!--===== MOTOR TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Motor' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Motor; let main_x = index;">
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br>{{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }}<br>{{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== MOTOR TARGETS END =====-->
+
+          <!--===== NON MOTOR TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Non-Motor' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Non_Motor; let main_x = index;">
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br>{{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }}<br>{{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== NON MOTOR TARGETS END =====-->
+
+          <!--===== HEALTH RETAIL TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Health-Retail' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Health_Retail; let main_x = index;">
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br>{{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }}<br>{{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== HEALTH RETAIL TARGETS END =====-->
+
+          <!--===== HEALTH GROUP TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Health-Group' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Health_Group; let main_x = index;">
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br>{{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }}<br>{{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== HEALTH GROUP TARGETS END =====-->
+
+          <!--===== LIFE RETAIL TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Life-Retail' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Life_Retail; let main_x = index;">
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br>{{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }}<br>{{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== LIFE RETAIL TARGETS END =====-->
+
+          <!--===== LIFE GROUP TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Life-Group' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Life_Group; let main_x = index;">
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br>{{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }}<br>{{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== LIFE GROUP TARGETS END =====-->
+
+          <!--===== OTHER TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Others' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Others; let main_x = index;">
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br>{{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }}<br>{{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== OTHER TARGETS END =====-->
+
+          <!--===== TOTAL TARGETS START =====-->
+          <tr *ngFor="let mainarr of AllocatedData;let main_i = index;">
+            <ng-container *ngIf="AllocatedLobsArray[main_i]=='Total' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs of AllocatedData[main_i].Total; let main_x = index;">
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs.SelfTarget }}<br>{{ mainarrs.SelfTargetStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs.SelfActualAchivement }}<br>{{ mainarrs.SelfActualAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs.SelfActualAchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs.SelfWeightageAchivement }}<br>{{ mainarrs.SelfWeightageAchivementStr }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs.SelfWeightageAchivementPercent }}
+                </td>
+
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== TOTAL TARGETS END =====-->
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+<!--==== TARGET DETAILS END =====-->
+
+
+<!--====POS TARGET DETAILS START =====-->
+<table border="0"
+  style="width: 100%;border-collapse: collapse; border: 1px solid #c8c8c8;padding:0px; table-layout:fixed;">
+  <tr>
+    <td style="background: #275b7a;color: aliceblue;font-size: 18px;
+    padding-left: 70px !important;" colspan="41" align="left">
+      <strong style="margin-left: 60px;">POS TARGETS</strong>
+      <button *ngIf="Is_Sales == 0" (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+    </td>
+  </tr>
+</table>
+
+<div style="position: relative;">
+  <div [ngClass]="(ShowLoader2=='Yes'?'custom_loader_two d_block_two':'custom_loader_two d_none_two')">
+    <div class="rotate_loader">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <table border="0"
+    style="width: 100%;border-collapse: collapse; border: 1px solid #c8c8c8;padding:0px; table-layout:fixed; margin-bottom: 30px;">
+    <tr>
+      <td colspan="8" rowspan="9" style="padding: 0; box-shadow: 8px 0px 10px 0px #000000a1 !important;"
+        [ngClass]="(ShowLoader2=='Yes'?'fixed_table filter_blur':'fixed_table')">
+        <table border="0" style="border:none;width: 100%;">
+          <tr>
+            <th class="th_bg" rowspan="9" colspan="1">POS</th>
+            <th class="th_right_bg" rowspan="1" colspan="2"></th>
+            <th class="th_right_bg" rowspan="1" colspan="1">Target</th>
+            <th class="th_right_bg" rowspan="1" colspan="1">YTD Ach.</th>
+            <th class="th_right_bg" rowspan="1" colspan="1">YTD Ach.%</th>
+          </tr>
+
+          <tr>
+            <th class="th_bg" colspan="2">Pos Target</th>
+            <td class="year_bg_color" colspan="1">{{ AllocatedPosTotal }}</td>
+            <td class="year_bg_color_2" colspan="1">{{ AllocatedPosYTD }}</td>
+            <td class="year_bg_color_3" colspan="1">{{ AllocatedPosYTDPercent }}</td>
+          </tr>
+
+          <tr>
+            <th style="padding: 0 !important;font-size: 10px;text-align: center;" class="th_bg" colspan="2">Total Mapped
+              Pos<label
+                style="border-top: 1px solid #000;width: 100%;font-size: 12px;margin: 0; font-weight: normal !important;">
+                {{ ActivePosTotal }}</label></th>
+            <td class="year_bg_color">{{ TotalActiveTarget }}</td>
+            <td class="year_bg_color_2">{{ ActivePosYTD }}</td>
+            <td class="year_bg_color_3">{{ ActivePosYTDPercent }}</td>
+          </tr>
+        </table>
+      </td>
+
+      <td style="padding: 0; border-left: none;"
+        [ngClass]="(ShowLoader2=='Yes'?'scroll_table filter_blur':'scroll_table')">
+        <table border="0" style="border:none;">
+          <tr>
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">April</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">April</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">MTD&nbsp;Ach.</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">MTD&nbsp;Ach.%</th>
+            <!--=== APRIL SECTION END===-->
+
+            <!--=== MAY SECTION START===-->
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">May</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">May</th>
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== MAY SECTION END ===-->
+
+            <!--=== JUNE SECTION START ===-->
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">June</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">June</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== JUNE SECTION END ===-->
+
+            <!--=== JULY SECTION START ===-->
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">July</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">July</th>
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== July SECTION END ===-->
+
+            <!--=== August SECTION START ===-->
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">August</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">August</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== AUGUST SECTION END ===-->
+
+            <!--=== SEPTEMBER SECTION START ===-->
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">September</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">September</th>
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== SEPTEMBER SECTION END ===-->
+
+            <!--=== OCTOBER SECTION START ===-->
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">October</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">October</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== OCTOBER SECTION END ===-->
+
+            <!--=== NOVEMBER SECTION START ===-->
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">November</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">November</th>
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== NOVEMBER SECTION END ===-->
+
+            <!--=== DECEMBER SECTION START ===-->
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">December</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">December</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== DECEMBER SECTION END ===-->
+
+            <!--=== JANUARY SECTION START ===-->
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">January</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">January</th>
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== JANUARY SECTION END ===-->
+
+            <!--=== FEBURARY SECTION START ===-->
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">February</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #F3CA52;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">Feburary</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th style="background-color: #F3CA52;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== FEBURARY SECTION END ===-->
+
+            <!--=== MARCH SECTION START ===-->
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">March</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+
+            <th style="padding: 0 ;background-color: #7aba78;" colspan="2"
+              *ngIf="Profile_Name != 'Relationship Manager'">
+              <table style="border: none !important;">
+                <tr>
+                  <th colspan="2" style="height: 25.5px !important;border-right:none !important;">MTD&nbsp;Ach.%</th>
+                </tr>
+                <tr>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Team</th>
+                  <th style="height: 25.5px !important;border-right:none !important;border-bottom :none !important;">
+                    Self</th>
+                </tr>
+              </table>
+            </th>
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">March</th>
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.</th>
+            <th style="background-color: #7aba78;" *ngIf="Profile_Name == 'Relationship Manager'">MTD Ach.%</th>
+            <!--=== MARCH SECTION END ===-->
+          </tr>
+
+          <!--===== IF PROFILE TYPE IS NOT RELATIONSHIP MANAGER START======-->
+
+          <tr *ngFor="let mainarr1 of AllocatedPosData;let main_i2 = index;">
+            <ng-container *ngIf="BelowArrays[main_i2]=='PosTarget' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs2 of AllocatedPosData[main_i2].PosTarget;  let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs2.Value }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs2.SelfTarget }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs2.TotalAchivement }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs2.TotalSelfAchivement }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs2.AchivementPercent }}
+                </td>
+
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs2.SelfAchivementPercent }}
+                </td>
+              </ng-container>
+            </ng-container>
+          </tr>
+
+          <tr *ngFor="let mainarr1 of AllocatedPosData;let main_i2 = index;">
+            <ng-container *ngIf="BelowArrays[main_i2]=='ActivePos' && Profile_Name != 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs2 of AllocatedPosData[main_i2].ActivePos;  let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs2.Value }}
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs2.SelfTarget }}
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs2.TotalAchivement }}
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'april_color3':'april_color_next3')">
+                  {{ mainarrs2.TotalSelfAchivement }}
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs2.AchivementPercent }}
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'april_color4':'april_color_next4')">
+                  {{ mainarrs2.SelfAchivementPercent }}
+                </td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== IF PROFILE TYPE IS NOT RELATIONSHIP MANAGER END======-->
+
+          <!--===== IF PROFILE TYPE IS RELATIONSHIP MANAGER START======-->
+          <tr *ngFor="let mainarr1 of AllocatedPosData;let main_i2 = index;">
+            <ng-container *ngIf="BelowArrays[main_i2]=='PosTarget' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs2 of AllocatedPosData[main_i2].PosTarget;  let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs2.SelfTarget }}
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs2.TotalSelfAchivement }}
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs2.SelfAchivementPercent }}
+                </td>
+              </ng-container>
+            </ng-container>
+          </tr>
+
+          <tr *ngFor="let mainarr1 of AllocatedPosData;let main_i2 = index;">
+            <ng-container *ngIf="BelowArrays[main_i2]=='ActivePos' && Profile_Name == 'Relationship Manager'">
+              <ng-container *ngFor="let mainarrs2 of AllocatedPosData[main_i2].ActivePos;  let main_x = index;">
+                <td [ngClass]="(main_x % 2 == 0?'april_color':'april_color_next')">
+                  {{ mainarrs2.SelfTarget }}
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'april_color1':'april_color_next1')">
+                  {{ mainarrs2.TotalSelfAchivement }}
+                </td>
+                <td [ngClass]="(main_x % 2 == 0?'april_color2':'april_color_next2')">
+                  {{ mainarrs2.SelfAchivementPercent }}
+                </td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          <!--===== IF PROFILE TYPE IS RELATIONSHIP MANAGER END======-->
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+<!--==== ALLOCATED TARGET DETAILS END=====-->

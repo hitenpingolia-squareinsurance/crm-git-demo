@@ -1,0 +1,224 @@
+<!-- <div class="row">
+    <div class="box-header">
+        <div class="row">
+            <div class="col-md-4">
+                <h3 class="box-title">Conversational Settings - DND</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="popup-content-body">
+    <div class="row popup-form">
+        <div class="col-md-12">
+            <div class="row mt-3">
+                <div class="row mt-3">
+                    <div class="col-md-4">Label</div>
+                    <div class="col-md-2">SMS</div>
+                    <div class="col-md-2">Whatsapp</div>
+                    <div class="col-md-2">Call</div>
+                    <div class="col-md-2">Email</div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-4"><b>Policy Updates </b></div>
+                    <div class="col-md-2"><input type="checkbox" [checked]="dataArr.Policy_SMS == 'Sms'" (click)="submit(1,'Sms',$event)" /></div>
+                    <div class="col-md-2"><input type="checkbox" [checked]="dataArr.Policy_Whatsapp == 'Whatsapp'" (click)="submit(1,'Whatsapp',$event)" /></div>
+                    <div class="col-md-2"><input type="checkbox" [checked]="dataArr.Policy_Call == 'Call'" (click)="submit(1,'Call',$event)" /></div>
+                    <div class="col-md-2"><input type="checkbox" [checked]="dataArr.Policy_Email == 'Email'" (click)="submit(1,'Email',$event)" /></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-4"><b>Pre Purchase Updates </b></div>
+                    <div class="col-md-2"> <input type="checkbox" [checked]="dataArr.Pre_SMS == 'Sms'" (click)="submit(2,'Sms',$event)" /></div>
+                    <div class="col-md-2"><input type="checkbox" [checked]="dataArr.Pre_Whatsapp == 'Whatsapp'" (click)="submit(2,'Whatsapp',$event)" /></div>
+                    <div class="col-md-2"><input type="checkbox" [checked]="dataArr.Pre_Call == 'Call'" (click)="submit(2,'Call',$event)" /></div>
+                    <div class="col-md-2"><input type="checkbox" [checked]="dataArr.Pre_Email == 'Email'" (click)="submit(2,'Email',$event)" /></div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-4"><b>News & Offers</b></div>
+                    <div class="col-md-2"> <input type="checkbox" [checked]="dataArr.News_SMS == 'Sms'" (click)="submit(3,'Sms',$event)" /></div>
+                    <div class="col-md-2"><input type="checkbox" [checked]="dataArr.News_Whatsapp == 'Whatsapp'" (click)="submit(3,'Whatsapp',$event)" /></div>
+                    <div class="col-md-2"><input type="checkbox" [checked]="dataArr.News_Call == 'Call'" (click)="submit(3,'Call',$event)" /></div>
+                    <div class="col-md-2"><input type="checkbox" [checked]="dataArr.News_Email == 'Email'" (click)="submit(3,'Email',$event)" /></div>
+                </div>
+                
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="col-md-12">
+            <div style="margin-top: 10px;" class="button-div-yes-no">
+                <button type="button" (click)="CloseModel11()" class="btn btn-danger">Close</button>&nbsp;
+            </div>
+        </div>
+
+    </div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+<div class="edit-setting">
+    <div class="heading">Edit Communication Settings</div>
+    <div class="con-one">
+        <ul>
+            <li>Registered Contact Number
+                <span>+91-{{mobile}}</span>
+            </li>
+            <li>Registered Email Address
+                <span>{{email}}</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- <div class="section">
+        <label>Please share your alternate number</label>
+        <input type="number" class="form-control" placeholder="Mobile Number">
+    </div> -->
+
+    <div class="section">
+        <label>Please select your preference for receiving calls, Whatsapp, SMS and Email</label>
+
+
+        <div class="main">
+            <input type="radio" id="tab-1" name="show" checked />
+            <input type="radio" id="tab-2" name="show" />
+            <input type="radio" id="tab-3" name="show" />
+            <div class="tab">
+                <label for="tab-1">Policy Updates</label>
+                <label for="tab-2">Pre Purchase Updates</label>
+                <label for="tab-3">News & Offers</label>
+            </div>
+            <div class="content">
+                <div class="content-dis">
+                    <div class="channels">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Channels</th>
+                                    <th>Policy Updates</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><i class="fa fa-whatsapp" aria-hidden="true"></i>Whatsapp</td>
+                                    <td><input type="checkbox" [checked]="dataArr.Policy_Whatsapp != 'Whatsapp'"
+                                            (click)="submit(1,'Whatsapp',$event)"></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa fa-phone" aria-hidden="true"></i>Calling</td>
+                                    <td><input type="checkbox" [checked]="dataArr.Policy_Call != 'Call'"
+                                            (click)="submit(1,'Call',$event)"></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa fa-envelope-o" aria-hidden="true"></i>SMS</td>
+                                    <td><input type="checkbox" [checked]="dataArr.Policy_SMS != 'Sms'"
+                                            (click)="submit(1,'Sms',$event)"></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa fa-envelope-o" aria-hidden="true"></i>Email</td>
+                                    <td><input type="checkbox" [checked]="dataArr.Policy_Email != 'Email'"
+                                            (click)="submit(1,'Email',$event)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="content-dis">
+                    <div class="channels">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Channels</th>
+                                    <th>Pre Purchase Updates</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><i class="fa fa-whatsapp" aria-hidden="true"></i>Whatsapp</td>
+                                    <td><input type="checkbox" [checked]="dataArr.Pre_Whatsapp != 'Whatsapp'"
+                                            (click)="submit(2,'Whatsapp',$event)"></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa fa-phone" aria-hidden="true"></i>Calling</td>
+                                    <td><input type="checkbox" [checked]="dataArr.Pre_Call != 'Call'"
+                                            (click)="submit(2,'Call',$event)"></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa fa-envelope-o" aria-hidden="true"></i>SMS</td>
+                                    <td><input type="checkbox" [checked]="dataArr.Pre_SMS != 'Sms'"
+                                            (click)="submit(2,'Sms',$event)"></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa fa-envelope-o" aria-hidden="true"></i>Email</td>
+                                    <td><input type="checkbox" [checked]="dataArr.Pre_Email != 'Email'"
+                                            (click)="submit(2,'Email',$event)"></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="content-dis" checked>
+                    <div class="channels">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Channels</th>
+                                    <th>News & Offers</th>
+                                    <!-- <th>Alternate Number</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><i class="fa fa-whatsapp" aria-hidden="true"></i>Whatsapp</td>
+                                    <td><input type="checkbox" [checked]="dataArr.News_Whatsapp != 'Whatsapp'"
+                                            (click)="submit(3,'Whatsapp',$event)"></td>
+                                    <!-- <td><input type="checkbox"></td> -->
+                                </tr>
+                                <tr>
+                                    <td><i class="fa fa-phone" aria-hidden="true"></i>Calling</td>
+                                    <td><input type="checkbox" [checked]="dataArr.News_Call != 'Call'"
+                                            (click)="submit(3,'Call',$event)"></td>
+                                    <!-- <td><input type="checkbox"></td> -->
+                                </tr>
+                                <tr>
+                                    <td><i class="fa fa-envelope-o" aria-hidden="true"></i>SMS</td>
+                                    <td><input type="checkbox" [checked]="dataArr.News_SMS != 'Sms'"
+                                            (click)="submit(3,'Sms',$event)"></td>
+                                    <!-- <td><input type="checkbox"></td> -->
+                                </tr>
+                                <tr>
+                                    <td><i class="fa fa-envelope-o" aria-hidden="true"></i>Email</td>
+                                    <td><input type="checkbox" [checked]="dataArr.News_Email != 'Email'"
+                                            (click)="submit(3,'Email',$event)"></td>
+                                    <!-- <td><input type="checkbox"></td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <!-- <label>Please share your alternate email address</label>
+        <input type="email" placeholder="Safehandotp@gmail.com" class="form-control"> -->
+        <div class="submit-view">
+            <input type="checkbox" id="sendUpdates">
+            <label for="sendUpdates">Send updates on Alternate email address</label>
+        </div>
+    </div>
+    <div class="submit-btn">
+        <button type="button" (click)="CloseModel11()" class="btn btn-danger">Close</button>&nbsp;
+        <button type="submit" (click)="SaveData()">Save & Continue</button>
+    </div>
+</div>

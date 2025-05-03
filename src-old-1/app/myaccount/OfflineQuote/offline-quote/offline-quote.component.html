@@ -1,0 +1,939 @@
+<section class="inner_page_css main_dashboard_css">
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Create Offline Form</div>
+          </div>
+          <form class="form" (ngSubmit)="AddOfflineQuote()" [formGroup]="OfflineQuoteForm">
+            <div class="main_body main_card_height_scroll">
+
+              <div class="row">
+
+
+                <div *ngIf="Divshow == 1">
+                  <div class="col-md-12">
+                    <div class="form_sub_title"><i class="fa fa-link mr_5"></i> Mapping Details</div>
+                  </div>
+
+                  <div class="col-md-3 mb_15">
+                    <div class="input_group">
+                      <label for="CustomerName">Quote Source</label>
+                      <ng-multiselect-dropdown class="form-control" name="QuoteSource" placeholder="Select Quote Source"
+                        [data]="QuoteSourceData" formControlName="QuoteSource" [settings]="dropdownSingleSettingsType">
+                      </ng-multiselect-dropdown>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 mb_15" *ngIf="this.empType == 'opsTeam' || this.empType =='SalesSupport'">
+                    <div class="input_group">
+                      <label for="CustomerEmailId">Mapping Type</label>
+                      <ng-multiselect-dropdown class="form-control" name="login_role_type"
+                        placeholder="Select Mapping Type" (onSelect)="onItemSelect($event,'login_role_type')"
+                        (onDeSelect)="onItemDeSelect($event,'login_role_type')" [data]="MappingType"
+                        formControlName="login_role_type" [settings]="dropdownSingleSettingsType">
+                      </ng-multiselect-dropdown>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 mb_15" *ngIf="this.empType == 'employee'">
+                    <div class="input_group">
+                      <label for="CustomerEmailId">Employee</label>
+                      <ng-multiselect-dropdown class="form-control" name="login_role_type"
+                        placeholder="Select Mapping Type" (onSelect)="onItemSelect($event,'login_role_type')"
+                        (onDeSelect)="onItemDeSelect($event,'login_role_type')" [data]="MappingType1"
+                        formControlName="login_role_type" [settings]="dropdownSingleSettingsType">
+                      </ng-multiselect-dropdown>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 mb_15"
+                    *ngIf="(this.empType == 'opsTeam' || this.empType =='SalesSupport') && (EmployeeMappingPersonval == 'Agent' || EmployeeMappingPersonval == 'Sp')">
+                    <div class="input_group">
+                      <label for="CustomerMobileNo">Select Mapping Employee</label>
+                      <ng-multiselect-dropdown class="form-control" name="EmployeeMappingPerson"
+                        placeholder="Select Mapping Employee" (onSelect)="onItemSelect($event,'EmployeeMappingPerson')"
+                        (onDeSelect)="onItemDeSelect($event,'login_role_type')" [data]="EmployeeMappingPersonData"
+                        formControlName="EmployeeMappingPerson" [settings]="dropdownSingleSettingsType">
+                      </ng-multiselect-dropdown>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 mb_15">
+                    <div class="input_group">
+                      <label for="CustomerMobileNo">Select {{EmployeeMappingPersonval}}</label>
+                      <ng-multiselect-dropdown class="form-control" name="login_role_id" placeholder="Select Mapping"
+                        [data]="MappingPerson" formControlName="login_role_id" [settings]="dropdownSingleSettingsType">
+                      </ng-multiselect-dropdown>
+                      <!-- <span *ngIf="isSubmitted && formControls.login_role_id.errors" class="ValidationError">
+                                                                  <span *ngIf="formControls.login_role_id.errors.required">{{EmployeeMappingPersonval}} is
+                                                                    required</span>
+                                                                </span> -->
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+                <div class="col-md-12">
+                  <div class="form_sub_title"><i class="fa fa-motorcycle mr_5"></i> Vehicle / Policy Details</div>
+                </div>
+
+                <div class="col-md-4">
+                  <fieldset class="mb_15">
+                    <div class="form_sub_title border_none mb_0">Plan Type</div>
+                    <div class="radio">
+                      <div class="">
+
+                        <span class="custom_radio_button" (click)="clickDontknow(1)">
+                          <input formControlName="PolicyTypeId" name="PolicyTypeId" type="radio" value="1"
+                            id="policy_1">
+                          <label class="form-control-label" for="policy_1">Comprehensive</label>
+                        </span>
+
+                        <span class="custom_radio_button" (click)="clickDontknow(2)">
+                          <input formControlName="PolicyTypeId" name="PolicyTypeId" type="radio" value="2"
+                            id="policy_2">
+                          <label class="form-control-label" for="policy_2">TP
+                            only</label>
+                        </span>
+
+                        <span class="custom_radio_button">
+                          <input formControlName="PolicyTypeId" name="PolicyTypeId" type="radio" value="3"
+                            (click)="clickDontknow(3)" id="policy_3">
+                          <label class="form-control-label" for="policy_3">Standalone OD</label>
+                        </span>
+                      </div>
+                    </div>
+                    <div *ngIf="isSubmitted && formControls.PolicyTypeId.errors " class="ValidationError">
+                      <div *ngIf="formControls.PolicyTypeId.errors.required">Please
+                        Select Policy type!</div>
+                    </div>
+                  </fieldset>
+                </div>
+
+
+                <div class="col-md-4 mb_15">
+
+                  <fieldset id="claim_status_box">
+                    <div class="form_sub_title border_none mb_0">File Type</div>
+                    <div class="radio">
+                      <div class="">
+                        <span class="custom_radio_button">
+                          <input id="Busniess_vehicle_Rollover" name="IsNewVehicle" formControlName="IsNewVehicle"
+                            type="radio" value="Rollover">
+                          <label for="Busniess_vehicle_Rollover">Rollover</label>
+                        </span>
+
+                        <span class="custom_radio_button">
+                          <input id="Busniess_vehicle_Used" name="IsNewVehicle" formControlName="IsNewVehicle"
+                            type="radio" value="Used">
+                          <label for="Busniess_vehicle_Used">Used</label>
+                        </span>
+
+                        <span class="custom_radio_button">
+                          <input id="Busniess_vehicle_Renewal" name="IsNewVehicle" formControlName="IsNewVehicle"
+                            (click)="GetRenewalFields()" type="radio" value="Renewal">
+                          <label for="Busniess_vehicle_Renewal">Renewal</label>
+                        </span>
+
+                        <span class="custom_radio_button">
+                          <input id="Busniess_vehicle_New" name="IsNewVehicle" formControlName="IsNewVehicle"
+                            type="radio" value="New" checked>
+                          <label for="Busniess_vehicle_New">New</label>
+                        </span>
+
+                        <div *ngIf="isSubmitted && formControls.IsNewVehicle.errors " class="ValidationError">
+                          <div *ngIf="formControls.IsNewVehicle.errors.required">
+                            Please Select Vehicle
+                            Details!</div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+
+                <div class="col-md-4 mb_15">
+                  <fieldset id="claim_status_box">
+                    <div class="form_sub_title border_none mb_0">Registration Type</div>
+                    <div class="radio">
+                      <div class="">
+                        <span class="custom_radio_button">
+                          <input id="Busniess_vehicle_Normal" name="VintageNumber" formControlName="VintageNumber"
+                            type="radio" value="Normal">
+                          <label for="Busniess_vehicle_Normal">Normal</label>
+                        </span>
+
+                        <span class="custom_radio_button">
+                          <input id="Busniess_vehicle_Vintage" name="VintageNumber" formControlName="VintageNumber"
+                            type="radio" value="Vintage">
+                          <label for="Busniess_vehicle_Vintage">Vintage</label>
+                        </span>
+
+
+                        <span class="custom_radio_button">
+                          <input id="Busniess_vehicle_BharatSeries" name="VintageNumber" formControlName="VintageNumber"
+                            type="radio" value="Bharat Series">
+                          <label for="Busniess_vehicle_BharatSeries">Bharat Series</label>
+                        </span>
+
+                        <div *ngIf="isSubmitted && formControls.VintageNumber.errors " class="ValidationError">
+                          <div *ngIf="formControls.VintageNumber.errors.required">
+                            Please Select !</div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+
+
+
+
+                <div class="col-md-4 mb_15"
+                  *ngIf="OfflineQuoteForm.value['VintageNumber'] == 'Vintage' || OfflineQuoteForm.value['VintageNumber'] == 'Bharat Series' ">
+                  <div class="input_group">
+                    <label for="Registration">Registration Number</label>
+
+                    <input type='text' class="form_control" formControlName="RegistrationNo">
+                    <div *ngIf="isSubmitted && formControls.RegistrationNo.errors " class="ValidationError">
+                      <div *ngIf="formControls.RegistrationNo.errors.required">
+                        Please Enter
+                        Registration No!</div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col-md-4 mb_15" *ngIf="OfflineQuoteForm.value['VintageNumber'] == 'Normal'">
+                  <div class="input_group">
+
+                    <label for="RegistrationNumber">Registration Number</label>
+                    <div class="input-group custom-input-group">
+                      <div class="form_control" id="register_number">
+                        <input class="myinput AutoUppercase" id="Registration_State_Code"
+                          formControlName="Registration_State_Code" type="text"
+                          (keyup)="AutoTabRegistrationNo($event,2,'Registration_District_Code')" maxlength="2"
+                          placeholder="XX">
+                        -
+                        <input class="myinput AutoUppercase" id="Registration_District_Code"
+                          formControlName="Registration_District_Code"
+                          (keyup)="AutoTabRegistrationNo($event,2,'Registration_City_Code')" placeholder="XX"
+                          type="text" appOnlynumber maxlength="2">
+                        <b
+                          *ngIf="(OfflineQuoteForm.value['IsNewVehicle'] == 'Rollover' || OfflineQuoteForm.value['IsNewVehicle'] == 'Used'  || OfflineQuoteForm.value['IsNewVehicle'] == 'Renewal' ) ">
+                          - </b>
+
+                        <input
+                          *ngIf="(OfflineQuoteForm.value['IsNewVehicle'] == 'Rollover' || OfflineQuoteForm.value['IsNewVehicle'] == 'Used' || OfflineQuoteForm.value['IsNewVehicle'] == 'Renewal' )"
+                          class="myinput AutoUppercase" placeholder="XXX" id="Registration_City_Code"
+                          formControlName="Registration_City_Code"
+                          (keyup)="AutoTabRegistrationNo($event,3,'Registration_Code')" type="text" maxlength="3">
+
+                        <b
+                          *ngIf="(OfflineQuoteForm.value['IsNewVehicle'] == 'Rollover' || OfflineQuoteForm.value['IsNewVehicle'] == 'Used' || OfflineQuoteForm.value['IsNewVehicle'] == 'Renewal'  )">
+                          - </b>
+
+                        <input
+                          *ngIf="(OfflineQuoteForm.value['IsNewVehicle'] == 'Rollover' || OfflineQuoteForm.value['IsNewVehicle'] == 'Used' || OfflineQuoteForm.value['IsNewVehicle'] == 'Renewal' )"
+                          class="myinput AutoUppercase" id="Registration_Code" formControlName="Registration_Code"
+                          type="text" placeholder="XXXX" appOnlynumber maxlength="4">
+
+
+                        <div *ngIf="isSubmitted && formControls.Registration_District_Code.errors "
+                          class="ValidationError">
+                          <div *ngIf="formControls.Registration_District_Code.errors.required">
+                            Please Enter
+                            District number!</div>
+                        </div>
+                        <div *ngIf="isSubmitted && formControls.Registration_Code.errors " class="ValidationError">
+                          <div *ngIf="formControls.Registration_Code.errors.required">
+                            Please Enter
+                            Registration number!</div>
+                        </div>
+                      </div>
+                      <!-- <button type="button" class="  btn btn-success opacity"
+                        *ngIf="(OfflineQuoteForm.value['IsNewVehicle'] != 'New' && OfflineQuoteForm.value['IsNewVehicle'] != 'Renewal' && OfflineQuoteForm.value['Registration_State_Code'] != '' && OfflineQuoteForm.value['Registration_District_Code'] != '' && OfflineQuoteForm.value['Registration_City_Code'] != ''  && OfflineQuoteForm.value['Registration_Code'] != '') "
+                        (click)="GetVehicleDetails()">Get Vehicle Details</button> -->
+
+
+                      <button type="button" class="btn btn-success" *ngIf="(OfflineQuoteForm.value['IsNewVehicle'] != 'New' && 
+                                        OfflineQuoteForm.value['IsNewVehicle'] != 'Renewal' && 
+                                        OfflineQuoteForm.value['Registration_State_Code'] != '' && 
+                                        OfflineQuoteForm.value['Registration_District_Code'] != '' && 
+                                        OfflineQuoteForm.value['Registration_City_Code'] != '' && 
+                                        OfflineQuoteForm.value['Registration_Code'] != '')"
+                        (click)="GetVehicleDetails()">Get Vehicle Details
+                      </button>
+
+                    </div>
+
+                  </div>
+                </div>
+
+
+                <div class="col-md-4 mb_15"
+                  *ngIf="OfflineQuoteForm.value['IsNewVehicle'] == 'Rollover'  || OfflineQuoteForm.value['IsNewVehicle'] == 'Used' || OfflineQuoteForm.value['IsNewVehicle'] == 'Renewal'">
+                  <div class="input_group">
+                    <label for="RegistrationDate">Registration Date</label>
+                    <input type="date" class="form_control" formControlName="RegistrationDate">
+                    <div *ngIf="isSubmitted && formControls.RegistrationDate.errors " class="ValidationError">
+                      <div *ngIf="formControls.RegistrationDate.errors.required">
+                        Please Enter
+                        Registration date!</div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+                <div class="col-md-4 mb_15">
+                  <fieldset>
+                    <div class="form_sub_title border_none mb_0">Product Type</div>
+                    <div class="radio">
+                      <div class="">
+                        <span class="custom_radio_button" data-spanid="1">
+                          <input id="vehicle_1" formControlName="VehicleTypeId" name="VehicleTypeId" type="radio"
+                            (click)="Changegaditype(1)" value="1" [(ngModel)]="vehicle_type"
+                            [checked]="vehicle_type === 1">
+                          <label for="vehicle_1">Two
+                            Wheeler</label>
+                        </span>
+                        <span class="custom_radio_button " data-spanid="2">
+                          <input id="vehicle_2" formControlName="VehicleTypeId" name="VehicleTypeId" type="radio"
+                            (click)="Changegaditype(2)" value="2" [(ngModel)]="vehicle_type"
+                            [checked]="vehicle_type === 2">
+                          <label for="vehicle_2">Private
+                            Car</label>
+                        </span>
+                        <span class="custom_radio_button" data-spanid="3"
+                          *ngIf="OfflineQuoteForm.value['PolicyTypeId'] != '3'">
+                          <input id="vehicle_3" formControlName="VehicleTypeId" name="VehicleTypeId" type="radio"
+                            (click)="Changegaditype(3)" value="3" [(ngModel)]="vehicle_type"
+                            [checked]="vehicle_type === 3">
+                          <label for="vehicle_3">PCV</label>
+                        </span>
+                        <span class="custom_radio_button" data-spanid="4"
+                          *ngIf="OfflineQuoteForm.value['PolicyTypeId'] != '3'">
+                          <input id="vehicle_4" formControlName="VehicleTypeId" name="VehicleTypeId" type="radio"
+                            (click)="Changegaditype(4)" value="4" [(ngModel)]="vehicle_type"
+                            [checked]="vehicle_type === 4">
+                          <label for="vehicle_4">GCV</label>
+                        </span>
+                        <span class="custom_radio_button" data-spanid="5"
+                          *ngIf="OfflineQuoteForm.value['PolicyTypeId'] != '3'">
+                          <input id="vehicle_5" formControlName="VehicleTypeId" name="VehicleTypeId" type="radio"
+                            (click)="Changegaditype(5)" value="5" [(ngModel)]="vehicle_type"
+                            [checked]="vehicle_type === 5">
+                          <label for="vehicle_5">Misc-D</label>
+                        </span>
+                      </div>
+                      <div *ngIf="isSubmitted && formControls.VehicleTypeId.errors" class="ValidationError">
+                        <div *ngIf="formControls.VehicleTypeId.errors.required">Please Select Vehicle type!
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+
+
+
+                <div class="col-md-12 "
+                  *ngIf="this.empType == 'opsTeam' && (OfflineQuoteForm.value['VintageNumber'] == 'Vintage' || OfflineQuoteForm.value['VintageNumber'] == 'Bharat Series' || OfflineQuoteForm.value['VintageNumber'] == 'Normal')">
+                  <div class="row">
+                    <div class="col-md-4 mb_15">
+                      <label for="make">Make</label>
+                      <ng-multiselect-dropdown class="form-control" placeholder="" [data]="makeData"
+                        formControlName="make" [settings]="dropdownSettingsSingle" (onSelect)="searchModels()"
+                        (onDeSelect)="onItemDeSelect11('Make')" (ngModelChange)="MakeModelChange('Make')"
+                        [(ngModel)]="SelectedmakeName">
+                      </ng-multiselect-dropdown>
+                      <div *ngIf="isSubmitted && formControls.make.errors " class="ValidationError">
+                        <div *ngIf="formControls.make.errors.required">
+                          Please Enter
+                          make !</div>
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-4 mb_15">
+                      <label for="make">Model</label>
+                      <ng-multiselect-dropdown class="form-control" placeholder="" [data]="modelData"
+                        formControlName="model" [settings]="dropdownSettingsSingle"
+                        (ngModelChange)="MakeModelChange('Model')" (onSelect)="searchFuelType()"
+                        (onDeSelect)="onItemDeSelect11('Model')" [(ngModel)]="SelectedmodelName">
+                      </ng-multiselect-dropdown>
+                      <!-- <input id="vehicle_5" formControlName="model" name="model" type="text" class="form-control"  [(ngModel)]="modelName"> -->
+                      <div *ngIf="isSubmitted && formControls.model.errors " class="ValidationError">
+                        <div *ngIf="formControls.model.errors.required">
+                          Please Enter
+                          model !</div>
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-4 mb_15">
+                      <label for="make">Fuel Type</label>
+                      <ng-multiselect-dropdown class="form-control" placeholder="" [data]="fuelData"
+                        formControlName="fuelType" [settings]="dropdownSettingsSingle"
+                        (ngModelChange)="MakeModelChange('Fuel')" (onSelect)="searchVariants()"
+                        (onDeSelect)="onItemDeSelect11('Fuel')" [(ngModel)]="SelectedfuelName">
+                      </ng-multiselect-dropdown>
+
+                      <!-- <input id="vehicle_5" formControlName="fuelType" name="fuelType" type="text" class="form-control               [(ngModel)]="fuelName"> -->
+
+                      <div *ngIf="isSubmitted && formControls.fuelType.errors " class="ValidationError">
+                        <div *ngIf="formControls.fuelType.errors.required">
+                          Please Enter
+                          fuel type !</div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4 mb_15">
+                      <label for="make">Variant</label>
+                      <ng-multiselect-dropdown class="form-control" placeholder="" [data]="variantData"
+                        formControlName="variant" [settings]="dropdownSettingsSingle" [(ngModel)]="SelectedvariantName">
+                      </ng-multiselect-dropdown>
+
+                      <!-- <input id="vehicle_5" formControlName="variant" name="variant" type="text" class="form-control"  [(ngModel)]="variantName"> -->
+
+                      <div *ngIf="isSubmitted && formControls.variant.errors " class="ValidationError">
+                        <div *ngIf="formControls.variant.errors.required">
+                          Please Enter
+                          variant !</div>
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-4 mb_15">
+                      <label for="make">Registration Year</label>
+                      <input id="vehicle_5" formControlName="registration_years" name="registration_years" type="text"
+                        class="form-control" [(ngModel)]="SelectedregYearName">
+                      <div *ngIf="isSubmitted && formControls.registration_years.errors " class="ValidationError">
+                        <div *ngIf="formControls.registration_years.errors.required">
+                          Please Enter
+                          registration year !</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4 mb_15"
+                  *ngIf="OfflineQuoteForm.value['PolicyTypeId'] == '1' && OfflineQuoteForm.value['VehicleTypeId'] == '1' && 
+                   (OfflineQuoteForm.value['IsNewVehicle'] == 'Rollover' || OfflineQuoteForm.value['IsNewVehicle'] == 'Used' || OfflineQuoteForm.value['IsNewVehicle'] == 'Renewal' ) ">
+                  <div class="input_group px_15">
+                    <label for="Tenures_Comprehensive">Tenure</label>
+                    <ng-multiselect-dropdown class="form_control_ng" name="Tenure_Comprehensive"
+                      placeholder="Select Tenure" [data]="TenureBox" formControlName="Tenure_Comprehensive"
+                      [settings]="dropdownSingleSettingsType">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.Tenure_Comprehensive.errors " class="ValidationError">
+                      <div *ngIf="formControls.Tenure_Comprehensive.errors.required">
+                        Please Enter
+                        Tenure !</div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <div>
+                  <div class="col-md-12">
+                    <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i>Customer Details</div>
+                  </div>
+
+                  <div class="col-md-3 mb_15">
+
+                    <div class="input_group">
+                      <label for="CustomerName">Customer Detail</label>
+                      <div class="position_relative">
+
+
+                        <span class="custom_radio_button">
+                          <input id="Yes" name="customerDetail" (change)="customerDetailFunction($event.target.value)"
+                            formControlName="customerDetail" type="radio" value="Yes">
+                          <label for="Yes">Yes</label>
+                        </span>
+                        <span class="custom_radio_button">
+                          <input id="No" name="customerDetail" (change)="customerDetailFunction($event.target.value)"
+                            formControlName="customerDetail" type="radio" value="No">
+                          <label for="No">No</label>
+                        </span>
+
+                      </div>
+                      <span *ngIf="isSubmitted && formControls.customerDetail.errors" class="ValidationError">
+                        <span *ngIf="formControls.customerDetail.errors.required">please choose customer details!</span>
+                      </span>
+                    </div>
+                  </div>
+
+
+                  <div class="col-md-3 mb_15" *ngIf="OfflineQuoteForm.get('customerDetail').value == 'Yes'">
+                    <div class="input_group">
+                      <label for="CustomerName">Customer Name</label>
+                      <div class="position_relative">
+                        <input class="form_control icon_cs" type="text" formControlName="customername"
+                          name="CustomerName" id="CustomerName" placeholder="Enter Name"
+                          [(ngModel)]="SelectedCustomername">
+                        <div class="input_icon"><i class="fa fa-user-o"></i></div>
+                      </div>
+                      <span *ngIf="isSubmitted && formControls.customername.errors" class="ValidationError">
+                        <span *ngIf="formControls.customername.errors.required">Customer Name is required</span>
+                        <span *ngIf="formControls.customername.errors.pattern">Special characters not allowed</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 mb_15" *ngIf="OfflineQuoteForm.get('customerDetail').value == 'Yes'">
+                    <div class="input_group">
+                      <label for="CustomerEmailId">Customer Email</label>
+                      <div class="position_relative">
+                        <input class="form_control icon_cs" type="email" formControlName="customeremail"
+                          name="CustomerEmailId" id="CustomerEmailId" placeholder="Customer Email"
+                          [(ngModel)]="SelectedCustomeremail">
+                        <div class="input_icon"><i class="fa fa-envelope-o"></i></div>
+                      </div>
+                      <div *ngIf="isSubmitted && formControls.customeremail.errors " class="ValidationError">
+                        <div *ngIf="formControls.customeremail.errors.required">Please
+                          Enter
+                          Customer
+                          Email!</div>
+                        <span *ngIf="formControls.customeremail.errors.pattern">Enter valid Email</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 mb_15" *ngIf="OfflineQuoteForm.get('customerDetail').value == 'Yes'">
+                    <div class="input_group">
+                      <label for="CustomerMobileNo">Mobile Number</label>
+                      <div class="position_relative">
+                        <input class="form_control icon_cs" type="text" name="CustomerMobileNo" id="CustomerMobileNo"
+                          placeholder="Enter Mobile Number" formControlName="customermobileno" maxlength="10"
+                          [(ngModel)]="SelectedCustomermobile">
+                        <div class="input_icon"><i class="fa fa-phone"></i></div>
+                      </div>
+                      <div *ngIf="isSubmitted && formControls.customermobileno.errors " class="ValidationError">
+                        <div *ngIf="formControls.customermobileno.errors.required">
+                          Please
+                          Enter
+                          Mobile
+                          no.!</div>
+                        <span *ngIf="formControls.customermobileno.errors.pattern">Enter valid Mobile Number</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+
+                <div *ngIf="OfflineQuoteForm.value['PolicyTypeId'] == '3'" class="col-md-12 mt_20">
+                  <div class="form_sub_title"><i class="fa fa-users mr_5"></i> TP Policy Details</div>
+                  <div class="row " id="pypdetails" *ngIf="OfflineQuoteForm.value['PolicyTypeId'] == '3'">
+                    <div class="col-md-4">
+                      <div class="input_group">
+                        <label for="TPexpirydate"> Tp policy Expiry Date*</label>
+                        <input type='date' class="form_control" formControlName="TPexpirydate">
+                        <div *ngIf="isSubmitted && formControls.TPexpirydate.errors " class="ValidationError">
+                          <div *ngIf="formControls.TPexpirydate.errors.required">
+                            Please Enter Expiry date!</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="input_group">
+                        <label for="TPpolicynumber"> TP policy Number* </label>
+                        <input class="form_control" type="type" name="TPpolicynumber" id="TPpolicynumber"
+                          formControlName="TPpolicynumber">
+                        <div *ngIf="isSubmitted && formControls.TPpolicynumber.errors " class="ValidationError">
+                          <div *ngIf="formControls.TPpolicynumber.errors.required">
+                            Please Enter TP policy number!</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4" id="tp_insurer_details">
+                      <div class="input_group">
+                        <label for="TPpolicyInsurerId">TP policy Insurer*</label>
+                        <ng-multiselect-dropdown class="form_control_ng" name="TPpolicyinsurer"
+                          placeholder="Select Insurer" [data]="Company" formControlName="TPpolicyinsurer"
+                          [settings]="dropdownSettingsType">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="isSubmitted && formControls.TPpolicyinsurer.errors " class="ValidationError">
+                          <div *ngIf="formControls.TPpolicyinsurer.errors.required">
+                            Please Select
+                            Insurer!</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  *ngIf="OfflineQuoteForm.value['IsNewVehicle'] == 'Rollover' || OfflineQuoteForm.value['IsNewVehicle'] == 'Renewal'"
+                  class="col-md-12 mt_20">
+                  <div class="form_sub_title"><i class="fa fa-lock mr_5"></i> Previous Policy</div>
+                  <div class="row mt_10">
+                    <div class="col-md-12">
+                      <div class="form_sub_title border_none mb_0">Have Previous Year Policy</div>
+                      <div class="radio">
+                        <div class="">
+                          <span class="custom_radio_button"
+                            (click)="clickDontknow(OfflineQuoteForm.value['PolicyTypeId'])">
+                            <input type="radio" name="IsPyp" formControlName="IsPyp" value="Yes" id="Yes1" />
+                            <label for="Yes1">Yes</label>
+                          </span>
+                          <span class="custom_radio_button"
+                            (click)="clickDontknow(OfflineQuoteForm.value['PolicyTypeId'])">
+                            <input type="radio" name="IsPyp" formControlName="IsPyp" value="No" id="No1" />
+                            <label for="No1" *ngIf="OfflineQuoteForm.value['PolicyTypeId'] != '3'">No (Don't Know
+                              Case)</label>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div id="pypdetails" *ngIf="OfflineQuoteForm.value['IsPyp'] == 'Yes'" class="mt_20">
+                        <div class="row ">
+                          <div class="col-md-3">
+                            <div class="input_group">
+                              <label for="Pypexpirydate">Expiry Date</label>
+                              <input class="form_control" type="date" name="Pypexpirydate" id="Pypexpirydate"
+                                formControlName="Pypexpirydate" placeholder="YYYY/MM/DD">
+                              <div *ngIf="isSubmitted && formControls.Pypexpirydate.errors " class="ValidationError">
+                                <div *ngIf="formControls.Pypexpirydate.errors.required">
+                                  Please Select Expiry date!</div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-3" id="OwnerChange_DETAILS"
+                            *ngIf="OfflineQuoteForm.value['PolicyTypeId'] !=2">
+                            <div class="form_sub_title border_none mb_0">Owner Change</div>
+                            <div class="radio">
+                              <div class="">
+                                <span class="custom_radio_button">
+                                  <input id="OwnerChangeaaa" name="OwnerChange" formControlName="OwnerChange"
+                                    type="radio" value="Yes">
+                                  <label for="OwnerChangeaaa">Yes</label>
+                                </span>
+                                <span class="custom_radio_button">
+                                  <input id="OwnerChangeNo" required style="margin-left: 20px;" name="OwnerChange"
+                                    formControlName="OwnerChange" type="radio" value="No">
+                                  <label for="OwnerChangeNo">No</label>
+                                </span>
+                                <div *ngIf="isSubmitted && formControls.OwnerChange.errors " class="ValidationError">
+                                  <div *ngIf="formControls.OwnerChange.errors.required">
+                                    Please Select Owner Change !</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-3" id="Ncb_protection_box"
+                            *ngIf="OfflineQuoteForm.value['PolicyTypeId'] !=2">
+                            <div class="form_sub_title border_none mb_0">Previous year NCB Protection?</div>
+                            <div class="radio">
+                              <div class="">
+                                <span class="custom_radio_button">
+                                  <input id="NCBProtectionyes" name="NCBProtection" formControlName="NCBProtection"
+                                    type="radio" value="Yes">
+                                  <label for="NCBProtectionyes">Yes</label>
+                                </span>
+                                <span class="custom_radio_button">
+                                  <input id="NCBProtectionno" required name="NCBProtection"
+                                    formControlName="NCBProtection" type="radio" value="No">
+                                  <label for="NCBProtectionno">No</label>
+                                </span>
+                                <div *ngIf="isSubmitted && formControls.NCBProtection.errors " class="ValidationError">
+                                  <div *ngIf="formControls.NCBProtection.errors.required">
+                                    Please Select NCB Protection !</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-3" id="Ncb_protection_box"
+                            *ngIf="OfflineQuoteForm.value['PolicyTypeId'] !=2">
+                            <div class="form_sub_title border_none mb_0">Claim Status</div>
+                            <div class="radio">
+                              <div class="">
+                                <span class="custom_radio_button">
+                                  <input id="ClaimRequestyes" name="IsClaimRequest" formControlName="IsClaimRequest"
+                                    type="radio" value="Yes">
+                                  <label for="ClaimRequestyes">Yes</label>
+                                </span>
+                                <span class="custom_radio_button">
+                                  <input id="ClaimRequestno" required name="IsClaimRequest"
+                                    formControlName="IsClaimRequest" type="radio" value="No">
+                                  <label for="ClaimRequestno">No</label>
+                                </span>
+                                <div *ngIf="isSubmitted && formControls.IsClaimRequest.errors " class="ValidationError">
+                                  <div *ngIf="formControls.IsClaimRequest.errors.required">Please Select Expiry date!
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="input_group" id="prev_insurer_details">
+                              <label for="PreviousInsurerId">Previous Insurer</label>
+                              <ng-multiselect-dropdown class="form_control_ng" name="previousinsurer"
+                                placeholder="Select Insurer" [data]="Company" formControlName="previousinsurer"
+                                [settings]="dropdownSingleSettingsType" [(ngModel)]="Selectedpreviousinsurer">
+                              </ng-multiselect-dropdown>
+                              <div *ngIf="isSubmitted && formControls.previousinsurer.errors" class="ValidationError">
+                                <div *ngIf="formControls.previousinsurer.errors.required">Please Select Previous Insurer
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+
+                          <div class="col-md-4" *ngIf="OfflineQuoteForm.value['PolicyTypeId'] !=2">
+                            <div
+                              *ngIf="OfflineQuoteForm.value['OwnerChange'] == 'No' && ((OfflineQuoteForm.value['NCBProtection'] == 'Yes' && OfflineQuoteForm.value['IsClaimRequest'] == 'Yes') || (OfflineQuoteForm.value['IsClaimRequest'] == 'No') ) "
+                              class="input_group" id="ncbdetails">
+                              <label for="NCB">Last Year NCB</label>
+                              <select class="form_control" formControlName="lastyearncb" name="NCB" id="NCB">
+                                <option selected value="0">0%</option>
+                                <option value="20">20%</option>
+                                <option value="25">25%</option>
+                                <option value="35">35%</option>
+                                <option value="45">45%</option>
+                                <option value="50">50%</option>
+                              </select>
+                              <div *ngIf="isSubmitted && formControls.lastyearncb.errors " class="ValidationError">
+                                <div *ngIf="formControls.lastyearncb.errors.required">
+                                  Please Select last year ncb!</div>
+                              </div>
+                            </div>
+                          </div>
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-12 mt_20">
+                  <div class="form_sub_title"><i class="fa fa-quote-left mr_5"></i> Quote request from Insurer(s)</div>
+                </div>
+
+
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form_sub_title border_none mb_0"> Preferred Quote?</div>
+                      <div class="radio">
+                        <div class="">
+                          <span class="custom_radio_button">
+                            <input type="radio" name="IsBestQuote" formControlName="IsBestQuote" value="Yes"
+                              id="IsBestQuoteyes" />
+                            <label for="IsBestQuoteyes">Yes</label>
+                          </span>
+                          <span class="custom_radio_button">
+                            <input type="radio" name="IsBestQuote" formControlName="IsBestQuote" value="No"
+                              id="IsBestQuoteno" />
+                            <label for="IsBestQuoteno">No</label>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3" id="addons_list">
+                      <div class="input_group">
+                        <label for="AddOns">Add-ons</label>
+                        <ng-multiselect-dropdown class="form_control_ng" name="requiredaddons"
+                          placeholder="Select Addon" [data]="Addons" formControlName="requiredaddons"
+                          [settings]="dropdownSettingsType">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="isSubmitted && formControls.requiredaddons.errors " class="ValidationError">
+                          <div *ngIf="formControls.requiredaddons.errors.required">Please Enetr enter addons!</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3" *ngIf="OfflineQuoteForm.value['PolicyTypeId'] != '2'" id="idv_value">
+                      <div class="input_group">
+                        <label for="IdvValue">IDV Value</label>
+                        <div class="form_control" id="register_number">
+                          <input class="myinput1" type="text" formControlName="idvlowestvalue" name="idvlowestvalue"
+                            id="IdvValue" maxlength="10" placeholder="Low">
+                          <input class="myinput1" type="text" formControlName="idvhighestvalue" name="idvhighestvalue"
+                            id="IdvValue" maxlength="10" placeholder="High">
+                          <div *ngIf="isSubmitted && formControls.idvlowestvalue.errors " class="ValidationError">
+                            <div *ngIf="formControls.idvlowestvalue.errors.required">Please Enter idv lowest value!
+                            </div>
+                            <div *ngIf="formControls.idvlowestvalue.errors.pattern">Please Enter Valid Idv!</div>
+                          </div>
+                          <div *ngIf="isSubmitted && formControls.idvhighestvalue.errors " class="ValidationError">
+                            <div *ngIf="formControls.idvhighestvalue.errors.required">Please Enter idv highest value!
+                            </div>
+                            <div *ngIf="formControls.idvhighestvalue.errors.pattern">Please Enter Valid Idv!</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3" id="insurer_list" *ngIf="OfflineQuoteForm.value['IsBestQuote'] == 'Yes'">
+                      <div class="input_group">
+                        <label for="Insurers">Insurers</label>
+                        <ng-multiselect-dropdown class="form_control_ng" name="requiredinsurer"
+                          placeholder="Select Insurer" [data]="Company" formControlName="requiredinsurer"
+                          [settings]="dropdownSettingsMultiselect">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="isSubmitted && formControls.requiredinsurer.errors " class="ValidationError">
+                          <div *ngIf="formControls.requiredinsurer.errors.required">Please Enetr insurer!</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col-md-12 mt_20" id="filecontainer">
+                  <div class="form_sub_title"><i class="fa fa-book mr_5"></i> Documents</div>
+                  <div class="row">
+                    <div class="col-md-3"
+                      *ngIf="(OfflineQuoteForm.value['IsNewVehicle'] == 'Rollover' || OfflineQuoteForm.value['IsNewVehicle'] == 'Used' || OfflineQuoteForm.value['IsNewVehicle'] == 'Renewal' )">
+                      <div class="input_group">
+                        <label>RC Front *</label>
+                        <label class="form_control d_flex flex_Center flex_Middel fileUpload_btn"
+                          [ngClass]="(this.RC_Motor_Front_image==1 ? 'ImageUploaded' : 'else' )" name="button"
+                          value="RC_Front">
+                          <input type="file" (change)="UploadDocs($event,'RC_Motor_Front')" id="file" name="RC_Front"
+                            formControlName="RcFront" accept="image/png, image/gif, image/jpeg ,application/pdf" />
+                        </label>
+                        <div *ngIf="isSubmitted && formControls.RcFront.errors " class="ValidationError">
+                          <div *ngIf="formControls.RcFront.errors.required">Please Select file!</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3"
+                      *ngIf="(OfflineQuoteForm.value['IsNewVehicle'] == 'Rollover' || OfflineQuoteForm.value['IsNewVehicle'] == 'Used' || OfflineQuoteForm.value['IsNewVehicle'] == 'Renewal')">
+                      <div class="input_group">
+                        <label>RC Back</label>
+                        <label class="form_control d_flex flex_Center flex_Middel fileUpload_btn"
+                          [ngClass]="(this.RC_Motor_Back_image==1 ? 'ImageUploaded' : 'else' )" name="button"
+                          value="RC_Back">
+                          <input type="file" (change)="UploadDocs($event,'RC_Motor_Back')" id="file" name="RcBack"
+                            formControlName="RcBack" accept="image/png, image/gif, image/jpeg ,application/pdf" />
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-3" *ngIf="OfflineQuoteForm.value['IsNewVehicle'] == 'New'">
+                      <div class="input_group">
+                        <label>Invoice *</label>
+                        <label class="form_control d_flex flex_Center flex_Middel fileUpload_btn"
+                          [ngClass]="(this.Invoice_image==1 ? 'ImageUploaded' : 'else' )" name="button" value="invoice">
+                          <input type="file" (change)="UploadDocs($event,'Invoice')" id="file" name="InvoiceImage"
+                            accept="image/png, image/gif, image/jpeg ,application/pdf" formControlName="InvoiceImage" />
+                        </label>
+                        <div *ngIf="isSubmitted && formControls.InvoiceImage.errors " class="ValidationError">
+                          <div *ngIf="formControls.InvoiceImage.errors.required">Please Select file! </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3"
+                      *ngIf="OfflineQuoteForm.value['IsPyp'] == 'Yes' && OfflineQuoteForm.value['IsNewVehicle'] == 'Rollover'">
+                      <div class="input_group">
+                        <label>Previous Year Policy*</label>
+                        <label class="form_control d_flex flex_Center flex_Middel fileUpload_btn"
+                          [ngClass]="(this.Previous_Policy_Pdf_image==1 ? 'ImageUploaded' : 'else' )" name="button"
+                          value="PreviousPolicy">
+                          <input type="file" (change)="UploadDocs($event,'Previous_Policy_Pdf')" id="file"
+                            name="PreviousPolicyPdf" accept="image/png, image/gif, image/jpeg ,application/pdf"
+                            formControlName="PreviousPolicyPdf">
+                        </label>
+                        <div *ngIf="isSubmitted && formControls.PreviousPolicyPdf.errors " class="ValidationError">
+                          <div *ngIf="formControls.PreviousPolicyPdf.errors.required">Please Select file!</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="input_group">
+                        <label>Other</label>
+                        <label class="form_control fileUpload_btn d_flex flex_Center flex_Middel"
+                          [ngClass]="(this.Other_image==1 ? 'ImageUploaded' : 'else' )" name="button" value="Others">
+                          <input type="file" (change)="UploadDocs($event,'Other')" id="file" name="OtherDocument"
+                            multiselected accept="image/png, image/gif, image/jpeg ,application/pdf"
+                            formControlName="OtherDocument" />
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="input_group">
+                        <label>Pan Card</label>
+                        <label class="form_control fileUpload_btn d_flex flex_Center flex_Middel"
+                          [ngClass]="(this.Pan_image==1 ? 'ImageUploaded' : 'else' )" name="button"
+                          value="pan_documents">
+                          <input type="file" (change)="UploadDocs($event,'Pan_image')" id="file" name="pan_document"
+                            multiselected accept="image/png, image/gif, image/jpeg ,application/pdf"
+                            formControlName="pan_document" />
+                        </label>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="input_group">
+                        <label>Aadhaar Card Front</label>
+                        <label class="form_control fileUpload_btn d_flex flex_Center flex_Middel"
+                          [ngClass]="(this.aadhar_image_front ==1 ? 'ImageUploaded' : 'else' )" name="button"
+                          value="aadhaar_document_front">
+                          <input type="file" (change)="UploadDocs($event,'aadhar_image_front')" id="file"
+                            name="aadhaar_document_front" multiselected
+                            accept="image/png, image/gif, image/jpeg ,application/pdf"
+                            formControlName="aadhaar_document_front" />
+                        </label>
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-3">
+                      <div class="input_group">
+                        <label>Aadhaar Card Back</label>
+                        <label class="form_control fileUpload_btn d_flex flex_Center flex_Middel"
+                          [ngClass]="(this.aadhar_image_back ==1 ? 'ImageUploaded' : 'else' )" name="button"
+                          value="aadhaar_document_back">
+
+
+                          <input type="file" (change)="UploadDocs($event,'aadhar_image_back')" id="file"
+                            name="aadhaar_document_back" multiselected
+                            accept="image/png, image/gif, image/jpeg ,application/pdf"
+                            formControlName="aadhaar_document_back" />
+
+                        </label>
+                      </div>
+                    </div>
+
+
+
+                    <div class="col-md-12">
+                      <div class="input_group">
+                        <label>Remarks *<small class="text-muted fs_10"> &nbsp;(Max 250 characters)</small></label>
+                        <textarea class="form_control" name="Remark" formControlName="remark" id="Remark"
+                          placeholder="Remarks" maxlength="250"></textarea>
+                        <div *ngIf="isSubmitted && formControls.remark.errors " class="ValidationError">
+                          <div *ngIf="formControls.remark.errors.required">Please Write remark!</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="main_footer">
+              <button type="submit" [disabled]="buttonDisable" class="Save_click">Submit Request</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

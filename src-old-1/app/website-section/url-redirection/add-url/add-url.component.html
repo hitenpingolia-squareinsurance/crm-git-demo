@@ -1,0 +1,55 @@
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 *ngIf="this.type == 'Add'" class="modal-title">CHANGE URL</h3>
+      <h3 *ngIf="this.type == 'Edit'" class="modal-title">EDIT URL</h3>
+    </div>
+
+    <div class="col-md-5">&nbsp;</div>
+
+  </div>
+  <form (ngSubmit)="submit()" [formGroup]="AddUrl" style="margin-top: -15px;">
+
+    <div class="box">
+
+      <div class="box-body">
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="state">OLD URL</label>
+            <input type="text" class="form-control" formControlName="oldurl">
+            <div *ngIf="isSubmitted && formControls.oldurl.errors" class="ValidationError">
+              <div *ngIf="formControls.oldurl.errors.required">Please enter old url</div>
+            </div>
+          </div>
+          <div class="col-md-12" style="margin-top: 10px;">
+            <label for="state">NEW URL</label>
+            <input type="text" class="form-control" formControlName="newurl">
+            <div *ngIf="isSubmitted && formControls.newurl.errors" class="ValidationError">
+              <div *ngIf="formControls.newurl.errors.required">Please enter new url</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="box-footer with-border">
+          <footer>
+            <button type="submit" *ngIf="this.type == 'Add' " style="margin-left: 5px; margin-right: -10px;"
+              class="btn pull-right btn-primary">Submit</button>&nbsp;&nbsp;
+            <button type="submit" *ngIf="this.type == 'Edit' " style="margin-left: 5px; margin-right: -10px;"
+              class="btn pull-right btn-primary">Update</button>
+            <button class="btn pull-right btn-danger" (click)="CloseModel()" type="button">Close</button>
+          </footer>
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+  </form>
+
+
+</div>

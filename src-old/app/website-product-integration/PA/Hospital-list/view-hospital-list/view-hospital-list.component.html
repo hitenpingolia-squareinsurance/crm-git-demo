@@ -1,0 +1,217 @@
+<section class="inner_page_css knowlage_details_page">
+  <div class="container-fluid">
+    <div class="main_card_form ">
+      <div class="main_header">
+        <div class="header_title">Hospitals List</div>
+      </div>
+
+      <div class="main_body main_card_height_scroll_withoutfooter">
+        <div class="btn_list_group">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="row">
+                <div class="col-md-8">
+                  <div id="exTab1">
+                    <ul class="nav nav-pills">
+                      <li><a href="/integration/plan-benefit">Plan Benefit</a></li>
+                      <li class="active"><a href="/integration/hospital">Hospital List</a></li>
+                      <li><a href="/integration/bourcher">Bourcher List</a></li>
+
+
+                      <li> <a href="/integration/highlight-label"> Highlight label</a></li>
+                      <li> <a href="/integration/youtube-url"> Youtube Video</a></li>
+
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="dsr-fillter">
+
+                    <a href="../../../../../assets/media/hospital_health_data_new_sample.csv" target="_blank"
+                      download>
+                      <button>Download Sample</button>
+                    </a>
+
+
+
+
+
+                    <button class="img_btn" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                      href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" title="Filter"><img
+                        src="../../../assets/image/filter.svg" alt="Filter"> </button>
+
+                    <button class="img_btn" type="button" style="margin-left: 5px;" (click)="AddHospitalList()"
+                      title="Add Lead"><img src="../../../assets/image/add_file.svg" alt="Add Lead">Hospital List
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse mt_15" role="tabpanel" aria-labelledby="headingOne">
+                <form [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+
+                  <div class="row custom-spacing">
+
+                    <div class="col-sm-3">
+
+                      <ng-multiselect-dropdown class="form-control" formControlName="LOB" [data]="lobs"
+                        [settings]="dropdownSingleSettingsType" placeholder="Select Lob"
+                        (onSelect)="FetchHealthInsurer($event)">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+
+                    <div class="col-sm-3 ">
+                      <ng-multiselect-dropdown class="form-control" formControlName="Search_Insurer"
+                        placeholder="Select Insurer" [data]="search_insurer" [settings]="dropdownSingleSettingsType">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <input type="text" formControlName="SearchValue" name="SearchValue" class="form-control"
+                        placeholder="Search">
+                    </div>
+
+                    <!-- <div class="col-sm-3">
+                      <div>
+                        <input type="Submit" class="btn btn-info" value="Filter">
+                        &nbsp;&nbsp;
+                        <input (click)="ClearSearch()" type="button" class="btn btn-danger fa fa-close" value="Reset">
+                      </div>
+                    </div> -->
+
+                    <div class="col-sm-3">
+
+                      <button class="btn btn-info" style="font-size: small;" type="submit">
+
+                        <i class="fa fa-search"></i> Search
+                      </button>
+                      &nbsp;&nbsp;
+                      <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                        value="Reset"> <i class="fa fa-close"> Reset</i> </button>&nbsp;&nbsp; &nbsp;&nbsp;
+                    </div>
+
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="custom_table">
+              <ul class="responsive-table">
+                <div class="custom_table tables_layout_design">
+                  <table datatable [dtOptions]="dtOptions" class="row-border table" id="example2" style="width: 0px;">
+                    <thead>
+                      <tr>
+                        <th></th>
+                      </tr>
+                    </thead>
+                  </table>
+                  <ul class="responsive-table" *ngIf="dataAr?.length > 0">
+                    <li class="table-row" *ngFor="let row of dataAr; let i=index;">
+                      <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">{{ row.SrNo }}</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Company</div>
+                              <strong class="fs_18" style="text-transform: capitalize;">{{row.Company}}</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Plan</div>
+                              <strong class="fs_18" style="text-transform: capitalize;">{{row.Plan
+                                }}</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Hospital Name</div><strong class="fs_18">
+                                {{row.HospitalName}}
+                              </strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="last_row_div">
+                        <div class="d_flex">
+
+                          <div class="label_chips health_lob">
+                            <span>Lob :{{row.lob}}</span>
+                          </div>&nbsp;&nbsp;
+
+                          <div class="label_chips health_lob">
+                            <span>Hospital Address :{{row.HospitalAddress}}</span>
+
+                          </div> &nbsp;&nbsp;
+                          <div class="label_chips health_lob" [ngStyle]="{'background-color': row.icon_color}">
+                            <span style="color: #c77c7c;">Pincode : {{
+                              row.Pincode}}</span>&nbsp;&nbsp;
+                          </div>
+
+                          <div class="label_chips health_lob" [ngStyle]="{'background-color': row.icon_color}">
+                            <span style="color: #c77c7c;">State : {{
+                              row.State}}</span>&nbsp;&nbsp;
+                          </div>
+                          <div class="label_chips health_lob" [ngStyle]="{'background-color': row.font_color}">
+                            <span style="color: #d64c4c;">City : {{
+                              row.City}}</span>&nbsp;&nbsp;
+                          </div>
+
+
+
+
+
+
+
+
+
+                        </div>
+                      </div>
+                      <div class="last_row">
+                        <div class="d_flex effective_date"></div>
+                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+
+                          <a style="cursor: pointer;">
+
+
+                            <span *ngIf="row.Status == 1" (click)="ActiveInactive(row.Id, 0, 'hospital_health_data')">
+                              Active</span>
+
+                            <span *ngIf="row.Status == 0" (click)="ActiveInactive(row.Id, 1, 'hospital_health_data')">
+                              Inactive</span>
+                          </a>
+
+                          <a style="cursor: pointer;" (click)="DeleteRequest(row.Id,'hospital_health_data')"
+                            class="btn-bg">Delete</a>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="row" *ngIf="dataAr?.length == 0">
+                    <div class="col-md-12">
+                      <div class="no_data_found">
+                        <span><img src="assets/image/no_data_banner.jpg"></span>
+                        <small>No data available !</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

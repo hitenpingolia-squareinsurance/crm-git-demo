@@ -1,0 +1,80 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+  
+    <section class="content">
+  
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header">
+              <div class="row">
+                <div class="col-md-4">
+                  <h3 class="box-title">Profile </h3>
+                </div>
+                <div class="col-md-5">&nbsp;</div>
+
+                <div class="col-md-3">
+                &nbsp;
+                </div>
+
+              </div>
+            </div>
+            <div class="box-body">
+              <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+              <div class="mydiv">
+                <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                  class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>S.No</th>
+                      <th>Request Id</th>
+                      <th>Agent Code</th>
+                      <th>Agent Name</th>
+                      <th>RM Name</th> 
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="dataAr?.length != 0 ">
+                    <tr *ngFor="let row of dataAr">
+                      <td>{{row.SrNo}}.</td>
+                      <td>{{row.requestid}}</td>
+                      <td>{{row.agentcode}}</td>
+                      <td>{{row.agentname}}</td>   
+                      <td>{{row.rmanme}} : {{row.rmid}}</td>              
+                      <td>
+                        <a *ngIf="row.Id != '' && (row.Manager_Id != '' &&  this.currentUrl =='/profile/profile-manager') || (row.Banking_Id != '' &&  this.currentUrl =='/profile/profile-banking') || ( row.Account_Id != '' && this.currentUrl =='/profile/profile-account' ) " (click)="profileapproval(row.Id, row.requestid, row.status_check,this.currentUrl)"><label
+                            class="label label-info btn" style="margin-bottom: 5px;">Details</label></a>&nbsp;
+
+                            <label class="label label-info" *ngIf="(row.Manager_Id == '' &&  this.currentUrl =='/profile/profile-manager') || (row.Banking_Id == '' &&  this.currentUrl =='/profile/profile-banking') || (( row.Account_Id == '' || row.Account_Id == '0') && this.currentUrl =='/profile/profile-account' ) "(click)="AcceptAssignQuote(row.Id, row.requestid, this.currentUrl)">Accept</label> &nbsp;&nbsp;
+
+                             <label class="label label-warning" *ngIf="row.status_check == 1 && row.QCStatusManager == 0">Pending For Manager</label>
+                             <label class="label label-warning" *ngIf="row.status_check == 2 && row.QCStatusBanking == 0">Pending For Banking</label>
+                            <label class="label label-warning" *ngIf="row.status_check == 3 && row.QCStatusAccount == 0">Pending For Account</label>
+                            <label class="label label-success" *ngIf="row.status_check == 4">complete</label>
+                            <label class="label label-danger" *ngIf="row.status_check == 1 && row.QCStatusManager == 2">Rejected by Manager</label>
+                            <label class="label label-danger" *ngIf="row.status_check == 2 && row.QCStatusBanking == 2">Rejected by Banking</label>
+                            <label class="label label-danger" *ngIf="row.status_check == 3 && row.QCStatusAccount == 2">Rejected by Accouont</label>
+
+                      </td>
+
+                    </tr>
+
+
+                  </tbody>
+                  <tbody *ngIf="dataAr?.length == 0">
+                    <tr>
+                      <td colspan="14" align="center">No data available !</td>
+                    </tr>
+                  <tbody>
+                </table>
+              </div>
+            </div>
+  
+  
+          </div>
+        </div>
+      </div>
+  
+    </section>
+  </div>
+  

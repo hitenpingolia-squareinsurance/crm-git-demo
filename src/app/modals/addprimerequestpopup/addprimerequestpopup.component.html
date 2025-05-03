@@ -1,0 +1,44 @@
+<table class="table">
+    
+	<thead>
+	 <tr>
+        <th colspan="6" style="text-align: center;">
+			 
+			<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+			 
+		</th>
+ 
+      </tr>
+	   
+    </thead>
+    <tbody>
+       
+         <tr>
+             <th>
+                 <div class="row">
+                <div class="col-lg-8">
+                    <label>Remarks:</label>
+                    <textarea rows="6" [(ngModel)]="RemarksRequestPrime" type="text" Id="RemarksRequestPrime" class="form-control" maxlength="1000"></textarea>
+                    <span *ngIf="ShowErrorRequired" class="form-text text-muted">
+                      <span style="color:red;">Field is required..!</span>
+                    </span>
+        
+                  </div>
+
+                  <div class="col-lg-4">
+                   
+                    
+                        <button (click)="SubmitRequests()"  type="button"  class="btn btn-info pull-right CustomRequest">Raise Request</button>
+
+                  
+                    </div>
+                </div>
+
+            </th>
+        </tr>  
+             
+       
+   </tbody>
+   
+   
+</table>

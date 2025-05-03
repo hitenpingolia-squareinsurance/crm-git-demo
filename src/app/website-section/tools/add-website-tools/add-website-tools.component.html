@@ -1,0 +1,165 @@
+<div class="row">
+
+
+  <div class="modal-header" style="text-align: center;">
+    <h4 *ngIf="this.type == 'Add'" class="modal-title">Add Tools</h4>
+    <h4 *ngIf="this.type == 'Edit'" class="modal-title">Edit Tools</h4>
+
+  </div>
+</div>
+<form (ngSubmit)="submit()" [formGroup]="addtoolForm">
+
+  <div class="popup-content-body">
+    <div class="row popup-form">
+      <div class="col-md-6">
+        <label for="state">Company Name</label>
+        <ng-multiselect-dropdown class="form-control" [data]="Company" formControlName="company"
+          [settings]="dropdownSettingsType" [(ngModel)]="company">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.company.errors" class="Validationerrors">
+          <div *ngIf="formControls.company.errors.required"><span style="color: red;">Please select
+              company name!</span></div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="state">LOB</label>
+        <select name="lob" formControlName="lob" (change)="FileType_Status($event)" class="form-control"
+          data-parsley-required="true">
+          <option value="">--Select LOB--</option>
+          <option value="motor">Motor</option>
+          <option value="nonmotor">Non Motor</option>
+          <option value="health">Health</option>
+        </select>
+        <div *ngIf="isSubmitted && formControls.lob.errors" class="Validationerrors">
+          <div *ngIf="formControls.lob.errors.required"><span style="color: red;">Please select
+              LOB!</span></div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6"
+        *ngIf="this.addtoolForm.value['lob'] == 'motor' || this.addtoolForm.value['lob'] == 'health' ||  this.addtoolForm.value['lob'] == 'nonmotor'">
+        <label for="state">Products</label>
+        <ng-multiselect-dropdown *ngIf="this.addtoolForm.value['lob'] == 'motor'" class="form-control"
+          placeholder="--Select--" [data]="Product" formControlName="product" [(ngModel)]="product"
+          [settings]="dropdownSettingsType" (click)="BusinessType_Status()">
+        </ng-multiselect-dropdown>
+
+        <input *ngIf="this.addtoolForm.value['lob'] == 'health' ||  this.addtoolForm.value['lob'] == 'nonmotor'"
+          type="text" class="form-control" formControlName="product">
+        <div *ngIf="isSubmitted && formControls.product.errors" class="Validationerrors">
+          <div *ngIf="formControls.product.errors.required"><span style="color: red;">Please select
+              product!</span></div>
+        </div>
+      </div>
+
+
+
+
+      <div class="col-md-6" *ngIf="this.addtoolForm.value['lob'] == 'motor'">
+        <label for="state">Sub Products</label>
+        <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="SubProducts"
+          formControlName="subproduct" [settings]="dropdownSettingsType" [(ngModel)]="sub_product">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.subproduct.errors" class="Validationerrors">
+          <div *ngIf="formControls.subproduct.errors.required"><span style="color: red;">Please select
+              subproduct!</span></div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6" *ngIf="this.addtoolForm.value['lob'] == 'motor'">
+        <label for="state">Type</label>
+        <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="Type" formControlName="types"
+          [settings]="dropdownSettingsType" [(ngModel)]="types">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.types.errors" class="Validationerrors">
+          <div *ngIf="formControls.types.errors.required"><span style="color: red;">Please Select
+              Type!</span></div>
+        </div>
+      </div>
+
+      <div class="col-md-6" *ngIf="this.addtoolForm.value['lob'] == 'motor' || this.addtoolForm.value['lob'] == 'nonmotor'
+             || this.addtoolForm.value['lob'] == 'health'">
+        <label for="state">URL</label>
+        <input type="url" name="url" formControlName="url" class="form-control" placeholder="Enter URL">
+        <div *ngIf="isSubmitted && formControls.url.errors" class="Validationerrors">
+          <div *ngIf="formControls.url.errors.required"><span style="color: red;">Please enter
+              url!</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6"
+        *ngIf="this.addtoolForm.value['lob'] == 'motor' || this.addtoolForm.value['lob'] == 'nonmotor' || this.addtoolForm.value['lob'] == 'health'">
+        <label for="state">Policy Wording</label>
+        <input type="file" name="toolPdf1" formControlName="policywording" (change)="UploadDocs($event,'policywording')"
+          class="form-control">
+        <div *ngIf="isSubmitted && formControls.policywording.errors" class="Validationerrors">
+          <div *ngIf="formControls.policywording.errors.required"><span style="color: red;">Please
+              Choose
+              File!</span></div>
+        </div>
+
+      </div>
+
+
+      <div class="col-md-6"
+        *ngIf="this.addtoolForm.value['lob'] == 'motor' || this.addtoolForm.value['lob'] == 'nonmotor' || this.addtoolForm.value['lob'] == 'health'">
+        <label for="state">Proposal Form</label>
+        <input type="file" formControlName="proposal" (change)="UploadDocs($event,'proposal')" class="form-control">
+        <div *ngIf="isSubmitted && formControls.proposal.errors" class="Validationerrors">
+          <div *ngIf="formControls.proposal.errors.required"><span style="color: red;">Please choose
+              file!</span></div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6"
+        *ngIf="this.addtoolForm.value['lob'] == 'motor' || this.addtoolForm.value['lob'] == 'nonmotor' || this.addtoolForm.value['lob'] == 'health'">
+        <label for="state">Claim Form</label>
+        <input type="file" formControlName="claim" (change)="UploadDocs($event,'claim')" class="form-control">
+        <div *ngIf="isSubmitted && formControls.claim.errors" class="Validationerrors">
+          <div *ngIf="formControls.claim.errors.required"><span style="color: red;">Please choose
+              file!</span></div>
+        </div>
+      </div>
+
+      <div class="col-md-6"
+        *ngIf="this.addtoolForm.value['lob'] == 'motor' || this.addtoolForm.value['lob'] == 'nonmotor' || this.addtoolForm.value['lob'] == 'health'">
+        <label for="state">Brochure</label>
+        <input type="file" formControlName="brochure" (change)="UploadDocs($event,'brochure')" class="form-control">
+        <div *ngIf="isSubmitted && formControls.brochure.errors" class="Validationerrors">
+          <div *ngIf="formControls.brochure.errors.required"><span style="color: red;">Please choose
+              file!</span></div>
+        </div>
+      </div>
+
+
+
+      <div class="col-md-6" *ngIf="this.addtoolForm.value['lob'] == 'health' ">
+        <label for="state">Hospital List</label>
+        <input type="file" class="form-control" (change)="UploadDocs($event,'hospitallist')"
+          formControlName="hospitallist">
+        <div *ngIf="isSubmitted && formControls.hospitallist.errors" class="Validationerrors">
+          <div *ngIf="formControls.hospitallist.errors.required"><span style="color: red;">Please
+              choose
+              File!</span></div>
+        </div>
+
+      </div>
+
+
+
+      <div class="clearfix"></div>
+      <div class="button-div-yes-no">
+        <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>
+        <button type="submit" *ngIf="this.type == 'Add' " class="btn btn-primary">Submit</button>
+        <button type="submit" *ngIf="this.type == 'Edit' " class="btn btn-primary">Update</button>
+      </div>
+
+    </div>
+  </div>
+</form>

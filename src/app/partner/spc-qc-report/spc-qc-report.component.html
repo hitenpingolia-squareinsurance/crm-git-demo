@@ -1,0 +1,201 @@
+<section class="inner_page_css main_dashboard_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">SPC QC Report</div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+
+                        <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                          
+                            <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                aria-controls="collapseOne">
+                                <a role="button" class="fa fa-filter"><span>Filters</span><i
+                                        class="fa fa-angle-down pull-right"></i></a>
+                            </button>
+                        </div>
+
+
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <!-- filter  -->
+                                <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+                                    <div class="row">
+                                
+                                
+                                        <div class="col-sm-4">
+                                            <select formControlName="AgentStatus" class="form-control">
+                                                <option selected value="">Agent Status</option>
+                                                <option value="All">All</option>
+                                                <option value="PendingForQC">PendingForQC</option>
+                                                <option value="PendingForKYC">PendingForKYC</option>
+                                                <option value="RejectByQC">RejectByQC</option>
+                                                <option value="Approved">Approved</option>
+                                                <option value="Blocked">Blocked</option>
+                                                <option value="FollowUp">FollowUp</option>
+                                            </select>
+                                        </div>
+                                
+                                
+                                        <div class="col-sm-4">
+                                            <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                                                formControlName="DateOrDateRange" bsDaterangepicker
+                                                [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                                        </div>
+                                
+                                        <div class="col-sm-4" style="text-align: right;">
+                                
+                                            <input type="submit" class="btn btn-info" value="Search">
+                                            &nbsp;&nbsp;
+                                            <!--<input *ngIf="UserRights['Is_Agent_Report_Excel_Export'] == 1" (click)="ExportExcel()" type="button" class="btn btn-success" value="Export">
+                                                &nbsp;&nbsp; -->
+                                            <input (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset">
+                                        </div>
+                                
+                                
+                                
+                                
+                                    </div>
+                                
+                                
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class=" mydiv table-responsive" data-loader="TableLoader">
+
+                            <table datatable [dtOptions]="dtOptions" id="Table1"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                      <th>Sr.No</th>
+                                      <th>Actions</th>
+                                    <th>Status</th>				  
+                                      <th>AgentId</th>
+                                      <th>MergeCode</th>
+                                      <th>Password</th>
+                                       
+                                      <th>AgentName</th>
+                                       <th>RM</th>
+                                     
+                                      <th>Mobile</th>
+                                      <th>Email</th>
+                                      
+                                     
+                                      
+                                      <th>Last Modify</th>
+                                      
+                                       
+                                    </tr>
+                                  </thead>
+                                  <tbody *ngIf="dataAr?.length != 0">
+                                      <tr *ngFor="let row of dataAr; let i=index;">
+                                         <td>{{ row.SrNo }}.</td>
+                                         
+                                         
+                                          <td> 
+                                          
+                                
+                                            
+                                            <!--<a *ngIf="row.Type!='SPC'" href="javascript:;"  (click)="ViewDocuments(row.Id)">
+                                             <span class="label label-success label-inline mr-2">Docs</span>
+                                             </a>-->
+                                             
+                                             <a href="javascript:;"  (click)="ViewDetails(row.Id)">
+                                                <span class="label label-success label-inline mr-2">View</span>
+                                             </a>
+                                             
+                                        
+                                            <a *ngIf="( (row.Type=='SP' || row.Type=='SPC' || row.Type=='Dealer') && (row.Is_Edit==0 || row.Status==3 || row.Status==4) && (api.GetUserData('User_Id_Dec')==row.POS_RM_Id) )" routerLink="/rm/edit-agent/{{row.Id}}">
+                                                <span style="margin: 5px 0px 5px 0px;" class="label label-danger label-inline mr-2">Edit&nbsp;&nbsp;</span>
+                                            </a> 
+                                            
+                                            <a *ngIf="( (row.Type=='SPC') && (row.Status==0 || row.Status==2 || row.Status==7) && ( UserRights['SPC_QC'] == 1) )" routerLink="/rm/edit-agent/{{row.Id}}">
+                                                <span style="margin: 5px 0px 5px 0px;" class="label label-danger label-inline mr-2">Edit&nbsp;&nbsp;</span>
+                                            </a> <!--SPC Edit Non Sales Person --> 
+                                              
+                                          </td>
+                                          
+                                          
+                                          <td> 
+                                            
+                                            <div *ngIf="row.Type == 'POS'">
+                                                <span *ngIf="row.Status==1" class="label label-success label-inline mr-2">Approved</span>
+                                                <span *ngIf="row.Status==0" class="label label-warning label-inline mr-2">Pending</span>
+                                                <span *ngIf="row.Status==2" class="label label-danger label-inline mr-2">Reject</span>
+                                            </div>
+                                            
+                                            
+                                            <div *ngIf="row.Type=='SP' || row.Type=='SPC' || row.Type=='Dealer'"> 
+                                                <span *ngIf="row.Status==0" class="label label-warning label-inline mr-2">PendingForQC</span>		
+                                                <span *ngIf="row.Status==1" class="label label-warning label-inline mr-2">PendingForKYC</span>
+                                                <span *ngIf="row.Status==2" class="label label-warning label-inline mr-2">PendingForBanking</span>
+                                                <span *ngIf="row.Status==3" class="label label-danger label-inline mr-2">RejectByQC</span>
+                                                <span *ngIf="row.Status==4" class="label label-danger label-inline mr-2">RejectByAccounts</span>
+                                                <span *ngIf="row.Status==5" class="label label-success label-inline mr-2">Approved</span>
+                                                <span *ngIf="row.Status==6" class="label label-danger label-inline mr-2">Blocked</span>
+                                                <span *ngIf="row.Status==7" class="label label-warning label-inline mr-2">FollowUp</span>
+                                            </div>
+                                              
+                                        
+                                          </td>
+                    
+                                          <td>{{ row.Agent_Id }}</td>
+                                           
+                                          <td>
+                                            
+                                          <span   *ngIf="row.MergeStatus==1">
+                                          {{ row.MergeName_And_Code }} 
+                                          
+                                             <a (click)="ViewDetails(row.Merge_Id)">
+                                                <span style="margin: 5px 0px 5px 0px;" class="label label-danger label-inline mr-2">View</span>
+                                             </a>
+                                             
+                                             </span>
+                                             
+                                          </td>
+                                          
+                                          <td>{{ row.Pass }}</td>
+                                          
+                                          
+                                          <td>{{ row.Name }} - {{ row.Type }}</td>
+                                          
+                                          <td>{{ row.RM_Name }} ({{ row.RM_Emp_Id }})</td>
+                                     
+                                          
+                                          
+                                         
+                                          <td>{{ row.Mobile }}</td>
+                                          <td>{{ row.Email }}</td>
+                                           <td>{{ row.Update_Stamp }}</td>
+                                          
+                                          
+                                           
+                                      </tr>
+                                  </tbody>
+                                  <tbody *ngIf="dataAr?.length == 0"> 
+                                    <tr>
+                                      <td colspan="12" align="center">No data Available !</td>
+                                    </tr>
+                                  <tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</section>

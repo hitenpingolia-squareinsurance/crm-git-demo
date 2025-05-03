@@ -1,0 +1,28 @@
+.btn_list_group .panel-default {
+    border: none;
+    box-shadow: none;
+  }
+  
+  .dsr-fillter {
+    float: right;
+  }
+  
+  .btn-info1 {
+    background-color: rgba(44, 178, 179, 1);
+    color: white;
+  }
+  
+  .check-flex {
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  
+    label {
+      margin-left: 2px;
+    }
+  }
+  
+  .btn{
+    margin-right: 10px;
+  }

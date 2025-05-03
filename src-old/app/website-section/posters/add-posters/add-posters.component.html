@@ -1,0 +1,102 @@
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 *ngIf="this.type == 'Add' ">Add Poster</h3>
+      <h3 *ngIf="this.type == 'Edit' ">Edit Poster</h3>
+    </div>
+    <div class="col-md-5">&nbsp;</div>
+    <div class="col-md-1">
+      <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+    </div>
+  </div>
+  <form (ngSubmit)="submit()" [formGroup]="Addposter" style="margin-top: -15px;" id="form-1">
+
+    <div class="box">
+
+      <div class="box-body">
+
+        <div class="row">
+
+          <div class="col-md-4">
+            <label for="state">Type</label>
+            <ng-multiselect-dropdown class="form-control" [data]="Type" formControlName="type"
+              [settings]="dropdownSettingsMultiselect" [(ngModel)]="typeName">
+            </ng-multiselect-dropdown>
+            <div *ngIf="isSubmitted && formControls.type.errors" class="ValidationError">
+              <div *ngIf="formControls.type.errors.required">Please select Type</div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <label for="state">Category</label>
+            <ng-multiselect-dropdown class="form-control" [data]="Category" formControlName="category"
+              [settings]="dropdownSettingsType" [(ngModel)]="categoryName">
+            </ng-multiselect-dropdown>
+            <div *ngIf="isSubmitted && formControls.category.errors" class="ValidationError">
+              <div *ngIf="formControls.category.errors.required">Please select category</div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <label for="state">Title</label>
+            <input type="text" class="form-control" formControlName="Title">
+            <div *ngIf="isSubmitted && formControls.Title.errors" class="ValidationError">
+              <div *ngIf="formControls.Title.errors.required">Please enter Title</div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <label for="state">Poster Image</label>
+            <input type="file" class="form-control" formControlName="PosterImage"
+              (change)="UploadDocs($event,'PosterImage')">
+            <div *ngIf="isSubmitted && formControls.PosterImage.errors" class="ValidationError">
+              <div *ngIf="formControls.PosterImage.errors.required">Please Select Poster Image</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <label for="state">Enable Date</label>
+            <!-- <input type="date" class="form-control" formControlName="enabledate"> -->
+            <input type="date" class="form-control" formControlName="enabledate" (change)="updateMinDisableDate()">
+            <div *ngIf="isSubmitted && formControls.PosterImage.errors" class="ValidationError">
+              <div *ngIf="formControls.PosterImage.errors.required">Please Select Enable Date</div>
+            </div>
+          </div>
+
+
+          <div class="col-md-4">
+            <label for="state">Disable Date</label>
+            <!-- <input type="date" class="form-control" formControlName="disabledate"> -->
+            <input type="date" class="form-control" formControlName="disabledate" [min]="minDisableDate">
+            <div *ngIf="isSubmitted && formControls.PosterImage.errors" class="ValidationError">
+              <div *ngIf="formControls.PosterImage.errors.required">Please Select Disable Date</div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="box-footer with-border">
+          <footer>
+            <button class="btn pull-right" (click)="CloseModel()" type="button">Close</button>
+            <button *ngIf="this.type == 'Add'" class="btn btn-primary nextBtn pull-right" style="margin-right: 5px;"
+              type="submit">Submit</button>
+            <button *ngIf="this.type == 'Edit'" class="btn btn-primary nextBtn pull-right" style="margin-right: 5px;"
+              type="submit">Update</button>
+
+          </footer>
+        </div>
+
+
+
+      </div>
+
+
+    </div>
+
+  </form>
+
+
+</div>

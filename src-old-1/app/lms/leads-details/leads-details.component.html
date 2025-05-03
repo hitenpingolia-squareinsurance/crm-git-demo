@@ -1,0 +1,408 @@
+<div class="container-fluid">
+
+</div>
+<div class="row">
+
+    <div class="modal-header">
+        <h4 class="modal-title">Lead ID - {{lead}}</h4>
+    </div>
+</div>
+
+
+
+<div style="margin-top: 0px;">
+
+    <div class="row">
+
+        <h4 style="margin-left: 15px;">CUSTOMER DETAILS</h4>
+
+    </div>
+
+
+    <hr style="border-top: dotted 2px; margin-top: 0px; color: darkgray;" />
+
+
+    <div class="box" style="margin-top: 0px;">
+
+        <table id="table1" name="table1">
+
+
+            <tbody>
+
+                <tr>
+                    <td>
+                        <label>NAME </label> : &nbsp; {{name | uppercase }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>EMAIL</label> : &nbsp; {{email}}
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td><label>MOBILE</label> : &nbsp; {{mobile}}
+                    </td>
+                </tr>
+
+
+            </tbody>
+
+        </table>
+
+        <div class="row" *ngIf="type == 1 || type == 2">
+
+            <h4 style="margin-left: 15px;">VEHICLE DETAILS</h4>
+        </div>
+
+
+        <div class="row" *ngIf="type == 3">
+
+            <h4 style="margin-left: 15px;">Health DETAILS</h4>
+        </div>
+
+
+        <div class="row" *ngIf="type == 4">
+
+            <h4 style="margin-left: 15px;">Health DETAILS</h4>
+        </div>
+
+
+        <hr style="border-top: dotted 2px; margin-top: 0px; color: darkgray;"/>
+
+        <table style="width: 100%;">
+            <tbody *ngIf="type == 1 || type == 2">
+                <tr>
+                    <td style="width: 50%;">
+                        <label>REG NO. </label> : &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; {{regno | uppercase }}
+                    </td>
+                    <td style="width: 50%;">
+                        <label>MAKE</label> : &nbsp; {{make | uppercase }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 50%;">
+                        <label>MODEL</label> : &nbsp; {{model | uppercase }}
+                    </td>
+                    <td style="width: 50%;">
+                        <label>VARIANT</label> : &nbsp; {{variant | uppercase }}
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td style="width: 50%;"><label>FULE TYPE</label> : &nbsp; {{fuel_type | uppercase}}
+                    </td>
+                    <td style="width: 50%;"><label>POLICY TYPE</label> : &nbsp; {{policy_type | uppercase}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 50%;"><label>POLICY EXPIRY PERIOD</label> : &nbsp;
+                        {{policy_expiry_period | uppercase}}
+                    </td>
+                    <td style="width: 50%;"><label>PREVIOUS INSURER</label> : &nbsp; {{previous_ins | uppercase}}
+                    </td>
+                </tr>
+
+                <!-- <tr>
+                    <td style="width: 50%;"><label>POLICY EXPIRY PERIOD</label> : &nbsp; {{vehicleno}}
+                    </td>
+                    <td style="width: 50%;"><label>PREVIOUS INSURER</label> : &nbsp; {{vehicleno}}
+                    </td>
+                </tr> -->
+
+
+                <tr>
+                    <td style="width: 50%;"><label>EXPIRY DATE</label> : &nbsp; {{expiry_date}}
+                    </td>
+                    <td style="width: 50%;"><label>REMAINING DAYS</label> : &nbsp; {{remainingdays}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 50%;"><label>FILE TYPE</label> : &nbsp; {{file_type | uppercase}}
+                    </td>
+                </tr>
+
+
+
+            </tbody>
+
+
+            <tbody *ngIf="type == 3">
+                <tr>
+                    <td style="width: 50%;">
+                        <label>Policy Type</label> : &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; {{health_policy_type | uppercase }}
+                    </td>
+                    <td style="width: 50%;">
+                        <label>Remark</label> : &nbsp; {{lead_followUp_time | uppercase }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 50%;">
+                        <label>Pre-Existing Disease</label> : &nbsp; {{any_disease | uppercase }}
+                    </td>
+                    <td style="width: 50%;">
+                        <label>Gender</label> : &nbsp; {{gender | uppercase }}
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td style="width: 50%;"><label>Sum Insured</label> : &nbsp; {{sum_assured | uppercase}}
+                    </td>
+                    <td style="width: 50%;"><label>Pincode</label> : &nbsp; {{pincode}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 50%;"><label>Self Age</label> : &nbsp;
+                        {{selfage}}
+                    </td>
+                    <td style="width: 50%;"><label>Spouse Age</label> : &nbsp; {{spouseage}}
+                    </td>
+                </tr>
+
+
+
+                <tr>
+                    <td style="width: 50%;"><label>Father Age</label> : &nbsp; {{fatherage}}
+                    </td>
+                    <td style="width: 50%;"><label>Mother Age</label> : &nbsp; {{motherage}}
+                    </td>
+                </tr>
+            </tbody>
+
+
+
+
+
+            <tbody *ngIf="type == 4">
+                <tr>
+                    <td style="width: 50%;">
+                        <label>Insurance Type</label> : &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; {{corporate_ins_type | uppercase }}
+                    </td>
+                    <td style="width: 50%;">
+                        <label>Organization Name</label> : &nbsp; {{organisation_name | uppercase }}
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td style="width: 50%;">
+                        <label>Pinocde</label> : &nbsp; {{pincode | uppercase }}
+                    </td>
+                    <td style="width: 50%;">
+                        <label>Remark</label> : &nbsp; {{lead_followUp_time | uppercase }}
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td style="width: 50%;"><label>City</label> : &nbsp; {{city | uppercase}}
+                    </td>
+                </tr>
+
+               
+            </tbody>
+
+
+
+        </table>
+
+
+        <div class="row" *ngIf="type == 1 || type == 2">
+
+            <h4 style="margin-left: 15px;">ADDON DETAILS</h4>
+
+        </div>
+
+
+        <hr *ngIf="type == 1 || type == 2" style="border-top: dotted 2px; margin-top: 0px; color: darkgray;" />
+
+        <table style="width: 100%;" *ngIf="type == 1 || type == 2">
+            <tbody>
+
+                <tr>
+                    <td style="width: 50%;">
+                        {{addon | uppercase }}
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <div class="row" *ngIf="type == 1 || type == 2">
+
+            <h4 style="margin-left: 15px;">QUOTES COMPANY</h4>
+
+
+        </div>
+        <hr style="border-top: dotted 2px; margin-top: 0px; color: darkgray;" />
+
+        <table style="width: 100%;" *ngIf="type == 1 || type == 2">
+            <tbody>
+
+                <tr>
+                    <td style="width: 50%;">
+                        {{quotescompany | uppercase }}
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+
+
+
+        <!-- <div class="row">
+
+            <h4 style="margin-left: 15px;">STATUS</h4>
+
+        </div>
+
+
+        <hr style="border-top: dotted 2px; margin-top: 0px; color: darkgray;" />
+
+        <table style="width: 100%;">
+            <tbody>
+
+                <tr>
+                    <td style="width: 50%;">
+                        <label>Status </label> :
+                        <label *ngIf="status_verify == '0'" class="label label-warning"> PENDING </label>
+                        <label *ngIf="status_verify == '1'" class="label label-success"> SAVED </label>
+
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table> -->
+
+        <div class="row">
+
+            <h4 style="margin-left: 15px;"><b>TRANSFER RECORD</b></h4>
+
+        </div>
+        <hr style="border-top: dotted 2px; margin-top: 0px; color: darkgray;" />
+
+        <table style="width: 100%;">
+            <tbody>
+
+                <tr>
+                    <td style="width: 50%;">
+                        <label>PRESENT EMPLOYEE </label> : &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; {{employee |
+                        uppercase }}
+                    </td>
+                    <td style="width: 50%;">
+                        <label>PRESENT BRANCH</label> : &nbsp; {{policyno}}
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+
+
+        <form (ngSubmit)="submit()" [formGroup]="addLead" id="form-1">
+
+
+            <div class="box">
+
+                <div class="box-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="state">Lead From</label>
+                            <select class="form-control" formControlName="leadform" (change)="FileType_Status()">
+                                <option value="Self">SELF</option>
+                                <option value="POS">POS</option>
+                                <option value="SP">SP</option>
+                                <option value="Refrence">REFERENCE</option>
+                            </select>
+                            <div *ngIf="isSubmitted && formControls.leadform.errors" class="ValidationError">
+                                <div *ngIf="formControls.leadform.errors.required">Please select leadfrom</div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6" *ngIf="this.addLead.value['leadform']=='SP'">
+                            <label>SP</label>
+                            <ng-multiselect-dropdown class="form-control" name="insurer" [data]="ServiceProvider" formControlName="sp"
+                            [settings]="dropdownSettingsType">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && formControls.sp.errors" class="ValidationError">
+                                <div *ngIf="formControls.sp.errors.required">Please select SP</div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6" *ngIf="this.addLead.value['leadform']=='POS'">
+                            <label>POS</label>
+                            <ng-multiselect-dropdown class="form-control" name="insurer" [data]="POs" formControlName="pos"
+                            [settings]="dropdownSettingsType">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && formControls.pos.errors" class="ValidationError">
+                                <div *ngIf="formControls.pos.errors.required">Please select POS</div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6" *ngIf="this.addLead.value['leadform']=='Refrence'">
+                            <label>REFRENCE</label>
+                            <input type="text" class="form-control" placeholder="valid Name or Id" formControlName="refrence">
+                            <div *ngIf="isSubmitted && formControls.refrence.errors" class="ValidationError">
+                                <div *ngIf="formControls.refrence.errors.required">Please select Refrence</div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <label>ASSIGNED TO</label>
+                            <ng-multiselect-dropdown class="form-control" name="insurer" [data]="AssignedTo" formControlName="assignedto"
+                            [settings]="dropdownSettingsType">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && formControls.assignedto.errors" class="ValidationError">
+                                <div *ngIf="formControls.assignedto.errors.required">Please select Assigned To</div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <button style=" margin-top: 10px;" class="btn btn-primary nextBtn pull-right"
+                        type="submit">Assign</button>
+
+                </div>
+
+
+            </div>
+
+        </form>
+
+
+
+
+
+
+
+
+
+
+
+
+        <div>
+            <footer>
+                <button class="btn pull-right" (click)="CloseModel()" type="button">Close</button>
+            </footer>
+        </div>
+
+    </div>
+
+
+</div>

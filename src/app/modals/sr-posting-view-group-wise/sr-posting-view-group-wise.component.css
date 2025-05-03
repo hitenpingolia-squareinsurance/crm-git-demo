@@ -1,0 +1,44 @@
+table.PayoutTable {
+    border: 1px solid #8a8a8a;
+    border-collapse: collapse;
+	width: 360px;
+}
+
+table.PayoutTable td {
+    border: 1px solid #8a8a8a;
+    padding: 5px;
+    width: auto;
+}
+
+
+button.close.closeModelButton {
+   position: absolute;
+    top: 45px;
+    z-index: 9;
+    background: #2cb2b3;
+    padding: 1px 6px;
+    color: #fff;
+    opacity: 1;
+    border-radius: 5px;
+    font-size: 25px;
+    right: 3.9%;
+}
+
+.coustom-table{
+	 border: 1px solid #8a8a8a;
+	
+}
+
+.coustom-table th{
+	 border: 1px solid #8a8a8a;
+}
+
+.coustom-table td{
+	 border: 1px solid #8a8a8a;
+}
+ 
+ 
+
+
+
+

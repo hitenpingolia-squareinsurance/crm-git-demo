@@ -1,0 +1,93 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Cancellation</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div>
+              <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <a role="button" class="fa fa-filter"><span>Filters</span><i
+                      class="fa fa-angle-down pull-right"></i></a>
+                </button>
+              </div>
+            </div>
+
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+                <!-- filter  -->
+                <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+              </div>
+            </div>
+
+            <hr>
+
+
+            <div class=" mydiv table-responsive">
+              <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+
+                    <th>S.No</th>
+                    <th>Cancel. Id</th>
+                    <th>Action</th>
+                    <th>LOB/Type </th>
+                    <th>Policy Number</th>
+                    <th>Insurer</th>
+                    <th>Vehicle No</th>
+                    <th>Customer Details</th>
+                    <th>Assigned To</th>
+                    <th>Add Stamp</th>
+
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{row.SrNo}}</td>
+                    <td>{{row.cancelId}}</td>
+                    <td>
+                      <label class="label label-primary" (click)="openDialog(row.SrId, rightType)"
+                        style="cursor: pointer;" *ngIf="(row.status == 0)">Pending</label>
+                      <label class="label label-warning" (click)="openDialog(row.SrId, rightType)"
+                        style="cursor: pointer;" *ngIf="(row.status == 1)">In Process</label>
+                      <label class="label label-success" (click)="openDialog(row.SrId, rightType)"
+                        style="cursor: pointer;" *ngIf="(row.status == 2)">Complete</label>
+                      <label class="label label-danger" (click)="openDialog(row.SrId, rightType)"
+                        style="cursor: pointer;" *ngIf="(row.status == 3)">Rejected</label>
+                    </td>
+                    <td><label class="label label-success">{{row.LOB}}</label> &nbsp;<label
+                        class="label label-warning">{{row.TypeName}}</label> </td>
+                    <td>{{row.PolicyNo}} <br><a *ngIf="(row.DownloadUrl !='')" class="fa fa-Info"
+                        (click)="ViewDocument(row.DownloadUrl)" href="javascript:void(0)"> &nbsp;<i
+                          class="fa fa-download"> Download</i></a>
+                    </td>
+                    <td>{{row.Company}}</td>
+                    <td>{{row.Vehicle_No}}</td>
+                    <td> <b>Name - </b> {{row.CustomerName}}<br> <b>Mobile - </b> {{row.CustomerMobile}}</td>
+                    <td><b>Name - </b> {{ row.AssignedTo }}<br> <b>Mobile - </b> {{row.AssignedToMobile}}</td>
+                    <td>{{row.InsertDate}}</td>
+
+                  </tr>
+
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="10" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

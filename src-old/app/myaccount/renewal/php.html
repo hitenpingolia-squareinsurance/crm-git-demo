@@ -1,0 +1,206 @@
+<div class="panel-body">
+  <form class="form-horizontal" id="add_form" name="demo-form" enctype="multipart/form-data">
+    <input type="hidden" name="add" value="Add">
+
+    <div class="form-group row m-b-15">
+      <div class="col-md-1 col-sm-1"></div>
+      <label class="col-md-2 col-sm-2 col-form-label" for="fullname">Choose a Product Type * :</label>
+      <div class="col-md-7 col-sm-7">
+        <select name="product_type" class="form-control" data-parsley-required="true">
+          <option value="" disabled="" selected="">--Select Product Type--</option>
+          <option value="1">Motor</option>
+          <option value="2">Health</option>
+          <option value="3">Property</option>
+          <option value="4">Marine</option>
+          <option value="5">Miscellaneous</option>
+          <option value="6">Engineering</option>
+          <option value="7">Liability</option>
+          <option value="8">Agriculture</option>
+          <option value="9">Travel</option>
+          <option value="10">life insurance</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row m-b-15">
+      <div class="col-md-1 col-sm-1"></div>
+
+      <label class="col-md-2 col-sm-2 col-form-label" for="fullname">Product Name * :</label>
+      <div class="col-md-7 col-sm-7">
+        <input class="form-control" type="text" id="fullname" name="product_name" placeholder="Required"
+          data-parsley-required="true">
+      </div>
+    </div>
+
+    <!-- <div class="form-group row m-b-15"><div class="col-md-1 col-sm-1"></div>
+              <label class="col-md-2 col-sm-2 col-form-label" for="fullname">Meta Keywords * :</label>
+              <div class="col-md-7 col-sm-7">
+              <input class="form-control" type="text" id="fullname" name="meta_keywords" placeholder="Required" data-parsley-required="true" /></div> </div>
+                -->
+    <!--<div class="form-group row m-b-15"><div class="col-md-1 col-sm-1"></div>
+              <label class="col-md-2 col-sm-2 col-form-label" for="fullname">Meta Description * :</label>
+              <div class="col-md-7 col-sm-7">
+              <input class="form-control" type="text" id="fullname"  name="meta_description" placeholder="Required" data-parsley-required="true" /></div> </div>
+              -->
+    <h5>Meta Details</h5>
+
+    <div class="row">
+      <div class="col-md-1 col-sm-1"></div>
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="titles" value="" placeholder="Title"
+          data-parsley-required="true">
+      </div>
+    </div>
+    <br>
+
+    <div class="row">
+      <div class="col-md-1 col-sm-1"></div>
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="meta_keywords" placeholder="Meta Keywords"
+          data-parsley-required="true">
+      </div>
+
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="meta_description" placeholder="Meta Description"
+          data-parsley-required="true">
+      </div>
+      <div class="col-md-1 col-sm-1"></div>
+    </div><br>
+
+    <div class="row">
+      <div class="col-md-1 col-sm-1"></div>
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="meta_robots" placeholder="Meta Robots"
+          data-parsley-required="true">
+      </div>
+
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="meta_viewports" placeholder="Meta Viewports"
+          data-parsley-required="true">
+      </div>
+      <div class="col-md-1 col-sm-1"></div>
+    </div><br>
+
+    <div class="row">
+      <div class="col-md-1 col-sm-1"></div>
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="meta_detection" placeholder="Meta Format Detection"
+          data-parsley-required="true">
+      </div>
+
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="og_type" placeholder="Og Type"
+          data-parsley-required="true">
+      </div>
+      <div class="col-md-1 col-sm-1"></div>
+    </div><br>
+
+    <div class="row">
+      <div class="col-md-1 col-sm-1"></div>
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="og_locale" placeholder="Og Locale"
+          data-parsley-required="true">
+      </div>
+
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="og_sitename" placeholder="Og Site Name"
+          data-parsley-required="true">
+      </div>
+      <div class="col-md-1 col-sm-1"></div>
+    </div><br>
+
+    <div class="row">
+      <div class="col-md-1 col-sm-1"></div>
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="og_url" placeholder="Og Url"
+          data-parsley-required="true">
+      </div>
+
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="og_title" name="og_title" placeholder="Og Title"
+          data-parsley-required="true">
+      </div>
+      <div class="col-md-1 col-sm-1"></div>
+    </div><br>
+
+    <div class="row">
+      <div class="col-md-1 col-sm-1"></div>
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="og_description" placeholder="Og Description "
+          data-parsley-required="true">
+      </div>
+
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="twitter_url" placeholder="Twitter Url"
+          data-parsley-required="true">
+      </div>
+      <div class="col-md-1 col-sm-1"></div>
+    </div><br>
+
+    <div class="row">
+      <div class="col-md-1 col-sm-1"></div>
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="twitter_description"
+          placeholder="Twitter Description " data-parsley-required="true">
+      </div>
+
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="twitter_title" placeholder="Twitter Title"
+          data-parsley-required="true">
+      </div>
+      <div class="col-md-1 col-sm-1"></div>
+    </div><br>
+
+    <div class="row">
+      <div class="col-md-1 col-sm-1"></div>
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="twitter_card" placeholder="Twitter Card "
+          data-parsley-required="true">
+      </div>
+
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="twitter_creator" placeholder="Twitter Creator"
+          data-parsley-required="true">
+      </div>
+      <div class="col-md-1 col-sm-1"></div>
+    </div><br>
+
+    <div class="row">
+      <div class="col-md-1 col-sm-1"></div>
+      <div class="col-md-5 col-sm-5"><label>OG Image :</label>
+        <input class="form-control" type="file" id="fullname" name="og_image" placeholder="Og Image "
+          data-parsley-required="true">
+      </div>
+
+      <div class="col-md-5 col-sm-5"><label>Twitter Image :</label>
+        <input class="form-control" type="file" id="fullname" name="twitter_image" placeholder="Twitter Image"
+          data-parsley-required="true">
+      </div>
+      <div class="col-md-1 col-sm-1"></div>
+    </div><br>
+
+    <div class="row">
+      <div class="col-md-1 col-sm-1"></div>
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="url" id="fullname" name="canonical_link" placeholder="Canonical Link "
+          data-parsley-required="true">
+      </div>
+
+      <div class="col-md-5 col-sm-5">
+        <input class="form-control" type="text" id="fullname" name="slug" placeholder="Required"
+          data-parsley-required="true">
+      </div>
+
+    </div><br>
+
+
+
+
+    <div class="form-group row m-b-0">
+      <label class="col-md-3 col-sm-3 col-form-label">&nbsp;</label>
+      <div class="col-md-8 col-sm-8">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="reset" class="btn btn-danger">Reset</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,595 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title" *ngIf="(urlSegment == 'view-employee')">View Employee</div>
+            <div class="header_title" *ngIf="(urlSegment == 'employee-directory')">Employee Directory</div>
+            <div class="header_title" *ngIf="(urlSegment == 'operation-emp-rights')">Operation Employee</div>
+            <div class="header_title" *ngIf="(urlSegment == 'employee-bqc-details')"> Employee BQC </div>
+
+
+
+          </div>
+          <div *ngIf="!hasAccess" class="error-message">
+            <div class="container" style="text-align: center;">
+              <img src="assets/Authorised.png" alt="">
+              <!-- <h4>{{ errorMessage }}</h4> -->
+            </div>
+
+          </div>
+
+          <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+            <div class="filterquotesrow">
+              <button class="btn btninfo1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><a role="button"><i
+                    class="fa fa-filter"></i><span>Filters</span><i class="fa fa-angle-down"></i></a></button>
+              <div *ngIf="(urlSegment == 'view-employee')"><a class="btn btninfo1"
+                  [routerLink]="['/employee/add-employee']" type="button"><i class="fa fa-plus"></i> Add New</a></div>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panelbody">
+                <form [formGroup]="searchForm" (ngSubmit)="SearchData()">
+                  <div class="row">
+
+
+
+                    <div class="col-sm-3">
+                      <input type="text" formControlName="SearchValue" name="SearchValue" class="form-control"
+                        placeholder="Search">
+                    </div>
+
+
+                    <div class="col-sm-3">
+                      <input type="submit" class="btn btninfo1" value="Search"> &nbsp;&nbsp;
+
+                      <input type="button" *ngIf="(urlSegment == 'view-employee') && this.loginId == '14'"
+                        class="btn btninfo1" value="Export" (click)="ExportEmployee()"> &nbsp;&nbsp;
+                      <button (click)="ClearSearch()" type="button" class="btn btndanger" value="Reset"> <i
+                          class="fa fa-close"> </i> Reset</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="custom_table tables_layout_design">
+              <table datatable [dtOptions]="dtOptions" class="row-border table" id="Table1">
+                <thead>
+                  <tr>
+                    <th></th>
+                  </tr>
+                </thead>
+              </table>
+              <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                <li class="table-row tablerow{{(i % 10) + 1}}" *ngFor="let row of dataAr; let i=index;"
+                  [ngClass]="{'activestatus': row.Status == '1' , 'inactivestatus': row.Status == '0' }">
+                  <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                    <div class="agents_data agents_data1">
+                      <div class="icon_re_cl">{{row.Sno}}</div>
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Employee Name </div>
+                          <strong class="fs_18">{{row.EmployeeName}} - <span
+                              *ngIf="(row.EmployeeType == 'Consultant')">{{row.EmployeeType}}</span><span
+                              *ngIf="(row.EmployeeType == 'On Board')">{{row.EmployeeType}}</span></strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data2">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Official Email Id</div>
+                          <strong class="fs_18" id="emailToCopy">{{row.OfficialEmail}} <button type="button"
+                              (click)="officialEmailCopy(row.OfficialEmail)"><i
+                                class="fa fa-copy"></i></button></strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data3">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Official Mobile No.</div>
+                          <strong class="fs_18">{{row.OfficialMobile}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="last_row_div" *ngIf="urlSegment != 'employee-bqc-details' ">
+                    <div class="d_flex custon-234">
+                      <div class="label_chips non_motor_lob" *ngIf="(urlSegment == 'view-employee')">
+                        <span>Personal Mobile No : {{ row.PersonalMobile }}</span>&nbsp;&nbsp;
+                      </div>
+                      <div class="label_chips motor_lob" *ngIf="(urlSegment == 'view-employee')">
+                        <span>Personal Email. Id : {{row.PersonalEmail}}</span>
+                      </div>
+                      <div class=" label_chips finance_lob">
+                        <span>Main Branch : {{row.MainBranch}}</span>
+                      </div>
+                      <div class="label_chips finance_lob">
+                        <span>Service Location : {{row.ServiceLocation}}</span>
+                      </div>
+
+                      <div class="label_chips non_motor_lob">
+                        <span>Designation : {{ row.Designation }}</span>&nbsp;&nbsp;
+                      </div>
+                      <div class=" label_chips motor_lob">
+                        <span>Profile : {{row.ProfileName}}</span>
+                      </div>
+
+                      <div class=" label_chips finance_lob">
+                        <span>Department : {{row.Department_Id}}</span>
+                      </div>
+                      <div class="label_chips mutual_fund_lob" *ngIf="row.ExtNo && (row.ExtNo != 0 || 'row.ExtNo != ')">
+                        <span>Ext No. : {{row.ExtNo}}</span>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="last_row"
+                    *ngIf="(urlSegment != 'employee-directory') && urlSegment != 'employee-bqc-details' ">
+                    <div class="effective_date" *ngIf="(urlSegment != 'operation-emp-rights' )">
+                      <div class="d_flex">
+                        <a href="javascript:;" (click)="EmployeeDetails(row.Emp_Id)" class="btn btnprimary"
+                          title="Details"><i class="fa fa-info"></i></a>
+                        <a class="btn btnsuccess" *ngIf="(urlSegment != 'salary-employee')"
+                          [routerLink]="['/employee/edit-employee', row.Id ]" title="Edit"><i
+                            class="fa fa-edit"></i></a>
+                        <button type="button" class="btn btnwarning" (click)="businessFilterId(row.Id)"
+                          data-toggle="modal" data-target="#businessFiltermodel" title="Business Filter"><i
+                            class="fa fa-filter"></i></button>
+                      </div>
+                    </div>
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom"
+                      *ngIf="(urlSegment == 'operation-emp-rights')">
+                      <a href="javascript:;" class="btnbg" (click)="AddContacts('User_Right',row.Id)">Rights</a>
+                    </div>
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom"
+                      *ngIf="(urlSegment != 'operation-emp-rights')">
+
+                      <a class="btn" style="background-color: #5562f980; margin-top: 4px;"
+                        *ngIf="(row.Status == '1') && (urlSegment != 'salary-employee')" data-toggle="modal"
+                        data-target="#AddBQC" (click)="AddBQC(row.Id)">Add BQC</a>
+
+                      <a class="btn" style="background-color: #f39c124f; margin-top: 4px;"
+                        *ngIf="(row.Status == '1') && (urlSegment != 'salary-employee')"
+                        (click)="EmpDetails(row.Id)">Profile Details</a>
+
+                      <a class="btnbg1active" href="javascript:;"
+                        *ngIf="(row.Status == '1') && (urlSegment != 'salary-employee')"
+                        (click)="UpdateStatusEmployee(row.Emp_Id, 0, 'status',row.Id)">Active</a>
+                      <a class="btnbg2inactive" href="javascript:;"
+                        *ngIf="(row.Status == '0') && (urlSegment != 'salary-employee')"
+                        (click)="UpdateStatusEmployee(row.Emp_Id, 1, 'status',row.Id)">Inactive</a>
+                      <a class="btnbg3" href="javascript:;" *ngIf="(urlSegment != 'salary-employee')"
+                        (click)="ManageRights(row.Emp_Id)">R-v2</a>
+                      <a class="btnbg3resign" href="javascript:;"
+                        *ngIf="(row.ResignStatus == '0') && (urlSegment != 'salary-employee')"
+                        (click)="UpdateEmployeeResignation(row.Emp_Id, 1, 'ResignStatus',row.Id,row.Profile)">Mark
+                        Resign</a>
+                      <a class="btnbg3resign" href="javascript:;"
+                        *ngIf="(row.ResignStatus == '1' ) && (urlSegment != 'salary-employee')">Resigned</a>
+
+                      <div class="btn-group dropup">
+                        <button type="button" class="btn btnsecondary dropdown-toggle" data-toggle="dropdown"
+                          aria-expanded="false">More..&nbsp;&nbsp;<i class="fa fa-angle-up"></i></button>
+                        <div class="dropdown-menu">
+                          <a class="dropdownitem" href="javascript:;"
+                            *ngIf="(row.Is_Sales == '0') && (urlSegment != 'salary-employee')"
+                            (click)="UpdateStatusEmployee(row.Emp_Id, 1, 'Is_Sales',row.Id)">Is-Sales</a>
+                          <a class="dropdownitem" href="javascript:;"
+                            *ngIf="(row.Is_Sales == '1') && (urlSegment != 'salary-employee')"
+                            (click)="UpdateStatusEmployee(row.Emp_Id, 0, 'Is_Sales',row.Id)">Non-Sales</a>
+                          <a class="dropdownitem" href="javascript:;" *ngIf="(urlSegment == 'salary-employee')"
+                            (click)="SalaryEditPoupup(row.Id, row.Emp_Id, row.Current_CTC,row.Fixed_Cost,row.Variable_Pay)">Salary
+                            Edit</a>
+                          <a class="dropdownitem" href="javascript:;" (click)="AddContacts('User_Right',row.Id)">User
+                            Right</a>
+
+                          <a class="dropdownitem" href="javascript:;"
+                            *ngIf="(row.TeleRm == '0') && (urlSegment != 'salary-employee')"
+                            (click)="UpdateStatusEmployee(row.Emp_Id, 1, 'TeleRm',row.Id)">Tele-Rm InActive</a>
+                          <a class="dropdownitem" href="javascript:;"
+                            *ngIf="(row.TeleRm == '1') && (urlSegment != 'salary-employee')"
+                            (click)="UpdateStatusEmployee(row.Emp_Id, 0, 'TeleRm',row.Id)">Tele-Rm Active</a>
+                          <a class="dropdownitem" href="javascript:;"
+                            *ngIf="(row.lwp_mail == '0') && (urlSegment != 'salary-employee')"
+                            (click)="UpdateStatusEmployee(row.Emp_Id, 1, 'lwp_mail',row.Id)">LWP Mail InActive</a>
+                          <a class="dropdownitem" href="javascript:;"
+                            *ngIf="(row.lwp_mail == '1') && (urlSegment != 'salary-employee')"
+                            (click)="UpdateStatusEmployee(row.Emp_Id, 0, 'lwp_mail',row.Id)">LWP Mail Active</a>
+                          <a class="dropdownitem" href="javascript:;"
+                            (click)="HerirarchyUpdateComponent(row.Emp_Id)">Check Hierarchy</a>
+
+                          <a class="dropdownitem" href="javascript:;" *ngIf="row.Advisor == '0'"
+                            (click)="AddAdvisor(row.Id,row.Emp_Id,'Add','employee')">Add Advisor</a>
+                          <a class="dropdownitem" href="javascript:;" *ngIf="row.Advisor == '1'"
+                            (click)="AddAdvisor(row.Id,row.Emp_Id,'Edit','employee')">Update Advisor</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="last_row" *ngIf="(urlSegment == 'employee-directory')">
+                    <div class="effective_date" *ngIf="(row.RMemp_id != '')">
+                      <div class="d_flex">
+                        <span> Reporting Manager : {{row.RMName}} - {{row.RMemp_id}}
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                      <a class="btn" style="background-color: #f39c124f; margin-top: 4px;" *ngIf="(row.Status == '1')"
+                        (click)="EmpDetails(row.Id)">Profile Details</a>
+                    </div>
+                  </div>
+
+                  <div class="last_rowtableth" *ngIf="urlSegment == 'employee-bqc-details' ">
+
+
+                    <div class="last_row_div">
+                      <table class="bqc-table">
+                        <thead>
+                          <tr>
+                            <th>BQC Type</th>
+                            <th>BQC Number</th>
+                            <th>Validity From</th>
+                            <th>Validity To</th>
+                            <th>Certificate Type</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngIf="row.BqcData && row.BqcData.length > 0">
+                          <tr *ngFor="let bqc of row.BqcData">
+                            <td>{{bqc.bqc_type}}</td>
+                            <td>{{bqc.bqc_no}}</td>
+                            <td>{{bqc.valid_from}}</td>
+                            <td>{{bqc.valid_to}}</td>
+                            <td>{{bqc.bqcCertificateType}}</td>
+                            <td
+                              [ngClass]="{'active-status': bqc.status === 'Active', 'expired-status': bqc.status === 'Expired'}">
+                              {{bqc.status}}
+                            </td>
+                            <td>
+                              <button class="btn btn-sm btn-info" (click)="viewBqcDocument(bqc.bqc_image)"
+                                [disabled]="!bqc.bqc_image">
+                                <i class="fa fa-eye"></i> View
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                        <tbody *ngIf="row.BqcData && row.BqcData.length === 0">
+                          <div class="no_data_found">
+                            <!-- <span><img src="assets/image/no_data_banner.jpg"></span> -->
+                            <small>No data available !</small>
+                          </div>
+                        </tbody>
+
+
+                      </table>
+                    </div>
+                  </div>
+
+                </li>
+              </ul>
+              <div class="row" *ngIf="dataAr?.length == 0">
+                <div class="col-md-12">
+                  <div class="no_data_found">
+                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                    <small>No data available !</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div id="AddCatSubCatOOOO" class="modal fade" role="dialog" style="z-index: 1042 !important;">
+  <div class="modal-dialog cs_table_data"
+    style="width: calc(100% - 230px);margin: 30px auto;margin-left: 230px;height: calc(100% - 60px);">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title">Operation Rights</div>
+            </div>
+            <div class="cs_modal_body" style="height: calc(100vh - 166px);overflow-y: scroll;">
+              <div class="view_more_cases">
+                <cdk-virtual-scroll-viewport #scroller1 itemSize="72" class="content">
+                  <mat-list class="cs_view_row_de_tw">
+                    <ng-container *cdkVirtualFor="let rows of postNested">
+                      <mat-list-item>
+                        <div class="case_table_de w_100">
+                          <div class="status_row warnings">
+                            <div class="number_row_text">{{ rows.SrNo }}</div>
+
+
+                            <div class="cs_status_sr">
+                              <button class="btn warnings customMargins">{{rows.MenuName}} </button>
+                            </div>
+
+                          </div>
+                          <div class="d_flex w_100 flex_End mt_15 mb_15">
+                            <div class="cs_status_sr" *ngIf="rows.Manage_Requests == '0'">
+                              <button class="btn success customMargins"
+                                (click)="ChangeManegerRequest(1,'Manage_Requests',rows.Menu_Id,rows.EmpPrimaryId,rows.EmpId)">Add
+                                Manager</button>
+                            </div>
+                            <div class="cs_status_sr" *ngIf="rows.Manage_Requests == '1'">
+                              <button class="btn dangers customMargins ml_10"
+                                (click)="ChangeManegerRequest(0,'Manage_Requests',rows.Menu_Id,rows.EmpPrimaryId,rows.EmpId)">Remove
+                                Manager </button>
+                            </div>
+                            <div class="cs_status_sr" *ngIf="rows.Punching_team == '0' && rows.Menu_Id == '3'">
+                              <button class="btn success customMargins ml_10"
+                                (click)="ChangeManegerRequest(1,'Punching_team',rows.Menu_Id,rows.EmpPrimaryId,rows.EmpId)">Add
+                                Punching</button>
+                            </div>
+                            <div class="cs_status_sr" *ngIf="rows.Punching_team == '1' && rows.Menu_Id == '3'">
+                              <button class="btn dangers customMargins ml_10"
+                                (click)="ChangeManegerRequest(0,'Punching_team',rows.Menu_Id,rows.EmpPrimaryId,rows.EmpId)">Remove
+                                Punching </button>
+                            </div>
+                          </div>
+                          <form [formGroup]="NewRights">
+                            <div class="row">
+                              <div class="col-md-6 mb_15">
+                                <div class="input_group">
+                                  <ng-multiselect-dropdown class="form_control_ng" [settings]="dropdownSettingsMultiple"
+                                    name="UserType" placeholder="Select User Type" [data]="AllServiceLocation"
+                                    formControlName="ServiceLocation" [(ngModel)]="SelectedServiceLocation">
+                                  </ng-multiselect-dropdown>
+
+                                  <input type="hidden" formControlName="fields" value="rows">
+                                </div>
+
+
+
+                              </div>
+                              <div class="col-md-12">
+                                <div class="w_100 d_flex flex_End flex_Middel mb_15">
+                                  <input type="submit" (click)="NewRightsUpdate(rows)" class="btn btn-info"
+                                    value="Update"> &nbsp;&nbsp;
+                                  <button (click)="ClearSearch()" type="button" style="font-size: small;"
+                                    class="btn btn-danger" value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                        <mat-divider></mat-divider>
+                      </mat-list-item>
+                    </ng-container>
+                    <div class="spinner-item" style="display: block;margin: auto; width: 50px;">
+                      <mat-progress-spinner [mode]="'indeterminate'" [diameter]="50"></mat-progress-spinner>
+                    </div>
+
+                  </mat-list>
+
+                </cdk-virtual-scroll-viewport>
+
+              </div>
+            </div>
+            <div class="main_footer">
+              <button type="button" id="ClosePOUPUP" class="mr_5 btn-danger Save_click"
+                data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="businessFiltermodel" tabindex="-1" role="dialog" aria-labelledby="businessFiltermodelLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="businessFiltermodelLabel">Busienss Support Report (Sales Support)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-business-filter (postCreated)="SearchDataFilter($event)"></app-business-filter>
+        <!-- <app-business-filter (postCreated)="SearchData($event)"></app-business-filter> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closemodal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ----------BQC FORM AND TABLE------------------- -->
+
+
+
+<div id="AddBQC" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="container-fluid modal-lg">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header modal-lg">
+              <div class="header_title">
+                {{ isEditMode ? 'Update BQC' : 'Add BQC' }}
+              </div>
+            </div>
+            <form [formGroup]="BQCForm" (ngSubmit)="BQCFormSubmit()">
+
+              <input type="hidden" formControlName="id">
+
+
+              <div class="main_body main_card_height_scroll" style="height: auto;">
+
+
+
+
+
+                <div class="row">
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Certificate Type</label>
+                      <ng-multiselect-dropdown [settings]="dropdownSettingsType" class="form-control"
+                        placeholder="--Select--" [data]="bqcTrainingTypeData" formControlName="bqctraining"
+                        (onSelect)="onItemSelect($event,'CertificateType')">
+                      </ng-multiselect-dropdown>
+                      <div *ngIf="isSubmittedbqc && formControls.bqctraining.errors " class="ValidationError">
+                        <div *ngIf="formControls.bqctraining.errors.required">Please Select Certificate Type!</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>BQC {{this.BqcTrainingType}} Type</label>
+                      <ng-multiselect-dropdown [settings]="dropdownSettingsType" class="form-control"
+                        placeholder="--Select--" [data]="bqcTypeData" formControlName="bqcType">
+                      </ng-multiselect-dropdown>
+                      <div *ngIf="isSubmittedbqc && formControls.bqcType.errors " class="ValidationError">
+                        <div *ngIf="formControls.bqcType.errors.required">Please Select BQC {{this.BqcTrainingType}}
+                          Type!</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>BQC {{this.BqcTrainingType}} Number</label>
+                      <input class="form-control" type="text" formControlName="bqcNo" placeholder="Enter Number">
+                      <div *ngIf="isSubmittedbqc && formControls.bqcNo.errors " class="ValidationError">
+                        <div *ngIf="formControls.bqcNo.errors.required">Please Enter BQC Number!</div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="CustomerName">BQC {{this.BqcTrainingType}} Certificate</label>
+                      <label class="form-control btn fileUpload btn-default" name="button" value="BQC_Image">
+                        <input type="file" (change)="bqcFile($event)" id="file" formControlName="bqcImage"
+                          accept="image/png, image/gif, image/jpeg" style="display:none;" />
+                        <span class="fas fa-user-alt"><b>Upload BQC {{this.BqcTrainingType}} Certificate</b></span>
+                      </label>
+                      <p>{{FileName}}</p>
+                      <div *ngIf="isSubmittedbqc && formControls.bqcImage.errors " class="ValidationError">
+                        <div *ngIf="formControls.bqcImage.errors.required">Please Upload BQC {{this.BqcTrainingType}}
+                          Certificate!</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Validity From</label>
+                      <input class="form-control" type="date" formControlName="bqcValidityFrom">
+                      <div *ngIf="isSubmittedbqc && formControls.bqcValidityFrom.errors " class="ValidationError">
+                        <div *ngIf="formControls.bqcValidityFrom.errors.required">Please Select Date!</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Validity To</label>
+                      <input class="form-control" type="date" formControlName="bqcValidityTo">
+                      <div *ngIf="isSubmittedbqc && formControls.bqcValidityTo.errors " class="ValidationError">
+                        <div *ngIf="formControls.bqcValidityTo.errors.required">Please Select Date!</div>
+                      </div>
+                      <div *ngIf="isSubmittedbqc && minDate" class="ValidationError">To Date cannot be earlier then From
+                        Date!</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="float: right;">
+                <button type="submit" class="btn btn-success mr_5">
+                  {{ isEditMode ? 'Update' : 'Submit' }}
+                </button>
+                <button type="button" id="closeFormModelRequest" class=" btn btn-danger"
+                  data-dismiss="modal">Close</button>&nbsp;&nbsp;
+              </div>
+            </form>
+
+            <hr>
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="custom_table tables_layout_design">
+                <!-- ======= Refer Table  =========-->
+                <ul class="responsive-table" style="padding:10px;">
+                  <li class="table-row" *ngFor="let row of bqcdata; let i = index;">
+                    <span class="addon_tag_name">{{row.bqc_type}}</span>
+                    <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15" style="padding-bottom:12px;">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{i + 1}}</div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>BQC Number</div>
+                            <strong class="fs_18 text-bold">{{row.bqc_no}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div> Validity From </div>
+                            <strong>
+                              {{row.valid_from | date : 'dd-MM-yyyy'}}
+                            </strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div> Validity To </div>
+                            <strong>
+                              {{row.valid_to | date : 'dd-MM-yyyy' }}
+                            </strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="last_row">
+                      <div class="effective_date">
+                        {{row.bqcCertificateType}}
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                        <button type="button" class="btn btn-primary" (click)="viewDocs(row.bqc_image)">
+                          <strong style="color: #fff;">View</strong>
+                        </button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-info" (click)="editBQC(row.id)">
+                          <strong style="color: #fff;">Edit</strong>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <!--======= Refer Table END ========= -->
+                <div class="row" *ngIf="bqcdata?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

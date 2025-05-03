@@ -1,0 +1,165 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+  <div class="container-fluid">
+    <div class="main_card_form ">
+      <div class="main_header">
+        <div class="header_title">Offline SR Login</div>
+      </div>
+
+      <div class="main_body main_card_height_scroll_withoutfooter">
+        <div class="btn_list_group">
+          <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="row">
+                <div class="col-md-7">
+                  <div id="exTab1">
+                    <ul class="nav nav-pills">
+
+                      <li><a data-toggle="tab" class="" routerLink="/offline-booking/sr-login">File to
+                          File</a></li>
+
+                      <li class="active"><a data-toggle="tab" routerLink="/offline-booking/qc-report">By
+                          Excel</a></li>
+
+                      <li><a routerLink="#" (click)="soon()">By PDF</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+
+                  <div class="dsr-fillter">
+
+                    <button class="btn btn-info1" (click)="Formate()">Download Format</button>
+
+                    <label for="file-input" style="height: 20px;" *ngIf="type == 'agent'">
+                      <a class="btn btn-info1">
+                        <input (change)="UploadExcel($event)" style="display: none;" type="file" id="file-input">Upload
+                        Excel</a>
+                    </label>
+
+                    <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" id="filter_close"
+                      data-parent="#accordion" href="#collapseOne" aria-expanded="true" *ngIf="type == 'employee'"
+                      aria-controls="collapseOne">Upload Excel
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body sub-form">
+                  <div class="row">
+                    <div class="col-md-12">
+
+                      <form [formGroup]="AddFieldForm" (ngSubmit)="Submit()">
+                        <div class="row">
+
+                          <div class="col-sm-3">
+                            <div class="category_list">
+                              <label for="state">RM Code</label>
+                              <ng-multiselect-dropdown class="form-control" placeholder="Select Company" [data]="RM_Ar"
+                                formControlName="rm" [settings]="dropdownSingleSelect" (ngModelChange)="GetAgent()">
+                              </ng-multiselect-dropdown>
+
+                              <span *ngIf="isSubmitted && FC.rm.errors" class="form-text text-muted">
+                                <span *ngIf="FC.rm.errors.required" style="color:red;">Please Enter the RM Code
+                                  !</span>
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <div class="category_list">
+                              <label>Agent Code</label>
+                              <ng-multiselect-dropdown class="form-control" placeholder="Select Company"
+                                [data]="Agent_Ar" formControlName="agent" [settings]="dropdownSingleSelect">
+                              </ng-multiselect-dropdown>
+
+                              <span *ngIf="isSubmitted && FC.agent.errors" class="form-text text-muted">
+                                <span *ngIf="FC.agent.errors.required" style="color:red;">Please Enter the Agent Code
+                                  !</span>
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <div class="category_list">
+                              <label for="state">Excel File</label>
+                              <input type="file" class="form-control" formControlName="file"
+                                placeholder="select the Excel file" (change)="UploadExcel($event)">
+
+                              <span *ngIf="isSubmitted && FC.file.errors" class="form-text text-muted">
+                                <span *ngIf="FC.file.errors.required" style="color:red;">Please select Excel File
+                                  !</span>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        &nbsp;&nbsp;
+                        <div class="col-sm-3">
+                          <div class="category_list">
+                            <input type="submit" class="btn btn-info" value="Upload">
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="All">
+
+                <div class="box-body">
+                  <div class="mydiv">
+                    <!-- <table id="Table1" class="table table-bordered table-hover"> -->
+                    <table datatable [dtOptions]="dtOptions"
+                      class="row-border hover table table-bordered table-hover table-checkable" id="kt_datatable"
+                      style="margin-top: 13px !important;width: 100% !important;">
+                      <thead>
+                        <tr>
+                          <th>S.No.</th>
+                          <th>View Details</th>
+                          <th>Bulk Id</th>
+                          <th>Total File</th>
+                          <th>Pending</th>
+                          <th>Inwarded</th>
+                          <th>Add Stamp</th>
+
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="dataAr?.length != 0">
+                        <tr *ngFor="let row of dataAr">
+                          <td>{{ row.SrNo }}.</td>
+                          <td><Button class="btn btn-info" (click)="viewReport(row.bulk_id)">View</Button></td>
+                          <td>{{ row.bulk_id }}</td>
+                          <td>{{ row.total_file }}</td>
+                          <td>{{ row.pending }}</td>
+                          <td>{{ row.Inwarded }}</td>
+                          <td>{{ row.Add_Stamp }}</td>
+                        </tr>
+                      </tbody>
+                      <tbody *ngIf="dataAr?.length == 0">
+                        <tr>
+                          <td colspan="7" align="center">No data available !</td>
+                        </tr>
+                      <tbody>
+                    </table>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

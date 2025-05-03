@@ -1,0 +1,121 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title">
+                <div>LWP Report</div>
+              </div>
+            </div>
+            <div class="main_body main_card_height_scroll_withoutfooter">
+              <div>
+                <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                  <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                    href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <a role="button" class="fa fa-filter"><span>Filters</span><i
+                        class="fa fa-angle-down pull-right"></i></a>
+                  </button>
+                </div>
+              </div>
+              
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <!-- <app-square-filter (postCreated)="SearchData($event)"></app-square-filter> -->
+                  <app-bms-filter (postCreated)="SearchData($event)"></app-bms-filter>
+                </div>
+              </div>
+  
+              <hr>
+              <div style="display:inline-flex;">
+                <h5 style="padding:10px;"><strong> Total LWP - {{ this.Total_Lwp }}</strong></h5>
+                <h5 style="padding:10px;"><strong> Total Employee - {{this.Total_Employee}} </strong></h5>
+            </div>
+               
+              <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                <div class="custom_table tables_layout_design">
+                  <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                    <thead>
+                      <tr>
+                        <th></th>
+                      </tr>
+                    </thead>
+                  </table> 
+
+                  <!-- ======= Refer Table  =========-->
+                 <ul class="responsive-table">
+                    <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+                  
+                      <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">{{ row.SrNo }}</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <strong class="fs_18 text-bold">{{row.Employee_Name}} - {{row.Employee_Code}}</strong>
+                            </div>
+                          </div>
+                        </div>
+
+                            <div class="agent_name_mobile">
+                              <div class="agent_data">
+                                <strong>Profile - {{row.Profile}}</strong>
+                              </div>
+                              <div class="agent_data">
+                                <strong>Date of Joining - {{row.DOJ | date:'dd-MM-yyyy'}}</strong>
+                              </div>
+                            </div>
+
+                            <div class="agents_data agents_data3">
+                                <div class="agent_name_mobile">
+                                  <div class="agent_data">
+                                    <button type="button"  class="btn btn-grad" style="padding: 2px;"  (click)="GetMonthData('current' , row.Employee_Id)">
+                                      <strong >Total LWP - {{ row.Current_Month_Leaves}}</strong>
+                                   </button>
+                                  </div>
+                                  <div class="agent_data">
+                                      <button type="button"  class="btn btn-grad1" style="padding: 2px;" (click)="GetMonthData('previous', row.Employee_Id)">
+                                        <strong>Total Previous Month LWP - {{row.Previous_Month_Leaves}}</strong>
+                                      </button>
+                                    </div>
+                                </div>
+                             </div>
+                        
+                      </div>
+                  
+                      <div class="last_row_div">
+                        <div class="d_flex custon-234">
+                          <div class="label_chips finance_lob" style="width: auto;">
+                            <span>Reporting Manager - {{row.ReportingManager}}</span>
+                          </div>
+                  
+                          <div class="label_chips non_motor_lob" style="width: auto;">
+                            <span>{{row.Department}}</span>&nbsp;&nbsp;
+                          </div>
+
+                          <div class="label_chips motor_lob" style="width: auto;">
+                            <span>{{row.Service_Location}}</span>&nbsp;&nbsp;
+                          </div>
+                  
+                        </div>
+                      </div>
+                  
+                    </li>
+                  </ul>
+                                  <!--======= Refer Table END ========= -->
+  
+                <div class="row" *ngIf="dataAr?.length == 0">
+                    <div class="col-md-12">
+                      <div class="no_data_found">
+                        <span><img src="assets/image/no_data_banner.jpg"></span>
+                        <small>No data available !</small>
+                      </div>
+                    </div>
+                  </div>
+               </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

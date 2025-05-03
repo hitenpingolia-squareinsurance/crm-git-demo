@@ -1,0 +1,113 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+  <div class="container-fluid">
+    <div class="main_card_form">
+      <div class="main_header">
+        <div class="header_title">Bulk Mail Sender</div>
+        <div class="call-precess" id="callProcess" style="display: none">
+          <div class="call-align">
+            <img src="assets/image/calling.gif" alt="" />
+          </div>
+          <div class="heading-call">Call in Progress....</div>
+        </div>
+      </div>
+
+      <div class="main_body main_card_height_scroll_withoutfooter">
+        <div class="btn_list_group">
+          <div
+            class="panel-group mb-0"
+            id="accordion"
+            role="tablist"
+            aria-multiselectable="true"
+          >
+            <div class="panel panel-default">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="dsr-fillter">
+                    <!-- <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            <a role="button" class="fa fa-filter"><span>Filters</span><i
+                                                    class="fa fa-angle-down pull-right"></i></a>
+                                        </button> -->
+                    <button class="btn btn-info1" (click)="dailog()">
+                      <span>Bulk Mail</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                id="collapseOne"
+                class="panel-collapse collapse"
+                role="tabpanel"
+                aria-labelledby="headingOne"
+              >
+                <div class="panel-body sub-form">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <!-- //Filter code here -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="All">
+                <div class="box-body">
+                  <div class="mydiv"></div>
+                  <div class="mydiv">
+                    <table
+                      datatable
+                      [dtOptions]="dtOptions"
+                      id="Table1"
+                      class="table table-bordered table-hover"
+                    >
+                      <thead>
+                        <tr>
+                          <th>SNo.</th>
+                          <th>Mail Type</th>
+                          <th>Total Mail</th>
+                          <th>Add Stamp</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let row of dataAr">
+                          <td>{{ row.sno }}</td>
+                          <td>{{ row.type }}</td>
+                          <td>{{ row.total }}</td>
+                          <td>{{ row.add_stamp }}</td>
+
+                          <td>
+                            <button
+                              class="btn btn-info1"
+                              (click)="details_dailog(row.bulkid, row.type)"
+                            >
+                              <span>Details</span></button
+                            >&nbsp;
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tbody *ngIf="dataAr?.length == 0">
+                        <tr>
+                          <td colspan="11" align="center">
+                            No data available !
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

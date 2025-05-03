@@ -1,0 +1,106 @@
+<table>
+
+    <tr>
+        <td colspan="2" align="center">
+            <b>Employee Id : {{row.EmployeeCode}}</b>
+        </td>
+        
+        <td colspan="2" align="center">
+            <b>Employment Type : {{row.EmployeeType}}</b>
+        </td>
+
+        <td colspan="1" align="center">
+            <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+        </td>
+    </tr>
+
+    <!-- <div class="collapsible-header" (click)="showFirst=!showFirst"><i class="material-icons" *ngIf="showFirst">filter_drama</i><i class="material-icons" *ngIf="!showFirst">place</i>First Section</div> -->
+
+    <tr class="ValueTD">
+        <td (click)="isShown=!isShown" colspan="5">Personal Details
+ 
+        </td>
+    </tr>
+
+
+    <tbody class="row container-fluid" id="divshow">
+        <tr>
+            <td colspan="2"><b>Name </b>: {{row.EmployeeName}}</td>
+            <td colspan="2"><b>Father Name </b>: {{row.FatherName}}</td>
+            <td colspan="1"><b>Official Mobile </b>: {{row.OfficialMobile}}</td>
+
+        </tr>
+
+        <tr>
+            <td colspan="2"><b>Personal Email </b>: {{row.PersonalEmail}}</td>
+            <td colspan="2"><b>Official Email </b>:{{row.OfficialEmail}}</td>
+            <td colspan="1"><b>Personal Mobile </b>: {{row.PersonalMobile}}</td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><b>Date Of Birth </b>: {{row.Dob}}</td>
+            <td colspan="2"><b>Date Of Joining </b>: {{row.Doj}}</td>
+            <td colspan="1"><b>Solicitor </b>: {{row.Solicitor}}</td>
+        </tr>
+
+        <tr *ngIf="row.Solicitor == 'Yes'">
+            <!-- <td colspan="2"><b>Saiba Id </b>: {{row.SaibaId}}</td> -->
+            <td colspan="2"><b>BQC Number </b>: {{row.BQCNO}}</td>
+            <td colspan="2"><b>BQC Valid To </b>: {{row.BQCValidityTo}}</td>
+            <td colspan="1"><b>BQC Valid From </b>: {{row.BQCValidityFrom}}</td>
+        </tr>
+        <tr *ngIf="row.BqcImage != ''">
+            <td colspan="5"><b>BQC Image </b> :
+                <a *ngIf="(row.BqcImage !='')" class="fa fa-Info" (click)="ViewDocument(row.BqcImage)"
+                    href="javascript:void(0)">
+                    &nbsp;<i class="fa fa-download"> View</i></a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5"><b>Address </b>: {{row.Address}}</td>
+        </tr>
+    </tbody>
+
+    <tr class="ValueTD">
+        <td (click)="isShown=!isShown" colspan="5">Profile Details
+
+            <!-- <div class="box-tools pull-right btn-right-side">
+                <i style="text-align: right;"><i class="material-icons DesignModuleButton" *ngIf="isShown">-</i><i
+                        class="material-icons" *ngIf="!isShown">+</i></i>
+            </div> -->
+        </td>
+    </tr>
+
+
+    <tbody class="row container-fluid" id="divshow">
+        <tr>
+            <td colspan="2"><b>Sales/Non-Sales </b>: {{row.IS_Sales}}</td>
+            <td colspan="2"><b>CoreLine </b>: {{row.CoreLine}}</td>
+            <td colspan="1"><b>Designation</b>: {{row.Designation}}</td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><b>Profile </b>: {{row.Profile}}</td>
+            <td colspan="2"><b>Department </b>: {{row.Department}}</td>
+            <td *ngIf="row.RmName != ''" colspan="1"><b> Reporting Manager </b>: <span class="label label-info "
+                    (click)="EmployeeDetails(row.RmCode)">{{row.RmName}} - {{row.RmCode}} </span> </td>
+        </tr>
+    </tbody>
+
+
+    <tr class="ValueTD">
+        <td (click)="isShown=!isShown" colspan="5">Geographical Details
+
+        </td>
+    </tr>
+
+    <tbody class="row container-fluid" id="divshow">
+        <tr>
+            <td colspan="2"><b>Zone </b>: {{row.Zone}}</td>
+            <td colspan="2"><b>Main Branch </b>: {{row.Branch}}</td>
+            <td colspan="1"><b>Service Location</b>: {{row.ServiceLocation}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div id="snackbar2">Copied to clipboard.</div>

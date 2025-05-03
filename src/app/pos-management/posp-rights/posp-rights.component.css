@@ -1,0 +1,46 @@
+.marg {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.modal-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+.modal-top h4.modal-title {
+    color: #2cb2b3;
+    text-transform: capitalize;
+    font-size: 20px;
+    font-weight: 600;
+}
+label {
+    margin-bottom: 0;
+}
+.button-div-yes-no {
+    float: right;
+}
+.button-div-yes-no .btn-danger {
+    margin-right: 10px;
+}
+
+.marg h5 {
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 0;
+}
+.marg abbr {
+    margin-right: 20px;
+    display: inline-flex;
+    align-items: center;
+}
+.marg abbr:last-child {
+    margin-right: 0px;
+}
+.marg abbr label {
+    margin-left: 5px;
+}
+.marg abbr input[type=checkbox] {
+    margin: 0px;
+}

@@ -1,0 +1,60 @@
+.custom-scrool .main_card_form .main_header {
+  background: #fff;
+  padding: 5px 40px 0 40px;
+  border-radius: 0px;
+  color: #3c8dbc;
+}
+
+.custom-scrool .main_card_form {
+  background: #fff;
+  border-radius: 0px;
+  box-shadow: none;
+  border: none;
+}
+
+.main_card_form .main_header .header_title {
+  color: #3c8dbc;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.col-md-12 {
+  padding: 0 40px 0 40px;
+}
+
+.closeModelButton {
+  margin: 5px 5px 0 0;
+}
+
+
+.check-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.new-margin {
+  margin-top: -8px;
+}
+.header_title {
+  margin: 0;
+  color: #2cb2b3;
+  font-weight: 700;
+  font-size: 16px;
+}
+hr {
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+.form-group {
+  position: relative;
+}
+.form-group .validators {
+  position: absolute;
+}
+form {
+  height: 450px;
+}
+
+
+

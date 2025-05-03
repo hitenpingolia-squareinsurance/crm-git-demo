@@ -1,0 +1,49 @@
+.btn_list_group .panel-default {
+    border: none;
+    box-shadow: none;
+  }
+  
+  .dsr-fillter {
+    float: right;
+    display: flex;
+  }
+  
+  .btn-info1 {
+    background-color: rgba(44, 178, 179, 1);
+    color: white;
+  }
+  
+  .check-flex {
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  
+    label {
+      margin-left: 2px;
+    }
+  }
+  
+  .btn{
+    margin-left: 10px;
+  }
+  
+  .col-sm-3{
+  margin-top: 5px;
+  }
+  .panel-body  {
+    padding: 10px 0px 0px 0px;
+  }
+  .panel-group {
+    margin-bottom: 10px;
+}
+table.table .btn {
+  padding: 2px 4px;
+  font-size: 75% !important;
+  font-weight: 700;
+  margin: 0px !important;
+  letter-spacing: 0.2px;
+}
+.category_list {
+  margin-bottom: 15px;
+}

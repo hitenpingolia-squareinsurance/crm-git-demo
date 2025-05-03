@@ -1,0 +1,103 @@
+<div class="content-wrapper">
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="box-title">Product Master</h3>
+                            </div>
+                            <div class="col-md-6">&nbsp;</div>
+                            <div class="col-md-2">
+                                <!-- <button class="btn btn-primary nextBtn pull-right" style="margin-right: 5px;"> <i
+                                        class="fa fa-plus">Add Request</i></button> -->
+                                <button class="btn btn-primary nextBtn pull-right" style="margin-right: 5px;"> <i
+                                        class="fa fa-plus" (click)="dailog()">Add</i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="mydiv">
+                            <!-- <table id="Table1" class="table table-bordered table-hover"> -->
+                            <table datatable [dtOptions]="dtOptions" id="Table1"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>SNo.</th>
+                                        <th>LOB</th>
+                                        <th>Product</th>
+                                        <th>Policy Type</th>
+                                        <th>Plan Type</th>
+                                        <th>SubProduct</th>
+                                        <th>Class Name</th>
+                                        <th>Sub Class</th>
+                                        <th>TP Premium</th>
+                                        <th>Per Passenger Cost</th>
+                                        <th>Company Name</th>
+                                        <th>New</th>
+                                        <th>Rollover</th>
+                                        <th>Renewal</th>
+                                        <th>Used</th>
+                                        <th>IRDIA Product Status</th>
+                                        <th>Limit Sum Insured</th>
+                                        <th>Operation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of dataAr">
+                                        <td>{{row.sno}}</td>
+                                        <td>{{row.LOB}}</td>
+                                        <td>{{row.Product ? row.Product : 'NA'}}</td>
+                                        <td>{{row.Policy_Type ? row.Policy_Type: 'NA'}}</td>
+                                        <td>{{row.Plan_Type? row.Plan_Type :'NA'}}</td>
+                                        <td>{{row.SubProduct ? row.SubProduct : 'NA'}}</td>
+                                        <td>{{row.Class_Name? row.Class_Name : 'NA'}}</td>
+                                        <td>{{row.Sub_Class ? row.Sub_Class : 'NA'}}</td>
+                                        <td>{{row.TP_Premium ? row.TP_Premium : 'NA'}}</td>
+                                        <td>{{row.Per_Passenger_Cost ? row.Per_Passenger_Cost : 'NA'}}</td>
+                                        <td>{{row.Company_Name ? row.Company_Name: 'NA'}}</td>
+
+                                        <td>
+                                            <span *ngIf="row.New==1 && row.LOB == 'Motor'">Yes</span>
+                                            <span *ngIf="row.New==0 && row.LOB == 'Motor'">NA</span>
+                                            <span *ngIf="row.LOB !== 'Motor'">NA</span>
+                                        </td>
+
+                                        <td>
+                                            <span *ngIf="row.Rollover == 1 && row.LOB == 'Motor'">Yes</span>
+                                            <span *ngIf="row.Rollover == 0 && row.LOB == 'Motor'">NA</span>
+                                            <span *ngIf="row.LOB !== 'Motor'">NA</span>
+                                        </td>
+
+                                        <td>
+                                            <span *ngIf="row.Renewal == 1 && row.LOB == 'Motor'">Yes</span>
+                                            <span *ngIf="row.Renewal == 0 && row.LOB == 'Motor'">NA</span>
+                                            <span *ngIf="row.LOB !== 'Motor'">NA</span>
+                                        </td>
+
+                                        <td>
+                                            <span *ngIf="row.Used == 1 && row.LOB == 'Motor'">Yes</span>
+                                            <span *ngIf="row.Used == 0 && row.LOB == 'Motor'">NA</span>
+                                            <span *ngIf="row.LOB !== 'Motor'">NA</span>
+                                        </td>
+
+                                        <td>{{row.IRDIA_Product_Status}}</td>
+                                        <td>{{row.Limit_Sum_Insured}}</td>
+
+                                        <td>
+                                            <button class="btn btn-primary nextBtn pull-right"
+                                                style="margin-right: 5px;"> <i class="fa fa-plus"
+                                                    (click)="update(row.Id)">Update</i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

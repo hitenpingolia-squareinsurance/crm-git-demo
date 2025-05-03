@@ -1,0 +1,1017 @@
+<section class="inner_page_css main_dashboard_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">
+              <div *ngIf="currentView === 'vendor-type'">
+                Vendor Type
+                <button class="btn btn-secondary" data-toggle="modal" data-target="#vendorModal" data-backdrop="static"
+                  data-keyboard="false" (click)="openAddModal()"
+                  style="float:right; color:#000; padding:2px; margin-bottom:2px;">
+                  Raise Vendor Type Request&nbsp;<i class="fa fa-plus-circle" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div *ngIf="currentView === 'vendor-service'">
+                Vendor Service
+                <button class="btn btn-secondary" data-toggle="modal" data-target="#vendorModal" data-backdrop="static"
+                  data-keyboard="false" (click)="openAddModal()"
+                  style="float:right; color:#000; padding:2px; margin-bottom:2px;">
+                  Raise Vendor Service Request&nbsp;<i class="fa fa-plus-circle" aria-hidden="true"></i>
+                </button>
+              </div>
+
+              <div *ngIf="currentView === 'vendor-request'">
+                Vendor Request
+                <button class="btn btn-secondary" data-toggle="modal" data-backdrop="static" data-keyboard="false"
+                  data-target="#vendorReqModal" (click)="openAddModal()"
+                  style="float:right; color:#000; padding:2px; margin-bottom:2px;">
+                  Raise Vendor Request&nbsp;<i class="fa fa-plus-circle" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="main_body main_card_height_scroll_withoutfooter"
+            *ngIf="currentView === 'vendor-service' || currentView === 'vendor-type'">
+            <div class="panelbody">
+              <form>
+                <div class="row">
+                  <div class="col-md-12">
+                    <form>
+                      <div class="row">
+
+                        <div class="col-sm-3">
+                          <label for="Request_type">Search</label>
+                          <input type="text" id="search-input" class="form-control" placeholder="Search"
+                            (input)="SearchData($event)">
+                        </div>
+
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <hr>
+            <div class="custom_table tables_layout_design">
+              <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                <thead>
+                  <tr>
+                    <th></th>
+                  </tr>
+                </thead>
+              </table>
+              <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                <li class="table-row tablerow" *ngFor="let vendor of dataAr; let i=index;"
+                  [ngClass]="{'activestatus': vendor.status == '1' , 'inactivestatus': vendor.status == '0' }">
+                  <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                    <div class="agents_data agents_data1">
+                      <div class="icon_re_cl">{{i+1}}</div>
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>{{ currentView === 'vendor-type' ? 'Vendor Type' : 'Vendor Service' }}</div>
+                          <strong class="fs_18"><span>{{vendor.name}}</span></strong>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="last_row_div">
+
+                  </div>
+                  <div class="last_row">
+                    <div class="effective_date">
+                      <div class="d_flex">
+
+                      </div>
+                    </div>
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                    </div>
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                      <button class="btn"
+                        [ngClass]="{'btn-success': vendor.status == 1, 'btn-danger': vendor.status == 0}"
+                        (click)="toggleStatus(vendor)" style="margin-right: 10px;">
+                        {{ vendor.status == 1 ? 'Active' : 'Inactive' }}
+                      </button>
+                      <button class="btn btn-primary" style="margin-right: 10px;" data-toggle="modal"
+                        data-target="#vendorModal" data-backdrop="static" data-keyboard="false"
+                        (click)="openEditModal(vendor.Id)">Edit</button>
+                      <button class="btn btn-danger" style="padding: 3px 10px;"
+                        (click)="deleteVendor(vendor.Id)">Delete</button>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="row" *ngIf="dataAr?.length == 0">
+                <div class="col-md-12">
+                  <div class="no_data_found">
+                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                    <small>No data available !</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="currentView === 'vendor-request'">
+            <div class="panelbody">
+              <form>
+                <div class="row">
+                  <div class="col-md-12">
+                    <form>
+                      <div class="row">
+
+                        <div class="col-sm-3">
+                          <label for="Request_type">Search</label>
+                          <input type="text" id="search-input" class="form-control" placeholder="Search"
+                            formControlName="SearchVal" (input)="SearchData($event)">
+                        </div>
+
+                      </div>
+                    </form>
+                  </div>
+
+
+                </div>
+              </form>
+            </div>
+            <div class="custom_table tables_layout_design">
+              <table datatable [dtOptions]="otOptions" class="row-border table" id="kt_datatable">
+                <thead>
+                  <tr>
+                    <th></th>
+                  </tr>
+                </thead>
+              </table>
+              <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                <li class="table-row tablerow" *ngFor="let vendor of dataArr; let i=index;"
+                  [ngClass]="{'activestatus': vendor.status == '1' , 'inactivestatus': vendor.status == '0' }">
+                  <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                    <div class="agents_data agents_data1">
+                      <div class="icon_re_cl">{{i+1}}</div>
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Request Name</div>
+                          <strong class="fs_18"><span>{{vendor.name }}</span></strong>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data2">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Vendor Type</div>
+                          <strong class="fs_18" id="emailToCopy">{{vendor.vendor_type}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data3">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Address</div>
+                          <strong class="fs_18">{{vendor.address}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data4">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>City</div>
+                          <strong class="fs_18">{{vendor.city}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="last_row_div">
+                    <div class="d_flex custon-234">
+                      <div class="label_chips non_motor_lob">
+                        <span>Director name - {{vendor.director_name}}</span>&nbsp;&nbsp;
+                      </div>
+                      <div class="label_chips motor_lob">
+                        <span>GST No. - {{ vendor.gst_no}}</span>
+                      </div>
+                      <div class="label_chips finance_lob">
+                        <span>Pan No. -
+                          {{ vendor.pan_no}}</span>
+                      </div>
+                      <div class="label_chips finance_lob">
+                        <span>Services. - {{ vendor.services}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="last_row">
+                    <div class="effective_date">
+                      <div class="d_flex">
+
+                      </div>
+                    </div>
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                    </div>
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                      <button class="btn"
+                        [ngClass]="{'btn-success': vendor.status == 1, 'btn-danger': vendor.status == 0}"
+                        (click)="toggleReqStatus(vendor)" style="margin-right: 10px; padding:3px 10px;">
+                        {{ vendor.status == 1 ? 'Active' : 'Inactive' }}
+                      </button>
+                      <button class="btn btn-success" style="margin-right: 10px;" data-toggle="modal"
+                        data-target="#vendorReqAgreementModal"
+                        (click)="openAgreementReqModal(vendor.Id)">Agreement</button>
+                      <button class="btn btn-primary" style="margin-right: 10px;" data-toggle="modal"
+                        data-backdrop="static" data-keyboard="false" data-target="#vendorReqModal"
+                        (click)="openEditReqModal(vendor.Id)">Edit</button>
+                      <button class="btn btn-danger" style="margin-right: 10px; padding:3px 10px;"
+                        (click)="deleteReqVendor(vendor.Id)">Delete</button>
+                      <button type="button" style="margin-right: 10px; padding:3px 10px;" class="btn btn-info"
+                        data-toggle="modal" data-target="#claims" (click)="ViewDocument(vendor.logo)">
+                        View
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="row" *ngIf="dataAr?.length == 0">
+                <div class="col-md-12">
+                  <div class="no_data_found">
+                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                    <small>No data available !</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal -->
+
+<div id="vendorModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title">
+                {{ modalAction === 'add' ? 'Create' : 'Edit' }}
+                {{ currentView === 'vendor-type' ? 'Vendor Type' : 'Service Type' }}
+              </div>
+            </div>
+            <form class="form" (ngSubmit)="submitForm()" [formGroup]="VendorTypeForm">
+              <div class="main_body main_card_height_scroll">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i> Basic Details</div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="input_group">
+                      <label for="vendorName">
+                        {{ currentView === 'vendor-type' ? 'Vendor' : 'Service' }} Name
+                        <span *ngIf="SubmitVendorType && formcontrolsVendorTypeForm.Name.errors"
+                          class="ValidationError">
+                          <span *ngIf="formcontrolsVendorTypeForm.Name.errors.required">Name is required</span>
+                        </span>
+                      </label>
+                      <div class="position_relative">
+                        <input type="text" class="form_control icon_cs" id="vendorName" formControlName="Name"
+                          name="vendorName" placeholder="Enter Name">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="main_footer">
+                <button type="button" id="close1" class="mr_5 btn-danger Save_click" data-dismiss="modal">Close</button>
+                <button type="submit" class="Save_click">
+                  {{ modalAction === 'add' ? 'Submit' : 'Update' }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Add/Edit Vendor Request -->
+
+<div id="vendorReqModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title">
+                {{ modalAction === 'add' ? 'Create' : 'Edit' }} Vendor Request
+              </div>
+            </div>
+            <form [formGroup]="vendorRequestForm" (ngSubmit)="submitVendorReqForm()" enctype="multipart/form-data">
+              <div class="main_body main_card_height_scroll">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="vendorType">Vendor Request</label>
+                      <select class="form-control" formControlName="requestType" required>
+                        <option value="">Select any</option>
+                        <option value="1">Vendor</option>
+                        <option value="2">Client</option>
+                      </select>
+                      <span *ngIf="SubmitRequestType && formcontrolsVendorRequestForm.requestType.errors"
+                        class="ValidationError">
+                        <span *ngIf="formcontrolsVendorRequestForm.requestType.errors.required">Vendor Request is
+                          required</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="vendorType">Vendor Type</label>
+                      <ng-multiselect-dropdown [settings]="dropdownVendorMultiSelectSettingsType" class="form-control"
+                        formControlName="vendorType" (keyup)="loadVendorTypes($event,1)"
+                        [(ngModel)]="selectedVendorType" [data]="vendorTypes" required>
+                      </ng-multiselect-dropdown>
+                      <span *ngIf="SubmitRequestType && formcontrolsVendorRequestForm.vendorType.errors"
+                        class="ValidationError">
+                        <span *ngIf="formcontrolsVendorRequestForm.vendorType.errors.required">Vendor Type is
+                          required</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="vendorName">Vendor Name</label>
+                      <input type="text" class="form-control" id="vendorName" formControlName="vendorName" required>
+                      <span *ngIf="SubmitRequestType && formcontrolsVendorRequestForm.vendorName.errors"
+                        class="ValidationError">
+                        <span *ngIf="formcontrolsVendorRequestForm.vendorName.errors.required">Vendor Name is
+                          required</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="vendorCity">City</label>
+                      <ng-multiselect-dropdown [settings]="dropdownMultiSelectSettingsType" class="form-control"
+                        formControlName="city" (keyup)="fetchCities($event,1)" [(ngModel)]="selectedCity" [data]="cities">
+                      </ng-multiselect-dropdown>
+                      <!-- <span *ngIf="SubmitRequestType && formcontrolsVendorRequestForm.city.errors"
+                        class="ValidationError">
+                        <span *ngIf="formcontrolsVendorRequestForm.city.errors.required">City is required</span>
+                      </span> -->
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="vendorAddress">Address</label>
+                      <input type="text" class="form-control" id="vendorAddress" formControlName="vendorAddress">
+                      <!-- <span *ngIf="SubmitRequestType && formcontrolsVendorRequestForm.vendorAddress.errors"
+                        class="ValidationError">
+                        <span *ngIf="formcontrolsVendorRequestForm.vendorAddress.errors.required">Address is
+                          required</span>
+                      </span> -->
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="logo">Logo</label>
+                      <input type="file" class="form-control" id="logo" formControlName="logo"
+                        (change)="onFileSelect($event)">
+                      <!-- <span *ngIf="SubmitRequestType && formcontrolsVendorRequestForm.logo.errors"
+                        class="ValidationError">
+                        <span *ngIf="formcontrolsVendorRequestForm.logo.errors.required">Logo is required</span>
+                      </span> -->
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="GST">GST No</label>
+                      <input type="text" class="form-control" id="gst_no" formControlName="gst_no">
+                      <!-- <span *ngIf="SubmitRequestType && formcontrolsVendorRequestForm.gst_no.errors"
+                        class="ValidationError">
+                        <span *ngIf="formcontrolsVendorRequestForm.gst_no.errors.required">GST No is required</span>
+                        <span *ngIf="formcontrolsVendorRequestForm.gst_no.errors.pattern">Invalid GST No.</span>
+                      </span> -->
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="pan_no">Pan No</label>
+                      <input type="text" class="form-control" id="pan_no" formControlName="pan_no">
+                      <!-- <span *ngIf="SubmitRequestType && formcontrolsVendorRequestForm.pan_no.errors"
+                        class="ValidationError">
+                        <span *ngIf="formcontrolsVendorRequestForm.pan_no.errors.required">Pan No is required</span>
+                        <span *ngIf="formcontrolsVendorRequestForm.pan_no.errors.pattern">Invalid Pan No.</span>
+                      </span> -->
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="director_name">Director Name</label>
+                      <input type="text" class="form-control" id="director_name" formControlName="director_name">
+                      <!-- <span *ngIf="SubmitRequestType && formcontrolsVendorRequestForm.director_name.errors"
+                        class="ValidationError">
+                        <span *ngIf="formcontrolsVendorRequestForm.director_name.errors.required">Director Name is
+                          required</span>
+                      </span> -->
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="input_group">
+                      <label for="vendorServices">Vendor Services</label>
+                      <ng-multiselect-dropdown [settings]="dropdownVendorServiceMultiSelectSettingsType"
+                        class="form-control" formControlName="vendorServices" [(ngModel)]="selectedServices"
+                        [data]="vendorServices" required>
+                      </ng-multiselect-dropdown>
+                      <span *ngIf="SubmitRequestType && formcontrolsVendorRequestForm.vendorServices.errors"
+                        class="ValidationError">
+                        <span *ngIf="formcontrolsVendorRequestForm.vendorServices.errors.required">Vendor Services are
+                          required</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="main_footer">
+                <button type="button" id="close2" class="mr_5 btn-danger Save_click" data-dismiss="modal">Close</button>
+                <button type="submit" class="Save_click">
+                  {{ modalAction === 'add' ? 'Submit' : 'Update' }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="vendorReqAgreementModal" tabindex="-1" role="dialog" aria-labelledby="vendorModalLabel"
+  aria-hidden="false">
+  <div class="modal-dialog modal-lg" role="document" style="width: 70%;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title">
+                Add Vendor Request Agreement
+              </div>
+            </div>
+            <form [formGroup]="vendorRequestAgreementForm" (ngSubmit)="onAgreementSubmit()"
+              enctype="multipart/form-data">
+              <div class="main_body main_card_height_scroll" style="height: calc(140vh - 215px);">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i> Basic Details</div>
+                  </div>
+                  <input type="hidden" id="req_id">
+
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="vendorType">Vendor Type</label>
+                      <ng-multiselect-dropdown [settings]="dropdownVendorMultiSelectSettingsType" class="form-control"
+                        formControlName="vendorType" (keyup)="loadVendorTypes($event, 1)"
+                        placeholder="Select Vendor Type" [(ngModel)]="selectedVendorType" [data]="vendorTypes"
+                        required></ng-multiselect-dropdown>
+                      <span *ngIf="SubmitAgreementType && formcontrolsVendorAgreementForm.vendorType.errors"
+                        class="ValidationError">
+                        <span *ngIf="formcontrolsVendorAgreementForm.vendorType.errors.required">Vendor Type is
+                          required</span>
+                      </span>
+                      
+                      
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="vendorServices">Vendor Services
+                      </label>
+                      <ng-multiselect-dropdown [settings]="dropdownVendorServiceMultiSelectSettingsType"
+                        class="form-control" formControlName="vendorServices" placeholder="Select Services Type"
+                        [(ngModel)]="selectedServices" [data]="vendorServices" required></ng-multiselect-dropdown>
+                        <span *ngIf="SubmitAgreementType && formcontrolsVendorAgreementForm.vendorServices.errors"
+                          class="ValidationError">
+                          <span *ngIf="formcontrolsVendorAgreementForm.vendorServices.errors.required">Vendor Services
+                            is required</span>
+                        </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="spokespersonName">Spokesperson Name
+                        
+                      </label>
+                      <input type="text" class="form-control" formControlName="spokespersonName" required>
+                      <span *ngIf="SubmitAgreementType && formcontrolsVendorAgreementForm.spokespersonName.errors"
+                          class="ValidationError">
+                          <span *ngIf="formcontrolsVendorAgreementForm.spokespersonName.errors.required">Spokesperson
+                            Name is required</span>
+                        </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="spokespersonEmail">Spokesperson Email
+                        
+                      </label>
+                      <input type="email" class="form-control" formControlName="spokespersonEmail" required>
+                      <span *ngIf="SubmitAgreementType && formcontrolsVendorAgreementForm.spokespersonEmail.errors"
+                          class="ValidationError">
+                          <span *ngIf="formcontrolsVendorAgreementForm.spokespersonEmail.errors.required">Spokesperson
+                            Email is required</span>
+                          <span *ngIf="formcontrolsVendorAgreementForm.spokespersonEmail.errors.email">Enter a valid
+                            email address</span>
+                        </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="spokespersonMobile">Spokesperson Mobile
+                       
+                      </label>
+                      <input type="number" class="form-control" formControlName="spokespersonMobile" required>
+                      <span *ngIf="SubmitAgreementType && formcontrolsVendorAgreementForm.spokespersonMobile.errors"
+                      class="ValidationError">
+                      <span *ngIf="formcontrolsVendorAgreementForm.spokespersonMobile.errors.required">Spokesperson
+                        Mobile is required</span>
+                      <span *ngIf="formcontrolsVendorAgreementForm.spokespersonMobile.errors.pattern">Enter a valid
+                        10-digit mobile number</span>
+                    </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="squareSpokesperson">Square Spokesperson (Employee)
+                       
+                      </label>
+                      <ng-multiselect-dropdown [settings]="dropdownVendorMultiSelectSettingsType" class="form-control"
+                        formControlName="squareSpokesperson" (keyup)="loadEmployees($event, 1)"
+                        placeholder="Select Employees" [(ngModel)]="selectedEmployee" [data]="Employee"
+                        required></ng-multiselect-dropdown>
+                        <span *ngIf="SubmitAgreementType && formcontrolsVendorAgreementForm.squareSpokesperson.errors"
+                        class="ValidationError">
+                        <span *ngIf="formcontrolsVendorAgreementForm.squareSpokesperson.errors.required">Square
+                          Spokesperson (Employee) is required</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="sealSignedBy">Seal and Signed by (Employee)
+                        
+                      </label>
+                      <ng-multiselect-dropdown [settings]="dropdownVendorMultiSelectSettingsType" class="form-control"
+                        formControlName="sealSignedBy" (keyup)="loadEmployees($event, 1)" placeholder="Select Employees"
+                        [(ngModel)]="selectedEmployeeSealSignedBy" [data]="Employee" required></ng-multiselect-dropdown>
+                        <span *ngIf="SubmitAgreementType && formcontrolsVendorAgreementForm.sealSignedBy.errors"
+                          class="ValidationError">
+                          <span *ngIf="formcontrolsVendorAgreementForm.sealSignedBy.errors.required">Seal and Signed by
+                            (Employee) is required</span>
+                        </span>
+                    </div>
+                  </div>
+
+                  <!-- Date fields -->
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="startDate">Agreement Start Date</label>
+                      <input type="date" class="form-control" formControlName="startDate" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="endDate">Agreement End Date</label>
+                      <input type="date" class="form-control" formControlName="endDate" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="sealSignedDate">Seal and Signed Date</label>
+                      <input type="date" class="form-control" formControlName="sealSignedDate" required>
+                    </div>
+                  </div>
+
+                  <!-- Upload Agreement -->
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="uploadAgreement">Upload Agreement</label>
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="uploadAgreement"
+                          (change)="onFileSelect($event)" formControlName="uploadAgreement" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Renewable Reminder -->
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="renewableReminder">Renewable Reminder</label>
+                      <select class="form-control" formControlName="renewableReminder" required>
+                        <option value="">Select any</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Renewable Reminder To -->
+                  <div class="col-md-4" *ngIf="showRenewableReminderTo">
+                    <div class="input_group">
+                      <label for="renewableReminderTo">Renewable Reminder To</label>
+                      <select class="form-control" formControlName="renewableReminderTo">
+                        <option value="">Select any</option>
+                        <option value="Square">Square</option>
+                        <option value="Vendor">Vendor</option>
+                        <option value="Client">Client</option>
+                      </select>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="main_footer">
+                  <button type="button" class="mr_5 btn-danger Save_click" data-dismiss="modal">Close</button>
+                  <button type="submit" class="Save_click">Submit</button>
+                </div>
+                
+            <div class="col-md-12" >
+
+              <div class="custom_table tables_layout_design">
+
+                <ul class="responsive-table" *ngIf="agreementDataArr?.length != 0">
+                  <li class="table-row tablerow" *ngFor="let vendor of agreementDataArr; let i=index;"
+                    [ngClass]="{'activestatus': vendor.status == '1' , 'inactivestatus': vendor.status == '0' }">
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{i+1}}</div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Vendor Name</div>
+                            <strong class="fs_18"><span>{{vendor.vendor_req}}</span></strong>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Spoke Name</div>
+                            <strong class="fs_18" id="emailToCopy">{{vendor.spokesperson_name}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Spoke Email</div>
+                            <strong class="fs_18">{{vendor.spokesperson_email }}</strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data4">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Spoke Mobile</div>
+                            <strong class="fs_18">{{vendor.spokesperson_mobile }}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data5">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Square Spoke</div>
+                            <strong class="fs_18">{{vendor.square_spokesperson }}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data6">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Seal Signed By</div>
+                            <strong class="fs_18">{{vendor.seal_signed_by }}</strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <hr>
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+                        <div class="label_chips non_motor_lob">
+                          <span>Seal Signed Date - {{vendor.seal_signed_date}}</span>&nbsp;&nbsp;
+                        </div>
+                        <div class="label_chips motor_lob">
+                          <span>Start Date - {{ vendor.start_date}}</span>
+                        </div>
+                        <div class="label_chips finance_lob">
+                          <span>End Date - {{ vendor.end_date}}</span>
+                        </div>
+                        <div class="label_chips finance_lob">
+                          <span>Services. - {{ vendor.vendor_service}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="last_row">
+                      <div class="effective_date">
+                        <div class="d_flex">
+
+                        </div>
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                        <button class="btn"
+                          [ngClass]="{'btn-success': vendor.status == 1, 'btn-danger': vendor.status == 0}"
+                          (click)="toggleReqAgreementStatus(vendor.Id, vendor)"
+                          style="margin-right: 10px; padding:3px 10px;">
+                          {{ vendor.status == 1 ? 'Active' : 'Inactive' }}
+                        </button>
+                        <button class="btn btn-primary" style="margin-right: 10px;" data-backdrop="static"
+                          data-keyboard="false" data-toggle="modal" data-target="#vendorReqAgreementEditModal"
+                          (click)="openEditReqAgreementModal(vendor.Id)">Edit</button>
+                        <button class="btn btn-danger" style="margin-right: 10px; padding: 3px 10px;"
+                          (click)="deleteReqAgreementVendor(vendor.Id)">Delete</button>
+                        <button type="button" style="padding: 3px 10px;" class="btn btn-info" data-toggle="modal"
+                          data-target="#claims" (click)="ViewDocument(vendor.upload_agreement)">
+                          View
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="row" *ngIf="agreementDataArr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+              </div>
+
+
+            </form>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="vendorReqAgreementEditModal" tabindex="-1" role="dialog" aria-labelledby="vendorModalLabel"
+  aria-hidden="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title">
+                Edit Vendor Request Agreement
+              </div>
+            </div>
+            <form [formGroup]="vendorRequestEditAgreementForm" (ngSubmit)="onAgreementUpdate()"
+              enctype="multipart/form-data">
+              <div class="main_body main_card_height_scroll">
+                <div class="row">
+                  <input type="hidden" formControlName="req_id">
+                  <input type="hidden" formControlName="UpdateId">
+
+                  <!-- Vendor -->
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="vendorType">Vendor Type</label>
+                      <ng-multiselect-dropdown [settings]="dropdownVendorMultiSelectSettingsType" class="form-control"
+                        formControlName="vendorType" (keyup)="loadVendorTypes($event,1)"
+                        placeholder="Select Vendor Type" [(ngModel)]="selectedVendorType" [data]="vendorTypes" required>
+                      </ng-multiselect-dropdown>
+                      <span *ngIf="UpdateAgreementType && formcontrolsVendorRequestEditAgreementForm.vendorType.errors"
+                        class="ValidationError">
+                        <span *ngIf="formcontrolsVendorRequestEditAgreementForm.vendorType.errors.required">Vendor Type
+                          is required</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Services -->
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="vendorServices">Vendor Services</label>
+                      <ng-multiselect-dropdown [settings]="dropdownVendorServiceMultiSelectSettingsType"
+                        class="form-control" formControlName="vendorServices" placeholder="Select Services Type"
+                        [(ngModel)]="selectedServices" [data]="vendorServices" required>
+                      </ng-multiselect-dropdown>
+                      <span
+                        *ngIf="UpdateAgreementType && formcontrolsVendorRequestEditAgreementForm.vendorServices.errors"
+                        class="ValidationError">
+                        <span *ngIf="formcontrolsVendorRequestEditAgreementForm.vendorServices.errors.required">Vendor
+                          Services is required</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Spokesperson Name -->
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="spokespersonName">Spokesperson Name</label>
+                      <input type="text" class="form-control" formControlName="spokespersonName" required>
+                      <span
+                        *ngIf="UpdateAgreementType && formcontrolsVendorRequestEditAgreementForm.spokespersonName.errors"
+                        class="ValidationError">
+                        <span
+                          *ngIf="formcontrolsVendorRequestEditAgreementForm.spokespersonName.errors.required">Spokesperson
+                          Name is required</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Spokesperson Email -->
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="spokespersonEmail">Spokesperson Email</label>
+                      <input type="email" class="form-control" formControlName="spokespersonEmail" required>
+                      <span
+                        *ngIf="UpdateAgreementType && formcontrolsVendorRequestEditAgreementForm.spokespersonEmail.errors"
+                        class="ValidationError">
+                        <span
+                          *ngIf="formcontrolsVendorRequestEditAgreementForm.spokespersonEmail.errors.required">Spokesperson
+                          Email is required</span>
+                        <span *ngIf="formcontrolsVendorAgreementForm.spokespersonEmail.errors.email">Enter a valid email
+                          address</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Spokesperson Mobile -->
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="spokespersonMobile">Spokesperson Mobile</label>
+                      <input type="number" class="form-control" formControlName="spokespersonMobile" required>
+                      <span
+                        *ngIf="UpdateAgreementType && formcontrolsVendorRequestEditAgreementForm.spokespersonMobile.errors"
+                        class="ValidationError">
+                        <span
+                          *ngIf="formcontrolsVendorRequestEditAgreementForm.spokespersonMobile.errors.required">Spokesperson
+                          Mobile is required</span>
+                        <span *ngIf="formcontrolsVendorAgreementForm.spokespersonMobile.errors.pattern">Enter a valid
+                          10-digit mobile number</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Square Spokesperson -->
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="squareSpokesperson">Square Spokesperson (Employee)</label>
+                      <ng-multiselect-dropdown [settings]="dropdownVendorMultiSelectSettingsType" class="form-control"
+                        formControlName="squareSpokesperson" (keyup)="loadEmployees($event,1)"
+                        placeholder="Select Employees" [(ngModel)]="selectedEmployee" [data]="Employee" required>
+                      </ng-multiselect-dropdown>
+                      <span
+                        *ngIf="UpdateAgreementType && formcontrolsVendorRequestEditAgreementForm.squareSpokesperson.errors"
+                        class="ValidationError">
+                        <span
+                          *ngIf="formcontrolsVendorRequestEditAgreementForm.squareSpokesperson.errors.required">Square
+                          Spokesperson (Employee) is required</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Seal and Signed by -->
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="sealSignedBy">Seal and Signed by (Employee)</label>
+                      <ng-multiselect-dropdown [settings]="dropdownVendorMultiSelectSettingsType" class="form-control"
+                        formControlName="sealSignedBy" (keyup)="loadEmployees($event,1)" placeholder="Select Employees"
+                        [(ngModel)]="selectedEmployeeSealSignedBy" [data]="Employee" required>
+                      </ng-multiselect-dropdown>
+                      <span
+                        *ngIf="UpdateAgreementType && formcontrolsVendorRequestEditAgreementForm.sealSignedBy.errors"
+                        class="ValidationError">
+                        <span *ngIf="formcontrolsVendorRequestEditAgreementForm.sealSignedBy.errors.required">Seal and
+                          Signed by (Employee) is required</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Agreement Start Date -->
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="startDate">Agreement Start Date</label>
+                      <input type="date" class="form-control" formControlName="startDate" required>
+                    </div>
+                  </div>
+
+                  <!-- Agreement End Date -->
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="endDate">Agreement End Date</label>
+                      <input type="date" class="form-control" formControlName="endDate" required>
+                    </div>
+                  </div>
+
+                  <!-- Seal and Signed Date -->
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="sealSignedDate">Seal and Signed Date</label>
+                      <input type="date" class="form-control" formControlName="sealSignedDate" required>
+                    </div>
+                  </div>
+
+                  <!-- Upload Agreement -->
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="uploadAgreement">Upload Agreement</label>
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="uploadAgreement"
+                          (change)="onFileSelect($event)" formControlName="uploadAgreement" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Renewable Reminder -->
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="renewableReminder">Renewable Reminder</label>
+                      <select class="form-control" formControlName="renewableReminder" required>
+                        <option value="">Select any</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Renewable Reminder To -->
+                  <div class="col-md-4" *ngIf="showRenewableReminderTo">
+                    <div class="input_group">
+                      <label for="renewableReminderTo">Renewable Reminder To</label>
+                      <select class="form-control" formControlName="renewableReminderTo" required>
+                        <option value="">Select any</option>
+                        <option value="Square">Square</option>
+                        <option value="Vendor">Vendor</option>
+                        <option value="Client">Client</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="main_footer">
+                <button type="button" id="close3" class="mr_5 btn-danger Save_click" data-dismiss="modal">Close</button>
+                <button type="submit" class="Save_click">Update</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

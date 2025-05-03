@@ -1,0 +1,85 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+                            <div class="row">
+                                <div class="col-md-10">
+                                  Event View
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-primary float-end" (click)="addEvent_today('Add','0')">
+                                        Add new
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+   
+                        <div class=" mydiv table-responsive">
+                            <table datatable [dtOptions]="dtOptions" id="Table1"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Event Name</th>
+                                        <th>Event Type</th>
+                                        <th>Event Start Date</th>
+                                        <th>Event End Date</th>
+                                        <th>URL</th>
+                                        <th>Location</th>
+                                        <th>City</th>
+                                        <th>Addstamp</th>
+                                        <th>Description</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr; let i=index;">
+                                        <td>{{row.Sno}}</td>
+                                        <td>{{row['AllData'].event_name}}</td>
+                                        <td>{{row['AllData'].event_type}}</td>
+                                        <td>{{row['AllData'].event_start | date: 'dd/MM/yyyy'}}</td>
+                                        <td>{{row['AllData'].event_end | date: 'dd/MM/yyyy'}}</td>
+                                        <td>{{row['AllData'].url }}</td>
+                                        <td>{{row['AllData'].location_name }}</td>
+                                        <td>{{row['AllData'].city_name }}</td>
+                                        <td>{{row['AllData'].addstamp}}</td>
+                                        <td>{{row['AllData'].remark}}</td>
+                                        <td>
+                                            <label class="label label-primary" (click)="addEvent_today('Edit',row['AllData'].id)">Edit..</label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label class="label label-danger" (click)="DeleteRequest(row['AllData'].id,'event')">Delete</label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label *ngIf="row['AllData'].status == 0" class="label label-danger"
+                                              (click)="ActiveInactive(row['AllData'].id, 1, 'event')">Inactive</label>
+                                            <label *ngIf="row['AllData'].status == 1" class="label label-success"
+                                              (click)="ActiveInactive(row['AllData'].id, 0, 'event')">Active</label>
+                                              &nbsp;&nbsp;&nbsp;&nbsp;
+                                              <label class="label label-primary" (click)="SendNotification('SendNotification',row['AllData'].id)">Send Notification ..</label>
+                                            
+                                        <!-- <td>{{row['AllData'].status}}</td> -->
+                                    </td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="8">No data Available !</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

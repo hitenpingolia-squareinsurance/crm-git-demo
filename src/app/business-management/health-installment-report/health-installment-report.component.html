@@ -1,0 +1,402 @@
+<section class="inner_page_css knowlage_details_page">
+    <div class="container-fluid">
+        <div class="main_card_form">
+            <div class="main_header">
+                <div class="header_title">Health Installments & Renewals Reports</div>
+            </div>
+            <div class="main_body main_card_height_scroll_withoutfooter">
+                <div class="btn_list_group">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+
+                            <!-- BEGIN::INSTALLMENTS TABS AND FILTERS -->
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div id="exTab1">
+                                        <ul class="nav nav-pills">
+                                            <li [ngClass]="(active_tab == '1'?'active':'')"><a data-toggle="tab"
+                                                    class="" href="#1a" (click)="SetActiveTab('1')">Installments</a>
+                                            </li>
+
+                                            <li [ngClass]="(active_tab == '2'?'active':'')"><a data-toggle="tab"
+                                                    href="#2a" (click)="SetActiveTab('2')">1st Year Renewal</a></li>
+
+                                            <li [ngClass]="(active_tab == '3'?'active':'')"><a data-toggle="tab"
+                                                    href="#3a" (click)="SetActiveTab('3')">2nd Year Renewal</a></li>
+
+                                            <li [ngClass]="(active_tab == '4'?'active':'')"><a data-toggle="tab"
+                                                    href="#3a" (click)="SetActiveTab('4')">3rd Year Renewal</a></li>
+
+                                            <li [ngClass]="(active_tab == '5'?'active':'')"><a data-toggle="tab"
+                                                    href="#3a" (click)="SetActiveTab('5')">>3 Year Renewal</a></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="dsr-fillter">
+                                        <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            <a role="button" class="fa fa-filter"><span>Filters</span><i
+                                                    class="fa fa-angle-down pull-right"></i></a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END::INSTALLMENTS TABS AND FILTERS -->
+
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <form [formGroup]="SearchForm"
+                                        (ngSubmit)="SearchData()">
+                                        <div class="row">
+
+                                            <!-- BEGIN::FINANCIAL YEARS -->
+                                            <div class="col-sm-3">
+                                                <ng-multiselect-dropdown class="form-control"
+                                                    placeholder="Select Financial Year" [data]="Year_Ar"
+                                                    [(ngModel)]="SelectedYear" formControlName="Financial_Year"
+                                                    [settings]="dropdownSettingsingleselect"
+                                                    (onSelect)="CheckDateLimit($event)"
+                                                    (onDeSelect)="CheckDateLimit($event)"> 
+                                                </ng-multiselect-dropdown>
+                                                <span *ngIf="isSubmitted && FC.Financial_Year.errors"
+                                                    class="form-text text-muted">
+                                                    <span *ngIf="FC.Financial_Year.errors.required"
+                                                        style="color:red;">Please Select Financial
+                                                        Year!
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <!-- END::FINANCIAL YEARS -->
+
+                                            <!-- BEGIN::VERTICAL -->
+                                            <div class="col-sm-3" *ngIf="loginType != 'user'">
+                                                <ng-multiselect-dropdown class="form-control"
+                                                    placeholder="Select Vertical" [data]="Vertical_Ar"
+                                                    formControlName="Vertical_Id"
+                                                    [settings]="dropdownSettingsingleselect" (onSelect)="GetEmployees()"
+                                                    (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                                            </div>
+                                            <!-- END::VERTICAL -->
+
+                                            <!-- BEGIN::SERVICE LOCATION -->
+                                            <div class="col-sm-3" *ngIf="loginType != 'user'">
+                                                <ng-multiselect-dropdown class="form-control"
+                                                    placeholder="Select Service Location" [data]="Region_Ar"
+                                                    formControlName="Region_Id" [settings]="dropdownSettingsingleselect"
+                                                    (onSelect)="GetEmployees()" (onDeSelect)="GetEmployees()">
+                                                </ng-multiselect-dropdown>
+                                            </div>
+                                            <!-- END::SERVICE LOCATION -->
+
+                                            <!-- BEGIN::EMPLOYESS -->
+                                            <div class="col-sm-3" *ngIf="loginType != 'user'">
+                                                <ng-multiselect-dropdown class="form-control"
+                                                    placeholder="Select Employee" [data]="Emps_Ar"
+                                                    formControlName="Emp_Id" [settings]="dropdownSettingsingleselect"
+                                                    (onSelect)="GetAgents('1')" (onDeSelect)="GetAgents('1')">
+                                                </ng-multiselect-dropdown>
+                                            </div>
+                                            <!-- END::EMPLOYESS -->
+
+                                            <!-- BEGIN::REPORT TYPE -->
+                                            <div class="col-sm-3" *ngIf="loginType != 'user'">
+                                                <ng-multiselect-dropdown class="form-control"
+                                                    placeholder="Select Report Type" [data]="ReportTypeData"
+                                                    [(ngModel)]="SelectedReportType" formControlName="Report_Type"
+                                                    [settings]="dropdownSettingsingleselect"
+                                                    (onSelect)="SetReportType()" (onDeSelect)="SetReportType()"
+                                                    [disabled]="ReportTypeDisable"> </ng-multiselect-dropdown>
+                                            </div>
+                                            <!-- END::REPORT TYPE -->
+
+                                            <!-- BEGIN::AGENT -->
+                                            <div class="col-sm-3" *ngIf="loginType != 'user'">
+                                                <ng-multiselect-dropdown class="form-control"
+                                                    [placeholder]="Agents_Placeholder" [data]="Agents_Ar"
+                                                    formControlName="Agent_Id" [settings]="dropdownSettingsmultiselect">
+                                                </ng-multiselect-dropdown>
+                                            </div>
+                                            <!-- END::AGENT -->
+
+                                            <!-- BEGIN::COMPANIES -->
+                                            <div class="col-sm-3" *ngIf="loginType != 'user'">
+                                                <ng-multiselect-dropdown class="form-control"
+                                                    placeholder="Select Ins Company" [data]="Companies_Ar"
+                                                    formControlName="Company_Id"
+                                                    [settings]="dropdownSettingsmultiselect">
+                                                </ng-multiselect-dropdown>
+                                            </div>
+                                            <!-- END::COMPANIES -->
+
+                                            <!-- BEGIN::SOURCE -->
+                                            <div class="col-sm-3" *ngIf="loginType != 'user'">
+                                                <ng-multiselect-dropdown class="form-control"
+                                                    placeholder="Select Source" [data]="SRSource_Ar"
+                                                    formControlName="SR_Source_Type"
+                                                    [settings]="dropdownSettingsmultiselect1">
+                                                </ng-multiselect-dropdown>
+                                            </div>
+                                            <!-- END::SOURCE -->
+
+                                            <!-- BEGIN::SR TYPE -->
+                                            <div class="col-sm-3" *ngIf="loginType != 'user'">
+                                                <ng-multiselect-dropdown class="form-control"
+                                                    placeholder="Select SR Type" [data]="SRType_Ar"
+                                                    formControlName="SR_Type" [settings]="dropdownSettingsingleselect1">
+                                                </ng-multiselect-dropdown>
+                                            </div>
+                                            <!-- END::SR TYPE -->
+
+                                            <!-- BEGIN::STATUS -->
+                                            <div class="col-sm-3" *ngIf="loginType != 'user'">
+                                                <ng-multiselect-dropdown class="form-control"
+                                                    placeholder="Select Status" [data]="Status_Ar"
+                                                    [(ngModel)]="SelectedCurrentStatus" formControlName="Status"
+                                                    [settings]="dropdownSettingsingleselect1"
+                                                    (onSelect)="EnableDisableMonthFilter('Status')"
+                                                    (onDeSelect)="EnableDisableMonthFilter('Status')">
+                                                </ng-multiselect-dropdown>
+                                                <span *ngIf="isSubmitted && FC.Status.errors"
+                                                    class="form-text text-muted">
+                                                    <span *ngIf="FC.Status.errors.required" style="color:red;">Please
+                                                        Select Status !</span>
+                                                </span>
+                                            </div>
+                                            <!-- END::STATUS -->
+
+                                            <!-- BEGIN::MONTHS  -->
+                                            <div class="col-sm-3"
+                                                *ngIf="(SearchForm.value['Status'] && SearchForm.value['Status'].length > 0 && SearchForm.value['Status'][0]['Id'] == 'Due') && loginType != 'user'">
+                                                <ng-multiselect-dropdown class="form-control" placeholder="Select Month"
+                                                    [data]="Months_Ar" [(ngModel)]="SelectedCurrentMonth"
+                                                    formControlName="Month_Name"
+                                                    [settings]="dropdownSettingsingleselect1"
+                                                    [disabled]="DisableMonthField">
+                                                </ng-multiselect-dropdown>
+                                            </div>
+                                            <!-- END::MONTHS  -->
+
+                                            <!-- BEGIN::DATE RANGE  -->
+                                            <div class="col-sm-3"
+                                                *ngIf="(SearchForm.value['Status'] && SearchForm.value['Status'].length > 0 && SearchForm.value['Status'][0]['Id'] != 'Due' && SearchForm.value['Status'][0]['Id'] != 'Grace') && loginType != 'user'">
+                                                <input type="text" placeholder="Select Date OR Date-Range"
+                                                    class="form-control" formControlName="DateOrDateRange"
+                                                    bsDaterangepicker
+                                                    [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }"
+                                                    [minDate]="minDate" [maxDate]="maxDate">
+                                                <span *ngIf="isSubmitted && FC.DateOrDateRange.errors"
+                                                    class="form-text text-muted">
+                                                    <span *ngIf="FC.DateOrDateRange.errors.required"
+                                                        style="color:red;">Please Select Date OR
+                                                        Date-Range !</span>
+                                                </span>
+                                            </div>
+                                            <!-- END::DATE RANGE  -->
+
+                                            <!-- BEGIN::DATE RANGE  -->
+                                            <div class="col-sm-3"
+                                                *ngIf="(SearchForm.value['Status'] && SearchForm.value['Status'].length > 0 && SearchForm.value['Status'][0]['Id'] == 'Grace')">
+                                                <input type="text" placeholder="Select Date OR Date-Range"
+                                                    class="form-control" formControlName="DateOrDateRange" readonly>
+                                                <span *ngIf="isSubmitted && FC.DateOrDateRange.errors"
+                                                    class="form-text text-muted">
+                                                    <span *ngIf="FC.DateOrDateRange.errors.required"
+                                                        style="color:red;">Please Select Date OR
+                                                        Date-Range !</span>
+                                                </span>
+                                            </div>
+                                            <!-- END::DATE RANGE  -->
+
+                                            <!-- BEGIN::GLOBAL SERACH  -->
+                                            <div class="col-sm-3">
+                                                <input type="text" formControlName="GlobalSearch"
+                                                    placeholder="Search SR No/Policy/Vehicle No." class="form-control">
+                                            </div>
+                                            <!-- END::GLOBAL SERACH  -->
+
+                                            <!-- BEGIN::SERACH FUCNTIONS  -->
+                                            <div class="col-lg-3">
+                                                <button type="submit" class="btn btn-info" style="font-size: small;"
+                                                    value="Search">
+                                                    <i class="fa fa-search"> Search</i>
+                                                </button> &nbsp;&nbsp;
+
+                                                <button (click)="ClearSearch()" type="button" style="font-size: small;"
+                                                    class="btn btn-danger" value="Reset">
+                                                    <i class="fa fa-close"> Reset</i>
+                                                </button>
+                                            </div>
+                                            <!-- END::SERACH FUCNTIONS  -->
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="All">
+
+                                <div class="custom_table">
+                                    <ul class="responsive-table">
+
+                                        <cdk-virtual-scroll-viewport #scroller itemSize="72" class="content mt_0">
+                                            <mat-list>
+                                                <ng-container *cdkVirtualFor="let row of post; let i=index;">
+
+                                                    <mat-list-item>
+                                                        <li class="table-row">
+                                                            <span class="addon_tag_name">{{row.Product_Id}} -
+                                                                HCP{{row.SR_No}}</span>
+
+                                                            <p class="life_status_label">
+                                                                <span
+                                                                    *ngIf="row.Renewal_Status == 0  && (SearchForm.value['Status'] && SearchForm.value['Status'].length > 0 && (SearchForm.value['Status'][0]['Id'] != 'Grace' && SearchForm.value['Status'][0]['Id'] != 'Lapsed'))"
+                                                                    class="btn btn-warning">Pending</span>
+                                                                <span
+                                                                    *ngIf="row.Renewal_Status == 1 && (SearchForm.value['Status'] && SearchForm.value['Status'].length > 0 && (SearchForm.value['Status'][0]['Id'] != 'Grace' && SearchForm.value['Status'][0]['Id'] != 'Lapsed'))"
+                                                                    class="btn btn-success">Complete</span>
+                                                                <span
+                                                                    *ngIf="(SearchForm.value['Status'] && SearchForm.value['Status'].length > 0 && (SearchForm.value['Status'][0]['Id'] == 'Grace' || SearchForm.value['Status'][0]['Id'] == 'Lapsed'))"
+                                                                    class="btn btn-warning">Lasped Days : {{
+                                                                    row.Lapsed_Days }}</span>
+                                                            </p>
+
+                                                            <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                                                                <div class="agents_data agents_data1">
+                                                                    <div class="icon_re_cl">{{ row.SrNo }}</div>
+                                                                    <div class="agent_name_mobile">
+
+                                                                        <div class="agent_data">
+                                                                            <div>Customer Details </div>
+                                                                            <strong class="fs_18">{{row.Customer_Name}}
+                                                                                - {{row.Customer_Mobile}}</strong>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="agents_data agents_data2">
+                                                                    <div class="agent_name_mobile">
+                                                                        <div class="agent_data">
+                                                                            <div>POSP Details.</div>
+                                                                            <strong class="fs_18">{{row.Pos_Name}} -
+                                                                                {{row.Pos_Mobile}}</strong>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="agents_data agents_data3">
+                                                                    <div class="agent_name_mobile">
+                                                                        <div class="agent_data">
+                                                                            <div>RM Details</div>
+                                                                            <strong class="fs_18">{{ row.RM_Name }} - {{
+                                                                                row.RM_Mobile }}</strong>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="last_row_div">
+                                                                <!-- Business Call && Club Related Section Start-->
+                                                                <div class="d_flex custon-234">
+
+                                                                    <div class="label_chips finance_lob">
+                                                                        <span>Policy No. - {{ row.Policy_No }}</span>
+                                                                    </div>
+                                                                    <div class="label_chips non_motor_lob">
+                                                                        <span>Payment Frequency - {{
+                                                                            row.Payment_Frequance
+                                                                            }}</span>&nbsp;&nbsp;
+                                                                    </div>
+
+                                                                    <div class="label_chips health_lob">
+                                                                        <span>Net Premium - {{ row.Net_Premium
+                                                                            }}</span>&nbsp;&nbsp;
+                                                                    </div>
+
+                                                                    <div class="label_chips motor_lob">
+                                                                        <span>Gross Premium - {{
+                                                                            row.Estimated_Gross_Premium
+                                                                            }}</span>&nbsp;&nbsp;
+                                                                    </div>
+
+                                                                </div>
+                                                                <!-- Business Call && Club Related Section End-->
+
+                                                            </div>
+
+                                                            <div class="last_row">
+                                                                <div class="d_flex effective_date">
+                                                                    <div class="date_text">
+                                                                        <span class="fs_12">Renewal Date</span>
+                                                                        <span class="fs_12">{{row.Renewal_Date}}</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Business Call && Club Related Section Start-->
+                                                                <div
+                                                                    class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                                                                    <a style="cursor: pointer;" href="javascript:;"
+                                                                        (click)="SrPopup(1,row.Id)"> Details
+                                                                        >></a>
+
+                                                                    <a style="cursor: pointer;"
+                                                                        (click)="ViewRenewalTrack(row.Id, row.ShowAction)"
+                                                                        class=" btn-bg">
+                                                                        Payment Track >></a>
+
+                                                                    <a style="cursor: pointer;"
+                                                                        *ngIf="(row.Renewal_Status == 0 && row.ShowAction == 'Yes')"
+                                                                        (click)="UpdateRenewalAction(row.Id, row.Track_Id, i)"
+                                                                        class=" btn-bg1"> Action
+                                                                        >></a>
+
+                                                                </div>
+                                                                <!-- Business Call && Club Related Section End-->
+
+                                                            </div>
+                                                        </li>
+
+                                                        <mat-divider></mat-divider>
+                                                    </mat-list-item>
+                                                </ng-container>
+
+                                                <div class="spinner-item"
+                                                    *ngIf="post?.length > 0 && show_spinner == 'yes'"
+                                                    style="display: block;margin: auto; width: 50px;">
+                                                    <mat-progress-spinner [mode]="'indeterminate'"
+                                                        [diameter]="50"></mat-progress-spinner>
+                                                </div>
+
+                                                <ul class="responsive-table" *ngIf="post?.length == 0">
+                                                    <li class="table-row">
+                                                        <div class="no_data_found">No data available !</div>
+                                                    </li>
+                                                </ul>
+                                            </mat-list>
+                                        </cdk-virtual-scroll-viewport>
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

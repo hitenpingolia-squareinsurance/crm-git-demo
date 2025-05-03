@@ -1,0 +1,200 @@
+<table>
+
+    <tr>
+      <td colspan="1" align="center">
+        <b>Full SR NO : {{row.SR_No}}</b>
+      </td>
+  
+      <td colspan="2" align="center">
+        <b>SR_Type: {{row.SR_Type}}</b>
+  
+      </td>
+      <td colspan="2" align="center">
+        <b>Policy No: {{row.Policy_No}}</b>
+  
+      </td>
+  
+      <td colspan="1" align="center">
+        <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+      </td>
+    </tr>
+  
+  
+    <tbody>
+      <tr class="ValueTD">
+        <td colspan="5">Details</td>
+      </tr>
+      <tr>
+        <td colspan="2"><b>Agent Code</b>: {{row.Agent_Code}}</td>
+        <td colspan="2"><b>RM Code </b>: {{row.RM_Code}}</td>
+        <td colspan="2"><b>LOB </b>: {{row.LOB}}</td>
+      </tr>
+
+      <tr>
+        <td colspan="2"><b>File Type </b>: {{row.File_Type}}</td>
+        <td colspan="2"><b>Insurer Renewal </b>: {{row.Insurer_Renewal}}</td>
+        <td colspan="2"><b>PA Owner </b>: {{row.PA_Owner}}</td>
+      </tr>
+      <tr>
+        <td colspan="2"><b>PA Owner Tenure </b>: {{row.PA_Owner_Tenure}}</td>
+        <td colspan="2"><b>Product </b>: {{row.Product}}</td>
+        <td colspan="2"><b>Segment </b>: {{row.Segment}}</td>
+      </tr>
+  
+  
+  
+      <tr>
+        <td colspan="2"><b>Plan Type </b>: {{row.Plan_Type}}</td>
+        <td colspan="2"><b>Make </b>: {{row.Make}}</td>
+        <td colspan="2"><b>Model </b>: {{row.Model}}</td>
+      </tr>
+  
+  
+      <tr>
+        <td colspan="2"><b>Variant </b>: {{row.Variant}}</td>
+        <td colspan="2"><b>Body Type </b>: {{row.Body_Type}}</td>
+        <td colspan="2"><b>Fuel Type </b>: {{row.Fuel_Type}}</td>
+      </tr>
+    </tbody>
+    <tbody>
+     
+      <tr>
+        <td colspan="2"><b>Seating Capcity</b>: {{row.Seating_Capcity}}</td>   
+        <td colspan="2"><b>Vehicle Type </b>: {{row.Vehicle_Type}}</td>
+        <td colspan="2"><b>Registration No </b>: {{row.Registration_No}}</td>
+      </tr>
+      <tr>
+        <td colspan="2"><b>Purchase Date </b>: {{row.Purchase_Date}}</td>
+        <td colspan="2"><b>Manufacture Year </b>: {{row.Manufacture_Year}}</td>
+        <td colspan="2"><b>Engine No </b>: {{row.Engine_No}}</td>
+      </tr>
+    </tbody>
+    
+
+
+    <tbody>
+      <tr class="ValueTD">
+        <td colspan="2"><b>Chasis No </b>: {{row.Chasis_No}}</td>
+        <td colspan="2"><b>State </b>: {{row.State}}</td>
+        <td colspan="2"><b>RTO </b>: {{row.RTO}}</td>
+      </tr>
+      <tr>
+        <td colspan="2"><b>Broker Code</b>: {{row.Broker_Code}}</td>
+        <td colspan="2"><b>Insurance Company </b>: {{row.Insurance_Company}}</td>
+        <td colspan="2"><b>Insurance Company Branch </b>: {{row.Insurance_Company_Branch}}</td>
+      </tr>
+    </tbody>
+
+    <tbody>
+     
+      <tr>
+        <td colspan="2"><b>Customer Name </b>: {{row.Customer_Name}}</td>
+        <td colspan="2"><b>Customer Mobile </b>: {{row.Customer_Mobile}}</td>
+        <td colspan="2"><b>Customer Email</b>: {{row.Customer_Email}}</td>
+      </tr>
+      <tr>
+        <td colspan="2"><b>Policy Start Date OD</b>: {{row.Policy_Start_Date_OD}}</td>
+        <td colspan="2"><b>Policy Start Date OD</b>: {{row.Policy_Start_Date_OD}}</td>
+        <td colspan="2"><b>Policy End Date OD</b>: {{row.Policy_End_Date_OD}}</td>
+      </tr>
+    </tbody>
+
+
+    <tbody>
+     
+      <tr>
+       
+        <td colspan="2"><b>Policy Start Date TP </b>: {{row.Policy_Start_Date_TP}}</td>
+        <td colspan="2"><b>Policy End Date TP </b>: {{row.Policy_End_Date_TP}}</td>
+        <td colspan="2"><b>Mode Of Payment</b>: {{row.Mode_Of_Payment}}</td>
+      </tr>
+      <tr>
+      
+        <td colspan="2"><b>Payment Cheque Ref No</b>: {{row.Payment_Cheque_Ref_No}}</td>
+        <td colspan="2"><b>Payout Mode </b>: {{row.Payout_Mode}}</td>
+        <td colspan="2"><b>TPPD </b>: {{row.TPPD}}</td>
+      </tr>
+    </tbody>
+
+
+    <tbody>
+     
+      <tr>
+        
+        <td colspan="2"><b>Basic OD</b>: {{row.Basic_OD}}</td>
+        <td colspan="2"><b>Basic TP</b>: {{row.Basic_TP}}</td>
+        <td colspan="2"><b>Other TP </b>: {{row.Other_TP}}</td>
+      </tr>
+      <tr>
+       
+        <td colspan="2"><b>PA Owner Premium </b>: {{row.PA_Owner_Premium}}</td>
+        <td colspan="2"><b>Terrorism Premium</b>: {{row.Terrorism_Premium}}</td>
+        <td colspan="2"><b>Net Premium</b>: {{row.Net_Premium}}</td>
+        
+      </tr>
+    </tbody>
+
+   
+
+    <tbody>
+     
+      <tr>
+       
+        <td colspan="2"><b>Gross Premium </b>: {{row.Gross_Premium}}</td>
+        <td colspan="2"><b>Sum Insured </b>: {{row.Sum_Insured}}</td>
+        <td colspan="2"><b>IDV</b>: {{row.IDV}}</td>
+      </tr>
+      <tr>
+       
+        <td colspan="2"><b>NCB</b>: {{row.NCB}}</td>
+        <td colspan="2"><b>Discount </b>: {{row.Discount}}</td>
+        <td colspan="2"><b>System Discount </b>: {{row.System_Discount}}</td>
+      </tr>
+    </tbody>
+  
+
+    <tbody>
+     
+      <tr>
+      
+        <td colspan="2"><b>Previous Insurer Name</b>: {{row.Previous_Insurer_Name}}</td>
+        <td colspan="2"><b>Previous Policy No</b>: {{row.Previous_Policy_No}}</td>
+        <td colspan="2"><b>Previous Expiry Date </b>: {{row.Previous_Expiry_Date}}</td>
+
+      </tr>
+      <tr>
+   
+        <td colspan="2"><b>Policy Issue Date </b>: {{row.Policy_Issue_Date}}</td>
+        <td colspan="2"><b>Booking Date</b>: {{row.Booking_Date}}</td>
+        <td colspan="2"><b>Third Party Insurer Name</b>: {{row.Third_Party_Insurer_Name}}</td>
+        
+      </tr>
+    </tbody>
+
+   
+   
+
+    <tbody>
+     
+      <tr>
+        
+        <td colspan="2"><b>Third Party Policy Number </b>: {{row.Third_Party_Policy_Number}}</td>
+        <td colspan="2"><b>Third Party Premium </b>: {{row.Third_Party_Premium}}</td>
+        <td colspan="2"><b>Imd code</b>: {{row.Imd_code}}</td>
+      </tr>
+    </tbody>
+    <tbody>
+     
+      <tr>
+        <td colspan="2"><b>Add_Stamp </b>: {{row.Add_Stamp}}</td>
+        <td colspan="4"><b>Address </b>: {{row.Address}}</td>
+      </tr>
+      
+    </tbody>
+   
+  
+  
+  
+  
+  
+  </table>

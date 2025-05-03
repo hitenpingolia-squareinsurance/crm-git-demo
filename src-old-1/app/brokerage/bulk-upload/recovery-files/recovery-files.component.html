@@ -1,0 +1,96 @@
+<div class="inner_page_css main_dashboard_css">
+ 
+    <section class="container-fluid">
+    
+    
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Recovery Files</div>
+          </div>
+
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                <li class="breadcrumb-item"> <a href="javascript:;" class="text-muted"> Bulk Upload </a> </li>
+                <li class="breadcrumb-item"> <a href="javascript:;" class="text-muted"> Extra Reward Files </a> </li>
+              </ul>
+    <!--end::Button--> 
+            <div class="card-header">
+                <div class="card-title">
+                <h3 class="card-label"></h3>
+                </div>
+                <div class="card-toolbar">
+                <label >
+                <a class="btn btn-primary font-weight-bolder" (click)="DownloadSampleExcel()"><span class="svg-icon svg-icon-md" download><i class="icon-xl fas fa-download "></i></span> Sample Format</a>
+                </label> &nbsp;&nbsp;
+            <label for="file-input">
+                <a class="btn btn-primary font-weight-bolder"><span class="svg-icon svg-icon-md">
+                    <input (change)="UploadExcel($event)" style="display: none;" type="file" id="file-input"/><i class="icon-xl fas fa-plus"></i></span> Upload Excel </a>
+                </label>
+            </div>
+            </div>
+             
+                <!--begin: Datatable-->
+                <div class="table-responsive mydiv">
+         
+               
+                	<table datatable [dtOptions]="dtOptions" class="row-border hover table table-bordered table-hover table-checkable" id="kt_datatable" style="width:100%; margin-top: 13px !important">
+                        <thead>
+                          <tr>
+                            <th>No.</th>
+                            <th>Details</th>
+                            <th>Bulk Id</th>
+                            <th>Total SR </th>
+                            <th>Upload Date</th>
+                          </tr>
+                        </thead>
+          
+                        <tbody *ngIf="dataAr?.length != 0">
+                            <tr *ngFor="let row of dataAr; let i=index;">
+                      <td>{{ row.SrNo }}.</td>
+          
+                                <td><a title="SR-Actions" href="javascript:;"  (click)="ExtraPayoutDetails(row.Bulk_Id)">
+                        <span style="margin-bottom: 5px;" class="label label-info label-inline mr-2">Details</span>
+                      </a></td>
+          
+                                <td>{{ row.Bulk_Id }}</td>
+                                <td>{{ row.TotalSR }}</td>
+                                <td>{{ row.SR_Add_Date }}</td>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="dataAr?.length == 0">
+          
+                          <tr>
+                            <td colspan="6" align="center">No data Available !</td>
+                          </tr>
+                        <tbody>
+                      </table>
+               
+               
+               </div>
+
+          </div>
+
+        </div>
+       
+  
+        
+    
+              
+             
+       
+           
+    
+    
+    
+    
+        </div>
+        <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </section>
+      <!-- /.content -->
+    
+    </div>  
+      

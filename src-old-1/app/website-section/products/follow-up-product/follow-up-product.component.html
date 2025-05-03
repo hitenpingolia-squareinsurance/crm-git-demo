@@ -1,0 +1,82 @@
+<div style="text-align: right; margin-top: -22px;">
+  <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+</div>
+
+<div class="box box-default" *ngIf="(Status2 != '3' && Status2 != '4')">
+  <div class="box-header with-border">
+    <h3 class="box-title">Details Form</h3>
+
+
+  </div>
+
+  <form [formGroup]="UpdateFollowForm" (ngSubmit)="UpdateFollowFormS()">
+    <!-- /.box-header -->
+    <div class="box-body">
+      <div class="row">
+
+        <div class="form-group row">
+
+          <div class="col-lg-3">
+
+            <select class="form-control" (change)="UpdateStatusValue($event)" formControlName="Status">
+
+              <option [value]="'2'" [selected]="Status2 == '1' || Status2 == '2'"
+                [disabled]="Status2 == '3' || Status2=='4'"> Follow Up </option>
+              <option [value]="'3'" [selected]="Status2=='3'" [disabled]="Status2=='4'"> Converted </option>
+              <option [value]="'4'" [selected]="Status2=='4'" [disabled]="Status2=='3'"> Lost </option>
+
+
+
+            </select>
+          </div>
+
+          <div class="col-lg-3" *ngIf="DateTimesShow">
+            <label> Date:</label>
+            <input type="text" class="form-control" bsDatepicker [minDate]="today" [maxDate]="Nextes"
+              formControlName="Dates" class="form-control">
+            <span *ngIf="isSubmitted && FC.Dates.errors" class="form-text text-muted">
+              <span *ngIf="FC.Dates.errors.required" style="color:red;">Field is required..!</span>
+            </span>
+          </div>
+
+          <div class="col-lg-3" *ngIf="DateTimesShow">
+            <label> Time:</label>
+            <input type="time" class="form-control" formControlName="Times" class="form-control">
+            <span *ngIf="isSubmitted && FC.Times.errors" class="form-text text-muted">
+              <span *ngIf="FC.Times.errors.required" style="color:red;">Field is required..!</span>
+            </span>
+          </div>
+
+          <div class="col-lg-6">
+            <label>Remarks:</label>
+            <textarea type="text" formControlName="Remarks" class="form-control" maxlength="1000"></textarea>
+            <span *ngIf="isSubmitted && FC.Remarks.errors" class="form-text text-muted">
+              <span *ngIf="FC.Remarks.errors.required" style="color:red;">Field is required..!</span>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="box-footer">
+      <button type="button" (click)="CloseModel()" class="btn btn-default pull-right">Cancel</button>
+      <button style="margin-right: 1%;" [disabled]="buttonDisable" type="submit"
+        class="btn btn-info pull-right">Update</button>
+    </div>
+  </form>
+
+</div>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Follow Up</h3>
+
+    <div class="box-tools pull-right">
+
+      <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+    </div>
+  </div>
+
+  <div class="modal-body card-box" id="show_ac_details" [innerHTML]="dataArr">
+  </div>
+</div>

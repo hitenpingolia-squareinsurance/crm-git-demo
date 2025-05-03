@@ -1,0 +1,118 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 *ngIf="ActivePage == 'Default'" class="box-title">View Tele RM POSP</h3>
+          </div>
+          <!-- /.box-header -->
+
+
+          <div class="box-body">
+          
+            <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+
+            <div class="mydiv">
+
+              <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+
+                    <th>S.No</th>
+                    <th> Agent Code</th>
+                    <th> Name</th>
+                    <th> Rm Details</th>
+                    <th> Department</th>
+                     <!-- <th> Email</th>
+                    <th> Mobile</th> -->
+                    <th>Create/Modified Date</th>
+                    <th>System Login Date</th>
+                    <th>POS Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{row.SrNo}}</td>
+                    <td>{{row.AgentId}}</td>
+                    <td>{{row.Name}}</td>
+                    <td> {{row.RmName}} - {{row.RmCode}} <br>
+                      {{row.RmMobile}}
+                      <br>
+                      {{row.RmEmail}}
+
+                    </td>
+                    <td>  {{row.Department}}</td>
+
+                    <!-- <td>{{row.Email}}</td>
+                    <td>{{row.Mobile}}</td> -->
+                    <td> <b>Create Date - </b> {{row.CreateDate}}<br> <b>Last Modified Date - </b>
+                      {{row.LastModifiedDate}}</td>
+                    <td>{{row.LastLoginDate}}</td>
+                    <td>
+                      <label *ngIf="row.PosStatus == 0" class="label label-primary">Pending</label>
+                      <label *ngIf="row.PosStatus == 1" class="label label-warning">Verified</label>
+                      <label *ngIf="row.PosStatus == 2" class="label label-success">Certified</label>
+                      <label *ngIf="row.PosStatus == 3" class="label label-danger">Incomplete</label>
+                      <label *ngIf="row.PosStatus == 4" class="label label-info">Under Training</label>
+                      <label *ngIf="row.PosStatus == 6" class="label label-danger">Rejected</label>
+                      <label *ngIf="row.PosStatus == 7  && row.PosNocStatus == 2"
+                          class="label label-success">NOC
+                        Released</label>
+
+                      <br>
+                      <a (click)="PospDetails(row.Id,'agent')"> <label class="label label-info">Details</label></a> <br>
+                      <br>
+                      <a *ngIf="row.Status == 0 && row.PosStatus == 2"> <label
+                          class="label label-danger">Inactive</label></a>
+
+                      <a *ngIf="row.Status == 1 && row.PosStatus == 2"> <label
+                          class="label label-success">Active</label></a>
+
+                      <br>
+                      <a style="cursor: pointer;" (click)="GetBusinessDetails(row.Id, row.Name)"
+                      class="label label-info">
+                        Reports </a>
+                      <!-- <a *ngIf="row.PosStatus == 7 && row.PosNocStatus == 2" (click)="ViewDocument(row.PosNocPdf)">
+                        <label class="label label-info"> &nbsp;<i class="fa fa-download"> NOC Letter</i> </label> </a> -->
+
+                      <br>
+                      <br>
+                    </td>
+
+                    <td>
+                      <a (click)="FollowupTelerm(row.Id,'agent')"> <label class="label label-info">Follow-Up</label></a>
+                      <br>
+
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+
+              </table>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

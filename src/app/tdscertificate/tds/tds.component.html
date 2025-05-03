@@ -1,0 +1,181 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="header_title">TDS Uploader</div>
+                            </div>
+                            <div class="col-md-2"><button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#exampleModal">TDS Uploader</button></div>
+                        </div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+                        <!-- <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchData()" ng>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="">
+                                        <ng-multiselect-dropdown class="form-control" name="Quarter"
+                                            placeholder="Select Quarter" [data]="QuarterSelect"
+                                            formControlName="Quarter"
+                                            [settings]="dropdownSettingsType"></ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="">
+                                        <ng-multiselect-dropdown class="form-control" name="Fiscal_Year"
+                                            placeholder="Select Fiscal Year" [data]="FiscalYear"
+                                            formControlName="Fiscal_Year"
+                                            [settings]="dropdownSettingsType"></ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3" *ngIf="this.CurrentUrl=='/tds/tds-view'">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" formControlName="SearchValue"
+                                            placeholder="Search ...">
+
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-info" style="font-size: small;" value="Search"><i
+                                        class="fa fa-search">
+                                    </i> Search</button>&nbsp;&nbsp;
+                                <button (click)="ClearSearch()" type="button" style="font-size: small;"
+                                    class="btn btn-danger" value="Reset"><i class="fa fa-close"> </i> Reset</button>
+                            </div>
+                        </form> -->
+                        <div>
+                            <div class="box box-default"
+                                style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                                <div class="custom_table tables_layout_design">
+                                    <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+
+                                    <ul class="responsive-table">
+                                        <li class="table-row" *ngFor="let row of dataAr; let i=index;">
+
+                                            <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                                                <div class="agents_data agents_data1">
+                                                    <div class="icon_re_cl">{{ row.SrNo }}</div>
+                                                    <div class="agent_name_mobile">
+                                                        <div class="agent_data">
+                                                            <div> Total File </div>
+                                                            <strong class="fs_18">{{ row.total_file }}</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="agents_data agents_data2">
+                                                    <div class="agent_name_mobile">
+                                                        <div class="agent_data">
+                                                            <div>Mapfile.</div>
+                                                            <strong class="fs_18">{{row.mapfile }}</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="agents_data agents_data3">
+                                                    <div class="agent_name_mobile">
+                                                        <div class="agent_data">
+                                                            <strong class="fs_18"><span class="link"></span><label
+                                                                    class="label label-info">
+
+                                                                    <a style="color: white"
+                                                                        [routerLink]="['/tds/tds-view/'+row.zip_id]">
+                                                                        View</a></label></strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="last_row_div">
+                                                <div class="d_flex custon-234">
+
+                                                    <div class="label_chips finance_lob">
+                                                        <span>Unmap file : {{ row.unmapfile }}</span>
+                                                    </div>
+
+                                                    <div *ngIf="row.unmapfile !=0" class="label_chips non_motor_lob">
+                                                        <span (click)="reMapping(row.zip_id)">Re
+                                                            Mapping</span>&nbsp;&nbsp;
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                        </li>
+                                    </ul>
+                                    <!--======= Refer Table END =========-->
+
+                                    <div class="row" *ngIf="dataAr?.length == 0">
+                                        <div class="col-md-12">
+                                            <div class="no_data_found">
+                                                <span><img src="assets/image/no_data_banner.jpg"></span>
+                                                <small>No data available !</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+<!--Bootstrap Modal Start-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog main_card_form modal-sm" role="document">
+        <div class="modal-content ">
+            <div class="main_header">
+                <div class="header_title">TDS Upload</div>
+            </div>
+            <form (ngSubmit)="submit()" [formGroup]="AddTDS" id="form-1">
+                <div class="main_body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input_group">
+                                <label for="state">ZIP Upload</label>
+                                <input type="file" class="form-control" formControlName="TDSZip"
+                                    (change)="UploadDocs($event,'TDSZip')">
+                                <div *ngIf="isSubmitted && formControls.TDSZip.errors" class="ValidationError">
+                                    <div *ngIf="formControls.TDSZip.errors.required">Please Select ZIP
+                                        Upload</div>
+                                </div>
+                                <div *ngIf="progress > 0">
+                                    <div class="progress-bar" role="progressbar" [style.width]="progress + '%'">
+                                        {{progress}}%</div>
+                                </div>
+                                <div *ngIf="message">
+                                    <p class="success">{{message}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_footer">
+                    <button type="button" class="mr_5 btn-danger Save_click" id="ClosePOUPUP"
+                    data-dismiss="modal" [disabled]="progress != 0" (click)="Close()">Close</button>
+                    <button type="button" class="Save_click" type="submit" [disabled]="progress != 0">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

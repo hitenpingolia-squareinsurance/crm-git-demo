@@ -1,0 +1,271 @@
+<div class="box box-default" *ngIf="(Pos_Status != '4' && ActionType =='Action')">
+    <div class="box-header with-border">
+        <h3 class="box-title">POS Verification</h3>
+        <div class="box-tools pull-right">
+            <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+        </div>
+    </div>
+    <div *ngIf="(Pos_Status != '4' && ActionType =='Action')">
+        <form [formGroup]="UpdateForm" (ngSubmit)="UpdatePosVerificationSatatus()">
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="form-group row" *ngIf="(Pos_Status == '0')">
+                        <div class="col-lg-3">
+                            <!-- <label> Agree:</label> -->
+                            <input type="radio" name="agree" formControlName="Agree" value="yes"
+                                id='agree_option'>&nbsp;&nbsp;Agree&nbsp;&nbsp;
+                        </div>
+                        <div class="col-lg-3">
+                            <!-- <label> Incomplete:</label> -->
+                            <input type="radio" name="agree" formControlName="Agree" value="no"
+                                id='agree_option'>&nbsp;&nbsp;Incomplete&nbsp;&nbsp;
+                        </div>
+                        <div class="col-lg-3">
+                            <!-- <label> Reject:</label> -->
+                            <input type="radio" name="agree" formControlName="Agree" value="reject"
+                                id='agree_option'>&nbsp;&nbsp;Reject&nbsp;&nbsp;
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-12"><label>Remarks</label>
+                                <textarea type="test" id="incomplete_remarks" formControlName="Remark"
+                                    name="incomplete_remarks" class="form-control"> </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="(Pos_Status == '1')">
+                        <div class="col-lg-3">
+                            <!-- <label> Incomplete:</label> -->
+                            <input type="radio" name="agree" value="training" formControlName="Agree"
+                                id='agree_option'>&nbsp;&nbsp;Accept For
+                            Tranning&nbsp;&nbsp;
+                        </div>
+                        <div class="col-lg-3">
+                            <!-- <label> Reject:</label> -->
+                            <input type="radio" name="agree" value="reject" formControlName="Agree"
+                                id='agree_option'>&nbsp;&nbsp;Reject&nbsp;&nbsp;
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-12"><label>Remarks</label>
+                                <textarea type="test" id="incomplete_remarks" formControlName="Remark"
+                                    name="incomplete_remarks" class="form-control"> </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="(Pos_Status == '4')">
+                        <div class="col-lg-3">
+                            <!-- <label> Incomplete:</label> -->
+                            <input type="radio" name="agree" value="posc" formControlName="Agree"
+                                id='agree_option'>&nbsp;&nbsp;Agree
+                            with Certificate&nbsp;&nbsp;
+                        </div>
+                        <div class="col-lg-3">
+                            <!-- <label> Reject:</label> -->
+                            <input type="radio" name="agree" value="reject" formControlName="Agree"
+                                id='agree_option'>&nbsp;&nbsp;Reject&nbsp;&nbsp;
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-12"><label>Remarks</label>
+                                <textarea type="test" id="incomplete_remarks" formControlName="Remark"
+                                    name="incomplete_remarks" class="form-control"> </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="(Pos_Status == '3')">
+                        <div class="col-lg-3">
+                            <!-- <label> Agree:</label> -->
+                            <input type="radio" name="agree" value="yes" formControlName="Agree"
+                                id='agree_option'>&nbsp;&nbsp;Agree&nbsp;&nbsp;
+                        </div>
+                        <div class="col-lg-3">
+                            <!-- <label> Reject:</label> -->
+                            <input type="radio" name="agree" value="reject" formControlName="Agree"
+                                id='agree_option'>&nbsp;&nbsp;Reject&nbsp;&nbsp;
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-12"><label>Remarks</label>
+                                <textarea type="test" id="incomplete_remarks" formControlName="Remark"
+                                    name="incomplete_remarks" class="form-control"> </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="(Pos_Status == '6')">
+                        <div class="col-lg-3">
+                            <!-- <label> Agree:</label> -->
+                            <input type="radio" name="agree" value="newPos" formControlName="Agree"
+                                id='agree_option'>&nbsp;&nbsp;New
+                            POS&nbsp;&nbsp;
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-12"><label>Remarks</label>
+                                <textarea type="test" id="incomplete_remarks" formControlName="Remark"
+                                    name="incomplete_remarks" class="form-control"> </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="button" (click)="CloseModel()" class="btn btn-default pull-right">Cancel</button>
+                <button style="margin-right: 1%;" type="submit" class="btn btn-info pull-right">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="box box-default" *ngIf="(Pos_Status == '4' && ActionType =='Action')">
+    <div class="box-header with-border">
+        <h3 class="box-title">Exam Training Details</h3>
+        <div class="box-tools pull-right">
+            <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+        </div>
+    </div>
+    <div class="customssss"> {{getAgentDetails}}</div>
+    <table class="table table-bordered" *ngIf="getAllModules?.length != 0">
+        <tr>
+            <td>Sr.No.</td>
+            <td>Module</td>
+            <td>Time</td>
+            <td>Status</td>
+        </tr>
+        <tr *ngFor="let row of getAllModules; let i=index;">
+            <td>
+                {{row.keys}}
+            </td>
+            <td>
+                {{row.module}}
+            </td>
+            <td>
+                {{row.times}}
+            </td>
+            <td>
+                <label class="btn btn-danger" *ngIf="(row.Status == '0')">Runing</label>
+                <label class="btn btn-success" *ngIf="(row.Status == '1')">Completed</label>
+            </td>
+        </tr>
+    </table>
+    <div class="col-sm-12" *ngIf="checkExamStatus != 0 && checkExamStatus != ''"><button type="button"
+            class='btn btn-success customcompletmodules' (click)="UpdateTrainingpos('Motor')">Complete All Module</button>
+    </div>
+</div>
+
+<div class="box box-default" *ngIf="(Pos_Status == '2' && ActionType =='Life')">
+    <div class="box-header with-border">
+        <h3 class="box-title">Exam Training Details</h3>
+        <div class="box-tools pull-right">
+            <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+        </div>
+    </div>
+    <div class="customssss"> {{getAgentDetails}}</div>
+    <table class="table table-bordered" *ngIf="getAllModules?.length != 0">
+        <tr>
+            <td>Sr.No.</td>
+            <td>Module</td>
+            <td>Time</td>
+            <td>Status</td>
+        </tr>
+        <tr *ngFor="let row of getAllModules; let i=index;">
+            <td>
+                {{row.keys}}
+            </td>
+            <td>
+                {{row.module}}
+            </td>
+            <td>
+                {{row.times}}
+            </td>
+            <td>
+                <label class="btn btn-danger" *ngIf="(row.Status == '0')">Runing</label>
+                <label class="btn btn-success" *ngIf="(row.Status == '1')">Completed</label>
+            </td>
+        </tr>
+    </table>
+    <div class="col-sm-12" *ngIf="checkExamStatus != 0 && checkExamStatus != ''"><button type="button"
+            class='btn btn-success customcompletmodules' (click)="UpdateTrainingpos('Life')">Complete All Module</button>
+    </div>
+</div>
+
+<div class="box box-default" *ngIf="(ActionType =='MoreAction')">
+    <div class="box-header with-border">
+        <h3 class="box-title">More Action</h3>
+        <div class="box-tools pull-right">
+            <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+        </div>
+    </div>
+    <div *ngIf="(AgentDetails.pos_status =='2')">
+        <div class="row" style="padding:7px">
+            <div class="col-sm-6"><strong>Create POS/Advisor Permission</strong></div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3">
+                <a *ngIf="(AgentDetails.create_pos_permission =='1')" style="cursor:pointer; color:white;"
+                    (click)="give_advisor_permission()" class="btn btn-grd-green label label-green">Advisor</a>
+                <a *ngIf="(AgentDetails.create_pos_permission =='2')" style="cursor:pointer; color:white;"
+                    (click)="give_permission()" class="btn btn-grd-success label label-success">Master Advisor</a>
+                <a *ngIf="(AgentDetails.create_pos_permission =='0')" style="cursor:pointer; color:white;"
+                    (click)="give_permission()" class="btn btn-grd-danger label label-danger">Not Allowed</a>
+            </div>
+        </div>
+        <!--Create Pos Permission-->
+        <div class="row" style="padding:7px">
+            <div class="col-sm-6"><strong>Create SP Permission</strong></div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3">
+                <a *ngIf="(AgentDetails.create_sp_permission =='1')" style="cursor:pointer; color:white;"
+                    (click)="give_sp_permission()" class="btn btn-grd-green label label-green">Allowed</a>
+                <a *ngIf="(AgentDetails.create_sp_permission =='0')" style="cursor:pointer; color:white;"
+                    (click)="give_sp_permission()" class="btn btn-grd-danger label label-danger">Not Allowed</a>
+            </div>
+        </div>
+        <!-- Regenrate Certificate-->
+        <div class="row" style="padding:7px">
+            <div class="col-sm-6"><strong>Regenrate Certificate</strong></div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3">
+                <a style="cursor:pointer; color:white;" (click)="regenerate_certificate()"
+                    class="btn btn-grd-primary label label-primary" download>Genrate</a>
+            </div>
+        </div>
+        <!-- Download Certificate-->
+        <div class="row" style="padding:7px">
+            <div class="col-sm-6"><strong>Download Certificate</strong></div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3"><a target="_blank"
+                    href="https://www.squareinsurance.in/squareadmin/uploads/certificate/{{AgentDetails.agent_id}}-certificate.pdf"
+                    class="btn btn-grd-primary label label-primary" download>Download</a></div>
+        </div>
+        <!-- Download Certificate-->
+        <div class="row" style="padding:7px">
+            <div class="col-sm-4"><strong>POSC Default Mail</strong></div>
+            <div class="col-sm-5"></div>
+            <div class="col-sm-3"><a style="cursor:pointer; color:white;"
+                    class="btn btn-grd-primary label label-primary" (click)="send_default_mail()">Send</a></div>
+        </div>
+    </div>
+    <!-- <div class="row" style="padding:7px">
+        <div class="col-sm-9">
+            <input name='mapping_employee' id='mapping_employeee' type="text" class="form-control"
+                onKeyup="return rel_employee(this.value,<?php echo $agent->id; ?>)" value="<?php echo $rm; ?>">
+            <span id="mapping_employee" style="display:none">
+                <p id="notfoundx"></p>
+            </span>
+        </div>
+        <div class="col-sm-3"><button class="btn btn-primary" type="button"
+                onClick="return update_reference(<?php echo $agent->id; ?>)">Update RM</button></div>
+    </div> -->
+    <div *ngIf="(AgentDetails.pos_status =='4')" class="row" style="padding:7px">
+        <a style="cursor:pointer; color:white;" class="btn btn-grd-primary label label-primary"
+            (click)="send_default_mail()">Resend Training Mail</a>
+    </div>
+    <!-- <div *ngIf="(AgentDetails.create_pos_permission =='1' || AgentDetails.create_pos_permission =='2' )" class="row"
+        style="padding:7px">
+        <input type="hidden" value="" id='mappingPosIdd'>
+        <div class="col-sm-9"><input name='pos_mapping' autocomplete="off" id='pos_mappingg' type="text"
+                class="form-control" onKeyup="return search_all_pos(this.value,<?php echo $agent->id; ?>)">
+            <span id="pos_mapping" style="display:none">
+                <p id="posnotfound"></p>
+            </span>
+        </div>
+        <div class="col-sm-3"><button class="btn btn-primary" type="button"
+                onClick="return update_pos_mapping(<?php echo $agent->id; ?>)">Map POS</button></div>
+    </div> -->
+</div>

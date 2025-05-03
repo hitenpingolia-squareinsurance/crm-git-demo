@@ -1,0 +1,187 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 *ngIf="ActivePage == 'Default'" class="box-title"> Square-Master </h3>
+          </div>
+          <!-- /.box-header -->
+
+
+          <div class="box-body">
+            <form class="form-blog-top" [formGroup]="searchForm" (ngSubmit)="SearchData()">
+
+              <div class="row" style="margin-top: 1%; padding-bottom: 30px;">
+
+                <!-- <div><input type="hidden" formControlName="SearchValue" name="SearchValue" class="form-control"
+                    placeholder="Search"></div> -->
+
+                <!-- <div class="col-sm-1"><input type="text" formControlName="type" name="type" class="form-control"
+                    placeholder="Type"></div> -->
+
+                <div class="col-sm-2"><input type="text" formControlName="make" name="make" class="form-control"
+                    placeholder="Make" (keyup)="SearchData()"></div>
+
+                <div class="col-sm-2"><input type="text" formControlName="modal" name="modal" class="form-control"
+                    placeholder="Modal" (keyup)="SearchData()"></div>
+
+                <div class="col-sm-2"><input type="text" formControlName="variant" name="variant" class="form-control"
+                    placeholder="Variant" (keyup)="SearchData()"></div>
+
+                <div class="col-sm-2"><input type="text" formControlName="cubic_capicity" name="cubic_capicity"
+                    class="form-control" placeholder="Cubic Capicity" (keyup)="SearchData()"></div>
+
+                <div class="col-sm-2">
+                  <select formControlName="fule_type" name="fule_type" (change)="SearchData()" class="form-control">
+                    <option disabled value=""> Select Fule-Type </option>
+                    <option *ngFor="let row of FuleData;" value="{{row.fule_type}}">{{row.fule_type}} </option>
+
+                  </select>
+                  <!-- <input type="text" formControlName="fule_type" name="fule_type"
+                    class="form-control" placeholder="Fule Type" (keyup)="SearchData()"> -->
+                </div>
+
+                <!-- <div class="col-sm-1" style="text-align: right;">
+                  <input type="submit" class="btn btn-info" value="Search"> &nbsp;&nbsp;
+                  <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger" value="Reset"> <i
+                      class="fa fa-close"> Reset</i> </button>
+                </div> -->
+
+              </div>
+              <!-- <hr>
+
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <b>Total Files :</b>
+                    </div>
+                    <div class="col-sm-2">
+                      {{TotalFiles}}
+                    </div>
+                  </div> -->
+
+            </form>
+
+            <div class="mydiv">
+
+
+
+
+              <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>MAKE</th>
+                    <th>Type</th>
+                    <th>Modal</th>
+                    <th>Variant</th>
+                    <th>Seating_Capicity</th>
+                    <th>Cubic_Capicity</th>
+                    <th>Fuel_Type</th>
+                    <th>Veh_Type_Name</th>
+                    <th>New India</th>
+                    <th>national</th>
+                    <th>chola</th>
+                    <!-- <th>universal</th> -->
+                    <th>universalMaster</th>
+                    <th>kotak</th>
+                    <th>digit</th>
+                    <th>acko</th>
+                    <th>reliance</th>
+                    <th>hdfc</th>
+                    <th>bajaj</th>
+                    <th>bharti</th>
+                    <th>tata</th>
+                    <th>shriram</th>
+                    <!-- <th>shriram_pcv</th>
+                <th>shriram_gcv</th>
+                <th>reliance_pcv</th>
+                <th>tata_pcv</th>
+                <th>digit_pcv</th> -->
+                    <th>icici</th>
+                    <th>iffco</th>
+                    <th>sbi</th>
+                    <th>oriental</th>
+                    <!-- <th>OrientalVcode</th> -->
+                    <th>royalSundaram</th>
+                    <th>future</th>
+                    <th>united</th>
+                    <th>magmaMaster</th>
+                    <th>raheja</th>
+                    <th>status</th>
+
+                  </tr>
+
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr">
+                    <td>{{row.SrNo}}.</td>
+                    <td>{{row.make}}.</td>
+                    <td>{{row.type}}</td>
+                    <td>{{row.modal}}</td>
+                    <td>{{row.variant}}</td>
+                    <td>{{row.seating_capicity}}</td>
+                    <td>{{row.cubic_capacity}}</td>
+                    <td>{{row.fule_type}}</td>
+                    <td>{{row.Veh_Type_Name}}</td>
+                    <td><a (click)="ForApproval(row.id,row.newindia_master,row.type)">{{row.new_india}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.national_master,row.type)">{{row.national}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.cholamandalam_master,row.type)">{{row.cholamandalam}}</a>
+                    </td>
+                    <!-- <td><a (click)="ForApproval(row.id,row.universals,row.type)">{{row.universal}}</a></td> -->
+                    <td><a (click)="ForApproval(row.id,row.universalMasters,row.type)">{{row.universalMaster}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.kotaks,row.type)">{{row.kotak}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.digits,row.type)">{{row.digit}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.ackos,row.type)">{{row.acko}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.reliances,row.type)">{{row.reliance}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.hdfcs,row.type)">{{row.hdfc}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.bajajs,row.type)">{{row.bajaj}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.bhartis,row.type)">{{row.bharti}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.tatas,row.type)">{{row.tata}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.shrirams,row.type)">{{row.shriram}}</a></td>
+                    <!-- <td><a (click)="ForApproval(row.id,row.shriram_pcvs,row.type)">{{row.shriram_pcv}}</a></td>
+                <td><a (click)="ForApproval(row.id,row.shriram_gcvs,row.type)">{{row.shriram_gcv}}</a></td>
+                <td><a (click)="ForApproval(row.id,row.reliance_pcvs,row.type)">{{row.reliance_pcv}}</a></td>
+                <td><a (click)="ForApproval(row.id,row.tata_pcvs,row.type)">{{row.tata_pcv}}</a></td>
+                <td><a (click)="ForApproval(row.id,row.digit_pcvs,row.type)">{{row.digit_pcv}}</a></td> -->
+                    <td><a (click)="ForApproval(row.id,row.icicis,row.type)">{{row.icici}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.iffcos,row.type)">{{row.iffco}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.sbis,row.type)">{{row.sbi}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.orientals,row.type)">{{row.oriental}}</a></td>
+                    <!-- <td><a (click)="ForApproval(row.id,row.orientalvcodes,row.type)">{{row.OrientalVcode}}</a></td> -->
+                    <td><a (click)="ForApproval(row.id,row.royalsundarams,row.type)">{{row.royalSundaram}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.futures,row.type)">{{row.future}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.uniteds,row.type)">{{row.united}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.magmaMasters,row.type)">{{row.magmaMaster}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.rahejas,row.type)">{{row.raheja}}</a></td>
+                    <td>{{row.status}}</td>
+
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="14" align="center">No data available!</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

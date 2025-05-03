@@ -1,0 +1,265 @@
+<form class="form" [formGroup]="AddExtraExpForm">
+  <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+  <table class="table">
+    <tbody>
+      <tr>
+        <td>
+          <div id="exTab1" class="">
+            <ul class="nav nav-pills">
+              <li class="active">
+                <a href="#1a" data-toggle="tab">+ Add New</a>
+              </li>
+              <li><a href="#2a" data-toggle="tab">Track Details</a>
+              </li>
+              <li style="font-size: 17px;color: #554489;font-weight:600;padding: 9px 0;width: 56%;text-align: right;">
+                Add Extra Expenses</li>
+            </ul>
+            <div class="tab-content add_extra_scroll clearfix">
+              <div class="tab-pane active" id="1a">
+                <div class="main_body ">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <form [formGroup]="AddExtraExpForm" style="padding: 0 15px;">
+                        <div class="row" style="margin-top: 10px;">
+                          <div class="col-sm-6">
+                            <div class="input_group">
+                              <label>Share Status : </label>
+                              <ng-multiselect-dropdown class="form_control_ng" placeholder="Select Status"
+                                [data]="Share_Status_Ar" formControlName="Share_Status"
+                                (onSelect)="OnSharingStatusChange()" [settings]="dropdownSettingsingleselect">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-6">
+                            <div class="input_group">
+                              <label>Expense Date : </label>
+                              <input type="text" placeholder="Select Date" class="form_control"
+                                formControlName="Expense_Date" bsDatepicker
+                                [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                            </div>
+                          </div>
+                        </div>
+
+                        <!--============= Sharing Section Details Start ==============-->
+                        <div class="row" style="margin-top: 10px;"
+                          *ngIf="(this.AddExtraExpForm.value['Share_Status'].length == 1 && this.AddExtraExpForm.value['Share_Status'][0]['Id'] == 'Sharing')">
+                          <div class="col-sm-6">
+                            <div class="input_group">
+                              <label>Expense Type : </label>
+                              <ng-multiselect-dropdown class="form_control_ng" placeholder="Select Expense Type"
+                                [data]="Expense_Type_Ar" formControlName="Expense_Type"
+                                [settings]="dropdownSettingsingleselect">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-6">
+                            <div class="input_group">
+                              <label>Branch : </label>
+                              <ng-multiselect-dropdown class="form_control_ng" placeholder="Select Branch"
+                                [data]="Branch_Ar" formControlName="Branch_Id" [settings]="dropdownSettingsingleselect">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row" style="margin-top: 10px;"
+                          *ngIf="(this.AddExtraExpForm.value['Share_Status'].length == 1 && this.AddExtraExpForm.value['Share_Status'][0]['Id'] == 'Sharing')">
+                          <div class="col-sm-6">
+                            <div class="input_group">
+                              <label>Expense Amount : </label>
+                              <input type="text" placeholder="Enter Expense Amount" class="form_control"
+                                formControlName="Expense_Amount">
+                              <span *ngIf="isSubmitted && FC_6.Expense_Amount.errors" class="form-text text-muted">
+                                <span *ngIf="FC_6.Expense_Amount.errors.pattern" style="color:red;">Please enter
+                                  valid amount !</span>
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-6">
+                            <div class="input_group">
+                              <label>Remarks (If Any) : </label>
+                              <input type="text" placeholder="Enter Remarks" class="form_control"
+                                formControlName="Remarks">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div formArrayName="Department_List" style="margin-top: 15px;"
+                          *ngIf="(this.AddExtraExpForm.value['Share_Status'].length == 1 && this.AddExtraExpForm.value['Share_Status'][0]['Id'] == 'Sharing')">
+                          <div *ngFor="let c of dep_list_func().controls; let i=index" [formGroupName]="i">
+                            <div class="row" style="margin-bottom: 15px;">
+                              <div class="col-sm-2">
+                                <div class="input_group"><input type="text" readonly formControlName="dep_id"
+                                    class="form_control" value="{{i + 1}}"></div>
+                              </div>
+
+                              <div class="col-sm-6">
+                                <div class="input_group">
+                                  <ng-multiselect-dropdown class="form_control_ng" placeholder="Select Department"
+                                    [data]="Department_Ar" formControlName="dep_type"
+                                    [settings]="dropdownSettingsingleselect">
+                                  </ng-multiselect-dropdown>
+                                </div>
+                              </div>
+
+                              <div class="col-sm-3">
+                                <div class="input_group"><input type="number" placeholder="0"
+                                    formControlName="exp_percent" class="form_control"></div>
+                              </div>
+
+                              <div class="col-sm-1">
+                                <button *ngIf="i==0" type="button" (click)="AddNewDep()" class="btn btn-primary"
+                                  style="width: 33px;height:33px;">
+                                  <i style="color:#fff;" class="fa fa-plus"></i></button>
+                                <button *ngIf="i!=0" (click)="RemoveNewDep(i)" class="btn btn-danger"
+                                  style="width: 33px;height:33px;">
+                                  <i class="fa fa-close"></i></button>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row" style="margin-top: 10px;"
+                          *ngIf="(this.AddExtraExpForm.value['Share_Status'].length == 0 || (this.AddExtraExpForm.value['Share_Status'].length == 1 && this.AddExtraExpForm.value['Share_Status'][0]['Id'] == 'Individual'))">
+                          <div class="col-sm-6">
+                            <div class="input_group">
+                              <label>Department : </label>
+                              <ng-multiselect-dropdown class="form_control_ng" placeholder="Select Department"
+                                [data]="Department_Ar" formControlName="Department_Id"
+                                [settings]="dropdownSettingsingleselect">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-6">
+                            <div class="input_group">
+                              <label>Branch : </label>
+                              <ng-multiselect-dropdown class="form_control_ng" placeholder="Select Branch"
+                                [data]="Branch_Ar" formControlName="Branch_Id" [settings]="dropdownSettingsingleselect">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row" style="margin-top: 10px;"
+                          *ngIf="(this.AddExtraExpForm.value['Share_Status'].length == 0 || (this.AddExtraExpForm.value['Share_Status'].length == 1 && this.AddExtraExpForm.value['Share_Status'][0]['Id'] == 'Individual'))">
+                          <div class="col-sm-6">
+                            <div class="input_group">
+                              <label>Remarks (If Any) : </label>
+                              <input type="text" placeholder="Enter Remarks" class="form_control"
+                                formControlName="Remarks">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div formArrayName="Expense_Type_List" style="margin-top: 15px;"
+                          *ngIf="(this.AddExtraExpForm.value['Share_Status'].length == 0 || (this.AddExtraExpForm.value['Share_Status'].length == 1 && this.AddExtraExpForm.value['Share_Status'][0]['Id'] == 'Individual'))">
+                          <div *ngFor="let c of exp_list_func().controls; let i=index" [formGroupName]="i">
+                            <div class="row" style="margin-bottom: 15px;">
+                              <div class="col-sm-2">
+                                <div class="input_group"><input type="text" readonly formControlName="exp_id"
+                                    class="form_control" value="{{i + 1}}"></div>
+                              </div>
+
+                              <div class="col-sm-6">
+                                <div class="input_group">
+                                  <ng-multiselect-dropdown class="form_control_ng" placeholder="Select Expense Type"
+                                    [data]="Expense_Type_Ar" formControlName="exp_type"
+                                    [settings]="dropdownSettingsingleselect">
+                                  </ng-multiselect-dropdown>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="input_group"><input type="number" placeholder="0"
+                                    formControlName="exp_amount" class="form_control"></div>
+                              </div>
+                              <div class="col-sm-1">
+                                <button *ngIf="i==0" type="button" (click)="AddNewExp()" class="btn btn-primary"
+                                  style="width: 33px;height:33px;">
+                                  <i style="color:#fff;" class="fa fa-plus"></i></button>
+                                <button *ngIf="i!=0" (click)="RemoveNewExp(i)" class="btn btn-danger"
+                                  style="width: 33px;height:33px;">
+                                  <i class="fa fa-close"></i></button>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                        <!--============= Individual Section Details End ==============-->
+
+
+                        <div class="row" style="margin-top: 10px;">
+                          <div class="col-sm-10"> </div>
+
+                          <div class="col-sm-2">
+                            <input (click)="AddExtraExpenses()" type="button" class="btn btn-info" value="Submit">
+                          </div>
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="tab-pane" id="2a">
+
+                <div class="main_body ">
+
+                  <div class="row">
+                    <div class="col-md-12">
+
+                      <div class="table-responsive mydiv">
+                        <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+
+                          <thead>
+                            <tr>
+
+                              <th style="text-align:center;">S.No</th>
+                              <th style="text-align:center;">Department</th>
+                              <th style="text-align:center;">Branch</th>
+                              <th style="text-align:center;">Upload Date</th>
+
+                            </tr>
+                          </thead>
+
+                          <tbody *ngIf="dataAr?.length != 0">
+                            <tr *ngFor="let row of dataAr; let i=index;">
+
+                              <td>{{ row.SNo }}</td>
+                              <td>{{ row.Dep_Name }}</td>
+                              <td>{{ row.Branch_Name }}</td>
+                              <td>{{ row.UploadDate }}</td>
+
+                            </tr>
+                          </tbody>
+
+                          <tbody *ngIf="dataAr?.length == 0">
+                            <tr>
+                              <td colspan="4" align=" center">No data Available !</td>
+                            </tr>
+                          <tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </td>
+      </tr>
+
+    </tbody>
+
+  </table>
+</form>

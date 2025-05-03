@@ -1,0 +1,223 @@
+<form class="form" [formGroup]="FollowupForm" (ngSubmit)="SubmitFollowupAction()"
+  *ngIf="action_type == 'Follow Up' || action_type == 'Visit'">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="text-align: center;">Activity Tracker
+          <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+
+          <div class="row" style="margin-top: 10px;" *ngIf="prospect_id != '' && prospect_id != 0">
+            <div class="col-sm-6">
+              <label>Need Follow Up* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Follow Up" [data]="followup_req_ar"
+                formControlName="followup_req" (onSelect)="UpdateValidation()" (onDeSelect)="UpdateValidation()"
+                [settings]="dropdownSettingsingleselect1">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.followup_req.errors " class="ValidationError">
+                <div *ngIf="formControls.followup_req.errors.required">Is follow up required?</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label>Follow Up Remarks* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Follow Up Remarks" [data]="followup_remarks_ar"
+                formControlName="followup_remarks" [settings]="dropdownSettingMultipleSelect">
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;" *ngIf="prospect_id == '' || prospect_id == 0">
+            <div class="col-sm-8">
+              <label>Search {{agent_placeholder}}* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Search {{agent_placeholder}}" [data]="agent_ar"
+                formControlName="agent" (keyup)="SearchAgents($event)" (onDropDownClose)="SearchComponentsData()"
+                (click)="GetProspectRemarks()" [settings]="dropdownSettingsingleselect">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.agent.errors " class="ValidationError">
+                <div *ngIf="formControls.agent.errors.required">Field required*!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <label>Need Follow Up* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Follow Up" [data]="followup_req_ar"
+                formControlName="followup_req" (onSelect)="UpdateValidation()" (onDeSelect)="UpdateValidation()"
+                [settings]="dropdownSettingsingleselect1">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.followup_req.errors " class="ValidationError">
+                <div *ngIf="formControls.followup_req.errors.required">Is follow up required?</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;" *ngIf="action_type == 'Visit'">
+            <div class="col-sm-12">
+              <label>Upload Selfie* : </label>
+              <label class="form-control btn fileUpload btn-default"
+                [ngClass]="(this.Other_image==1 ? 'ImageUploaded' : 'else' )" name="button" value="Upload Selfie">
+                <input type="file" (change)="checkFileType($event,'Camera')" formControlName="camera" accept="image/*"
+                  capture="user" style="display:none;" />
+                <span class="fas fa-user-alt"><b>Upload Selfie</b></span>
+              </label>
+              <div *ngIf="isSubmitted && formControls.camera.errors " class="ValidationError">
+                <div *ngIf="formControls.camera.errors.required">Please upload Selfie!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;"
+            *ngIf="FollowupForm.value['followup_req'].length == 1 && FollowupForm.value['followup_req'][0]['Id'] == 'Yes' && (action_type == 'Visit' || action_type == 'Follow Up')">
+            <div class="col-sm-6">
+              <label>Next Follow Up Date(If Any) : </label>
+              <input type="text" placeholder="Choose date" formControlName="followup_date" class="form-control"
+                bsDatepicker [bsConfig]="{ isAnimated: true }">
+              <div *ngIf="isSubmitted && formControls.followup_date.errors " class="ValidationError">
+                <div *ngIf="formControls.followup_date.errors.required">Please choose date!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <timepicker [(ngModel)]="mytime" formControlName="followup_time"></timepicker>
+              <div *ngIf="isSubmitted && formControls.followup_time.errors " class="ValidationError">
+                <div *ngIf="formControls.followup_time.errors.required">Please choose time</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;" *ngIf="prospect_id == '' || prospect_id == 0">
+            <div class="col-sm-12">
+              <label>Follow Up Remarks* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Follow Up Remarks" [data]="followup_remarks_ar"
+                formControlName="followup_remarks" [settings]="dropdownSettingMultipleSelect">
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <label>Remarks* : </label>
+              <textarea class="form-control" placeholder="Please enter remarks" formControlName="remark"></textarea>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit Activity">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+
+</form>
+
+
+<form class="form" [formGroup]="AddProspectCallForm" *ngIf="action_type == 'Prospect'">
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="text-align: center;">Add Prospect Details
+          <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-6">
+              <label>Prospect Name* : </label>
+              <input type="text" class="form-control" placeholder="Enter Name" formControlName="Name">
+              <div *ngIf="isSubmitted1 && formControls1.Name.errors " class="ValidationError">
+                <div *ngIf="formControls1.Name.errors.required">Please enter name!</div>
+                <div *ngIf="formControls1.Name.errors.pattern">Please enter valid prospect name!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label>Mobile* : </label>
+              <input type="text" class="form-control" placeholder="Enter Mobile No." maxlength="10"
+                formControlName="Mobile">
+              <div *ngIf="isSubmitted1 && formControls1.Mobile.errors" class="ValidationError">
+                <div *ngIf="formControls1.Mobile.errors.required">Please enter mobile!</div>
+                <div *ngIf="formControls1.Mobile.errors.pattern">Please enter valid mobile no.!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-6">
+              <label>Email : </label>
+              <input type="text" class="form-control" placeholder="Enter Email Id" formControlName="Email">
+              <div *ngIf="isSubmitted1 && formControls1.Email.errors " class="ValidationError">
+                <div *ngIf="formControls1.Email.errors.pattern">Please enter valid email id!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label>Occupation* : </label>
+              <input type="text" class="form-control" placeholder="Enter Occupation" formControlName="Occupation">
+              <div *ngIf="isSubmitted1 && formControls1.Occupation.errors " class="ValidationError">
+                <div *ngIf="formControls1.Occupation.errors.required">Please enter occupation!</div>
+                <div *ngIf="formControls1.Occupation.errors.pattern">Please enter valid details!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-6">
+              <label>Prospect Type* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Choose Prospect Type" [data]="prospect_type_ar"
+                formControlName="Prospect_Type" [settings]="dropdownSettingsingleselect1">
+              </ng-multiselect-dropdown>
+
+              <div *ngIf="isSubmitted1 && formControls1.Prospect_Type.errors " class="ValidationError">
+                <div *ngIf="formControls1.Prospect_Type.errors.required">Please choose prospect type!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label>Call Type* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Choose Call Type" [data]="call_type_ar"
+                formControlName="Call_Type" [settings]="dropdownSettingsingleselect1">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted1 && formControls1.Call_Type.errors " class="ValidationError">
+                <div *ngIf="formControls1.Call_Type.errors.required">Please choose call type!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <label>Remarks : </label>
+              <textarea class="form-control" placeholder="Enter Remarks" formControlName="Remark"></textarea>
+            </div>
+
+          </div>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <!-- <input type="button" style="margin-right: 10px;" (click)="SubmitProspectDetails('Visit')" class="btn btn-info"
+            value="+ Visit"> -->
+          <input type="submit" (click)="SubmitProspectDetails('Follow Up')" class="btn btn-info" value="Next">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+
+</form>

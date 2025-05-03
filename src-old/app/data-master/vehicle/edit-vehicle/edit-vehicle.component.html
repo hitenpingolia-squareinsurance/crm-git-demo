@@ -1,0 +1,218 @@
+<!--begin::Content-->
+
+<div class="content  d-flex flex-column flex-column-fluid" id="kt_content"> 
+  <!--begin::Subheader-->
+  <div class="subheader py-2 py-lg-4  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap"> 
+      <!--begin::Info-->
+      <div class="d-flex align-items-center flex-wrap mr-1"> 
+        
+        <!--begin::Page Heading-->
+        <div class="d-flex align-items-baseline mr-5"> 
+          <!--begin::Page Title-->
+          <h5 class="text-dark font-weight-bold my-2 mr-5">Edit Vehicle </h5>
+          <!--end::Page Title--> 
+          
+          <!--begin::Breadcrumb-->
+          <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+            <li class="breadcrumb-item"> <a href="javascript:;" class="text-muted"> data-management </a> </li>
+            <li class="breadcrumb-item"> <a href="javascript:;" class="text-muted"> edit-vehicle </a> </li>
+             
+          </ul>
+          <!--end::Breadcrumb--> 
+        </div>
+        <!--end::Page Heading--> 
+      </div>
+      <!--end::Info--> 
+      
+      <!--begin::Toolbar-->
+       
+      <!--end::Toolbar--> 
+    </div>
+  </div>
+  <!--end::Subheader--> 
+  
+  <!--begin::Entry-->
+  <div class="d-flex flex-column-fluid"> 
+    <!--begin::Container-->
+    <div class=" container "> 
+      <!--begin::Notice-->
+    
+      <!--end::Notice--> 
+      
+      <!--begin::Card-->
+      <div class="card card-custom">
+        <div class="card-header">
+          <div class="card-title">  
+            <h3 class="card-label"></h3>
+          </div>
+          <div class="card-toolbar"> 
+             
+            
+            <!--begin::Button--> 
+            <a routerLink="/data-management/vehicle" class="btn btn-primary font-weight-bolder"> 
+			<span class="svg-icon svg-icon-md"> 
+             <i class="icon-xl fas fa-reply"></i>
+            </span> Back </a> 
+            <!--end::Button--> 
+          </div>
+        </div>
+		
+		
+        
+           
+		    <form class="form" id="kt_form_1" [formGroup]="AddForm" (ngSubmit)="Edit()">
+				<div class="card-body">
+				 
+					
+					 
+					
+					<div class="form-group row">
+						<label class="col-form-label text-left col-lg-3 col-sm-12">Class <span style="color:red;">*</span></label>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<select class="form-control" name="Vehicle_Type_Id" formControlName="Vehicle_Type_Id">
+								<option value="">Select</option>
+								<option *ngFor="let row of VehicleType_Ar;" value="{{row.Id}}">{{row.Name}}</option> 
+							</select>
+
+							<span *ngIf="isSubmitted && formControls.Vehicle_Type_Id.errors" class="form-text text-muted">
+								<span *ngIf="formControls.Vehicle_Type_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+
+						</div>
+					</div>
+					
+					 
+					<div class="form-group row">
+						<label class="col-form-label text-left col-lg-3 col-sm-12">Make <span style="color:red;">*</span></label>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<input type="text" class="form-control" name="Make" formControlName="Make"  placeholder=""/>
+							
+							<span *ngIf="isSubmitted && formControls.Make.errors" class="form-text text-muted">
+								<span *ngIf="formControls.Make.errors.required" style="color:red;">Please enter Make/Manufacturer name !</span>
+							</span>
+							
+						</div> 
+					</div>
+					
+						<div class="form-group row">
+						<label class="col-form-label text-left col-lg-3 col-sm-12">Model <span style="color:red;">*</span></label>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<input type="text" class="form-control" name="Model" formControlName="Model"  placeholder=""/>
+							
+							<span *ngIf="isSubmitted && formControls.Model.errors" class="form-text text-muted">
+								<span *ngIf="formControls.Model.errors.required" style="color:red;">Please enter Model name !</span>
+							</span>
+							
+						</div> 
+					</div>
+
+					<div class="form-group row">
+						<label class="col-form-label text-left col-lg-3 col-sm-12">Variant  <span style="color:red;">*</span></label>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<input type="text" class="form-control" name="Variant" formControlName="Variant"  placeholder=""/>
+							
+							<span *ngIf="isSubmitted && formControls.Variant.errors" class="form-text text-muted">
+								<span *ngIf="formControls.Variant.errors.required" style="color:red;">Please enter Variant name !</span>
+							</span>
+							
+						</div> 
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-form-label text-left col-lg-3 col-sm-12">Fuel Type <span style="color:red;">*</span></label>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<input type="text" class="form-control" name="Fuel_Type" formControlName="Fuel_Type"  placeholder=""/>
+							
+							<span *ngIf="isSubmitted && formControls.Fuel_Type.errors" class="form-text text-muted">
+								<span *ngIf="formControls.Fuel_Type.errors.required" style="color:red;">Please enter Fuel Type !</span>
+							</span>
+							
+						</div> 
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-form-label text-left col-lg-3 col-sm-12">Cubic Capacity <span style="color:red;">*</span></label>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<input type="text" class="form-control" name="Cubic_Capacity" formControlName="Cubic_Capacity"  placeholder=""/>
+							
+							<span *ngIf="isSubmitted && formControls.Cubic_Capacity.errors" class="form-text text-muted">
+								<span *ngIf="formControls.Cubic_Capacity.errors.required" style="color:red;">Please enter Cubic Capacity !</span>
+							</span>
+							
+						</div> 
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-form-label text-left col-lg-3 col-sm-12">Seating Capacity <span style="color:red;">*</span></label>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<input type="text" class="form-control" name="Seating_Capacity" formControlName="Seating_Capacity"  placeholder=""/>
+							
+							<span *ngIf="isSubmitted && formControls.Seating_Capacity.errors" class="form-text text-muted">
+								<span *ngIf="formControls.Seating_Capacity.errors.required" style="color:red;">Please enter Seating Capacity !</span>
+							</span>
+							
+						</div> 
+					</div>
+					
+						<div class="form-group row">
+						<label class="col-form-label text-left col-lg-3 col-sm-12">Body Type  <span style="color:red;">*</span></label>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<input type="text" class="form-control" name="Body_Type" formControlName="Body_Type"  placeholder=""/>
+							
+							<span *ngIf="isSubmitted && formControls.Body_Type.errors" class="form-text text-muted">
+								<span *ngIf="formControls.Body_Type.errors.required" style="color:red;">Please enter Body Type !</span>
+							</span>
+							
+						</div> 
+					</div>
+					
+					
+					
+					
+				  
+					
+
+					<div class="form-group row">
+						<label class="col-form-label text-left col-lg-3 col-sm-12">Status <span style="color:red;">*</span></label>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<select class="form-control" name="Status" formControlName="Status" >
+								<option value="">Select</option>
+								<option value="1">Active</option>
+								<option value="0">De-active</option>
+								 
+							</select>
+							 
+							<span *ngIf="isSubmitted && formControls.Status.errors" class="form-text text-muted">
+								<span *ngIf="formControls.Status.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							
+							
+						</div>
+					</div>
+
+					 
+				</div>
+				
+				<div class="card-footer">
+					<div class="row">
+						<div class="col-lg-9 ml-lg-auto">
+							<button type="submit" class="btn btn-primary font-weight-bold mr-2">Update</button>
+							<button type="reset" class="btn btn-light-primary font-weight-bold">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		   
+        
+      </div>
+      <!--end::Card--> 
+    </div>
+    
+<!--end::Container--> 
+	
+	
+  </div>
+  <!--end::Entry--> 
+</div>
+<!--end::Content--> 

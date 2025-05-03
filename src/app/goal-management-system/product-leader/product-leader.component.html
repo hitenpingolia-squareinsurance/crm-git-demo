@@ -1,0 +1,142 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Performance Management System</h3>
+          </div>
+          <!-- Info boxes -->
+
+          <!-- /.row -->
+
+
+          <!-- SELECT2 EXAMPLE -->
+          <div class="box box-default">
+            <div class="box-body">
+
+              <form *ngIf="checkedList?.length==0" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+                <div class="row">
+                  <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Vertical" [data]="Vertical_Ar"
+                      formControlName="Vertical_Id" [settings]="dropdownSettingsmultiselect" (onSelect)="GetEmployees()"
+                      (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Branch" [data]="Region_Ar"
+                      formControlName="Region_Id" [settings]="dropdownSettingsmultiselect" (onSelect)="GetSubBranches()"
+                      (onDeSelect)="GetSubBranches()"> </ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Service Location"
+                      [data]="Sub_Branch_Ar" formControlName="Sub_Region_Id" [settings]="dropdownSettingsmultiselect"
+                      (onSelect)="GetEmployees()" (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="Emp_Id" placeholder="Select Employee"
+                      [data]="Emps_Ar" formControlName="Emp_Id" [settings]="dropdownSettingsmultiselect">
+                    </ng-multiselect-dropdown>
+                  </div>
+
+                </div>
+
+                <div class="row"  >
+
+                  <div class="col-sm-3">
+                    <ng-multiselect-dropdown name="Month_Name" class="form-control" placeholder="Select Month"
+                      [data]="MonthArray" [(ngModel)]="SelectedCurrentMonth" formControlName="Month_Name"
+                      [settings]="dropdownSettingsingleselect1"> </ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <input type="text" formControlName="SearchValue" placeholder="Search Name/Emp. Id/Mobile"
+                      class="form-control">
+                  </div>
+
+                  <div class="col-lg-2">
+                    <input type="submit" class="btn btn-info" value="Search"> &nbsp;&nbsp;
+                    <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                      value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                  </div>
+                </div>
+
+              </form>
+
+              <hr>
+
+              <div class="table-responsive mydiv">
+                <table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>S.No</th>
+                      <th>Action / Details</th>
+                      <th>Profile</th>
+                      <th>Name / Employee ID</th>
+                      <th>Mobile</th>
+                      <th>Status</th>
+                      <th>DOJ</th>
+                      <th>Target</th>
+                      <th>Achivement</th>
+                      <th>Achivement %</th>
+                      <th>Revenue</th>
+                    </tr>
+                  </thead>
+
+                  <tbody *ngIf="dataAr?.length != 0">
+                    <tr *ngFor="let row of dataAr; let i=index;">
+                      <td>{{row.SrNo}}.</td>
+
+                      <td>
+                        <a href="javascript:;" (click)="TargetDetails(row.Id, row.Profile_Type)"><span
+                            style="margin-right: 5px;" class="label label-default">Details</span></a>
+                      </td>
+
+                      <td><span style="margin-right: 5px;" class="label label-primary">{{row.Profile_Type}}</span></td>
+                      <td>{{row.Name}}</td>
+                      <td>{{row.Mobile}}</td>
+
+                      <td>
+                        <span *ngIf="row.ResignStatus == 1" style="margin-right: 5px;"
+                          class="label label-danger">Resigned</span>
+                        <span *ngIf="row.ResignStatus == 0 && row.Status == 1" style="margin-right: 5px;"
+                          class="label label-success">Active</span>
+                        <span *ngIf="row.ResignStatus == 1 && row.Status == 0" style="margin-right: 5px;"
+                          class="label label-warning">Inactive</span>
+                      </td>
+
+                      <td>{{row.DOJ}}</td>
+                      <td>{{row.Total_Target}}</td>
+                      <td>{{row.Business}}</td>
+                      <td>{{row.AchivementPercent}}</td>
+                      <td>{{row.Revenue}}</td>
+                    </tr>
+                  </tbody>
+
+                  <tbody *ngIf="dataAr?.length == 0">
+                    <tr>
+                      <td colspan="14" align="center">No data Available !</td>
+                    </tr>
+                  <tbody>
+                </table>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+  </section>
+  <!-- /.content -->
+
+</div>

@@ -1,0 +1,190 @@
+<mat-dialog-content class="mat-typography ">
+  <div id="exTab1" class="">
+    <ul class="nav nav-pills">
+      <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+
+      <li *ngFor="let row of CircleAr; let i=index;" [ngClass]="(activeTab == row?'active':'')">
+        <a *ngIf="row == 'LI'" href="#1a" (click)="GetData(row, '1')" data-toggle="tab">Life</a>
+        <a *ngIf="row != 'LI'" href="#1a" (click)="GetData(row, '1')" data-toggle="tab">{{ row }}</a>
+      </li>
+      <li class="rm_name_chip view-status status-align">{{ Agent_Name }}</li>
+
+    </ul>
+
+
+
+    <div class="tab-content clearfix">
+
+      <div class="row">
+        <div class="col-sm-12">
+          <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+            <div class="row">
+              <div class="col-sm-3">
+                <ng-multiselect-dropdown class="form-control" placeholder="{{int_placeholder}}"
+                  [data]="interaction_type_ar" formControlName="interaction_type"
+                  [settings]="dropdownSettingsingleselect">
+                </ng-multiselect-dropdown>
+              </div>
+
+              <div class="col-sm-3" *ngIf="Circle_Type != 'Employee Call'">
+                <ng-multiselect-dropdown class="form-control" placeholder="Follow Up Remarks"
+                  [data]="followup_remarks_ar" formControlName="follow_up_remark"
+                  [settings]="dropdownSettingsingleselect">
+                </ng-multiselect-dropdown>
+              </div>
+
+              <div class="col-sm-3">
+                <input type="text" placeholder="Select Date-Range" class="form-control" formControlName="date_range"
+                  bsDaterangepicker [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+              </div>
+
+              <div class="col-sm-3">
+                <input type="submit" class="btn btn-info" value="Search">&nbsp;&nbsp;
+                <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                  value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <div class="tab-pane active" id="1a">
+
+        <div class="main_body ">
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="view-status" *ngIf="Circle_Type != 'Employee Call'">
+                <ul>
+                  <li class="virtual_chip">Virtual<span>{{virtual_count}}</span></li>
+                  <li class="visit_chip">Visit<span>{{visit_count}}</span></li>
+                  <!-- <li class="reject_chip">Reject<span>123</span></li> -->
+                </ul>
+              </div>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="All">
+
+                  <div class="custom_table">
+                    <ul class="responsive-table">
+
+                      <cdk-virtual-scroll-viewport #scroller itemSize="72" class="content mt_0">
+                        <mat-list>
+
+                          <ng-container *cdkVirtualFor="let row of post; let i = index">
+
+                            <mat-list-item>
+                              <li class="table-row">
+                                <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                                  <div class="agents_data agents_data1">
+                                    <div class="icon_re_cl">{{ row.SrNo }}</div>
+                                    <div class="agent_name_mobile">
+                                      <div class="agent_data">
+                                        <div>Interaction Type </div><strong class="fs_18">
+                                          <i *ngIf="row.Action_Type == 'Virtual'" class="fa fa-phone"
+                                            aria-hidden="true"></i>
+                                          <i *ngIf="row.Action_Type == 'Visit'" class="fa fa-user"
+                                            aria-hidden="true"></i>
+                                          {{ row.Action_Type }}<span *ngIf="row.Action_Type == 'Visit'">
+                                            ({{row.FollowUp_Date}})</span></strong>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="agents_data agents_data2">
+                                    <div class="agent_name_mobile">
+                                      <div class="agent_data" *ngIf="Circle_Type != 'Employee Call'">
+                                        <div>Follow Up Required</div>
+                                        <strong class="fs_18"><span
+                                            [ngClass]="(row.FollowUp_Type == 'Yes'?'text-success':'text-danger')">{{row.FollowUp_Type}}</span><span
+                                            *ngIf="row.FollowUp_Type == 'Yes'"> ({{row.FollowUp_Date}})</span></strong>
+                                      </div>
+
+                                      <div class="agent_data"
+                                        *ngIf="Circle_Type == 'Employee Call' && row.Action_Type == 'Meeting'">
+                                        <div>Meeting Date</div>
+                                        <strong class="fs_18"><span class="text-success">
+                                            ({{row.Meeting_Date}})</span></strong>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="agents_data agents_data3">
+                                    <div class="agent_name_mobile">
+                                      <div class="agent_data">
+                                        <div>Activity By</div><strong class="fs_18">{{ row.FollowUpBy
+                                          }}</strong>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="remarks_div">
+                                  <ul>
+                                    <li *ngIf="Circle_Type != 'Employee Call' && row.FollowUp_Remark != ''">
+                                      <span>Reason :</span>{{row.FollowUp_Remark}}
+                                    </li>
+
+                                    <li *ngIf="Circle_Type == 'Employee Call' && row.Action_Type == 'Meeting'">
+                                      <span>Meeting Time :</span>{{row.Meeting_Start_Time}} - {{row.Meeting_End_Time}}
+                                    </li>
+
+                                    <li *ngIf="row.Remarks != ''">
+                                      <span>Remark :</span>{{row.Remarks}}
+                                    </li>
+                                  </ul>
+                                </div>
+
+                                <div class="last_row">
+                                  <div class="d_flex effective_date">
+                                    <div class="date_text">
+                                      <span class="fs_12">Activity Date : </span>
+                                      <span> {{row.Add_Stamp}} </span>
+                                    </div>
+                                  </div>
+
+                                  <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                    <a *ngIf="row.Camera_Image!='' && row.Camera_Image!=null && row.Action_Type == 'Visit'"
+                                      (click)="ViewDocument(row.Camera_Image)" href="javascript:;"
+                                      class="mr_5 btn-bg">Selfie</a>
+                                  </div>
+
+                                </div>
+                              </li>
+
+                              <mat-divider></mat-divider>
+                            </mat-list-item>
+
+                          </ng-container>
+
+                          <!-- <div class="spinner-item" *ngIf="post?.length > 0"
+                            style="display: block;margin: auto; width: 50px;">
+                            <mat-progress-spinner [mode]="'indeterminate'" [diameter]="50"></mat-progress-spinner>
+                          </div> -->
+
+                          <ul class="responsive-table" *ngIf="post?.length == 0">
+                            <li class="table-row">
+                              <div class="no_data_found">No data available !</div>
+                            </li>
+                          </ul>
+                        </mat-list>
+                      </cdk-virtual-scroll-viewport>
+
+                    </ul>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+</mat-dialog-content>

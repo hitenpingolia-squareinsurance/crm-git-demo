@@ -1,0 +1,42 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Details Form</h3>
+    <div class="box-tools pull-right">
+      <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+    </div>
+  </div>
+  <form [formGroup]="UpdateFollowForm" (ngSubmit)="UpdateFollowFormS()">
+    <!-- /.box-header -->
+    <div class="box-body">
+      <div class="row">
+        <div class="form-group row">
+          <div class="col-lg-3" *ngIf="Type == 1">
+            <label> Date:</label>
+            <input type="text" class="form-control" bsDatepicker formControlName="Dates" required class="form-control">
+            <span *ngIf="isSubmitted && FC.Dates.errors" class="form-text text-muted">
+              <span *ngIf="FC.Dates.errors.required" style="color:red;">Field is required..!</span>
+            </span>
+          </div>
+          <div class="col-lg-3" *ngIf="Type == 1">
+            <label> Time:</label>
+            <input type="time" class="form-control" formControlName="Times" required class="form-control">
+            <span *ngIf="isSubmitted && FC.Times.errors" class="form-text text-muted">
+              <span *ngIf="FC.Times.errors.required" style="color:red;">Field is required..!</span>
+            </span>
+          </div>
+          <div class="col-lg-4">
+            <label>Remarks:</label>
+            <input type="text" formControlName="Remarks" class="form-control" maxlength="1000">
+            <span *ngIf="isSubmitted && FC.Remarks.errors" class="form-text text-muted">
+              <span *ngIf="FC.Remarks.errors.required" style="color:red;">Field is required..!</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="box-footer">
+      <button type="button" (click)="CloseModel()" class="btn btn-default pull-right">Cancel</button>
+      <button style="margin-right: 1%;" type="submit" class="btn btn-info pull-right">Update</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,98 @@
+.Astrik {
+    color: red;
+}
+
+.btn_list_group .panel-default {
+    border: none;
+    box-shadow: none;
+}
+
+.nav{
+    margin-left: 10px;
+}
+
+.nav-pills>li {
+    float: left;
+    background: transparent;
+    letter-spacing: 0.3px;
+}
+
+.nav>li>a {
+    padding: 7px 15px;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    color: #444;
+    font-size: 14px;
+    background-color: transparent;
+}
+
+.nav-pills>li>a {
+    border-top: none;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover {
+    color: #1aac80;
+    background-color: transparent;
+    border-color: #1aac80;
+    font-weight: 700;
+}
+
+.nav>li>a:hover,
+.nav>li>a:active,
+.nav>li>a:focus {
+    color: #444;
+    font-size: 14px;
+    background-color: transparent;
+    border-top: none;
+    border-bottom: 2px solid transparent;
+}
+
+.table-responsive {
+    min-height: .01%;
+    overflow-x: auto;
+    background: white;
+}
+
+
+
+.tabs-marker .nav-link.active .marker {
+    height: 30px;
+    width: 30px;
+    left: 50%;
+    bottom: -30px;
+    transform: translatex(-50%);
+    position: absolute;
+    overflow: hidden;
+}
+
+.nav-justified>li {
+    display: table-cell;
+    width: auto;
+}
+
+
+.VehicleNoCls {
+	width:20%;
+	float:left;
+	border-right: 0px;
+	border-radius: 0px;
+	text-transform: uppercase !important;
+}
+
+.VehicleNoCls2 {
+	width:25%;
+	float:left;
+	border-right: 0px;
+	border-radius: 0px;
+	text-transform: uppercase !important;
+}
+
+.VehicleNoCls3 {
+	width:25%;
+	float:left;
+	border-radius: 0px;
+	text-transform: uppercase !important;
+}

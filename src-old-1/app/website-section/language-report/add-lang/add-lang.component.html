@@ -1,0 +1,162 @@
+<section class="custom-scrool" id="click-close">
+    <div class="">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <h4 *ngIf="this.type == 'Add'" class="modal-title">Add Language Key</h4>
+                <h4 *ngIf="this.type == 'Edit'" class="modal-title">Update Language</h4>
+
+                <button type="button" (click)="CloseModel()" class="close closeModelButton"><i
+                        class="fa fa-close"></i></button>
+                <div class="call-precess" id="callProcess" style="display:none;">
+                    <div class="call-align">
+                        <img src="assets/image/calling.gif" alt="">
+                    </div>
+                    <div class="heading-call">Call in Progress....</div>
+                </div>
+            </div>
+            <hr>
+            <div class="modal_body">
+
+                <div class="row">
+
+                </div>
+
+
+
+
+                <form [formGroup]="AddFieldForm">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="key_name">Key Name</label>
+                                <div *ngIf="this.type !== 'Edit'">
+                                    <input type="text" class="form-control" id="key_name" formControlName="key_name"
+                                        placeholder="Enter Key Name">
+                                </div>
+
+
+                                <div *ngIf="this.type == 'Edit'">
+                                    <input type="text" class="form-control" id="key_name" formControlName="key_name"
+                                        placeholder="Enter Key Name" disabled>
+                                </div>
+
+                                <div *ngIf="AddFieldForm.get('key_name').hasError('required') && (AddFieldForm.get('key_name').touched || AddFieldForm.dirty)"
+                                    class="text-danger">
+                                    This field is required.
+                                </div>
+                                <div *ngIf="AddFieldForm.get('key_name').hasError('pattern') && (AddFieldForm.get('key_name').touched || AddFieldForm.dirty)"
+                                    class="text-danger">
+                                    Key Name must contain only letters and underscores.
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="english">English</label>
+                                <textarea class="form-control" id="english" formControlName="english"
+                                    placeholder="Enter English text"></textarea>
+                                <div *ngIf="AddFieldForm.get('english').hasError('required') && (AddFieldForm.get('english').touched || AddFieldForm.dirty)"
+                                    class="text-danger">
+                                    This field is required.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="hindi">Hindi</label>
+                                <textarea class="form-control" id="hindi" formControlName="hindi"
+                                    placeholder="Enter Hindi text"></textarea>
+                                <div *ngIf="AddFieldForm.get('hindi').hasError('required') && (AddFieldForm.get('hindi').touched || AddFieldForm.dirty)"
+                                    class="text-danger">
+                                    This field is required.
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="bengali">Bengali</label>
+                                <textarea class="form-control" id="bengali" formControlName="bengali"
+                                    placeholder="Enter Bengali text"></textarea>
+                                <div *ngIf="AddFieldForm.get('bengali').hasError('required') && (AddFieldForm.get('bengali').touched || AddFieldForm.dirty)"
+                                    class="text-danger">
+                                    This field is required.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="marathi">Marathi</label>
+                                <textarea class="form-control" id="marathi" formControlName="marathi"
+                                    placeholder="Enter Marathi text"></textarea>
+                                <div *ngIf="AddFieldForm.get('marathi').hasError('required') && (AddFieldForm.get('marathi').touched || AddFieldForm.dirty)"
+                                    class="text-danger">
+                                    This field is required.
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="tamil">Tamil</label>
+                                <textarea class="form-control" id="tamil" formControlName="tamil"
+                                    placeholder="Enter Tamil text"></textarea>
+                                <div *ngIf="AddFieldForm.get('tamil').hasError('required') && (AddFieldForm.get('tamil').touched || AddFieldForm.dirty)"
+                                    class="text-danger">
+                                    This field is required.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="telugu">Telugu</label>
+                                <textarea class="form-control" id="telugu" formControlName="telugu"
+                                    placeholder="Enter Telugu text"></textarea>
+                                <div *ngIf="AddFieldForm.get('telugu').hasError('required') && (AddFieldForm.get('telugu').touched || AddFieldForm.dirty)"
+                                    class="text-danger">
+                                    This field is required.
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="float-end button-container">
+                                <!-- <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button> -->
+                                <button type="submit" *ngIf="this.type == 'Add'" class="btn btn-primary"
+                                    (click)="add()">Submit</button>
+                                <button type="submit" *ngIf="this.type == 'Edit'" class="btn btn-primary"
+                                    (click)="update()">Update</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Reject Quote -{{Id}}</h2>
+
+<form class="form" [formGroup]="modalForm" (ngSubmit)="submitStatusRequest()">
+  <div class="col-md-12">
+    <label for="name">Remarks</label>
+    <textarea class="form-control" formControlName="remarks" placeholder="Enter Remarks" maxlength="200"> </textarea>
+    <div *ngIf="isSubmitted && formControls.remarks.errors " class="ValidationError">
+      <div *ngIf="formControls.remarks.errors.required">Please fill remarks!</div>
+    </div>
+  </div>
+
+  <div class="col-md-12" style="text-align: right;
+  margin-top: 20px;">
+    <button class="btn btn-primary" [disabled]="buttonDisable" type="submit">Save</button>&nbsp;&nbsp;
+
+    <button class="btn btn-light" (click)="CloseModel()">Close</button>
+
+  </div>
+
+</form>

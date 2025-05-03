@@ -1,0 +1,156 @@
+<div style="position:relative;" data-loader="CustomForm">
+    <form class="form-blog-top " [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+
+
+        <div class="row"  >
+           
+
+         
+
+            
+ 
+ 
+
+        
+            <!--===== POLICYS RELATED FILTER SECTION START =====-->
+            <div
+                *ngIf="urlSegmentRoot == 'mis-reports' || urlSegmentRoot == 'irda-reports'   || urlSegment == 'renewal-custom-report' || urlSegment == 'busniess-custom-report'  || urlSegment == 'custom-active-inactive-pos'  || urlSegmentRoot == 'Tele-Rm-Reports' || (urlSegmentRoot == 'account' && urlSegment == 'cases') || (urlSegmentRoot == 'account' && urlSegment == 'renewal' ) || urlSegmentSub == 'renewals'">
+
+                <div class="col-sm-3"
+                    *ngIf="(urlSegmentRoot == 'mis-reports' ||  urlSegmentRoot == 'irda-reports' || urlSegmentRoot == 'Tele-Rm-Reports') && urlSegment != 'gems-reports'">
+                    <ng-multiselect-dropdown class="form-control" name="Sr_Status" placeholder="Select SR Status"
+                        [data]="SrSr_Status" formControlName="Sr_Status" [settings]="dropdownSettingsingleselect"
+                        [(ngModel)]="SrSr_StatusValue">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3"
+                    *ngIf="(urlSegmentRoot == 'mis-reports' || urlSegmentRoot == 'irda-reports'  || urlSegmentRoot == 'Tele-Rm-Reports') && urlSegment == 'business'">
+                    <ng-multiselect-dropdown class="form-control" name="Sr_LoginStatus" placeholder="Select Login Type"
+                        [data]="SrSrLoginTYpe" formControlName="SrLoginStatus" [settings]="dropdownSettingsingleselect">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3"
+                    *ngIf="(urlSegmentRoot == 'mis-reports' || urlSegmentRoot == 'irda-reports'  || urlSegmentRoot == 'Tele-Rm-Reports') && urlSegment == 'business'">
+                    <ng-multiselect-dropdown class="form-control" name="Sr_PolicyTypeStatus"
+                        placeholder="Select File Type" [data]="SrSr_PolicyStatus" formControlName="SrPolicyStatus"
+                        [settings]="dropdownSettingsingleselect">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3"
+                    *ngIf="(urlSegmentRoot == 'mis-reports' || urlSegmentRoot == 'irda-reports'  || urlSegmentRoot == 'Tele-Rm-Reports') && urlSegment != 'gems-reports'">
+                    <ng-multiselect-dropdown class="form-control" name="Sr_Type" placeholder="Select SR Type"
+                        [data]="SrSr_Type" formControlName="Sr_Type" [settings]="dropdownSettingsingleselect">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3" *ngIf="urlSegment != 'gems-reports'">
+                    <ng-multiselect-dropdown class="form-control" name="Source" placeholder="Select Source"
+                        [data]="SRSource_Ar" formControlName="Source" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'SRSource_Ar')"
+                        (onDeSelect)="onItemDeSelect($event,'SRSource_Ar')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3" *ngIf="urlSegment != 'gems-reports'">
+                    <ng-multiselect-dropdown class="form-control" name="Lob" placeholder="Select LOB" [data]="GlobelLOB"
+                        formControlName="Lob" [settings]="dropdownSettingsmultiselect1"
+                        (onSelect)="onItemSelect($event,'GlobelLOB')" (onDeSelect)="onItemDeSelect($event,'GlobelLOB')">
+                    </ng-multiselect-dropdown>
+                </div>
+                
+                <div class="col-sm-3" *ngIf="urlSegment != 'gems-reports'">
+                    <ng-multiselect-dropdown class="form-control" name="PolicyFileType" placeholder="Business Type"
+                        [data]="PolicyFileType" formControlName="PolicyFileType"
+                        [settings]="dropdownSettingsmultiselect" (onSelect)="onItemSelect($event,'PolicyFileType')"
+                        (onDeSelect)="onItemDeSelect($event,'PolicyFileType')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3" *ngIf="urlSegment != 'gems-reports'">
+                    <ng-multiselect-dropdown class="form-control" name="ProductType" placeholder="Product Type"
+                        [data]="ProductType" formControlName="ProductType" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'ProductType')"
+                        (onDeSelect)="onItemDeSelect($event,'ProductType')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3" *ngIf="urlSegment != 'gems-reports'">
+                    <ng-multiselect-dropdown class="form-control" name="PolicyType" placeholder="Policy Type"
+                        [data]="PolicyType" formControlName="PolicyType" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'PolicyType')"
+                        (onDeSelect)="onItemDeSelect($event,'PolicyType')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3" *ngIf="urlSegment != 'gems-reports'">
+                    <ng-multiselect-dropdown class="form-control" name="Company" placeholder="Select Insurer"
+                        [data]="Ins_Compaines" formControlName="Company" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'Ins_Compaines')"
+                        (onDeSelect)="onItemDeSelect($event,'Ins_Compaines')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+          
+
+
+
+      
+                <!-- RENEWAL SECTION START-->
+                <div *ngIf="urlSegmentSub == 'renewals' || urlSegmentSub == 'renewals-section'">
+                 
+                  
+
+                    <div class="col-sm-3"  >
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Status"
+                            [data]="RenewalStatusData" formControlName="RenewalStatus"
+                            [settings]="dropdownSettingsmultiselect" (onSelect)="onItemSelect($event,'RenewalStatus')"
+                            (onDeSelect)="onItemDeSelect($event,'RenewalStatus')">
+                        </ng-multiselect-dropdown>
+                    </div>
+                </div>
+                <!-- RENEWAL SECTION END-->
+                 <!-- Lost renewal start-->
+                <div *ngIf="(urlSegmentRoot == 'account' && urlSegment == 'renewal')">
+                 
+                  
+
+                    <div class="col-sm-3"  >
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Status"
+                            [data]="statusRenewal" formControlName="statusRenewal"
+                            [settings]="dropdownSettingsmultiselect" (onSelect)="onItemSelect($event,'statusRenewal')"
+                            (onDeSelect)="onItemDeSelect($event,'statusRenewal')">
+                        </ng-multiselect-dropdown>
+                    </div>
+                </div>
+
+                <!-- Lost Renewal end-->
+
+
+
+
+            </div>
+
+
+          
+            <div class="col-sm-3" *ngIf="urlSegmentRoot != 'custom-reports'"><input type="text"
+                    formControlName="SearchValue" name="SearchValue" class="form-control" placeholder="Search"></div>
+
+           
+ 
+
+            <div class="col-sm-3">
+                <button type="submit" class="btn btn-info" style="font-size: small;" value="Search"  id="fillterSearchId" [disabled]="SearchButtonDisabled"> <i
+                        class="fa fa-search">
+                        Search</i></button> &nbsp;&nbsp;
+                <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                    value="Reset"> <i class="fa fa-close"> Reset</i></button>
+            </div>
+
+            <!-- style="text-align: right;-->
+        </div>
+
+    </form>
+</div>

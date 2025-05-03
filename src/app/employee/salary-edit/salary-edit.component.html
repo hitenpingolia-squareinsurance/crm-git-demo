@@ -1,0 +1,159 @@
+<div class="box box-default">
+
+    <form [formGroup]="SalaryEditForm" (ngSubmit)="SalaryEdit()">
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <!-- BEGIN:OLD FIXED COST -->
+                <div class="col-lg-3">
+                    <label>Old Fixed Cost:</label>
+                    <input type="text" class="form-control" formControlName="OldFixedCostSalary" readonly>
+                    <span *ngIf="isSubmitted && FC.OldFixedCostSalary.errors" class="form-text text-muted">
+                        <span *ngIf="FC.OldFixedCostSalary.errors.required" style="color:red;">Field is required..!</span>
+                        <span *ngIf="FC.OldFixedCostSalary.errors.pattern" style="color:red;">Field Pattern is
+                            required..!</span>
+                    </span>
+                </div>
+                <!-- END:OLD FIXED COST -->
+
+                <!-- BEGIN:OLD VARIABLE PAY -->
+                <div class="col-lg-3">
+                    <label>Old Variable Cost:</label>
+                    <input type="text" class="form-control" formControlName="OldVariablePaySalary" readonly>
+                    <span *ngIf="isSubmitted && FC.OldVariablePaySalary.errors" class="form-text text-muted">
+                        <span *ngIf="FC.OldVariablePaySalary.errors.required" style="color:red;">Field is required..!</span>
+                        <span *ngIf="FC.OldVariablePaySalary.errors.pattern" style="color:red;">Field Pattern is
+                            required..!</span>
+                    </span>
+                </div>
+                <!-- END:OLD VARIABLE PAY -->
+
+                <!-- BEGIN:OLD CTC  -->
+                <div class="col-lg-3">
+                    <label>Old CTC:</label>
+                    <input type="text" class="form-control" formControlName="OldSalary" readonly>
+                    <span *ngIf="isSubmitted && FC.OldSalary.errors" class="form-text text-muted">
+                        <span *ngIf="FC.OldSalary.errors.required" style="color:red;">Field is required..!</span>
+                        <span *ngIf="FC.OldSalary.errors.pattern" style="color:red;">Field Pattern is
+                            required..!</span>
+                    </span>
+                </div>
+                <!-- END:OLD CTC  -->
+
+            </div>
+
+            <div class="row" style="margin-top: 14px;">
+                <!-- BEGIN:NEW FIXED COST CTC  -->
+                <div class="col-lg-3">
+                    <label>New Fixed Cost :</label>
+                    <input type="text" class="form-control" formControlName="NewCurrentFixedCost" (input)="updateCurrentCTC()">
+                    <span *ngIf="isSubmitted && FC.NewCurrentFixedCost.errors" class="form-text text-muted">
+                        <span *ngIf="FC.NewCurrentFixedCost.errors.required" style="color:red;">Field is
+                            required..!</span>
+                        <span *ngIf="FC.NewCurrentFixedCost.errors.pattern" style="color:red;">Field Pattern is
+                            required..!</span>
+                    </span>
+                </div>
+                <!-- END:NEW FIXED COST CTC  -->
+
+                <!-- BEGIN:NEW VARIABLE PAY CTC  -->
+                <div class="col-lg-3">
+                    <label>New Variable Pay :</label>
+                    <input type="text" class="form-control" formControlName="NewCurrentVariablePay" (input)="updateCurrentCTC()">
+                    <span *ngIf="isSubmitted && FC.NewCurrentVariablePay.errors" class="form-text text-muted">
+                        <span *ngIf="FC.NewCurrentVariablePay.errors.required" style="color:red;">Field is required..!</span>
+                        <span *ngIf="FC.NewCurrentVariablePay.errors.pattern" style="color:red;">Field Pattern is required..!</span>
+                    </span>
+                </div>
+                <!-- END:NEW VARIABLE PAY CTC  -->
+
+                <!-- BEGIN:NEW CURRENT CTC  -->
+                <div class="col-lg-3">
+                    <label> New CTC :</label>
+                    <input type="text" class="form-control" formControlName="NewCurrentCTC" readonly>
+                    <span *ngIf="isSubmitted && FC.NewCurrentCTC.errors" class="form-text text-muted">
+                        <span *ngIf="FC.NewCurrentCTC.errors.required" style="color:red;">Field is
+                            required..!</span>
+                        <span *ngIf="FC.NewCurrentCTC.errors.pattern" style="color:red;">Field Pattern is
+                            required..!</span>
+
+                    </span>
+                </div>
+                <!-- END:NEW CURRENT CTC  -->
+
+                <div class="col-lg-3">
+                    <label> Effective Date :</label>
+                    <input type="date" class="form-control" formControlName="Effective_Date">
+                    <span *ngIf="isSubmitted && FC.Effective_Date.errors" class="form-text text-muted">
+                        <span *ngIf="FC.Effective_Date.errors.required" style="color:red;">Field is
+                            required..!</span>
+
+                    </span>
+                </div>
+
+                <div class="col-lg-3">
+                    <label>Remarks:</label>
+                    <textarea type="text" formControlName="Remarks" class="form-control" maxlength="1000"> </textarea>
+                    <span *ngIf="isSubmitted && FC.Remarks.errors" class="form-text text-muted">
+                        <span *ngIf="FC.Remarks.errors.required" style="color:red;">Field is required..!</span>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="box-footer">
+            <button type="button" (click)="CloseModel()" class="btn btn-default pull-right">Close</button>
+            <button style="margin-right: 1%;" type="submit" class="btn btn-info pull-right">Update</button>
+        </div>
+    </form>
+</div>
+
+<div class="mydiv">
+
+    <table id="Table1" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+
+                <th>S.No</th>
+                <th>Employee Name</th>
+                <th>Old Salary</th>
+                <th>New Salary</th>
+                <th>Effective Date</th>
+                <th>Remarks</th>
+                <th>Date</th>
+                <th>Action By</th>
+
+            </tr>
+        </thead>
+
+        <tbody *ngIf="dataAr?.length != 0">
+
+            <tr *ngFor="let row of dataAr; let i=index;">
+                <td>{{row.Sno}}</td>
+                <td> {{row.EmployeeName}} - {{row.EmployeeCode}} </td>
+                <td>
+                    <div style="color: green;font-weight: bold;">CTC: {{ (row.OldSalary || 0) }}</div>
+                    <div style="color: blue;font-weight: bold;">Fixed Cost: {{ (row.OldFixedCost || 0) }}</div>
+                    <div style="color: red;font-weight: bold;">Variable Pay: {{ (row.OldVariablePay || 0) }}</div>
+                </td>
+
+                <td>
+                    <div style="color: green;font-weight: bold;">CTC: {{ (row.NewSalary || 0) }}</div>
+                    <div style="color: blue;font-weight: bold;">Fixed Cost: {{ (row.NewFixedCost || 0) }}</div>
+                    <div style="color: red;font-weight: bold;">Variable Pay: {{ (row.NewVariablePay || 0) }}</div>
+                </td>
+                <td> {{row.Effective_Date}} </td>
+                <td> {{row.Remark}} </td>
+                <td> {{row.Date}} </td>
+                <td> {{row.ActionByName}} - {{row.ActionByCode}} </td>
+            </tr>
+
+        </tbody>
+        <tbody *ngIf="dataAr?.length == 0">
+            <tr>
+                <td colspan="8" align="center">No data Available !</td>
+            </tr>
+        <tbody>
+
+    </table>
+</div>

@@ -1,0 +1,91 @@
+<div class="row">
+
+
+  <div class="modal-header" style="text-align: center;">
+    <h4 class="modal-title">Add Plan Benifit</h4>
+  </div>
+</div>
+
+<div class="popup-content-body">
+  <div class="row popup-form">
+    <form [formGroup]="Addposter" id="form-1">
+      <div class="col-md-6">
+        <label for="state">Company</label>
+        <select class="form-control" formControlName="Company" (change)="FetchHealthPlanSubPlan($event)">
+          <option value="" disabled>Select</option>
+          <option *ngFor="let row of Companys;" value="{{row.company}}">{{row.company | uppercase}}</option>
+        </select>
+        <div *ngIf="isSubmitted && formControls.Company.errors" class="ValidationError">
+          <div *ngIf="formControls.Company.errors.required">Please enter Company</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="state">Plan</label>
+        <select class="form-control" formControlName="Plan">
+          <option value="" disabled>Select</option>
+          <option *ngFor="let row of Plans;" value="{{row.Plan}}">{{row.Plan | uppercase}}</option>
+        </select>
+        <div *ngIf="isSubmitted && formControls.Plan.errors" class="ValidationError">
+          <div *ngIf="formControls.Plan.errors.required">Please Select File</div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6">
+        <label for="state">From Suminsured</label>
+        <ng-multiselect-dropdown class="form-control" name="FromSuminsured" placeholder="Select From Suminsured"
+          [data]="Suminusred" formControlName="FromSuminsured" [settings]="dropdownSingleSettingsType">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.FromSuminsured.errors" class="ValidationError">
+          <div *ngIf="formControls.FromSuminsured.errors.required">Please Fill Suminsured</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="state">To Suminsured</label>
+        <ng-multiselect-dropdown class="form-control" name="ToSuminsured" placeholder="Select To Suminsured"
+          [data]="Suminusred" formControlName="ToSuminsured" [settings]="dropdownSingleSettingsType">
+        </ng-multiselect-dropdown>
+
+        <div *ngIf="isSubmitted && formControls.ToSuminsured.errors" class="ValidationError">
+          <div *ngIf="formControls.ToSuminsured.errors.required">Please Fill Suminsured</div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="state">SubPlan</label>
+        <select class="form-control" formControlName="SubPlan">
+          <option value="" disabled>Select</option>
+          <option *ngFor="let row of SubPlans;" value="{{row.SubPlan}}">{{row.SubPlan | uppercase}}</option>
+        </select>
+        <div *ngIf="isSubmitted && formControls.SubPlan.errors" class="ValidationError">
+          <div *ngIf="formControls.SubPlan.errors.required">Please Select File</div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6">
+        <label for="state">File</label>
+        <input type="file" class="form-control" formControlName="File"
+          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          (change)="UploadDocs($event,'PosterImage')">
+        <div *ngIf="isSubmitted && formControls.File.errors" class="ValidationError">
+          <div *ngIf="formControls.File.errors.required">Please Select File</div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="state">Unique Label</label>
+        <input type="text" class="form-control" placeholder="Please Enter Unique Label" formControlName="uniquelabel">
+        <div *ngIf="isSubmitted && formControls.File.errors" class="ValidationError">
+          <div *ngIf="formControls.File.errors.required">Please Enter Unique Label</div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="button-div-yes-no">
+  <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>
+  <button type="submit" (click)="submit()" class="btn btn-primary">Submit</button>
+</div>

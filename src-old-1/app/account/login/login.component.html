@@ -1,0 +1,207 @@
+<section class="bg-login" style="background-image: url(assets/dist/img/login.png); ">
+  <div class="login-view">
+    <div class="login-flex">
+      <div class="login-box">
+        <div class="log-pro">
+          <img class="login-img" src="../../assets/image/login-banner.svg">
+          <div class="mobile_app_btn">
+            <ul>
+              <li *ngIf="Types !=  'agent'"><a
+                  href="https://play.google.com/store/apps/details?id=com.square.squareinsurance" rel="noopener"
+                  target="_blank">
+                  <img
+                    src="https://square-web.s3.ap-south-1.amazonaws.com/Webiste/web-react/SquareWebImages/android-button.png"
+                    alt="iOS mobile app" title="iOS mobile app" loading="lazy">
+                </a>
+              </li>
+              <li *ngIf="Types == 'agent'"> <a href="https://play.google.com/store/search?q=square+insurance+pos&c=apps"
+                  rel="noopener" target="_blank">
+                  <img
+                    src="https://square-web.s3.ap-south-1.amazonaws.com/Webiste/web-react/SquareWebImages/android-button.png"
+                    alt="iOS mobile app" title="iOS mobile app" loading="lazy">
+                </a>
+              </li>
+              <li *ngIf="Types ==  'agent'"><a href="https://apps.apple.com/in/app/square-insurance/id1549182208"
+                  rel="noopener" target="_blank">
+                  <img
+                    src="https://square-web.s3.ap-south-1.amazonaws.com/Webiste/web-react/SquareWebImages/ios-button.png"
+                    alt="andriod mobile app" title="andriod mobile app" loading="lazy">
+                </a>
+              </li>
+              <li *ngIf="Types !=  'agent'"><a href="https://apps.apple.com/in/app/square-insurance/id1549182208"
+                  rel="noopener" target="_blank">
+                  <img
+                    src="https://square-web.s3.ap-south-1.amazonaws.com/Webiste/web-react/SquareWebImages/ios-button.png"
+                    alt="andriod mobile app" title="andriod mobile app" loading="lazy">
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="login-center">
+          <div class="login-box-body">
+            <div class="login-logo">
+              <!-- <a href="javascrpit:void(0)"><img  class="img-fluid"
+                  src="https://www.squareinsurance.in/assets/img/new-logo-cdr.svg"></a> -->
+              <h1>Welcome Back</h1>
+            </div>
+            <p class="login-box-msg">Sign in to start your session</p>
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
+              <div class="form-group has-feedback">
+                <select class="form-control" formControlName="Type" name="Type" style="display:none;">
+                  <option value="user">User</option>
+                  <option value="sp">SP</option>
+                  <option value="agent">Agent</option>
+                  <option value="employee">Employee</option>
+                  <option value="admin">Admin</option>
+                </select>
+                <div *ngIf="isSubmitted && formControls.Type.errors" class="ValidationError">
+                  <div *ngIf="formControls.Type.errors.required">Login Type is required</div>
+                </div>
+              </div>
+
+              <div class="form-group has-feedback">
+                <input type="text" formControlName="Username" name="Username" class="form-control text-uppercase"
+                  placeholder="Mobile / User Id" maxlength="11">
+                <span class="form-control-feedback">
+                  <img class="img-fluid" src="../assets/image/man.svg">
+                </span>
+                <div *ngIf="isSubmitted && formControls.Username.errors" class="ValidationError">
+                  <div *ngIf="formControls.Username.errors.required">Mobile / User Id is required</div>
+                  <div *ngIf="formControls.Username.errors.pattern">Enter valid User Id/ Mobile</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="form-group has-feedback otp">
+                    <div class=" otp123" *ngIf="OtpVisible == 1">
+                      <input type="text" maxlength='6' formControlName="LoginOtp" name="LoginOtp" class="form-control"
+                        placeholder="OTP">
+                      <span class=" form-control-feedback">
+                        <!-- <img  class="img-fluid"
+                        src="../assets/image/locked.svg"> -->
+                      </span>
+                      <div *ngIf="isSubmitted && formControls.LoginOtp.errors" class="ValidationError">
+                        <div *ngIf="formControls.LoginOtp.errors.required"></div>
+                      </div>
+                    </div>
+                    <div *ngIf="OtpVisible == 1">
+                      <button [disabled]="ResendOtpButton" (click)="ResendOTP()" type="button" id="ResendOtpButton"
+                        class="btn btn-info btn-block btn-flat login-button2 resend"></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group has-feedback" *ngIf="PasswordVisible == 1">
+                <input type="password" formControlName="Password" name="Password" class="form-control"
+                  placeholder="Password">
+                <span class=" form-control-feedback">
+                  <img class="img-fluid" src="../assets/image/locked.svg">
+                </span>
+                <div *ngIf="isSubmitted && formControls.Password.errors" class="ValidationError">
+                  <div *ngIf="formControls.Password.errors.required">Password is required</div>
+                </div>
+                <a class="forgot-password"
+                  (click)="ForgetPassword(this.loginForm.value['Type'],'Forget Password')">Forgot Password?</a>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <button type="submit" [disabled]="SubmitButton" id="ProceedButtonValueGetByID"
+                    class="btn btn-info btn-block btn-flat login-button">{{buttonVallue}}</button>
+                </div>
+                <div class="col-xs-12" *ngIf="loginForm.value['Type'] != 'user'">
+                  <a (click)="ViewPassword()" id="clickswitchpasws"
+                    class="btn btn-primary  btn-flat login-button bdr-btn">{{buttonVallueLogin}}</a>
+                </div>
+                <!-- <div class="col-xs-12" *ngIf="Types ==  'agent'">
+                  <div class="direction ">
+                    <a href="https://www.squareinsurance.in/become-pos" target="_blank">Become-pos</a>
+                  </div>
+                </div> -->
+                <!-- <div class="form-group has-feedback col-xs-12" *ngIf="loginForm.value['Type'] == 'user'">
+                  <span style="  text-align: center;
+                padding: 22px;
+                font-style: unset;
+                font-weight: 600;"> Do Not Have Account, <a href="https://www.squareinsurance.in/users/register">Create
+                      A New Account</a> </span>
+                </div> -->
+              </div>
+            </form>
+          </div>
+          <div class="col-xl-12">
+            <div class="align-details" *ngIf="Types ==  'agent'">
+
+              <div class="number">
+                <label>24*7 Connect With</label>
+                <span>+91-9783391777</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul class="login-footer">
+        <li>Copyright &#169; 2021- {{currentYear}} Customer Relationship Management</li>
+        <li>Powered by Square Insurance Brokers Pvt. Ltd.</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+
+<button style="display: none;" type="hidden" class="btn btn-success" data-toggle="modal" data-target="#exampleModal2"
+  id="clickbtn">
+</button>
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Please Fill Some Details</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addUserForm" (ngSubmit)="AddUserDetails()" class="working_day">
+          <div class="dropdown_day">
+            <div class="geo-list geo-pro">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" formControlName="name">
+                <span *ngIf="isSubmitted && formControls2.name.errors" class="ValidationError">
+                  <span *ngIf="formControls2.name.errors.required">Please enter name!</span>
+                  <span *ngIf="formControls2.name.errors.pattern">Please Enter Name Correct
+                    Format.!</span>
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label>Email</label>
+                <input type="text" class="form-control" formControlName="email">
+                <span *ngIf="isSubmitted && formControls2.email.errors" class="ValidationError">
+                  <span *ngIf="formControls2.email.errors.required">Please enter email!</span>
+                  <span *ngIf="formControls2.email.errors.pattern">Please Enter Valid Email
+                    Format.!</span>
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label>Pincode</label>
+                <input type="text" class="form-control" formControlName="pincode">
+                <span *ngIf="isSubmitted && formControls2.pincode.errors" class="ValidationError">
+                  <span *ngIf="formControls2.pincode.errors.required">Please enter pincode!</span>
+                  <span *ngIf="formControls2.pincode.errors.pattern">Please Enter Valid Pincode format.!</span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer custom-footer">
+            <button type="submit" class="btn btn-info">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

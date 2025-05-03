@@ -1,0 +1,179 @@
+<section class="inner_page_css main_dashboard_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+
+                            <div>BA/BP Update</div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+
+
+                        <form [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+
+                            <div class="row" style="margin-top: 1%;">
+
+
+                                <div class="col-sm-3" *ngIf="(this.UrlSegment =='update-request-ba-bp-manager')">
+                                    <ng-multiselect-dropdown class="form-control" placeholder="Request Type"
+                                        [data]="QuoteTypes" formControlName="Request_Type"
+                                        [settings]="dropdownSettingsingleselect1" [(ngModel)]="QuoteTypeVal">
+                                    </ng-multiselect-dropdown>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <input type="text" placeholder="Search" class="form-control"
+                                        formControlName="SearchValue">
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <input type="submit" class="btn btn-info" value="Search">&nbsp;&nbsp;
+                                    <!-- <input *ngIf="UserRights['Is_Agent_Report_Excel_Export']==1 && Is_Export==1" (click)="ExportExcel()" type="button" class="btn btn-success" value="Export">&nbsp;&nbsp; -->
+                                    <button (click)="ClearSearch()" type="button" style="font-size: small;"
+                                        class="btn btn-danger" value="Reset"> <i class="fa fa-close">Reset</i> </button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <br>
+
+
+                        <div class=" mydiv table-responsive">
+
+                            <table datatable [dtOptions]="dtOptions" id="Table1"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th> Name</th>
+                                        <th> Email</th>
+                                        <th> Mobile</th>
+                                        <th>Remark</th>
+                                        <th>Create Date</th>
+                                        <th>Type</th>
+                                        <th *ngIf="this.UrlSegment === 'update-request-ba-bp-manager'">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr; let i=index;">
+                                        <td>{{row.SrNo}}</td>
+                                        <td>{{row.Name}}</td>
+                                        <td>{{row.Email}}</td>
+                                        <td>{{row.Mobile_No}}</td>
+                                        <td>{{row.Remark}}</td>
+                                        <td>{{row.Addstamp}}</td>
+
+
+
+                                        <td>
+
+                                            <label *ngIf="row.Type == 3 " class="label label-info"> Name & Code =
+                                                {{row.babpName}} - {{row.babpCode}}</label>
+
+
+                                            <br>
+                                            <label class="label label-primary">{{ row.Type == 1 ? ' Business Partner' :
+                                                (row.Type == 2 ? ' Business Advisor' : 'Change Mapping BP/BA')
+                                                }}</label>
+                                            <br>
+
+                                            <label *ngIf="this.UrlSegment != ''" class="label" [ngClass]="{
+                                                    'label-danger': row.Leadstatus == 0,
+                                                    'label-warning': row.Leadstatus == 1 , 
+                                                    'label-success': row.Leadstatus == 2
+                                                }">{{row.Leadstatus == 0 ? 'Rejected' : (row.Leadstatus == 1 ? 'Pending
+                                                For Manager' :
+                                                'Approved')}}</label>
+                                        </td>
+                                        <td *ngIf="this.UrlSegment === 'update-request-ba-bp-manager'">
+
+
+                                            <button class="btn btn-success"
+                                                *ngIf="(row.Leadstatus === '1' && this.UrlSegment == 'update-request-ba-bp-manager'  && row.manager_id == '')"
+                                                (click)="AcceptRequest(row.Id,row.Leadstatus)"
+                                                style="font-size: small; padding: 2px;">Accept
+                                            </button>
+
+                                            <button
+                                                *ngIf="  (row.Leadstatus === '1') &&  row.manager_id === this.LoginId"
+                                                class="btn btn-success"
+                                                (click)="LeadData(row.Id , 'Approve' , row.Type,row.AgentId)"
+                                                style="font-size: small; padding: 2px;" data-toggle="modal"
+                                                data-target="#exampleModal">Approve
+                                            </button>
+
+                                            <br>
+
+                                            <button
+                                                *ngIf=" (row.Leadstatus === '1') && row.manager_id === this.LoginId "
+                                                class="btn btn-danger"
+                                                (click)="LeadData(row.Id , 'Reject' , row.Type,row.AgentId)"
+                                                style="font-size: small; padding: 2px;" data-toggle="modal"
+                                                data-target="#exampleModal">Reject
+                                            </button>
+                                            {{row.ManagerRemark}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="8" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ------------Modal----------------- -->
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>{{this.LeadStatus }}</b></h5>
+                    <button type="button" id="close_pop" class="close closeModelButton" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="false">&times;</span>
+                    </button>
+
+                </div>
+                <div class="modal-body">
+                    <form class="form" (ngSubmit)="Leadstatus()" [formGroup]="Lead_status">
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <label for="Remark">Remark</label>
+                                <input class="form-control" type="text" formControlName="Remark" name="Remark"
+                                    id="Remark" placeholder="Enter Remark">
+                                <span *ngIf="isSubmitted && FC.Remark.errors" class="ValidationError">
+                                    <span *ngIf="FC.Remark.errors.required">Remark required!</span>
+                                </span>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

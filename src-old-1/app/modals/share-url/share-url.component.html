@@ -1,0 +1,30 @@
+<div class="section-container" id="qr-us-section" style="text-align: center;">
+  <!-- <div><button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button></div> -->
+
+
+
+  <div class="qr-code">
+    <img style="text-align: center;" src="https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl={{Dataarrr}}"
+      id="qr_code_d">
+  </div>
+
+
+  <div class="row row-m-t">
+    <div class="col-md-12 share-url">
+
+      <textarea id="w3review" name="w3review" rows="2" disabled>{{Dataarrr}}</textarea>
+    </div>
+
+    <div class="col-md-6 "></div>
+
+    <div class="col-md-3 btn-copy" style="
+    padding: 0px 5px 2px !important; ">
+
+      <button (click)="CopyText(Dataarrr)" type="button" id="submitt_btnxx"
+        class="btn btn-primary ">Copy</button>
+    </div>
+    <div class="col-md-3 btn-copy" style="padding: 0px 16px 0px 2px!important;">
+
+      <button (click)="CloseModel()" type="button" id="submitt_btnxx" class="btn btn-danger ">Close</button>
+    </div>
+  </div>

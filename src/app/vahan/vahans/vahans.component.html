@@ -1,0 +1,393 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+  <div class="container-fluid">
+    <div class="main_card_form ">
+      <div class="main_header">
+        <div class="header_title">Third Party Venders</div>
+      </div>
+
+      <div class="main_body main_card_height_scroll_withoutfooter">
+
+
+
+        <div class="btn_list_group">
+          <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="row">
+
+                <div class="col-md-12">
+                  <div class="dsr-fillter">
+                    <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                      data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <a role="button" class="fa fa-filter"><span>Filters</span><i
+                          class="fa fa-angle-down pull-right"></i></a>
+                    </button>
+                    <button class="btn btn-info1" (click)="dailog()"><span>Add Price</span></button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body sub-form">
+                  <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <input type="text" placeholder="Date OR Date-Range" class="form-control"
+                          formControlName="DateOrDateRange" bsDaterangepicker
+                          [bsConfig]="{dateInputFormat: 'DD-MM-YYYY', isAnimated: true }">
+                        <span *ngIf="isSubmitted && formControls.DateOrDateRange.errors" class="ValidationError">
+                          <span *ngIf="formControls.DateOrDateRange.errors.required">Date is required</span>
+                        </span>
+                      </div>
+                      <div class="col-sm-3">
+                        <button class="btn btn-success" type="submit">Submit</button>
+                        <button class="btn btn-info " (click)="ClearSearch()">Reset</button>
+                      </div>
+                      <div class="col-md-6">
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="All">
+
+                <div class="custom_table">
+                  <ul class="responsive-table">
+
+
+                    <li class="table-row" *ngFor="let row of dataTable">
+                      <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">1</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Name</div>
+                              <strong class="fs_18">{{row.type}}</strong>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Success</div>
+                              <strong class="fs_18"><span class="link"></span>{{row.pass}}</strong>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Fail</div><strong class="fs_18">{{row.fail}}</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Total</div><strong class="fs_18">{{row.total}}</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Amount</div><strong class="fs_18">{{row.amt}}</strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="last_row">
+                        <div class="d_flex effective_date"> </div>
+                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                          <a class="btn btn-info1 opacityhide" (click)="exportData('vahan/vahans', 1)">Exports</a>
+                          <a style="cursor: pointer;" class="btn btn-info1"
+                            (click)="exportData('vahan/vahans', 0)">Export</a>
+                        </div>
+                      </div>
+                    </li>
+
+
+                    <li class="table-row" *ngIf="dataTable?.length == 0">
+                      <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">1</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Name</div>
+                              <strong class="fs_18">Vahan</strong>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Success</div>
+                              <strong class="fs_18"><span class="link"></span>0</strong>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Fail</div><strong class="fs_18">0</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Total</div><strong class="fs_18">0</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Amount</div><strong class="fs_18">0</strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="last_row">
+                        <div class="d_flex effective_date"> </div>
+                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                          <a style="cursor: pointer;" class="btn btn-info1"
+                            (click)="exportData('vahan/vahans', 0)">Export</a>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li class="table-row" *ngFor="let row of dataTable1">
+                      <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">2</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Name</div>
+                              <strong class="fs_18">{{row.type1}}</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+
+                              <div>Success</div>
+                              <strong class="fs_18"><span class="link"></span>{{row.pass1}}</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Fail</div><strong class="fs_18">{{row.fail1}}</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Total</div><strong class="fs_18">{{row.total1}}</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Amount</div><strong class="fs_18">{{row.amt1}}</strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="last_row">
+                        <div class="d_flex effective_date"> </div>
+                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                          <a style="cursor: pointer;" class="btn btn-info1 opacityhide"
+                            (click)="exportData('vahan/whatsapp', 1)">Export</a>
+                          <a style="cursor: pointer;" class="btn btn-info1"
+                            (click)="exportData('vahan/whatsapp', 0)">Export</a>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li class="table-row" *ngIf="dataTable1?.length == 0">
+                      <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">2</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Name</div>
+                              <strong class="fs_18">Whatsapp</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+
+                              <div>Success</div>
+                              <strong class="fs_18"><span class="link"></span>0</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Fail</div><strong class="fs_18">0</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Total</div><strong class="fs_18">0</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Amount</div><strong class="fs_18">0</strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="last_row">
+                        <div class="d_flex effective_date"> </div>
+                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                          <a style="cursor: pointer;" class="btn btn-info1"
+                            (click)="exportData('vahan/whatsapp', 0)">Export</a>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li class="table-row" *ngFor="let row of dataTable2">
+                      <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">3</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Name</div>
+                              <strong class="fs_18">{{row.type2}}</strong>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+
+                              <div>Success</div>
+                              <strong class="fs_18"><span class="link"></span>{{row.pass2}}</strong>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Fail</div><strong class="fs_18">{{row.fail2}}</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Total</div><strong class="fs_18">{{row.total2}}</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Amount</div><strong class="fs_18">{{row.amt2}}</strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="last_row">
+                        <div class="d_flex effective_date"> </div>
+                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                          <a style="cursor: pointer;" class="btn btn-info1 opacityhide"
+                            (click)="exportData('vahan/sms', 1)">Export</a>
+                          <a style="cursor: pointer;" class="btn btn-info1"
+                            (click)="exportData('vahan/sms', 0)">Export</a>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li class="table-row" *ngIf="dataTable2?.length == 0">
+                      <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">3</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Name</div>
+                              <strong class="fs_18">SMS and Email</strong>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+
+                              <div>Success</div>
+                              <strong class="fs_18"><span class="link"></span>0</strong>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Fail</div><strong class="fs_18">0</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Total</div><strong class="fs_18">0</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Amount</div><strong class="fs_18">0</strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="last_row">
+                        <div class="d_flex effective_date"> </div>
+                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                          <!-- <a style="cursor: pointer;" class="btn btn-info1" (click)="exportData('vahan/sms')">Export</a> -->
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

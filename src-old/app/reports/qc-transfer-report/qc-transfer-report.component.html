@@ -1,0 +1,116 @@
+<section class="inner_page_css main_dashboard_css">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title">
+                <!-- title  -->
+                QC Transfer Report
+              </div>
+            </div>
+            <div class="main_body main_card_height_scroll_withoutfooter">
+  
+              <div>
+                <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                  <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                    href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <a role="button" class="fa fa-filter"><span>Filters</span><i
+                        class="fa fa-angle-down pull-right"></i></a>
+                  </button>
+                </div>
+              </div>
+  
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <!-- filter  -->
+  
+                  <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+
+
+                    <div class="row">
+        
+        
+                      <div class="col-sm-3">
+                        <input type="date" placeholder="Select Date" class="form-control" formControlName="DateOrDateRange">
+                        <span *ngIf="isSubmitted && FC.DateOrDateRange.errors" class="form-text text-muted">
+                          <span *ngIf="FC.DateOrDateRange.errors.required" style="color:red;">Please choose Date!</span>
+                        </span>
+        
+                      </div>
+        
+                      <div class="col-sm-3">
+                        <input type="text" placeholder="Search employee name/code" class="form-control"
+                          formControlName="GlobalSearch">
+                        <span *ngIf="isSubmitted && FC.GlobalSearch.errors" class="form-text text-muted">
+                          <span *ngIf="FC.GlobalSearch.errors.required" style="color:red;">Please enter search value !</span>
+                        </span>
+        
+                      </div>
+        
+        
+                      <div class="col-sm-3" style="text-align: right;">
+        
+                        <input type="submit" class="btn btn-info" value="Search">
+                        &nbsp;&nbsp;
+                        <span *ngIf="(api.GetUserData('User_Role') == 'Hod')">
+                          <input (click)="ExportExcel()" type="button" class="btn btn-success" value="Export">
+                          &nbsp;&nbsp;
+                        </span>
+        
+        
+                        <input (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset">
+                      </div>
+        
+                    </div>
+        
+                  </form>
+  
+                </div>
+              </div>
+  
+  
+          
+  
+  
+              
+  
+    
+              <div class=" mydiv table-responsive">
+                <table datatable [dtOptions]="dtOptions"
+                class="row-border hover table table-bordered table-hover table-checkable" id="kt_datatable"
+                style="margin-top: 13px !important">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Date/Time</th>
+                    <th>Emplyee Name</th>
+                    <th>No. Of QC</th>
+                    <th>Transfer By </th>
+                    <th>Remark</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr">
+                    <td>{{ row.SrNo }}.</td>
+                    <td>{{ row.Add_Stamp }}</td>
+                    <td>{{ row.EmpBY }}</td>
+                    <td>{{ row.no_of_qc }}</td>
+                    <td>{{ row.transferBy }}</td>
+                    <td>{{ row.Remark }}</td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="6" align="center">No data available !</td>
+                  </tr>
+                <tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

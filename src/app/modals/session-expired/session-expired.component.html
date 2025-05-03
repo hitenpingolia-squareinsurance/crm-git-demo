@@ -1,0 +1,28 @@
+<div class="login-ui">
+
+    <h2>Your session has been expired</h2>
+
+    <p>If you want to continue session as
+        <b>{{api.GetUserData('Name')}}</b>, please re-write your password.
+    </p>
+    <form class="form " [formGroup]="LoginForm" (ngSubmit)="Relogin()">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+               <div class="form-group">
+                <input formControlName="Password" class="form-control" type="password" placeholder="Password" name="Password"
+                    id="kt_email" autocomplete="new-password" />
+                
+                <span *ngIf="isSubmitted && FC.Password.errors" class="form-text text-muted">
+                    <span *ngIf="FC.Password.errors.required" style="color:red;">Please enter password!</span>
+                </span>
+               </div>
+            </div>
+            <div class="col-md-10 col-md-offset-1" >
+                <div class="btn-group-align">
+                    <button type="submit" id=""  class="btn btn-primary">Login</button>
+                    <button routerLink="/Logoutweb" type="button" id="" class="btn btn-light-primary">Logout</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,80 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header">
+              <div class="row">
+                <div class="col-md-4">
+                  <h3 class="box-title">Leads</h3>
+                </div>
+                <div class="col-md-5">&nbsp;</div>
+                <div class="col-md-3">
+                  <button class="btn btn-primary nextBtn pull-right" (click)="Addleads()"
+                    style="margin-right: 5px;"> Add New Lead </button>
+                    
+                </div>
+
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="mydiv">
+                <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                  class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>S.No</th>
+                      <th>Lead Id</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Mobile</th>
+                      <th>Reg. No.</th>
+                      <th>Expiry Date</th>
+                      <th>Remaining Days</th>
+                      <th>Creation Date</th>
+                      <!-- <th>Share Policy</th> -->
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="dataAr?.length != 0">
+                    <tr *ngFor="let row of dataAr">
+                      <td>{{row.SrNo}}.</td>
+                      <td>{{row.leadid}}
+                        <br>
+                        {{row.type}}
+                      </td>
+                      <td>{{row.name  | uppercase }}</td>
+                      <td>{{row.email  | uppercase }}</td>
+                      <td>{{row.mobile}}</td>
+                      <td>{{row.regno  | uppercase }}</td>
+                      <td>{{row.expirydate}}</td>
+                      <td>{{row.remainingdays}}</td>
+                      <td>{{row.creationdate}}</td>
+                      <!-- <td>{{row.sharepolicy}}</td> -->
+
+                      <td>
+                        <label class="label label-info" (click)="DetailsLeads(row.Id,row.leadid)">Details</label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                      </td>
+                      
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="dataAr?.length == 0">
+                    <tr>
+                      <td colspan="14" align="center">No data available!</td>
+                    </tr>
+                  <tbody>
+                </table>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>

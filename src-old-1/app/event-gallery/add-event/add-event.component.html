@@ -1,0 +1,82 @@
+<div>
+    <button (click)="CloseModel()" type="button" class="close closeModelButton">
+      &times;
+    </button>
+  
+    <form class="form" [formGroup]="addEventForm" method="post" enctype="multipart/form-data">
+      <div class="box-body">
+        <div class="row clearfix" style="margin-top: 10px;">
+          <div class="col-md-12">
+
+            <div class="col-md-4">
+              <label for="title">Image Title</label>
+              <input type="text" id="title" placeholder="Enter Title" formControlName="title" class="form-control">
+              <div *ngIf="isSubmitted && formControls.title.errors" class="text-danger">
+                Please Enter Image Title!
+              </div>
+            </div>
+  
+            <div class="col-md-4">
+              <label for="tag">Alt Tag</label>
+              <input type="text" id="tag" placeholder="Enter Tag" formControlName="tag" class="form-control">
+              <div *ngIf="isSubmitted && formControls.tag.errors" class="text-danger">
+                Please Enter Tag!
+              </div>
+            </div>
+         
+            <div class="col-md-4">
+              <label for="file">Choose Files</label>
+              <div class="custom-file-input-wrapper">
+                  <input type="file" multiple="true" id="file" (change)="onFileChange($event)" formControlName="file" class="form-control ">
+                  <!-- <input type="text" [value]="this.File || 'No file chosen'" class="form-control custom-file-input-display" readonly> -->
+              </div>
+              <p>{{this.FileNames}}</p>
+              <div *ngIf="isSubmitted  && formControls.file.errors?.required" class="text-danger">
+                  Please Choose File!
+              </div>
+              <div *ngIf="fileError" class="text-danger">
+                {{ fileError }}
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="Status">Status</label>
+              <ng-multiselect-dropdown 
+                class="form-control" 
+                placeholder="--Select--" 
+                [data]="Status"
+                formControlName="Status" 
+                [settings]="dropdownSettingsType"
+                [(ngModel)]="activeinactive">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.Status.errors" class="ValidationError">
+                <div *ngIf="formControls.Status.errors.required">Please Select Status!</div>
+              </div>
+            </div>
+            
+
+            <div class="col-md-4">
+              <label for="discription">Meta Title</label>
+              <textarea type="text" id="discription" placeholder="Enter Description" formControlName="description" class="form-control"></textarea>
+              <div *ngIf="isSubmitted && formControls.description.errors" class="text-danger">
+                Please Enter Description!
+              </div>
+            </div>
+          
+          
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-10">&nbsp;</div>
+          <div class="col-md-2 actionButtons" style="margin-bottom: 5px;">
+            <button class="btn btn-primary save-click" (click)="AddData(ID)" type="submit">
+              {{ ID ? 'Update' : 'Submit' }}
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+  

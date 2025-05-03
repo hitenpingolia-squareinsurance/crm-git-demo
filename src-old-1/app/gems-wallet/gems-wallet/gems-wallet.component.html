@@ -1,0 +1,230 @@
+<!-- <link rel="stylesheet" href="https://www.squareinsurance.in/assets/css/squarewallet.css" /> -->
+
+<div class="inner_page_css main_dashboard_css">
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="main_card_form">
+
+                    <div class="main_header">
+                        <div class="header_title">
+                            Redeem your points
+                        </div>
+                    </div>
+
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+                        <div class="wallet_details_table_details">
+                            <div class="wallet_details_table_details_main">
+                                <div class="row">
+
+                                    <form class="form" (ngSubmit)="AddGemsForm()" [formGroup]="AddForm">
+
+
+
+
+                                        <div class="col-sm-3">
+                                            <div class="form-group coustom_input">
+                                                <input type="hidden" class="form-control"
+                                                    formControlName="TotalWalletBalance" id="TotalWalletBalance"
+                                                    aria-describedby="emailHelp" placeholder="Points">
+                                                <input type="text" class="form-control" formControlName="ReedemPoint"
+                                                    (keyup)="onkeypress()" id="ReedemPoint" aria-describedby="emailHelp"
+                                                    placeholder="Points">
+                                                <div *ngIf="isSubmitted && formControls.ReedemPoint.errors "
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.ReedemPoint.errors.required">Enter Reedem
+                                                        Point !</div>
+                                                    <span *ngIf="formControls.ReedemPoint.errors.pattern">numeric
+                                                        value allowed</span>
+                                                    <span *ngIf="formControls.ReedemPoint.errors.max"> Insufficient
+                                                        points</span>
+                                                    <span *ngIf="formControls.ReedemPoint.errors.min"> minimum 500
+                                                        points required </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group coustom_input">
+                                                <input type="text" class="form-control" formControlName="Remarks"
+                                                    id="Remarks" aria-describedby="emailHelp" placeholder="Remarks">
+                                                <div *ngIf="isSubmitted && formControls.Remarks.errors "
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.Remarks.errors.required"> Enter Remarks!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-sm-3">
+                                            <ng-multiselect-dropdown class="form-control" name="FinancialYear" placeholder="Financial Year"
+                                                [data]="SR_Session_Year" formControlName="FinancialYear" [settings]="dropdownSettingsingleselect"  [(ngModel)]="financialYearVal" >
+                                            </ng-multiselect-dropdown>
+                                        
+                                            <span *ngIf="isSubmitted && formControls.FinancialYear.errors" class="ValidationError">
+                                                <span *ngIf="formControls.FinancialYear.errors.required">Financial Year is required</span></span>
+                                        </div> -->
+                                        <div class="col-sm-3">
+                                            <div class="coustom_btn">
+                                                <button type="submit" [disabled]="this.TotalBalance =='0'"
+                                                    class="btn btn-primary">Redeem</button>
+
+                                                <button type="button" (click)="ViewGemsDetails()"
+                                                    class="btn btn-info other_btn">Quarter Details</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1">
+
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <ng-multiselect-dropdown class="form-control" name="FinancialYear"
+                                                placeholder="Financial Year" [data]="SR_Session_Year"
+                                                formControlName="FinancialYear" [settings]="dropdownSettingsingleselect"
+                                                (onSelect)="ViewRequest()" [(ngModel)]="financialYearVal">
+                                            </ng-multiselect-dropdown>
+
+                                            <span *ngIf="isSubmitted && formControls.FinancialYear.errors"
+                                                class="ValidationError">
+                                                <span *ngIf="formControls.FinancialYear.errors.required">Financial Year
+                                                    is required</span></span>
+                                        </div>
+                                    </form>
+
+
+                                    <div class="col-md-12">
+                                        <div class="right_side_blog">
+                                            <ul class="media-points-ul">
+
+
+                                                <li class=" width_dev_eight">
+                                                    <div class="media-points">
+                                                        <abbr>Points</abbr><span>{{this.TotalBalance}}</span>
+                                                        <div class="right-side icon-right-primary">
+                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                            <div class="shap-block">
+                                                                <div class="rounded-shap animate-bg-primary">
+                                                                    <i></i><i></i></div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </li>
+                                                <li class=" width_dev_eight">
+                                                    <div class="media-points"><abbr>Redeemed
+                                                            Points</abbr><span>{{this.reedemedpoints}}</span>
+                                                        <div class="right-side icon-right-success">
+                                                            <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
+                                                            <div class="shap-block">
+                                                                <div class="rounded-shap animate-bg-primary">
+                                                                    <i></i><i></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class=" width_dev_eight">
+                                                    <div class="media-points"><abbr>Redeemable
+                                                            Points</abbr><span>{{this.ReedembalePoints}}</span>
+                                                        <div class="right-side icon-right-primary">
+                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            <div class="shap-block">
+                                                                <div class="rounded-shap animate-bg-primary">
+                                                                    <i></i><i></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class=" width_dev_eight">
+                                                    <div class="media-points"><abbr>Balance
+                                                            Points</abbr><span>{{this.BalancePoints}}</span>
+                                                        <div class="right-side icon-right-success">
+                                                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                                            <div class="shap-block">
+                                                                <div class="rounded-shap animate-bg-primary">
+                                                                    <i></i><i></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div>
+                                            <table class="table statment_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">TRANSACTIONS</th>
+                                                        <th scope="col">POINTS</th>
+                                                        <th scope="col">STATUS</th>
+                                                        <th scope="col">COMMENTS</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody *ngIf="ViewRequests?.length != 0">
+                                                    <tr *ngFor="let row of ViewRequests">
+                                                        <!-- <tr>
+                                                                <td colspan="4">
+                                                                    <label class="month_label">April 2022</label>
+                                                                </td>
+                                                            </tr> -->
+
+                                                        <th scope="row">
+                                                            <div class="table_details">
+                                                                <div class="table_details_img_blog">
+                                                                    <img class="img-fluid flag-img" style="margin: 19%;"
+                                                                        src="assets/dist/img/bank_icon.png"
+                                                                        alt="Square Insurance" />
+                                                                </div>
+
+                                                                <div class="table_details_text_blog">
+                                                                    <span> {{row.AgentName }} </span>
+                                                                    <span> {{row.RequestDate}}</span>
+                                                                    <!-- <span>{{row.AgentName}}</span> -->
+                                                                    <span>Gems ID {{row.PaymentId}}</span>
+                                                                </div>
+                                                            </div>
+
+                                                        </th>
+                                                        <td> {{row.DebitAmount}}</td>
+
+                                                        <td>
+                                                            <label
+                                                                *ngIf="row.PaymentStatus == '1' && row.AssignerId == ''"
+                                                                class="stutas_label_pending">Requested</label>
+                                                            <label
+                                                                *ngIf="row.PaymentStatus == '1' && row.AssignerId != ''"
+                                                                class="stutas_label_pending">Pending</label>
+                                                            <label *ngIf="row.PaymentStatus == '2'"
+                                                                class="stutas_label_hold">Hold</label>
+                                                            <label *ngIf="row.PaymentStatus == '0'"
+                                                                class="stutas_label_failed">Reject</label>
+                                                            <label *ngIf="row.PaymentStatus == '3'"
+                                                                class="stutas_label">Success</label>
+
+                                                        </td>
+
+                                                        <td>{{row.ReasonRemark}}</td>
+                                                    </tr>
+                                                </tbody>
+
+
+                                                <tbody *ngIf="ViewRequests?.length == 0">
+                                                    <tr>
+                                                        <td colspan="14" align="center">No data available!</td>
+                                                    </tr>
+                                                <tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

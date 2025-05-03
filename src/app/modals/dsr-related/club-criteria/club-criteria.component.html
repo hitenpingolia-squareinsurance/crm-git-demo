@@ -1,0 +1,196 @@
+<mat-dialog-content class="mat-typography ">
+  <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+  <div id="exTab1" class="">
+    <ul class="nav nav-pills">
+      <li class="active">
+        <a href="#1a" data-toggle="tab">Club Business Criteria</a>
+      </li>
+      <li>
+        <a href="#2a" data-toggle="tab">Club Rewards Criteria</a>
+      </li>
+    </ul>
+
+    <div class="tab-content clearfix">
+      <div class="tab-pane active" id="1a">
+        <div class="datalist">
+
+          <div class="data-view data-label">
+            <ul>
+              <li><strong></strong></li>
+              <li><strong>Non Motor</strong></li>
+              <!-- <li><strong>Health</strong></li> -->
+              <li><strong>Health</strong><abbr>(Including PA)</abbr></li>
+              <li><strong>Life</strong></li>
+              <!-- <li><strong>Personal Accident</strong></li>
+              <li><strong>Travel</strong></li> -->
+              <!-- <li><strong>Finance</strong></li> -->
+              <li><strong>Finance</strong><abbr>(Disbursement)</abbr></li>
+              <li><strong>Mutual Fund</strong></li>
+              <!-- <li><strong>Real Estate</strong></li> -->
+              <li><strong>Credit Card</strong></li>
+            </ul>
+          </div>
+
+          <div class="data-view">
+            <ul>
+              <li class="first-col"><abbr>Novel</abbr></li>
+
+              <li>
+                <span class="elite">{{non_motor_novel}}</span>
+              </li>
+
+              <li>
+                <span class="elite">{{health_novel}}</span>
+              </li>
+
+              <li>
+                <span class="elite">{{life_novel}}</span>
+              </li>
+
+              <!-- <li>
+                <span class="elite">{{pa_novel}}</span>
+              </li> -->
+
+              <!-- <li>
+                <span class="elite">{{travel_novel}}</span>
+              </li> -->
+
+              <li>
+                <span class="elite">{{finance_novel}}</span>
+              </li>
+
+              <li>
+                <span class="elite">{{mutual_fund_novel}}</span>
+              </li>
+
+              <!-- <li>
+                <span class="elite">{{real_estate_novel}}</span>
+              </li> -->
+
+              <li>
+                <span class="elite">{{credit_card_novel}}</span>
+              </li>
+
+            </ul>
+          </div>
+
+          <div class="data-view">
+            <ul>
+              <li class="first-col"><abbr>Maker</abbr></li>
+              <li>
+                <span class="elite">{{non_motor_maker}}</span>
+              </li>
+
+              <li>
+                <span class="elite">{{health_maker}}</span>
+              </li>
+
+              <li>
+                <span class="elite">{{life_maker}}</span>
+              </li>
+
+              <!-- <li>
+                <span class="elite">{{pa_maker}}</span>
+              </li>
+
+              <li>
+                <span class="elite">{{travel_maker}}</span>
+              </li> -->
+
+              <li>
+                <span class="elite">{{finance_maker}}</span>
+              </li>
+
+              <li>
+                <span class="elite">{{mutual_fund_maker}}</span>
+              </li>
+
+              <!-- <li>
+                <span class="elite">{{real_estate_maker}}</span>
+              </li> -->
+
+              <li>
+                <span class="elite">{{credit_card_maker}}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="data-view">
+            <ul>
+              <li class="first-col"><abbr>Elite</abbr></li>
+
+              <li>
+                <span class="elite">{{non_motor_elite}}</span>
+              </li>
+
+              <li>
+                <span class="elite">{{health_elite}}</span>
+              </li>
+
+              <li>
+                <span class="elite">{{life_elite}}</span>
+              </li>
+
+              <!-- <li>
+                <span class="elite">{{pa_elite}}</span>
+              </li>
+
+              <li>
+                <span class="elite">{{travel_elite}}</span>
+              </li> -->
+
+              <li>
+                <span class="elite">{{finance_elite}}</span>
+              </li>
+
+              <li>
+                <span class="elite">{{mutual_fund_elite}}</span>
+              </li>
+
+              <!-- <li>
+                <span class="elite">{{real_estate_elite}}</span>
+              </li> -->
+
+              <li>
+                <span class="elite">{{credit_card_elite}}</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tab-pane" id="2a">
+        <div class="datalist">
+          
+          <div class="data-view data-label">
+            <ul>
+              <li><strong>Club Rewards</strong></li>
+              <li><strong>Minimum POSP</strong></li>
+              <li><strong>Novel</strong></li>
+              <li><strong>Maker</strong></li>
+              <li><strong>Elite</strong></li>
+              
+            </ul>
+          </div>
+      
+          <div *ngFor="let reward of clubRewardData" class="data-view">
+            <ul>
+              <li class="first-col"><abbr>{{ reward.club_reward }}</abbr></li>
+              <li><span class="elite">{{ reward.minimum_posp }}</span></li>
+              <li><span class="elite">{{ reward.noval_percent }}</span></li>
+              <li><span class="elite">{{ reward.maker_percent }}</span></li>
+              <li><span class="elite">{{ reward.elite_percent }}</span></li>
+             
+            </ul>
+          </div>
+      
+        </div>
+      </div>
+      
+      
+
+    </div>
+  </div>
+
+</mat-dialog-content>

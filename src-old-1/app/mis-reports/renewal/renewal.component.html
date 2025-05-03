@@ -1,0 +1,228 @@
+<section class="inner_page_css main_dashboard_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">
+              <!-- title  -->
+              <div *ngIf="ActivePage == 'Default'">Renewals Reports</div>
+            </div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <!-- Info boxes -->
+            <div class="row">
+              <section class="pt-5 pb-5">
+                <div class="box-blog">
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="col-md-12">
+                        <div class="uprenewal">
+                          <h2>Upcoming Renewals</h2>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 col-md-6 margin-30px-bottom xs-margin-20px-bottom">
+                        <div class="services-block-three"> <a (click)="ChangeStatus([{Id:'Today',Name:'Today'}])"
+                            href="javascript:void(0)">
+                            <div class="padding-15px-bottom"> <i class="fa fa-eercast"></i> </div>
+                            <h4>{{data_Ar.Total_Today}}</h4>
+                            <p class="xs-font-size13 xs-line-height-22">Today's</p>
+                          </a> </div>
+                      </div>
+                      <div class="col-lg-4 col-md-6 margin-30px-bottom xs-margin-20px-bottom">
+                        <div class="services-block-three"> <a (click)="ChangeStatus([{Id:'15_Days',Name:'15 Days'}])"
+                            href="javascript:void(0)">
+                            <div class="padding-15px-bottom"> <i class="fa fa-sun-o" aria-hidden="true"></i> </div>
+                            <h4>{{data_Ar.Total_15_Days}}</h4>
+                            <p class="xs-font-size13 xs-line-height-22">Next 15 day's</p>
+                          </a> </div>
+                      </div>
+                      <div class="col-lg-4 col-md-6 margin-30px-bottom xs-margin-20px-bottom">
+                        <div class="services-block-three"> <a (click)="ChangeStatus([{Id:'30_Days',Name:'30 Days'}])"
+                            href="javascript:void(0)">
+                            <div class="padding-15px-bottom"> <i class="fa fa-object-ungroup"></i> </div>
+                            <h4>{{data_Ar.Total_30_Days}}</h4>
+                            <p class="xs-font-size13 xs-line-height-22">Next 30 day's</p>
+                            <!--<span>1 Cars</span> <span>1 Bikes</span>-->
+                          </a> </div>
+                      </div>
+
+                      <!-- end -->
+                    </div>
+                    <div class="col-md-4">
+                      <div class="col-md-12">
+                        <div class="uprenewal">
+                          <h2>Missed Renewals</h2>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 margin-30px-bottom xs-margin-20px-bottom">
+                        <div class="services-block-three"> <a href="javascript:void(0)">
+                            <div class="padding-15px-bottom"> <i class="fa fa-calendar" aria-hidden="true"></i> </div>
+                            <h4>0</h4>
+                            <p class="xs-font-size13 xs-line-height-22">This Month</p>
+                          </a> </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 margin-30px-bottom xs-margin-20px-bottom">
+                        <div class="services-block-three"> <a href="javascript:void(0)">
+                            <div class="padding-15px-bottom"> <i class="fa fa-th-list" aria-hidden="true"></i> </div>
+                            <h4>0</h4>
+                            <p class="xs-font-size13 xs-line-height-22">Last Month</p>
+                          </a> </div>
+                      </div>
+                      <!-- end -->
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="col-md-12">
+                        <div class="uprenewal">
+                          <h2>Lost Renewals</h2>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 col-md-6 margin-30px-bottom xs-margin-20px-bottom">
+                        <div class="services-block-three"> <a href="javascript:void(0)">
+                            <div class="padding-15px-bottom"> <i class="fa fa-calendar" aria-hidden="true"></i> </div>
+                            <h4>0</h4>
+                            <p class="xs-font-size13 xs-line-height-22">This Month Lost</p>
+                          </a> </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </section>
+            </div>
+            <!-- /.row -->
+            <div>
+              <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <a role="button" class="fa fa-filter"><span>Filters</span><i
+                      class="fa fa-angle-down pull-right"></i></a>
+                </button>
+              </div>
+            </div>
+
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+                <!-- filter  -->
+                <app-bms-filter (postCreated)="SearchData($event)"></app-bms-filter>
+              </div>
+            </div>
+
+
+            <hr>
+
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td><label>Label / Status</label></td>
+                  <td><label> Pending </label></td>
+                  <td><label> Follow Up</label></td>
+                  <td><label> Renewed</label></td>
+                  <td><label> Lost</label></td>
+                  <td><label> Missed</label></td>
+                  <td><label> Lost (O.C.)</label></td>
+                </tr>
+                <tr>
+                  <td><label>No Of Cases</label></td>
+                  <td *ngFor="let row1 of FilterDatatype; ">
+                    <span>
+                      {{row1.TotalRecord}}
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><label>Premium</label></td>
+                  <td *ngFor="let row1 of FilterDatatype; ">
+                    {{row1.NetPremium}}
+                  </td>
+                </tr>
+                <tr>
+                  <td><label>Ratio</label></td>
+                  <td *ngFor="let row1 of FilterDatatype; ">
+                    <span *ngIf="((row1.TotalRecord/totalRecordsfiltered)*100).toFixed(2) !='NaN' ">
+                      {{ ((row1.TotalRecord/totalRecordsfiltered)*100).toFixed(2)}}%
+                    </span>
+                    <span *ngIf="((row1.TotalRecord/totalRecordsfiltered)*100).toFixed(2) =='NaN' ">
+                      0%
+                    </span>
+                  </td>
+                </tr>
+              </thead>
+            </table>
+
+            <hr>
+            <div class=" mydiv table-responsive">
+
+              <table datatable [dtOptions]="dtOptions" class="table table-bordered mg-b-0">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>LOB / Product </th>
+                    <th>Expiry In</th>
+                    <th>Quotation Id / Source</th>
+                    <th> Name / Mobile</th>
+                    <th>Vehicle No</th>
+                    <th>Policy No</th>
+                    <th>Policy PDF</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{row.SrNo}}.</td>
+                    <td>
+                      <label class="btn btn-success">{{row.LOB}}</label> &nbsp;<label
+                        class="btn btn-warning">{{row.ProductName}}</label>
+                    </td>
+                    <!-- <td>{{row.LOB}} / {{row.ProductName}}</td> -->
+                    <td>{{row.ExpiryDays}}</td>
+                    <td>{{row.Quotation_Id}} / {{row.Source}} </td>
+                    <!-- <td></td> -->
+                    <td>{{row.CustomerName}} / {{row.CustomerMobile}}</td>
+                    <td>{{row.Vehicle_No}}</td>
+                    <td>{{row.Policy_No}}</td>
+                    <td><a (click)="ViewDocument(row.Download_Url)" href="javascript:void(0)">Download</a>
+                    </td>
+                    <td>
+                      <span *ngIf="row.Status=='Pending'" class="btn warnings customMargins">{{ row.Status
+                        }}</span>
+                      <span *ngIf="row.Status=='Follow Up'" class="btn secondarys customMargins">{{
+                        row.Status }}</span>
+                      <span *ngIf="row.Status=='Missed'" class="btn darks customMargins">{{ row.Status
+                        }}</span>
+                      <span *ngIf="row.Status=='Lost'" class="btn dangers customMargins">{{ row.Status
+                        }}</span>
+                      <span *ngIf="row.Status=='Renewed'" class="btn successs customMargins">{{ row.Status
+                        }}</span>
+                      <!-- <button *ngIf="row.Status=='Pending'" (click)="DetailShowPopup(row.Id)"
+                        class="btn warnings customMargins">{{ row.Status }}</button>
+                      <button *ngIf="row.Status=='Follow Up'" (click)="DetailShowPopup(row.Id)"
+                        class="btn secondarys customMargins">{{ row.Status }}</button>
+
+                      <button *ngIf="row.Status=='Missed'" (click)="DetailShowPopup(row.Id)"
+                        class="btn darks customMargins">{{ row.Status }}</button>
+
+                      <button *ngIf="row.Status=='Lost'" (click)="DetailShowPopup(row.Id)"
+                        class="btn dangers customMargins">{{ row.Status }}</button>
+                      <button *ngIf="row.Status=='Renewed'" (click)="DetailShowPopup(row.Id)"
+                        class="btn successs customMargins">{{ row.Status }}</button> -->
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="10" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

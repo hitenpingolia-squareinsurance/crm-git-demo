@@ -1,0 +1,119 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+                            <div>FAQ's
+                                <button class="btn btn-primary d_flex" routerLink="/WebsiteSection/FAQs"
+                                    style="float:right;">Add</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+                        <div class="box box-default"
+                            style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                            <div class="custom_table tables_layout_design">
+                                <table datatable [dtOptions]="dtOptions" class="row-border table mydiv" id="tabel1">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+
+                                <!-- ======= Refer Table  =========-->
+                                <ul class="responsive-table">
+                                    <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+
+                                        <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm">
+                                            <div class="agents_data agents_data1">
+                                                <div class="icon_re_cl">{{ row.Sr_no }}</div>
+                                                <div class="agent_name_mobile">
+                                                    <div class="agent_data">
+                                                        <strong class="fs_18 text-bold">{{row.url}}</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="agents_data agents_data3">
+                                                <div class="agent_name_mobile">
+                                                    <div class="agent_data">
+                                                        <div><b>Date: {{ row.add_stamp | date: 'dd-MM-yyyy' }}</b></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="last_row_div mt15">
+                                            <div class="d_flex custon-234">
+                                                <div class="label_chips finance_lob" style="width: auto;">
+                                                    <span>Question - {{row.question}}</span>
+                                                </div>
+
+                                                <div class="label_chips non_motor_lob" style="width: auto;"
+                                                    (click)="Answer(row.id)" data-toggle="modal"
+                                                    data-target="#answerModal">
+                                                    <span>Answer - {{ row.answer.substring(0, 150) }}...</span>
+                                                </div>&nbsp;&nbsp;
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="last_row">
+                                            <div class="d_flex effective_date" style="width: auto; padding-top:5px;">
+                                                <span class=" btn btn-primary" style="padding:0px 6px;"
+                                                    (click)="StatusChange(row.id ,  row.status == 1 ? 'Active' : 'In-Active')">{{row.status == 1 ?
+                                                    'Active' : 'In-Active' }}</span>&nbsp;&nbsp;
+                                                <span class=" btn btn-success" style="padding:0px 6px;"
+                                                    routerLink="/WebsiteSection/FAQs/{{row.id}}">Edit <i
+                                                        class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                </ul>
+                                <!--======= Refer Table END ========= -->
+
+                                <div class="row" *ngIf="dataAr?.length == 0">
+                                    <div class="col-md-12">
+                                        <div class="no_data_found">
+                                            <span><img src="assets/image/no_data_banner.jpg"></span>
+                                            <small>No data available !</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- -----------AnswerModal-------------- -->
+
+<div class="modal fade" id="answerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>Answer</b></h5>
+                <button type="button" (click)="closeModal()" class="close closeModelButton" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5> {{ this.answer }} </h5>
+            </div>
+        </div>
+    </div>
+</div>

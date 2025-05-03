@@ -1,0 +1,206 @@
+<div class="position-relative">
+    <div class="modal_header d_flex flex_Equal flex_Middel">
+        <div class="modal_title">Hierarchy Update</div> <button type="button" (click)="CloseModel()"
+            class="close closeModelButton"><i class="fa fa-close"></i></button>
+    </div>
+    <div class="modal_body py_15">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-panel-fixed">
+                    <div class="label-group">
+                        <div class="panel-label"> <label for="field-name">LOB</label> </div>
+                        <div class="panel-label"> <label for="field-name">Department</label> </div>
+                        <div class="panel-label"> <label for="field-name">Rm Details</label> </div>
+                    </div>
+                    <div class="label-action">
+                        <div class="panel-button"> <label for="field-name">Action</label> </div>
+                    </div>
+                </div>
+                <form [formGroup]="AddFieldForm" class="table-custom-scrool">
+                    <div class="row horizontal_scroll_popup" formArrayName="FieldForm" id="margin">
+                        <div class="col-md-12" *ngFor="let quantity of AddField().controls; let i=index"
+                            [formGroupName]="i">
+                            <div class="category_list custon_inline">
+                                <div class="panel">
+                                    <div class="panel-body">
+
+                                        <div class="form-width-group">
+                                            
+                                            <div class="form-group box_1"> <input id="margin" formControlName="lob"
+                                                    class="form-control" disabled="true">
+                                                <div *ngIf="AddFieldForm.get('FieldForm.' + i + '.lob').touched && AddFieldForm.get('FieldForm.' + i + '.lob').hasError('required')"
+                                                    class="Validationerrors"> <span style="color: red;">Requiered
+                                                        !</span> </div>
+                                            </div>
+
+                                            <div class="form-group box_1"
+                                                *ngIf="AddFieldForm.get('FieldForm.' + i + '.VerticalId').value == this.PosDepartment && AddFieldForm.get('FieldForm.' + i + '.lob').value !=  this.core_lob">
+                                                {{AddFieldForm.get('FieldForm.' + i + '.lob').value}}
+                                                <ng-multiselect-dropdown class="form-control" id="margin"
+                                                    placeholder="please select" [data]="VerticalDataAr"
+                                                    formControlName="VerticalData" [settings]="dropdownSettingsType">
+                                                </ng-multiselect-dropdown>
+                                                <div *ngIf="AddFieldForm.get('FieldForm.' + i + '.VerticalData').touched && AddFieldForm.get('FieldForm.' + i + '.VerticalData').hasError('required')"
+                                                    class="Validationerrors"> <span style="color: red;">Please select
+                                                        !</span> </div>
+                                            </div>
+                                            <div class="form-group box_1"
+                                                *ngIf="AddFieldForm.get('FieldForm.' + i + '.VerticalId').value != this.PosDepartment  || AddFieldForm.get('FieldForm.' + i + '.lob').value ==  this.core_lob ">
+                                                <ng-multiselect-dropdown class="form-control" id="margin"
+                                                    placeholder="please select" [data]="VerticalDataAr"
+                                                    formControlName="VerticalData" [settings]="dropdownSettingsType"
+                                                    [disabled]="true"> </ng-multiselect-dropdown>
+                                                <P>
+                                                    Core LOB
+                                                </P>
+                                                <div *ngIf="AddFieldForm.get('FieldForm.' + i + '.VerticalData').touched && AddFieldForm.get('FieldForm.' + i + '.VerticalData').hasError('required')"
+                                                    class="Validationerrors"> <span style="color: red;">Please select
+                                                        !</span> </div>
+                                            </div> <!-- RmName,b.Emp_Id as RmCode -->
+
+                                            <div class="form-group box_1"> <input id="margin" formControlName="RmId"
+                                                    class="form-control" disabled="true">
+                                                <!-- {{FieldForm. + i + .RmName}} -->
+                                                <!--                                                                                         <input id="margin" name="RmName" class="form-control" disabled="true" -->
+                                            </div>
+                                        </div>
+
+                                        <div class="form-btn-group">
+
+                                            <!-- <button *ngIf="(AddFieldForm.get('FieldForm.' + i + '.PosLobId').value !== '' ) && (RightsData == 'ManagerAllowed')"
+                                                class="btn btn-primary nextBtn pull-right box_1"
+                                                (click)="TransferPos(AddFieldForm.get('FieldForm.' + i + '.withdraw_request_rm').value,AddFieldForm.get('FieldForm.' + i + '.AgentId').value ,AddFieldForm.get('FieldForm.' + i + '.lob').value,AddFieldForm.get('FieldForm.' + i + '.department_id').value,AddFieldForm.get('FieldForm.' + i + '.PosLobId').value,'Action')">Change
+                                                RM </button> 
+                                                <button *ngIf="(AddFieldForm.get('FieldForm.' + i + '.PosLobId').value !== '' ) && (RightsData == 'ManagerAllowed')"
+                                                class="btn btn-danger nextBtn pull-right box_1"
+                                                (click)="ApproveRequest(AddFieldForm.get('FieldForm.' + i + '.withdraw_request_rm').value,AddFieldForm.get('FieldForm.' + i + '.AgentId').value ,AddFieldForm.get('FieldForm.' + i + '.lob').value,AddFieldForm.get('FieldForm.' + i + '.department_id').value,AddFieldForm.get('FieldForm.' + i + '.PosLobId').value)">LOB
+                                                Withdrawl </button> <button *ngIf="(RightsData == 'ManagerAllowed')"
+                                                class="btn btn-danger nextBtn pull-right box_1" data-toggle="modal"
+                                                data-target="#UpDateAgentBusiness" data-backdrop="static"
+                                                data-keyboard="false"
+                                                (click)="UpdatePospBusinessMapping(AddFieldForm.get('FieldForm.' + i + '.lob').value, AddFieldForm.get('FieldForm.' + i + '.AgentId').value )">
+                                                Update POSP Business</button>
+                                            <button class="btn btn-primary nextBtn pull-right box_1" data-toggle="modal"
+                                                data-target="#AddCatSubCat" data-backdrop="static" data-keyboard="false"
+                                                (click)="UpdatePospReporting(AddFieldForm.get('FieldForm.' + i + '.lob').value)">View
+                                                Request</button> -->
+
+                                            <div class="dropdown custom-dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                    <span class="icon">⋮</span>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right"
+                                                    aria-labelledby="dropdownMenuButton">
+                                                    <!-- <a class="dropdown-item" href="#">Update POSP Business</a>
+                                                      <a class="dropdown-item" href="#">View Request</a> -->
+
+                                                    <button
+                                                        *ngIf="(AddFieldForm.get('FieldForm.' + i + '.PosLobId').value !== '' ) && (RightsData == 'ManagerAllowed')"
+                                                        class="dropdown-item"
+                                                        (click)="TransferPos(AddFieldForm.get('FieldForm.' + i + '.withdraw_request_rm').value,AddFieldForm.get('FieldForm.' + i + '.AgentId').value ,AddFieldForm.get('FieldForm.' + i + '.lob').value,AddFieldForm.get('FieldForm.' + i + '.department_id').value,AddFieldForm.get('FieldForm.' + i + '.PosLobId').value,'Action')">Change
+                                                        RM </button>
+                                                    <button
+                                                        *ngIf="(AddFieldForm.get('FieldForm.' + i + '.PosLobId').value !== '' ) && (RightsData == 'ManagerAllowed')"
+                                                        class="dropdown-item"
+                                                        (click)="ApproveRequest(AddFieldForm.get('FieldForm.' + i + '.withdraw_request_rm').value,AddFieldForm.get('FieldForm.' + i + '.AgentId').value ,AddFieldForm.get('FieldForm.' + i + '.lob').value,AddFieldForm.get('FieldForm.' + i + '.department_id').value,AddFieldForm.get('FieldForm.' + i + '.PosLobId').value)">LOB
+                                                        Withdrawl </button> <button
+                                                        *ngIf="(RightsData == 'ManagerAllowed')"
+                                                        class="dropdown-item"
+                                                        data-toggle="modal" data-target="#UpDateAgentBusiness"
+                                                        data-backdrop="static" data-keyboard="false"
+                                                        (click)="UpdatePospBusinessMapping(AddFieldForm.get('FieldForm.' + i + '.lob').value, AddFieldForm.get('FieldForm.' + i + '.AgentId').value )">
+                                                        Update POSP Business</button>
+                                                    <button class="dropdown-item"
+                                                        data-toggle="modal" data-target="#AddCatSubCat"
+                                                        data-backdrop="static" data-keyboard="false"
+                                                        (click)="UpdatePospReporting(AddFieldForm.get('FieldForm.' + i + '.lob').value)">View
+                                                        Request</button>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal_footer modal-footer" *ngIf="Action == 1"> <button class="btn btn-primary nextBtn pull-right"
+            (click)="Submit()" type="submit">Submit</button> </div>
+</div>
+<div id="AddCatSubCat" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_header">
+                            <div class="header_title">Agent LOB Track</div> <button type="button" id="ClosePOUPUP"
+                                class="mr_5 Save_click close_btn close closeModelButton" data-dismiss="modal"><i
+                                    _ngcontent-shj-c7="" class="fa fa-close"></i></button>
+                        </div>
+                        <table id="Table12" class="table table-bordered table-hover margin-dialog">
+                            <thead>
+                                <tr>
+                                    <th>Action User</th>
+                                    <th>Assign User</th>
+                                    <th>Status</th>
+                                    <th>Create Date</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="AgentLobWiseLog?.length != 0">
+                                <tr *ngFor="let row of AgentLobWiseLog; let i=index;">
+                                    <td> {{row.ActionUserName}} <br> {{row.ActionUserCode}} <br> </td>
+                                    <td> {{row.AssignUserName}} <br> {{row.AssignUserCode}} <br> </td>
+                                    <td> <span *ngIf="row.status == 0" class="label label-primary">Vertical
+                                            Assigned</span> <span *ngIf="row.status == 1" class="label label-primary">RM
+                                            Assigned </span> <span *ngIf="row.status == 2"
+                                            class="label label-primary">Withdraw Request </span> <span
+                                            *ngIf="row.status == 3" class="label label-primary">Withdrawn </span> </td>
+                                    <td>{{row.created_date}}</td>
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="AgentLobWiseLog?.length == 0">
+                                <tr>
+                                    <td colspan="8" align="center">No data Available !</td>
+                                </tr>
+                            <tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="UpDateAgentBusiness" tabindex="-1" role="dialog" aria-labelledby="UpDateAgentBusinessss"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Business Mapping</h5> <button type="button"
+                    class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form" [formGroup]="UpdatePospReportingForm">
+                <div class="modal-body"> <ng-multiselect-dropdown class="form-control" name="reference"
+                        placeholder="Reporting Maneger" [(ngModel)]="ChangePospRm"
+                        [data]="GetEmployeeDataForLastMapping" formControlName="reference"
+                        [settings]="dropdownSettingsType"> </ng-multiselect-dropdown> </div>
+                <div class="modal-body"> <ng-multiselect-dropdown class="form-control" name="SelectSr"
+                        placeholder="Select Sr" [data]="GetSrData" formControlName="SelectSr"
+                        [settings]="dropdownSettingsMultipleType"> </ng-multiselect-dropdown> </div>
+                <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="closemodal">Close</button> <button type="button" class="btn btn-primary"
+                        (click)="MappingUpdatePospBusiness()">Submit</button> </div>
+            </form>
+        </div>
+    </div>
+</div>

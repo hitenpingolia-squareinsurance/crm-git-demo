@@ -1,0 +1,75 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content">
+      
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header">
+              <div class="row">
+                <div class="col-md-4">
+                  <h3 class="box-title">Health Landing Page</h3>
+                </div>
+                <div class="col-md-5">&nbsp;</div>
+               
+              </div>
+            </div>
+            <div class="box-body">
+
+              <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+              <div class="mydiv">
+                <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                  class="table table-bordered table-hover">
+                  <thead>
+
+                    <tr>
+                      <th>S.No</th>
+                      <th>Product Name</th>
+                      <th>Quotation Id</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Mobile</th>
+                      <th>Pincode</th>
+                      <th>Sum Insured</th>
+                      <th> Create Date</th>
+                      <!-- <th>Hierarchy</th> -->
+                    </tr>
+                    
+                  </thead>
+                  
+                  <tbody *ngIf="dataAr?.length != 0">
+                    <tr *ngFor="let row of dataAr">
+                      <td>{{row.SrNo}}.</td>
+                      <td>{{row.ProductName}}</td>
+                      <td>{{row.Quotation_Id}}</td>
+                      <td>{{row.Name}}</td>
+                      <td>{{row.Email}}</td>
+                      <td>{{row.Mobile}}</td>
+                       <td>{{row.HealthPincode}}</td>
+                      <td>{{row.HealthSuminsured}}</td>
+                       <td>{{row.CreateDate}}</td>
+                      <!-- <td>
+                        <label class="label label-info" (click)="EmpDetails(row.Id)">Details</label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                      </td> -->
+                    </tr>
+                  </tbody>
+
+                  <tbody *ngIf="dataAr?.length == 0">
+                    <tr>
+                      <td colspan="14" align="center">No data available!</td>
+                    </tr>
+                  <tbody>
+                </table>
+              </div>
+            </div>
+  
+  
+          </div>
+        </div>
+      </div>
+  
+    </section>
+  </div>
+  

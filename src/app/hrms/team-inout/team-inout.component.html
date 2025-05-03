@@ -1,0 +1,225 @@
+<div class="inner_page_css main_dashboard_css">
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">In-Out</div>
+                    </div>
+
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+
+                        <div class="btn_list_group">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                      <div class="dsr-fillter">
+                                        <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                          data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                          <a role="button" class="fa fa-filter"><span>Filters</span><i
+                                              class="fa fa-angle-down pull-right"></i></a>
+                                        </button>
+                
+                                      </div>
+                                    </div>
+                  
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                                        aria-labelledby="headingOne">
+                                        <div class="panel-body loader_inner_data">
+                                            <!-- <div [ngClass]="(ShowDashboardLoader == 'Yes'?'inner_cs_loader show_loader_on':'show_loader_on')">
+                                                <div class="loader_box">
+                                                    <img src="https://www.squareinsurance.in/images/loadernew.gif">
+                                                </div>
+                                            </div> -->
+                                            <form [formGroup]="SearchForm" style="padding: 0 15px;">
+                                                <div class="row">
+
+                                                    <div class="col-sm-3">
+                                                        <ng-multiselect-dropdown class="form-control" placeholder="Select Financial Year"
+                                                        [data]="Year_Ar" [(ngModel)]="SelectedYear" formControlName="Financial_Year"
+                                                        [settings]="dropdownSettingsingleselect">
+                                                        </ng-multiselect-dropdown>
+                                                    </div>
+                
+                                                    <div class="col-sm-3">
+                                                        <ng-multiselect-dropdown class="form-control" placeholder="Select Report Type"
+                                                        [data]="ReportTypeData" [(ngModel)]="SelectedReportType" formControlName="Report_Type"
+                                                        [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+                                                    </div>
+                            
+                                                    <div class="col-sm-3" *ngIf="Select_Multi_Month == 'Yes'">
+                                                        <ng-multiselect-dropdown class="form-control" placeholder="Select Month" [data]="MonthArray"
+                                                        [(ngModel)]="SelectedCurrentMonth" formControlName="Month_Name"
+                                                        [settings]="dropdownSettingsmultiselect1"> </ng-multiselect-dropdown>
+                                                    </div>
+                            
+                                                    <div class="col-sm-3" *ngIf="Select_Multi_Month == 'No'">
+                                                        <ng-multiselect-dropdown class="form-control" placeholder="Select Month" [data]="MonthArray"
+                                                        [(ngModel)]="SelectedCurrentMonth" formControlName="Month_Name"
+                                                        [settings]="dropdownSettingsingleselect1"> </ng-multiselect-dropdown>
+                                                    </div> 
+
+                                                    <div class="col-sm-3">
+                                                        <input type="text" formControlName="SearchValue"
+                                                            placeholder="Search Name/Emp. Id/Mobile"
+                                                            class="form-control">
+                                                    </div>
+
+                                                    <div class="col-sm-3">
+                                                        <input (click)="SearchBtn()" type="button" class="btn btn-info"
+                                                            value="Search">&nbsp;&nbsp;
+                                                        <input (click)="ClearSearch()" type="button"
+                                                            class="btn btn-danger" value="Reset">&nbsp;&nbsp;
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="total-count">
+                                <ul>
+                                    <li>
+                                        {{InOutSummary?.totalShortLeaveCount}}<span>Short Leave</span>
+                                    </li>
+                                    <li>
+                                        {{InOutSummary?.totalShortLeaveHalfDay}}<span>Short Leave Half</span>
+                                    </li>
+                                    <li>
+                                        {{InOutSummary?.totalHalfDayCount}}<span>Half Day</span>
+                                    </li>
+                                    <li>
+                                        {{InOutSummary?.totalFullDayLeaveCount}}<span>Full Day Leave</span>
+                                    </li>
+                                    <li>
+                                        {{(InOutSummary?.totalAbsentCount)}}<span>Absent</span>
+                                    </li>
+                                    <li>
+                                        {{(InOutSummary?.totalCalculatedLeaveCount)}}<span>Total Leaves</span>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li>
+                                        {{InOutSummary?.totalAvailableDaysCount}}<span>Available Days</span>
+                                    </li>
+                                    <li>
+                                        {{InOutSummary?.totalHolidayCount}}<span>Holidays</span>
+                                    </li>
+                                    <li>
+                                        {{(InOutSummary?.totalOfficeTime)}}<span>Total Office Time</span>
+                                    </li>
+                                    <li>
+                                        {{(InOutSummary?.totalWorkingTime)}}<span>Working Time</span>
+                                    </li>
+                                    <li>
+                                        {{InOutSummary?.totalBreakTime}}<span>Remaining Time</span>
+                                    </li> 
+                                    <li>
+                                        {{(InOutSummary?.totalExtraTime)}}<span>Extra Time</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="mydiv table-responsive leave-table">
+                                <table datatable [dtOptions]="dtOptions" class="table table-bordered table-hover"
+                                    id="Table1">
+                                    <thead>
+                                        <tr>
+                                            <th>Sno.</th>
+                                            <th>Employee Name</th>
+                                            <th>Date</th>
+                                            <th>In Time</th>
+                                            <th>Out Time</th>
+                                            <th>Worked Time</th>
+                                            <th>Remaining Time</th>
+                                            <th>Extra Time</th>
+                                            <!-- <th>Office Hours</th> -->
+                                            <th>Type</th>
+                                            <th>Remark</th>
+                                            <th>Reporting Manager</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="dataAr?.length != 0">
+                                        <tr *ngFor="let row of dataAr; let i=index;">
+                                            <td>{{row?.SNO}}</td>
+                                            <td> {{row?.employee_name}}</td>
+                                            <td>
+                                                <div class="leave-date">
+                                                    {{ row?.date | date:'MMM dd, yyyy' }}
+                                                    <span>{{row?.weekday}}</span>
+                                                </div>
+                                            </td>
+                                            <td class="bottom">
+                                                <div class="work-time">
+                                                    <ng-container *ngIf="row?.in_entire?.length > 0; else noData">
+                                                        <span class="time" *ngFor="let inRow of row?.in_entire">
+                                                      {{ formatTimeToAMPM(inRow?.in_time) }}
+                                                      <img 
+                                                        [src]="inRow?.platform_in == 'mobile' ? './assets/image/phone-attendance.svg' : './assets/image/web-attendance.svg'" 
+                                                        [title]="inRow?.platform_in == 'mobile' ? 'Mobile' : 'Web'"
+                                                        (click)="openLocationInGoogleMaps(inRow.lat_in, inRow.long_in)" />
+                                                        </span>
+                                                    </ng-container>
+                                                    <ng-template #noData>N/A</ng-template>
+                                                </div>
+                                            </td>
+                                            <td class="bottom">
+                                                <div class="work-time">
+                                                    <ng-container *ngIf="row?.out_entire?.length > 0; else noData">
+                                                        <span class="time" *ngFor="let outRow of row?.out_entire">
+                                                        {{ formatTimeToAMPM(outRow?.out_time) }}
+                                                        <img 
+                                                            [src]="outRow?.platform_out == 'mobile' ? './assets/image/phone-attendance.svg' : './assets/image/web-attendance.svg'" 
+                                                            [title]="outRow?.platform_out == 'mobile' ? 'Mobile' : 'Web'"
+                                                            (click)="openLocationInGoogleMaps(outRow.lat_out, outRow.long_out)" />
+                                                        </span>
+                                                    </ng-container>
+                                                    <ng-template #noData>N/A</ng-template>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {{(row?.working_time)}}
+                                            </td>
+                                            <td>
+                                                {{(row?.break_time)}}
+                                                <!-- <span class="text-success">08:00</span> -->
+                                            </td>
+                                            <td>
+                                                {{(row?.extra_time || '00:00:00')}}
+                                            </td>
+                                            <!-- <td>{{row?.office_hours}}</td> -->
+                                            <td>
+                                                {{row?.type}}
+                                            </td>
+                                            <td>
+                                                {{row?.remark || 'N/A'}}
+                                            </td>
+                                            <td>
+                                                {{row?.reporting_manager_name}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody *ngIf="dataAr?.length == 0">
+                                        <tr>
+                                            <td colspan="9" style="text-align:center !important;">No data Available !</td>
+                                        </tr>
+                                    <tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</div>

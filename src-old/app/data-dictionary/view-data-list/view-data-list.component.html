@@ -1,0 +1,990 @@
+<section class="inner_page_css main_dashboard_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+                            <div>
+                                Data Dictionary List
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!hasAccess" class="error-message">
+                        <div class="container" style="text-align: center;">
+                          <img src="assets/Authorised.png" alt="">
+                          <!-- <h4>{{ errorMessage }}</h4> -->
+                        </div>
+                    </div>
+
+                    <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+                        <div class="filterquotesrow">
+                            <button class="btn btninfo1" style="margin-right:10px;" role="tab" id="headingOne"
+                                data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                aria-controls="collapseOne"><a role="button"><i
+                                        class="fa fa-filter"></i><span>Filters</span><i
+                                        class="fa fa-angle-down"></i></a></button>
+
+                            
+                            <!-- <button class="btn btn-info" style="margin-right:10px;" data-toggle="modal" data-target="#BulkUpload"
+                            data-backdrop="static" data-keyboard="false">
+                                Upload Excel&nbsp;<i style="color: white;" class="fa fa-file"></i>
+                            </button> -->
+                            <button class="btn btn-info" (click)="addForm()" *ngIf="this.currentUrl === '/data_dictionary/user-data-list'">
+                                Add Data Lead&nbsp;<i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            </button>
+                            <button class="btn btn-info" id="openmodal" data-toggle="modal" data-target="#addDataLead"
+                            data-backdrop="static" data-keyboard="false" style="display: none;">
+                                Add Data Lead&nbsp;<i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="headingOne">
+                            <div class="panelbody">
+                                <!-- <app-square-filter (postCreated)="SearchData($event)"></app-square-filter> -->
+                                <form [formGroup]="searchForm" (ngSubmit)="SearchData()">
+                                    <div class="row">
+
+                                        <div class="col-sm-3">
+                                            <div class="input_group">
+                                                 <ng-multiselect-dropdown [settings]="dropdownMultiSelectSettingsType"
+                                                 class="form-control" formControlName="LeadStatusFilter"
+                                                    placeholder="Select Lead Status" [data]="LeadStatusData" 
+                                                    required></ng-multiselect-dropdown>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div class="input_group">
+                                                 <ng-multiselect-dropdown [settings]="dropdownMultiSelectSettingsType"
+                                                 class="form-control" formControlName="EmployeeFilter"
+                                                    placeholder="Select Employee" [data]="employeeData" 
+                                                    required></ng-multiselect-dropdown>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div class="input_group">
+                                                 <ng-multiselect-dropdown [settings]="dropdownMultiSelectSettingsType"
+                                                 class="form-control" formControlName="LobFilter"
+                                                    placeholder="Select Lob Type" [data]="lobTypesData"
+                                                    required></ng-multiselect-dropdown>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div class="input_group">
+                                                 <ng-multiselect-dropdown [settings]="dropdownMultiSelectSettingsType"
+                                                 class="form-control" formControlName="StatusFilter"
+                                                    placeholder="Select Status" [data]="StausData"
+                                                    required></ng-multiselect-dropdown>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" placeholder="Search"
+                                                formControlName="SearchValue">
+                                        </div>
+                                        <div class="col-sm-3" style="margin-top:24px;">
+                                            <input type="submit" class="btn btn-info" value="Search"> &nbsp;&nbsp;
+                                            <button (click)="ClearSearch()" type="button" class="btn btn-danger"
+                                                value="Reset"> <i class="fa fa-close"> </i> Reset</button>
+
+                                                <button *ngIf="showReassignButton" data-toggle="modal" data-target="#reassignModal"
+                                                data-backdrop="static" data-keyboard="false" style="display: none;" id= "reassignmodal" (click)="openReassignModal()" type="button" 
+                                                    class="btn btn-warning" style="margin-left: 10px;">
+                                                    <i class="fa fa-user-plus"></i> Re-Assign
+                                                </button>
+
+                                                <button *ngIf="showAssignButton" data-toggle="modal" data-target="#reassignModal"
+                                                data-backdrop="static" data-keyboard="false" style="display: none;" id= "reassignmodal" (click)="openAssignModal()" type="button" 
+                                                    class="btn btn-primary" style="margin-left: 10px;">
+                                                    <i class="fa fa-user-plus"></i> Assign
+                                                </button>
+                                        </div>
+
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="custom_table tables_layout_design">
+                            <table datatable [dtOptions]="dtOptions" id="Table1" class="row-border table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                                <li class="table-row tablerow" *ngFor="let row of dataAr; let i=index;" [ngClass]="{'activestatus': row.Status == '1' , 'inactivestatus': row.Status == '0' }">
+                                    <span class="addon_tag_name">{{row.LobType}}</span>
+                                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                                        <div class="agents_data agents_data1">
+                                            <div class="icon_re_cl">{{row.SrNo}}.</div>
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <!-- <div>Employee Name - (Code)</div>
+
+                                                    <strong class="fs_18"><span>
+                                                            {{row.EmployeeName}} - ({{row.EmployeeID}})
+                                                        </span></strong> -->
+                                                        <div *ngIf="row.UploadedBy && row.UploadedBy == 'Assigned'">
+                                                            <div>Assigner Name - (Code)</div>
+                                                            <strong class="fs_18"><span>{{row.AssignerName}} - ({{row.AssignerEmployeeId}})</span></strong>
+                                                        </div>
+
+                                                        <div *ngIf="row.UploadedBy && row.UploadedBy == 'Not Assigned'">
+                                                            <div>Assigner Name - (Code)</div>
+                                                            <strong class="fs_18"><span>Not Available</span></strong>
+                                                        </div>
+
+                                                        <div *ngIf="row.UploadedBy && row.UploadedBy == ''">
+                                                            <div>Uploaded By</div>
+                                                            <strong class="fs_18"><span>{{row.UploadedBy}}</span></strong>
+                                                        </div>
+                                                        
+
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="agents_data agents_data2">
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div>Customer Details</div>
+                                                    <div>
+                                                        <strong>{{row.Name}}</strong>&nbsp; | &nbsp; <strong>
+                                                            {{row.Mobile}}
+                                                        </strong>&nbsp; | &nbsp; <strong>
+                                                            {{row.Email}}
+                                                        </strong>
+
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="agents_data agents_data3">
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div>Expiry Date</div>
+                                                    <strong class="fs_18"><span>
+                                                            {{row.ExpiryDate | date: 'dd-MM-yyyy'}}
+                                                        </span></strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="last_row_div">
+                                        <div class="d_flex custon-234">
+                                            <div class="label_chips real_estate_lob"
+                                                *ngIf="row.EmployeeName && row.EmployeeName !== ''">
+                                                <span>Employee Name (Code) : {{row.EmployeeName}} ({{row.EmployeeID}})</span>&nbsp;&nbsp;
+                                            </div>
+                                            <div class="label_chips health_lob"
+                                                *ngIf="row.MotorType && row.MotorType !== ''">
+                                                <span>Motor Type : {{row.MotorType}}</span>&nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="label_chips motor_lob"
+                                                *ngIf="row.RegistrationNo && row.RegistrationNo !== ''">
+                                                <span>Registration No : {{row.RegistrationNo}}</span>&nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="label_chips finance_lob" *ngIf="row.Make && row.Make !== ''">
+                                                <span>Make : {{row.Make}}</span>&nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="label_chips life_lob" *ngIf="row.Model && row.Model !== ''">
+                                                <span>Model : {{row.Model}}</span>&nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="label_chips mutual_fund_lob"
+                                                *ngIf="row.Variant && row.Variant !== ''">
+                                                <span>Variant : {{row.Variant}}</span>&nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="label_chips real_estate_lob"
+                                                *ngIf="row.PrevPolicyInsurer && row.PrevPolicyInsurer !== ''">
+                                                <span>Prev Policy Insurer : {{row.PrevPolicyInsurer}}</span>&nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="label_chips health_lob" *ngIf="row.Claim && row.Claim !== ''">
+                                                <span>Claim : {{row.Claim}}</span>&nbsp;&nbsp;
+                                            </div>
+                                            <div class="label_chips motor_lob"
+                                                *ngIf="row.Insurer && row.Insurer !== ''">
+                                                <span>Insurer : {{row.Insurer}}</span>&nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="label_chips finance_lob"
+                                                *ngIf="row.Premium && row.Premium !== ''">
+                                                <span>Premium : {{row.Premium}}</span>&nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="label_chips life_lob"
+                                                *ngIf="row.FamilyGroup && row.FamilyGroup !== ''">
+                                                <span>Family Group : {{row.FamilyGroup}}</span>&nbsp;&nbsp;
+                                            </div>
+                                        </div>
+                                        <div class="d_flex custon-234" style="margin-top: 10px;">
+                                            <div class="label_chips mutual_fund_lob"
+                                                *ngIf="row.State && row.State !== ''">
+                                                <span>State : {{row.State}}</span>&nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="label_chips real_estate_lob"
+                                                *ngIf="row.City && row.City !== ''">
+                                                <span>City : {{row.City}}</span>&nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="label_chips health_lob"
+                                                *ngIf="row.Pincode && row.Pincode !== ''">
+                                                <span>Pincode : {{row.Pincode}}</span>&nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="label_chips motor_lob" *ngIf="row.Source && row.Source !== ''">
+                                                <span>Source : {{row.Source}}</span>&nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="label_chips finance_lob"
+                                                *ngIf="row.Campaign && row.Campaign !== ''">
+                                                <span>Campaign : {{row.Campaign}}</span>&nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="label_chips growth_negative"
+                                                *ngIf="row.Remarks && row.Remarks !== ''">
+                                                <span style="color:white;">Reason : {{row.Remarks}}</span>&nbsp;&nbsp;
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="last_row">
+                                        <div class="effective_date">
+                                            <div class="d_flex">
+                                                <span *ngIf="row.StartDate && row.StartDate !== ''">Start Date -
+                                                    {{row.StartDate | date: 'dd-MM-yyyy'}}</span>&nbsp;&nbsp;
+                                                    
+                                                <!-- <span *ngIf="row.UploadedBy && row.UploadedBy !== '' && row.UploadedBy == 'Assigned'"> | <b style="color:#00a65a;">Lead Status -
+                                                    {{row.UploadedBy}}</b></span>
+
+                                                <span *ngIf="row.UploadedBy && row.UploadedBy !== '' && row.UploadedBy == 'Not Assigned'"> | <b style="color:red;">Lead Status -
+                                                    {{row.UploadedBy}}</b></span> -->
+                                                    
+                                            </div>
+                                        </div>
+                                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                            <div class="row">
+                                                <button style="padding:3px 10px; margin-right:10px;" type="button" *ngIf="row.UploadedBy && row.UploadedBy !== '' && row.UploadedBy == 'Assigned'"class="btn btn-primary">{{row.UploadedBy}}</button>
+
+                                                <button style="padding:3px 10px; margin-right:10px;" type="button" *ngIf="row.UploadedBy && row.UploadedBy !== '' && row.UploadedBy == 'Not Assigned'"class="btn btn-danger">{{row.UploadedBy}}</button>
+
+                                                <button style="padding:3px 10px; margin-right:10px;" type="button"
+                                                    (click)="openEditModal(row.Id)"
+                                                    class="btn btn-info">Edit</button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </li>
+                            </ul>
+                            <div class="row" *ngIf="dataAr?.length == 0">
+                                <div class="col-md-12">
+                                    <div class="no_data_found">
+                                        <span><img src="assets/image/no_data_banner.jpg"></span>
+                                        <small>No data available !</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Add the modal at the bottom of your template -->
+<div id="reassignModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="main_card_form">
+              <div class="main_header">
+                <div class="header_title">
+                  Reassign Lead
+                </div>
+              </div>
+              <form class="form" [formGroup]="reassignForm">
+                <div class="main_body main_card_height_scroll">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="input_group">
+                        <label>Select Employee</label>
+                        <ng-multiselect-dropdown
+                          [settings]="dropdownMultiSelectSettingsType"
+                          class="form-control"
+                          formControlName="selectedEmployee"
+                          placeholder="Select Employee"
+                          [data]="employeeData"
+                          required
+                        ></ng-multiselect-dropdown>
+                        <span
+                          *ngIf="SubmitReassignForm && formcontrolsSubmitReassignForm['selectedEmployee'].errors"
+                          class="ValidationError"
+                        >
+                          <span
+                            *ngIf="formcontrolsSubmitReassignForm['selectedEmployee'].errors"
+                            >Employee is required</span
+                          >
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="main_footer">
+                  <button
+                    type="button"
+                    id="close2"
+                    class="mr_5 btn-danger Save_click"
+                    data-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                  <button type="button" class="Save_click" (click)="confirmReassign()">
+                    Confirm Reassign
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal -->
+
+<!-- <div id="BulkUpload" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_header">
+                            <div class="header_title">
+                                Bulk Upload
+                            </div>
+                        </div>
+                        <form class="form" [formGroup]="bulkUploadForm" (ngSubmit)="onSubmitBulkUploadForm()">
+                            <div class="main_body main_card_height_scroll">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i> Basic Details
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-8">
+                                        <div class="input_group">
+                                            <label for="File">
+                                                File
+                                            </label>
+                                            <div class="position_relative">
+                                                <input type="file" class="form_control icon_cs" id="File"
+                                                    formControlName="file" name="file"
+                                                    placeholder="Enter csv file" (change)="UploadDocs($event,'file')">
+                                                <span
+                                                    *ngIf="SubmitbulkUploadForm && formcontrolsbulkUploadForm.file.errors"
+                                                    class="ValidationError">
+                                                    <span
+                                                        *ngIf="formcontrolsbulkUploadForm.file.errors.required">csv file required</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-md-4" style="display: flex;">
+                                        <div style="height: 85px; align-content: center;">
+                                            <button type="button" class="btn btn-info" (click)="downloadCSV()">
+                                                Download Csv Format
+                                            </button>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="main_footer">
+                                <button type="button" id="close2" class="mr_5 btn-danger Save_click"
+                                    (click)="resetbulkUploadForm()" data-dismiss="modal">Close</button>
+                                <button type="submit" class="Save_click">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div id="addDataLead" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_header">
+                            <div class="header_title">
+                                {{ modalMode === 'add' ? 'Add Data Lead' : 'Edit Data Lead' }}
+                            </div>
+                        </div>
+                        <form class="form" [formGroup]="DataLeadForm" (ngSubmit)="onSubmit()">
+                            <div class="main_body main_card_height_scroll">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i> Basic Details
+                                        </div>
+                                    </div>
+                                    
+
+
+
+                                    <div class="col-md-12">
+                                        <div class="input_group">
+                                            <label for="LobType">Lob Type</label>
+                                            <ng-multiselect-dropdown [settings]="dropdownMultiSelectSettingsType"
+                                            class="form-control" formControlName="LobType"
+                                                placeholder="Select Lob Type" [data]="lobTypesData"
+                                                required></ng-multiselect-dropdown>
+                                            <span *ngIf="SubmitDataLeadForm && formcontrolsDataLeadForm['LobType'].errors"
+                                                class="ValidationError">
+                                                <span *ngIf="formcontrolsDataLeadForm['LobType'].errors">Lob Type
+                                                    is
+                                                    required</span>
+                                            </span>
+
+
+                                        </div>
+                                    </div>
+                                    <div *ngIf="showMotorFields">
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="MotorType">Motor Type</label>
+                                                <ng-multiselect-dropdown [settings]="dropdownMultiSelectSettingsType"
+                                                class="form-control" formControlName="MotorType"
+                                                    placeholder="Select Motor Type"
+                                                    [data]="MotorTypesData"></ng-multiselect-dropdown>
+                                                <span
+                                                    *ngIf="SubmitDataLeadForm && formcontrolsDataLeadForm['MotorType'].errors"
+                                                    class="ValidationError">
+                                                    <span
+                                                        *ngIf="formcontrolsDataLeadForm['MotorType'].errors">Motor
+                                                        Type is required</span>
+                                                </span>
+
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="RegistrationNo">
+                                                    Registration No.
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="RegistrationNo"
+                                                        formControlName="RegistrationNo" name="RegistrationNo"
+                                                        placeholder="Enter Registration No">
+                                                    <span
+                                                        *ngIf="SubmitDataLeadForm && formcontrolsDataLeadForm['RegistrationNo'].errors"
+                                                        class="ValidationError">
+                                                        <span
+                                                            *ngIf="formcontrolsDataLeadForm['RegistrationNo'].errors">Registration
+                                                            No is required</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Make">
+                                                    Make
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="Make"
+                                                        formControlName="Make" name="Make" placeholder="Enter Brand">
+                                                    <span
+                                                        *ngIf="SubmitDataLeadForm && formcontrolsDataLeadForm['Make'].errors"
+                                                        class="ValidationError">
+                                                        <span
+                                                            *ngIf="formcontrolsDataLeadForm['Make'].errors">Brand
+                                                            required</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Model">
+                                                    Model
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="Model"
+                                                        formControlName="Model" name="Model"
+                                                        placeholder="Enter Model Name">
+                                                    <span
+                                                        *ngIf="SubmitDataLeadForm && formcontrolsDataLeadForm['Model'].errors"
+                                                        class="ValidationError">
+                                                        <span
+                                                            *ngIf="formcontrolsDataLeadForm['Model'].errors">Model
+                                                            required</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Variant">
+                                                    Variant
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="Variant"
+                                                        formControlName="Variant" name="Variant"
+                                                        placeholder="Enter Variant Name">
+                                                    <span
+                                                        *ngIf="SubmitDataLeadForm && formcontrolsDataLeadForm['Variant'].errors"
+                                                        class="ValidationError">
+                                                        <span
+                                                            *ngIf="formcontrolsDataLeadForm['Variant'].errors">Variant
+                                                            required</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="PrevPolicyInsurer">
+                                                    Prev Policy Insurer
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs"
+                                                        id="PrevPolicyInsurer" formControlName="PrevPolicyInsurer"
+                                                        name="PrevPolicyInsurer"
+                                                        placeholder="Enter Prev Policy Insurer Name">
+                                                    <span
+                                                        *ngIf="SubmitDataLeadForm && formcontrolsDataLeadForm['PrevPolicyInsurer'].errors"
+                                                        class="ValidationError">
+                                                        <span
+                                                            *ngIf="formcontrolsDataLeadForm['PrevPolicyInsurer'].errors">Prev
+                                                            Policy Insurer required</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Name">
+                                                    Start Date
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="date" class="form_control icon_cs" id="StartDate"
+                                                        formControlName="StartDate" name="StartDate"
+                                                        placeholder="Enter Start Date">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Name">
+                                                    Expiry Date
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="date" class="form_control icon_cs" id="ExpiryDate"
+                                                        formControlName="ExpiryDate" name="ExpiryDate"
+                                                        placeholder="Enter Expiry Date">
+                                                    <span
+                                                        *ngIf="SubmitDataLeadForm && formcontrolsDataLeadForm['ExpiryDate'].errors"
+                                                        class="ValidationError">
+                                                        <span
+                                                            *ngIf="formcontrolsDataLeadForm['ExpiryDate'].errors">Expiry
+                                                            Date required</span>
+                                                    </span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Claim">Claim</label>
+                                                <ng-multiselect-dropdown [settings]="dropdownMultiSelectSettingsType"
+                                                class="form-control" formControlName="Claim"
+                                                    placeholder="Select Claims"
+                                                    [data]="ClaimData"></ng-multiselect-dropdown>
+
+                                                <span
+                                                    *ngIf="SubmitDataLeadForm && formcontrolsDataLeadForm['Claim'].errors"
+                                                    class="ValidationError">
+                                                    <span *ngIf="formcontrolsDataLeadForm['Claim'].errors">Claim
+                                                        required</span>
+                                                </span>
+
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Name">
+                                                    Name
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="vendorName"
+                                                        formControlName="Name" name="Name" placeholder="Enter Name">
+                                                    <span
+                                                        *ngIf="SubmitDataLeadForm && formcontrolsDataLeadForm['Name'].errors"
+                                                        class="ValidationError">
+                                                        <span *ngIf="formcontrolsDataLeadForm['Name'].errors">Name
+                                                            is required</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Email">
+                                                    Email
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="email" class="form_control icon_cs" id="Email"
+                                                        formControlName="Email" name="Name" placeholder="Enter Email">
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Mobile">
+                                                    Mobile
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="Mobile"
+                                                        formControlName="Mobile" name="Mobile"
+                                                        placeholder="Enter Mobile">
+                                                    <span
+                                                        *ngIf="SubmitDataLeadForm && formcontrolsDataLeadForm['Mobile'].errors"
+                                                        class="ValidationError">
+                                                        <span
+                                                            *ngIf="formcontrolsDataLeadForm['Mobile'].errors">Mobile
+                                                            is required</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="State">
+                                                    State
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="State"
+                                                        formControlName="State" name="State" placeholder="Enter State">
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="City">
+                                                    City
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="City"
+                                                        formControlName="City" name="City" placeholder="Enter City">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Pincode">
+                                                    Pincode
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="Pincode"
+                                                        formControlName="Pincode" name="Pincode"
+                                                        placeholder="Enter Pincode">
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Source">
+                                                    Source
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="Source"
+                                                        formControlName="Source" name="Source"
+                                                        placeholder="Enter Source">
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Campaign">
+                                                    Campaign
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="Campaign"
+                                                        formControlName="Campaign" name="Campaign"
+                                                        placeholder="Enter Campaign">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div *ngIf="showHealthFields">
+
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Name">
+                                                    Name
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="Name"
+                                                        formControlName="Name" name="Name" placeholder="Enter Name">
+                                                    <span
+                                                        *ngIf="SubmitDataLeadForm && formcontrolsDataLeadForm['Name'].errors"
+                                                        class="ValidationError">
+                                                        <span *ngIf="formcontrolsDataLeadForm['Name'].errors">Name
+                                                            is required</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Mobile">
+                                                    Mobile
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="Mobile"
+                                                        formControlName="Mobile" name="Mobile"
+                                                        placeholder="Enter Mobile">
+                                                    <span
+                                                        *ngIf="SubmitDataLeadForm && formcontrolsDataLeadForm['Mobile'].errors"
+                                                        class="ValidationError">
+                                                        <span
+                                                            *ngIf="formcontrolsDataLeadForm['Mobile'].errors">Mobile
+                                                            is required</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Email">
+                                                    Email
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="email" class="form_control icon_cs" id="Email"
+                                                        formControlName="Email" name="Name" placeholder="Enter Email">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Insurer">
+                                                    Insurer
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="Insurer"
+                                                        formControlName="Insurer" name="Insurer"
+                                                        placeholder="Enter Insurer Name">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Premium">
+                                                    Premium
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="Premium"
+                                                        formControlName="Premium" name="Premium"
+                                                        placeholder="Enter Premium">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Name">
+                                                    Start Date
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="date" class="form_control icon_cs" id="StartDate"
+                                                        formControlName="StartDate" name="StartDate"
+                                                        placeholder="Enter Start Date">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Name">
+                                                    Expiry Date
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="date" class="form_control icon_cs" id="ExpiryDate"
+                                                        formControlName="ExpiryDate" name="ExpiryDate"
+                                                        placeholder="Enter Expiry Date">
+                                                    <span
+                                                        *ngIf="SubmitDataLeadForm && formcontrolsDataLeadForm['ExpiryDate'].errors"
+                                                        class="ValidationError">
+                                                        <span
+                                                            *ngIf="formcontrolsDataLeadForm['ExpiryDate'].errors">Expiry
+                                                            Date
+                                                            required</span>
+                                                    </span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="FamilyGroup">
+                                                    Family Group
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="FamilyGroup"
+                                                        formControlName="FamilyGroup" name="FamilyGroup"
+                                                        placeholder="Enter Family Group">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="State">
+                                                    State
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="State"
+                                                        formControlName="State" name="State" placeholder="Enter State">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="City">
+                                                    City
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="City"
+                                                        formControlName="City" name="City" placeholder="Enter City">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Pincode">
+                                                    Pincode
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="Pincode"
+                                                        formControlName="Pincode" name="Pincode"
+                                                        placeholder="Enter Pincode">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Source">
+                                                    Source
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="Source"
+                                                        formControlName="Source" name="Source"
+                                                        placeholder="Enter Source">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input_group">
+                                                <label for="Campaign">
+                                                    Campaign
+                                                </label>
+                                                <div class="position_relative">
+                                                    <input type="text" class="form_control icon_cs" id="Campaign"
+                                                        formControlName="Campaign" name="Campaign"
+                                                        placeholder="Enter Campaign">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="main_footer">
+                                <button type="button" id="close1" class="mr_5 btn-danger Save_click"
+                                    data-dismiss="modal" (click)="ResetForm()">Close</button>
+                                <button type="submit" class="Save_click">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

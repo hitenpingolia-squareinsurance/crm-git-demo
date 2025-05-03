@@ -1,0 +1,145 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">Author Details</div>
+                    </div>
+                    <div *ngIf="!hasAccess" class="error-message">
+                        <div class="container" style="text-align: center;">
+                          <img src="assets/Authorised.png" alt="">
+                          <h4>{{ errorMessage }}</h4>
+                        </div>
+                        
+                      </div>
+            
+                      <div class="main_body main_card_height_scroll" *ngIf="hasAccess">
+                        <div class="filterquotesrow">
+                            
+                            <button class="btn btn-info nextBtn pull-right"
+                                (click)="AddAuthor('Author',0,'Add')" style="float:right; margin-bottom:2px; margin-right:10px;"> Add Author <i class="fa fa-plus-circle"></i>
+                            </button>
+                          </div>
+                          
+                        <div class="box box-default"
+                            style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                            <div class="custom_table tables_layout_design">
+                                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+
+                                <!--======= Refer Table  =========-->
+                                <ul class="responsive-table">
+                                    <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+                                        <!-- <p class="life_status_label">
+                                            <span>
+                                                <a *ngIf="row.Status == '1'"
+                                                    routerLink="/ticket/{{ UserTypesView }}/{{ row.Ticket_Id }}">
+                                                    <span class="label label-default">Pending</span>
+                                                </a>
+                                                <a *ngIf="row.Status == '2'"
+                                                    routerLink="/ticket/{{ UserTypesView }}/{{ row.Ticket_Id }}">
+                                                    <span class="label label-primary">In Process</span>
+                                                </a>
+                                                <a *ngIf="row.Status == '3'"
+                                                    routerLink="/ticket/{{ UserTypesView }}/{{ row.Ticket_Id }}">
+                                                    <span class="label label-success">Completed</span>
+                                                    <br>
+                                                     
+                                                </a>
+                                                <a *ngIf="row.Status == '1' && (row.CurrentUser_Id == '' || row.CurrentUser_Id == 0) && RequestTypesFilter"
+                                                    (click)="AcceptRequest(row.Ticket_Id)">
+                                                    <span class="label btn-primary">Accept</span>
+                                                </a>
+                                            </span>
+                                        </p> -->
+
+                                        <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+
+                                            <div class="agents_data agents_data1">
+                                                <div class="icon_re_cl">{{ row.SrNo }}</div>
+                                                <div class="agent_name_mobile">
+                                                    <div class="agent_data">
+                                                        <strong class="fs_18 text-bold">Author Name</strong>
+                                                        <div>{{ row.name }}</div>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="agents_data agents_data3">
+                                                <div class="agent_name_mobile">
+                                                    <div class="agent_data">
+                                                        <div>Date:<br>{{ row.insert_date }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="last_row_div">
+                                            <div class="d_flex custon-234">
+                                                <div class="label_chips finance_lob" style="width: auto;">
+                                                    <span>Education : {{ row.education }}</span>
+                                                </div>
+
+                                                <div class="label_chips non_motor_lob" style="width: auto;">
+                                                    <span>Experience : {{
+                                                        row.experience }}</span>&nbsp;&nbsp;
+                                                </div>
+
+                                                <!-- <div class="label_chips non_motor_lob" style="width: auto;">
+                                                    <span>Short Description:
+                                                        {{ row.short_description }}</span>&nbsp;&nbsp;
+                                                </div> -->
+                                                <div class="label_chips finance_lob" style="width: auto;">
+                                                    <span> Certificates : {{ row.certificates }} </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="last_row">
+                                            <div class="d_flex effective_date">
+                                                Short Description : {{ row.short_description }}
+                                            </div>
+
+                                            <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                                                <button *ngIf="row.Status == 1" class="btn btn-success"
+                                                    (click)="ActiveInactive(row.Id, 0, 'author')" style="padding: 3px 10px; margin-right: 10px;">Active</button>
+
+                                                <button *ngIf="row.Status == 0" class="btn btn-danger"
+                                                    (click)="ActiveInactive(row.Id, 1, 'author')" style="padding: 3px 10px; margin-right: 10px;">In-Active</button>
+
+                                                    
+                                                <button (click)="AddAuthor('Author',row.Id,'Edit')" class="btn btn-info" style="padding: 3px 10px; margin-right: 10px;">Edit</button>
+                             
+
+                                                
+
+                                                <button class="btn btn-info" style="padding: 3px 10px; margin-right: 10px;" *ngIf="row.image != ''" (click)="openImage(row.image)">View Image</button>
+
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                </ul>
+                                <!--======= Refer Table END =========-->
+
+                                <div class="row" *ngIf="dataAr?.length == 0">
+                                    <div class="col-md-12">
+                                        <div class="no_data_found">
+                                            <span><img src="assets/image/no_data_banner.jpg"></span>
+                                            <small>No data available !</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

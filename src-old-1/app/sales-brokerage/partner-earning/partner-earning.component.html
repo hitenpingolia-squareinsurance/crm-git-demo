@@ -1,0 +1,306 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title">Parnter Earning</div>
+               
+            </div>
+            <div class="main_body main_card_height_scroll_withoutfooter">
+   
+
+				<form *ngIf="checkedList?.length==0" [formGroup]="SearchForm" (ngSubmit)="SearchBtn('0')">
+
+					<div class="row">
+
+						<div class="col-sm-4">
+
+
+
+							<select (change)="GetEmployees()" formControlName="Vertical_Id" class="form-control">
+								<option disabled selected>Select Vertical</option>
+
+								<option *ngFor="let r of Vertical_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+							</select>
+
+							<span *ngIf="isSubmitted && FC.Vertical_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.Vertical_Id.errors.required" style="color:red;">Please Select Vertical !</span>
+							</span>
+
+						</div>
+
+						<div class="col-sm-4">
+							<select (change)="GetSubBranches($event)" formControlName="Region_Id" class="form-control">
+								<option value="0">Select Region</option>
+								<option value="0">None</option>
+								<option *ngFor="let r of Region_Ar;" value="{{r.id}}">{{r.text}}</option>
+							</select>
+						</div>
+
+						<div class="col-sm-4">
+							<select (change)="GetEmployees()" formControlName="Sub_Region_Id" class="form-control">
+								<option value="0">Select Region-Branch</option>
+								<option value="0">None</option>
+								<option *ngFor="let r of Sub_Branch_Ar;" value="{{r.id}}">{{r.text}}</option>
+							</select>
+						</div>
+
+
+					</div>
+
+					<div class="row"  >
+
+						<div class="col-sm-6">
+
+							<ng-multiselect-dropdown class="form-control" name="Emp_Id" [placeholder]="Employee_Placeholder" [data]="Emps_Ar"
+								formControlName="Emp_Id" [settings]="dropdownSettings" (onSelect)="onItemSelect($event,'Employee')"
+								(onDeSelect)="onItemDeSelect($event,'Employee')">
+							</ng-multiselect-dropdown>
+
+							<span *ngIf="isSubmitted && FC.Emp_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.Emp_Id.errors.required" style="color:red;">Please Select Employee !</span>
+							</span>
+
+						</div>
+						<div class="col-sm-6">
+
+							<ng-multiselect-dropdown class="form-control" name="Agent_Id" [placeholder]="Agents_Placeholder" [data]="Agents_Ar"
+								formControlName="Agent_Id" [settings]="AgentdropdownSettings">
+							</ng-multiselect-dropdown>
+						</div>
+
+
+
+
+
+
+					</div>
+
+
+					<div class="row"  >
+
+
+						<!--<div class="col-sm-2">
+
+ <ng-multiselect-dropdown
+	name="SR_Payout_Type"
+	placeholder="Select Payout Type"
+	[data]="SR_Payout_Type_Ar"
+	formControlName="SR_Payout_Type"
+	[settings]="LOB_dropdownSettings"
+	(onSelect)="onItemSelect($event,'PayoutType')"
+	>
+</ng-multiselect-dropdown>
+
+<span *ngIf="isSubmitted && FC.SR_Payout_Type.errors" class="form-text text-muted">
+	<span *ngIf="FC.SR_Payout_Type.errors.required" style="color:red;">Please choose Payout options !</span>
+</span>
+
+</div>
+
+
+	<div class="col-sm-3">
+
+			 <ng-multiselect-dropdown
+				name="SR_Payout_Status"
+				placeholder="Select Payout Status"
+				[data]="SR_Payout_Status_Ar"
+				formControlName="SR_Payout_Status"
+				[settings]="LOB_dropdownSettings"
+				(onSelect)="onItemSelect($event,'PayoutStatus')"
+				>
+			</ng-multiselect-dropdown>
+
+			<span *ngIf="isSubmitted && FC.SR_Payout_Status.errors" class="form-text text-muted">
+				<span *ngIf="FC.SR_Payout_Status.errors.required" style="color:red;">Please choose posting options !</span>
+			</span>
+
+		</div>-->
+
+						<div class="col-sm-3">
+							<select (change)="GetMonths($event,0)" formControlName="FY" class="form-control">
+								<option value="0" disabled>Select Financial-Year</option>
+								<option *ngFor="let r of FY_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+							</select>
+						</div>
+						<div class="col-sm-3">
+
+							<ng-multiselect-dropdown class="form-control"
+								name="Month" 
+								placeholder="Select Month" 
+								[data]="Months_Ar"
+								formControlName="Month" 
+								[settings]="AgentdropdownSettings">
+							</ng-multiselect-dropdown>
+
+							<!--<select formControlName="Month" class="form-control">
+								<option value=""  selected>Select Month</option>
+								<option *ngFor="let r of Months_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+							</select>-->
+
+							<span *ngIf="isSubmitted && FC.Month.errors" class="form-text text-muted">
+								<span *ngIf="FC.Month.errors.required" style="color:red;">Please Select Month!</span>
+							</span>
+
+							<!--
+			  <input
+			  type="text"
+			  placeholder="Select Date OR Date-Range"
+			  class="form-control"
+			  formControlName="DateOrDateRange"
+			  bsDaterangepicker
+			  [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+			<span *ngIf="isSubmitted && FC.DateOrDateRange.errors" class="form-text text-muted">
+				<span *ngIf="FC.DateOrDateRange.errors.required" style="color:red;">Please Select Date OR Date-Range !</span>
+			</span>
+			-->
+						</div>
+
+						<div class="col-sm-3">
+							<!-- <input type="text" formControlName="GlobalSearch" placeholder="Search Agent/RM" class="form-control"> -->
+						</div>
+
+
+						<div class="col-sm-3" style="text-align: right;">
+
+							<input *ngIf="(Is_Export==1)" (click)="ExportExcel()" type="button" class="btn btn-success"
+								value="Export">
+							&nbsp;&nbsp;
+
+
+							<input type="submit" class="btn btn-info" value="Search">
+							&nbsp;&nbsp;
+							<input (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset">
+							&nbsp;&nbsp;
+
+							<label *ngIf="(TabsType=='Approved')" for="file-input">
+								<a class="btn btn-warning">
+									<input style="display: none;" type="file" id="file-input" />
+									Import</a>
+							</label>
+
+						</div>
+
+					</div>
+
+				</form>
+
+
+
+
+
+				<div *ngIf="checkedList?.length>0" class="row"  >
+
+
+					<div class="col-sm-3">
+						<input type="email" [(ngModel)]="AdditonalCCEmail" class="form-control"
+							placeholder="Additonal CC Email (Optional)">
+					</div>
+
+					<div class="col-sm-4">
+						<input class="form-control" [(ngModel)]="Remark" placeholder="Remark">
+					</div>
+					<div class="col-sm-3">
+						<input type="button" (click)="Transfer()" class="btn btn-info" value="Send PO On Email">
+						&nbsp;&nbsp;
+						<input (click)="CancelTransfer()" type="button" class="btn btn-danger" value="Cancel">
+					</div>
+
+				</div>
+
+
+				<hr>
+
+				<!--begin: Datatable-->
+				<div id="my_div" class="position-relative">
+					<div class="cs_search_btn">
+						<form [formGroup]="SearchForm1">
+
+							<div class="input-group mb-3">
+								<input type="text" formControlName="GlobalSearch" placeholder="Search Agent/RM" class="form-control"
+									[ngClass]="(isSubmitted1 && FC1.GlobalSearch.errors && FC1.GlobalSearch.errors.required?'form-control errorMsgg':'form-control')">
+								<div class="input-group-append">
+									<button class="btn btn-info" type="button" (click)="SearchBtn('1')"><span
+											class="fa fa-search"></span></button>
+								</div>
+							</div>
+
+						</form>
+					</div>
+					<div class="table-responsive" id="mydiv">
+						<table datatable [dtOptions]="dtOptions"
+							class="row-border hover table table-bordered table-hover table-checkable" id="kt_datatable"
+							style="margin-top: 13px !important;border-collapse:collapse !important;border:inherit;">
+							<thead>
+								<tr>
+
+									<th>Sr.No</th>
+
+									<th>Action</th>
+									<th>Statement Month</th>
+
+									<th>Agent Name</th>
+									<th>Agent Code</th>
+
+									<th>RM Name</th>
+									<th>RM Code</th>
+
+
+
+								</tr>
+							</thead>
+							<tbody *ngIf="dataAr?.length != 0">
+								<tr *ngFor="let row of dataAr">
+
+									<td>{{row.SrNo}}.</td>
+
+									<td>
+
+										<a href="javascript:;"
+											(click)="ViewStatements(row.Id,row.Agent_Id,row.Posting_Month_Year,'PartnerStatement')">
+											<span style="margin-top:5px;width: 94px;" class="label label-warning label-inline mr-2">Export
+												Excel</span>
+										</a>
+
+										<a href="javascript:;" (click)="ViewStatementsPDF(row.Id)">
+											<span style="margin-top:5px;" class="label label-danger label-inline mr-2">PDF</span>
+										</a>
+
+										<a href="javascript:;" (click)="SendMail(row.Id,row.Agent_Id,row.Posting_Month_Year)">
+											<span style="margin-top:5px;" class="label label-success label-inline mr-2">Mail</span>
+										</a>
+
+									</td>
+
+									<td>{{ row.Posting_Month_Year }}</td>
+									<td>{{ row.Agent_Name }}</td>
+									<td>{{ row.Agent_Code }}</td>
+									<td>{{ row.RM_Name }}</td>
+									<td>{{ row.RM_Code }}</td>
+
+								</tr>
+
+
+							</tbody>
+							<tbody *ngIf="dataAr?.length == 0">
+								<tr>
+									<td colspan="7" align="center">No data available !</td>
+								</tr>
+							<tbody>
+						</table>
+					</div>
+				</div>
+
+				<!--end: Datatable-->
+
+				
+			</div>
+		</div>
+	</div>
+</div>
+      <!-- /.row -->
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</section>

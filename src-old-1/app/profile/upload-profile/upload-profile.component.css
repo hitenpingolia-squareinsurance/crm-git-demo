@@ -1,0 +1,15 @@
+.modal-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+.modal-top h4.modal-title {
+    color: #2cb2b3;
+    text-transform: capitalize;
+    font-size: 20px;
+    font-weight: 600;
+}
+.modal-ftr {
+    margin-top: 20px;
+}

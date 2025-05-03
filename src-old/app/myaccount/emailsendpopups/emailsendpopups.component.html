@@ -1,0 +1,167 @@
+<div class="main_card_form">
+
+  <div class="main_header">
+    <div class="header_title">Send Renewal Alert  </div>
+  </div>
+
+  <div class="cs_modal_body">
+    <form [formGroup]="UpdateFollowForm">
+      <div class="row customSentLables">
+        <div class="col-md-12">
+          <mat-tab-group class="demo-tab-group" (selectedTabChange)="onTabClick($event)">
+            <mat-tab label="Email">
+              <div class="demo-tab-content d_flex flex_Start flex_Middel flex_wrap mt_40">
+                <div class="send_to_emails">
+                  <span class="custom_radio_button">
+                    <input (click)="setNestedTabs('Customer','Email')" checked formcontrolname="VehicleTypeId3"
+                      id="customer_whatsapp2" name="emailtype" type="radio">
+                    <label for="customer_whatsapp2"><i class="fa fa-envelope mr_5"></i>Mail Send To Customer</label>
+                  </span>
+                  <span class="custom_radio_button">
+                    <input formcontrolname="VehicleTypeId4" id="customer_partner2" name="emailtype" type="radio"
+                      (click)="setNestedTabs('Partner','Email')">
+                    <label for="customer_partner2"><i class="fa fa-envelope mr_5"></i>Mail Send To Partner</label>
+                  </span>
+                </div>
+                <div class="row w_100">
+                  <div class="col-sm-4">
+                    <div class="input_group">
+                      <label> To (Email):</label>
+                      <input type="text" readonly formControlName="ToEmail" class="form_control">
+                      <span *ngIf="isSubmitted && FC.ToEmail.errors" class="form-text text-muted">
+                        <span *ngIf="FC.ToEmail.errors.required" style="color:red;">Field is required..!</span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="input_group">
+                      <label> CC (Emails):</label>
+                      <input type="text" placeholder="Multiple CC Email By Comma Sperated" class="form_control"
+                        formControlName="CCEmail" maxlength="300">
+                      <span *ngIf="isSubmitted && FC.CCEmail.errors" class="form-text text-muted">
+                        <span *ngIf="FC.CCEmail.errors.required" style="color:red;">Field is required..!</span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="input_group">
+                      <label> To (Emails Comma Sperated):</label>
+                      <input type="text" placeholder="Multiple To Email By Comma Sperated" class="form_control"
+                        formControlName="ToEmailCommaSeprated" maxlength="300">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+
+            <mat-tab label="Whatsapp" *ngIf="mobile_tab">
+              <div class="demo-tab-content d_flex flex_Start flex_Middel flex_wrap mt_40">
+                <div class="send_to_whatsapp">
+                  <span class="custom_radio_button">
+                    <input formcontrolname="VehicleTypeId1" id="customer_whatsapp1" value="1" name="whatsptype"
+                      type="radio" checked (click)="setNestedTabs('Customer','Whatsapp')">
+                    <label for="customer_whatsapp1"><i class="fa fa-whatsapp mr_5"></i>Send To Customer Whatsapp</label>
+                  </span>
+                  <span class="custom_radio_button">
+                    <input formcontrolname="VehicleTypeId2" id="customer_partner1" value="1" name="whatsptype"
+                      type="radio" (click)="setNestedTabs('Partner','Whatsapp')">
+
+                    <label for="customer_partner1"><i class="fa fa-whatsapp mr_5"></i>Send To Partner Whatsapp</label>
+                  </span>
+                </div>
+                <div class="row w_100">
+                  <div class="col-sm-4">
+                    <div class="input_group">
+                      <label> To (Mobile):</label>
+                      <input type="text" readonly formControlName="ToMobile" class="form_control">
+                      <span *ngIf="isSubmitted && FC.ToMobile.errors" class="form-text text-muted">
+                        <span *ngIf="FC.ToMobile.errors.required" style="color:red;">Field is required..!</span>
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+
+
+
+      </div>
+
+    </form>
+  </div>
+  <div class="main_footer">
+    <button type="button" (click)="CloseModel()" class="mr_5 btn-danger Save_click" data-dismiss="modal">Cancel</button>
+    <button type="submit" class="Save_click" (click)="UpdateFollowFormS()">Send Now</button>
+  </div>
+</div>
+
+
+
+<!-- <div class="box box-default" style="margin-top: 0px;">
+  <div class="box-header with-border">
+    <h3 class="box-title"></h3>
+    <div class="box-tools pull-right">
+      <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+    </div>
+  </div>
+  <form [formGroup]="UpdateFollowForm">
+
+    <div class="box-body">
+      <div class="row customSentLables">
+        <div class="col-sm-12 mb_25">
+          <div class=" fs_36 P_10 " style="text-align: center;">
+            <a *ngIf="UserRoleType=='employee' ||  UserRoleType=='agent'" (click)="showvalue('Mail')"
+              class="label fs_18 P_10 label-primary mr_15">Email</a>
+            <a *ngIf="UserRoleType=='employee' ||  UserRoleType=='agent'" (click)="showvalue('Whatsapp')"
+              class="label fs_18 P_10 label-primary mr_15">Whatsapp</a>
+          </div>
+          <div class="d_flex flex_Start flex_Middel flex_wrap" style="text-align: center;">
+            <a *ngIf="(UserRoleType=='employee' ||  UserRoleType=='agent') && showhideval =='Whatsapp' "
+              (click)="Sendmails(SrTableId,Days,'whatsapp')" class="label fs_18 P_10 label-primary mr_15">Send To
+              Customer Whatsapp</a>
+              <a *ngIf="(UserRoleType=='employee' ||  UserRoleType=='agent') && showhideval =='Whatsapp' "
+              (click)="Sendmails(SrTableId,Days,'whatsapp')" class="label fs_18 P_10 label-primary mr_15">Send To
+              Partner Whatsapp</a>
+            <a *ngIf="(UserRoleType =='employee') && showhideval =='Mail'" (click)="Sendmails(SrTableId,Days,'agent')"
+              class="label fs_18 P_10 label-primary mr_15">Mail Send To Partner</a>
+            <a *ngIf="(UserRoleType=='employee' ||  UserRoleType=='agent' || UserRoleType=='sp') && showhideval =='Mail'"
+              (click)="Sendmails(SrTableId,Days,'customer')" class="label fs_18 P_10 label-primary">Mail Send To Customer</a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group row">
+          <div class="col-sm-4">
+            <label> To (Email):</label>
+            <input type="text" class="form-control" readonly formControlName="ToEmail" class="form-control">
+            <span *ngIf="isSubmitted && FC.ToEmail.errors" class="form-text text-muted">
+              <span *ngIf="FC.ToEmail.errors.required" style="color:red;">Field is required..!</span>
+            </span>
+          </div>
+          <div class="col-sm-4">
+            <label> CC (Emails):</label>
+            <input type="text" placeholder="Multiple CC Email By Comma Sperated" class="form-control"
+              formControlName="CCEmail" class="form-control" maxlength="300">
+            <span *ngIf="isSubmitted && FC.CCEmail.errors" class="form-text text-muted">
+              <span *ngIf="FC.CCEmail.errors.required" style="color:red;">Field is required..!</span>
+            </span>
+          </div>
+          <div class="col-sm-4">
+            <label> To (Emails By Comma Sperated):</label>
+            <input type="text" placeholder="Multiple To Email By Comma Sperated" class="form-control"
+              formControlName="ToEmailCommaSeprated" class="form-control" maxlength="300">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+  <div class="box-footer">
+    <button type="button" (click)="CloseModel()" class="btn btn-default pull-right">Cancel</button>
+
+  </div>
+</div> -->

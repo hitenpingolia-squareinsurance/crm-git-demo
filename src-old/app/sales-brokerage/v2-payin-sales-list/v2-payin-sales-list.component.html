@@ -1,0 +1,688 @@
+<section class="inner_page_css">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="main_card_form">
+					<div class="main_header">
+						<div class="header_title">Update Payout</div>
+
+					</div>
+					<div class="main_body main_card_height_scroll_withoutfooter">
+
+						<form [formGroup]="PayInForm" (ngSubmit)="SearchBtn()">
+
+							<div class="form-group row">
+
+								<div class="col-lg-2">
+									<label>Business Month:</label>
+
+									<select formControlName="Bussiness_Month" class="form-control">
+										<option *ngFor="let r of BusinessMonths_Ar; let i=index;" value="{{r.Id}}">
+											{{r.Name}}</option>
+									</select>
+
+									<span *ngIf="isSubmitted && FC.Bussiness_Month.errors" class="form-text text-muted">
+										<span *ngIf="FC.Bussiness_Month.errors.required" style="color:red;">Please
+											select an option !</span>
+									</span>
+
+								</div>
+
+
+								<div class="col-lg-2">
+									<label>Group:</label>
+
+									<select (change)="PO_Group()" formControlName="PO_Group" class="form-control">
+										<option value="" disabled selected>--select</option>
+										<option value="1">SIBPL</option>
+										<!-- <option value="2">CM-Market</option> -->
+									</select>
+
+									<span *ngIf="isSubmitted && FC.PO_Group.errors" class="form-text text-muted">
+										<span *ngIf="FC.PO_Group.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+
+								<div class="col-lg-2">
+									<label>LOB:</label>
+
+									<select (change)="LOB('LOB')" formControlName="LOB" class="form-control">
+										<option *ngFor="let r of LOB_Ar; let i=index;" value="{{r.Name}}">{{r.Name}}
+										</option>
+									</select>
+
+									<span *ngIf="isSubmitted && FC.LOB.errors" class="form-text text-muted">
+										<span *ngIf="FC.LOB.errors.required" style="color:red;">Please select an option
+											!</span>
+									</span>
+
+								</div>
+
+								<div class="col-lg-2">
+									<label>File Type:</label>
+
+									<ng-multiselect-dropdown class="form-control" name="File_Type"
+										[placeholder]="'Select File Type'" [data]="File_Type_Ar"
+										formControlName="File_Type" [settings]="dropdownSettings"
+										(onSelect)="onItemSelect($event,'File_Type')"
+										(onDeSelect)="onItemDeSelect($event,'File_Type')"
+										(onSelectAll)="onSelectAll($event,'File_Type')"
+										(onDeSelectAll)="onDeSelectAll($event,'File_Type')">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.File_Type.errors" class="form-text text-muted">
+										<span *ngIf="FC.File_Type.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+
+
+								<div class="col-lg-3">
+									<label>Broker:</label>
+									<ng-multiselect-dropdown name="Broker_Ids" class="form-control"
+										[placeholder]="'Select Brokers'" [data]="Brokers_Ar"
+										formControlName="Broker_Ids" [settings]="ins_Company_dropdownSettings"
+										(onSelect)="onItemSelect($event,'Broker')">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.Broker_Ids.errors" class="form-text text-muted">
+										<span *ngIf="FC.Broker_Ids.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+
+								<div class="col-lg-3">
+									<label>Insurance Company:</label>
+
+									<ng-multiselect-dropdown name="Ins_Compaines_Ids" class="form-control"
+										[placeholder]="'Select Insurance Company'" [data]="Ins_Companies_Ar"
+										formControlName="Ins_Compaines_Ids" [settings]="ins_Company_dropdownSettings"
+										(onSelect)="onItemSelect($event,'InsuranceCompany')"
+										(onDeSelect)="onItemDeSelect($event,'InsuranceCompany')">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.Ins_Compaines_Ids.errors"
+										class="form-text text-muted">
+										<span *ngIf="FC.Ins_Compaines_Ids.errors.required" style="color:red;">Please
+											select an option !</span>
+									</span>
+
+								</div>
+
+							</div>
+
+							<div class="form-group row">
+								<div class="col-lg-3">
+									<label *ngIf="(PayInForm.value['LOB']=='Motor')">Product:</label>
+									<label *ngIf="(PayInForm.value['LOB']=='Health')">Plan Type:</label>
+									<label
+										*ngIf="(PayInForm.value['LOB']=='Life' || PayInForm.value['LOB']=='Non Motor' || PayInForm.value['LOB']=='Travel' || PayInForm.value['LOB']=='Personal Accident')">Policy
+										Type:</label>
+
+
+									<ng-multiselect-dropdown class="form-control" name="Product_Ids"
+										[placeholder]="'Select Products'" [data]="Products_Ar"
+										formControlName="Product_Ids" [settings]="ins_Company_dropdownSettings"
+										(onSelect)="onItemSelect($event,'Product')"
+										(onDeSelect)="onItemDeSelect($event,'Product')"
+										(onSelectAll)="onSelectAll($event,'Product')"
+										(onDeSelectAll)="onDeSelectAll($event,'Product')">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.Product_Ids.errors" class="form-text text-muted">
+										<span *ngIf="FC.Product_Ids.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+
+								<div class="col-lg-3">
+									<label
+										*ngIf="(PayInForm.value['LOB']=='Motor' || PayInForm.value['LOB']=='Health')">Policy
+										Type:</label>
+									<label
+										*ngIf="(PayInForm.value['LOB']=='Life' || PayInForm.value['LOB']=='Non Motor' || PayInForm.value['LOB']=='Travel' || PayInForm.value['LOB']=='Personal Accident')">Plan
+										Type:</label>
+
+
+									<ng-multiselect-dropdown class="form-control" name="Segment_Ids"
+										[placeholder]="'Select Policy Type'" [data]="Segment_Ar"
+										formControlName="Segment_Ids" [settings]="ins_Company_dropdownSettings"
+										(onSelect)="onItemSelect($event,'PolicyType')"
+										(onDeSelect)="onItemDeSelect($event,'PolicyType')"
+										(onSelectAll)="onSelectAll($event,'PolicyType')"
+										(onDeSelectAll)="onDeSelectAll($event,'PolicyType')">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.Segment_Ids.errors" class="form-text text-muted">
+										<span *ngIf="FC.Segment_Ids.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+
+								<div class="col-lg-3">
+									<label *ngIf="(PayInForm.value['LOB']=='Motor')">Plan Type:</label>
+									<label
+										*ngIf="(PayInForm.value['LOB']=='Health' || PayInForm.value['LOB']=='Life' || PayInForm.value['LOB']=='Non Motor' || PayInForm.value['LOB']=='Travel' || PayInForm.value['LOB']=='Personal Accident')">Product
+										:</label>
+
+									<ng-multiselect-dropdown name="Plan_Type" class="form-control"
+										[placeholder]="'Select Plan Type'" [data]="Plan_Type_Ar"
+										formControlName="Plan_Type" [settings]="ins_Company_dropdownSettings"
+										(onSelect)="onItemSelect($event,'PlanType')"
+										(onDeSelect)="onItemDeSelect($event,'PlanType')"
+										(onSelectAll)="onSelectAll($event,'PlanType')"
+										(onDeSelectAll)="onDeSelectAll($event,'PlanType')">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.Plan_Type.errors" class="form-text text-muted">
+										<span *ngIf="FC.Plan_Type.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+
+
+								<div *ngIf="(PayInForm.value['LOB']=='Motor')" class="col-lg-3">
+									<label>Sub-Product:</label>
+
+									<ng-multiselect-dropdown name="SubProduct_Ids" class="form-control"
+										[placeholder]="'Select Sub-Products'" [data]="SubProducts_Ar"
+										formControlName="SubProduct_Ids" [settings]="ins_Company_dropdownSettings"
+										(onSelect)="onItemSelect($event,'SubProduct')"
+										(onDeSelect)="onItemDeSelect($event,'SubProduct')"
+										(onSelectAll)="onSelectAll($event,'SubProduct')"
+										(onDeSelectAll)="onDeSelectAll($event,'SubProduct')">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.SubProduct_Ids.errors" class="form-text text-muted">
+										<span *ngIf="FC.SubProduct_Ids.errors.required" style="color:red;">Please select
+											an option !</span>
+									</span>
+
+								</div>
+
+
+
+							</div>
+
+
+							<div *ngIf="(PayInForm.value['LOB']=='Motor')" class="form-group row">
+
+								<div class="col-lg-3">
+									<label>Class:</label>
+
+									<ng-multiselect-dropdown name="Class_Ids" class="form-control"
+										[placeholder]="'Select Class'" [data]="Classes_Ar" formControlName="Class_Ids"
+										[settings]="ins_Company_dropdownSettings"
+										(onSelect)="onItemSelect($event,'Class')"
+										(onDeSelect)="onItemDeSelect($event,'Class')"
+										(onSelectAll)="onSelectAll($event,'Class')"
+										(onDeSelectAll)="onDeSelectAll($event,'Class')">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.Class_Ids.errors" class="form-text text-muted">
+										<span *ngIf="FC.Class_Ids.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+
+								<div class="col-lg-3">
+
+									<label>Sub-Class:</label>
+
+									<ng-multiselect-dropdown name="Sub_Class_Ids" class="form-control"
+										[placeholder]="'Select Sub-Classs'" [data]="Sub_Classes_Ar"
+										formControlName="Sub_Class_Ids" [settings]="dropdownSettings"
+										(onSelect)="onItemSelect($event,'SubClass')"
+										(onDeSelect)="onItemDeSelect($event,'SubClass')"
+										(onSelectAll)="onSelectAll($event,'SubClass')"
+										(onDeSelectAll)="onDeSelectAll($event,'SubClass')">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.Sub_Class_Ids.errors" class="form-text text-muted">
+										<span *ngIf="FC.Sub_Class_Ids.errors.required" style="color:red;">Please select
+											an option !</span>
+									</span>
+
+								</div>
+
+
+								<div class="col-lg-3">
+
+									<label>Make:</label>
+
+									<ng-multiselect-dropdown name="Make_Id" class="form-control"
+										[placeholder]="'Select Make'" [data]="Make_Ar" formControlName="Make_Id"
+										[settings]="dropdownSettings_removeSelectAll"
+										(onSelect)="onItemSelect($event,'Make')"
+										(onDeSelect)="onItemDeSelect($event,'Make')"
+										(onSelectAll)="onSelectAll($event,'Make')"
+										(onDeSelectAll)="onDeSelectAll($event,'Make')">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.Make_Id.errors" class="form-text text-muted">
+										<span *ngIf="FC.Make_Id.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+
+								<div class="col-lg-3">
+
+									<label>Model:</label>
+
+									<ng-multiselect-dropdown class="form-control" name="Model_Id"
+										[placeholder]="'Select Model'" [data]="Model_Ar" formControlName="Model_Id"
+										[settings]="dropdownSettings_removeSelectAll">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.Model_Id.errors" class="form-text text-muted">
+										<span *ngIf="FC.Model_Id.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+
+								<div class="col-lg-3">
+
+
+								</div>
+
+
+
+
+							</div>
+
+
+
+							<div class="form-group row">
+
+								<div class="col-lg-2" *ngIf="(PayInForm.value['LOB']=='Motor')">
+									<label>Fuel Type:</label>
+
+									<ng-multiselect-dropdown class="form-control" name="Fuel_Type"
+										[placeholder]="'Select Fuel Type'" [data]="Fuel_Type_Ar"
+										formControlName="Fuel_Type" [settings]="dropdownSettings">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.Fuel_Type.errors" class="form-text text-muted">
+										<span *ngIf="FC.Fuel_Type.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+
+								<div *ngIf="Is_Body_Type == true" class="col-lg-2">
+
+									<label>Body Type:</label>
+
+									<ng-multiselect-dropdown name="Body_Type_Ids" class="form-control"
+										[placeholder]="'Select Body Type'" [data]="Body_Type_Ar"
+										formControlName="Body_Type_Ids" [settings]="dropdownSettings">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.Body_Type_Ids.errors" class="form-text text-muted">
+										<span *ngIf="FC.Body_Type_Ids.errors.required" style="color:red;">Please select
+											an option !</span>
+									</span>
+
+								</div>
+
+								<div class="col-lg-2" *ngIf="(PayInForm.value['LOB']=='Motor')">
+									<label>CPA Status:</label>
+
+									<ng-multiselect-dropdown class="form-control" name="CPA"
+										[placeholder]="'Select CPA'" [data]="CPA_Ar" formControlName="CPA"
+										[settings]="dropdownSettings">
+									</ng-multiselect-dropdown>
+
+
+									<span *ngIf="isSubmitted && FC.CPA.errors" class="form-text text-muted">
+										<span *ngIf="FC.CPA.errors.required" style="color:red;">Please select an option
+											!</span>
+									</span>
+
+								</div>
+
+								<div class="col-lg-2" *ngIf="(PayInForm.value['LOB']=='Motor')">
+									<label>NCB Status:</label>
+
+									<ng-multiselect-dropdown class="form-control" name="NCB_Status"
+										[placeholder]="'Select NCB'" [data]="CPA_Ar" formControlName="NCB_Status"
+										[settings]="dropdownSettings">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.NCB_Status.errors" class="form-text text-muted">
+										<span *ngIf="FC.NCB_Status.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+								</div>
+
+
+								<div class="col-lg-2">
+									<label>Source:</label>
+
+									<ng-multiselect-dropdown class="form-control" name="Source_Type"
+										[placeholder]="'Select Source'" [data]="Source_Ar" formControlName="Source_Type"
+										[settings]="dropdownSettings">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.Source_Type.errors" class="form-text text-muted">
+										<span *ngIf="FC.Source_Type.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+
+
+								<!--</div>
+		
+		<div class="form-group row">-->
+
+
+								<div class="col-lg-2">
+									<label>Select Partner Type:</label>
+
+									<select class="form-control" formControlName="AgentType"
+										(change)="onChangeAgentType($event)">
+										<option value="">--select--</option>
+										<option selected value="All-Agents">All Agents</option>
+										<option *ngIf="(PayInForm.value['LOB']=='Motor')" value="Non-Fleet-All-Agents">
+											Non Fleet All Agents</option>
+										<option
+											*ngIf="(PayInForm.value['LOB']=='Motor' || PayInForm.value['LOB']=='Non Motor')"
+											value="Fleet">Fleet</option>
+										<option *ngIf="(PayInForm.value['LOB']=='Motor')" value="Search">Search & Select
+											All Agents</option>
+									</select>
+
+									<span *ngIf="isSubmitted && FC.AgentType.errors" class="form-text text-muted">
+										<span *ngIf="FC.AgentType.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+								<div *ngIf="PayInForm.value['AgentType']=='Search'" class="col-lg-2">
+									<label>Agents:</label>
+									<ng-select class="form-control" formControlName="Agent_Ids" [multiple]="true"
+										[items]="Agents_Ar" [(ngModel)]="selected" (keyup)="searchAgents($event)"
+										placeholder="No Agent selected"></ng-select>
+
+									<span *ngIf="isSubmitted && FC.Agent_Ids.errors" class="form-text text-muted">
+										<span *ngIf="FC.Agent_Ids.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+
+								<div *ngIf="PayInForm.value['AgentType']=='Fleet'" class="col-lg-2">
+									<label>Fleet :</label>
+									<ng-multiselect-dropdown name="Agent_Ids" class="form-control"
+										[placeholder]="'Select Fleets'" [data]="Fleets_Ar" formControlName="Agent_Ids"
+										[settings]="dropdownSettings">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.Agent_Ids.errors" class="form-text text-muted">
+										<span *ngIf="FC.Agent_Ids.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+
+								<div *ngIf="(PayInForm.value['LOB']=='Motor')" class="col-lg-2">
+									<label>State:</label>
+
+									<ng-multiselect-dropdown class="form-control" name="States_Ids"
+										[placeholder]="'Select State'" [data]="States_Ar" formControlName="States_Ids"
+										[settings]="ins_Company_dropdownSettings"
+										(onSelect)="onItemSelect($event,'State')"
+										(onDeSelect)="onItemDeSelect($event,'State')"
+										(onSelectAll)="onSelectAll($event,'State')"
+										(onDeSelectAll)="onDeSelectAll($event,'State')">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.States_Ids.errors" class="form-text text-muted">
+										<span *ngIf="FC.States_Ids.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+
+								<div *ngIf="(PayInForm.value['LOB']=='Motor')" class="col-lg-2">
+									<label>RTO:</label>
+
+									<ng-multiselect-dropdown class="form-control" name="RTO_Ids"
+										[placeholder]="'Select RTO'" [data]="RTO_Ar" formControlName="RTO_Ids"
+										[settings]="dropdownSettings">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && FC.RTO_Ids.errors" class="form-text text-muted">
+										<span *ngIf="FC.RTO_Ids.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+
+								</div>
+
+
+								<!--<div class="col-sm-3">
+			<label>Effective:</label>
+				  <input
+				  type="text"
+				  placeholder="Select Date OR Date-Range"
+				  class="form-control" 
+				  formControlName="DateOrDateRange"
+				  bsDaterangepicker
+				  [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+			</div>-->
+
+
+								<div class="col-sm-3" style="text-align: right;margin-top: 2%;">
+
+									<!--<input *ngIf="(Is_Export==1)" (click)="ExportExcel()" type="button" class="btn btn-success" value="Export">
+				&nbsp;&nbsp;-->
+									<input type="submit" class="btn btn-info" value="Search">
+									&nbsp;&nbsp;
+									<input (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset">
+									&nbsp;&nbsp;
+
+
+								</div>
+
+
+							</div>
+
+
+
+						</form>
+
+						<div class="custom_table">
+							<ul class="responsive-table" *ngIf="dataAr?.length == 0 && Is_Export==1">
+								<li class="table-row">
+									<div class="no_data_found">No data available !</div>
+								</li>
+							</ul>
+							<ul class="responsive-table" *ngIf="dataAr?.length != 0">
+								<li class="table-row" *ngFor="let row of dataAr">
+									<div class="first_row px_10">
+										<div class="cs_btn"><strong>Broker</strong> : {{row.Broker_Ids}}</div>
+										<div class="cs_btn"><strong>Partner Type</strong> : {{row.AgentType}}</div>
+										<div class="cs_btn"><strong>Insurer</strong> : {{row.Insurer}}</div>
+										<div *ngIf="(PayInForm.value['LOB']!=='Motor')" class="cs_btn"><strong>Plan
+												Type</strong> : {{row.Product_Ids}}</div>
+										<div class="cs_btn"><strong>Policy Type</strong> : {{row.Segment_Ids}}</div>
+										<div *ngIf="(PayInForm.value['LOB']=='Motor')" class="cs_btn"><strong>NCB
+												Status</strong> : {{row.NCB_Status}}</div>
+										<div *ngIf="(PayInForm.value['LOB']=='Motor')" class="cs_btn"><strong>CPA
+												Status</strong> : {{row.CPA}}</div>
+										<div *ngIf="(PayInForm.value['LOB']=='Motor')" class="cs_btn"><strong>File
+												Type</strong> : {{row.File_Type_Ids}}</div>
+										<div *ngIf="(PayInForm.value['LOB']=='Motor')" class="cs_btn"><strong>Fuel
+												Type</strong> : {{row.Fuel_Type}}</div>
+										<div *ngIf="(PayInForm.value['LOB']=='Motor')" class="cs_btn"><strong>Body
+												Type</strong> : {{row.Body_Type}}</div>
+									</div>
+									<div class="table-responsive px_10">
+										<table *ngIf="(PayInForm.value['LOB']=='Motor')"
+											class="table table-striped table-bordered table-hover">
+											<tr>
+												<th>Products&nbsp;Type</th>
+												<th>Plan&nbsp;Type</th>
+												<th>Sub&nbsp;-&nbsp;Product</th>
+												<th>Class</th>
+												<th>Sub&nbsp;-&nbsp;Class</th>
+											</tr>
+											<tr *ngFor="let tb of row.Products_Table">
+												<td>{{tb.Product}}</td>
+												<td><span *ngFor="let pp of tb.Plan">{{pp.Name}}&nbsp;</span> </td>
+												<td><span *ngFor="let ss of tb.SubProduct">{{ss.Name}}&nbsp;</span>
+												</td>
+												<td><span *ngFor="let cc of tb.Class_Name">{{cc.Name}}&nbsp;</span>
+												</td>
+												<td><span *ngFor="let sc of tb.Sub_Class">{{sc.Name}}&nbsp;</span> </td>
+											</tr>
+										</table>
+
+										<table *ngIf="(PayInForm.value['LOB']!=='Motor')"
+											class="table table-striped table-bordered table-hover">
+											<tr>
+												<th>Product's </th>
+											</tr>
+											<tr>
+												<td><span *ngFor="let pp of row.Plan_Type_Ids">{{pp.Name}}&nbsp;</span>
+												</td>
+											</tr>
+										</table>
+
+									</div>
+									<div class="second_row px_10">
+										<div *ngIf="row.PayOutOD!=0" class="cs_btn"><strong>PO OD</strong> :
+											{{row.PayOutOD}}</div>
+										<div *ngIf="row.PayOutTP!=0" class="cs_btn"><strong>PO TP</strong> :
+											{{row.PayOutTP}}</div>
+										<div *ngIf="row.PayOutNet!=0" class="cs_btn"><strong>PO Net</strong> :
+											{{row.PayOutNet}}</div>
+										<div *ngIf="row.PayOutReward!=0" class="cs_btn"><strong>PO Reward</strong> :
+											{{row.PayOutReward}}</div>
+										<div *ngIf="row.PayOutScheme!=0" class="cs_btn"><strong>PO Scheme</strong> :
+											{{row.PayOutScheme}}</div>
+									</div>
+									<div class="last_row">
+										<div class="col_2 effective_date">
+											<div class="date_text"><img src="/../assets/media/dashborad/calendar.png"
+													alt="calender">&nbsp;&nbsp;{{row.Effective_Date}}</div>
+											<div class="extra_remark"><img src="/../assets/media/dashborad/comment.png"
+													alt="calender">&nbsp;&nbsp;{{row.Extra_Remark}}</div>
+										</div>
+										<div class="col_2 action_btn">
+											<a (click)="AddPayIn(row.Id,'View')" href="javascript:void(0)"><i
+													class="fa fa-pen"></i> Update PO</a>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="table_responsive" style="display:none !important;">
+							<table datatable [dtOptions]="dtOptions"
+								class="row-border hover table table-bordered table-hover table-checkable"
+								id="kt_datatable" style="margin-top: 13px !important">
+								<thead>
+									<tr>
+										<th>No</th>
+										<th>Actions</th>
+										<th>Effective Date</th>
+										<th>Remark</th>
+										<th>Applicable On</th>
+										<th>Broker</th>
+										<th>Insurer</th>
+										<th>File-Type</th>
+										<th>Product</th>
+										<th>Policy Type</th>
+										<th>Plan Type</th>
+										<th>Sub-Product</th>
+										<th>Class</th>
+										<th>Sub-Class</th>
+										<th>Fuel Type</th>
+										<th>Body Type</th>
+										<th>CPA Status</th>
+										<th>NCB Status</th>
+
+										<th>Pay-Out OD</th>
+										<th>Pay-Out TP</th>
+										<th>Pay-Out Net</th>
+										<th>Pay-Out Reward</th>
+										<th>Pay-Out Scheme</th>
+									</tr>
+								</thead>
+								<tbody *ngIf="dataAr?.length != 0">
+									<tr *ngFor="let row of dataAr">
+										<td>{{ row.SrNo }}</td>
+
+										<td>
+											<a (click)="AddPayIn(row.Id,'View')" href="javascript:void(0)">
+												<span
+													class="label label-success label-inline mr-2 ng-star-inserted">Update</span>
+											</a>
+										</td>
+										<td>{{row.Extra_Remark}}</td>
+										<td>
+											<p style="width:75px;">{{row.Effective_Date}}</p>
+
+										</td>
+
+										<td>
+
+											<select class="form-control" style="width:120px;">
+												<option *ngFor="let l of row.Agents">{{l.Name}}</option>
+											</select>
+										</td>
+
+
+										<td>{{row.Broker_Ids}}</td>
+										<td>{{row.Insurer}}</td>
+										<td>{{row.File_Type_Ids}}</td>
+										<td>{{row.Product_Ids}}</td>
+										<td>{{row.Segment_Ids}}</td>
+										<td>{{row.Plan_Type_Ids}}</td>
+										<td>{{row.SubProduct_Ids}}</td>
+										<td>{{row.Class_Ids}}</td>
+										<td>{{row.Sub_Class_Ids}}</td>
+
+										<td>{{row.Fuel_Type}}</td>
+										<td>{{row.Body_Type}}</td>
+										<td>{{row.CPA}}</td>
+										<td>{{row.NCB_Status}}</td>
+
+										<td>{{row.PayOutOD}}</td>
+										<td>{{row.PayOutTP}}</td>
+										<td>{{row.PayOutNet}}</td>
+										<td>{{row.PayOutReward}}</td>
+										<td>{{row.PayOutScheme}}</td>
+
+									</tr>
+								</tbody>
+								<tbody *ngIf="dataAr?.length == 0">
+									<tr>
+										<td colspan="22" align="center">No data available !</td>
+									</tr>
+								<tbody>
+							</table>
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /.row -->
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+</section>

@@ -1,0 +1,357 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title">
+                <div>{{currentUrl == 'leads' ? 'Get Leads' : currentUrl == 'purchased-leads' ? 'My Leads'  : currentUrl == 'user-transaction' ? 'Tansactions' : ''}}
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="!hasAccess" class="error-message">
+              <div class="container" style="text-align: center;">
+                  <img src="assets/Authorised.png" alt="">
+              </div>
+          </div>
+
+            <div class="main_body main_card_height_scroll_withoutfooter"  *ngIf="hasAccess">
+  
+              <div class="panelbody">
+                <form [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+                  <div class="row">
+  
+                    <div class="col-sm-3">
+                      <label>Select Financial Year</label>
+                      <ng-multiselect-dropdown class="form-control" placeholder="Financial Year" [data]="SR_Session_Year"
+                        formControlName="FinancialYear" [settings]="dropdownSettingsType"
+                        (onSelect)="onItemSelect($event)"> </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3" *ngIf="currentUrl == 'leads'">
+                        <label>Select Month</label>
+                        <ng-multiselect-dropdown class="form-control" placeholder="Month" [data]="MonthAr"
+                          formControlName="Month" [settings]="dropdownSettingsType"></ng-multiselect-dropdown>
+                    </div>
+  
+                    <div class="col-sm-3" *ngIf="currentUrl == 'purchased-leads' || currentUrl == 'user-transaction'">
+                      <label>Select Date Range</label>
+                      <input type="text" placeholder="Date OR Date-Range" class="form-control"
+                        formControlName="DateOrDateRange" bsDaterangepicker [minDate]="minDate" [maxDate]="maxDate"
+                        [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                    </div>
+  
+                    <div class="col-sm-3" *ngIf="currentUrl == 'purchased-leads'">
+                      <label>Select Policy Expire Days</label>
+                      <ng-multiselect-dropdown class="form-control" placeholder="Policy Expired In" [data]="Days_Data"
+                        formControlName="Days_Data" [settings]="dropdownSettingsType"></ng-multiselect-dropdown>
+                    </div>
+  
+                    <div class="col-sm-3" *ngIf="currentUrl == 'purchased-leads'">
+                      <label>Transaction</label>
+                      <ng-multiselect-dropdown class="form-control" placeholder="Transaction" [data]="TransactionData"
+                        formControlName="Transaction" [settings]="dropdownSettingsType"></ng-multiselect-dropdown>
+                    </div>
+  
+                    <div class="col-sm-3" *ngIf="currentUrl == 'purchased-leads' || currentUrl == 'user-transaction'">
+                      <label for="Request_type">Search</label>
+                      <input type="text" class="form-control" placeholder="Search" formControlName="SearchVal">
+                    </div>
+
+                    <div class="col-sm-3" style="margin-top:24px;">
+                      <input type="submit" class="btn btn-info" value="Search"> &nbsp;&nbsp;
+                      <button (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset"> <i
+                          class="fa fa-close"> </i> Reset</button>
+                    </div>
+
+                    <div style="margin-top:24px; float:inline-end; margin-right: 20px;" *ngIf="currentUrl == 'leads'">
+                        <button (click)="RangeMster()" type="button" class="btn btn-info" data-toggle="modal" data-target="#RangeModal">Range Master</button>
+                      </div>
+
+                  </div>
+                </form>
+              </div>
+  
+              <hr>
+
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>{{currentUrl == 'leads' ? 'Total Leads' : currentUrl == 'user-transaction' ? 'Total Transctions' : currentUrl == 'purchased-leads' ? 'Total Leads' : ''}}</th>
+                      <th *ngIf="currentUrl == 'leads' && currentUrl != 'purchased-leads'">Purchased Leads</th>
+                      <th>Gems</th>
+                    </tr>
+      
+                  </thead>
+                  <tbody style="background-color: #f4f4f4;">
+                    <tr>
+                      <td>{{dashboard_data &&  currentUrl == 'leads' ? dashboard_data.totalLeadsData : dashboard_data &&  currentUrl == 'user-transaction' ? dashboard_data.totaltransactions : currentUrl == 'purchased-leads' && dashboard_data ? dashboard_data.recordsTotal : 0}}</td>
+                      <td  *ngIf="currentUrl == 'leads' && currentUrl != 'purchased-leads'">{{currentUrl == 'leads' && dashboard_data ? dashboard_data.totalPurchased : 0}}</td>
+                      <td>{{(currentUrl == 'leads' || currentUrl == 'user-transaction') && dashboard_data ? dashboard_data.totalGems : dashboard_data && currentUrl == 'purchased-leads' ? dashboard_data.UserGems : 0}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+  
+              <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                <div class="custom_table tables_layout_design">
+                  <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                    <thead>
+                      <tr>
+                        <th></th>
+                      </tr>
+                    </thead>
+                  </table>
+  
+                  <!-- ======= Refer Table  =========-->
+                  <ul class="responsive-table">
+                    <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+  
+                      <p class="life_status_label label label-success" style="padding : 5px 11px;" *ngIf="currentUrl == 'user-transaction'">
+                        <span><b>Gems {{ row.gems}}</b></span>
+                      </p>
+
+                        <p class="life_status_label" *ngIf="currentUrl == 'purchased-leads' && row.policyExpireIn != ''">
+                            <span>
+                              <a>
+                                <span 
+                                  [ngClass]="{
+                                    'label label-warning': row.policyStatus == 1,
+                                    'label label-danger': row.policyStatus == 0
+                                  }">
+                                  {{ row.policyStatus == 1 ? 'Policy Expiery IN - ' + row.policyExpireIn : row.policyExpireIn }}
+                                </span>
+                              </a>
+                            </span>
+                          </p>
+  
+                      <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">{{row.sno}}</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <strong class="fs_18 text-bold">{{currentUrl == 'leads' && row.month && row.year ? row.month + ' - '+ row.year :  currentUrl == 'purchased-leads'  ?  row.contactName : currentUrl == 'user-transaction' ? row.transaction_id :  'N/A' }}</strong>
+                            </div>
+                            <div><b>{{row.contactMobile}}</b></div>
+                          </div>
+                        </div>
+  
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data" *ngIf="currentUrl == 'purchased-leads' || currentUrl == 'user-transaction'">
+                                <div>{{currentUrl == 'purchased-leads' ? 'Lead Purchased' : currentUrl == 'user-transaction' ? 'Transaction Date' : ''}}</div>
+                                <strong *ngIf="currentUrl == 'purchased-leads'">
+                                  {{row.leadPurchasedDate | date : 'dd-MM-yyyy'}}
+                                </strong>
+                                <strong *ngIf="currentUrl == 'user-transaction'">
+                                  {{row.transaction_date}}
+                                </strong>
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="agents_data agents_data3">
+                            <div class="agent_name_mobile">
+                              <div class="agent_data" *ngIf="currentUrl == 'leads'">
+                                <div>Total Leads</div>
+                                <strong>
+                                  {{row.totalLeads}}
+                                </strong>
+                              </div>
+                              
+                            </div>
+                          </div>
+  
+                        <div class="agent_name_mobile" style="position: relative; left: -5%; width: 600px;">
+  
+                          <div class="agent_data"
+                            *ngIf="currentUrl == 'purchased-leads' && row.customername != ''">
+                            <strong>
+                              Customer Name -
+                              {{row.customername}}
+                            </strong>
+                          </div>
+                          <div class="agent_data"
+                            *ngIf="currentUrl == 'purchased-leads' && row.customermobile != ''">
+                            <strong>
+                              Customer Mobile -
+                              {{row.customermobile}}
+                            </strong>
+                          </div>
+                          <div class="agent_data"
+                            *ngIf="currentUrl == 'purchased-leads' && row.customeremail != '' ">
+                            <strong>
+                              Customer Email -
+                              {{row.customeremail}}
+                            </strong>
+                          </div>
+                        </div>
+  
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+  
+                            <!-- <div class="agent_data"
+                              *ngIf="currentUrl == 'purchased-leads'  && row.regYear != ''">
+                              <strong style="color:#000;">
+                                Registration Year -
+                                {{row.reg_year}}
+                              </strong>
+                            </div> -->
+  
+                            <div class="agent_data"
+                              *ngIf="currentUrl == 'purchased-leads' && row.registration_date != ''">
+                              <div>Registration Date</div>
+                              <strong>
+                                {{row.registration_date | date : 'dd-MM-yyyy'}}
+                              </strong>
+                            </div>
+
+                            <div class="agent_data" *ngIf="currentUrl == 'leads'  || currentUrl == 'user-transaction' ">
+                                <div>{{currentUrl == 'leads' ? 'Purchased Leads' : currentUrl == 'user-transaction' ? 'Total Leads' : ''}}</div>
+                                <strong>
+                                {{currentUrl == 'leads' ? row.purchased : currentUrl == 'user-transaction' ? row.leads : ''}}
+                                </strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+  
+                      <div class="last_row_div mt10" style="margin-top:10px;"  *ngIf="currentUrl == 'purchased-leads'">
+                        <div class="d_flex custon-234">
+                          <div class="label_chips finance_lob" style="width: auto;" *ngIf="row.registration_no != ''">
+                            <span>Registration No. - {{row.registration_no}}</span>
+                          </div>
+  
+                          <div class="label_chips non_motor_lob" style="width: auto;" *ngIf="row.make != ''">
+                            <span>Make - {{row.make}}</span>&nbsp;&nbsp;
+                          </div>
+  
+                          <div class="label_chips health_lob" style="width: auto;" *ngIf="row.model != ''">
+                            <span>Model - {{row.model}}</span>&nbsp;&nbsp;
+                          </div>
+  
+                          <div class="label_chips life_lob" style="width: auto;" *ngIf="row.variant != ''">
+                            <span>Variant - {{row.variant}}</span>&nbsp;&nbsp;
+                          </div>
+                          <div class="label_chips motor_lob" style="width: auto;" *ngIf="row.fuel != ''">
+                            <span>Fuel Type - {{row.fuel}}</span>&nbsp;&nbsp;
+                          </div>
+  
+                          <div class="label_chips finance_lob" style="width: auto;" *ngIf="row.vechileType != ''">
+                            <span>Vechile Type - {{row.vechileTypeName}}</span>
+                          </div>
+  
+                        </div>
+                      </div>
+  
+                      <div class="last_row"  *ngIf="(row.totalLeads != row.purchased && currentUrl == 'leads') || currentUrl == 'purchased-leads' || currentUrl == 'user-transaction'">
+                        <div class="d_flex effective_date">
+                          <div style="margin-right: 80px;" *ngIf="row.transaction_id != '' && currentUrl == 'purchased-leads'">Transaction Id : {{row.transaction_id}}</div>
+                          <div style="margin-right: 80px;" *ngIf="row.policy_expiery_date != '' && currentUrl == 'purchased-leads'">Policy Expiry Date : {{row.policy_expiery_date | date : 'dd-MM-yyyy'}}</div>
+                        
+                        </div>
+                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                           <button *ngIf="currentUrl == 'leads'" class="btn btn-success" style="padding:2px;" data-toggle="modal" data-target="#PurchaseModal" (click)="Getmonth(row.month , row.year)">Purchase</button>
+                           <button *ngIf="currentUrl == 'user-transaction' " class="btn btn-info" style="padding:2px;"
+                           [routerLink]="['/Sync/purchased-leads', row.transaction_id]">Details</button>
+                           <div *ngIf="row.previous_insurer != '' && currentUrl == 'purchased-leads'">Previous Insurer : {{row.previous_insurer}}</div>
+                        </div>
+                      </div>
+  
+                    </li>
+                  </ul>
+                  <!--======= Refer Table END ========= -->
+  
+                  <div class="row" *ngIf="dataAr?.length == 0">
+                    <div class="col-md-12">
+                      <div class="no_data_found">
+                        <span><img src="assets/image/no_data_banner.jpg"></span>
+                        <small>No data available !</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal -->
+<div class="modal fade" id="PurchaseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Purchase</h5>
+            <button type="button" id="CloseModel" data-dismiss="modal" aria-label="Close" class="close closeModelButton" style="float: right;"><i
+                class="fa fa-close" style="font-size:17px"></i></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="purchaseLeads" (ngSubmit)="purchase_Leads()">
+                <div class="row">
+                  <div class="col-sm-5">
+                    <label>Leads</label>
+                    <input type="number" class="form-control" formControlName="leads" placeholder="Enter Leads" maxlength="5">
+                    <div *ngIf="isSubmitted && purchaseLeads.get('leads').errors" class="ValidationError">
+                        <div *ngIf="purchaseLeads.get('leads').errors.required">Please Enter Leads!</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" style="position:relative; right:-82%;">
+                    <button class="btn btn-success" style="padding:4px 10px;">Submit</button>&nbsp;&nbsp;
+                <button class="btn btn-danger" data-dismiss="modal" aria-label="Close" style="padding:4px 10px;">Cancel</button>
+                </div>
+            </form>
+            <hr>
+            <div>
+                <h6><span class="text-muted text-bold">Disclaimer :</span>Leads will be generated only after your approval and at your sole discretion. Applicable gems will be excluded from your total gems earned during the reconciliation process, as per the selected leads.</h6>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal -->
+<div class="modal fade" id="RangeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal_header">
+        <div class="modal_title" id="exampleModalLabel">Range Master</div>
+        <button type="button" data-dismiss="modal" aria-label="Close" class="close closeModelButton"
+          style="float: right;"><i class="fa fa-close" style="font-size:17px"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Range</th>
+                <th>Gems</th>
+              </tr>
+
+            </thead>
+            <tbody *ngFor="let range of rangeData;">
+              <tr>
+                <td>{{range.range}}</td>
+                <td>{{range.amount}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr>
+          <div>
+            <h6><span class="text-muted text-bold">Disclaimer :</span>Leads will be generated only after your approval
+              and at your sole discretion. Applicable gems will be excluded from your total gems earned during the
+              reconciliation process, as per the selected leads.</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  

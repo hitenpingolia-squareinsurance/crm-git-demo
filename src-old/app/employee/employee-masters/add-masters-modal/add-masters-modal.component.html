@@ -1,0 +1,104 @@
+<h2 mat-dialog-title>{{ActionType}} {{ masterType }}</h2>
+
+<form class="form" [formGroup]="addForm" >
+
+  <div class="col-sm-12">
+    <label> Enter Name</label>
+    <input class="form-control" type="text" formControlName="Name" placeholder="Enter {{masterType}} Name">
+
+    <div *ngIf="isSubmitted && formControls.Name.errors " class="ValidationError">
+      <div *ngIf="formControls.Name.errors.required">Please Enter Name!</div>
+    </div>
+  </div>
+
+  <div class="col-sm-12" *ngIf="masterType == 'Branch' || masterType == 'Service-Location'">
+    <label> Choose Zone</label>
+    <ng-multiselect-dropdown class="form-control" placeholder="--Select Zone--" [data]="zoneData" formControlName="zone"
+      [(ngModel)]="zone" [settings]="dropdownSettingsType" (onSelect)="onZoneChange('Zone'); getRoData()" (onDeSelect)="onItemDeSelect('Zone')"> </ng-multiselect-dropdown>
+
+    <div *ngIf="isSubmitted && formControls.zone.errors " class="ValidationError">
+      <div *ngIf="formControls.zone.errors.required">Please Select Zone!</div>
+    </div>
+  </div>
+
+  <div class="col-sm-12" *ngIf="masterType == 'Regional-Office'">
+    <label> Choose Zone</label>
+    <ng-multiselect-dropdown class="form-control" placeholder="--Select Zone--" [data]="zoneData" formControlName="zone"
+      [(ngModel)]="zone" [settings]="dropdownSettingsType"> </ng-multiselect-dropdown>
+
+    <div *ngIf="isSubmitted && formControls.zone.errors " class="ValidationError">
+      <div *ngIf="formControls.zone.errors.required">Please Select Zone!</div>
+    </div>
+  </div>
+
+  <div class="col-sm-12" *ngIf="masterType == 'Branch'">
+    <label>Regional Office</label>
+    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="ROData"
+      formControlName="ro" [settings]="dropdownSettingsType"
+      (onDeSelect)="onItemDeSelect('ro')" [(ngModel)]="ro">
+    </ng-multiselect-dropdown>
+    <div *ngIf="isSubmitted && formControls.ro.errors " class="ValidationError">
+      <div *ngIf="formControls.ro.errors.required">Please Select Regional Office!
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="masterType == 'Service-Location'">
+    <label>Regional Office</label>
+    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="ROData"
+      formControlName="ro" [settings]="dropdownSettingsType" (onSelect)="getBranchData()"
+      (onDeSelect)="onItemDeSelect('ro')" [(ngModel)]="ro">
+    </ng-multiselect-dropdown>
+    <div *ngIf="isSubmitted && formControls.ro.errors " class="ValidationError">
+      <div *ngIf="formControls.ro.errors.required">Please Select Regional Office!
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-12" *ngIf="masterType == 'Service-Location'">
+    <label>Branch</label>
+    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="BranchData"
+      formControlName="branch" [settings]="dropdownSettingsType"
+       (onDeSelect)="onItemDeSelect('Branch')"
+      [(ngModel)]="selectedBranch">
+    </ng-multiselect-dropdown>
+    <!-- <div *ngIf="isSubmitted && formControls.branch.errors " class="ValidationError">
+      <div *ngIf="formControls.branch.errors.required">Please Select Branch!
+      </div>
+    </div> -->
+  </div>
+
+  <div class="col-sm-12" *ngIf="masterType == 'Service-Location'  ">
+    <label> Choose Tier</label>
+    <ng-multiselect-dropdown class="form-control" placeholder="--Select Tier--" [data]="Current_Tier"
+      formControlName="Current_Tier" [(ngModel)]="Current_Tier_Val" [settings]="dropdownSettingsType">
+    </ng-multiselect-dropdown>
+
+    <div *ngIf="isSubmitted && formControls.Current_Tier.errors " class="ValidationError">
+      <div *ngIf="formControls.Current_Tier.errors.required">Please Select Tier !</div>
+    </div>
+  </div>
+
+  
+
+  
+
+  <div class="col-sm-12" *ngIf="masterType == 'Branch'">
+    <label> Enter Address</label>
+    <textarea class="form-control" type="text" formControlName="Address"
+      placeholder="Enter Branch Name"></textarea>
+
+    <div *ngIf="isSubmitted && formControls.Address.errors " class="ValidationError">
+      <div *ngIf="formControls.Address.errors.required">Please Enter Branch Address!</div>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <mat-dialog-actions>
+      <button class="btn btn-primary" (click)="submitMastersData()" type="submit">Submit</button>
+      &nbsp;&nbsp;
+      <button class="btn btn-light" (click)="close()">Close</button>
+    </mat-dialog-actions>
+  </div>
+
+</form>

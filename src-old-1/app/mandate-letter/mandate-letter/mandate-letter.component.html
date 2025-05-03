@@ -1,0 +1,232 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+  <!-- Main content -->
+  <section class="content">
+
+    <!-- SELECT2 EXAMPLE -->
+    <div class="box box-default">
+      <div class="box-body">
+
+        <div class="box-header">
+          <h3 class="box-title">Mandate Letter Report</h3>
+        </div>
+
+        <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+          <div class="row">
+            <div class="col-sm-3"
+              *ngIf="(this.api.GetUserData('Code') == 'SIB101' || this.api.GetUserData('Code') == 'SIB102')">
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Business Line" [data]="BusinessLine_Ar"
+                formControlName="Business_Line_Id" [settings]="dropdownSettingsingleselect1"
+                (onSelect)="GetVerticalData()" (onDeSelect)="SearchComponentsData()"> </ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-sm-3">
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Vertical" [data]="Vertical_Ar"
+                formControlName="Vertical_Id" [settings]="dropdownSettingsmultiselect" (onSelect)="GetEmployees()"
+                (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-sm-3">
+              <ng-multiselect-dropdown class="form-control" name="Emp_Id" placeholder="Select Employee" [data]="Emps_Ar"
+                formControlName="Emp_Id" [settings]="dropdownSettingsmultiselect" (onSelect)="GetAgents('1')"
+                (onDeSelect)="GetAgents('1')"> </ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-sm-3">
+              <ng-multiselect-dropdown class="form-control" placeholder="Report Type" [data]="ReportTypeData"
+                formControlName="RM_Search_Type" [settings]="dropdownSettingsingleselect1" (onSelect)="SetReportType()"
+                (onDeSelect)="SetReportType()" [(ngModel)]="reportTypeVal" [disabled]="ReportTypeDisable">
+              </ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-sm-3"
+              *ngIf="(this.api.GetUserData('Code') != 'SIB101' && this.api.GetUserData('Code') != 'SIB102')">
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Agents" [data]="Agents_Ar"
+                formControlName="Agent_Id" [settings]="dropdownSettingsmultiselect"> </ng-multiselect-dropdown>
+            </div>
+
+          </div>
+
+          <div class="row"  >
+            <div class="col-sm-3"
+              *ngIf="(this.api.GetUserData('Code') == 'SIB101' || this.api.GetUserData('Code') == 'SIB102')">
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Agents" [data]="Agents_Ar"
+                formControlName="Agent_Id" [settings]="dropdownSettingsmultiselect"> </ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-sm-3">
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Product" [data]="Products_Ar"
+                formControlName="Product_Id" [settings]="dropdownSettingsmultiselect"></ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-sm-3">
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Ins Company" [data]="Companies_Ar"
+                formControlName="Company_Id" [settings]="dropdownSettingsmultiselect"></ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-sm-3">
+              <ng-multiselect-dropdown class="form-control" placeholder="Select SR Status" [data]="SRStatus_Ar"
+                formControlName="SRStatus" [settings]="dropdownSettingsingleselect1"></ng-multiselect-dropdown>
+              <span *ngIf="isSubmitted && FC.SRStatus.errors" class="form-text text-muted">
+                <span *ngIf="FC.SRStatus.errors.required" style="color:red;">Please choose business type!</span>
+              </span>
+            </div>
+
+            <div class="col-sm-3  //===== UPLOAD DOCS =====//
+        " *ngIf="(this.api.GetUserData('Code') != 'SIB101' && this.api.GetUserData('Code') != 'SIB102')">
+              <ng-multiselect-dropdown class="form-control" placeholder="Select SR Type" [data]="SRType_Ar"
+                formControlName="SR_Type" [settings]="dropdownSettingsingleselect1"></ng-multiselect-dropdown>
+            </div>
+
+          </div>
+
+          <div class="row"  >
+            <div class="col-sm-3"
+              *ngIf="(this.api.GetUserData('Code') == 'SIB101' || this.api.GetUserData('Code') == 'SIB102')">
+              <ng-multiselect-dropdown class="form-control" placeholder="Select SR Type" [data]="SRType_Ar"
+                formControlName="SR_Type" [settings]="dropdownSettingsingleselect1"></ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-sm-3">
+              <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                formControlName="DateOrDateRange" bsDaterangepicker
+                [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+              <span *ngIf="isSubmitted && FC.DateOrDateRange.errors" class="form-text text-muted">
+                <span *ngIf="FC.DateOrDateRange.errors.required" style="color:red;">Please choose Date or
+                  Date-Range!</span>
+              </span>
+            </div>
+
+            <div class="col-sm-3">
+              <input type="text" placeholder="Search" class="form-control" formControlName="SearchValue">
+            </div>
+
+            <div class="col-sm-3"
+              *ngIf="(this.api.GetUserData('Code') != 'SIB101' && this.api.GetUserData('Code') != 'SIB102')"></div>
+
+            <div class="col-sm-3">
+              <input *ngIf="(Is_Export==1)" (click)="ExportExcel()" type="button" class="btn btn-success"
+                value="Export">&nbsp;&nbsp;
+              <input type="submit" class="btn btn-info" value="Search">&nbsp;&nbsp;
+              <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+            </div>
+          </div>
+
+        </form>
+
+        <hr>
+
+        <div class="table-responsive mydiv">
+          <table datatable [dtOptions]="dtOptions"
+            class="row-border hover table table-bordered table-hover table-checkable " id="kt_datatable"
+            style="margin-top: 13px !important; width: 100% !important">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Action</th>
+                <th>CreateDate</th>
+                <th>Current/UserStatus</th>
+                <th>SRCreateUser</th>
+                <th>Remark</th>
+                <th>SR-Status</th>
+                <th>S.No</th>
+                <th>File Type</th>
+                <th>Customer Name</th>
+                <th>PolicyNo</th>
+                <th>Gross Premium</th>
+                <th>Agent</th>
+                <th>RM</th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="dataAr?.length != 0">
+              <tr *ngFor="let row of dataAr">
+                <td>{{ row.SrNo }}.</td>
+
+                <td>
+                  <a title="SR-Actions" href="javascript:;" (click)="SrPopup(1,row.Id)">
+                    <span style="margin-right: 5%;" class="label label-success label-inline mr-2">Details</span>
+                  </a>
+
+                  <!--=== FOR OPERATION AND UNDERWRITER NON MOTOR START ===-->
+                  <span *ngIf="(UserRights.Is_Operation == 1 || UserRights.Underwriter_Non_Motor == 1)">
+                    <a title="SR-Actions" href="javascript:;" *ngIf="row.Mandate_Status == 'Yes' && row.QC_Status == 0"
+                      (click)="MandateLetterQC(row.Id,row.SR_No)">
+                      <span class="label label-warning label-inline mr-2">QC&nbsp;Pending</span>
+                    </a>
+
+                    <a title="SR-Actions" href="javascript:;" *ngIf="row.Mandate_Status == 'No' && row.QC_Status == 0"
+                      (click)="UploadDocs(row.Id,row.SR_No,'New')">
+                      <span class="label label-warning label-inline mr-2">Upload Mandate</span>
+                    </a>
+
+                    <a title="SR-Actions" href="javascript:;" *ngIf="row.Mandate_Status == 'Yes' && row.QC_Status == 2"
+                      (click)="UploadDocs(row.Id,row.SR_No,'Rejected')"><span
+                        class="label label-danger label-inline mr-2">Rejected</span></a>
+                  </span>
+                  <!--=== FOR OPERATION AND UNDERWRITER NON MOTOR END ===-->
+
+                  <!--=== FOR RMS START ===-->
+                  <span *ngIf="(UserRights.Is_Operation != 1 && UserRights.Underwriter_Non_Motor != 1)">
+                    <span title="SR-Actions" class="label label-warning label-inline mr-2"
+                      *ngIf="row.Mandate_Status == 'Yes' && row.QC_Status == 0"
+                      (click)="MandateLetterQC(row.Id,row.SR_No)"> QC&nbsp;Pending</span>
+
+                    <a title="SR-Actions" href="javascript:;" *ngIf="row.Mandate_Status == 'No' && row.QC_Status == 0"
+                      (click)="UploadDocs(row.Id,row.SR_No,'New')"><span
+                        class="label label-warning label-inline mr-2">Upload Mandate</span></a>
+
+                    <a title="SR-Actions" href="javascript:;" *ngIf="row.Mandate_Status == 'Yes' && row.QC_Status == 2"
+                      (click)="UploadDocs(row.Id,row.SR_No,'Rejected')"><span
+                        class="label label-danger label-inline mr-2">Rejected</span></a>
+                  </span>
+                  <!--=== FOR RMS END ===-->
+                </td>
+
+                <td>{{ row.Add_Stamp }}</td>
+                <td>
+                  <span>{{ row.CurrentSrUserName }}</span>
+                  <span class="label label-info label-inline mr-2">{{ row.SR_Current_Status }}</span>
+                </td>
+
+                <td>{{ row.SRCreateUser }}</td>
+                <td>{{ row.SR_Remark }}</td>
+                <td>
+                  <span *ngIf="row.SR_Status == 'Complete'" class="label label-success label-inline mr-2">Booked</span>
+                  <span *ngIf="row.SR_Status == 'Pending'" class="label label-danger label-inline mr-2">UnBooked</span>
+                  <span *ngIf="row.SR_Status == 'Cancelled'"
+                    class="label label-danger label-inline mr-2">Cancelled</span>
+                </td>
+
+
+                <td>{{ row.SR_No }}</td>
+                <td>{{ row.File_Type }}</td>
+                <td>{{ row.Customer_Name }}</td>
+
+                <td>{{ row.Policy_No }}</td>
+                <td>{{ row.Estimated_Gross_Premium }}</td>
+
+                <td>{{ row.Agent_Name }}</td>
+                <td>{{ row.RM_Name }}</td>
+
+              </tr>
+            </tbody>
+
+            <tbody *ngIf="dataAr?.length == 0">
+              <tr>
+                <td colspan="14" align="center">No data Available !</td>
+              </tr>
+            <tbody>
+          </table>
+        </div>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+  </section>
+  <!-- /.content -->
+
+</div>

@@ -1,0 +1,59 @@
+<button type="button" (click)="CloseModel()" class="Close closeModelButton"><i class="fa fa-remove"></i></button>
+
+<div class="box box-default" *ngIf="currentUrl != '/Tele-Rm/View-Tele-Rm-Reports'">
+ 
+    <form [formGroup]="UpdateFollowForm" (ngSubmit)="UpdateFollowFormS()">
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="form-group row">
+                    <div class="col-lg-3">
+                        <label> Date:</label>
+                        <input type="text" class="form-control" bsDatepicker formControlName="Dates" required
+                            class="form-control">
+                        <span *ngIf="isSubmitted && FC.Dates.errors" class="form-text text-muted">
+                            <span *ngIf="FC.Dates.errors.required" style="color:red;">Field is required..!</span>
+                        </span>
+                    </div>
+                    <div class="col-lg-3">
+                        <label> Time:</label>
+                        <input type="time" class="form-control" formControlName="Times" required class="form-control">
+                        <span *ngIf="isSubmitted && FC.Times.errors" class="form-text text-muted">
+                            <span *ngIf="FC.Times.errors.required" style="color:red;">Field is required..!</span>
+                        </span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Remarks:</label>
+                        <input type="text" formControlName="Remarks" class="form-control" maxlength="1000">
+                        <span *ngIf="isSubmitted && FC.Remarks.errors" class="form-text text-muted">
+                            <span *ngIf="FC.Remarks.errors.required" style="color:red;">Field is required..!</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer">
+            <button type="button" (click)="ClearSearch()" class="btn btn-default pull-right">Cancel</button>
+            <button style="margin-right: 1%;" type="submit" class="btn btn-info pull-right">Update</button>
+        </div>
+    </form>
+</div>
+
+
+<!-- 
+
+<select data-loader="loginbtnadd" style="height: 25px; width: 130px;">
+    <option value="select">-- select --</option>
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="mercedes">Mercedes</option>
+    <option value="audi">Audi</option>
+  </select> -->
+
+
+
+<div class="modal-body card-box" [innerHTML]="dataArr">
+
+
+
+</div>

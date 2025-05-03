@@ -1,0 +1,104 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Manage Sub Class Missing Make Model</h3>
+          </div>
+
+          <div class="box-body">
+            <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+              <div class="row"  >
+                <div class="col-sm-3">
+                  <ng-multiselect-dropdown class="form-control" name="Product" placeholder="Select Product"
+                    [data]="ProductData" formControlName="Product" [settings]="dropdownSettingsingleselect">
+                  </ng-multiselect-dropdown>
+                </div>
+
+
+
+                <div class="col-sm-3"><input type="text" formControlName="SearchMake" name="SearchMake"
+                    class="form-control" placeholder="Search Make"></div>
+
+                <div class="col-sm-3"><input type="text" formControlName="SearchModel" name="SearchModel"
+                    class="form-control" placeholder="Search Model"></div>
+                <div class="col-sm-3">
+
+                  <input type="submit" class="btn btn-info" value="Search">
+                  &nbsp;&nbsp;
+                  <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                    value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                </div>
+
+              </div>
+              <hr>
+            </form>
+
+            <div class="mydiv table-responsive ">
+
+
+              <table datatable [dtOptions]="dtOptions" class="table table-bordered table-hover" id="Table1">
+                <thead>
+                  <tr>
+                    <!-- <th>Sr.No</th> -->
+                    <th>Vehicle Type</th>
+                    <th>Sub-Class</th>
+                    <th style="width:25%">Update Status</th>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Variant</th>
+                    <th>Fuel Type</th>
+                    <th>Cubic Capacity</th>
+                    <th>Seating Capacity</th>
+
+                    <!-- <th>Action</th> -->
+                  </tr>
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr">
+                    <!-- <td>{{ row.SrNo }}.</td> -->
+                    <td>{{ row.Vehicle_Type }}</td>
+                    <td>{{ row.Sub_Class }}</td>
+
+                    <td style="width:25%">
+
+                      <ng-multiselect-dropdown class="form-control" name="SubClass" placeholder="Select SubClass"
+                        [data]="SubClassData" (onSelect)="onItemSelect($event,'SubClass',row.Id )"
+                        (onDeSelect)="onItemDeSelect($event,'SubClass')" [settings]="dropdownSettingsingleselect">
+                      </ng-multiselect-dropdown>
+                    </td>
+
+                    <td>{{ row.Make }}</td>
+                    <td>{{ row.Model }}</td>
+                    <td>{{ row.Variant }}</td>
+                    <td>{{ row.Fuel_Type }}</td>
+                    <td>{{ row.Cubic_Capacity }}</td>
+                    <td>{{ row.Seating_Capacity }}</td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="11" align="center">No data available !</td>
+                  </tr>
+                <tbody>
+              </table>
+
+
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+</div>

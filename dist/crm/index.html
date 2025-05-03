@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+  <title> CRM - Customer Relationship Management | Squareinsurance </title>
+  <meta name="description" itemprop="description"
+    content="Welcome to sqWelcome to square insurance brokers pvt. ltd. Using this window you can use square insurance CRM. Enter your username and password." />
+  <meta name="keywords" content="CRM, Customer Relationship Management  " />
+  <meta name="robots" content="noindex,nofollow" />
+
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+
+
+
+  <base href="/">
+
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- Google Font -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+
+<link rel="stylesheet" href="styles.4164a7db7ea0019c0af6.css"></head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+  <app-root></app-root>
+<script src="runtime-es2015.f774d17fa29eb3818e64.js" type="module"></script><script src="polyfills-es2015.440593c5c0666131ed67.js" type="module"></script><script src="runtime-es5.a127c2e2f708471a08d2.js" nomodule></script><script src="polyfills-es5.40f221e5afa29627b592.js" nomodule></script><script src="scripts.1e288e39770755c0dc81.js"></script><script src="vendor-es2015.0c154bf7d2bc54fdb53a.js" type="module"></script><script src="main-es2015.1d45328cf71b0f2b5ddc.js" type="module"></script><script src="vendor-es5.cc90ca207afa867d94dc.js" nomodule></script><script src="main-es5.024f8d6b5c0141d3f00e.js" nomodule></script></body>
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  -->
+<script>
+  $(document).on('click', '.MainMenu', function (e) {
+    e.preventDefault();
+    var parentLi = $(this).parent();
+
+    if (parentLi.hasClass("menu-open")) {
+      parentLi.removeClass('menu-open');
+      parentLi.children('.treeview-menu').slideUp(300);
+    } else {
+      $(".treeview").not(parentLi).removeClass('menu-open');
+      $(".treeview-menu").not(parentLi.children('.treeview-menu')).slideUp(300);
+
+      parentLi.addClass('menu-open');
+      parentLi.children('.treeview-menu').slideDown(300);
+    }
+  });
+
+  $(document).on('click', '.ChildMenu', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var parentLi = $(this).parent();
+
+    if (parentLi.hasClass("Child-open")) {
+      parentLi.removeClass('Child-open');
+      parentLi.children('.treeview-menu-child').slideUp(300);
+    } else {
+      parentLi.closest('.treeview').find('.treeview-menu-child').slideUp(300);
+      parentLi.closest('.treeview').find('.Child-open').removeClass('Child-open');
+
+      parentLi.addClass('Child-open');
+      parentLi.children('.treeview-menu-child').slideDown(300);
+    }
+  });
+
+  $(document).on('click', '.ClickAnchorMenu', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var parentLi = $(this).parent();
+
+    parentLi.addClass('Child-open');
+    parentLi.children('.treeview-menu-child').slideDown(300);
+
+  });
+</script>
+
+</html>

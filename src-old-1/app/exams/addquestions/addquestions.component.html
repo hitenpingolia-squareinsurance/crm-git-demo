@@ -1,0 +1,107 @@
+<div class="row">
+
+    <div class="modal-header" style="text-align: center;">
+        <h4 class="modal-title">Company Profile</h4>
+       
+    </div>
+</div>
+
+
+<form (ngSubmit)="submit()" [formGroup]="QuestionAnswerForm">
+
+
+    <div class="popup-content-body">
+        <div class="row popup-form">
+
+            <div class="col-md-12">
+                <label for="state">Question Answer Details</label>
+               <textarea class="form-control" formControlName="question"></textarea>
+                <div *ngIf="isSubmitted && formControls.question.errors" class="Validationerrors">
+                    <div *ngIf="formControls.question.errors.required"><span style="color: red;">Please Enter Question!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-6" >
+            <label for="state">Select Set</label>
+
+
+            <ng-multiselect-dropdown class="form-control" name="set" placeholder="Select Set"
+            [data]="set" formControlName="set" [(ngModel)]="set_no" [settings]="dropdownSettingsType">
+            </ng-multiselect-dropdown>
+           
+            <div *ngIf="isSubmitted && formControls.set.errors" class="Validationerrors">
+                <div *ngIf="formControls.set.errors.required"><span style="color: red;">Please select
+                        set!</span></div>
+            </div>
+        </div>
+
+
+            <div class="col-md-6">
+                <label for="state">Option 1</label>
+                <input  type="text" class="form-control" formControlName="optionone">
+                <div *ngIf="isSubmitted && formControls.optionone.errors" class="Validationerrors">
+                    <div *ngIf="formControls.optionone.errors.required"><span style="color: red;">Please enter
+                            option 1!</span></div>
+                </div>
+            </div>
+
+            
+            <div class="col-md-6">
+                <label for="state">option 2</label>
+                <input type="text" class="form-control" formControlName="optiontwo">
+                <div *ngIf="isSubmitted && formControls.optiontwo.errors" class="Validationerrors">
+                    <div *ngIf="formControls.optiontwo.errors.required"><span style="color: red;">Please enter
+                        options 2!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="state">Option 3</label>
+               <input type="text" class="form-control" formControlName="optionthree">
+                <div *ngIf="isSubmitted && formControls.optionthree.errors" class="Validationerrors">
+                    <div *ngIf="formControls.optionthree.errors.required"><span style="color: red;">Please enter
+                        Option 3!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="state">Option 4</label>
+               <input type="text" class="form-control" formControlName="optionfour">
+                <div *ngIf="isSubmitted && formControls.optionfour.errors" class="Validationerrors">
+                    <div *ngIf="formControls.optionfour.errors.required"><span style="color: red;">Please enter
+                        option 4!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="state">Answer</label>
+               <input type="text" class="form-control" formControlName="answer">
+                <div *ngIf="isSubmitted && formControls.answer.errors" class="Validationerrors">
+                    <div *ngIf="formControls.answer.errors.required"><span style="color: red;">Please enter
+                        Answer!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="state">Marks</label>
+               <input type="text" class="form-control" formControlName="marks">
+                <div *ngIf="isSubmitted && formControls.marks.errors" class="Validationerrors">
+                    <div *ngIf="formControls.marks.errors.required"><span style="color: red;">Please enter
+                        Marks!</span></div>
+                </div>
+            </div>
+         
+           
+      
+           <div class="clearfix"></div>
+            <div class="button-div-yes-no" align="right" style="margin-top: 10px; margin-right: 13px;" >
+                <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>&nbsp;
+                <button type="submit" *ngIf="this.type=='Add'" class="btn btn-primary">Submit</button>&nbsp;
+                <button type="submit" *ngIf="this.type=='Edit'"  class="btn btn-primary">Update</button>
+            </div>
+
+
+        </div>
+    </div>
+
+</form>

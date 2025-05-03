@@ -1,0 +1,897 @@
+<div class="main_dashboard_css">
+    <div class="inner_dashboard">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d_flex flex_Start marque_row">
+                        <img src="assets/image/product_icon/alarm.gif" alt="health">
+                        <marquee class="ml_10" scrollamount="4" onmouseover="this.stop();" onmouseout="this.start();">
+                            <p *ngFor="let row of ViewKnowledgeBaseData; let i=index;">
+                                {{row.title}}
+                                <a routerLink="/knowledge/single-knowledge-details/{{row.Id}}/{{row.categoryId}}">View
+                                    More</a>
+                            </p>
+                        </marquee>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12" *ngIf="DashboardValue=='2'">
+                            <div class="products_list">
+                                <div class="all_card_de all_card_custom">
+                                    <div class="main_card cs_card_width_auto_set">
+                                        <div class="main_card_body"
+                                            (click)="RedirectToWEbs('https://www.squareinsurance.in/health-insurance')">
+                                            <img src="assets/image/product_icon/health.svg" alt="health">
+                                            <div class="count_box">Health</div>
+                                        </div>
+                                    </div>
+                                    <div class="main_card cs_card_width_auto_set">
+                                        <div class="main_card_body"
+                                            (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/bike-insurance')">
+                                            <img src="assets/image/product_icon/bike.svg" alt="bike">
+                                            <div class="count_box">Bike</div>
+                                        </div>
+                                    </div>
+                                    <div class="main_card cs_card_width_auto_set">
+                                        <div class="main_card_body"
+                                            (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/car-insurance')">
+                                            <img src="assets/image/product_icon/car.svg" alt="car">
+                                            <div class="count_box">Car</div>
+                                        </div>
+                                    </div>
+                                    <div class="main_card cs_card_width_auto_set">
+                                        <div class="main_card_body"
+                                            (click)="RedirectToWEbs('https://squareinsurance.in/motor-insurance/commercial-vehicle-insurance/passenger-carrying')">
+                                            <img src="assets/image/product_icon/pcv.svg" alt="pcv">
+                                            <div class="count_box">PCV</div>
+                                        </div>
+                                    </div>
+                                    <div class="main_card cs_card_width_auto_set">
+                                        <div class="main_card_body"
+                                            (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/commercial-vehicle-insurance/goods-carrying')">
+                                            <img src="assets/image/product_icon/gcv.svg" alt="gcv">
+                                            <div class="count_box">GCV</div>
+                                        </div>
+                                    </div>
+                                    <div class="main_card cs_card_width_auto_set">
+                                        <div class="main_card_body"
+                                            (click)="RedirectToWEbs('https://www.squareinsurance.in/travel-insurance')">
+                                            <img src="assets/image/product_icon/travel.svg" alt="travel">
+                                            <div class="count_box">Travel</div>
+                                        </div>
+                                    </div>
+                                    <div class="main_card cs_card_width_auto_set">
+                                        <div class="main_card_body" *ngIf="Life_Training_Status == 1"
+                                            (click)="RedirectToWEbs('https://www.squareinsurance.in/life-insurance')">
+                                            <img src="assets/image/product_icon/life.svg" alt="life">
+                                            <div class="count_box">Life</div>
+                                        </div>
+                                        <div class="main_card_body" *ngIf="Life_Training_Status == 0"
+                                            (click)="ViewDashboardPoupup()">
+                                            <img src="assets/image/product_icon/life.svg" alt="life">
+                                            <div class="count_box">Life</div>
+                                        </div>
+                                    </div>
+                                    <div class="main_card cs_card_width_auto_set">
+                                        <div class="main_card_body"
+                                            (click)="RedirectToWEbs('https://www.squareinsurance.in/health-insurance/personal-accident-insurance')">
+                                            <img src="assets/image/product_icon/pa.svg" alt="pa">
+                                            <div class="count_box">Personal Accident</div>
+                                        </div>
+                                    </div>
+                                    <div class="main_card cs_card_width_auto_set">
+                                        <div class="main_card_body"
+                                            (click)="RedirectToWEbs('https://www.squareinsurance.in/life-insurance')">
+                                            <img src="https://square-web.s3.ap-south-1.amazonaws.com/Webiste/web-react/SquareWebImages/2-cr-term-insurance.svg" alt="2 Cr Term">
+                                            <div class="count_box">2 Cr Term</div>
+                                        </div>
+                                    </div>
+                                    <div class="main_card cs_card_width_auto_set">
+                                        <label class="dashboard-new">New</label>
+                                        <div class="main_card_body" 
+                                        data-target="#followUpPopup" data-backdrop="static" data-keyboard="false"data-toggle="modal">
+                                            <img src="https://square-web.s3.ap-south-1.amazonaws.com/Webiste/web-react/SquareWebImages/pet-insurance.svg" alt="pet insurance">
+                                            <div class="count_box">Pet</div>
+                                        </div>
+                                    </div>
+                                    <div class="main_card cs_card_width_auto_set">
+                                        <div class="main_card_body"
+                                            (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/commercial-vehicle-insurance/miscellaneous-insurance')">
+                                            <img src="assets/image/product_icon/miscd.svg" alt="miscd">
+                                            <div class="count_box">MISC-D</div>
+                                        </div>
+                                    </div>
+                                    <div class="main_card cs_card_width_auto_set">
+                                        <div class="main_card_body" data-toggle="modal"
+                                            data-target="#viewmoreinsuranceproducts">
+                                            <img src="assets/image/product_icon/view_more.svg" alt="miscd">
+                                            <div class="count_box">View  More</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                <!-- <div class="col-md-4">
+                    <div class="slider-container">
+                        <div class="slider" [style.transform]="getTransform()" [style.transition]="getTransition()">
+                          <div class="slide" *ngFor="let image of images">
+                            <a target="_blank"><img [src]="image.url" [alt]="image.alt"></a>
+                            
+                          </div>
+                          <div class="slide">
+                            <img [src]="images[0].url" [alt]="images[0].alt">
+                          </div>
+                        </div>
+                    </div>
+
+                </div> -->
+
+                
+                        <div class="col-md-12" *ngIf="DashboardValue=='2'">
+                            <div class="row_cs policy_box new-policy_box">
+                                <div class="d-flex flex-wrap align-items-center  border-block-end-dashed">
+                                    <div class="custom-flex flex-fill border-end border-inline-end-dashed border-bottom"
+                                        *ngFor="let row of Dataarr;">
+                                        <div class="main_card">
+                                            <div class="main_card_body flex_Middel" routerLink="{{row.Route}}">
+                                                <div class="line-gap-1">
+                                                    <p class="count_tag">{{row.Name}}</p>
+                                                </div>
+
+                                                <div class="count_box">
+                                                    <div class="count_title">{{row.TotalRecord}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="custom-flex flex-fill border-end border-inline-end-dashed border-bottom"
+                                        *ngFor="let row of Dataarr1;">
+                                        <div class="main_card">
+                                            <div class="main_card_body flex_Middel" routerLink="{{row.Route}}">
+                                                <div class="line-gap-1">
+                                                    <p class="count_tag">{{row.Name}}</p>
+                                                    
+                                                </div>
+                                                <div class="count_box" routerLink="{{row.Route}}">
+                                                    <div class="count_title">{{row.TotalRecord}}</div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row" *ngIf="DashboardValue=='2' && ( LoginType =='employee' || LoginType =='agent')">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="main_card min_height_chart">
+                                                <div class="main_card_body">
+                                                    <div class="count_box">
+                                                        
+                                                        <p class="count_tag text_center">Monthly Business</p>
+                                                        <div class="count_title text_center">{{TotalPolicyGraph}}</div>
+                                                        <!-- <span class="month-view">June</span> -->
+
+                                                        <!-- <div style="display: block">
+                                                            <canvas baseChart [datasets]="PolicyChartData" [labels]="PolicyChartLabels"
+                                                                [options]="barChartOptions" [legend]="barChartLegend"
+                                                                [chartType]="PolicyChartType">
+                                                            </canvas>
+                                                        </div> -->
+
+                                                        <div class="right-side icon-right-primary"><i class="fa fa-line-chart" aria-hidden="true"></i>
+                                                            <div class="shap-block">
+                                                            <div class="rounded-shap animate-bg-primary"><i></i><i></i></div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div style="display: block">
+                                                            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels2"
+                                                                [chartType]="pieChartType">
+                                                            </canvas>
+                                                        </div> -->
+                                        <!-- <div class="col-lg-4 col-md-6">
+                                            <div class="main_card min_height_chart">
+                                                <div class="main_card_body">
+                                                    <div class="count_box">
+                                                        
+                                                        <p class="count_tag text_center">Business Bifurcation</p>
+                                                        <div class="count_title text_center">{{TotalLObGraph}}</div>
+                                                        <ul class="earn-ul">
+                                                            <li><span></span>Motor</li>
+                                                            <li><span></span>Non-Motor</li>
+                                                        </ul>
+                                                    
+                                                        <div class="right-side icon-right-info"><i class="fa fa-line-chart" aria-hidden="true"></i>
+                                                            <div class="shap-block">
+                                                            <div class="rounded-shap animate-bg-primary"><i></i><i></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-lg-4 col-md-6" *ngIf="Partner != 'emitra' ">
+                                            <div class="main_card min_height_chart">
+                                                <div class="main_card_body">
+                                                    <div class="count_box">
+                                                        
+                                                        <p *ngIf="LoginType=='agent'" class="count_tag text_center">Earning</p>
+                                                        <p *ngIf="LoginType=='employee'" class="count_tag text_center">Revenue</p>
+                                                        <div class="count_title text_center">{{TotalRevenueGraph}}</div>
+                                                        <!-- <span class="month-view">June</span> -->
+                                                        
+                                                        <!-- <div style="display: block">
+                                                            <canvas baseChart [datasets]="RevenueChartData" [labels]="RevenueChartLabels"
+                                                                [options]="barChartOptions" [legend]="barChartLegend"
+                                                                [chartType]="RevenueChartType">
+                                                            </canvas>
+                                                        </div> -->
+                                                        <div class="right-side icon-right-success"><i class="fa fa-line-chart" aria-hidden="true"></i>
+                                                            <div class="shap-block">
+                                                            <div class="rounded-shap animate-bg-primary"><i></i><i></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" *ngIf="this.LoginType == 'employee' ">
+
+                    <div class="hot-update bottom-gap">
+                        <div class="event">Projection Overview
+                            <button class="add-modal" *ngIf="IsUpdate == 'Yes'" (click)="update_projection()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                        </div>
+                        <div class="projection-view">
+                            <div class="projection-header">
+                                <div class="btn-group projection-btn-group" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-secondary"   (click)="showToday()" [ngClass]="{'active': isTodayActive}">Today</button>
+                                    <button type="button" class="btn btn-secondary" (click)="showLastMonth()" [ngClass]="{'active': !isTodayActive}">Month</button>
+                                  </div>
+                                <div class="projection-body">
+                                    <div class="projection-details">
+                                        <ul class="achiev-ul">
+                                            <li><abbr>{{ isTodayActive ? 'Today Day Target' : 'MTD Target' }}
+                                               
+                                            </abbr>{{ this.SelfTarget}}
+                                               
+                                                <!-- <small class="plus" [ngClass]="{'text-positive': this.PercentageChange > 0, 'text-negative': this.PercentageChange <= 0}">
+                                                    {{ isTodayActive ? this.Abspercent1 : this.Abspercent }}%
+                                                  </small> -->
+                                            </li>
+                                
+                                            <li><abbr>Achievement</abbr>{{this.SelfAchivementPercent}}%</li>
+                                        </ul>
+                                        <ul class="achiev-ul">
+                                            <li><abbr>{{ isTodayActive ? 'Last Day Target' : 'Last MTD Target' }}</abbr>
+                                                {{ 
+                                                         this.yesterday_target 
+                                                      
+                                                  }}
+                                                
+                                            </li>
+                                            <li><abbr>Achievement</abbr>{{this.LastAchievementPercent}}%</li>
+                                        </ul>
+                                    </div>
+                              
+                                  
+                                </div>
+                            </div>
+                        
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="col-md-4" *ngIf="Partner != 'emitra' && this.GetUserDataType != 'user' ">
+                    <div class="hot-update">
+                        <div class="event">Events</div>
+                        <div class="div-marquee">
+                            <ng-container *ngIf="UpcomingEvents?.length > 0; else noEventsTemplate">
+                                <ul>
+                                  <li *ngFor="let Events of UpcomingEvents">
+                                    <div *ngIf="Events.event_type === 'online' && !shouldShowJoinButton(Events.date)"  class="btn-hot btn-join"
+                                    data-target="#EventMsg"
+                                    data-toggle="modal">
+                                        <a class="event-heading">{{Events.event_name}}<abbr>{{Events.status}}</abbr></a>
+                                    </div>
+                                    <div *ngIf="Events.event_type !== 'online'"  class="btn-hot btn-join">
+                                        <a class="event-heading">{{Events.event_name}}<abbr>{{Events.status}}</abbr></a>
+                                    </div>
+                                        <div class="hot-details">
+                                            <var>Date :</var>
+                                        <abbr>{{Events.date}}</abbr>
+                                        <button *ngIf="Events.event_type === 'online' && shouldShowJoinButton(Events.date)" class="btn-hot btn-join" (click)="openUrl(Events.url)">Join</button>
+                                        <button class="btn-hot btn-copy" *ngIf="Events.event_type !== 'online'" (click)="openUrl(Events.url)">
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i> Directions
+                                        </button>
+                                        </div>
+                                    
+                                  </li>
+                                </ul>
+                              </ng-container>
+                              <ng-template #noEventsTemplate>
+                                <div class="no-events">
+                                  <p>No events found</p>
+                                  <img src="assets/image/no_data_banner.jpg" alt="No events" />
+                                </div>
+                              </ng-template>
+                       </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Button to open the modal -->
+            <!-- <button type="button" class="btn renew-btn" data-toggle="modal" data-target="#myModal"><i
+                    class="fa fa-angle-left" aria-hidden="true"></i></button> -->
+
+                                        <!-- <li> Name<label> {{RmData.name}} - {{RmData.employee_id}}</label></li> -->
+
+            <!-- <div class="row" *ngIf="this.LoginType=='agent'">
+                <div class="col-lg-12 teliarm">
+                    <div class="row position-relative">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="c-dashboardInfo">
+                                <div class="wrap">
+                                    <h4><img class="img-fluid" src="assets/dist/img/myrm.png">My Relationship Manager
+                                    </h4>
+                                    <ul>
+                                        <li> Name<label>{{ convertToProperCase(RmData.name) }} -
+                                                {{RmData.employee_id}}</label></li>
+                                        <li> Mobile<label> {{RmData.mobile}}</label></li>
+
+                                        <li style="width: 100%;"> Email<label class="one_label">
+                                                {{RmData.email}}</label>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="c-dashboardInfo text_center ">
+                                <div class="wrap">
+                                    <h4><img class="img-fluid" src="assets/dist/img/telerm.png">My Tele RM
+                                    </h4>
+                                    <ul>
+                                        <li>Name <label> {{TeleRmData.name}} - {{TeleRmData.employee_id}}</label></li>
+                                        <li>Mobile <label> {{TeleRmData.mobile}}</label> </li>
+                                        <li style="width: 100%;">Email <label class="one_label">
+                                                {{TeleRmData.email}}</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+
+            <div class="row">
+                <div class="col-md-6 table_box"
+                    *ngIf="DepartmentIdLoginUser == 10 && LoginType =='employee' &&  OpsCurrentDay?.length != 0">
+                    <div class="dashboard_new_design custom-performance-report">
+                        <div class="new_table_design custom_table">
+                            <ul class="responsive-table" style="width: calc(100%) !important">
+                                <li class="table-row Conversaion_box" *ngFor="let row of OpsCurrentDay; let i=index;">
+                                    <div class="business_name">Operation Performance Report </div>
+                                    <div class="d_flex w_100 flex_Equal flex_colum_sm">
+
+                                        <div class="agents_data">
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div>Issuance Online </div><strong>{{row.Issuance_Online}} </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="agents_data">
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div>Issuance Offline </div><strong>{{row.Issuance_Offline}}
+                                                    </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="agents_data">
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div>Payment Url Shared </div><strong>{{row.PaymentUrlShared}}
+                                                    </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="agents_data">
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div>Web policy QC NOP </div><strong>{{row.WebPoliesQCNOP}}
+                                                    </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="agents_data">
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div>Quote Release </div><strong>{{row.Quote_Release}}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="agents_data">
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div>Inspection Manager </div>
+                                                    <strong>{{row.InspectionManeger}}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="agents_data">
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div>Endorsement Manager </div>
+                                                    <strong>{{row.EndrosmentManeger}}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="agents_data">
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div>Online Motor Quotes </div>
+                                                    <strong>{{row.OnlineMotorQuotes}}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="last_row">
+                                        <div class="d_flex effective_date">
+                                            <div class="date_text">
+                                                <span class="fs_12"> Total</span>
+                                                <span>{{row.Total}}</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 table_box"
+                    *ngIf="DepartmentIdLoginUser == 10 && LoginType =='employee' &&  OpsLastDay?.length != 0">
+                    <div class="dashboard_new_design ">
+                        <div class="new_table_design custom_table">
+
+                            <ul class="responsive-table" style="width: calc(100%) !important">
+                                <li class="table-row top_ten_posp" style="width: 100%;">
+                                    <div class="business_name">Previous Day Top Performer</div>
+                                    <div class=" w_100 flex_Equal flex_colum_sm">
+
+                                        <div *ngIf="OpsLastDay && OpsLastDay.length > 0" class="top-performer">
+                                            <img *ngIf="OpsLastDay[0].EmployeeProfile != ''"
+                                                class="user-image dash-user img-circle"
+                                                [src]="OpsLastDay[0].EmployeeProfile">
+                                            <img *ngIf="OpsLastDay[0].EmployeeProfile == ''"
+                                                class="user-image dash-user img-circle"
+                                                src="../../assets/image/profile.svg">
+                                            <div class="performer-content">
+                                                <span class="performer-name">{{OpsLastDay[0].EmployeeName}}
+                                                    <small>{{OpsLastDay[0].EmployeeCode}}</small></span>
+                                                <span class="performer-case">{{OpsLastDay[0].Total}}</span>
+                                            </div>
+                                        </div>
+
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <td><small>Profile</small></td>
+                                                    <td><small>Name & Code</small></td>
+                                                    <td><small>Total Case</small></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of OpsLastDay; let i=index;">
+                                                    <td class="dropdown-toggle" *ngIf="i > 0">
+                                                        <img *ngIf="row.EmployeeProfile != ''"
+                                                            class="user-image dash-user img-circle"
+                                                            [src]="row.EmployeeProfile">
+                                                        <img *ngIf="row.EmployeeProfile == ''"
+                                                            class="user-image dash-user img-circle"
+                                                            src="../../assets/image/profile.svg">
+                                                    </td>
+                                                    <td *ngIf="i > 0"><span>{{row.EmployeeName}}
+                                                            {{row.EmployeeCode}}</span></td>
+                                                    <td *ngIf="i > 0"><span>{{row.Total}}</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+          
+
+            <div class="row">
+                <div class="col-md-12">
+                    <section *ngIf="DashboardValue=='0'" class="content">
+                        <div class="section-bg-1">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="details-div">
+                                        <p>You have successfully applied for Square Insurance POSP your documents under
+                                            verification and
+                                            for more details you can connect with your RM</p>
+                                        <div class="btn-div-all">
+                                            <button class="btn btn-warning" (click)="GetRmDetails()" type="button"><i
+                                                    class="fa fa-info-circle" aria-hidden="true"></i> RM
+                                                Details</button>
+                                            <button class="btn btn-danger" (click)="Logout()" type="button"><i
+                                                    class="fa fa-sign-out" aria-hidden="true"></i>Logout</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="img-section">
+                                        <!-- <img class="img-fluid" src="assets/dist/img/sucsess2.png"> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section *ngIf="DashboardValue=='1'" class="content">
+                        <div class="section-bg-2">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="details-div">
+                                        <p>You document has been verified successfully you will be receive a training
+                                            url &
+                                            login
+                                            credentials shortly for more details kindly connect with your RM</p>
+                                        <div class="btn-div-all">
+                                            <!-- <button class="btn btn-warning" (click)="GetRmDetails()" type="button"><i
+                                                    class="fa fa-info-circle" aria-hidden="true"></i> RM
+                                                Details</button> -->
+                                            <button class="btn btn-danger" (click)="Logout()" type="button"><i
+                                                    class="fa fa-sign-out" aria-hidden="true"></i>Logout</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="img-section">
+                                        <!-- <img class="img-fluid" src="assets/dist/img/sucsess3.png"> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section *ngIf="DashboardValue=='4'" class="content">
+                        <div class="section-bg-3">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="details-div">
+                                        <p>You can start your training by clicking on below mentioned Button</p>
+                                        <div class="btn-div-all">
+                                            <div class="row">
+
+                                                <div class="col-md-4">
+                                                    <button class="btn btn-primary"
+                                                        (click)="Clicks2(AgentTrainingType,'Motor')" type="button"><i
+                                                            class="fa fa-hourglass-start" aria-hidden="true"></i>
+                                                        Non-Life Training</button>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button class="btn btn-danger" (click)="Logout()" type="button"><i
+                                                            class="fa fa-times" aria-hidden="true"></i>I will do it
+                                                        later</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="img-section">
+                                        <img class="img-fluid" src="assets/dist/img/training.png">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+
+
+                 <!-- PET INSURANCE  -->
+     
+                 <div class="modal fade" id="followUpPopup" #followUpPopup tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content" style="width:650px;">
+                        <div class="modal-header"  style="padding-bottom: 0px;">
+                          <h5 class="modal-title" id="exampleModalLabel" style="color: #10498a; font-size: 20px; font-weight: 600;">Pet Insurance</h5>
+                          <button type="button" class="close" id="close_pop" (click)="RestForm()" data-dismiss="modal" aria-label="Close" style="position: relative; top: -50px; right: -20px;">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="col-6" style="float:left; margin-top: 10px;">
+                              <img src="https://squarebweb-documents.s3.ap-south-1.amazonaws.com/Webiste/web-react/SquareWebImages/pet-ins.webp" alt="Pet insurance" title="Pet insurance" style="width: 350px;">
+                            </div>
+                            <div class="col-6" style="float:left; margin-left: 15px;;">
+                              <form class="form" [formGroup]="PetInsurance">
+                                <div class="form-group">
+                                    <input type="text" formControlName="name" pattern="[a-zA-Z ]+" placeholder="Enter Name" 
+                                      style="width: 100%; padding: 10px; margin: 5px;" minlength="3" oninput="this.value = this.value.replace(/[0-9]/g, '').replace(/\s{2,}/g, ' ');">
+                                    <div *ngIf="isSubmitted && formControls.name.errors" class="ValidationError">
+                                      <div *ngIf="formControls.name.errors.required" style="font-size: 10px; font-weight: 800;">Please Enter Name!</div>
+                                      <div *ngIf="formControls.name.errors.pattern" style="font-size: 10px; font-weight: 800;">Invalid Name!</div>
+                                      <div *ngIf="formControls.name.errors.minlength" style="font-size: 10px; font-weight: 800;">Must have min. 3 characters!</div>
+                                    </div>
+                                  </div>
+                                  
+                                  <div class="form-group">
+                                    <input type="text" formControlName="mobile" pattern="^[6789][0-9]{9}$" maxlength="10" placeholder="Enter Mobile Number" style="width: 100%; padding: 10px; margin: 5px;"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                    <div *ngIf="isSubmitted && formControls.mobile.errors " class="ValidationError">
+                                      <div *ngIf="formControls.mobile.errors.required" style="font-size: 10px; font-weight: 800;">Please Enter Mobile!</div>
+                                      <div *ngIf="formControls.mobile.errors.pattern" style="font-size: 10px; font-weight: 800;">Invalid Mobile Number!</div>
+                                    </div>
+                                  </div>
+                                  
+                                  <div class="form-group">
+                                    <input type="text" formControlName="city" pattern="[a-zA-Z ]+" placeholder="Enter City" style="width: 100%; padding: 10px; margin: 5px;"
+                                    minlength="3" oninput="this.value = this.value.replace(/[0-9]/g, '').replace(/\s{2,}/g, ' '); 
+                                                           this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                                    <div *ngIf="isSubmitted && formControls.city.errors " class="ValidationError">
+                                      <div *ngIf="formControls.city.errors.required" style="font-size: 10px; font-weight: 800;">Please Enter City!</div>
+                                      <div *ngIf="formControls.city.errors.pattern" style="font-size: 10px; font-weight: 800;">Invalid City Name</div>
+                                      <div *ngIf="formControls.city.errors.minlength" style="font-size: 10px; font-weight: 800;">Must have min. 3 characters!</div>
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group" *ngIf="this.showOtpInput == true">
+                                    <input type="text" formControlName="otp" minlength="6" maxlength="6" placeholder="Enter OTP" style="width: 100%; padding: 10px; margin: 5px;"  oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                    <div *ngIf="isSubmitted && formControls.otp.errors" class="ValidationError">
+                                      <div *ngIf="formControls.otp.errors.required" style="font-size: 10px; font-weight: 800;">Please Enter OTP!</div>
+                                      <div *ngIf="formControls.otp.errors.minlength" style="font-size: 10px; font-weight: 800;">Invalid OTP!</div>
+                                    </div>
+                                    <!-- <a (click)="Submit_data()">Resend</a> -->
+                                  </div>
+
+
+                                <div class="form-group">
+                                    <button class="btn btn-info" type="submit" (click)="showOtpInput == true ? verifyOtp() : Submit_data()" 
+                                    style="width: 100%; padding: 10px; margin: 5px; margin-bottom: 0px;">{{ this.showOtpInput ? 'Verify OTP' : 'Get Quotes' }}</button>
+                                </div>
+                              </form>
+                                <div style="font-weight: 800; font-size: 10px; margin-top: -8px;">
+                                    <p>By clicking on You, Agreed to our <a [href]="'/privacypolicy'" target="_blank">Privacy Policy</a> 
+                                        &amp; <br>
+                                        <a [href]="'/terms-of-use'" target="_blank">Terms of use</a> 
+                                        &amp; *Disclaimer
+                                    </p>
+                                </div>
+    
+                                <div>
+                                    <label>
+                                        <img src="https://squarebweb-documents.s3.ap-south-1.amazonaws.com/Webiste/web-react/SquareWebImages/whatsapp_icon.svg" 
+                                        alt="Get Updates on WhatsApp" title="Get Updates on WhatsApp" style="width:10px;">
+                                        Get Updates on WhatsApp
+                                    </label>
+                                    <!-- <div class="form-check form-switch">
+                                        <label>
+                                      <input class="form-check-input" type="checkbox" role="switch"  id="flexSwitchCheckChecked"
+                                      style="font-size:10px; font-weight:800;" [(ngModel)]="isChecked"/>
+                                     Agree to terms and conditions.
+                                    </label>
+                                    </div> -->
+                                  </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div id="viewmoreinsuranceproducts" class="modal fade" role="dialog" style="background: #008eff63;">
+    <div class="modal-dialog" style="width:100%; max-width: 900px;margin: 100px auto 30px;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_body main_body_diff main_card_height_scrollddddd">
+                            <div class="all_card_de">
+                                <div class="main_card">
+                                    <div class="main_card_body"
+                                        (click)="RedirectToWEbs('https://www.squareinsurance.in/health-insurance')">
+                                        <img src="assets/image/product_icon/health.svg" alt="health">
+                                        <div class="count_box">Health<br>Insurance</div>
+                                    </div>
+                                </div>
+                                <div class="main_card">
+                                    <div class="main_card_body"
+                                        (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/bike-insurance')">
+                                        <img src="assets/image/product_icon/bike.svg" alt="bike">
+                                        <div class="count_box">Bike<br>Insurance</div>
+                                    </div>
+                                </div>
+                                <div class="main_card">
+                                    <div class="main_card_body"
+                                        (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/car-insurance')">
+                                        <img src="assets/image/product_icon/car.svg" alt="car">
+                                        <div class="count_box">Car<br> Insurance</div>
+                                    </div>
+                                </div>
+                                <div class="main_card">
+                                    <div class="main_card_body"
+                                        (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/commercial-vehicle-insurance/passenger-carrying')">
+                                        <img src="assets/image/product_icon/pcv.svg" alt="pcv">
+                                        <div class="count_box">PCV <br>Insurance</div>
+                                    </div>
+                                </div>
+                                <div class="main_card">
+                                    <div class="main_card_body"
+                                        (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/commercial-vehicle-insurance/goods-carrying')">
+                                        <img src="assets/image/product_icon/gcv.svg" alt="gcv">
+                                        <div class="count_box">GCV <br>Insurance</div>
+                                    </div>
+                                </div>
+                                <div class="main_card">
+                                    <div class="main_card_body"
+                                        (click)="RedirectToWEbs('https://www.squareinsurance.in/travel-insurance')">
+                                        <img src="assets/image/product_icon/travel.svg" alt="travel">
+                                        <div class="count_box">Travel <br>Insurance</div>
+                                    </div>
+                                </div>
+                                <div class="main_card">
+                                    <div class="main_card_body" *ngIf="Life_Training_Status == 1"
+                                        (click)="RedirectToWEbs('https://www.squareinsurance.in/life-insurance')">
+                                        <img src="assets/image/product_icon/life.svg" alt="life">
+                                        <div class="count_box">Life<br> Insurance</div>
+                                    </div>
+                                    <div class="main_card_body" *ngIf="Life_Training_Status == 0"
+                                        (click)="ViewDashboardPoupup()">
+                                        <img src="assets/image/product_icon/life.svg" alt="life">
+                                        <div class="count_box">Life<br> Insurance</div>
+                                    </div>
+                                </div>
+                                <div class="main_card">
+                                    <div class="main_card_body"
+                                        (click)="RedirectToWEbs('https://www.squareinsurance.in/health-insurance/personal-accident-insurance')" >
+                                        <img src="assets/image/product_icon/pa.svg" alt="pa">
+                                        <div class="count_box">Personal Accident Insurance</div>
+                                    </div>
+                                </div>
+
+                                <div class="main_card">
+                                    <div class="main_card_body"
+                                        (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/commercial-vehicle-insurance/miscellaneous-insurance')">
+                                        <img src="assets/image/product_icon/miscd.svg" alt="miscd">
+                                        <div class="count_box">MISC-D Insurance</div>
+                                    </div>
+                                </div>
+
+                                <div class="main_card">
+                                    <div class="main_card_body"
+                                        (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/bike-insurance/third-party-insurance')">
+                                        <img src="assets/image/product_icon/third-party-bike-insurance.svg" alt="bike">
+                                        <div class="count_box">Third Party Bike Insurance</div>
+                                    </div>
+                                </div>
+
+                                <div class="main_card">
+                                    <div class="main_card_body"
+                                        (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/car-insurance/third-party-insurance')">
+                                        <img src="assets/image/product_icon/car.svg" alt="car">
+                                        <div class="count_box">Third Party Pvt Car Insurance</div>
+                                    </div>
+                                </div>
+                                <div class="main_card">
+                                    <div class="main_card_body"
+                                        (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/commercial-vehicle-insurance/passenger-carrying/third-party-insurance')">
+                                        <img src="assets/image/product_icon/third-party-pcv-insurance.svg" alt="pcv">
+                                        <div class="count_box">Third Party PCV Insurance</div>
+                                    </div>
+                                </div>
+                                <div class="main_card">
+                                    <div class="main_card_body"
+                                        (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/commercial-vehicle-insurance/goods-carrying/third-party-insurance')">
+                                        <img src="assets/image/product_icon/third-party-gcv-insurance.svg" alt="gcv">
+                                        <div class="count_box">Third Party GCV Insurance</div>
+                                    </div>
+                                </div>
+                                <div class="main_card">
+                                    <div class="main_card_body"
+                                        (click)="RedirectToWEbs('https://www.squareinsurance.in/motor-insurance/commercial-vehicle-insurance/miscellaneous-insurance/third-party-insurance')">
+                                        <img src="assets/image/product_icon/third-party-miscd-insurance.svg"
+                                            alt="miscd">
+                                        <div class="count_box">Third Party MISC-D Insurance</div>
+                                    </div>
+                                </div>
+
+                                <div class="main_card">
+                                    <div class="main_card_body"
+                                        (click)="RedirectToWEbs('https://www.squareinsurance.in/marine-insurance')">
+                                        <img src="assets/image/product_icon/home_marine_icon.svg"
+                                            alt="miscd">
+                                        <div class="count_box">Marine Insurance</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal event" id="EventMsg" #EventMsg tabindex="-1" role="dialog" aria-labelledby="EventMsgModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="width:650px;">
+        <!-- <div class="modal-header"  style="padding-bottom: 0px;">
+          <h5 class="modal-title" id="EventMsgModal" style="color: #10498a; font-size: 20px; font-weight: 600;">Event Detail</h5>
+          <button type="button" class="close" id="close_pop" data-dismiss="modal" aria-label="Close" style="position: relative; top: -50px; right: -20px;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div> -->
+        <div class="modal-body">
+            <button type="button" class="close" id="close_pop" data-dismiss="modal" aria-label="Close" style="position: relative; top: -20px; right: -20px;">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            <h4> This link will be available <span>30 minutes before</span> the meeting.</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+

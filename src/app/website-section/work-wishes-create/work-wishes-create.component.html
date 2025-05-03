@@ -1,0 +1,276 @@
+<section class="inner_page_css fire_form_page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header d_flex flex_Equal">
+
+                        <div class="header_title">{{title}}</div>
+
+                    </div>
+
+                    <div class="main_body main_card_height_scroll">
+
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                <section class="work-anniversary" id="capture">
+                                    <div class="work-anniversary-img">
+                                        <img src="{{bgTheme}}">
+                                        <!-- <img src="{{bgTheme}}"> -->
+                                    </div>
+                                    <div class="work-anniversary-details">
+                                        <div class="add_logo">
+                                            <!-- <img src="assets/image/square_logo_app.png"> -->
+                                            <img src="{{logo}}">
+                                        </div>
+                                        <div class="anniversary-view" *ngIf="title == 'Star Of The Month'">
+                                            <h1>{{title}}<span>{{ dynamicMonth }}</span></h1>
+                                        </div>
+                                        <div class="anniversary-view" *ngIf="title == 'Work Anniversary'">
+                                            <h1>HAPPY<span>{{ dynamicTitle }}</span></h1>
+                                        </div>
+                                        <div class="employee-view">
+                                            <div class="employee-data">
+                                                <div class="employee-photo">
+
+                                                    <img [src]="croppedImage" [style.border]="croppedImage ? '1px solid black' : 'none'" />
+                                                    <!-- <img [src]="imageSrc"> -->
+
+                                                </div>
+                                                <div class="employee-name">
+                                                    <h4>{{dynamicSalutation}} {{ dynamicName }}</h4>
+                                                    <!-- <h4>Mrs. Leela abc demo</h4> -->
+                                                </div>
+                                                <div class="employee-name" *ngIf="title == 'Star Of The Month'">
+                                                    <h4>{{dynamicSalutation}} {{ dynamicName }} <br>
+                                                        <span>({{dynamicVartical}})</span>
+                                                    </h4>
+                                                    <!-- <h4>Mrs. Leela abc demo</h4> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="year-count" *ngIf="title == 'Work Anniversary'">
+                                            <h2>{{dynamicTagLine}}</h2>
+                                            <!-- <h2>Wonderful <span>2</span> Years</h2> -->
+                                        </div>
+                                        <div class="loc-work">
+                                            <ul>
+                                                <li *ngFor="let row of footerData">
+                                                    <i *ngIf="row.key_name == 'url'" class="fa fa-globe"
+                                                        aria-hidden="true"></i>
+                                                    <i *ngIf="row.key_name == 'mail'" class="fa fa-envelope"
+                                                        aria-hidden="true"></i>
+                                                    <i *ngIf="row.key_name == 'Number'" class="fa fa-phone"
+                                                        aria-hidden="true"></i>
+                                                    {{row.key_value}}
+                                                </li>
+                                            </ul>
+                                            <!--<ul  *ngIf="footerData?.length == 0">
+                                                
+                                                   <li><i class="fa fa-globe" aria-hidden="true"></i>www.squareinsurance.in</li>
+                                                    <li><i class="fa fa-envelope" aria-hidden="true"></i>info.squareinsurance.in</li>
+                                                    <li><i class="fa fa-phone" aria-hidden="true"></i>18001205430</li> 
+                                                </ul> -->
+                                        </div>
+                                    </div>
+                                </section>
+
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="row mt-2" style="margin-top: 15px;">
+                                    <div class="col-md-12">
+
+                                        <form [formGroup]="WishForm">
+                                       
+                                            <div class="row">
+
+
+                                                <div class="col-sm-6">
+                                                    <label for="lob">Event</label>
+                                                    <ng-multiselect-dropdown class="form-control"
+                                                        placeholder="Select Event" [data]="eventData"
+                                                        formControlName="Event"
+                                                        [(ngModel)]="selectedEvent"
+                                                        [settings]="dropdownSettingsingleselect"
+                                                        (onSelect)="getBackgroundTheme($event,0)">
+                                                    </ng-multiselect-dropdown>
+                                                </div>
+
+
+                                                <div class="col-sm-6">
+                                                    <label for="lob">Company</label>
+                                                    <ng-multiselect-dropdown class="form-control"
+                                                        placeholder="Select Company" [data]="companyNameData"
+                                                        formControlName="Company"
+                                                        [settings]="dropdownSettingsingleselect"
+                                                        (onSelect)="UpdateTypeValue($event)"
+                                                        [(ngModel)]="CompanySelected"> </ng-multiselect-dropdown>
+
+                                                </div>
+
+                                                <div class="col-md-6" *ngIf="title == 'Star Of The Month'">
+                                                    <label for="type">Departments</label>
+                                                    <ng-multiselect-dropdown class="form-control"
+                                                    formControlName="Departments"
+                                                        placeholder="Select Department" [data]="DepartmentData"
+                                                        [settings]="dropdownSettingsingleselect"
+                                                        (onSelect)="UpdateDepartment($event)">
+                                                    </ng-multiselect-dropdown>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="">Salutation</label>
+                                                    <ng-multiselect-dropdown class="form-control"   formControlName="Salutation"
+                                                        placeholder="Select Salutation" [data]="SalutationData"
+                                                        [settings]="dropdownSettingsingleselect"
+                                                        (onSelect)="UpdateSalutation($event)">
+                                                    </ng-multiselect-dropdown>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="">Employee Name</label>
+                                                    <ng-multiselect-dropdown class="form-control"   formControlName="EmployeeName"
+                                                        placeholder="Select Name" [data]="empData"
+                                                        [settings]="dropdownSettingsingleselect"
+                                                        (onSelect)="UpdateEmployee($event)"> </ng-multiselect-dropdown>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="input_group"> 
+                                                        <label for="name">Profile Image</label>
+                                                        <input type="file"   formControlName="Profile" (change)="fileChangeEvent($event)" id="pro_img"
+                                                            class="form-control">
+
+                                                            <image-cropper [ngStyle]="{width: '300px'}"
+                                                            [imageChangedEvent]="imageChangedEvent"
+                                                            [maintainAspectRatio]="true"
+                                                            format="png"
+                                                            (imageCropped)="imageCropped($event)"
+                                                            (imageLoaded)="imageLoaded()"
+                                                            (cropperReady)="cropperReady($event)"
+                                                            (loadImageFailed)="loadImageFailed()"
+                                                            [roundCropper]="true"
+                                                        ></image-cropper>
+                                                        
+                                                      
+
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6" *ngIf="title == 'Work Anniversary'">
+                                                    <label for="type">Title</label>
+                                                    <!-- <input type="text" id="title" class="form-control"> -->
+                                                    <input type="text" name="title" [(ngModel)]="titleValue" formControlName="Title"
+                                                        class="form-control" (ngModelChange)="onTitleChange()">
+
+                                                </div>
+                                                <div class="col-md-6" *ngIf="title == 'Work Anniversary'">
+                                                    <label for="">Tag Line</label>
+                                                    <input type="text" id="tagline" name="tagline" [(ngModel)]="tagLine" formControlName="Tagline"
+                                                        class="form-control" (ngModelChange)="onTagLineChange()"
+                                                        class="form-control">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row" *ngIf="title == 'Star Of The Month'">
+                                                <div class="col-md-6 d_none">
+                                                    <label for="">Description</label>
+                                                    <input type="text" id="" name="empName" [(ngModel)]="EmpName" formControlName="Description"
+                                                        class="form-control" (ngModelChange)="onDescChange()"
+                                                        class="form-control">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="month">Month</label>
+                                                    <ng-multiselect-dropdown class="form-control" formControlName="Month"
+                                                        placeholder="Select Month" [data]="monthData"
+                                                        [settings]="dropdownSettingsingleselect"
+                                                        (onSelect)="UpdateMonth($event)"> </ng-multiselect-dropdown>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <h3>Choose Background Theme</h3>
+                                <div class="row">
+                                    <div class="col-md-2" *ngFor="let row of backgroundTheme">
+                                        <img class="demo cursor" src="{{row.key_value}}" style="width:100%"
+                                            (click)="ThemeChange($event)" alt="The Woods">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+
+
+                    </div>
+                    <div class="main_footer">
+
+                        <button  *ngIf="LoginDepartment == '7'"  type="button" class="Save_click" data-toggle="modal" data-target="#modelId">Add
+                            Background</button>&nbsp;&nbsp;&nbsp;
+                        <button type="button" (click)="screenshot()"
+                            class="Save_click">Download</button>&nbsp;&nbsp;&nbsp;
+                      
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Modal -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Background Theme</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-blog-top" [formGroup]="BackgroundAddForm" (ngSubmit)="Submit()">
+
+
+                    <div class="row"  >
+
+                        <div class="col-sm-5">
+                            <label for="lob">File</label>
+                            <input type="file" name="File" (change)="UploadDocs($event,'file')" formControlName="File"
+                                class="form-control">
+                        </div>
+
+
+                        <div class="col-sm-2">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-info form-control" style="font-size: small;">Add
+                            </button>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

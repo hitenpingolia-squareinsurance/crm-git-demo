@@ -1,0 +1,13 @@
+.close_btn{
+    float:right;
+    font-size: 15px;
+    position: relative;
+    top: -10px;
+}
+.answer {
+    position: relative;
+    top: -30px;
+}
+.formarray {
+    margin-top: 15px;
+}

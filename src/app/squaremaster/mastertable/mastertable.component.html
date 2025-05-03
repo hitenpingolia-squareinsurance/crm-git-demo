@@ -1,0 +1,360 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box">
+          <div class="box-header">
+            <div class="row">
+              <div class="col-md-4">
+                <h3 class="box-title">Square Master</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="box-body">
+            <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+
+              <div class="row" style="margin-top: 2%;">
+
+                <div><input type="hidden" formControlName="SearchValue" name="SearchValue" class="form-control"
+                    placeholder="Search"></div>
+
+                <select formControlName="vechileType" class="form-control">
+                  <option value="">Select Vehicle Type </option>
+                  <option *ngFor="let r of vehicletype; let i=index;" value="{{r.Id}}">{{r.Name}}
+                  </option>
+                </select>
+                <!-- <div class="col-sm-2">
+                <ng-multiselect-dropdown class="form-control" name="type" placeholder="Select Type" [data]="vehicletype"
+                  formControlName="vechileType" [settings]="dropdownMultiSelectSettingsType">
+                </ng-multiselect-dropdown>    </div> -->
+
+                <div><input type="hidden" formControlName="type" name="type" class="form-control" placeholder="Type">
+                </div>
+
+                <div class="col-sm-2">
+
+                  <ng-multiselect-dropdown class="form-control" name="make" placeholder="Select Make"
+                    [data]="SquareMasterMakeData" formControlName="make" [settings]="dropdownMultiSelectSettingsType">
+                  </ng-multiselect-dropdown>
+
+                  <!-- <input type="text" formControlName="make" name="make" class="form-control"
+                    placeholder="Make"> -->
+
+                </div>
+
+                <div class="col-sm-2">
+
+                  <ng-multiselect-dropdown class="form-control" name="modal" placeholder="Select Modal"
+                    [data]="SquareMasterModalData" formControlName="modal" [settings]="dropdownMultiSelectSettingsType">
+                  </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-2">
+                  <ng-multiselect-dropdown class="form-control" name="variant" placeholder="Select Variant"
+                    [data]="SquareMasterVariantData" formControlName="variant"
+                    [settings]="dropdownMultiSelectSettingsType">
+                  </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-2">
+                  <ng-multiselect-dropdown class="form-control" name="cubic_capicity" placeholder="Select CC"
+                    [data]="SquareMasterCCData" formControlName="cubic_capicity"
+                    [settings]="dropdownMultiSelectSettingsType">
+                  </ng-multiselect-dropdown>
+
+                </div>
+
+                <div class="col-sm-2">
+                  <ng-multiselect-dropdown class="form-control" name="fule_type" placeholder="Select Fuel Type"
+                    [data]="SquareMasterFuelTypeData" formControlName="fule_type"
+                    [settings]="dropdownMultiSelectSettingsType">
+                  </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-2" style="text-align: right;">
+                  <input type="submit" class="btn btn-info" value="Search"> &nbsp;&nbsp;
+                  <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                    value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                </div>
+
+              </div>
+              <div class="row" style="margin-top: 2%;"> </div>
+            </form>
+
+
+            <div class="mydiv">
+              <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Make</th>
+                    <th>Type</th>
+                    <th>Modal</th>
+                    <th>Variant</th>
+                    <th>Seating_Capicity</th>
+                    <th>Cubic_Capicity</th>
+                    <th>Fuel_Type</th>
+                    <th>Veh_Type_Name</th>
+                    <th>New India</th>
+                    <th>National</th>
+                    <th>chola</th>
+                    <!-- <th>universal</th> -->
+                    <th>universalMaster</th>
+                    <th>kotak</th>
+                    <th>digit</th>
+                    <th>acko</th>
+                    <th>reliance</th>
+                    <th>hdfc</th>
+                    <th>bajaj</th>
+                    <!-- <th>bharti</th> -->
+                    <th>tata</th>
+                    <th>shriram</th>
+                    <!-- <th>shriram_pcv</th>
+                    <th>shriram_gcv</th>
+                    <th>reliance_pcv</th>
+                    <th>tata_pcv</th>
+                    <th>digit_pcv</th> -->
+                    <th>icici</th>
+                    <th>iffco</th>
+                    <th>sbi</th>
+                    <th>oriental</th>
+                    <!-- <th>OrientalVcode</th> -->
+                    <th>royalSundaram</th>
+                    <th>future</th>
+                    <th>united</th>
+                    <th>magmaMaster</th>
+                    <th>raheja</th>
+                    <th>liberty</th>
+                    <th>status</th>
+                  </tr>
+
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr">
+                    <td>{{row.SrNo}}.</td>
+                    <td>{{row.make}}.</td>
+                    <td>
+                      <label class="label label-warning" *ngIf="row.type == 1">Two Wheeler</label>
+                      <label class="label label-info" *ngIf="row.type == 2">Private Car</label>
+
+                      <!-- {{row.type}} -->
+
+                    </td>
+                    <td>{{row.modal}}</td>
+                    <td>{{row.variant}}</td>
+                    <td>{{row.seating_capicity}}</td>
+                    <td>{{row.cubic_capacity}}</td>
+                    <td>{{row.fule_type}}</td>
+                    <td>{{row.Veh_Type_Name}}</td>
+                    <td><a
+                        (click)="ForApproval(row.new_india_Id,row.newindia_master,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_new_india,row.new_india)">{{row.new_india}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'newindia',1)"
+                        *ngIf="(row.available_new_india == '0' ||  row.available_new_india == '' ||  row.available_new_india == null) && row.new_india == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'newindia',0)"
+                        *ngIf="row.available_new_india == '1'">Unavailable</label>
+                    </td>
+
+                    <td><a
+                        (click)="ForApproval(row.national_Id,row.national_master,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_national,row.national)">{{row.national}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'national',1)"
+                        *ngIf="(row.available_national == '0' ||  row.available_national == '' ||  row.available_national == null) && row.national == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'national',0)"
+                        *ngIf="row.available_national == '1'">Unavailable</label>
+                    </td>
+                    <td><a
+                        (click)="ForApproval(row.cholamandalam_Id,row.cholamandalam_master,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_cholamandalam,row.cholamandalam)">{{row.cholamandalam}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'cholamandalam',1)"
+                        *ngIf="(row.available_cholamandalam == '0' ||  row.available_cholamandalam == '' ||  row.available_cholamandalam == null) && row.cholamandalam == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'cholamandalam',0)"
+                        *ngIf="row.available_cholamandalam == '1'">Unavailable</label>
+                    </td>
+
+                    <!-- <td><a (click)="ForApproval(row.id,row.universals,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id)">{{row.universal}}</a></td> -->
+                    <td><a
+                        (click)="ForApproval(row.universalMaster_Id,row.universalMasters,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_universalmaster,row.universalMaster)">{{row.universalMaster}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'universalMaster',1)"
+                        *ngIf="(row.available_universalmaster == '0' ||  row.available_universalmaster == '' ||  row.available_universalmaster == null) && row.universalMaster == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'universalMaster',0)"
+                        *ngIf="row.available_universalmaster == '1'">Unavailable</label>
+                    </td>
+
+                    <td><a
+                        (click)="ForApproval(row.kotak_Id,row.kotaks,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_kotakmaster,row.kotak)">{{row.kotak}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'kotakMaster',1)"
+                        *ngIf="(row.available_kotakmaster == '0' ||  row.available_kotakmaster == '' ||  row.available_kotakmaster == null) && row.kotak == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'kotakMaster',0)"
+                        *ngIf="row.available_kotakmaster == '1'">Unavailable</label>
+                    </td>
+                    <td><a
+                        (click)="ForApproval(row.digit_Id,row.digits,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_digit,row.digit)">{{row.digit}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'digit',1)"
+                        *ngIf="(row.available_digit == '0' ||  row.available_digit == '' ||  row.available_digit == null) && row.digit == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'digit',0)"
+                        *ngIf="row.available_digit == '1'">Unavailable</label>
+                    </td>
+                    <td><a
+                        (click)="ForApproval(row.acko_Id,row.ackos,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_acko,row.acko)">{{row.acko}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'acko',1)"
+                        *ngIf="(row.available_acko == '0' ||  row.available_acko == '' ||  row.available_acko == null) && row.acko == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'acko',0)"
+                        *ngIf="row.available_acko == '1'">Unavailable</label>
+                    </td>
+                    <td><a
+                        (click)="ForApproval(row.reliance_Id,row.reliances,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_reliance,row.reliance)">{{row.reliance}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'reliance',1)"
+                        *ngIf="(row.available_reliance == '0' ||  row.available_reliance == '' ||  row.available_reliance == null) && row.reliance == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'reliance',0)"
+                        *ngIf="row.available_reliance == '1'">Unavailable</label>
+                    </td>
+                    <td><a
+                        (click)="ForApproval(row.hdfc_Id,row.hdfcs,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_hdfc,row.hdfc)">{{row.hdfc}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'hdfc',1)"
+                        *ngIf="(row.available_hdfc == '0' ||  row.available_hdfc == '' ||  row.available_hdfc == null) && row.hdfc == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'hdfc',0)"
+                        *ngIf="row.available_hdfc == '1'">Unavailable</label>
+                    </td>
+                    <td><a
+                        (click)="ForApproval(row.bajaj_Id,row.bajajs,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_bajaj,row.bajaj)">{{row.bajaj}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'bajaj',1)"
+                        *ngIf="(row.available_bajaj == '0' ||  row.available_bajaj == '' ||  row.available_bajaj == null) && row.bajaj == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'bajaj',0)"
+                        *ngIf="row.available_bajaj == '1'">Unavailable</label>
+                    </td>
+                    <!-- <td><a
+                        (click)="ForApproval(row.bharti_Id,row.bhartis,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_bharti,row.bharti)">{{row.bharti}}</a><br>
+                        <label class="label label-danger"  (click)="Availibilty(row.id,'bharti',1)" *ngIf="(row.available_bharti == '0' ||  row.available_bharti == '' ||  row.available_bharti == null) && row.bharti == 0" >Not Available</label>
+                        <label class="label label-success" (click)="Availibilty(row.id,'bharti',0)" *ngIf="row.available_bharti == '1'" >Unavailable</label>
+                    </td> -->
+                    <td><a
+                        (click)="ForApproval(row.tata_Id,row.tatas,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_tata,row.tata)">{{row.tata}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'tata',1)"
+                        *ngIf="(row.available_tata == '0' ||  row.available_tata == '' ||  row.available_tata == null) && row.tata == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'tata',0)"
+                        *ngIf="row.available_tata == '1'">Unavailable</label>
+                    </td>
+                    <td><a
+                        (click)="ForApproval(row.shriram_Id,row.shrirams,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_shriram,row.shriram)">{{row.shriram}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'shriram',1)"
+                        *ngIf="(row.available_shriram == '0' ||  row.available_shriram == '' ||  row.available_shriram == null) && row.shriram == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'shriram',0)"
+                        *ngIf="row.available_shriram == '1'">Unavailable</label>
+                    </td>
+                    <!-- <td><a (click)="ForApproval(row.id,row.shriram_pcvs,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id)">{{row.shriram_pcv}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.shriram_gcvs,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id)">{{row.shriram_gcv}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.reliance_pcvs,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id)">{{row.reliance_pcv}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.tata_pcvs,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id)">{{row.tata_pcv}}</a></td>
+                    <td><a (click)="ForApproval(row.id,row.digit_pcvs,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id)">{{row.digit_pcv}}</a></td> -->
+                    <td><a
+                        (click)="ForApproval(row.icici_Id,row.icicis,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_icici,row.icici)">{{row.icici}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'icici',1)"
+                        *ngIf="(row.available_icici == '0' ||  row.available_icici == '' ||  row.available_icici == null) && row.icici == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'icici',0)"
+                        *ngIf="row.available_icici == '1'">Unavailable</label>
+                    </td>
+                    <td><a
+                        (click)="ForApproval(row.iffco_Id,row.iffcos,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_iffco,row.iffco)">{{row.iffco}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'iffco',1)"
+                        *ngIf="(row.available_iffco == '0' ||  row.available_iffco == '' ||  row.available_iffco == null) && row.iffco == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'iffco',0)"
+                        *ngIf="row.available_iffco == '1'">Unavailable</label>
+                    </td>
+                    <td><a
+                        (click)="ForApproval(row.sbi_Id,row.sbis,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_sbi,row.sbi)">{{row.sbi}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'sbi',1)"
+                        *ngIf="(row.available_sbi == '0' ||  row.available_sbi == '' ||  row.available_sbi == null) && row.sbi == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'sbi',0)"
+                        *ngIf="row.available_sbi == '1'">Unavailable</label>
+                    </td>
+                    <td><a
+                        (click)="ForApproval(row.oriental_Id,row.orientals,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_oriental,row.oriental)">{{row.oriental}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'oriental',1)"
+                        *ngIf="(row.available_oriental == '0' ||  row.available_oriental == '' ||  row.available_oriental == null) && row.oriental == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'oriental',0)"
+                        *ngIf="row.available_oriental == '1'">Unavailable</label>
+                    </td>
+
+                    <!-- <td><a (click)="ForApproval(row.id,row.orientalvcodes,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id)">{{row.OrientalVcode}}</a></td> -->
+                    <td><a
+                        (click)="ForApproval(row.royalSundaram_Id,row.royalsundarams,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_royalsundaram,row.royalSundaram)">{{row.royalSundaram}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'royalSundaram',1)"
+                        *ngIf="(row.available_royalsundaram == '0' ||  row.available_royalsundaram == '' ||  row.available_royalsundaram == null) && row.royalSundaram == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'royalSundaram',0)"
+                        *ngIf="row.available_royalsundaram == '1'">Unavailable</label>
+                    </td>
+                    <td><a
+                        (click)="ForApproval(row.future_Id,row.futures,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_future,row.future)">{{row.future}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'future',1)"
+                        *ngIf="(row.available_future == '0' ||  row.available_future == '' ||  row.available_future == null) && row.future == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'future',0)"
+                        *ngIf="row.available_future == '1'">Unavailable</label>
+                    </td>
+                    <td><a
+                        (click)="ForApproval(row.united_Id,row.uniteds,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_united,row.united)">{{row.united}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'united',1)"
+                        *ngIf="(row.available_united == '0' ||  row.available_united == '' ||  row.available_united == null) && row.united == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'united',0)"
+                        *ngIf="row.available_united == '1'">Unavailable</label>
+                    </td>
+                    <td><a
+                        (click)="ForApproval(row.magmaMaster_Id,row.magmaMasters,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_magmaMaster,row.magmaMaster)">{{row.magmaMaster}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'magmaMaster',1)"
+                        *ngIf="(row.available_magmaMaster == '0' ||  row.available_magmaMaster == '' ||  row.available_magmaMaster == null) && row.magmaMaster == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'magmaMaster',0)"
+                        *ngIf="row.available_magmaMaster == '1'">Unavailable</label>
+                    </td>
+                    <td><a
+                        (click)="ForApproval(row.raheja_Id,row.rahejas,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_raheja,row.raheja)">{{row.raheja}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'raheja',1)"
+                        *ngIf="(row.available_raheja == '0' ||  row.available_raheja == '' ||  row.available_raheja == null) && row.raheja == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'raheja',0)"
+                        *ngIf="row.available_raheja == '1'">Unavailable</label>
+                    </td>
+                    <td><a
+                        (click)="ForApproval(row.liberty_id,row.liberty_name,row.type,row.make,row.modal,row.variant,row.cubic_capacity,row.seating_capicity,row.fule_type,row.id,row.available_liberty,row.liberty)">{{row.liberty}}</a><br>
+                      <label class="label label-danger" (click)="Availibilty(row.id,'liberty',1)"
+                        *ngIf="(row.available_liberty == '0' ||  row.available_liberty == '' ||  row.available_liberty == null) && row.raheja == 0">Not
+                        Available</label>
+                      <label class="label label-success" (click)="Availibilty(row.id,'liberty',0)"
+                        *ngIf="row.available_liberty == '1'">Unavailable</label>
+                    </td>
+                    <td>{{row.status}}</td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="14" align="center">No data available!</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

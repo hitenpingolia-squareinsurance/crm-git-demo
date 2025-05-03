@@ -1,0 +1,48 @@
+<table class="table table-bordered table-hover" style="margin-top: 15px;">
+  <tr class="ValueTD">
+      <td colspan="5" align="center">
+          <h4 class="modal-title">View Details
+              <button type="button" (click)="CloseModel()" class="btn btn-box-tool" style="float: right;"><i
+                      class="fa fa-close" style="font-size:17px"></i></button>
+          </h4>
+          <div class="box-tools pull-right btn-right-side">
+
+          </div>
+      </td>
+  </tr>
+  <div class="mydiv">
+    <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+      class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>User Name</th>
+          <th>Meeting Id</th>
+          <th>Total Time</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody *ngIf="dataAr?.length != 0">
+        <tr *ngFor="let row of dataAr">
+          <td>{{row.SrNo}}.</td>
+          <td>{{row.name}}- {{row.logId}}</td>
+          <td>{{row.meetingId}}</td>
+          <td>{{row.diffrence}}</td>
+          <td>{{row.date}}</td>
+          <td>
+               <label class="label label-info"
+              (click)="viewTime(row.Id,row.meetingId,row.loginId)">View Time</label>&nbsp;
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="dataAr?.length == 0">
+        <tr>
+          <td colspan="14" align="center">No data available!</td>
+        </tr>
+      <tbody>
+    </table>
+  </div>
+
+</table>

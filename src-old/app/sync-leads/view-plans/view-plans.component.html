@@ -1,0 +1,265 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title">
+                <div>Plans
+                    <button *ngIf="urlSegment == 'plans'" class="btn btn-primary" style="float:right; padding: 3px;" data-toggle="modal" data-target="#AddModel" (click)="formReset()">Add&nbsp;<i class="fa fa-plus" aria-hidden="true"></i></button>
+                </div>
+
+              </div>
+            </div>
+            <div class="main_body main_card_height_scroll_withoutfooter">
+            
+            
+  
+              <hr>
+           
+               
+              <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                <div class="custom_table tables_layout_design">
+                  <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                    <thead>
+                      <tr>
+                        <th></th>
+                      </tr>
+                    </thead>
+                  </table> 
+
+                  <!-- ======= Refer Table  =========-->
+                 <ul class="responsive-table">
+                    <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+                  
+                      <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">{{urlSegment == 'plans' ?  row.Sno  : urlSegment == 'agent_plans' ? row.sno : ''}}</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <strong class="fs_18 text-bold">{{urlSegment == 'plans' ?  row.PlanName  : urlSegment == 'agent_plans' ? row.planName : ''}}</strong>
+                            </div>
+                          </div>
+                        </div>
+
+
+                            <div class="agents_data agents_data3">
+                                <div class="agent_name_mobile">
+                                  <div class="agent_data">
+                                    <button type="button"  class="btn btn-primary"   (click)="ViewImage(urlSegment == 'plans' ?  row.background_image : urlSegment == 'agent_plans' ? row.backgroundImage : '')">
+                                      <strong style="color: #fff;">View</strong>
+                                   </button>
+                                  </div>
+                                  <div class="agent_data" *ngIf="urlSegment == 'plans'">
+                                    <button type="button"  class="btn" 
+                                      [ngClass]="{
+                                        'btn-warning': row.status == 0,
+                                        'btn-success': row.status == 1
+                                      }" 
+                                      (click)="ChangeStatus(row.id , 'ChangeStatus')">
+                                      <strong> {{ row.status == 0 ? 'Inactive' : 'Active' }}</strong>  
+                                    </button>
+                                  </div>
+                                  
+                                </div>
+                             </div>
+                        
+                      </div>
+                  
+                      <div class="last_row_div mt10">
+                        <div class="d_flex custon-234">
+                          <div class="label_chips finance_lob" style="width: auto;">
+                            <span>No.Of Leads - {{urlSegment == 'plans' ?  row.Leads : urlSegment == 'agent_plans' ? row.leads : ''}}</span>
+                          </div>
+                  
+                          <div class="label_chips non_motor_lob" style="width: auto;">
+                            <span>Amount - {{urlSegment == 'plans' ? row.Amount : urlSegment == 'agent_plans' ? row.amount : ''}}</span>&nbsp;&nbsp;
+                          </div>
+<!-- 
+                          <div class="label_chips motor_lob" style="width: auto;">
+                            <span>{{row.Service_Location}}</span>&nbsp;&nbsp;
+                          </div> -->
+                  
+                        </div>
+                      </div>
+
+                      <div class="last_row">
+                        <div class="d_flex effective_date">
+                           Description : {{urlSegment == 'plans' ?  row.PlanDescription : urlSegment == 'agent_plans' ? row.planDescription : ''}}
+                        </div>
+
+
+                        <div class="col_2 action_btn d_flex flex_Middel box-bottom" *ngIf="urlSegment == 'plans'">
+                            <a (click)="ChangeStatus(row.id , 'Edit')" class="btn-secondary" data-toggle="modal" data-target="#AddModel">Edit&nbsp;<i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        </div>
+
+                      </div>
+                  
+                    </li>
+                  </ul>
+                                  <!--======= Refer Table END ========= -->
+  
+                <div class="row" *ngIf="dataAr?.length == 0">
+                    <div class="col-md-12">
+                      <div class="no_data_found">
+                        <span><img src="assets/image/no_data_banner.jpg"></span>
+                        <small>No data available !</small>
+                      </div>
+                    </div>
+                  </div>
+               </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+  <div class="modal fade" id="AddModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document" style="width: 800px;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{this.UpdateId ? 'Edit Plan' : 'Add Plan'}}</h5>
+          <button type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="false">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         
+            <form class="form" [formGroup]="AddPlanForm" (ngSubmit)="AddPlan()">
+
+
+                    <div class="row clearfix" style="margin-bottom: 10px;">
+
+
+                        <div class="col-md-4">
+                            <label for="PlanName">Plan Name</label>
+                            <input class="form-control" type="text" placeholder="Enter Plan"
+                                formControlName="PlanName">
+                            <div *ngIf="isSubmitted && formControls.PlanName.errors " class="ValidationError">
+                                <div *ngIf="formControls.PlanName.errors.required">Please Enter Plan!
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-md-4">
+                            <label for="Leads">Number of leads</label>
+                            <input class="form-control" type="number" placeholder="Enter No. Of Leads"
+                                formControlName="Leads">
+                            <div *ngIf="isSubmitted && formControls.Leads.errors " class="ValidationError">
+                                <div *ngIf="formControls.Leads.errors.required">Please Enter No. Of Leads!
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="col-md-4">
+                            <label for="Amount">Amount</label>
+                            <input class="form-control" type="number" placeholder="Enter Amount"
+                                formControlName="Amount">
+                            <div *ngIf="isSubmitted && formControls.Amount.errors " class="ValidationError">
+                                <div *ngIf="formControls.Amount.errors.required">Please Enter Amount!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix" style="margin-bottom: 10px;">
+
+
+                        <!-- <div class="col-md-4">
+                            <label for="PlanStatus">Status</label>
+                            <ng-multiselect-dropdown class="form-control" placeholder="--Select--"
+                                [data]="PlanStatus" formControlName="PlanStatus"
+                                [settings]="dropdownSettingsType">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && formControls.PlanStatus.errors " class="ValidationError">
+                                <div *ngIf="formControls.PlanStatus.errors.required">Please Select Status!
+                                </div>
+                            </div>
+                        </div> -->
+
+
+                        <div class="col-md-4">
+                            <label for="Background_image">Background image</label>
+                            <input class="form-control" type="file" formControlName="Background_image" (change)="onFileChange($event)">
+                            <div *ngIf="isSubmitted &&  this.UpdateId == '' &&  formControls.Background_image.errors "
+                                class="ValidationError">
+                                <div *ngIf="formControls.Background_image.errors.required">Please Select
+                                    Background Image!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" >
+                            <label for="SelectEmployee">Select Employee</label>
+                            <ng-multiselect-dropdown class="form-control" placeholder="--Select--"
+                                [data]="employeeData" formControlName="SelectEmployee"
+                                [settings]="dropdownSettingsMultiselect" (click)="searchAgent()" [(ngModel)]="Employee_selected">
+                            </ng-multiselect-dropdown>
+                          
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="SelectPartner">Select Partner</label>
+                            <ng-multiselect-dropdown class="form-control" placeholder="--Select--"
+                                [data]="agentData" formControlName="SelectPartner"
+                                [settings]="dropdownSettingsMultiselect" [(ngModel)]="Partners">
+                            </ng-multiselect-dropdown>
+                        </div>
+
+                    </div>
+
+                    <div class="row clearfix" style="margin-bottom: 10px;">
+
+                        <!-- <div class="col-md-4">
+                            <label for="Partner">Partner</label>
+                            <ng-multiselect-dropdown class="form-control" placeholder="--Select--"
+                                [data]="PartnerStatus" formControlName="Partner"
+                                [settings]="dropdownSettingsType">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && formControls.Partner.errors " class="ValidationError">
+                                <div *ngIf="formControls.Partner.errors.required">Please Select Partner!
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="col-md-4">
+                            <label for="PlanDescription">Plan Description</label>
+                            <textarea class="form-control" type="text" placeholder="Enter Description"
+                                formControlName="PlanDescription"></textarea>
+                            <div *ngIf="isSubmitted && formControls.PlanDescription.errors "
+                                class="ValidationError">
+                                <div *ngIf="formControls.PlanDescription.errors.required">Please Enter Plan
+                                    Description!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="CloseModel" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit"  class="btn btn-success">Submit</button>
+                      </div>
+
+
+            </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>

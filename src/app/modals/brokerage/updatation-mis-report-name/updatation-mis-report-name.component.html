@@ -1,0 +1,69 @@
+<div class="">
+    <h2 class="">
+    Prepare Customize Updation Report
+    </h2>
+    
+    </div>
+    
+    
+    <div class="">
+    
+    <div class="form-group">
+        <div class="checkbox-inline">
+            <label *ngFor="let item of columnAr;" class="checkbox">
+                <input type="checkbox" [(ngModel)]="item.isChecked" (change)="changeSelection()"/> {{item.label}}
+                <span></span>
+            </label> 
+        </div>
+    </div>
+    </div>
+    
+    <div class="">
+        <button *ngIf="checkedIDs.length>0 && ReportBtn == 0" (click)="Export(1)" type="button" class="btn btn-primary mr-2">Export</button>
+        
+        <button *ngIf="ReportBtn == 1" (click)="Export(2)" type="button" class="btn btn-warning mr-2">Download</button> 
+        <button *ngIf="ReportBtn == 1" (click)="Export(3)" type="button" class="btn btn-info mr-2">Create Sample Report</button> 
+    </div>
+    
+     <!--<code>{{checkedIDs}}</code>-->
+     
+     
+     <!--<table class="table table-hover">
+        <thead>
+          <tr>
+            <th colspan="4">Sample reports</th>
+          </tr>
+        </thead>
+        <tbody> 
+         <tr *ngFor="let row of my_reports; let i=index;">
+            <td>{{i+1}}.</td>
+            <td><a (click)="createdExport(row.Id)" href="javascript:void;">{{row.Report_Name}}</a></td>
+            <td>{{row.Add_Stamp}}</td>
+            <td><a title="Delete" (click)="Is_Delete(row.Id)"><i class="fa fa-trash text-danger mr-5"></i></a></td>
+          </tr>
+          
+           <tr *ngIf="my_reports.length==0">
+            <td colspan="4">No data available</td>
+          </tr>
+          
+        </tbody>
+      </table>--> 
+     
+     <table class="table table-hover">
+        <thead>
+          <tr>
+            <th colspan="3">Sample reports</th>
+          </tr>
+        </thead>
+        <tbody>
+         <tr *ngFor="let row of recent_downloads; let i=index;">
+            <td>{{i+1}}.</td>
+            <td><a target="_blank" href="{{row.Report_Url}}">{{row.File_Name}}</a></td>
+            <td>{{row.Add_Stamp}}</td>
+            <td><a title="Delete" (click)="Is_Delete(row.Id)"><i class="fa fa-trash text-danger mr-5"></i></a></td>
+          </tr>
+          <tr *ngIf="recent_downloads.length==0">
+            <td colspan="4">No data available</td>
+          </tr>
+        </tbody>
+      </table>

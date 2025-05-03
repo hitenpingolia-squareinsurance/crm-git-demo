@@ -1,0 +1,122 @@
+<section class="custom-scrool" id="click-close">
+    <div class="">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <h4 class="header_title">Update Insurer Channel Form</h4>
+                <button type="button" (click)="CloseModel()" class="close closeModelButton"><i
+                        class="fa fa-close"></i></button>
+            </div>
+            <hr>
+            <div class="modal_body">
+                <div class="row">
+                    <div class="col-md-12">
+                       
+
+                        <form [formGroup]="AddFieldForm" (ngSubmit)="SubBtn()">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="category_list">
+                                        <label>Select Insurer Name</label>
+                                        <ng-multiselect-dropdown [settings]="dropdownSettingsmultiselect" class="form-control"
+                                            placeholder="--Select Company--" [data]="company" formControlName="company">
+                                        </ng-multiselect-dropdown>
+                                        <span *ngIf="isSubmitted && FC['company'].errors" class="form-text text-muted">
+                                            <span *ngIf="isSubmitted && FC['company'].errors['required']"
+                                                style="color:red;">This field is Required</span>
+                                        </span>
+                                    </div>
+                                </div>
+    
+                                <div class="col-sm-6">
+                                    <div class="category_list">
+                                        <label>Branch Address</label>
+                                        <input type="text" class="form-control" formControlName="branch"
+                                            placeholder="Branch Address">
+    
+                                        <span *ngIf="isSubmitted && FC['branch'].errors" class="form-text text-muted">
+                                            <span *ngIf="isSubmitted && FC['branch'].errors['required']"
+                                                style="color:red;">This field is Required</span>
+                                            <span *ngIf="isSubmitted && FC['branch'].errors['pattern']"
+                                                style="color:red;">Enter Valid Characters</span>
+                                        </span>
+                                    </div>
+                                </div>
+    
+                                <div class="col-sm-6">
+                                    <div class="category_list">
+                                        <label>Contact Person Name</label>
+                                        <input type="text" class="form-control" formControlName="contactPerson"
+                                            placeholder="Contact Person Name">
+    
+                                        <span *ngIf="isSubmitted && FC['contactPerson'].errors" class="form-text text-muted">
+                                            <span *ngIf="isSubmitted && FC['contactPerson'].errors['required']"
+                                                style="color:red;">This field is Required</span>
+                                            <span *ngIf="isSubmitted && FC['contactPerson'].errors['pattern']"
+                                                style="color:red;">Enter Valid Characters</span>
+                                        </span>
+                                    </div>
+                                </div>
+    
+    
+                                
+    
+                                <div class="col-sm-6">
+                                    <div class="category_list">
+                                        <label>Email</label>
+                                        <input type="text" class="form-control" formControlName="email"
+                                            placeholder="Email Id">
+    
+                                        <span *ngIf="isSubmitted && FC['email'].errors" class="form-text text-muted">
+                                            <span *ngIf="isSubmitted && FC['email'].errors['required']"
+                                                style="color:red;">This field is Required</span>
+                                            <span *ngIf="isSubmitted && FC['email'].errors['pattern']"
+                                                style="color:red;">Enter Valid Characters</span>
+                                        </span>
+                                    </div>
+                                </div>
+    
+                                <div class="col-sm-6">
+                                    <div class="category_list">
+                                        <label>Phone</label>
+                                        <input type="text" class="form-control" formControlName="phone"
+                                            placeholder="Phone number ">
+    
+                                        <span *ngIf="isSubmitted && FC['phone'].errors" class="form-text text-muted">
+                                            <span *ngIf="isSubmitted && FC['phone'].errors['required']"
+                                                style="color:red;">This field is Required</span>
+                                            <span *ngIf="isSubmitted && FC['phone'].errors['pattern']"
+                                                style="color:red;">Enter Valid Characters</span>
+                                        </span>
+                                    </div>
+                                </div>
+    
+                                <div class="col-sm-6">
+                                    <div class="category_list">
+                                        <label>Pay-in  and posting Criteria</label>
+                                        <ng-multiselect-dropdown [settings]="dropdownSettingsmultiselect" class="form-control"
+                                            placeholder="--Select Posting Criteria--" [data]="payin" formControlName="payin">
+                                        </ng-multiselect-dropdown>
+                                        <span *ngIf="isSubmitted && FC['payin'].errors" class="form-text text-muted">
+                                            <span *ngIf="isSubmitted && FC['payin'].errors['required']"
+                                                style="color:red;">This field is Required</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="float-end pull-right">
+                                        <button type="submit" class="btn btn_primary btn-success">Submit</button>
+                                        &nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+    
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

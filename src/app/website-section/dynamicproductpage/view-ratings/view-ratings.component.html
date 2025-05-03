@@ -1,0 +1,91 @@
+<p>dynamic-quote-view works!</p>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header">
+              <div class="row">
+                <div class="col-md-4">
+                  <h3 class="box-title">Website Ratings</h3>
+                </div>
+                <div class="col-md-6">&nbsp;</div>
+                <div class="col-md-2">
+                  <!-- <button class="btn btn-primary nextBtn pull-right" routerLink="WebsiteSection/products/add_dynamic_images"
+                    style="margin-right: 5px;"> Add Product Quotes </button> -->
+                    <button class="btn btn-primary nextBtn pull-right" routerLink="/WebsiteSection/products/add_ratings" 
+                    style="margin-right: 5px;">Add Ratings</button>
+                </div>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="mydiv">
+                <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+                <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                    class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>S.No</th>
+                      <th>Product</th>
+                      <th>Name</th>
+                      <th>Image</th>
+                      <th>Add Stamp</th>
+                      <th>Update Stamp</th>
+                      <th style="width:100px;">Action</th>
+                    </tr>
+                  </thead>
+
+                  <tbody *ngIf="dataAr?.length != 0">
+                    <tr *ngFor="let row of dataAr">
+                      <td>{{row.SrNo}}.</td>
+                      <td>{{row.product_type}}</td>
+                      <td>{{row.name}}</td>
+                      <td>
+                        <label class="label label-info">  <a style="color: white;" *ngIf="row.image != '' " href="{{row.image}}" target="_blank">
+                        View</a></label>
+                      </td>
+                      <td>{{row.add_stamp}}</td>
+                      <td>{{row.update_stamp}}</td>
+                      <td>
+                        <label class="label label-info"
+                        routerLink="/WebsiteSection/products/edit_ratings/{{row.Id}}">Edit</label>&nbsp;
+                        <!-- <label class="label label-danger"
+                          (click)="DeleteRequest(row.Id, row.delete_status)">Delete</label> -->
+                          
+                          <label class="label label-success" *ngIf="row.status == 1"
+                          (click)="ActiveInactive(row.Id, 0, 'web_review','Active')">Active</label>&nbsp;&nbsp;
+
+                          <label class="label label-success" *ngIf="row.status == 2">Popular Review</label>&nbsp;&nbsp;
+                          <label class="label label-success" *ngIf="row.status == 1">Latest Review</label>&nbsp;&nbsp;
+
+                          <label class="label label-primary" *ngIf="row.status == 1"
+                          (click)="ActiveInactive(row.Id, 2, 'web_review','Popular')">Move To Popular Review</label>&nbsp;&nbsp;
+
+                          <label class="label label-primary" *ngIf="row.status == 2"
+                          (click)="ActiveInactive(row.Id, 1, 'web_review','Popular')">Move To Latest Review</label>&nbsp;&nbsp;
+  
+                        <label class="label label-danger" *ngIf="row.status == 0"
+                          (click)="ActiveInactive(row.Id, 1, 'web_review','Inactive')">In-Active</label>
+
+                      </td>
+  
+                    </tr>
+                  </tbody>
+  
+                  <tbody *ngIf="dataAr?.length == 0">
+                    <tr>
+                      <td colspan="14" align="center">No data available!</td>
+                    </tr>
+                  <tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </section>
+  </div>
+  

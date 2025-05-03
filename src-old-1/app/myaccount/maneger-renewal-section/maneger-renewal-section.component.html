@@ -1,0 +1,478 @@
+<section class="inner_page_css knowlage_details_page">
+  <div class="container-fluid">
+    <div class="main_card_form">
+      <div class="main_header">
+        <div class="header_title" *ngIf="ActivePage == 'Default'">Renewals</div>
+      </div>
+
+      <div class="main_body main_card_height_scroll_withoutfooter">
+        <div *ngIf="urlSegmentroot != 'Tele-Rm-Reports'" style="display:none;">
+          <div class="main_card main_card_col_padd">
+            <div class="row m_0">
+              <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                <a class="inner_card_new" (click)="ChangeStatus([{ Id: 'Today', Name: 'Today' }])"
+                  href="javascript:void(0)">
+                  <span class="label_re">Upcoming</span>
+                  <div class="icon_re">
+                    <i class="fa fa-eercast"></i>
+                  </div>
+                  <div class="re_data">
+                    <div>{{ data_Ar.Total_Today }}</div>
+                    <div>Today's</div>
+                  </div>
+                </a>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                <a class="inner_card_new" (click)="ChangeStatus([{ Id: '15_Days', Name: '15 Days' }])"
+                  href="javascript:void(0)">
+                  <span class="label_re">Upcoming</span>
+                  <div class="icon_re">
+                    <i class="fa fa-sun-o" aria-hidden="true"></i>
+                  </div>
+                  <div class="re_data">
+                    <div>{{ data_Ar.Total_15_Days }}</div>
+                    <div>Next 15 day's</div>
+                  </div>
+                </a>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                <a class="inner_card_new" (click)="ChangeStatus([{ Id: '30_Days', Name: '30 Days' }])"
+                  href="javascript:void(0)">
+                  <span class="label_re">Upcoming</span>
+                  <div class="icon_re">
+                    <i class="fa fa-object-ungroup"></i>
+                  </div>
+                  <div class="re_data">
+                    <div>{{ data_Ar.Total_30_Days }}</div>
+                    <div>Next 30 day's</div>
+                  </div>
+                </a>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                <a class="inner_card_new" href="javascript:void(0)">
+                  <span class="label_re">Missed</span>
+                  <div class="icon_re">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                  </div>
+                  <div class="re_data">
+                    <div>{{ MonthRenewal.ThisMonth }}</div>
+                    <div>This Month</div>
+                  </div>
+                </a>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                <a class="inner_card_new" href="javascript:void(0)">
+                  <span class="label_re">Missed</span>
+                  <div class="icon_re">
+                    <i class="fa fa-th-list" aria-hidden="true"></i>
+                  </div>
+                  <div class="re_data">
+                    <div>{{ MonthRenewal.LastMonth }}</div>
+                    <div>Last Month</div>
+                  </div>
+                </a>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                <a class="inner_card_new" href="javascript:void(0)">
+                  <span class="label_re">Lost</span>
+                  <div class="icon_re">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                  </div>
+                  <div class="re_data">
+                    <div>{{ MonthRenewal.LostThisMonthRenewal }}</div>
+                    <div>This Month Lost</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <app-bms-filter-v2 (postCreated)="SearchData($event)"></app-bms-filter-v2>
+
+ 
+
+
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table id="Table1" class="table custom_stripd_table">
+                <thead>
+                  <tr>
+                    <td><label>Label / Status</label></td>
+                    <td><label> Base Renewals </label></td>
+                    <td><label> Pending </label></td>
+                    <td><label> Follow Up</label></td>
+                    <td><label> Renewed </label></td>
+                    <td><label> Lost</label></td>
+                    <td><label> Missed</label></td>
+                  </tr>
+                  <tr>
+                    <td><label>No Of Cases</label></td>
+                    <td>
+                      <span>
+                        {{TotalRenewalFilteredRecords}}
+                      </span>
+                    </td>
+                    <td *ngFor="let row1 of FilterDatatype; ">
+                      <span>
+                        {{row1.TotalRecord}}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label>Premium</label></td>
+                    <td>
+                      <span>
+                        {{NetPremiumFilteredRecords}}
+                      </span>
+                    </td>
+                    <td *ngFor="let row1 of FilterDatatype; ">
+                      {{row1.NetPremium}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label>Ratio NOPs</label></td>
+                    <td>
+                      <span>
+                        100%
+                      </span>
+                    </td>
+                    <td *ngFor="let row1 of FilterDatatype; ">
+                      {{row1.Ratio}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label>Ratio Busniess</label></td>
+                    <td>
+                      <span>
+                        100%
+                      </span>
+                    </td>
+                    <td *ngFor="let row1 of FilterDatatype; ">
+                      {{((row1.NetPremium/NetPremiumFilteredRecords)*100).toFixed(2)}}
+                    </td>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <!--only show for agent and customer -->
+
+            <div class="tab-content" *ngIf="UserRoleType == 'employee'">
+              <div role="tabpanel" class="tab-pane fade in active" id="All">
+                <div class="custom_table">
+                  <ul class="responsive-table">
+                    <cdk-virtual-scroll-viewport #scroller itemSize="72" class="content mt_0">
+                      <mat-list>
+                        <ng-container *cdkVirtualFor="let row of post">
+                          <!-- <ng-container *ngFor="let row of dataAr; let i = index"> -->
+                          <mat-list-item>
+                            <li class="table-row">
+                              <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                                <div class="agents_data">
+                                  <div class="icon_re_cl">{{ row.SrNo }}</div>
+                                  <div class="agent_name_mobile" *ngIf="UserRoleType == 'employee'">
+                                    <div class="agent_data">
+                                      <div>Partner Name & Code </div><strong class="fs_18">{{ row.Agent_Name }}</strong>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="agents_data">
+                                  <div class="agent_name_mobile" *ngIf="UserRoleType == 'employee'">
+                                    <div class="agent_data">
+                                      <div>Partner Mobile No.</div> <strong>{{row.Agent_Mobile}}</strong>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="agents_data">
+                                  <div class="agent_name_mobile" *ngIf="UserRoleType == 'employee'">
+                                    <div class="agent_data">
+                                      <div>Relationship Manager & Code</div><strong>{{ row.RM_Name }}</strong>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="last_row_div">
+                                <div class="d_flex">
+                                  <div *ngFor="let rowval of row.FilterData" class="label_chips">
+                                    <span *ngIf="rowval.Renewal_Status == '0'">Pending</span>
+                                    <span *ngIf="rowval.Renewal_Status == '1'">Follow Up</span>
+                                    <span *ngIf="rowval.Renewal_Status == '2'">Renewed</span>
+                                    <span *ngIf="rowval.Renewal_Status == '3'">Lost</span>
+                                    <span *ngIf="rowval.Renewal_Status == '4'">Missed</span>&nbsp;&nbsp;
+                                    <span>{{ rowval.TotalRecord }} - {{ rowval.Ratio }} % ( {{ rowval.NetPremium }} )
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="last_row">
+                                <div class="d_flex effective_date">
+                                  <div class="date_text">
+                                    <span class="fs_12">Total Number of Case</span>
+                                    <span>{{ row.totalCases }}</span>
+                                  </div>
+                                  <div class="date_text">
+                                    <span>Total Premium</span>
+                                    <span>{{ row.totalNetPremium }}</span>
+                                  </div>
+                                </div>
+                                <div class="col_2 action_btn d_flex flex_Middel">
+
+                                  <span id="{{ row.SrNo }}_errors" class="error_class_daterange"></span>
+
+                                  <a href="javascript:void(0);" class="mr_5"
+                                    (click)="SendRenewalsFromReports(row.Agent_Id,row.Agent_Code,row.Agent_Name,row.SrNo+'_errors',RenewalQuery)">Send
+                                    Renewals >></a>
+
+
+                                  <a href="javascript:void(0);" class="mr_5"
+                                    (click)="groupFollowupForm(row.Agent_Id,'Button')">Follow Up >></a>
+                                  <a   (click)="GetBulkCases(row.Agent_Name,row.Agent_Id,'val',1)"
+                                      data-keyboard="false"> View
+                                    Cases
+                                  </a>
+                                </div>
+                              </div>
+                            </li>
+                            <mat-divider></mat-divider>
+                          </mat-list-item>
+                        </ng-container>
+                        <div class="spinner-item" style="display: block;margin: auto; width: 50px;">
+                          <mat-progress-spinner [mode]="'indeterminate'" [diameter]="50"></mat-progress-spinner>
+                        </div>
+                      </mat-list>
+                    </cdk-virtual-scroll-viewport>
+                  </ul>
+                </div>
+                <div class="custom_table d_none">
+                  <ul class="responsive-table">
+                    <li class="table-row" *ngFor="let row of dataAr; let i = index">
+                      <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                        <div class="agents_data">
+                          <div class="icon_re_cl">{{ row.SrNo }}</div>
+                          <div class="agent_name_mobile" *ngIf="UserRoleType == 'employee'">
+                            <div class="agent_data">
+                              <div>Partner Name & Code </div><strong class="fs_18">{{ row.Agent_Name }}</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data">
+                          <div class="agent_name_mobile" *ngIf="UserRoleType == 'employee'">
+                            <div class="agent_data">
+                              <div>Partner Mobile No.</div> <strong>{{row.Agent_Mobile}}</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data">
+                          <div class="agent_name_mobile" *ngIf="UserRoleType == 'employee'">
+                            <div class="agent_data">
+                              <div>Relationship Manager & Code</div><strong>{{ row.RM_Name }}</strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="last_row">
+                        <div class="d_flex effective_date">
+                          <div class="date_text">
+                            <span class="fs_12">Total Number of Case</span>
+                            <span>{{ row.totalCases }}</span>
+                          </div>
+                          <div class="date_text">
+                            <span>Total Premium</span>
+                            <span>{{ row.totalNetPremium }}</span>
+                          </div>
+                        </div>
+                        <div class="col_2 action_btn d_flex flex_Middel">
+                          <a href="javascript:void(0);" class="mr_5"
+                            (click)="groupFollowupForm(row.Agent_Id,'Button')">Follow Up </a>
+                          <a   (click)="GetBulkCases(row.Agent_Name,row.Agent_Id,'val',1)" > View
+                            Cases
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <ul class="responsive-table" *ngIf="dataAr?.length == 0">
+                      <li class="table-row">
+                        <div class="no_data_found">No data available !</div>
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+
+
+                <!-- <div class="table-responsive">
+                      <div class="mydiv">
+                        <table datatable [dtOptions]="dtOptions" class="table table-bordered mg-b-0">
+                          <thead>
+                            <tr>
+                              <th>S.No</th>
+                              <th>Action</th>
+                              <th>LOB / Product</th>
+                              <th>Expiry In</th>
+                              <th>SR NO. </th>
+                              <th *ngIf="UserRoleType == 'employee'">Agent</th>
+                              <th *ngIf="UserRoleType == 'employee'">RM</th>
+                              <th>Name / Mobile</th>
+                              <th>Vehicle No/Notice</th>
+                              <th>Policy No / Insurer</th>
+                              <th>Premium</th>
+                              <th>Policy PDF</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody *ngIf="dataAr?.length != 0">
+                            <tr *ngFor="let row of dataAr; let i = index">
+                              <td>{{ row.SrNo }}</td>
+                              <td>
+                                <a *ngIf="
+                                      row.LOB == 'Motor'
+                                      && row.Source == 'Online'
+                                      && row.Status != 'Renewed' " class="label label-primary" style="cursor: pointer"
+                                  (click)="
+                                      CreateQuickRenewalQuote(
+                                        row.Quotation_Id,
+                                        'quote',
+                                        row.File_Type,
+                                        row.Vehicle_No
+                                      )
+                                    ">Proceed</a>
+    
+                                <a *ngIf="
+                                    row.LOB == 'Motor' &&
+                                    row.Source == 'Offline'
+                                    && row.Status != 'Renewed'
+                                  " class="label label-primary" style="cursor: pointer" (click)="
+                                  CreateNewQuoteofflinePolicy(
+                                      row.SrId,
+                                      row.File_Type,
+                                      row.Vehicle_No,
+                                      row.Product_Id
+                                    )
+                                  ">Create Online Quote</a>
+                                <button *ngIf="row.Status != 'Renewed'" (click)="
+                                      ShowEmailPopups(row.Id, row.ExpiryDays)
+                                    " class="label label-info marginsMail">
+                                  Send Mail
+                                </button>
+                                <a *ngIf="
+                                      row.LOB == 'Motor' &&
+                                      row.Source == 'Online'
+                                      && row.Status != 'Renewed'
+                                    " (click)="
+                                      CreateQuickRenewalQuote(
+                                        row.Quotation_Id,
+                                        'review',
+                                        row.File_Type,
+                                        row.Vehicle_No
+                                      )
+                                    " class="label label-primary" style="cursor: pointer">QuickRenewal</a>
+                              </td>
+                              <td>
+                                <label class="label label-success">{{ row.LOB }}</label>
+                                &nbsp;<label class="label label-warning">{{ row.ProductName }}</label>
+                              </td>
+                              <td>{{ row.ExpiryDays }}</td>
+                              <td>
+                                {{ row.FullSRNo }}
+                              </td>
+                              <td *ngIf="UserRoleType == 'employee'">
+                                {{ row.Agent_Name }}
+                                <span class="label label-primary" *ngIf="MaskingAgentMobile == i"
+                                  (click)="ShowMaskingField('Temp')"> Mobile : {{row.Agent_Mobile}}</span>
+                                <span class="label label-primary" *ngIf="MaskingAgentMobile != i "
+                                  (click)="ShowMaskingField(i)"> Mobile : ****</span>
+                              </td>
+                              <td *ngIf="UserRoleType == 'employee'">
+                                {{ row.RM_Name }}
+                              </td>
+                              <td>
+                                {{ row.CustomerName }} /
+                                {{ row.CustomerMobile }}
+                              </td>
+                              <td>
+                                {{ row.Vehicle_No }}
+                                <a href="javascript:void(0)" *ngIf="loginType == 'employee'" class="label label-info"
+                                  (click)="showRenewalNotoces(row.Id)">Upload Notice</a>
+                              </td>
+                              <td>{{ row.Policy_No }}
+                                <br>
+                                {{ row.Company_Name }}
+                              </td>
+                              <td>
+                                <table class="PayoutTable">
+                                  <tr>
+                                    <td>Net</td>
+                                    <td>Gross</td>
+                                  </tr>
+                                  <tr>
+                                    <td>{{row.NetPremium}}</td>
+                                    <td>{{row.GrossPremium}}</td>
+                                  </tr>
+                                </table>
+                              </td>
+                              <td>
+                                <label *ngIf="row.Download_Url != ''" class="label label-info"
+                                  (click)="ViewDocument(row.Download_Url)">Download</label>
+                                &nbsp;<label class="label label-warning" (click)="SrPopup(1,row.SrId)">Details</label>
+                              </td>
+                              <td>
+                                <button *ngIf="row.Status == 'Pending'"
+                                  (click)="ChangeStatusRenewals(row.Status ,row.Id,'Button')"
+                                  class="btn warnings customMargins">
+                                  {{ row.Status }}
+                                </button>
+                                <button *ngIf="row.Status == 'Follow Up'"
+                                  (click)="ChangeStatusRenewals(row.Status ,row.Id,'Button')"
+                                  class="btn secondarys customMargins">
+                                  {{ row.Status }}
+                                </button>
+                                <button *ngIf="row.Status == 'Missed'"
+                                  (click)="ChangeStatusRenewals(row.Status ,row.Id,'Button')"
+                                  class="btn darks customMargins">
+                                  {{ row.Status }}
+                                </button>
+                                <button *ngIf="row.Status == 'Lost'"
+                                  (click)="ChangeStatusRenewals(row.Status ,row.Id,'Button')"
+                                  class="btn dangers customMargins">
+                                  {{ row.Status }}
+                                </button>
+                                <button *ngIf="row.Status == 'Renewed'"
+                                  (click)="ChangeStatusRenewals(row.Status ,row.Id,'Button')"
+                                  class="btn successs customMargins">
+                                  {{ row.Status }}
+                                </button>
+                              </td>
+                            </tr>
+    
+                          </tbody>
+    
+                          <tbody *ngIf="dataAr?.length == 0">
+                            <tr>
+                              <td colspan="10" align="center">
+                                No data Available !
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tbody></tbody>
+                        </table>
+                      </div>
+                    </div>
+                   -->
+
+
+
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

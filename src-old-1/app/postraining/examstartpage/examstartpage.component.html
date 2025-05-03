@@ -1,0 +1,163 @@
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          Dashboard
+          <!--<small>Version 2.0</small>-->
+        </h1>
+        <ol class="breadcrumb">
+          <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+          <li class="active">Exam</li>
+        </ol>
+      </section>
+   
+  
+      <section class="content">
+
+        
+        <div class="row">
+        
+          
+  
+     
+        <div class="col-sm-8">
+
+          
+            <div class="exam-q-a">
+                          <div class="question">
+                  <h1><label>{{ CurrentQuestionRunning }}</label> Question  </h1>
+                  <p>{{ QuestionShow }}?</p>
+                </div>
+  
+  
+               
+                  <div class="row">
+                    <div class="col-sm-6">
+               
+                        <div class="radio ansdiv">
+                          <input id="radio-1" name="radio"  [value]="Option1"   type="radio" (click)="RadioValueSet($event,Option1)">
+                          <label for="radio-1" class="radio-label">{{ Option1 }}</label>
+                        </div>
+                        </div>
+             
+                    <div class="col-sm-6">
+                    <div class="radio ansdiv">
+                        <input id="radio-2"  [value]="Option2" name="radio" type="radio" (click)="RadioValueSet($event,Option2)" >
+                        <label  for="radio-2" class="radio-label">{{ Option2 }}</label>
+                      </div> 
+                  </div>
+  
+                       <div class="col-sm-6">
+                    <div class="radio ansdiv">
+                        <input id="radio-3"  [value]="Option3" name="radio"   type="radio" (click)="RadioValueSet($event,Option3)" >
+                        <label  for="radio-3" class="radio-label">{{ Option3 }}</label>
+                      </div>
+                  </div>
+                       <div class="col-sm-6">
+                    <div class="radio ansdiv">
+                        <input id="radio-4"  [value]="Option4" name="radio"   type="radio" (click)="RadioValueSet($event,Option4)" >
+                        <label  for="radio-4" class="radio-label">{{ Option4 }}</label>
+                      </div>
+                  </div>
+  
+        
+                </div>
+  
+                  <div class="row">
+                    <div class="col-sm-6">
+                                        <div class="timer-blocks">
+                              <ul>
+                                <li>  
+                    
+                           
+                                 <span><i class="fa fa-clock-o" aria-hidden="true"></i>{{ Training_Time }}</span>
+                               </li>
+                                <li> 
+                             
+                                   <span><i class="fa fa-clock-o" aria-hidden="true"></i>{{ Current_Time }}</span>
+                               </li>
+                    
+                    
+                              </ul>
+                            </div>
+                    </div>
+                    <div class="col-sm-6"> 
+                        <div class="next-pre-btn">
+
+                      
+                            <button *ngIf="CurrentQuestionRunning>1" (click)="MangeQuestionNextPre('P',Q_Id)" type="button" class="btn btn-primary"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>Save & Previous</button>
+
+                            <button *ngIf="CurrentQuestionRunning<TotalQuestions" (click)="MangeQuestionNextPre('N',Q_Id)" type="button" class="btn btn-secondary">Save & Next <i class="fa fa-chevron-circle-right" aria-hidden="true"></i></button>
+  
+                    </div>
+
+                    </div>
+                  </div>
+  
+                  
+  
+  
+            </div>
+  
+        </div>
+  
+  
+           <div class="col-sm-4">
+  
+  
+         <div class=" exam-q-a">
+  
+                 <div class="question-a-u">
+                      <ul>
+                        <li><a href="#">Unattempted  </a></li>
+                        <li class="single-li"><a href="#">Attempted </a></li>
+  
+                      </ul>
+                 </div>
+  
+                  <div class="clearfix"></div>
+                
+                    <div class="total-question">
+
+                      <a *ngFor="let ShowAllQuestion of ShowAllQuestions" href="javascript:void(0)"  [ngClass]="{'active': ShowAllQuestion.Attempt!==''}" (click)="ClickAllQuestion(ShowAllQuestion.Qno,ShowAllQuestion.Qid)">
+
+                        {{ ShowAllQuestion.Qno  }} 
+                      
+                      </a>
+                        
+                     
+                   
+                     
+  
+  
+                    </div>
+  
+                      <div class="end-exam">
+                        <button type="button" class="btn btn-primary" (click)="OpenConfirmSubmitExam()">Finish Exam</button>
+                      </div>
+  
+            </div>
+     
+    </div>
+  
+           
+          
+  
+  
+      </div>
+  
+  
+      </section>
+  
+  
+  
+  </div>
+  
+  
+  
+  
+   
+  
+  

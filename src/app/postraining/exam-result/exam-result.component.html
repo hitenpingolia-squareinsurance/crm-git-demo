@@ -1,0 +1,79 @@
+
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            Result
+            <!--<small>Version 2.0</small>-->
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Exam</li>
+          </ol>
+        </section> 
+    
+    
+          <section class="content">
+        <div class="{{ Img }}">
+           <div class="row">
+               <div class="col-lg-6"> 
+
+                   <div class="details-div" *ngIf="Results=='pass'">
+                   <p style="margin: 0;">Great! you have successfully 
+                   Passed exam with {{ ExamMarks }}% marks.
+                   Now you are authorised person of square insurance to purchase {{ ShowText  }} </p>
+                   <p>You can download below mentioned docs  which will help you to understand the further working </p>
+                    
+    
+                  
+                   </div>
+                   <div class="details-div" *ngIf="Results=='fail'">
+                    <p style="margin: 0;">Sorry! you have Failed 
+                    with {{ ExamMarks }}% marks.</p>
+                    <p><button class="btn btn-danger" (click)="StartAgain()">Start Again</button> </p>
+                 
+                     
+     
+                   
+                    </div>
+
+
+
+               </div>
+    
+                       <div class="col-lg-6">
+                         
+                         <div class="img-section">
+                              <!-- <img class="img-fluid" src="assets/dist/img/result.png"> -->
+                         </div>
+    
+                       </div>
+    
+            <div class="col-lg-12" *ngIf="Results=='pass'">
+                  <div class="btn-div-all btn-align">
+
+                    
+                    <!-- <button class="btn btn-primary"  (click)="downloadPayoutsheet()" type="button"><i class="fa fa-download" aria-hidden="true"></i> IRDAI  Payout Sheet</button> -->
+
+
+
+                       <button class="btn btn-primary" *ngIf="Training_Type=='Motor'" (click)="downloadMyFile()" type="button"><i class="fa fa-download" aria-hidden="true"></i> POSP Certificate </button>
+
+                       
+                       <button class="btn btn-primary" *ngIf="Training_Type=='Life'" (click)="downloadMyFile()" type="button"><i class="fa fa-download" aria-hidden="true"></i> POSP Certificate </button>
+
+
+                       <button (click)="downloadBrochure()" class="btn btn-primary" type="button"><i class="fa fa-download" aria-hidden="true"></i>Square Brochure </button>
+    
+    
+    
+                       </div>
+            </div>
+    
+           </div>
+       </div>
+           
+       </section>

@@ -1,0 +1,87 @@
+
+<section class=" ">
+   <button (click)="CloseModel()" type="button"
+                class="close closeModelButton">&times;</button>
+                                        <div class="wallet_heading">
+                                            <h3>Redeem your points</h3>
+                                        </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="right_side_blog">
+                                            <ul class="_1ngz7">
+                                                <li>
+                                                    <div>Total Points :<span>{{this.TotalBalance}}</span></div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div>
+                                            <table class="table statment_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">TRANSACTIONS</th>
+                                                        <th scope="col">POINTS</th>
+                                                        <th scope="col">STATUS</th>
+                                                        <th scope="col">COMMENTS</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody *ngIf="ViewRequests?.length != 0">
+                                                    <tr *ngFor="let row of ViewRequests">
+                                                      
+
+                                                        <th scope="row">
+                                                            <div class="table_details">
+                                                                <div class="table_details_img_blog">
+                                                                    <img class="img-fluid flag-img" style="margin: 19%;"
+                                                                        src="assets/dist/img/bank_icon.png"
+                                                                        alt="Square Insurance" />
+                                                                </div>
+
+                                                                <div class="table_details_text_blog">
+                                                                    <span> {{row.AgentName }} </span>
+                                                                    <span> {{row.RequestDate}}</span>
+                                                                    <!-- <span>{{row.AgentName}}</span> -->
+                                                                    <span>Gems ID {{row.PaymentId}}</span>
+                                                                </div>
+                                                            </div>
+
+                                                        </th>
+                                                        <td> {{row.DebitAmount}}</td>
+
+                                                        <td>
+                                                            <label
+                                                                *ngIf="row.PaymentStatus == '1' && row.AssignerId == ''"
+                                                                class="stutas_label_pending">Requested</label>
+                                                            <label
+                                                                *ngIf="row.PaymentStatus == '1' && row.AssignerId != ''"
+                                                                class="stutas_label_pending">Pending</label>
+                                                            <label *ngIf="row.PaymentStatus == '2'"
+                                                                class="stutas_label_hold">Hold</label>
+                                                            <label *ngIf="row.PaymentStatus == '0'"
+                                                                class="stutas_label_failed">Reject</label>
+                                                            <label *ngIf="row.PaymentStatus == '3'"
+                                                                class="stutas_label">Success</label>
+
+                                                        </td>
+
+                                                        <td>{{row.ReasonRemark}}</td>
+                                                    </tr>
+                                                </tbody>
+
+
+                                                <tbody *ngIf="ViewRequests?.length == 0">
+                                                    <tr>
+                                                        <td colspan="14" align="center">No data available!</td>
+                                                    </tr>
+                                                <tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+            
+       
+    </section>

@@ -1,0 +1,102 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+  <div class="container-fluid">
+    <div class="main_card_form ">
+      <div class="main_header">
+        <div class="header_title">Language Localization Report</div>
+      </div>
+
+      <div class="main_body main_card_height_scroll_withoutfooter">
+        <div class="btn_list_group">
+          <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="row">
+
+                <div class="col-md-12">
+                  <div class="d_flex flex_End flex_Middel">
+                    <a href="javascript:void(0);" class="btn btn-primary font-weight-bolder btn-sm"
+                      (click)="update('Add',0)"><i class="fa fa-plus mr_5"></i>Add New</a>
+                  </div>
+                </div>
+
+              </div>
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade in active" id="All">
+
+            <div class="mydiv">
+
+              <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>SrNo</th>
+                    <th>Key_Name</th>
+                    <th>English</th>
+                    <th>Hindi</th>
+                    <th>Bengali</th>
+                    <th>Marathi</th>
+                    <th>Telugu</th>
+                    <th>Tamil</th>
+                    <th>Add Stamp</th>
+                    <th>Update Stamp</th>
+                    <th>Action</th>
+
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{i+1}}</td>
+                    <td>{{row.key_name}}</td>
+                    <td>{{row.english}}</td>
+                    <td>{{row.hindi}}</td>
+                    <td>{{row.bengali}}</td>
+                    <td>{{row.marathi}}</td>
+                    <td>{{row.telugu}}</td>
+                    <td>{{row.tamil}}</td>
+                    <td>{{row.add_stamp}}</td>
+                    <td>{{row.update_stamp}}</td>
+
+
+                    <td>
+
+                      <button class="btn btn-info btn-sm" (click)="update('Edit',row)">
+                        <span>Update</span>
+                      </button>
+                      <button class="btn btn-danger btn-sm" (click)="delete('delete',row.Id)">
+                        <span>Delete</span>
+                      </button>
+                    </td>
+
+
+                  </tr>
+
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="11" align="center">No data available !</td>
+                  </tr>
+                <tbody>
+              </table>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+

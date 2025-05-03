@@ -1,0 +1,280 @@
+<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+				
+
+<div *ngIf="(Payout_RequestType=='Pending For Accounts' || Payout_RequestType=='Pending For Banking')">
+<table align="center" class="coustom-table row-border hover table table-bordered table-hover table-checkable table-responsive" id="kt_datatable">
+			 
+			   
+			   <tr *ngIf="checkedList?.length>0">
+					<td colspan="4"> 
+						<div style="margin:1%;" class="row">
+						  
+						  <!--<div class="col-sm-6">
+							<input class="form-control" [(ngModel)]="UTR_No" placeholder="UTR No.">
+						  </div>-->
+						  <div class="col-sm-3">
+							<select class="form-control" [(ngModel)]="Status">
+								<option value=""></option>
+								<option value="Approve">Approve</option>
+								<option value="Reject">Reject</option>
+							</select>
+						  </div>
+						  
+						  <div class="col-sm-6">
+							<input class="form-control" [(ngModel)]="Remark" placeholder="Remark">
+						  </div>
+						   
+						  <div class="col-sm-3">
+									<input type="button" (click)="Transfer()" class="btn btn-info" value="Submit">
+									&nbsp;&nbsp; 
+									<input (click)="CancelTransfer()" type="button" class="btn btn-primary" value="Cancel">
+						   </div>
+								 
+						</div> 
+						 
+					</td>
+			   </tr>
+			   
+			   
+			   <tr *ngIf="(PostingData.Status == '1' && PostingData.Pending == '0') || (PostingData.Status == '3' && PostingData.Banking_Pending == '0')">
+			   
+			     <td colspan="4"> 
+						<div style="margin:1%;" class="row">
+						 
+						  <div class="col-sm-3">
+							<select *ngIf="(PostingData.Status == '1' && PostingData.Pending == '0')" class="form-control" [(ngModel)]="Status">
+								<option value=""></option>
+								<option value="PendingForBanking">Process To Banking</option>
+								<option value="RejectByAccounts">Reject</option>
+							</select>
+							
+							<select *ngIf="(PostingData.Status == '3' && PostingData.Banking_Pending == '0')" class="form-control" [(ngModel)]="Status">
+								<option value=""></option>
+								<option value="Approved">Banking Approve</option>
+								<option value="RejectByBanking">Reject</option>
+							</select>
+							
+						  </div>
+						  
+						  <div class="col-sm-6">
+							<input class="form-control" [(ngModel)]="Remark" placeholder="Remark">
+						  </div>
+						   
+						  <div class="col-sm-3">
+									<input type="button" (click)="UpdatePostingStatus()" class="btn btn-info" value="Proceed">
+									&nbsp;&nbsp; 
+									<input (click)="CancelTransfer()" type="button" class="btn btn-primary" value="Cancel">
+						   </div>
+								 
+						</div> 
+						 
+					</td>
+			   </tr>
+			   
+			   
+			   <tr *ngIf="(PostingData.Status == '5' && PostingData.Banking_Pending == '0')">
+					<td colspan="4"> 
+						<div style="margin:1%;" class="row">
+						  
+						  <div class="col-sm-4">
+							<input class="form-control" [(ngModel)]="UTR_No" placeholder="UTR No.">
+						  </div>
+						  
+						  
+						  <div class="col-sm-5">
+							<input class="form-control" [(ngModel)]="Remark" placeholder="Remark">
+						  </div>
+						   
+						  <div class="col-sm-3">
+									<input type="button" (click)="UpdatePostingStatus()" class="btn btn-info" value="Submit">
+									&nbsp;&nbsp; 
+									<input (click)="CancelTransfer()" type="button" class="btn btn-primary" value="Cancel">
+						   </div>
+								 
+						</div> 
+						 
+					</td>
+			   </tr>
+</table>
+
+<table class="coustom-table row-border hover table table-bordered table-hover table-checkable table-responsive" id="kt_datatable">
+				<thead>
+			 
+		  
+				<tr>
+				 
+				<th>SrNo.</th>
+				<th>Action
+					&nbsp;
+					<input [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()" type="checkbox">
+					 
+				</th>
+				<th>SR_No</th>
+				<th>BookingDate</th>
+				
+				 
+				<th>SR Status</th>
+				 
+				<th>LOB</th>
+				<th>File Type</th>
+
+				<th>Segment</th>
+				<th>Product</th>
+				<th>SubProduct</th>
+				<th>Class</th>
+
+				<th>SubClass</th>
+
+				<th>Net Premium</th>
+				<th>Gross Premium</th>
+				<th>Agent</th>
+				<th>RM</th>
+				<th style="text-align:center;">Payout Details</th> 
+				<th>Customer Name</th>
+			 
+  
+				</tr>
+				</thead>
+				
+				
+				<tbody *ngIf="dataAr?.length != 0">
+				  <tr *ngFor="let row of dataAr; let i=index;">
+					  
+					  <td>{{ i+1 }}.</td>
+					  <td> 
+					   
+					   <input *ngIf="(row.Posting_Status_Web == '1' && Payout_RequestType == 'Pending For Accounts')" type="checkbox" [(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}" (change)="isAllSelected()">
+					   <input *ngIf="(row.Posting_Status_Web == '3' && Payout_RequestType == 'Pending For Banking')" type="checkbox" [(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}" (change)="isAllSelected()">
+					    
+					 </td>
+					  <td>{{ row.SR_No }}</td>
+					    
+					   <td>{{ row.SR_Create_Date }}</td>
+					 
+					  
+					 <td>
+						<span *ngIf="row.SR_Status == 'Complete'" class="label label-success label-inline mr-2">Booked</span>
+						<span *ngIf="row.SR_Status == 'Pending'" class="label label-danger label-inline mr-2">UnBooked</span>
+						<span *ngIf="row.SR_Status == 'Cancelled'" class="label label-danger label-inline mr-2">Cancelled</span>
+					  </td>
+					  
+					  
+					
+					<td>{{ row.LOB_Id }}</td>
+					  <td>{{ row.File_Type }}</td>
+					  <td>{{ row.Segment_Id }}</td>
+					  <td>{{ row.Product_Id }}</td>
+					  <td>{{ row.SubProduct_Id }}</td>
+					  <td>{{ row.Class_Id }}</td>
+					  <td>{{ row.Sub_Class_Id }}</td>
+
+
+					  <td>{{ row.Net_Premium }}</td>
+					  <td>{{ row.Estimated_Gross_Premium }}</td>
+					  <td>{{ row.Agent_Name }}</td>
+					  <td>{{ row.RM_Name }}</td> 
+					  <td>
+						<table class="PayoutTable">
+							<tr>
+								<td>OD%</td>
+								<td>OD AMT</td>
+								<td>TP%</td>
+								<td>TP AMT</td>
+								 
+								<td>Reward</td>
+								<td>Scheme</td>
+								<td>Total</td>
+							</tr>
+							<tr>
+								<td>{{row.Web_Agent_Payout_OD}}</td>
+								<td>{{row.Web_Agent_Payout_OD_Amount}}</td>
+								<td>{{row.Web_Agent_Payout_TP}}</td>
+								<td>{{row.Web_Agent_Payout_TP_Amount}}</td>
+								 
+								<td>{{row.Web_Agent_Reward_Amount}}</td>
+								<td>{{row.Web_Agent_Scheme_Amount}}</td>
+								<td>{{row.Web_Agent_Total_Amount}}</td>
+								  
+							</tr>
+							
+						</table>
+					  </td>
+					  <td>{{ row.Customer_Name }}</td>
+					   
+					  
+ 
+					 
+				  </tr>
+				</tbody>
+				
+			 
+				 
+				</table>
+				
+</div>
+<div *ngIf="(Payout_RequestType=='Approved/PayoutTransferred')">
+
+<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+				
+				
+<table   class="coustom-table row-border hover table table-bordered table-hover table-checkable table-responsive" id="kt_datatable">
+				
+			 
+				
+				<thead>
+			  
+		  
+				<tr>
+				 
+				<th>SrNo.</th>
+				 
+				<th>Agent Name/Code</th>
+				<th>Request Id</th>
+				
+				<th>Transfer Date</th>
+				 <th>UTR No</th>
+  
+				</tr>
+				</thead>
+				
+				
+				<tbody *ngIf="dataAr?.length != 0">
+				  <tr *ngFor="let row of dataAr; let i=index;">
+					  
+					  <td>{{ i+1 }}.</td>
+					  
+					  <td>{{ row.Agent_Name }}</td>
+					  <td>{{ row.Group_Id }}</td>
+					  <td><input (change)="UpdateSingleUTR($event,row.Id,i,'UTR_Update_Date')" type="date" [value]="row.UTR_Update_Date" class="form-control"></td>
+					  
+					  <td><input (keyup)="UpdateSingleUTR($event,row.Id,i,'UTR_No')" type="text" [value]="row.UTR_No" class="form-control"></td>
+					  
+				  </tr>
+				</tbody>
+				
+				<thead>
+			   
+				  
+		  
+				<tr>
+				 
+				<th>SrNo.</th>
+				 
+				<th>Agent Name/Code</th>
+				<th>Request Id</th>
+				<th>Request Id</th>
+				<th>
+					<input type="button" (click)="UpdateBulkUTRNo()" class="btn btn-info" value="Submit">
+						
+				</th>
+				
+				 
+  
+				</tr>
+				</thead>
+			 
+				 
+				</table>
+
+
+</div>

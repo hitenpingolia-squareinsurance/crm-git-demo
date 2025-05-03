@@ -1,0 +1,71 @@
+<div class="content-wrapper">
+  
+  <!-- Content Header (Page header) -->
+
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box">
+          <div class="box-header">
+            <div class="row">
+              <div class="col-md-4">
+                <h3 class="box-title">Meeting URL's</h3>
+              </div>
+              <div class="col-md-4">&nbsp;</div>
+              <div class="col-md-4">
+              
+              </div>
+            </div>
+          </div>
+
+
+          <div class="box-body">
+            <div class="mydiv">
+              <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <!-- <th>Meeting For</th> -->
+                    <th>Meeting Id</th>
+                    <th>Meeting Topic</th>
+                    <th>Meeting URL</th>
+                    <th>Meeting Date</th>
+                    <th>Meeting Time</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr">
+                    <td>{{row.SrNo}}.</td>
+                    <!-- <td>{{row.meetingFor}}</td> -->
+                    <td>{{row.meetingId}}</td>
+                    <td>{{row.meetingTopic}}</td>
+                    <td>{{row.meetingUrl}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="copybtn" (click)="CopyText(row.meetingUrl)"
+                        value="click to copy"> <span class="fa fa-copy"></span></button>
+                        
+                      </td>
+                    <td>{{row.meetingDate}}</td>
+                    <td>{{row.meetingTime}}</td>
+                    <td>{{row.date}}</td>
+
+                      
+                    </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="14" align="center">No data available!</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

@@ -1,0 +1,107 @@
+<form class="form" [formGroup]="CreateSalaryForm" (ngSubmit)="CreateAppraisalLetter()">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="text-align: center; background-color: #2cb2b3; color: white;">Create Appraisal Letter
+          <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+
+          <!--===== BULK UPLOAD DATA =====-->
+          <div class="row" style="margin-top: 10px;" *ngIf="action_type == 'bulk'">
+            <div class="col-sm-12">
+              <label>Upload Excel* : </label>
+              <label class="form-control btn fileUpload btn-default"
+                [ngClass]="(this.Other_image==1 ? 'ImageUploaded' : 'else' )" name="button">
+                <input type="file" (change)="checkFileType($event,'Excel')" formControlName="excel_file"
+                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  style="display:none;" />
+                <span class="fas fa-user-alt"><b>Upload Excel</b></span>
+
+                <div *ngIf="isSubmitted && formControls.excel_file.errors " class="ValidationError">
+                  <div *ngIf="formControls.excel_file.errors.required">Please Upload Excel!</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!--===== EMPLOYEE WISE DETAILS =====-->
+          <div class="row" style="margin-top: 10px;" *ngIf="action_type == 'single'">
+            <div class="col-sm-6">
+              <label>PF Deduction : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="PF/None-PF" [data]="PFStatusArray"
+                formControlName="pf_status" [settings]="dropdownSettingSingleSelect">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.pf_status.errors " class="ValidationError">
+                <div *ngIf="formControls.pf_status.errors.required">Please Select PF/None-PF!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label>Gross Salary : </label>
+              <input type="text" placeholder="Enter Gross Salary" formControlName="gross_salary" class="form-control">
+              <div *ngIf="isSubmitted && formControls.gross_salary.errors " class="ValidationError">
+                <div *ngIf="formControls.gross_salary.errors.required">Please Enter Gross Salary!</div>
+                <div *ngIf="formControls.gross_salary.errors.pattern">Please Enter Numeric Value!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;" *ngIf="action_type == 'single'">
+            <div class="col-sm-6">
+              <label>Gratuity : </label>
+              <input type="text" placeholder="Enter Gratuity" formControlName="gratuity" class="form-control">
+              <div *ngIf="isSubmitted && formControls.gratuity.errors " class="ValidationError">
+                <div *ngIf="formControls.gratuity.errors.required">Please Enter Gratuity!</div>
+                <div *ngIf="formControls.gratuity.errors.pattern">Please Enter Numeric Value!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label>Variable Pay : </label>
+              <input type="text" placeholder="Enter Variable Pay" formControlName="variable_pay" class="form-control">
+              <div *ngIf="isSubmitted && formControls.variable_pay.errors " class="ValidationError">
+                <div *ngIf="formControls.variable_pay.errors.required">Please Enter Variable Pay!</div>
+                <div *ngIf="formControls.variable_pay.errors.pattern">Please Enter Numeric Value!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-6">
+              <label>Effective Month : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Effective Month" [data]="MonthsArray"
+                formControlName="effective_month" [settings]="dropdownSettingSingleSelect">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.effective_month.errors " class="ValidationError">
+                <div *ngIf="formControls.effective_month.errors.required">Please Select Effective Month!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label>Effective Year : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Effective Year" [data]="YearsArray"
+                formControlName="effective_year" [settings]="dropdownSettingSingleSelect">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.effective_year.errors " class="ValidationError">
+                <div *ngIf="formControls.effective_year.errors.required">Please Select Effective Year!</div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

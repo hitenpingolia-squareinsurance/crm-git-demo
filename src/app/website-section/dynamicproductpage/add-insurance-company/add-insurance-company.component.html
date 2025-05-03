@@ -1,0 +1,71 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title" *ngIf="this.id == '' ">Add Dynamic Images</div>
+              <div class="header_title" *ngIf="this.id != '' ">Edit Dynamic Images</div>  
+              <button class="btn btn-primary nextBtn pull-right" routerLink="/WebsiteSection/products/view_insurance_company" 
+              style="margin-top: -27px;">Back To View</button>
+            </div>
+            
+            <form class="form" (ngSubmit)="Submit()" [formGroup]="DynamicImageAdd">
+              <div class="main_body main_card_height_scroll">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form_sub_title"><i class="fa fa-link mr_5"></i>Details</div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="input_group">
+                      <label for="CustomerName">Page Name</label>
+                      <ng-multiselect-dropdown class="form-control" [data]="Page" formControlName="pagename"
+                        [settings]="dropdownSettingsType" [(ngModel)]="pagename">
+                      </ng-multiselect-dropdown>
+                      <span *ngIf="isSubmitted && formControls.pagename.errors" class="ValidationError">
+                        <span *ngIf="formControls.pagename.errors.required">pagename is
+                          required</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="input_group">
+                      <label for="CustomerMobileNo">Company Name</label>
+                        <input type="text" class="form-control" formControlName="companyName" placeholder="Enter Company Name">
+                        <span *ngIf="isSubmitted && formControls.companyName.errors" class="ValidationError">
+                          <span *ngIf="formControls.companyName.errors.required">price is
+                            required</span>
+                        </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="CustomerName">Image</label>
+                      <div class="position_relative">
+                        <input type="file" class="form-control" formControlName="image"
+                        (change)="UploadDocs($event,'image')">
+                      </div>
+                      <span *ngIf="isSubmitted && formControls.image.errors" class="ValidationError">
+                        <span *ngIf="formControls.image.errors.required">Please Select Image !</span>
+                      </span>
+                     
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="main_footer">
+                <button type="submit" *ngIf="this.id == '' " class="Save_click">Submit Request</button>
+                <button type="submit" *ngIf="this.id != '' " class="Save_click">Edit Request</button>
+              </div>
+  
+            </form>
+  
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

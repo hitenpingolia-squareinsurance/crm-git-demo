@@ -1,0 +1,21 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+.card-toolbar{
+    display: flex; 
+    justify-content: flex-end;
+}
+
+.btn btn-primary font-weight-bolder{
+ padding: 10px 20px;
+  margin-left: 10px;
+}

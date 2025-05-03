@@ -1,0 +1,283 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">
+              <div *ngIf="ActivePage == 'Default'" class="box-title">Payout Status</div>
+              <!-- <h3 *ngIf="ActivePage == 'ManageRequests'" class="box-title">Manage Requests</h3> -->
+            </div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+
+            <div>
+              <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <a role="button" class="fa fa-filter"><span>Filters</span><i
+                      class="fa fa-angle-down pull-right"></i></a>
+                </button>
+              </div>
+            </div>
+
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+       
+                <!-- filter  -->
+                <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" name="FinancialYear" placeholder="Financial Year"
+                        [data]="SR_Session_Year" formControlName="FinancialYear"
+                        [settings]="dropdownSettingsingleselect" (onSelect)="onItemSelect($event,'FinancialYear')"
+                        (onDeSelect)="onItemDeSelect($event,'FinancialYear')" [(ngModel)]="financialYearVal">
+                      </ng-multiselect-dropdown>
+                      <span *ngIf="isSubmitted && formControls.FinancialYear.errors" class="ValidationError">
+                        <span *ngIf="formControls.FinancialYear.errors.required">Financial Year is
+                          required</span></span>
+                      </div>
+                     
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" name="Source" placeholder="Select Source"
+                        [data]="SRSource_Ar" formControlName="Source" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'SRSource_Ar')"
+                        (onDeSelect)="onItemDeSelect($event,'SRSource_Ar')">
+                      </ng-multiselect-dropdown>
+                      </div>
+                     
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" name="Lob" placeholder="Select LOB"
+                        [data]="GlobelLOB" formControlName="Lob" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'GlobelLOB')" (onDeSelect)="onItemDeSelect($event,'GlobelLOB')">
+                      </ng-multiselect-dropdown>
+                      </div>
+                     
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" name="PolicyFileType" placeholder="Business Type"
+                        [data]="PolicyFileType" formControlName="PolicyFileType"
+                        [settings]="dropdownSettingsmultiselect" (onSelect)="onItemSelect($event,'PolicyFileType')"
+                        (onDeSelect)="onItemDeSelect($event,'PolicyFileType')">
+                      </ng-multiselect-dropdown>
+                      </div>
+                    
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" name="PolicyType" placeholder="Policy Type"
+                        [data]="PolicyType" formControlName="PolicyType" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'PolicyType')"
+                        (onDeSelect)="onItemDeSelect($event,'PolicyType')">
+                      </ng-multiselect-dropdown>
+                      </div>
+                     
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" name="ProductType" placeholder="Product Type"
+                        [data]="ProductType" formControlName="ProductType" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'ProductType')"
+                        (onDeSelect)="onItemDeSelect($event,'ProductType')">
+                      </ng-multiselect-dropdown>
+                      </div>
+                     
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                        formControlName="DateOrDateRange" bsDaterangepicker [minDate]="minDate" [maxDate]="maxDate"
+                        [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+
+                      <span *ngIf="isSubmitted && formControls.DateOrDateRange.errors" class="ValidationError">
+                        <span *ngIf="formControls.DateOrDateRange.errors.required">Date is required</span></span>
+                      </div>
+                     
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" name="Company" placeholder="Select Insurer"
+                        [data]="Ins_Compaines" formControlName="Company" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'Ins_Compaines')"
+                        (onDeSelect)="onItemDeSelect($event,'Ins_Compaines')">
+                      </ng-multiselect-dropdown>
+                      </div>
+                      
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" name="Company" placeholder="Select Earning"
+                        [data]="Earning_Filter" formControlName="Earning_Filter_User"
+                        [settings]="dropdownSettingsmultiselect" (onSelect)="onItemSelect($event,'Ins_Compaines')"
+                        (onDeSelect)="onItemDeSelect($event,'Ins_Compaines')">
+                      </ng-multiselect-dropdown>
+                      </div>
+                     
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <input type="text" formControlName="SearchValue" name="SearchValue" class="form-control"
+                        placeholder="Search">
+                      </div>
+                      
+                    </div>
+                    <div class="col-sm-6">
+                     <div class="pull-right">
+                       <!-- <input type="submit" class="btn btn-info" [disabled]="buttonDisable" value="Search"> -->
+                       <button type="submit" class="btn btn-info" style="font-size: small;" value="Search">
+                        <i class="fa fa-search">
+                          Search</i></button>
+                      &nbsp;&nbsp;
+                      <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                        value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                     </div>
+                     
+                    </div>
+
+                  </div>
+
+   
+                </form>
+
+
+
+
+                <!-- </form> -->
+           
+            </div>
+
+            <hr>
+            <div class="row">
+              <div class="col-sm-2">
+                <b>Total Files </b>
+              </div>
+              <div class="col-sm-2">
+                {{TotalFiles}}
+              </div>
+              <div class="col-sm-1">
+                <b>Payout</b>
+              </div>
+              <div class="col-sm-2">
+                <i class="fa fa-inr"></i> {{TotalEarning}}
+              </div>
+              <div class="col-sm-1">
+                <b>Premium</b>
+              </div>
+              <div class="col-sm-2">
+                <i class="fa fa-inr"></i> {{TotalPremium}}
+              </div>
+
+            </div>
+
+            <hr>
+            <div class=" mydiv table-responsive">
+              <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+
+                    <th>S.No</th>
+                    <th>LOB / Type</th>
+                    <th>Policy Number</th>
+                    <th>Insurer</th>
+                    <th>Vehicle No</th>
+                    <th *ngIf="this.api.GetUserType() == 'admin' || this.api.GetUserType() == 'employee'">Agent</th>
+                    <th *ngIf="this.api.GetUserType() == 'admin' || this.api.GetUserType() == 'employee'">RM</th>
+
+                    <th>Proposal Details</th>
+                    <!-- <th>Customer Mobile</th> -->
+                    <th>Premium/Payout details</th>
+
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{row.SrNo}}</td>
+                    <td>
+                      <label class="btn btn-success">{{row.LOB}}</label> &nbsp;<label
+                        class="btn btn-warning">{{row.TypeName}}</label>&nbsp;<label *ngIf="(row.Policy_Type =='2')"
+                        class="btn btn-danger1">Referred</label>
+                      <br>
+
+                      <span *ngIf="row.Posting_Status_Web == '0'"
+                        class="label label-warning label-inline mr-2">PendingForPosting</span>
+                      <span *ngIf="row.Posting_Status_Web == '1'"
+                        class="label label-default label-inline mr-2">PendingForAccounts</span>
+                      <span *ngIf="row.Posting_Status_Web == '2'"
+                        class="label label-danger label-inline mr-2">RejectByAccounts</span>
+                      <span *ngIf="row.Posting_Status_Web == '3'"
+                        class="label label-primary label-inline mr-2">PendingForBanking</span>
+                      <span *ngIf="row.Posting_Status_Web == '4'"
+                        class="label label-danger label-inline mr-2">RejectByBanking</span>
+                      <span *ngIf="row.Posting_Status_Web == '5'"
+                        class="label label-info label-inline mr-2">Approved</span>
+                      <span *ngIf="row.Posting_Status_Web == '6'"
+                        class="label label-success label-inline mr-2">Paid/PayoutTransfered</span>
+
+
+                    </td>
+                    <td>{{row.PolicyNo}} <br><a *ngIf="(row.DownloadUrl !='')" class="fa fa-Info"
+                        (click)="ViewDocument(row.DownloadUrl)" href="javascript:void(0)"> &nbsp;<i
+                          class="fa fa-download"> Download</i></a>
+                    </td>
+                    <td>{{row.Company}}</td>
+                    <td>{{row.Vehicle_No}}</td>
+                    <td *ngIf="this.api.GetUserType() == 'admin' || this.api.GetUserType() == 'employee'">
+                      {{row.Agent_Name}}</td>
+                    <td *ngIf="this.api.GetUserType() == 'admin' || this.api.GetUserType() == 'employee'">
+                      {{row.RM_Name}}</td>
+                    <td> <b>Name - </b> {{row.CustomerName}}<br> <b>Mobile - </b> {{row.CustomerMobile}}</td>
+                    <!--
+                              <td>{{row.CustomerName}}</td>
+                              <td>{{row.CustomerMobile}}</td> -->
+
+                    <td>
+                      <table class="PayoutTable">
+                        <tr>
+                          <td>OD AMT</td>
+                          <td>TP AMT</td>
+                          <td>Net</td>
+                          <td>Payout</td>
+                        </tr>
+                        <tr>
+                          <td>{{row.Web_Agent_Payout_OD_Amount}}</td>
+                          <td>{{row.Web_Agent_Payout_TP_Amount}}</td>
+                          <td>{{row.NetPremium}}</td>
+                          <td>{{row.Payout}}</td>
+
+                        </tr>
+
+                      </table>
+                    </td>
+                    <!-- <td><a (click)="ViewDocument(row.DownloadUrl)" href="javascript:void(0)">Download</a></td> -->
+
+
+                  </tr>
+
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

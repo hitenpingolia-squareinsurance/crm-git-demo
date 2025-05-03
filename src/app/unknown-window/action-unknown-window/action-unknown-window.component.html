@@ -1,0 +1,59 @@
+<div class="box box-default">
+    <div class="box-header with-border">
+        <h3 class="box-title">Details Form</h3>
+        <div class="box-tools pull-right">
+            <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+        </div>
+    </div>
+    <form [formGroup]="UpdateFollowForm" (ngSubmit)="UpdateFollowFormS()">
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="form-group row">
+                    <div class="col-lg-3">
+                        <!-- (change)="ChangeStatusRenewals($event)" -->
+                        <label> Action Type </label>
+                        <select *ngIf="UserRoleType == 'employee'" class="form-control"
+                             formControlName="ActionType"> 
+                            <!-- <option [value]="'1'" [selected]=" row.SrStatus=='1'"
+                                [disabled]=" row.SrStatus =='1' ||  row.SrStatus =='2' ||  row.SrStatus=='3' ||  row.SrStatus=='4'">
+                                Pending</option> -->
+                            <option [value]="'1'" [selected]="row.SrStatus=='1'"
+                                [disabled]=" row.SrStatus=='2' ||  row.SrStatus=='3'"> Unknown
+                                Case </option>
+                            <option [value]="'2'" [selected]="row.SrStatus=='2'"
+                                [disabled]="row.SrStatus=='3'"> Direct
+                            </option>
+                            <option [value]="'3'" [selected]="row.SrStatus=='3'"
+                                [disabled]="row.SrStatus=='2'"> Agent
+                            </option>
+                        </select>
+                        <span *ngIf="isSubmitted && FC.ActionType.errors" class="form-text text-muted">
+                            <span *ngIf="FC.ActionType.errors.required" style="color:red;">Action Type is
+                                required..!</span>
+                        </span>
+                    </div>
+                    
+                    <div class="col-lg-4" >
+                        <label>Remarks:</label>
+                        <input type="text" formControlName="Remarks" class="form-control" maxlength="1000">
+                        <span *ngIf="isSubmitted && FC.Remarks.errors" class="form-text text-muted">
+                            <span *ngIf="FC.Remarks.errors.required" style="color:red;">Field is required..!</span>
+                        </span>
+                    </div>
+
+                    <div class="col-lg-4" *ngIf="UpdateFollowForm.value['ActionType'] == '2'">
+                        <label>Select SPC:</label>
+                        <ng-multiselect-dropdown class="form-control" placeholder="--Select SPC --" [data]="SpcData" formControlName="Spc" [settings]="dropdownSettingsType">
+                        </ng-multiselect-dropdown>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer">
+            <button type="button" (click)="CloseModel()" class="btn btn-default pull-right">Cancel</button>
+            <button style="margin-right: 1%;" type="submit" class="btn btn-info pull-right">Update</button>
+        </div>
+    </form>
+</div>

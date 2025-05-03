@@ -1,0 +1,180 @@
+.modal-footer {
+    border-top-color: #f4f4f4;
+    padding: 10px 0px 0px 0px;
+}
+
+
+/* .modal_footer.modal-footer {
+    position: fixed;
+    height: 100px;
+    bottom: 0;
+    right: 0;
+} */
+
+table.table-hover.margin-dialog {
+    margin: 15px
+}
+
+.modal_footer.modal-footer {
+    border-top: none;
+    padding: 0px;
+}
+
+.main_header button.close_btn.Save_click {
+    font-size: 18px;
+    background-color: transparent;
+    color: #fff;
+}
+
+.main_card_form table.table-hover.margin-dialog {
+    width: 94%;
+}
+
+button.btn.nextBtn {
+    padding: 8px 12px;
+}
+
+.category_list.custon_inline .panel-body .form-width-group {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.category_list.custon_inline .panel-body .form-btn-group {
+    width: 10%;
+    /* justify-content: end; */
+    
+    display: flex;
+}
+
+.category_list.custon_inline .panel-body button.box_1 {
+    width: auto;
+    margin: 0px 2px !important;
+}
+
+.table-panel-fixed {
+    display: flex;
+    justify-content: space-around;
+}
+
+.table-panel-fixed .label-group {
+    display: flex;
+    width: 90%;
+    justify-content: space-around;
+}
+
+.table-panel-fixed .label-action {
+    width: 10%;
+    text-align: center;
+}
+
+.table-panel-fixed .panel-button {
+    width: auto;
+    margin: 0px !important;
+}
+
+.table-panel-fixed .panel-label {
+    width: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*  
+  .btn-secondary {
+    background-color: transparent;
+    border: none;
+    color: #000;
+    font-size: 24px;
+  }
+  
+  .btn-secondary:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  
+  .dropdown-menu {
+    min-width: 200px;
+  }
+  
+  .dropdown-menu.dropdown-menu-left {
+    right: 0;
+    left: auto;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #17a2b8;
+    color: white;
+  }
+  
+  
+   */
+
+   .btn-secondary {
+    background-color: transparent;
+    border: none;
+    color: #000;
+    font-size: 24px;
+    padding: 0;
+  }
+  
+  .btn-secondary:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  
+  .dropdown-menu {
+    min-width: 200px;
+    padding: 0;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  }
+  
+  .custom-dropdown .dropdown-item {
+    padding: 7px 15px;
+    font-size: 12px;
+    color: #000;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+    background: #fff;
+    border: none;
+    border-bottom: 1px solid #ddd;
+  }
+ .custom-dropdown  .dropdown-item:last-child {
+    border-bottom: none;
+  }
+  .custom-dropdown .dropdown-item:hover {
+    background-color: #17a2b8;
+    color: white;
+  }
+  
+  .custom-dropdown .dropdown-item:first-child {
+    border-bottom: 1px solid #eee;
+  }
+  .dropdown.custom-dropdown {
+    margin-right: 20px;
+  }
+  .dropdown.custom-dropdown .btn-secondary {
+    color: #2cb2b3;
+    font-size: 20px !important;
+    padding: 5px;
+}
+.category_list.custon_inline .panel-body {
+    align-items: baseline;
+}
+.custom-dropdown .dropdown-menu-right {
+    border-radius: 5px;
+    overflow: hidden;
+}
+  

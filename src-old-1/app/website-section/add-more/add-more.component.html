@@ -1,0 +1,90 @@
+<div class="row">
+
+  <div class="modal-header" style="text-align: center;">
+    <h4 class="modal-title" *ngIf="this.currentUrl == '/WebsiteSection/gallery'">Gallery
+
+    </h4>
+
+    <h4 class="modal-title" *ngIf="this.currentUrl == '/WebsiteSection/awards'"> Awards
+
+    </h4>
+
+    <h4 class="modal-title" *ngIf="this.currentUrl == '/WebsiteSection/clients'"> Clients
+
+    </h4>
+    <h4 class="modal-title" *ngIf="this.currentUrl == '/WebsiteSection/testimonials'">TESTIMONIALS
+
+    </h4>
+
+
+  </div>
+</div>
+
+<form (ngSubmit)="submit()" [formGroup]="AddMoreData" style="margin-top: -15px;">
+
+  <div class="box-body">
+
+    <div class="row">
+      <div class="col-md-4" *ngIf="this.currentUrl == '/WebsiteSection/gallery'">
+        <label for="state">Heading</label>
+        <input type="text" class="form-control" formControlName="heading">
+        <div *ngIf="isSubmitted && formControls.heading.errors" class="ValidationError">
+          <div *ngIf="formControls.heading.errors.required">Please enter Heading</div>
+        </div>
+      </div>
+
+
+      <div class="col-md-4"
+        *ngIf="this.currentUrl == '/WebsiteSection/testimonials' ||  this.currentUrl == '/WebsiteSection/clients'">
+        <label for="state">Title</label>
+        <input type="text" class="form-control" formControlName="title">
+        <div *ngIf="isSubmitted && formControls.title.errors" class="ValidationError">
+          <div *ngIf="formControls.title.errors.required">Please enter Title</div>
+        </div>
+      </div>
+
+      <div class="col-md-4" *ngIf="this.currentUrl == '/WebsiteSection/clients'">
+        <label for="state">alt tag</label>
+        <input type="text" class="form-control" formControlName="description">
+        <div *ngIf="isSubmitted && formControls.title.errors" class="ValidationError">
+          <div *ngIf="formControls.title.errors.required">Please enter alt tag</div>
+        </div>
+      </div>
+
+
+      <div class="col-md-4" *ngIf="this.currentUrl == '/WebsiteSection/gallery' || this.currentUrl == '/WebsiteSection/awards'   || this.currentUrl == '/WebsiteSection/clients'
+            || this.currentUrl == '/WebsiteSection/testimonials'">
+        <label for="state">Image</label>
+        <input type="file" class="form-control" formControlName="image" (change)="UploadDocs($event,'image')">
+        <div *ngIf="isSubmitted && formControls.image.errors" class="ValidationError">
+          <div *ngIf="formControls.image.errors.required">Please Select Image</div>
+        </div>
+      </div>
+
+
+      <div class="col-md-12" *ngIf="this.currentUrl == '/WebsiteSection/testimonials'">
+        <label>Description</label>
+        <ckeditor formControlName="description"></ckeditor>
+        <!-- <ckeditor [editor]="CKEditorComponent" formControlName="ckeditor"></ckeditor> -->
+        <div *ngIf="isSubmitted && formControls.description.errors" class="Validationerrors">
+          <div *ngIf="formControls.description.errors.required"><span style="color: red;">
+              Please Enter Discription!</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="box-footer with-border">
+      <footer>
+        <button class="btn pull-right" (click)="CloseModel()" type="button">Close</button>
+        <button class="btn btn-primary nextBtn pull-right" style="margin-right: 5px;" type="submit">Submit</button>
+      </footer>
+    </div>
+
+
+
+  </div>
+
+
+
+</form>

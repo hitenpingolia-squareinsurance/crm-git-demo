@@ -1,0 +1,21 @@
+.ImageUploaded {
+  background-color: green;
+  color: white;
+}
+
+.mat-dialog-container {
+  overflow: hidden !important;
+}
+
+.cdk-overlay-pane {
+  min-height: 65% !important;
+}
+
+.app-add-follow-ups {
+  max-height: 100% !important;
+  overflow: hidden !important;
+}
+
+.table {
+  margin-bottom: 0px !important;
+}

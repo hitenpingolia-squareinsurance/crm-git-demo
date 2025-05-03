@@ -1,0 +1,106 @@
+.section-bg-1{
+	background-image: url(/assets/dist/img/result-bg.png);
+    padding: 20px;
+    border: 1px solid #19739354;
+    box-shadow: 1px 1px 10px #2cb2b333;
+    background-repeat: no-repeat;
+    height: 434px;
+    background-size: cover;
+}
+.section-bg-2{
+	background-image: url(/assets/dist/img/result-bgpass.png);
+    padding: 20px;
+    border: 1px solid #19739354;
+    box-shadow: 1px 1px 10px #2cb2b333;
+    background-repeat: no-repeat;
+    height: 434px;
+    background-size: cover;
+}
+
+
+.section-bg{
+	background: #ffffff5c;
+    padding: 20px;
+    border: 1px solid #19739354;
+    box-shadow: 1px 1px 10px #2cb2b333;
+}
+
+
+.img-section img{
+	width: 100%;
+}
+
+.details-div p{
+	font-size: 25px;
+	color: dimgrey;
+
+}
+
+
+.details-div{
+	padding:50px 0px;
+}
+
+
+.btn-div-all button{
+
+margin-right: 10px;
+font-size: 18px;
+width: 30%;
+
+}
+
+
+.btn-div-all button i{
+	padding-right: 5px;
+}
+
+.btn-div-all {
+  padding:20px 0px;
+}
+
+
+.details-div label{
+	color: #367fa9;
+    font-weight: 600;
+    margin: 0;
+    font-size: 18px;
+}
+
+
+.btn-align{
+	text-align: center;
+}
+
+
+
+
+
+@media (min-device-width: 992px) and (max-device-width: 1199px){}
+@media (min-device-width: 768px) and (max-device-width:991px){}
+@media (max-width: 767px){
+
+   .btn-div-all button{
+
+			margin-right: 0;
+			font-size: 18px;
+			width: 100%;
+			margin: 5px 0px;
+
+}
+
+
+.details-div p{
+	font-size: 18px;
+	color: dimgrey;
+	text-align: justify;
+
+}
+
+
+.details-div {
+    padding: 0px 0px;
+}
+
+
+}

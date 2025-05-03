@@ -1,0 +1,789 @@
+<div class="modal-dialog cs_table_data custom-modal-dailog-data">
+    <div>
+        <div class="modal-body" style="height: calc(100vh - 115px) !important; overflow-y: auto;">
+
+            <button class="btn btn-secondary" style="padding:3px; position: fixed; top: 79px; right: 2%;"
+                (click)="CloseModel()">
+                <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;Back
+            </button>
+
+            <table *ngIf="DetailType == 'Details'">
+                <tr class="ValueTD">
+                    <td colspan="6">Employee Details</td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="2"><b>Request ID : </b> {{this.requestId}}</td>
+                    <td align="center" colspan="2"><b>Employee Name : </b> {{EmployeeData ?
+                        EmployeeData[0].Employee_Name : ''}}</td>
+                    <td align="center" colspan="2"><b>Designation : </b> {{EmployeeData ?
+                        EmployeeData[0].Employee_Designation : ''}}</td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="2"><b>Profile : </b> {{EmployeeData ? EmployeeData[0].Employee_Profile :
+                        ''}}</td>
+                    <td align="center" colspan="2"><b>Vertical : </b> {{EmployeeData ?
+                        EmployeeData[0].Employee_Department : ''}}</td>
+                    <td align="center" colspan="2"><b>Reporting Manager : </b> {{EmployeeData ?
+                        EmployeeData[0].Employee_ReportingManager : ''}}</td>
+                </tr>
+
+                <tbody *ngFor="let row of dataAr;">
+                    <tr class="ValueTD">
+                        <td colspan="6">Travel Mode / Type</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Travel Arrangement</b> : {{row.travel_arrangement}}</td>
+                        <td colspan="2"><b>Travel Type</b> : {{row.travel_type}}</td>
+                        <td colspan="2"><b>Travel Mode</b> : {{row.travel_mode}}</td>
+                    </tr>
+                    <tr class="ValueTD">
+                        <td colspan="6">Date Range And Purpose</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>From Date</b> : {{row.travel_start_date}}</td>
+                        <td colspan="2"><b>To Date</b> : {{row.travel_end_date}}</td>
+                        <td colspan="2"><b>Purpose of Visit Details</b> : {{row.purpose_of_visit}}</td>
+                    </tr>
+                    <tr class="ValueTD">
+                        <td colspan="6">Start Point</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Country</b> : {{row.country_end_point}}</td>
+                        <td colspan="2"><b>State</b> : {{state_start_point}}</td>
+                        <td colspan="2"><b>City</b> : {{city_start_point}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>City Class</b>: {{row.tier_start_point}}</td>
+                    </tr>
+                    <tr class="ValueTD">
+                        <td colspan="6">End Point</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Country</b> : {{row.country_end_point}}</td>
+                        <td colspan="2"><b>State</b> : {{state_end_point}}</td>
+                        <td colspan="2"><b>City</b> : {{city_end_point}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>City Class</b> : {{row.tier_end_point}}</td>
+                    </tr>
+                    <tr class="ValueTD" *ngIf="selected_guesthouse != '' || row.HotelName != ''">
+                        <td colspan="6">Guest House / Hotel</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" *ngIf="selected_guesthouse != ''"><b>Guest House </b> : {{selected_guesthouse}}
+                        </td>
+                        <td colspan="2" *ngIf="row.HotelName != ''"><b>Hotel </b> : {{row.HotelName}}</td>
+                        <td colspan="2" *ngIf="selected_guesthouse != '' || row.HotelName != ''"><b>Nearest Location
+                            </b> : {{row.nearby_hotels}}</td>
+                    </tr>
+
+                    <tr class="ValueTD" *ngIf="row.advance_requirement == 'Yes'">
+                        <td colspan="6">Advance Details</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" *ngIf="row.advance_requirement == 'Yes'"><b>Advance Amount Requested</b> :
+                            {{row.advance_amount}}</td>
+                        <td colspan="2" *ngIf="row.advance_requirement == 'Yes'"><b>Advance Details</b> :
+                            {{row.advance_details}}</td>
+                        <td colspan="2" *ngIf="row.advance_requirement == 'Yes'"><b>Advance Approved</b> :
+                            {{row.account_amount}}</td>
+                    </tr>
+
+                    <tr class="ValueTD">
+                        <td colspan="6">Travel Details</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"><b>Travel With </b> : {{row.travel_with}}</td>
+                        <td colspan="2"><b>Work In Hand</b> :{{row.work_in_hand}}</td>
+                        <td colspan="2"><b>Remarks</b> : {{row.remark}}</td>
+
+                    </tr>
+
+                    <tr>
+                        <td colspan="12" *ngIf="row.travel_with == 'Group'"><b>Travel With </b> :
+                            {{employees_to_travelwith}}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="12"><b>Email to Contact Person</b> : {{email_to_contact}}</td>
+                    </tr>
+
+                    <tr class="ValueTD">
+                        <td colspan="6">Document</td>
+                    </tr>
+                    <tr *ngFor="let image of Images; let i = index">
+                        <td colspan="3"><b>Document {{ i + 1 }}</b></td>
+                        <td colspan="3"><a href="javascript:void(0)" (click)="ViewDocument(image)">Click to View</a>
+                        </td>
+                    </tr>
+
+                    <tr class="ValueTD" *ngIf="this.hotelImages ? this.hotelImages.length > 0 : ''">
+                        <td colspan="6">Hotel Document</td>
+                    </tr>
+                    <tr *ngFor="let image of hotelImages; let i = index">
+                        <td colspan="3"><b>Document {{ i + 1 }}</b></td>
+                        <td colspan="3"><a href="javascript:void(0)" (click)="ViewDocument(image)">Click to View</a>
+                        </td>
+                    </tr>
+
+                    <tr class="ValueTD" *ngIf="this.travelImages ? this.travelImages.length > 0 : ''">
+                        <td colspan="6">Travel Document</td>
+                    </tr>
+                    <tr *ngFor="let image of travelImages; let i = index">
+                        <td colspan="3"><b>Document {{ i + 1 }}</b></td>
+                        <td colspan="3"><a href="javascript:void(0)" (click)="ViewDocument(image)">Click to View</a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+
+
+            <!-- --------------------------CLAIMS-------------------------------- -->
+
+            <!-- Logs Modal -->
+            <div *ngIf="DetailType == 'Claim'">
+
+                <form class="form" (ngSubmit)="claim_Form()" [formGroup]="ClaimUpdateForm">
+
+                    <div class="modal-body" *ngIf="Claimrequest_Type.has('1')">
+                        <h5 class="title-h5">{{Claimrequest_Type.has('1') ? 'Journey Details' : ''}}</h5>
+                        <table class="table-claim  table-bordered table-hover" id="Table1"
+                            style="width: -webkit-fill-available;">
+                            <thead>
+                                <th>SrNo.</th>
+                                <th>Departure Start Point</th>
+                                <th>Arrival Start Point</th>
+                                <th>Date Range</th>
+                                <th>Mode</th>
+                                <th>Distance</th>
+                                <th>Document</th>
+                                <th>Remark</th>
+                                <th>Requested Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 0 && url_segment == 'claimManager') || managerAmount != null">
+                                    Manager Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 1 && url_segment == 'claimHOD' && Status != 'View') || this.hodAmount != null">
+                                    HOD Amount</th>
+
+                                <th
+                                    *ngIf="(Claim_status == 2 && url_segment == 'claimTravel' && Status != 'View') || this.travelAmount != null">
+                                    Travel Amount</th>
+
+                                <th
+                                    *ngIf="(Claim_status == 3 && url_segment == 'claimAccount' && Status != 'View') || this.accountAmount != null">
+                                    Account Amount</th>
+
+                            </thead>
+
+
+                            <tbody *ngFor="let row of ClaimDataAr;">
+                                <tr *ngIf="row.expense_type  == '1'">
+                                    <td>{{row.sr_no}}</td>
+                                    <td>{{row.hotel}}</td>
+                                    <td>{{row.start_point}}</td>
+                                    <td>
+                                        {{row.from_date | date:'dd-MM-yyyy'}} TO {{row.to_date | date:'dd-MM-yyyy'}}
+                                    </td>
+
+                                    <td>
+                                        {{row.travel_mode}}
+                                    </td>
+                                    <td>
+                                        {{row.distance}}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#claimdocs"
+                                            (click)="ViewClaimDocs(row.document)">View</button>
+                                    </td>
+                                    <td>{{row.remarks}}</td>
+                                    <td>{{row.amount}}</td>
+                                    <td *ngIf="row.ClaimStatus == 0 && url_segment == 'claimManager'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.managerAmount != null">
+                                        {{row.managerAmount}}
+                                    </td>
+                                    <td *ngIf="row.ClaimStatus == 1 && url_segment == 'claimHOD' && Status != 'View'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.hodAmount != null">
+                                        {{row.hodAmount}}
+                                    </td>
+                                    <td
+                                        *ngIf="row.ClaimStatus == 2 && url_segment == 'claimTravel' && Status != 'View'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.travelAmount != null">
+                                        {{row.travelAmount}}
+                                    </td>
+                                    <td
+                                        *ngIf="row.ClaimStatus == 3 && url_segment == 'claimAccount' && Status != 'View'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.accountAmount != null">
+                                        {{row.accountAmount}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="modal-body" *ngIf="Claimrequest_Type.has('2')">
+                        <h5><b>{{Claimrequest_Type.has('2') ? 'Loading Details' : ''}}</b></h5>
+                        <table class="table-claim  table-bordered table-hover" id="Table1"
+                            style="width: -webkit-fill-available;">
+                            <thead>
+                                <th>SrNo.</th>
+                                <th>Hotel</th>
+                                <th>Date Range</th>
+                                <th>Document</th>
+                                <th>Remark</th>
+                                <th>Requested Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 0 && url_segment == 'claimManager') || managerAmount != null">
+                                    Manager Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 1 && url_segment == 'claimHOD' && Status != 'View') || this.hodAmount != null">
+                                    HOD Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 2 && url_segment == 'claimTravel' && Status != 'View') || this.travelAmount != null">
+                                    Travel Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 3 && url_segment == 'claimAccount' && Status != 'View') || this.accountAmount != null">
+                                    Account Amount</th>
+
+                            </thead>
+                            <tbody *ngFor="let row of ClaimDataAr;">
+                                <tr *ngIf="row.expense_type  == '2'">
+                                    <td>{{row.sr_no}}</td>
+                                    <td>{{row.hotel}}</td>
+                                    <td>
+                                        {{row.from_date | date:'dd-MM-yyyy'}} TO {{row.to_date | date:'dd-MM-yyyy'}}
+                                    </td>
+                                    <td>
+
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#claimdocs"
+                                            (click)="ViewClaimDocs(row.document)">View</button>
+                                    </td>
+                                    <td>{{row.remarks}}</td>
+                                    <td>{{row.amount}}</td>
+                                    <td *ngIf="row.ClaimStatus == 0 && url_segment == 'claimManager'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.managerAmount != null">
+                                        {{row.managerAmount}}
+                                    </td>
+                                    <td *ngIf="row.ClaimStatus == 1 && url_segment == 'claimHOD' && Status != 'View'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.hodAmount != null">
+                                        {{row.hodAmount}}
+                                    </td>
+                                    <td
+                                        *ngIf="row.ClaimStatus == 2 && url_segment == 'claimTravel' && Status != 'View'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.travelAmount != null">
+                                        {{row.travelAmount}}
+                                    </td>
+                                    <td
+                                        *ngIf="row.ClaimStatus == 3 && url_segment == 'claimAccount' && Status != 'View'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.accountAmount != null">
+                                        {{row.accountAmount}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="modal-body" *ngIf="Claimrequest_Type.has('3')">
+                        <h5 class="title-h5">{{Claimrequest_Type.has('3') ? 'Travel Allowance' : ''}}</h5>
+                        <table class="table-claim  table-bordered table-hover" id="Table1"
+                            style="width: -webkit-fill-available;">
+                            <thead>
+                                <th>SrNo.</th>
+                                <th>Date Range</th>
+                                <th>Remark</th>
+                                <th>Requested Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 0 && url_segment == 'claimManager') || managerAmount != null">
+                                    Manager Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 1 && url_segment == 'claimHOD' && Status != 'View') || this.hodAmount != null">
+                                    HOD Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 2 && url_segment == 'claimTravel' && Status != 'View') || this.travelAmount != null">
+                                    Travel Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 3 && url_segment == 'claimAccount' && Status != 'View') || this.accountAmount != null">
+                                    Account Amount</th>
+
+                            </thead>
+                            <tbody *ngFor="let row of ClaimDataAr;">
+                                <tr *ngIf="row.expense_type  == '3'">
+                                    <td>{{row.sr_no}}</td>
+                                    <td>
+                                        {{row.from_date | date:'dd-MM-yyyy'}} TO {{row.to_date | date:'dd-MM-yyyy'}}
+                                    </td>
+                                    <td>{{row.remarks}}</td>
+                                    <td>{{row.amount}}</td>
+                                    <td *ngIf="row.ClaimStatus == 0 && url_segment == 'claimManager'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.managerAmount != null">
+                                        {{row.managerAmount}}
+                                    </td>
+                                    <td *ngIf="row.ClaimStatus == 1 && url_segment == 'claimHOD' && Status != 'View'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.hodAmount != null">
+                                        {{row.hodAmount}}
+                                    </td>
+                                    <td
+                                        *ngIf="row.ClaimStatus == 2 && url_segment == 'claimTravel' && Status != 'View'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.travelAmount != null">
+                                        {{row.travelAmount}}
+                                    </td>
+                                    <td
+                                        *ngIf="row.ClaimStatus == 3 && url_segment == 'claimAccount' && Status != 'View'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.accountAmount != null">
+                                        {{row.accountAmount}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="modal-body" *ngIf="Claimrequest_Type.has('4')">
+                        <h5><b>{{Claimrequest_Type.has('4') ? 'Daily Allowance' : ''}}</b></h5>
+                        <table class="table-claim  table-bordered table-hover" id="Table1"
+                            style="width: -webkit-fill-available;">
+                            <thead>
+                                <th>SrNo.</th>
+                                <th>Date Range</th>
+                                <th>Remark</th>
+                                <th>Requested Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 0 && url_segment == 'claimManager') || managerAmount != null">
+                                    Manager Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 1 && url_segment == 'claimHOD' && Status != 'View') || this.hodAmount != null">
+                                    HOD Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 2 && url_segment == 'claimTravel' && Status != 'View') || this.travelAmount != null">
+                                    Travel Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 3 && url_segment == 'claimAccount' && Status != 'View') || this.accountAmount != null">
+                                    Account Amount</th>
+
+                            </thead>
+                            <tbody *ngFor="let row of ClaimDataAr;">
+                                <tr *ngIf="row.expense_type  == '4'">
+                                    <td>{{row.sr_no}}</td>
+                                    <td>
+                                        {{row.from_date | date:'dd-MM-yyyy'}} TO {{row.to_date | date:'dd-MM-yyyy'}}
+                                    </td>
+                                    <td>{{row.remarks}}</td>
+                                    <td>{{row.amount}}</td>
+                                    <td *ngIf="row.ClaimStatus == 0 && url_segment == 'claimManager'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.managerAmount != null">
+                                        {{row.managerAmount}}
+                                    </td>
+                                    <td *ngIf="row.ClaimStatus == 1 && url_segment == 'claimHOD' && Status != 'View'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.hodAmount != null">
+                                        {{row.hodAmount}}
+                                    </td>
+                                    <td
+                                        *ngIf="row.ClaimStatus == 2 && url_segment == 'claimTravel' && Status != 'View'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.travelAmount != null">
+                                        {{row.travelAmount}}
+                                    </td>
+                                    <td
+                                        *ngIf="row.ClaimStatus == 3 && url_segment == 'claimAccount' && Status != 'View'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.accountAmount != null">
+                                        {{row.accountAmount}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="modal-body" *ngIf="Claimrequest_Type.has('5')">
+                        <h5><b>{{Claimrequest_Type.has('5') ? 'Other Expense' : ''}}</b></h5>
+                        <table class="table-claim  table-bordered table-hover" id="Table1"
+                            style="width: -webkit-fill-available;">
+                            <thead>
+                                <th>SrNo.</th>
+                                <th>Date Range</th>
+                                <th>Document</th>
+                                <th>Remark</th>
+                                <th>Requested Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 0 && url_segment == 'claimManager') || managerAmount != null">
+                                    Manager Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 1 && url_segment == 'claimHOD' && Status != 'View') || this.hodAmount != null">
+                                    HOD Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 2 && url_segment == 'claimTravel' && Status != 'View') || this.travelAmount != null">
+                                    Travel Amount</th>
+                                <th
+                                    *ngIf="(Claim_status == 3 && url_segment == 'claimAccount' && Status != 'View') || this.accountAmount != null">
+                                    Account Amount</th>
+
+                            </thead>
+                            <tbody *ngFor="let row of ClaimDataAr;">
+                                <tr *ngIf="row.expense_type  == '5'">
+                                    <td>{{row.sr_no}}</td>
+                                    <td>
+                                        {{row.from_date | date:'dd-MM-yyyy'}} TO {{row.to_date | date:'dd-MM-yyyy'}}
+                                    </td>
+                                    <td>
+
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#claimdocs"
+                                            (click)="ViewClaimDocs(row.document)">View</button>
+                                    </td>
+                                    <td>{{row.remarks}}</td>
+                                    <td>{{row.amount}}</td>
+                                    <td *ngIf="row.ClaimStatus == 0 && url_segment == 'claimManager'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.managerAmount != null">
+                                        {{row.managerAmount}}
+                                    </td>
+                                    <td *ngIf="row.ClaimStatus == 1 && url_segment == 'claimHOD' && Status != 'View'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.hodAmount != null">
+                                        {{row.hodAmount}}
+                                    </td>
+                                    <td
+                                        *ngIf="row.ClaimStatus == 2 && url_segment == 'claimTravel' && Status != 'View'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.travelAmount != null">
+                                        {{row.travelAmount}}
+                                    </td>
+                                    <td
+                                        *ngIf="row.ClaimStatus == 3 && url_segment == 'claimAccount' && Status != 'View'">
+                                        <input type="number" class="form-control"
+                                            [formControlName]="row.id + '_journeyAmount'"
+                                            (input)="amountcalculate($event.target.value, row.id)">
+                                        <div *ngIf="claimSubmit && ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="ClaimUpdateForm.get(row.id + '_journeyAmount')?.errors?.required">
+                                                Amount is required
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="row.accountAmount != null">
+                                        {{row.accountAmount}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+
+                <form class="form" [formGroup]="ClaimForm"
+                    *ngIf="Status != 'View' && ((Claim_status == 0 && url_segment == 'claimManager') || Claim_status == 1 && url_segment == 'claimHOD' || Claim_status == 2 && url_segment == 'claimTravel' || Claim_status == 3 && url_segment == 'claimAccount')">
+
+                    <div class="modal-body ">
+                        <div class="form-group">
+                            <label for="Remark">Remark</label>
+                            <textarea class="form-control" type="text" formControlName="Remark" name="Remark"
+                                id="Remark" placeholder="Enter Remark"></textarea>
+                            <span *ngIf="claimSubmit && FormClaim.Remark.errors" class="ValidationError">
+                                <span *ngIf="FormClaim.Remark.errors.required">Remark required!</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" (click)="claim_Form()" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+                <div class="remark">
+                    <h5 *ngIf="ManagerRemark && Claim_status != 0" class="remark-text"><abbr>Manager
+                            Remark</abbr><span>{{ManagerRemark}}</span></h5>
+                    <h5 *ngIf="HODRemark && (Claim_status != 0 || Claim_status != 1)" class="remark-text"><abbr>HOD
+                            Remark</abbr><span>{{HODRemark}}</span></h5>
+                    <h5 *ngIf="TravelRemark && (Claim_status != 0 && Claim_status != 1 && Claim_status != 2)"
+                        class="remark-text"><abbr>Travel Remark</abbr><span>{{TravelRemark}}</span></h5>
+                    <h5 *ngIf="AccountRemark && (Claim_status != 0 && Claim_status != 1 && Claim_status != 2 && Claim_status != 3)"
+                        class="remark-text"><abbr>Account Remark</abbr><span>{{AccountRemark}}</span></h5>
+                </div>
+
+
+
+
+
+
+                <div class="features-box">
+                    <div class="box1">
+                        <div class="box2">
+                            <div class="box_1">
+                                <abbr>Journey Amount Total</abbr>
+                                <span>{{ Status == 'View' ? JourneyAmountTotal : JourneyAmountTotal_1}}</span>
+                            </div>
+                            <div class="box_1">
+                                <abbr>Loading Amount Total</abbr>
+                                <span>{{ Status == 'View' ? LoadingAmountTotal : LoadingAmountTotal_1}}</span>
+                            </div>
+                            <div class="box_1">
+                                <abbr>TA Amount Total</abbr>
+                                <span>{{ Status == 'View' ? TAAmountTotal : TAAmountTotal_1}}</span>
+                            </div>
+                            <div class="box_1">
+                                <abbr>DA Amount Total</abbr>
+                                <span>{{ Status == 'View' ? DAAmountTotal : DAAmountTotal_1}}</span>
+                            </div>
+                            <div class="box_1">
+                                <abbr>Other Expense Amount Total</abbr>
+                                <span>{{ Status == 'View' ? OtherAmountTotal : OtherAmountTotal_1}}</span>
+                            </div>
+                        </div>
+                        <div class="box3">
+                            <div class="box3_1 bg1">
+                                <abbr>Total:</abbr>
+                                <span>{{ Status == 'View' ? TotalAmount : TotalAmount_1}}</span>
+                            </div>
+                            <div class="box3_1 bg2">
+                                <abbr>Advance Taken:</abbr>
+                                <span>
+                                    {{this.ClaimDataAr ? this.ClaimDataAr[0].account_amount : 0}}
+                                </span>
+                            </div>
+                            <div class="box3_1 bg3">
+                                <abbr>Balance:</abbr>
+                                <span>{{ Status == 'View' ? Balance : Balance_1}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- ---------------------------------CLAIM DOCS-------------------------- -->
+<div class="modal fade" id="claimdocs" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="false">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content" style="width:600px;">
+            <div class="modal-header">
+                <h5 class="modal-title-h2 " id="exampleModalLabel">Claim Docs</h5>
+                <button id="CloseModel" type="button" class="close closeModelButton" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="doc_one" *ngFor="let doc of selectedImages; let i = index">
+                    <h5>Document {{i + 1}}</h5>
+                    <button class="btn btn-primary" (click)="ViewDocument(doc)">
+                        View
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

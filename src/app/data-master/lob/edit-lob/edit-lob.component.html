@@ -1,0 +1,122 @@
+<!--begin::Content-->
+
+<div class="content  d-flex flex-column flex-column-fluid" id="kt_content"> 
+  <!--begin::Subheader-->
+  <div class="subheader py-2 py-lg-4  subheader-transparent " id="kt_subheader">
+    <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap"> 
+      <!--begin::Info-->
+      <div class="d-flex align-items-center flex-wrap mr-1"> 
+        
+        <!--begin::Page Heading-->
+        <div class="d-flex align-items-baseline mr-5"> 
+          <!--begin::Page Title-->
+          <h5 class="text-dark font-weight-bold my-2 mr-5">Edit LOB </h5>
+          <!--end::Page Title--> 
+          
+          <!--begin::Breadcrumb-->
+          <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+            <li class="breadcrumb-item"> <a href="javascript:;" class="text-muted"> data-management </a> </li>
+            <li class="breadcrumb-item"> <a href="javascript:;" class="text-muted"> edit-lob </a> </li>
+             
+          </ul>
+          <!--end::Breadcrumb--> 
+        </div>
+        <!--end::Page Heading--> 
+      </div>
+      <!--end::Info--> 
+      
+      <!--begin::Toolbar-->
+       
+      <!--end::Toolbar--> 
+    </div>
+  </div>
+  <!--end::Subheader--> 
+  
+  <!--begin::Entry-->
+  <div class="d-flex flex-column-fluid"> 
+    <!--begin::Container-->
+    <div class=" container "> 
+      <!--begin::Notice-->
+    
+      <!--end::Notice--> 
+      
+      <!--begin::Card-->
+      <div class="card card-custom">
+        <div class="card-header">
+          <div class="card-title">  
+            <h3 class="card-label"></h3>
+          </div>
+          <div class="card-toolbar"> 
+             
+            
+            <!--begin::Button--> 
+            <a routerLink="/data-management/lob" class="btn btn-primary font-weight-bolder"> 
+			<span class="svg-icon svg-icon-md"> 
+             <i class="icon-xl fas fa-reply"></i>
+            </span> Back </a> 
+            <!--end::Button--> 
+          </div>
+        </div>
+		
+		
+        
+           
+		    <form class="form" id="kt_form_1" [formGroup]="AddForm" (ngSubmit)="Edit()">
+				<div class="card-body">
+				
+					  
+					<div class="form-group row">
+						<label class="col-form-label text-right col-lg-3 col-sm-12">Name <span style="color:red;">*</span></label>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<input type="text" class="form-control" name="Name" formControlName="Name"  placeholder=""/>
+							
+							<span *ngIf="isSubmitted && formControls.Name.errors" class="form-text text-muted">
+								<span *ngIf="formControls.Name.errors.required" style="color:red;">Please enter name !</span>
+							</span>
+							
+						</div>
+					</div>
+					 
+
+					<div class="form-group row">
+						<label class="col-form-label text-right col-lg-3 col-sm-12">Status <span style="color:red;">*</span></label>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<select class="form-control" name="Status" formControlName="Status" >
+								<option value="">Select</option>
+								<option value="1">Active</option>
+								<option value="0">De-active</option>
+								 
+							</select>
+							 
+							<span *ngIf="isSubmitted && formControls.Status.errors" class="form-text text-muted">
+								<span *ngIf="formControls.Status.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							
+							
+						</div>
+					</div>
+
+					 
+				</div>
+				<div class="card-footer">
+					<div class="row">
+						<div class="col-lg-9 ml-lg-auto">
+							<button type="submit" class="btn btn-primary font-weight-bold mr-2">Update</button>
+							<button type="reset" class="btn btn-light-primary font-weight-bold">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		   
+        
+      </div>
+      <!--end::Card--> 
+    </div>
+    
+<!--end::Container--> 
+	
+	
+  </div>
+  <!--end::Entry--> 
+</div>
+<!--end::Content--> 

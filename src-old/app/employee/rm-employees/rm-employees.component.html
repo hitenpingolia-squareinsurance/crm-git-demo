@@ -1,0 +1,107 @@
+<div>
+  <div class="row">
+
+
+    <div class="modal-header">
+      <h4 class="modal-title">Employee Team</h4>
+      <button type="button" (click)="CloseModel()" class="close closeModelButton" style="float: right;"><i
+        class="fa fa-close" style="font-size:17px"></i></button>
+    </div>
+
+  </div>
+
+  <table>
+
+    <tbody>
+
+      <tr>
+        <td><b>Name</b>: {{name}}</td>  
+        <td><b>Email</b>: {{email}}</td>
+        <td colspan="2"><b>Mobile</b>: {{mobile}} <span *ngIf="this.extensionno !== '' && this.extensionno != null ">/ <b>Ext. No. : </b> {{extensionno}}</span> 
+        </td>
+      </tr>
+    </tbody>
+
+    <tbody>
+
+      <tr>
+        <td><b>Profile</b>: {{profile}}</td>
+        <td><b>Designation</b>: {{designation}}</td>
+        <td colspan="2"><b>Branch</b>: {{branch}}</td>
+      </tr>
+    </tbody>
+
+    <tbody>
+
+      <tr>
+        <td *ngIf=" (rmname != '')  && (reportingid != '') "><b>Reporting Manager</b>: <span class="pointer"
+            (click)="EmpDetails(RMid)"> <a>{{rmname}}-{{reportingid}}</a> </span></td>
+        <td><b>Vertical</b>: {{departmentname}}</td>
+        <td><b>Mapped Employees</b>: {{records}}</td>        
+      </tr>
+    </tbody>
+  </table>
+  <div class="box-body">
+    <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+
+    <div class="mydiv">
+      <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+        class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Email ID</th>
+            <th>Mobile</th>
+            <th>Department</th>
+            <th>Branch</th>
+            <th>Reporting Manager</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="dataAr?.length != 0">
+          <tr *ngFor="let row of dataAr; let i=index;">
+            <td>{{row.SrNo}}.</td>
+            <td (click)="EmpDetails(row.Id)" class="pointer"><a>{{row.Name}} - {{row.emp_id}}</a></td>
+
+
+            <!-- 
+            <td>{{row.Email}}</td>
+            <td>{{row.Mobile}}</td> -->
+
+            <td>
+
+              <span class="label label-primary" *ngIf="Masking == 'Email'+i" (click)="ShowMaskingField('TempEmail')">
+                Email : {{row.Email}} <span (click)="CopyText(row.Email)" class="fa fa-copy"></span></span>
+
+              <span class="label label-primary" *ngIf="Masking != 'Email'+i" (click)="ShowMaskingField('Email'+i)">
+                Email : ****</span>
+            </td>
+            <td>
+              <span class="label label-primary" *ngIf="Masking =='Mobile'+i" (click)="ShowMaskingField('TempMobile')">
+                Mobile : {{row.Mobile}}</span>
+
+              <span class="label label-primary" *ngIf="Masking != 'Mobile'+i" (click)="ShowMaskingField('Mobile'+i)">
+                Mobile : ****</span>
+            </td>
+
+
+            <td>{{row.Department}}</td>
+            <td>{{row.Branch}}</td>
+            <td (click)="EmpDetails(row.RMId)" class="pointer"><a>{{row.reporting_manager}} - {{row.reporting_id}}</a>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="dataAr?.length == 0">
+          <tr>
+            <td colspan="14" style="text-align: center;">No data available!</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+
+</div>

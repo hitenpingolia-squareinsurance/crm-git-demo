@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="modal-header" style="text-align: center;">
+    <h4 class="modal-title">Add Plan Benefit</h4>
+  </div>
+</div>
+
+<div class="popup-content-body">
+  <div class="row popup-form">
+    <form [formGroup]="Addposter">
+      <div class="col-md-6">
+        <label for="state">LOB</label>
+        <ng-multiselect-dropdown class="form-control" formControlName="LOB" [data]="lobs"
+          (onSelect)="FetchCompany($event)" [settings]="dropdownSingleSettingsType">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.LOB.errors" class="ValidationError">
+          <div *ngIf="formControls.LOB.errors.required">Please enter LOB</div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="state">Insurer</label>
+        <ng-multiselect-dropdown class="form-control" formControlName="Company" [data]="Companys"
+          (onSelect)="FetchPlans($event)" [settings]="dropdownSingleSettingsType">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.Company.errors" class="ValidationError">
+          <div *ngIf="formControls.Company.errors.required">Please enter Company</div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="state">Plan</label>
+        <ng-multiselect-dropdown class="form-control" formControlName="Plan" [data]="Plans"
+          [settings]="dropdownSingleSettingsType" (onSelect)="FetchSubplans($event)">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.Plan.errors" class="ValidationError">
+          <div *ngIf="formControls.Plan.errors.required">Please enter Plan</div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="state">SubPlan</label>
+        <ng-multiselect-dropdown class="form-control" formControlName="SubPlan" [data]="SubPlans"
+          [settings]="dropdownSingleSettingsType">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.SubPlan.errors" class="ValidationError">
+          <div *ngIf="formControls.SubPlan.errors.required">Please enter SubPlan</div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="state">File</label>
+        <input type="file" class="form-control" formControlName="File"
+          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          (change)="UploadDocs($event,'PosterImage')">
+        <div *ngIf=" isSubmitted && formControls.File.errors" class="ValidationError">
+          <div *ngIf="formControls.File.errors.required">Please upload a file</div>
+        </div>
+      </div>
+
+      <!-- <div class="col-md-6">
+        <label for="state">Label</label>
+        <input type="text" class="form-control" placeholder="Please Enter Label" formControlName="uniquelabel">
+        <div *ngIf="isSubmitted && formControls.uniquelabel.errors" class="ValidationError">
+          <div *ngIf="formControls.uniquelabel.errors.required">Please enter Label</div>
+        </div>
+      </div> -->
+
+
+
+
+
+      <div class="col-md-12">
+        <div class="col-sm-8">&nbsp;</div>
+        <div class="col-sm-4">
+          <div class="button-di1v-yes-no">
+            <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>&nbsp;&nbsp;
+            <button type="submit" class="btn btn-primary" (click)="submit()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+ <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">All Employee</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Action</th>
+                  <th>Name</th>
+                  <th>Emp Code</th>
+				  <th>Type</th>
+                  <th>Mobile No</th>
+                  <th>Email</th>
+
+                  <th>Vertical</th>
+                  <th>Branch/Sub-Name</th>
+
+
+                </tr>
+                </thead>
+
+				<tbody *ngIf="dataAr?.length != 0">
+
+					<tr *ngFor="let row of dataAr; let i=index;">
+					  <td>{{row.SrNo}}.</td>
+
+					  <td>
+
+						<a *ngIf="row.Status == '0'" routerLink="/report-management/employee-rights/{{row.Id}}">
+						<span class="label label-info">Rights</span><br>
+						</a>
+
+						<span *ngIf="row.Status == '0'" class="label label-success">Active</span>
+					    <span *ngIf="row.Status == '1'" class="label label-danger">De-Active</span>
+
+					  </td>
+
+					  <td>{{row.Name}}</td>
+					  <td>{{row.Emp_Code}}</td>
+					  <td>{{row.Emp_Type}}</td>
+					  <td>{{row.Mobile_No}}</td>
+					  <td>{{row.Email}}</td>
+					  <td>{{row.Vertical_Name}}</td>
+					  <td>{{row.Branch_Name}}<span *ngIf="row.Sub_Branch_Name!=null">/{{row.Sub_Branch_Name}}</span></td>
+
+					</tr>
+
+                </tbody>
+
+				<tbody *ngIf="dataAr?.length == 0">
+				<tr>
+				  <td colspan="5" align="center">No data Available !</td>
+				</tr>
+			  <tbody>
+
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->

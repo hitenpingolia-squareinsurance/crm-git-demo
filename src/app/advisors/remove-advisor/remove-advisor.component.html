@@ -1,0 +1,102 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box">
+          <div class="box-header">
+            <div class="row">
+              <div class="col-md-4">
+                <h3 class="box-title">Remove Advisors</h3>
+              </div>
+              <div class="col-md-6">&nbsp;</div>
+              <div class="col-md-2">
+                <button class="btn btn-primary nextBtn pull-right" routerLink="/Advisors/add-advisors"
+                  style="margin-right: 5px;">Add Advisors</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="box-body">
+
+            <div class="mydiv">
+              <!-- <app-square-filter (postCreated)="SearchData($event)"></app-square-filter> -->
+
+              <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+
+                <div class="row" style="margin-top: 2%;">
+
+                  <div class="col-sm-2">
+                    <input type="text" formControlName="SearchValue" name="SearchValue" class="form-control"
+                      placeholder="Search">
+                  </div>
+
+                  <div class="col-sm-2">
+                    <ng-multiselect-dropdown [settings]="dropdownMultiSelectSettingsType" class="form-control"
+                      (keyup)="FilterCity($event,1)" formControlName="City" name="city" placeholder="Select City"
+                      [data]="CityData">
+                    </ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-2">
+                    <ng-multiselect-dropdown [settings]="dropdownMultiSelectSettingsType" class="form-control"
+                      formControlName="type" name="type" placeholder="Select type" [data]="Type">
+                    </ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-2" style="text-align: right;">
+                    <input type="submit" class="btn btn-info" value="Search"> &nbsp;&nbsp;
+                    <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                      value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                  </div>
+                </div>
+              </form>
+
+              <button class="btn btn-primary nextBtn pull-right" (click)="removeAdviosrs()"
+                style="margin-right: 5px;">Remove Advisor</button>
+
+              <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>Select All &nbsp;&nbsp;&nbsp;<input type="checkbox" [(ngModel)]="selectAll"
+                        (click)="headerClick($event)" (change)="selectAllRows()" /></th>
+                    <th>S.No</th>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Experience</th>
+                    <th>City</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr">
+                    <td>
+                      <input type="checkbox" class="form-contol" [(ngModel)]="row.selected" (change)="selectRow(row)" />
+                    </td>
+                    <td>{{row.SrNo}}.</td>
+                    <td>{{row.type}}</td>
+                    <td>{{row.name}} - {{row.code}}</td>
+                    <td>{{row.experince}}</td>
+                    <td>{{row.city}}</td>
+
+                    <td> <label (click)="AddAdvisor(row.id,row.code,'Edit',row.type)"
+                        class="label label-primary">Edit</label></td>
+                  </tr>
+                </tbody>
+
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="14" align="center">No data available!</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,355 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="inner_page_css main_dashboard_css">
+  <!-- Content Header (Page header) -->
+  <!-- Main content -->
+  <section class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div *ngIf="ActivePage == 'Default'" class="header_title">Policy Schedule</div>
+            <!-- <h3 *ngIf="ActivePage == 'SrPolicyReportsComponent'" class="box-title">Sr Policy Reports Component</h3> -->
+          </div>
+          <!-- /.box-header -->
+
+          <div class="main_body">
+
+            <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn1()">
+              <div class="row">
+                <div class="col-sm-3">
+                  <ng-multiselect-dropdown class="form-control" name="Company" placeholder="Select Company"
+                    [data]="Globel_company" formControlName="Company" [settings]="dropdownSettingscompany"
+                    (onSelect)="onItemSelect($event,'Company')" (onDeSelect)="onItemDeSelect($event,'Company')">
+                  </ng-multiselect-dropdown>
+                </div>
+                <div class="col-sm-3">
+                  <!-- <input type="submit" class="btn btn-info" value="Search"> -->
+                  <button type="submit" class="btn btn-info" style="font-size: small;" value="Search">
+                    <i class="fa fa-search">
+                      Search</i></button>
+                  &nbsp;&nbsp;
+                  <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                    value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                </div>
+              </div>
+            </form>
+
+            <hr>
+
+            <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Quotation</th>
+                  <th>Mid</th>
+                  <th>Company</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="dataAr?.length != 0">
+                <tr *ngFor="let row of dataAr; let i=index;">
+                  <td>{{row.SrNo}}.</td>
+                  <td style="cursor: pointer;" (click)="HitSchedulePolicy(row.Quotation)">{{row.Quotation}}</td>
+                  <td>{{row.Mid}}</td>
+                  <td>{{row.Company}}</td>
+                  <td>{{row.Timestamp}}</td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="dataAr?.length == 0">
+                <tr>
+                  <td colspan="8" align="center">No data Available !</td>
+                </tr>
+              <tbody>
+            </table>
+
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <section class="inner_page_css main_dashboard_css"> -->
+  <div class="container-fluid" style="margin-top: 35px !important;">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">
+              <!-- title  -->
+              <div *ngIf="ActivePage == 'Default'">SR Reports </div>
+            </div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div>
+              <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <a role="button" class="fa fa-filter"><span>Filters</span><i
+                      class="fa fa-angle-down pull-right"></i></a>
+                </button>
+              </div>
+            </div>
+
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+                <!-- filter  -->
+                <form class="form-blog-top" [formGroup]="SearchForm2" (ngSubmit)="SearchBtn2()">
+                  <div class="row"  >
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" name="Financial_Year" placeholder="Financial Year"
+                        [data]="FinancialYear" formControlName="Financial_Year"
+                        [settings]="dropdownSettingsFinancialYear" (onSelect)="onItemSelect($event,'Financial_Year')"
+                        (onDeSelect)="onItemDeSelect($event,'Financial_Year')">
+                      </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-sm-2">
+                      <ng-multiselect-dropdown class="form-control" name="Sr_Status" placeholder="Select Status"
+                        [data]="SrStatus_Ar" formControlName="Sr_Status" [settings]="dropdownSettingsSr"
+                        (onSelect)="onItemSelect($event,'Sr_Status')" (onDeSelect)="onItemDeSelect($event,'Sr_Status')">
+                      </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-sm-2">
+                      <ng-multiselect-dropdown class="form-control" name="Company" placeholder="Select Company"
+                        [data]="Globel_company" formControlName="Company" [settings]="dropdownSettingscompany"
+                        (onSelect)="onItemSelect($event,'Company')" (onDeSelect)="onItemDeSelect($event,'Company')">
+                      </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-sm-2"><input type="text" formControlName="SearchValue" name="SearchValue"
+                        class="form-control" placeholder="Search">
+                    </div>
+                    <div class="col-sm-3">
+                      <!-- <input type="submit" class="btn btn-info" value="Search"> -->
+                      <button type="submit" class="btn btn-info" style="font-size: small;" value="Search">
+                        <i class="fa fa-search">
+                          Search</i></button>
+                      &nbsp;&nbsp;
+                      <input (click)="ClearSearch2()" type="button" class="btn btn-danger" value="Reset">
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+
+
+            <hr>
+            <div class=" mydiv table-responsive">
+              <table datatable [dtOptions]="dtOptions2" id="Table2" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Type</th>
+                    <th>Quotation</th>
+                    <th>Policy No</th>
+                    <th>Company</th>
+                    <th>Vehicle No</th>
+                    <th>Schedule Status</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="dataAr2?.length != 0">
+
+                  <tr *ngFor="let row of dataAr2; let i=index;">
+                    <td>{{row.SrNo}}.</td>
+                    <td>{{row.Lob}}</td>
+                    <td *ngIf="row.Sr_status=='5'">{{row.Quotation}}</td>
+                    <td *ngIf="row.Sr_status!='5'" style="cursor: pointer;"
+                      (click)="ShowSrDetailsSingle(row.Quotation,row.StatusSrScedule)">{{row.Quotation}}</td>
+                    <td>{{row.policy_no}}</td>
+                    <td>{{row.Company}}</td>
+                    <td>{{row.Vehicle_No}}</td>
+                    <td style="color:red;font-weight: bold;">{{row.StatusSrScedule}}</td>
+                    <td>
+                      <a *ngIf="row.Sr_status == '0'"><span class="label label-danger">Pending</span></a>
+                      <a *ngIf="row.Sr_status == '2'"><span class="label label-danger">Dispute</span></a>
+                      <a *ngIf="row.Sr_status == '3'"><span class="label label-danger">Premium Diff.</span></a>
+                      <a *ngIf="row.Sr_status == '4'"><span class="label label-danger">Pdf Error</span></a>
+                      <a *ngIf="row.Sr_status == '5'"><span class="label label-danger">Already Bms</span></a>
+                      <a *ngIf="row.Sr_status == '6'"><span class="label label-danger">Cancel Sr</span></a>
+                      <a *ngIf="row.Sr_status == '7'"><span class="label label-danger">Mapping User/Branch</span></a>
+                      <a *ngIf="row.Sr_status == '9'"><span class="label label-danger">Refund Policy</span></a>
+                      <a *ngIf="row.Sr_status == '10'"><span class="label label-danger">Waiting/Sync Policy</span></a>
+                      <a *ngIf="row.Sr_status == '11'"><span class="label label-danger">Hold Sr</span></a>
+                    </td>
+                    <td>
+                      <select (change)="ChangeStatuSRPolicy($event,row.Quotation)">
+                        <option value="">Select</option>
+                        <option value="9">Refund Policy</option>
+                        <option value="11">Hold Sr</option>
+                        <option value="10">Waiting/Sync Policy</option>
+                        <option value="6">Cancel Sr</option>
+                      </select>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr2?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </section> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<button style="display:none;" type="button" id="QuoteIdBtn" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#myModal">Open Modal</button>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">SR Log Details</h4>
+        <button type="button" id="ClosePopups" class="close" data-dismiss="modal">&times;</button>
+
+      </div>
+      <div class="modal-body">
+        <div class="col-sm-12">
+          <h6>Quotation Id {{ QidSr }}</h6>
+          <table class="table table-bordered srdetails">
+            <thead>
+              <tr>
+                <td>Request</td>
+                <td>Response</td>
+                <td>Timestamp</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let DatsaSr of SingleSrLogData;">
+                <th>
+                  <div style="height: 300px; overflow:scroll;">{{ DatsaSr.request }}</div>
+                </th>
+                <th>
+                  <div style="height: 300px; overflow:scroll;">{{ DatsaSr.response }}</div>
+                </th>
+                <th>
+                  <div style="height: 300px; overflow:scroll;">{{ DatsaSr.datetime | date: 'dd-MM-yyyy H:mm:ss' }}</div>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row" *ngIf="ScedulesTextCondiotn==''">
+            <h3 class="heading">Sr Hit </h3>
+            <div class="col-sm-4 ">
+              <button type="button" class="btn btn-warning" (click)="ForceHitSr(QidSr)">
+                Force Hit Sr
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<button style="display:none;" type="button" id="HoldPopusBtns" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#myModalHoldPopusBtns">Open Modal</button>
+
+<!-- Modal -->
+<div id="myModalHoldPopusBtns" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">SR Log Details</h4>
+        <button type="button" id="ClosePopupsHolds" class="close" data-dismiss="modal">&times;</button>
+
+      </div>
+      <div class="modal-body">
+        <div class="col-sm-12">
+          <h6>Quotation Id {{ QidSr }}</h6>
+
+
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-sm-8">
+
+            <textarea rows="6" [(ngModel)]="RamarkSr" class="form-control" placeholder="Enter Remarks"></textarea>
+
+            <span style="color:red;font-size:17px;" *ngIf="RemarkValidtion">
+              Remark is Required..!
+            </span>
+
+          </div>
+          <div class="col-sm-4">
+
+            <button type="button" [disabled]="DisabledUpdateHoldSr" (click)="UpdateForms()"
+              class="btn btn-info">Update</button>
+
+          </div>
+
+
+        </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,119 @@
+<section class="custom-scrool" id="click-close">
+    <div class="main_card_form ">
+        <div class="main_header">
+            <h4 class="header_title" *ngIf="this.type == 'add'">Add Insurer Channels </h4>
+            <h4 class="header_title" *ngIf="this.type == 'update'">Update Insurer Channels </h4>
+            <button type="button" (click)="CloseModel()" class="close closeModelButton"><i class="fa fa-close"></i></button>
+        </div>
+        <hr>
+        <div class="modal_body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form [formGroup]="AddFieldForm" (ngSubmit)="SubBtn()">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="category_list">
+                                    <label>Select Insurer </label>
+                                    <ng-multiselect-dropdown [settings]="dropdownSettingsmultiselect" class="form-control"
+                                        [data]="company" formControlName="company">
+                                    </ng-multiselect-dropdown>
+                                    <span *ngIf="isSubmitted && FC['company'].errors" class="form-text text-muted">
+                                        <span *ngIf="isSubmitted && FC['company'].errors['required']"
+                                            style="color:red;">This field is Required</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="category_list">
+                                    <label>Channel Branch Address</label>
+                                    <input type="text" class="form-control" formControlName="branch"
+                                        >
+
+                                    <span *ngIf="isSubmitted && FC['branch'].errors" class="form-text text-muted">
+                                        <span *ngIf="isSubmitted && FC['branch'].errors['required']"
+                                            style="color:red;">This field is Required</span>
+                                        <span *ngIf="isSubmitted && FC['branch'].errors['pattern']"
+                                            style="color:red;">Enter Valid Characters</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="category_list">
+                                    <label>Contact Person Name</label>
+                                    <input type="text" class="form-control" formControlName="contactPerson"
+                                       >
+
+                                    <span *ngIf="isSubmitted && FC['contactPerson'].errors" class="form-text text-muted">
+                                        <span *ngIf="isSubmitted && FC['contactPerson'].errors['required']"
+                                            style="color:red;">This field is Required</span>
+                                        <span *ngIf="isSubmitted && FC['contactPerson'].errors['pattern']"
+                                            style="color:red;">Enter Valid Characters</span>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            
+
+                            <div class="col-sm-6">
+                                <div class="category_list">
+                                    <label>Contact Person Email</label>
+                                    <input type="text" class="form-control" formControlName="email"
+                                        >
+
+                                    <span *ngIf="isSubmitted && FC['email'].errors" class="form-text text-muted">
+                                        <span *ngIf="isSubmitted && FC['email'].errors['required']"
+                                            style="color:red;">This field is Required</span>
+                                        <span *ngIf="isSubmitted && FC['email'].errors['email']"
+                                            style="color:red;">Enter Valid Characters</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="category_list">
+                                    <label>Contact Person Phone</label>
+                                    <input type="number" class="form-control" formControlName="phone"
+                                       >
+
+                                    <span *ngIf="isSubmitted && FC['phone'].errors" class="form-text text-muted">
+                                        <span *ngIf="isSubmitted && FC['phone'].errors['required']"
+                                            style="color:red;">This field is Required</span>
+                                        <span *ngIf="isSubmitted && FC['phone'].errors['pattern']"
+                                            style="color:red;">Enter Valid Characters</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- <div class="col-sm-6">
+                                <div class="category_list">
+                                    <label>Payout Posting Criteria</label>
+                                    <ng-multiselect-dropdown [settings]="dropdownSettingsmultiselect" class="form-control"
+                                         [data]="payin" formControlName="payin">
+                                    </ng-multiselect-dropdown>
+                                    <span *ngIf="isSubmitted && FC['payin'].errors" class="form-text text-muted">
+                                        <span *ngIf="isSubmitted && FC['payin'].errors['required']"
+                                            style="color:red;">This field is Required</span>
+                                    </span>
+                                </div>
+                            </div> -->
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="float-end pull-right">
+                                    <button type="submit" class="btn btn_primary btn-success">Submit</button>
+                                    &nbsp;&nbsp;
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

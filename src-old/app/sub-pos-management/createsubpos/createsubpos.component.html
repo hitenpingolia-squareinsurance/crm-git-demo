@@ -1,0 +1,98 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Add Mobile
+            <!--<small>Create Request</small>-->
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Claim Assistance</a></li>
+            <li class="active">create-request</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <!-- SELECT2 EXAMPLE -->
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">&nbsp; Add Mobile: </h3>
+
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                </div>
+            </div>
+
+            <div class="box-body">
+
+                <form [formGroup]="AddForm">
+
+                    <!-- <table class="table table-bordered" formArrayName="quantities">
+            <tr>
+              <th colspan="2">Add Multiple Numbers:</th>
+             <th width="150px"><button type="button" (click)="addQuantity()" class="btn btn-primary">Add More</button>
+         </th>  </tr> -->
+                    <div formArrayName="quantities" class="row" style="padding-bottom: 14px;">
+                        <div *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+                            <div class=" col-sm-4">
+
+                                <input type="text" maxlength="10" formControlName="Mobile" class="form-control" placeholder="Enter 10 Digit Mobile Number Without +91">
+
+
+                                <span *ngIf="isSubmitted && AddForm.controls.quantities['controls'][i].controls.Mobile.errors" class="ValidationError">
+                  <span *ngIf="AddForm.controls.quantities['controls'][i].controls.Mobile.errors.required">Mobile is
+                    required</span>
+                                <span *ngIf="AddForm.controls.quantities['controls'][i].controls.Mobile.errors.pattern">Invalid
+                    Mobile..!</span>
+                                </span>
+                            </div>
+
+                            <div class="col-sm-2" *ngIf="ShowSubmit">
+
+                                <input type="text" maxlength="6" required formControlName="Otp" [disabled]="buttonOtp" class="form-control" placeholder="Enter 6 Digit OTP">
+
+                                <span *ngIf="isSubmitted && AddForm.controls.quantities['controls'][i].controls.Otp.errors" class="ValidationError">
+                  <span *ngIf="AddForm.controls.quantities['controls'][i].controls.Otp.errors.required">OTP is
+                    required</span>
+                                <span *ngIf="AddForm.controls.quantities['controls'][i].controls.Otp.errors.pattern">Invalid
+                    OTP..!</span>
+                                </span>
+
+                            </div>
+
+
+                            <div class="col-sm-2" *ngIf="ShowSubmit">
+
+
+                                <button style="margin: 0" [disabled]="ResendOtpButton" (click)="ResendOTP()" type="button" id="ResendOtpButton" class="btn btn-info btn-block btn-flat login-button">Resend</button>
+
+
+                            </div>
+
+                            <!-- <td class="remove-btn">
+                <button (click)="removeQuantity(i)" class="btn btn-danger">Remove</button>
+              </td> -->
+
+
+
+                        </div>
+                    </div>
+
+                    <button *ngIf="ShowSubmitOtp" [disabled]="this.buttondisabled"  (click)="SendOtp()" type="submit" class="btn btn-success">Send OTP</button>
+
+                    <button *ngIf="ShowSubmit" [disabled]="this.buttondisabled" type="submit" (click)="onSubmit()" class="btn btn-success">Submit</button>
+
+                </form>
+
+
+            </div>
+            <!-- /.box -->
+        </div>
+
+    </section>
+    <!-- /.content -->
+
+</div>

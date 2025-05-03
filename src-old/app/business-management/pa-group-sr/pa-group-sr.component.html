@@ -1,0 +1,211 @@
+<section class="inner_page_css main_dashboard_css">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="main_card_form">
+					<div class="main_header">
+						<div class="header_title">
+							<!-- title  -->
+							<div>Group Personal Accident SR</div>
+
+							<!-- <ol class="breadcrumb">
+								<li><a href="javascript:void(0)"><i class="fa fa-table"></i> Business Management</a>
+								</li>
+								<li class="active">Group Personal Accident SR</li>
+							</ol> -->
+						</div>
+					</div>
+					<div class="main_body main_card_height_scroll_withoutfooter">
+
+						<div>
+							<div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+								<button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+									data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+									aria-controls="collapseOne">
+									<a role="button" class="fa fa-filter"><span>Filters</span><i
+											class="fa fa-angle-down pull-right"></i></a>
+								</button>
+							</div>
+						</div>
+
+						<div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+							aria-labelledby="headingOne">
+							<div class="panel-body">
+								<!-- filter  -->
+								<form *ngIf="checkedList?.length==0" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+									<div class="row">
+										<div class="col-sm-3">
+											<select (change)="GetEmployees()" formControlName="Vertical_Id"
+												class="form-control">
+												<option value="0">Select Vertical</option>
+												<option *ngFor="let r of Vertical_Ar;" value="{{r.Id}}">{{r.Name}}
+												</option>
+											</select>
+										</div>
+
+										<div class="col-sm-3">
+											<select (change)="GetSubBranches($event)" formControlName="Region_Id"
+												class="form-control">
+												<option value="0">Select Region</option>
+												<option value="0">None</option>
+												<option *ngFor="let r of Region_Ar;" value="{{r.id}}">{{r.text}}
+												</option>
+											</select>
+										</div>
+
+										<div class="col-sm-3">
+											<select (change)="GetEmployees()" formControlName="Sub_Region_Id"
+												class="form-control">
+												<option value="0">Select Region-Branch</option>
+												<option value="0">None</option>
+												<option *ngFor="let r of Sub_Branch_Ar;" value="{{r.id}}">{{r.text}}
+												</option>
+											</select>
+										</div>
+
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown name="Emp_Id" class="form-control"
+												[placeholder]="Employee_Placeholder" [data]="Emps_Ar"
+												formControlName="Emp_Id" [settings]="dropdownSettings"
+												(onSelect)="onItemSelect($event,'Employee')"
+												(onDeSelect)="onItemDeSelect($event,'Employee')">
+											</ng-multiselect-dropdown>
+										</div>
+
+									</div>
+
+									<div class="row"  >
+
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown name="Agent_Id" class="form-control"
+												[placeholder]="Agents_Placeholder" [data]="Agents_Ar"
+												formControlName="Agent_Id" [settings]="AgentdropdownSettings">
+											</ng-multiselect-dropdown>
+										</div>
+
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown name="Company_Id" class="form-control"
+												placeholder="Select Ins Company" [data]="Companies_Ar"
+												formControlName="Company_Id" [settings]="dropdownSettings">
+											</ng-multiselect-dropdown>
+										</div>
+
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown name="SRStatus" class="form-control"
+												placeholder="Select SR Status" [data]="SRStatus_Ar"
+												[(ngModel)]='SrStatusValue' formControlName="SRStatus"
+												[settings]="LOB_dropdownSettings">
+											</ng-multiselect-dropdown>
+										</div>
+
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown name="SR_Source_Type" class="form-control"
+												placeholder="Select Source" [data]="SRSource_Ar"
+												formControlName="SR_Source_Type" [settings]="LOB_dropdownSettings"
+												(onSelect)="onItemSelect($event,'Source')">
+											</ng-multiselect-dropdown>
+										</div>
+
+									</div>
+
+									<div class="row"  >
+
+
+										<div class="col-sm-3">
+											<input type="text" placeholder="Select Date OR Date-Range"
+												class="form-control" formControlName="DateOrDateRange" bsDaterangepicker
+												[bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+											<span *ngIf="isSubmitted && FC.DateOrDateRange.errors"
+												class="form-text text-muted">
+												<span *ngIf="FC.DateOrDateRange.errors.required"
+													style="color:red;">Please
+													Select Date
+													OR Date-Range
+													!</span>
+											</span>
+										</div>
+
+										<div class="col-sm-3">
+											<input type="text" formControlName="GlobalSearch"
+												placeholder="Search SR No/Policy/Vehicle No." class="form-control">
+										</div>
+
+										<div class="col-lg-2" style="text-align: right;">
+											<!-- <input type="submit" class="btn btn-info" value="Search"> -->
+											<button type="submit" class="btn btn-info" style="font-size: small;"
+												value="Search" >
+												<i class="fa fa-search">
+													Search</i></button>
+											&nbsp;&nbsp;
+											<input (click)="ClearSearch()" type="button" class="btn btn-danger"
+												value="Reset">
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+
+
+
+
+						<hr>
+						<div class=" mydiv table-responsive">
+							<table datatable [dtOptions]="dtOptions" id="Table1"
+								class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>S.No</th>
+										<th>Details&nbsp;/&nbsp;Log</th>
+										<th>SR&nbsp;No&nbsp;/&nbsp;Status</th>
+										<th>Create&nbsp;Date</th>
+										<th>Booking&nbsp;Date</th>
+										<th>SR&nbsp;Create&nbsp;User</th>
+										<th>Current&nbsp;User</th>
+										<th>Remark</th>
+										<th>Customer&nbsp;Name</th>
+										<th>Policy&nbsp;No</th>
+									</tr>
+								</thead>
+
+								<tbody *ngIf="dataAr?.length != 0">
+									<tr *ngFor="let row of dataAr; let i=index;">
+										<td>{{row.SrNo}}.</td>
+
+										<td>
+											<a href="javascript:;" (click)="SrPopup(1,row.Id)"><span
+													style="margin-right: 5px;"
+													class="label label-info">Details</span></a>
+											<a (click)="ViewEndorsementLog(row.Id)"><span
+													class="label label-warning">Log</span></a><br>
+											<a (click)="ViewGroupSrMembers(row.Id)"><span
+													class="label label-primary">Employee
+													List</span></a>
+										</td>
+
+										<td> {{row.Full_SR_No}}</td>
+										<td>{{row.Create_Date}}</td>
+										<td>{{row.Booking_Date}}</td>
+										<td>{{row.Creator}}</td>
+										<td>{{row.CurrentUser}}</td>
+										<td>{{row.SR_Current_Remark}}</td>
+										<td>{{row.Customer_Name}}</td>
+										<td><span>{{row.Policy_No}}</span></td>
+
+									</tr>
+								</tbody>
+
+								<tbody *ngIf="dataAr?.length == 0">
+									<tr>
+										<td colspan="10" align="center">No data Available !</td>
+									</tr>
+								<tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

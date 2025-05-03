@@ -1,0 +1,729 @@
+<div class="inner_page_css main_dashboard_css">
+  <section class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Add Employee Details</div>
+          </div>
+          <form class="form " [formGroup]="addEmployeeForm">
+            <div class="main_body main_card_height_scroll">
+              <!----====== CUSTOMER DETAILS START ========----------->
+              <div class="form_sub_title">
+                <i class="fa fa-link mr_5"></i> Personal Details
+              </div>
+              <div class="row clearfix rowclearfix">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="coreLine">Employment Type</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="EmploymentType"
+                      (onSelect)="CheckEmployeeType()" (onDeSelect)="onItemDeSelect('EmployeeType')"
+                      formControlName="EmployeeType" [settings]="dropdownSettingsType"
+                      [(ngModel)]="EmploymentTypeSetValue">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.EmployeeType.errors " class="ValidationError">
+                      <div *ngIf="formControls.EmployeeType.errors.required">Please Select Employment Type!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="CustomerName">Employee ID</label>
+                    <input class="form-control" type="text" formControlName="employeeId" [readonly]="EmployeeIdreadonly"
+                      placeholder="Enter Enter Employee Id">
+
+                    <div *ngIf="isSubmitted && formControls.employeeId.errors " class="ValidationError">
+                      <div *ngIf="formControls.employeeId.errors.required">Please Enter Employee ID!</div>
+                      <div *ngIf="formControls.employeeId.errors.pattern">Please Enter Valid Format!</div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input class="form-control" type="text" formControlName="fullName" placeholder="Enter Full Name"
+                      required>
+                    <div *ngIf="isSubmitted && formControls.fullName.errors " class="ValidationError">
+                      <div *ngIf="formControls.fullName.errors.required">Please Enter FullName!</div>
+                      <div *ngIf="formControls.fullName.errors.pattern">Please Use Alphabets Only!</div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="CustomerName">Gender</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="GenderData"
+                      formControlName="Gender" [settings]="dropdownSettingsType" [(ngModel)]="selected_Gender">
+                    </ng-multiselect-dropdown>
+
+                    <div *ngIf="isSubmitted && formControls.Gender.errors " class="ValidationError">
+                      <div *ngIf="formControls.Gender.errors.required">Please Select Gender!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="personalEmail">Personal Email</label>
+                    <input class="form-control" type="text" formControlName="personalEmail"
+                      placeholder="Enter Personal Email">
+                    <div *ngIf="isSubmitted && formControls.personalEmail.errors " class="ValidationError">
+                      <div *ngIf="formControls.personalEmail.errors.required">Please Enter Personal Email!</div>
+                      <div *ngIf="formControls.personalEmail.errors.pattern">Please Enter Valid Email!</div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="officialEmail">Official Email</label>
+                    <input class="form-control" type="text" placeholder="Enter Official Email"
+                      formControlName="officialEmail" required>
+                    <div *ngIf="isSubmitted && formControls.officialEmail.errors " class="ValidationError">
+                      <div *ngIf="formControls.officialEmail.errors.required">Please Enter Official Email!</div>
+                      <div *ngIf="formControls.officialEmail.errors.pattern">Please Enter Valid Email!</div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="personalMobile">Personal Mobile</label>
+                    <input class="form-control" type="text" placeholder="Enter Personal Mobile"
+                      formControlName="personalMobile" maxlength="10">
+                    <div *ngIf="isSubmitted && formControls.personalMobile.errors " class="ValidationError">
+                      <div *ngIf="formControls.personalMobile.errors.required">Please Enter Personal Mobile Number!
+                      </div>
+                      <div *ngIf="formControls.personalMobile.errors.pattern">Please Enter valid Mobile Number!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="officialMobile">Official Mobile</label>
+                    <input class="form-control" type="text" placeholder="Enter Official Mobile"
+                      formControlName="officialMobile" maxlength="10">
+                    <div *ngIf="isSubmitted && formControls.officialMobile.errors " class="ValidationError">
+                      <div *ngIf="formControls.officialMobile.errors.required">Please Enter Official Mobile Number!
+                      </div>
+                      <div *ngIf="formControls.officialMobile.errors.pattern">Please Enter valid Mobile Number!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Extension Number</label>
+                    <input class="form-control" type="text" placeholder="Extension Number" maxlength="3"
+                      formControlName="extensionno">
+
+                    <div *ngIf="isSubmitted && formControls.extensionno.errors " class="ValidationError">
+                      <!-- <div *ngIf="formControls.extensionno.errors.required">Please Enter Extension Number!</div> -->
+                      <div *ngIf="formControls.extensionno.errors.pattern">Please Enter Valid Extension Number!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="dateOfJoining">Date Of Birth</label>
+                    <input type='date' class="form-control" formControlName="dateOfBirth">
+                    <div *ngIf="isSubmitted && formControls.dateOfBirth.errors" class="ValidationError">
+                      <div *ngIf="formControls.dateOfBirth.errors.required">Please Enter Date Of Birth !
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="communicationAddress">Aadhaar Number</label>
+                    <input class="form-control" type="text" formControlName="aadhhar_number" maxlength="12"
+                      placeholder="Enter Aadhhar Number">
+                    <div *ngIf="isSubmitted && formControls.aadhhar_number.errors " class="ValidationError">
+                      <div *ngIf="formControls.aadhhar_number.errors.required">Please Enter Aadhhar Number!</div>
+                      <div *ngIf="formControls.aadhhar_number.errors.pattern">Please Enter Valid Aadhhar Number!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="communicationAddress">Pan Number</label>
+                    <input class="form-control" type="text" formControlName="pan_number" maxlength="10"
+                      placeholder="Enter Pan Number">
+                    <div *ngIf="isSubmitted && formControls.pan_number.errors " class="ValidationError">
+                      <div *ngIf="formControls.pan_number.errors.required">Please Enter Pan Number!</div>
+                      <div *ngIf="formControls.pan_number.errors.pattern">Please Enter Valid Pan Number!</div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="CustomerName">Blood Group</label>
+
+
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="DataBloodGroup"
+                      formControlName="blood_group" [settings]="dropdownSettingsType"
+                      [(ngModel)]="selected_Blood_Group">
+                    </ng-multiselect-dropdown>
+
+
+
+                    <div *ngIf="isSubmitted && formControls.blood_group.errors " class="ValidationError">
+                      <div *ngIf="formControls.blood_group.errors.required">Please Select Blood Group!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="personalMobile">Emergency Mobile</label>
+                    <input class="form-control" type="text" placeholder="Enter Emergency Mobile"
+                      formControlName="emergency_contact_no" maxlength="10">
+                    <div *ngIf="isSubmitted && formControls.emergency_contact_no.errors " class="ValidationError">
+                      <div *ngIf="formControls.emergency_contact_no.errors.required">Please Enter Emergency Mobile
+                        Number!
+                      </div>
+                      <div *ngIf="formControls.emergency_contact_no.errors.pattern">Please Enter valid Mobile
+                        Number!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="fatherName">Father's Name</label>
+                    <input class="form-control" type="text" formControlName="fatherName"
+                      placeholder="Enter Father's Name">
+                    <div *ngIf="isSubmitted && formControls.fatherName.errors " class="ValidationError">
+                      <div *ngIf="formControls.fatherName.errors.required">Please Enter Father's Name!</div>
+                      <div *ngIf="formControls.fatherName.errors.pattern">Please Use Alphabets Only!</div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="communicationAddress">Pincode</label>
+                    <input class="form-control" type="text" formControlName="pincode" maxlength="6"
+                      placeholder="Enter Pincode">
+                    <div *ngIf="isSubmitted && formControls.pincode.errors " class="ValidationError">
+                      <div *ngIf="formControls.pincode.errors.required">Please Enter Pincode!</div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="communicationAddress">Communication Address</label>
+                    <input class="form-control" type="text" formControlName="communicationAddress"
+                      placeholder="Enter Communication Address">
+                    <div *ngIf="isSubmitted && formControls.communicationAddress.errors " class="ValidationError">
+                      <div *ngIf="formControls.communicationAddress.errors.required">Please Enter Communication
+                        Address!</div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="dateOfJoining">Date Of Joining</label>
+                    <input type='date' class="form-control" formControlName="dateOfJoining">
+                    <div *ngIf="isSubmitted && formControls.dateOfJoining.errors" class="ValidationError">
+                      <div *ngIf="formControls.dateOfJoining.errors.required">Please Enter Date Of Joining!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- BEGIN::FIXED COST  -->
+                <div class="col-md-4" *ngIf="splitted2 != 'edit-employee'">
+                  <div class="form-group">
+                    <label for="fullName">Fixed Cost</label>
+                    <input class="form-control" type="text" formControlName="FixedCost"
+                      placeholder="Enter Fixed Cost" (input)="updateCurrentCTC()" >
+                    <div *ngIf="isSubmitted && formControls.FixedCost.errors " class="ValidationError">
+                      <div *ngIf="formControls.FixedCost.errors.required">Please Enter Fixed Cost!</div>
+                      <div *ngIf="formControls.FixedCost.errors.pattern">Please Use Valid Fixed Cost !</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- END::FIXED COST  -->
+
+                <!-- BEGIN::VARIABLE PAY  -->
+                <div class="col-md-4" *ngIf="splitted2 != 'edit-employee'">
+                  <div class="form-group">
+                    <label for="fullName">Variable Pay</label>
+                    <input class="form-control" type="text" formControlName="VariablePay"
+                      placeholder="Enter Variable Pay" (input)="updateCurrentCTC()" >
+                    <div *ngIf="isSubmitted && formControls.VariablePay.errors " class="ValidationError">
+                      <div *ngIf="formControls.VariablePay.errors.required">Please Enter Variable Pay !</div>
+                      <div *ngIf="formControls.VariablePay.errors.pattern">Please Use Valid Variable Pay !</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- END::VARIABLE PAY  -->
+
+                <!-- BEGIN::CURRENT CTC  -->
+                <div class="col-md-4" *ngIf="splitted2 != 'edit-employee'">
+                  <div class="form-group">
+                    <label for="fullName">{{currentCtcLabelValue}}</label>
+                    <input class="form-control" type="text" formControlName="CurrentCTC"
+                      placeholder="Enter {{currentCtcLabelValue}}" readonly >
+                    <div *ngIf="isSubmitted && formControls.CurrentCTC.errors " class="ValidationError">
+                      <div *ngIf="formControls.CurrentCTC.errors.required">Please Enter Current CTC!</div>
+                      <div *ngIf="formControls.CurrentCTC.errors.pattern">Please Use Valid Current CTC !</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- END::CURRENT CTC  -->
+
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="isSolicitor">Is Solicitor</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="solicitorData"
+                      formControlName="isSolicitor" (onSelect)="solicitorDetailFields()"
+                      (onDeSelect)="onItemDeSelect('Solicitor')" [settings]="dropdownSettingsType"
+                      [(ngModel)]="selectedSolicitorType">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.isSolicitor.errors " class="ValidationError">
+                      <div *ngIf="formControls.isSolicitor.errors.required">Please Select Solicitor Type!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!--=== IF SOLICITOR TYPE IS YES START===-->
+                <div *ngIf="showSolicitorBox">
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="CustomerName">Saiba ID</label>
+                      <input class="form-control" type="text" formControlName="saibaId"
+                        placeholder="Enter Enter Saiba Id">
+                      <div *ngIf="isSubmitted && formControls.saibaId.errors " class="ValidationError">
+                        <div *ngIf="formControls.saibaId.errors.required">Please Enter Saiba ID!</div>
+                        <div *ngIf="formControls.saibaId.errors.pattern">Please Enter Valid Format!</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>BQC Number</label>
+                      <input class="form-control" type="text" formControlName="bqcNo"
+                        placeholder="Enter Enter BQC Number">
+                      <div *ngIf="isSubmitted && formControls.bqcNo.errors " class="ValidationError">
+                        <div *ngIf="formControls.bqcNo.errors.required">Please Enter BQC Number!</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="CustomerName">BQC Certificate</label>
+                      <label class="form-control btn fileUpload btn-default" name="button" value="BQC_Image">
+                        <input type="file" (change)="checkFileType($event,'BQC_Image')" id="file"
+                          formControlName="bqcImage" accept="image/png, image/gif, image/jpeg" style="display:none;" />
+                        <span class="fas fa-user-alt"><b>Upload BQC Certificate</b></span>
+                      </label>
+                      <div *ngIf="isSubmitted && formControls.bqcImage.errors " class="ValidationError">
+                        <div *ngIf="formControls.bqcImage.errors.required">Please Upload BQC Certificate!</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Validity From</label>
+                      <input class="form-control" type="date" formControlName="bqcValidityFrom">
+                      <div *ngIf="isSubmitted && formControls.bqcValidityFrom.errors " class="ValidationError">
+                        <div *ngIf="formControls.bqcValidityFrom.errors.required">Please Enter Employee ID!</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Validity To</label>
+                      <input class="form-control" type="date" formControlName="bqcValidityTo">
+                      <div *ngIf="isSubmitted && formControls.bqcValidityTo.errors " class="ValidationError">
+                        <div *ngIf="formControls.bqcValidityTo.errors.required">Please Enter Employee ID!</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+                <!--=== IF SOLICITOR TYPE IS YES END===-->
+
+
+              </div>
+              <!----====== CUSTOMER DETAILS END ========----------->
+              <!----====== EMPLOYEE AND PARTNER DETAILS START ========----------->
+              <div class="form_sub_title mt20">
+                <i class="fa fa-link mr_5"></i> Profile Details
+              </div>
+              <div class="row clearfix rowclearfix">
+
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="coreLine">Sales/Non-Sales</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="IsSeles_NonSales"
+                      formControlName="Is_Sales" [settings]="dropdownSettingsType" [(ngModel)]="selectedIs_Sales">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.Is_Sales.errors " class="ValidationError">
+                      <div *ngIf="formControls.Is_Sales.errors.required">Please Select Is Sales / Non-Sales!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="coreLine">Core Line</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="CoreLineData"
+                      formControlName="coreLine" [settings]="dropdownSettingsType" [(ngModel)]="selectedCoreline">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.coreLine.errors " class="ValidationError">
+                      <div *ngIf="formControls.coreLine.errors.required">Please Select Coreline!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="agentName">Designation/Grade</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="DesignationData"
+                      formControlName="designation" [settings]="dropdownSettingsType" [(ngModel)]="selectedDesignation">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.designation.errors " class="ValidationError">
+                      <div *ngIf="formControls.designation.errors.required">Please Select Designation!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- (onSelect)="getProfilesType()"  -->
+
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="employeeMobileNo">Profile Type</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="ProfileData"
+                      formControlName="profile" (onSelect)="showAdditionalVerticalInput()"
+                      (onDeSelect)="onItemDeSelect('Profile')" [settings]="dropdownSettingsType1"
+                      [(ngModel)]="selectedProfile">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.profile.errors " class="ValidationError">
+                      <div *ngIf="formControls.profile.errors.required">Please Select Profile Type!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="employeeMobileNo"> Vertical</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="VerticalData"
+                      formControlName="vertical" (onDeSelect)="onItemDeSelect('Vertical')"
+                      (onSelect)="getReportingManagers('add')" [settings]="dropdownSettingsTypevertical"
+                      [(ngModel)]="selectedVertical">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.vertical.errors " class="ValidationError">
+                      <div *ngIf="formControls.vertical.errors.required">Please Select Vertical!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+
+                <div class="col-md-4" *ngIf="PresidentShow == 'President'">
+                  <div class="form-group">
+                    <label for="employeeMobileNo"> Core Vertical</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="CoreVerticalData"
+                      formControlName="core_vertical" [settings]="dropdownSettingsType1"
+                      [(ngModel)]="selectedCoreVertical">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.core_vertical.errors " class="ValidationError">
+                      <div *ngIf="formControls.core_vertical.errors.required">Please Select Core Vertical!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="reportingManager">Reporting Manager</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="ReportingManagerData"
+                      formControlName="reportingManager" [settings]="dropdownSettingsType1" [(ngModel)]="selectedRM">
+                    </ng-multiselect-dropdown>
+                    <!-- <div *ngIf="isSubmitted && formControls.reportingManager.errors " class="ValidationError">
+                            <div *ngIf="formControls.reportingManager.errors.required">Please Select Reporting Manager!
+                            </div>
+                          </div> -->
+                  </div>
+
+                </div>
+
+
+              </div>
+              <!----====== EMPLOYEE AND PARTNER DETAILS END ========----------->
+              <!----====== EMPLOYEE AND PARTNER DETAILS START ========----------->
+              <div class="form_sub_title mt20">
+                <i class="fa fa-link mr_5"></i> Experience Details
+              </div>
+              <div class="row clearfix rowclearfix">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="coreLine">Select Type</label>
+
+
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="ExperienceTypeData"
+                      formControlName="ExperienceType" (onSelect)="ExperienceDetailFields()"
+                      (onDeSelect)="onItemDeSelect('Experience')" [settings]="dropdownSettingsType"
+                      [(ngModel)]="selectedExperienceType">
+                    </ng-multiselect-dropdown>
+
+
+                    <div *ngIf="isSubmitted && formControls.ExperienceType.errors " class="ValidationError">
+                      <div *ngIf="formControls.ExperienceType.errors.required">Please Select Experience Type!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div *ngIf="ShowExperienceType">
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="CustomerName">Organization Name</label>
+                      <input class="form-control" type="text" formControlName="organization_name"
+                        placeholder="Enter Enter Organization Name">
+                      <div *ngIf="isSubmitted && formControls.organization_name.errors " class="ValidationError">
+                        <div *ngIf="formControls.organization_name.errors.required">Please Enter Organization
+                          Name!</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Last Organization Contact</label>
+                      <input class="form-control" type="text" formControlName="last_organization_contact_no"
+                        placeholder="Last Organization Contact Number">
+                      <div *ngIf="isSubmitted && formControls.last_organization_contact_no.errors "
+                        class="ValidationError">
+
+                        <div *ngIf="formControls.last_organization_contact_no.errors.pattern">Please Enter BQC
+                          Number!</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="CustomerName">Total Experience</label>
+
+
+                      <ng-multiselect-dropdown class="form-control" placeholder="--Select--"
+                        [data]="oldEmployeeExperiance" formControlName="emp_experiance"
+                        [settings]="dropdownSettingsType" [(ngModel)]="selected_emp_experiance">
+                      </ng-multiselect-dropdown>
+
+
+
+                      <div *ngIf="isSubmitted && formControls.emp_experiance.errors " class="ValidationError">
+                        <div *ngIf="formControls.emp_experiance.errors.required">Please Enter Employee Experiance!
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <!-- <label>Last Company Working Duretion</label> -->
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Last Company Working Validity From</label>
+
+                      <input class="form-control" type="date" formControlName="LcValidityFrom">
+                      <div *ngIf="isSubmitted && formControls.LcValidityFrom.errors " class="ValidationError">
+                        <div *ngIf="formControls.LcValidityFrom.errors.required">Please Enter Last Company Working
+                          Validity From!
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Last Company Working Validity To</label>
+                      <input class="form-control" type="date" formControlName="LcValidityTo">
+                      <div *ngIf="isSubmitted && formControls.LcValidityFrom.errors " class="ValidationError">
+                        <div *ngIf="formControls.LcValidityFrom.errors.required">Please Enter Last Company Working
+                          Validity To!</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+              <!----====== EMPLOYEE AND PARTNER DETAILS END ========----------->
+              <!----====== PRODUCT AND VEHICLE DETAILS START========----------->
+              <div class="form_sub_title mt20">
+                <i class="fa fa-link mr_5"></i> Geographical Details
+              </div>
+              <div class="row clearfix rowclearfix">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Zone</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="ZoneData"
+                      formControlName="zone" [settings]="dropdownSettingsType" (onSelect)="getRoData()"
+                      (onDeSelect)="onItemDeSelect('Zone')" [(ngModel)]="selectedZone">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.zone.errors " class="ValidationError">
+                      <div *ngIf="formControls.zone.errors.required">Please Select Zone!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Regional Office</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="ROData"
+                      formControlName="ro" [settings]="dropdownSettingsType" (onSelect)="getBranchData()"
+                      (onDeSelect)="onItemDeSelect('ro')" [(ngModel)]="selectedro">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.ro.errors " class="ValidationError">
+                      <div *ngIf="formControls.ro.errors.required">Please Select Regional Office!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Branch</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="BranchData"
+                      formControlName="branch" [settings]="dropdownSettingsType" (onSelect)="getServiceBranchData()"
+                      (onDeSelect)="onItemDeSelect('Branch')" [(ngModel)]="selectedBranch">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.branch.errors " class="ValidationError">
+                      <div *ngIf="formControls.branch.errors.required">Please Select Branch!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Service Location</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="ServiceLocationData"
+                      formControlName="Servicelocation" [settings]="dropdownSettingsType"
+                      [(ngModel)]="selectedOpsBranch">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.Servicelocation.errors " class="ValidationError">
+                      <div *ngIf="formControls.Servicelocation.errors.required">Please Select Service location!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Branch Address</label>
+                    <input class="form-control" type="text" placeholder="Enter Branch Address"
+                      formControlName="branchAddress" readonly>
+                    <div *ngIf="isSubmitted && formControls.branchAddress.errors " class="ValidationError">
+                      <div *ngIf="formControls.branchAddress.errors.required">Please Enter Branch Address!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+              </div>
+              <!----====== PRODUCT AND VEHICLE DETAILS END========----------->
+            </div>
+            <div class="main_footer">
+              <button class="Save_click" (click)="AddEmployee()" type="submit">Submit</button>
+            </div>
+            <!----====== ACTION DETAILS END========----------->
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+
+<!-- users_hierarchy_employee -->

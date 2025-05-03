@@ -1,0 +1,84 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header">
+              <div class="row">
+                <div class="col-md-4">
+                  <h3 class="box-title">Exam Question Answer Masters </h3>
+                </div>
+                <div class="col-md-5">&nbsp;</div>
+                <div class="col-md-3">
+                  <button class="btn btn-primary nextBtn pull-right" (click)="Questions('Add',0)"
+                    style="margin-right: 5px;"> Add More </button>
+
+                </div>
+
+              </div>
+            </div>
+            <div class="box-body">
+              <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+
+              <div class="mydiv">
+                <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                  class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>S.No</th>
+                      <th>Set</th>
+                      <th>Question</th>
+                      <th>Answer</th>
+                      <th>Option 1</th>
+                      <th>Option 2</th>
+                      <th>Option 3</th>
+                      <th>Option 4</th>
+                      <th>Mark</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="dataAr?.length != 0">
+                    <tr *ngFor="let row of dataAr">
+                      <td> Set {{row.SrNo}}.</td>
+                      <td>{{row.set_no}}</td>
+                      <td>{{row.question}}</td>
+                      <td>{{row.answer}}</td>
+                      <!-- <td>{{row.option1}}<br/>{{row.option2}}<br/>{{row.option3}}<br/>{{row.option4}}</td> -->
+                      <td>{{row.option1}}</td>
+                      <td>{{row.option2}}</td>
+                      <td>{{row.option3}}</td>
+                      <td>{{row.option4}}</td>
+                      <td>{{row.mark}}</td>
+
+                      <td>
+
+                        <label class="label label-info" (click)="Questions('Edit',row.Id)">Edit</label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <!-- <label *ngIf="row.Status == 1" class="fa fa-close "
+                          (click)="ActiveInactive(row.Id, 0, 'website_title_description')"></label>
+                        <label *ngIf="row.Status == 0" class="fa fa-check"
+                          (click)="ActiveInactive(row.Id, 1, 'website_title_description')"></label>
+   -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="dataAr?.length == 0">
+                    <tr>
+                      <td colspan="14" align="center">No data available!</td>
+                    </tr>
+                  <tbody>
+                </table>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>

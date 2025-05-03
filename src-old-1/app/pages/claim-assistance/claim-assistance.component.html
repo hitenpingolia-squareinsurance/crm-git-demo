@@ -1,0 +1,161 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div *ngIf="ActivePage == 'Default'" class="header_title">Create Claim Requests</div>
+            <div *ngIf="ActivePage == 'ManageRequests'" class="header_title">View Manage Requests</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+           
+                <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+                  <div class="row"  >
+                    <div class="col-sm-3">
+                      <input type="text" formControlName="SearchValue" name="SearchValue" class="form-control"
+                        placeholder="Search">
+                    </div>
+                    <div class="col-sm-3">
+    
+                      <input *ngIf="(Is_Export==1)" type="button" class="btn btn-success" value="Export">
+                      &nbsp;&nbsp;
+    
+                      <button type="submit" class="btn btn-info" style="font-size: small;" value="Search"> <i
+                          class="fa fa-search">
+                          Search</i></button>
+                      &nbsp;&nbsp;
+                      <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                        value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                    </div>
+                  </div>
+                </form>
+            
+            <div class="custom_table tables_layout_design">
+              <table datatable [dtOptions]="dtOptions" class="row-border table" id="Table1">
+                <thead>
+                  <tr>
+                    <th></th>
+                  </tr>
+                </thead>
+              </table>
+              <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                <li class="table-row tablerow{{(i % 10) + 1}}" *ngFor="let row of dataAr; let i=index;">
+                  <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                    <div class="agents_data agents_data1">
+                      <div class="icon_re_cl">{{row.SrNo}}</div>
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Customer Name</div>
+                          <strong class="fs_18">{{row.CustomerName}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data2">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Policy No</div>
+                          <strong class="fs_18" id="emailToCopy">{{row.PolicyNo}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data3">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Vehicle Number</div>
+                          <strong class="fs_18">{{row.Vehicle_No}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="last_row_div custon-234">
+                    <div class="label_chips motor_lob">
+                      <span>Insurer : {{row.Company}}</span>
+                    </div>
+                    <div class="label_chips finance_lob">
+                      <span>Mobile No. : {{row.CustomerMobile}}</span>
+                    </div>
+                    <div class="label_chips growth_negative">
+                      <span>Lob : {{row.LOB}}</span>
+                    </div>
+                    <div class="label_chips non_motor_lob">
+                      <span>Type : {{row.TypeName}}</span>
+                    </div>
+                    <div class="label_chips health_lob" *ngIf="(row.Policy_Type =='2')">
+                      <span>Referred</span>
+                    </div>
+                   
+                   
+                    <div class="label_chips non_motor_lob">
+                      <span>Make/Model : {{row.MakeModel}}</span>
+                    </div>
+                  </div>
+                  <div class="last_row">
+                    <div class="d_flex effective_date">
+                      <div class="date_text">
+                        <span>RSD : </span>
+                        <span class="fs_12"> <b>OD -</b> {{row.Policy_Start_Date_OD}} <b>TP -</b> {{row.Policy_Start_Date_TP}}</span>
+                      </div>
+
+                      <div class="date_text">
+                        <span>RED : </span>
+                        <span class="fs_12"><b>OD -</b> {{row.Policy_End_Date_OD}} <b>TP -</b> {{row.Policy_End_Date_TP}}</span>
+                      </div>
+                    </div>
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                        <a class="btnbg1active" style="cursor: pointer;" (click)="CreateClaim(row)">Create</a>
+                        <a *ngIf="this.api.GetUserType() == 'employee'" (click)="GetPolicyDetails(row.SrID)"
+                        class="btnbg2inactive">Policy Details</a>
+                     
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="row" *ngIf="dataAr?.length == 0">
+                <div class="col-md-12">
+                  <div class="no_data_found">
+                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                    <small>No data available !</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

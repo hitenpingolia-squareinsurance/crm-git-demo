@@ -1,0 +1,12 @@
+.doc-required {
+    margin-top: 30px;
+}
+textarea.form-control {
+    height: 34px;
+}
+.form-group {
+    position: relative;
+}
+.ValidationError {
+    position: absolute;
+}

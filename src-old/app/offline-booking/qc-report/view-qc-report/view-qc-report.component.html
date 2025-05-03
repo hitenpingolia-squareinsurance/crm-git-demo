@@ -1,0 +1,240 @@
+<section class="custom-scrool" id="click-close">
+    <div class="">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <h4 class="header_title">Upload Detail</h4>
+                <button type="button" (click)="CloseModel()" class="close closeModelButton"><i
+                        class="fa fa-close"></i></button>
+            </div>
+            <hr>
+            <div class="modal_body ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive mysrdiv" id="mydiv">
+                            <table datatable [dtOptions]="dtOptions"
+                                class="row-border hover table table-bordered table-hover table-checkable"
+                                id="kt_datatable" style="margin-top: 13px !important;width: 100% !important;">
+                                <thead>
+                                    <tr>
+                                        <th>S.No.</th>
+                                        <th>Upload_Status</th>
+                                        <th style="min-width: 140px;">Policy_No / SR.No</th>
+                                        <th>LOB</th>
+                                        <th style="min-width: 140px;">File_Type</th>
+                                        <th style="min-width: 160px;">Product</th>
+                                        <th style="min-width: 150px;">Segment</th>
+                                        <th style="min-width: 150px;">Insurance_Company</th>
+                                        <th>Registration_No</th>
+                                        <th>Customer_Name</th>
+                                        <th style="min-width: 120px;">Policy_Start_Date_OD</th>
+                                        <th>Mode_Of_Payment</th>
+                                        <!-- <th>Gross_Premium</th> -->
+                                        <th>Sum_Insured</th>
+                                        <th>Add Stamp</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr">
+                                        <td>{{ row.SrNo }}.</td>
+                                        <td>
+                                            <span *ngIf="row.Upload_Status ==  0"
+                                                class="label label-warning">Pending</span>
+                                            <span *ngIf="row.Upload_Status ==  1" class="label label-warning">Pending
+                                                Upload</span>
+                                            <span *ngIf="row.Upload_Status ==  2" class="label label-danger">SR Alredy
+                                                Done</span>
+                                            <span *ngIf="row.Upload_Status ==  4" class="label label-warning">SR Id
+                                                Assign</span>
+                                            <span *ngIf="row.Upload_Status ==  5" class="label label-success">SR
+                                                Done</span>
+                                        </td>
+                                        <td>
+                                            <p style="font-weight: 700;">Policy_No:
+                                                <span style="font-weight: 500;">{{ row.Policy_No }}</span>
+                                            </p>
+
+                                            <p style="font-weight: 700;">SR_No:
+                                                <span style="font-weight: 500;">{{ row.SRNum }}</span>
+                                            </p>
+                                        </td>
+                                        <td>{{ row.LOB }}</td>
+                                        <td>
+                                            <span *ngIf="row.File_Type == ''">
+                                                <form [formGroup]="fileType">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="category_list">
+                                                                <label>File Type</label>
+                                                                <select class="form-control" formControlName="fileType"
+                                                                    (change)="fileValidation(row.Id)">
+                                                                    <option value="">-Select Policy-</option>
+                                                                    <option *ngFor=" let row of fileAr;"
+                                                                        value="{{row.Id}}">{{row.Name}}
+                                                                    </option>
+                                                                </select>
+                                                                <span *ngIf="isSubmitted && FC3.fileType.errors"
+                                                                    class="form-text text-muted">
+                                                                    <span *ngIf="FC4.fileType.errors.required"
+                                                                        style="color:red;">Please Select
+                                                                        fileType!</span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </span>
+                                            <span *ngIf="row.File_Type">{{ row.File_Type }}</span>
+                                        </td>
+                                        <td>
+
+                                            <span *ngIf="row.Product==''">
+                                                <form [formGroup]="Product">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <label>Product</label>
+                                                            <select class="form-control" formControlName="product"
+                                                                (change)="getPolicy(row.Id)">
+                                                                <option value="">-Select Product-</option>
+                                                                <option *ngFor="let row of productAr;"
+                                                                    value="{{row.Id}}">{{row.Name}}
+                                                                </option>
+                                                            </select>
+                                                            <span *ngIf="isSubmitted && FC2.product.errors"
+                                                                class="form-text text-muted">
+                                                                <span *ngIf="FC2.product.errors.required"
+                                                                    style="color:red;">Please Product!</span>
+                                                            </span>
+                                                            <!-- (ngModelChange)="onClose()" -->
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </span>
+                                            <span *ngIf="row.Product">{{ row.Product }}</span>
+
+                                        </td>
+                                        <td>
+                                            <span *ngIf="row.Segment==''">
+                                                <form [formGroup]="Segment">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="category_list">
+                                                                <label>Segment</label>
+                                                                <select class="form-control" formControlName="segment"
+                                                                    (change)="segmentValidate(row.Id)">
+                                                                    <option value="">-Select Policy-</option>
+                                                                    <option *ngFor="let row of segmentAr;"
+                                                                        value="{{row.Id}}">{{row.Name}}
+                                                                    </option>
+                                                                </select>
+                                                                <span *ngIf="isSubmitted && FC3.segment.errors"
+                                                                    class="form-text text-muted">
+                                                                    <span *ngIf="FC3.segment.errors.required"
+                                                                        style="color:red;">Please Segment!</span>
+                                                                </span>
+                                                                <!-- (ngModelChange)="onClose()" -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </span>
+                                            <span *ngIf="row.Segment">{{ row.Segment }}</span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="row.Insurance_Company == ''">
+                                                <form [formGroup]="Company">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="category_list">
+                                                                <label>Company</label>
+                                                                <select class="form-control" formControlName="company"
+                                                                    (change)="CompanyValidation(row.Id)">
+                                                                    <option value="">-Select Company-</option>
+                                                                    <option *ngFor=" let row of companyAr;"
+                                                                        value="{{row.Id}}">{{row.Name}}
+                                                                    </option>
+                                                                </select>
+                                                                <span *ngIf="isSubmitted && FC3.company.errors"
+                                                                    class="form-text text-muted">
+                                                                    <span *ngIf="FC4.company.errors.required"
+                                                                        style="color:red;">Please Select Company!</span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </span>
+                                            <span *ngIf="row.Insurance_Company">
+                                                {{ row.Insurance_Company }}
+                                            </span>
+                                        </td>
+                                        <td>{{ row.Registration_No }}</td>
+                                        <td>{{ row.Customer_Name }}</td>
+                                        <td>
+                                            <span *ngIf="row.Policy_Start_Date_OD == ''">
+                                                <form [formGroup]="AddFieldForm">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <!-- <label for="">Policy Start</label> -->
+                                                            <input type="text" placeholder="Policy Start"
+                                                                class="form-control" formControlName="date" bsDatepicker
+                                                                [bsConfig]="{dateInputFormat: 'DD-MM-YYYY', isAnimated: true }"
+                                                                (ngModelChange)="UploadValidation(row.Id)">
+                                                            <span *ngIf="isSubmitted && FC1.date.errors"
+                                                                class="form-text text-muted">
+                                                                <span *ngIf="FC1.date.errors.required"
+                                                                    style="color:red;">Please Select Date!</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </span>
+
+                                            <span *ngIf="row.Policy_Start_Date_OD">
+                                                {{ row.Policy_Start_Date_OD }}
+                                            </span>
+                                        </td>
+                                        <!-- <td>{{ row.Mode_Of_Payment }}</td> -->
+                                        <td>{{ row.Gross_Premium }}</td>
+                                        <td>{{ row.Sum_Insured }}</td>
+                                        <td>{{ row.Add_Stamp }}</td>
+                                        <td>
+                                            <span
+                                                *ngIf="row.isCheck == true && row.productCheck == true && row.segmentCheck == true && row.companyCheck == true 
+                                            && row.fileCheck == true &&  (row.Upload_Status ==  0 || row.Upload_Status ==  1)">
+                                                <label>
+                                                    <a class="btn btn-success">
+                                                        <input (change)="UploadPDF($event, row.Id, row.Policy_Start_Date_OD, row.Pt, row.St, 
+                                                            row.Insurance_Company, row.File_Type)"
+                                                            style="display: none;" type="file">Upload
+                                                        PDF</a>
+                                                </label>
+                                            </span>
+                                            <span *ngIf="row.document_file == '' && (row.Upload_Status ==  0 || row.Upload_Status ==  1)  && 
+                                                (row.isCheck == false || row.productCheck == false || row.segmentCheck == false || row.companyCheck == false 
+                                                || row.fileCheck == false)">
+                                                <button class="btn btn-warning" (click)="FormValid(row.Id)">Upload
+                                                    PDF</button>
+                                            </span>
+                                            <span *ngIf="row.Upload_Status ==  5">
+                                                <button class="btn btn-info1"
+                                                    (click)="viewReport(row.document_file)">View Report</button>
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="18" align="center">No data available !</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

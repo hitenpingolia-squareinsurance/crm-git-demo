@@ -1,0 +1,86 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="inner_page_css knowlage_details_page custom-scrool">
+    <!-- Main content -->
+    <section class="container-fluid">
+        <!-- SELECT2 EXAMPLE -->
+        <div class="main_card_form ">
+                <div class="main_header">
+                    <div class="header_title">Early Payout Wallet</div>
+                </div>
+                <div class="main_body main_card_height_scroll_withoutfooter">
+                    <div class="row"> 
+                        <div class="col-md-3">
+                            <div class=" bg-img centerview">
+                                    <span class="wallet">
+                                        <img src="../../../assets/image/product_icon/wallet.svg">
+                                    </span>
+                                    <label class="font-bold text-2xl mb-2 text-center text-stone-600 py-6">{{total_po}} INR/-</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="btn-align">
+                                <input type="number" [(ngModel)]="request_po" class="form-control">
+                                <input type="button" (click)="WithdrawalRequest()" class="btn btn-info btn-pro" value="Withdrawal Request">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="box-title">Transaction Requests</div>
+                    <!--begin: Datatable-->
+                    <div class="mydiv table-responsive">
+                        <table datatable [dtOptions]="dtOptions"
+                            class="table row-border hover table table-bordered table-hover table-checkable" id="kt_datatable"
+                            style="margin-top: 10px !important">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Action</th>
+                                    <th>Request-Id</th>
+                                    <th>Balance Amount</th>
+                                    <th>Request Amount</th>
+                                    <th>Request Date/Time</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="dataAr?.length != 0">
+                                <tr *ngFor="let row of dataAr">
+                                    <td>{{ row.SrNo }}</td>
+                                    <td>
+                                        <div>
+                                            <span (click)="ViewFiles(row.request_id)" style="margin-bottom: 5px;width:100%;" 
+                                        class="label label-danger label-inline mr-2">
+                                            View Detailed
+                                        </span>
+                                            <br>
+                                        <span *ngIf="row.request_status==1 && row.po_id!=0" (click)="ViewStatementsPDF(row.po_id)" style="margin-top: 5px;"
+                                            class="label label-info label-inline mr-2">UTR & Statement Details</span>
+                                        </div>
+                                    </td>
+                                    <td>{{row.request_id}}
+                                        <br>
+                                        <span *ngIf="row.request_status==0" style="margin-top: 5px;width:100%;" class="label label-warning label-inline mr-2">
+                                            Pending
+                                        </span>
+                                        <span *ngIf="row.request_status==1" style="margin-top: 5px;width:100%;" class="label label-success label-inline mr-2">
+                                            Approved
+                                        </span>
+                                        <span *ngIf="row.request_status==2" style="margin-top: 5px;width:100%;" class="label label-danger label-inline mr-2">
+                                            Rejected
+                                        </span>
+                                    </td>
+                                    <!-- <td>{{row.request_amt}}</td> -->
+                                    <td>{{row.balance_po}}</td>
+                                    <td>{{row.request_po}}</td>
+                                    <td>{{row.add_stamp}}</td>
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="dataAr?.length == 0">
+                                <tr>
+                                    <td colspan="5" align="center">No data available !</td>
+                                </tr>
+                            <tbody>
+                        </table>
+                    </div>
+                    <!--end: Datatable-->
+                </div>
+        </div>
+    </section>

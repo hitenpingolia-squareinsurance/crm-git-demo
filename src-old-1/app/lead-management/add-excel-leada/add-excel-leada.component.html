@@ -1,0 +1,133 @@
+<!-- 
+
+<div class="row">
+    <div class="modal-header" style="text-align: center;">
+        <h4 class="modal-title">Add Lead</h4>
+    </div>
+</div>
+
+<form (ngSubmit)="submit()" [formGroup]="AddLeads">
+    <div class="popup-content-body">
+        <div class="row popup-form">
+            <div class="col-md-2" style="margin-top:25px">
+                <a class="form-control btn btn-primary" style="cursor:pointer;" 
+                   href="https://crmapi.squareinsurance.in/uploads/contact_upload.csv" download="">
+                   Download
+                </a>
+            </div>
+            <div class="col-md-4">
+                <label for="file">File</label>
+                <input type="file" class="form-control" 
+                       (change)="onFileSelect($event)" 
+                       formControlName="file">
+                <div *ngIf="isSubmitted && formControls.file.errors" class="validation-errors">
+                    <div *ngIf="formControls.file.errors.required">
+                        <span style="color: red;">Please choose a file!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-right" style="margin-top: 10px;">
+                <button type="button" (click)="closeModel()" class="btn btn-danger">Close</button>&nbsp;
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</form> -->
+
+
+
+
+
+
+
+
+
+<div> 
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Add User</h3>
+        </div>
+        <div class="col-md-5">&nbsp;</div>
+
+        <div class="col-md-1">
+            <button type="button" (click)="CloseModel()" class="btn btn-box-tool">
+                <i class="fa fa-remove"></i>
+            </button>
+        </div>
+    </div>
+
+    <div>
+        <form (ngSubmit)="onSubmit()" [formGroup]="Addvertical" style="margin-top: -15px" id="form-1">
+            <div class="box">
+                <div class="box-body">
+                    <div class="row">
+                        <!-- Vertical Select -->
+                        <div class="col-md-4">
+                            <label>Vertical Select</label>
+                            <ng-multiselect-dropdown class="form-control" [data]="verticalSelectArr"
+                                formControlName="verticalSelect" [settings]="dropdownSettingsTypeSingle"
+                                (onSelect)="onverticalSelectSelect()">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && Addvertical.controls.verticalSelect.errors"
+                                class="ValidationError">
+                                <div *ngIf="Addvertical.controls.verticalSelect.errors.required">
+                                    Please select Vertical Select
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Vertical Name -->
+                        <div class="col-md-4">
+                            <label>Vertical Name</label>
+                            <input type="text" class="form-control" formControlName="verticalName" />
+                            <div *ngIf="isSubmitted && Addvertical.controls.verticalName.errors"
+                                class="ValidationError">
+                                <div *ngIf="Addvertical.controls.verticalName.errors.required">
+                                    Please Enter Vertical Name
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Vertical Manager -->
+                        <div class="col-md-4">
+                            <label>Select Vertical Manager</label>
+                            <ng-multiselect-dropdown class="form-control" [data]="verticalManagerArr"
+                                formControlName="verticalManager" [settings]="dropdownSettingsTypeSingle">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && Addvertical.controls.verticalManager.errors"
+                                class="ValidationError">
+                                <div *ngIf="Addvertical.controls.verticalManager.errors.required">
+                                    Please select Vertical Manager
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Employee Select -->
+                        <div class="col-md-4">
+                            <label>Select Employee</label>
+                            <ng-multiselect-dropdown class="form-control" [data]="EmployeeArr"
+                                formControlName="Employee" [settings]="dropdownSettingsType">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && Addvertical.controls.Employee.errors" class="ValidationError">
+                                <div *ngIf="Addvertical.controls.Employee.errors.required">
+                                    Please select Employee
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Buttons -->
+
+                        <div class="box-footer with-border">
+                            <footer>
+                                <button class="btn pull-right" (click)="CloseModel()" type="button">Close</button>
+                                <button class="btn btn-primary nextBtn pull-right" style="margin-right: 5px"
+                                    type="submit">Submit</button>
+                            </footer>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,125 @@
+<div class="inner_page_css main_dashboard_css">
+ 
+  <section class="container-fluid">
+  
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="main_card_form">
+        <div class="main_header">
+          <div class="header_title">SR Wise Reports</div>
+        </div>
+        <div class="main_body main_card_height_scroll_withoutfooter">
+
+          
+
+        <div  style="display: flex; align-items: center; gap: 55px;">
+     
+          <div class="c-dashboardInfo width_dev_eight" style="float: left; margin-left: 20px;">
+            <div class="wrap">
+              <ul>
+                <li>
+                  <Strong>Total NOP :</Strong>
+                  <label style="cursor: not-allowed !important;">{{TotalRecord}}</label>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="c-dashboardInfo width_dev_eight" style="float: left;">
+            <div class="wrap">
+              <ul>
+                <li><Strong>Total Premium :</Strong> <label style="cursor: not-allowed !important;">{{
+                  TotalNetPremium }}</label></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="c-dashboardInfo width_dev_eight" style="float: left; margin-right: 80px;">
+            <div class="wrap">
+              <ul>
+                <li><Strong>Total PO :</Strong> <label style="cursor: not-allowed !important;">{{
+                  TotalPO }}</label></li>
+              </ul>
+            </div>
+          </div>
+<div>
+          <a (click)="Add()" class="btn btn-primary font-weight-bolder searchbtn" > 
+            <i aria-hidden="true" class="fa fa-search"></i> Search </a>
+            </div>
+        </div> 
+
+
+
+
+                  <!--begin: Datatable-->
+              <div class="table-responsive" style="width: 100%;">
+                <table datatable [dtOptions]="dtOptions" class="row-border hover table table-bordered table-hover table-checkable" id="kt_datatable" style="margin-top: 13px !important">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Action</th>
+                    <th>Source</th>
+                    <th>RM Name</th>
+                    <th>Hold by</th>
+                    <th>Customer Name</th>
+                    <th>Agent Name</th>
+                    <th>SR No</th>
+                    <th>LOB</th>
+                    <th>Remark</th>
+
+                    <th>Registration No</th>
+                    <th>Gross Premium</th>
+                    
+                    <th>Policy No</th>
+                    <th>File Type</th>
+                    <th>Create Date</th>
+                    <th>Booking Date</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr; let i = index">
+                    <td>{{ row.SNo }}</td>
+                    <td > <button (click)="UnHold(row.Id)"  class="btn btn-primary" style="margin-left: 0%;">Unhold</button></td>
+                    <td>{{ row.Source === 'Web' ? 'Online' : row.Source }}</td>
+                    <td>{{ row.RMName }}</td>
+                    <td>{{ row.LoginUser }} {{row.loginCode}}</td>
+                    <td>{{ row.Customer_Name }}</td>
+                    <td>{{ row.AgentName }}</td>
+                    <td>{{ row.SR_No }}</td>
+                    <td>{{ row.LOB_Id }}</td>
+                    <td>{{ row.remark }}</td>
+
+                    <td>{{ row.Registration_No }}</td>
+                    <td>{{ row.Estimated_Gross_Premium }}</td>
+                    <td>{{ row.Policy_No }}</td>
+                    <td>{{ row.File_Type }}</td>
+                    <td>{{ row.Add_Stamp }}</td>
+                    <td>{{ row.Booking_Date }}</td>
+                    
+                    
+                  
+                    
+                  
+                    
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                <tr>
+                  <td colspan="13" align="center">No data available !</td>
+                </tr>
+                <tbody>
+                </table>
+              </div>
+        </div>
+      </div>
+      
+      </div>
+      <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </section>
+    <!-- /.content -->
+  
+  </div>  
+    

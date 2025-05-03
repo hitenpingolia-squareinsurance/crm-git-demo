@@ -1,0 +1,617 @@
+
+<table> 
+		  <tr class="">
+			 
+			<td colspan="2" align="center">
+				<b>Add Recovery</b>
+			</td>
+			<td colspan="3" align="center">
+				
+				<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+			
+			</td>
+		  </tr>
+		  
+<tr class="">
+ 
+<td colspan="5" align="">
+
+ <div class="form-group row">
+	
+	<div class="col-lg-4">	  
+		<select [(ngModel)]="RecoveryType" (change)="onChangeRecoveryType($event)" class="form-control">
+			<option value="Cheque Bounced/Policy Cancelled">Cheque Bounced/Policy Cancelled</option>
+			<option value="Premium Correction">Premium Correction</option>
+			<option value="PO Correction">PO Correction</option>
+		</select>
+	</div>
+	
+	<div class="col-lg-4">	  
+		<input type="text" [(ngModel)]="SearchString" class="form-control" placeholder="Please Enter SR NO/Reg No"> 
+	</div>
+	 
+	<div class="col-lg-2">	
+	 
+		 <button type="button" (click)="Search()" class="btn btn-primary mr-2">Search</button>
+	</div>	 
+	
+</div>	 
+</td>
+</tr>		  
+</table>	 	  
+<table *ngIf="row.LOB_Id=='Motor' || row.LOB_Id=='Non Motor' || row.LOB_Id=='Health' || row.LOB_Id=='Travel' || row.LOB_Id=='Personal Accident'">		  
+		  
+		  
+		  <tr class="">
+			<td colspan="1" align="center">
+				<b>SR NO : {{row.SR_No}}</b>
+				<br>
+				<b *ngIf="(row.Source=='Web')">Quotation Id : {{row.Quotation_Id}}</b>
+			</td>
+			<td colspan="1" align="center"><b>SR Remark</b></td>
+			<td colspan="3" align="center">
+				{{row.SR_Current_Remark}}
+			</td> 
+		  </tr>
+		  
+<tr class="ValueTD">
+	<td>Agent</td>
+	<td>RM</td>
+	<td>UW</td>
+	<td>OPS</td>
+	<td>Account</td> 
+  </tr>
+  <tr>
+	 
+	<td>{{row.Agent_Name}}</td>
+	<td>{{row.RM_Name}}</td>
+	<td>{{row.UW_Name}}</td>
+	<td>{{row.Operation_Name}}</td>
+	<td>{{row.Account_Name}}</td>
+	 
+	 
+  </tr>
+  
+		  
+<tbody *ngIf="row.LOB_Id=='Motor'">
+ 
+		
+  <tr class="ValueTD">
+	<td>File Type</td>
+	<td>LOB</td>
+	<td>Segment</td>
+	<td>Class/Sub-Class</td>
+	<td>Insurer Renewal</td>
+  </tr>
+  <tr>
+	<td>{{row.File_Type}}</td>
+	<td>{{row.LOB_Id}}</td>
+	<td>{{row.Segment_Id}}</td>
+	<td>{{row.Class_Id}} / ({{row.Sub_Class_Id}})</td>
+	<td>{{row.Insurer_Renewal}}</td>
+  </tr>
+  
+  <tr class="ValueTD">
+	<td>Product</td>
+	<td>Sub-Product</td>
+	<td>Make/Model</td>
+	 
+	<td>Variant</td>
+	<td>Fuel/Body Type</td>
+  </tr>
+  <tr>
+	<td>{{row.Product_Id}}</td>
+	<td>{{row.SubProduct_Id}}</td>
+	<td>{{row.Make_Id}}<b>/</b>{{row.Model_Id}}</td>
+	 
+	<td>{{row.Variant_Id}}</td>
+	<td>{{row.Fuel_Type}}<b>/</b>{{row.Body_Type}}</td>
+  </tr>
+  
+  <tr class="ValueTD">
+	<td>Registration No</td>
+	<td>Purchase Date</td>
+	<td>Year of Manufacturing</td>
+	<td>Engine No</td>
+	<td>Chasis No</td>
+  </tr>
+  <tr>
+	<td>{{row.Registration_No}}</td>
+	<td>{{row.Purchase_Date}}</td>
+	<td>{{row.Manufacture_Year}}</td>
+	<td>{{row.Engine_No}}</td>
+	<td>{{row.Chasis_No}}</td>
+  </tr>
+  
+  <tr class="ValueTD">
+	<td>Broker</td>
+	<td>Insurance Company</td>
+	<td>Insurance Company Branch</td>
+	<td>State</td>
+	<td>RTO/Branch Name</td>
+	
+  </tr>
+  <tr>
+	 
+	<td>{{row.Broker_Name}}</td>
+	<td>{{row.Insurance_Company_Name}}</td>
+	<td>{{row.Insurance_Branch_Company_Name}}</td>
+	<td>{{row.State_Name}}</td>
+	<td>{{row.RTO_Region_Name}}</td>
+	
+  </tr>
+  
+  <tr class="ValueTD">
+	<td>Customer Name</td>
+	<td>Customer Mobile No</td>
+	<td>
+		<span *ngIf="(row.Policy_Start_Date_OD!='' && row.Policy_End_Date_OD!='')">
+			Policy (OD) Start/End Date
+		</span>
+	</td>
+	<td>
+		<span *ngIf="(row.Policy_Start_Date_OD=='' && row.Policy_End_Date_OD=='')">
+			Policy Start/End Date
+		</span>
+		
+		<span *ngIf="(row.Policy_Start_Date_OD!='' && row.Policy_End_Date_OD!='')">
+			Policy (TP) Start/End Date
+		</span>
+	
+	</td> 
+	
+	<td>Policy Status & No.</td>
+  </tr>
+  <tr>
+	<td>{{Salutation_Type}} {{row.Customer_Name}}</td>
+	<td>{{row.Customer_Mobile}}</td>
+	<td>
+		<span *ngIf="(row.Policy_Start_Date_OD!='' && row.Policy_End_Date_OD!='')">
+			{{row.Policy_Start_Date_OD}} /  {{row.Policy_End_Date_OD}}
+		</span> 
+	</td>
+	<td>{{row.Policy_Start_Date_TP}} /  {{row.Policy_End_Date_TP}}</td>
+	 
+	<td>{{row.Policy_Status}}/{{row.Policy_No}}</td>
+  </tr>
+  
+  <tr class="ValueTD">
+	<td colspan="5">Previous Policy Details</td>
+  </tr>
+  <tr>
+	<td colspan="2"><b>Insurer Name </b>: {{row.Pre_Insurer_Name}}</td>
+	<td colspan="2"><b>Policy No. </b>: {{row.Pre_Policy_No}}</td>
+	<td colspan="1"><b>Expiry Date. </b>: {{row.Pre_Expiry_Date}}</td>
+  </tr>
+  
+  <tr class="ValueTD">
+	<td colspan="5">Payment Details</td>
+  </tr>
+  <tr>
+	<td colspan="2"><b>Payment Favour </b>: {{row.Payment_Towards}}</td>
+	<td colspan="2"><b>Mode Of Payment </b>: {{row.Mode_Of_Payment}}</td>
+	<td colspan="1"><b>Payment/Cheque Ref No. </b>: {{row.Payment_Cheque_Ref_No}}</td>
+  </tr>
+  
+  <tr class="ValueTD">
+	<td colspan="5">Premium Details</td>
+  </tr>
+  <tr>
+	<td colspan="1"><b>Basic Owan Damage Premium </b>: {{row.Basic_OD}}</td>
+	<td colspan="1"><b>Basic Third Party Premium </b>: {{row.Basic_TP}}</td>
+	<td colspan="1"><b>Other Third Party Premium </b>: {{row.Other_TP}}</td>
+	<td colspan="2"><b>P A Owner Premium</b>: {{row.PA_Owner_Premium}}</td>
+	
+  </tr>
+  
+  <tr>
+	<td colspan="3"><b>Net Premium</b>: {{row.Net_Premium}}</td>
+	<td colspan="2"><b>Gross Premium</b>: {{row.Estimated_Gross_Premium}}</td>
+  </tr>
+  
+  
+  <tr>
+	<td colspan="1"><b>IDV </b>: {{row.IDV}}</td>
+	<td colspan="2"><b>NCB% </b>: {{row.NCB}}</td>
+	<td colspan="2"><b>Discount </b>: {{row.Discount}}</td>
+  </tr>
+ 
+</tbody>
+	 	   
+
+<tbody *ngIf="row.LOB_Id=='Non Motor' || row.LOB_Id=='Health' || row.LOB_Id=='LI' || row.LOB_Id=='Travel' || row.LOB_Id=='Personal Accident'">
+		  
+  <tr class="ValueTD">
+	<td>File Type</td>
+	<td>LOB</td>
+	<td>Segment</td>
+	<td>Class</td>
+	<td>Insurer Renewal</td>
+  </tr>
+  <tr>
+	<td>{{row.File_Type}}</td>
+	<td>{{row.LOB_Id}}</td>
+	<td>{{row.Segment_Id}}</td>
+	<td>{{row.Class_Id}}</td>
+	<td>{{row.Insurer_Renewal}}</td>
+  </tr>
+  
+  <tr class="ValueTD">
+	<td>Sub-Class</td>
+	<td>Product</td>
+	<td>Sub-Product</td>
+	<td></td>
+	<td></td>
+  </tr>
+  <tr>
+	<td>{{row.Sub_Class_Id}}</td>
+	<td>{{row.Product_Id}}</td>
+	<td>{{row.SubProduct_Id}}</td>
+	<td></td>
+	<td></td>
+	 
+  </tr>
+  
+ 
+  
+  <tr class="ValueTD">
+	<td>Broker</td>
+	<td>Insurance Company</td>
+	<td>Insurance Company Branch</td>
+	 
+	<td></td>
+	<td>&nbsp;</td>
+  </tr>
+  <tr>
+	<td>{{row.Broker_Name}}</td>
+	<td>{{row.Insurance_Company_Name}}</td>
+	<td>{{row.Insurance_Branch_Company_Name}}</td>
+	 
+	<td></td>
+	<td>&nbsp;</td>
+  </tr>
+  
+  <tr class="ValueTD">
+	<td>Customer Name</td>
+	<td>Customer Mobile No</td>
+	
+	<td>Policy Start/End Date</td>
+	<td>Policy Status & No.</td>
+	<td></td>
+  </tr>
+  <tr>
+	<td>{{Salutation_Type}} {{row.Customer_Name}}</td>
+	<td>{{row.Customer_Mobile}}</td>
+	 
+	<td>{{row.Policy_Start_Date_TP}} /  {{row.Policy_End_Date_TP}}</td>
+	<td>{{row.Policy_Status}}/{{row.Policy_No}}</td>
+	<td></td>
+  </tr>
+  
+  <tr class="ValueTD">
+	<td colspan="5">Previous Policy Details</td>
+  </tr>
+  <tr>
+	<td colspan="2"><b>Insurer Name </b>: {{row.Pre_Insurer_Name}}</td>
+	<td colspan="2"><b>Policy No. </b>: {{row.Pre_Policy_No}}</td>
+	<td colspan="1"><b>Expiry Date. </b>: {{row.Pre_Expiry_Date}}</td>
+  </tr>
+  
+  <tr class="ValueTD">
+	<td colspan="5">Payment Details</td>
+  </tr>
+  <tr>
+	<td colspan="2"><b>Payment Favour </b>: {{row.Payment_Towards}}</td>
+	<td colspan="2"><b>Mode Of Payment </b>: {{row.Mode_Of_Payment}}</td>
+	<td colspan="1"><b>Payment/Cheque Ref No. </b>: {{row.Payment_Cheque_Ref_No}}</td>
+  </tr>
+  
+  <tr class="ValueTD">
+	<td colspan="5">Premium Details</td>
+  </tr>
+  <tr>
+	
+	
+	<td colspan="1"><b>Net Premium</b>: {{row.Net_Premium}}</td>
+	<td colspan="1"><b>Gross Premium</b>: {{row.Estimated_Gross_Premium}}</td>
+	<td colspan="1"><b>Sum Insured </b>: {{row.Sum_Insured}}</td>
+	<td colspan="1"> </td>
+	<td colspan="1"> </td>
+	
+  </tr>
+  
+  
+  
+ 
+</tbody>
+
+
+<tbody>
+
+  <tr class="ValueTD">
+	<td colspan="5"><a style="color: #080808;" href="javascript:void(0);" (click)="UserForIT()">Payout Details</a>
+		
+	</td>
+  </tr> 
+  <tr>
+	 
+	<td colspan="2"><b>MOD</b>: {{Payout_Details.Payout_MOD}}</td>
+	<td colspan="2"><b>Remark</b>: {{Payout_Details.Payout_Remark}}</td>
+	<td colspan="1"><b>Total Payout Amount</b>: {{PayoutMaster.Agent_Total_Amount}}</td>
+	
+</tr>
+
+<tr>
+	<td colspan="1"><b>Payout OD</b>: {{PayoutMaster.Agent_Payout_OD}}</td>
+	<td colspan="1"><b>Payout TP</b>: {{PayoutMaster.Agent_Payout_TP}}</td>
+	<td colspan="1"><b>Payout Net</b>: {{PayoutMaster.Agent_Payout_Net}}</td>
+	<td colspan="2"><b>Payout Reward Amount</b>: {{PayoutMaster.Agent_Reward_Amount}}</td>
+  </tr>
+  
+  <tr>  
+	<td colspan="1"><b>Payout OD Amount</b>: {{PayoutMaster.Agent_Payout_OD_Amount}}</td>
+	<td colspan="1"><b>Payout TP Amount</b>: {{PayoutMaster.Agent_Payout_TP_Amount}}</td>
+	<td colspan="1"><b>Payout Net Amount</b>: {{PayoutMaster.Agent_Payout_Net_Amount}}</td>
+	<td colspan="2"><b>Payout Scheme Amount</b>: {{PayoutMaster.Agent_Scheme_Amount}}</td>
+  </tr>
+  
+  
+  </tbody>
+  
+</table>
+
+<table *ngIf="row.LOB_Id=='Motor' || row.LOB_Id=='Non Motor' || row.LOB_Id=='Health' || row.LOB_Id=='Travel' || row.LOB_Id=='Personal Accident'" class="table table-bordered">
+     
+	<thead>
+	 
+	  <tr>
+        <th colspan="3" style="text-align: center;"><b>SR Document Details</b></th>
+      </tr>
+	  
+      <tr>
+        <th>Document Name</th>
+        <th>Document View</th>
+        <!--<th>Upload</th>-->
+        <th>Upload Date</th>
+      </tr>
+    </thead>
+    <tbody>
+	
+	<tr *ngFor="let r of Documents;">
+        <td>{{r.Document_Type}}</td>
+        <td><a *ngIf="r.Document_File_Name!=''" (click)="ViewDocument(r.Document_File_Name)" href="javascript:;">Click to View</a> </td>
+        <!--<td><input [disabled]="IsDisabled" type="file" class="form-control" (change)="UploadDocs($event,r.Document_Type)"  accept=".png,.jpg,.pdf"></td>-->
+        <td><span *ngIf="r.Document_File_Name!=''">{{r.Upload_Date_Format}}</span></td>
+      </tr>
+	    
+    </tbody>
+  </table> 
+ 
+
+<table *ngIf="row.LOB_Id=='Motor' || row.LOB_Id=='Non Motor' || row.LOB_Id=='Health' || row.LOB_Id=='Travel' || row.LOB_Id=='Personal Accident'" class="table table-bordered">
+
+<tr>
+        <th colspan="5" style="text-align: center;"><b>Recovery Type :</b> {{RecoveryType}}</th>
+      </tr>
+	  
+ 
+
+<tr class=""> 
+<td colspan="5" align="">
+
+<form class="form" [formGroup]="SRForm" (ngSubmit)="Add_Recovery()">
+ 
+ <div class="form-group row" *ngIf="RecoveryType == 'Premium Correction'">
+	<div class="col-lg-3">
+	 <label>Basic OD Recover Premium:</label>
+		<input min="0" [max]="row['Basic_OD']" class="form-control" (keyup)="Basic_OD_Recover()"  formControlName="Basic_OD_Recover"  type="number">
+							<span *ngIf="isSubmitted && FC.Basic_OD_Recover.errors" class="form-text text-muted">
+								<span *ngIf="FC.Basic_OD_Recover.errors.required" style="color:red;">Please enter Basic OD Recover Premium !</span>
+								<span *ngIf="FC.Basic_OD_Recover.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+	</div>
+	
+	<div class="col-lg-3">
+	 <label>Basic OD Premium:</label>
+		<input readonly placeholder="{{row['Basic_OD']}}" class="form-control" (keyup)="Basic_OD()"  formControlName="Basic_OD" min="1" type="number">
+							<span *ngIf="isSubmitted && FC.Basic_OD.errors" class="form-text text-muted">
+								<span *ngIf="FC.Basic_OD.errors.required" style="color:red;">Please enter Final Own Damage Premium !</span>
+								<span *ngIf="FC.Basic_OD.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+	</div>
+	
+	
+	
+	<div class="col-lg-3">
+		<label>Basic TP Premium:</label>
+		<input readonly placeholder="{{row['Basic_TP']}}" class="form-control" formControlName="Basic_TP" min="1" type="number">
+							<span *ngIf="isSubmitted && FC.Basic_TP.errors" class="form-text text-muted">
+								<span *ngIf="FC.Basic_TP.errors.required" style="color:red;">Please enter Basic Third Party Premium !</span>
+								<span *ngIf="FC.Basic_TP.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+	</div>
+	
+	<div class="col-lg-3">
+		<label>Other TP Premium:</label>
+		<input placeholder="{{row['Other_TP']}}" class="form-control" (change)="Other_TP()" formControlName="Other_TP" min="1" type="number">
+							<span *ngIf="isSubmitted && FC.Other_TP.errors" class="form-text text-muted">
+								<span *ngIf="FC.Other_TP.errors.required" style="color:red;">Please enter Other Third Party Premium !</span>
+								<span *ngIf="FC.Other_TP.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+							<span style="color:red;">{{Other_TP_Error_Msg}}</span>
+	</div>
+
+</div>
+
+ <div class="form-group row" *ngIf="RecoveryType == 'Premium Correction'">
+	
+	<div class="col-lg-4">
+		<label>P A Owner Premium:</label>
+		<input readonly placeholder="{{row['PA_Owner_Premium']}}" class="form-control" formControlName="PA_Owner_Premium" min="1" type="number">
+							<span *ngIf="isSubmitted && FC.PA_Owner_Premium.errors" class="form-text text-muted">
+								<span *ngIf="FC.PA_Owner_Premium.errors.required" style="color:red;">Please enter P A Owner Premium !</span>
+								<span *ngIf="FC.PA_Owner_Premium.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+	</div>
+	<div class="col-lg-4">
+		<label>Net Premium:</label>
+		<input readonly placeholder="{{row['Net_Premium']}}" class="form-control" (keyup)="NetPremium()" formControlName="Net_Premium" min="1" type="number">
+		<span *ngIf="isSubmitted && FC.Net_Premium.errors" class="form-text text-muted">
+		<span *ngIf="FC.Net_Premium.errors.required" style="color:red;">Please enter Net Premium !</span>
+		<span *ngIf="FC.Net_Premium.errors.pattern" style="color:red;">Please enter only number !</span>
+	</span>
+	<span style="color:red;">{{Net_Premium_Error_Msg}}</span>
+	</div>
+	
+	<div class="col-lg-4">
+		<label>Gross Premium:</label>
+		<input readonly placeholder="{{row['Estimated_Gross_Premium']}}" class="form-control" (keyup)="EstimatedGrossPremium()" formControlName="Estimated_Gross_Premium" min="1" type="number">
+		<span *ngIf="isSubmitted && FC.Estimated_Gross_Premium.errors" class="form-text text-muted">
+			<span *ngIf="FC.Estimated_Gross_Premium.errors.required" style="color:red;">Please enter Estimated Gross Premium !</span>
+			<span *ngIf="FC.Estimated_Gross_Premium.errors.pattern" style="color:red;">Please enter only number !</span>
+		</span>
+	</div>
+
+</div>
+
+<div class="form-group row" *ngIf="RecoveryType == 'PO Correction'">
+		
+		<div class="col-lg-2">
+			<label>Pay-Out OD:</label>
+			<input type="number" readonly min="1" formControlName="PayOutOD" class="form-control"> 		 	   
+			<span *ngIf="isSubmitted && FC.PayOutOD.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutOD.errors.required" style="color:red;">Please enter Pay-Out OD !</span>
+			</span>
+			
+		</div>
+		
+		<div class="col-lg-2">
+			<label>Pay-Out Recover OD:</label>
+			<input type="number" (keyup)="PayoutRecover($event,'OD')"  min="1" formControlName="PayOutOD_Recover" class="form-control"> 	 	   
+			<span *ngIf="isSubmitted && FC.PayOutOD_Recover.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutOD_Recover.errors.required" style="color:red;">Please enter Pay-Out Recover OD !</span>
+			</span>
+		</div> 
+		
+		<div class="col-lg-2">
+			<label>Pay-Out Net:</label>
+			<input type="number" readonly min="1" formControlName="PayOutNet" class="form-control"> 		 	   
+			<span *ngIf="isSubmitted && FC.PayOutNet.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutNet.errors.required" style="color:red;">Please enter Pay-Out OD !</span>
+			</span>
+			
+		</div>
+		
+		<div class="col-lg-2">
+			<label>Pay-Out Recover Net:</label>
+			<input type="number" (keyup)="PayoutRecover($event,'Net')"  min="1" formControlName="PayOutNet_Recover" class="form-control"> 	 	   
+			<span *ngIf="isSubmitted && FC.PayOutNet_Recover.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutNet_Recover.errors.required" style="color:red;">Please enter Pay-Out Recover Net !</span>
+			</span>
+		</div> 
+		
+		<div class="col-lg-2">
+			<label>Pay-Out TP:</label>
+			<input type="number" readonly min="1" formControlName="PayOutTP" class="form-control"> 		 	   
+			<span *ngIf="isSubmitted && FC.PayOutTP.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutTP.errors.required" style="color:red;">Please enter Pay-Out TP !</span>
+			</span>
+			
+		</div>
+		
+		<div class="col-lg-2">
+			<label>Pay-Out Recover TP:</label>
+			<input type="number" (keyup)="PayoutRecover($event,'TP')"  min="1" formControlName="PayOutTP_Recover" class="form-control"> 	 	   
+			<span *ngIf="isSubmitted && FC.PayOutTP_Recover.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutTP_Recover.errors.required" style="color:red;">Please enter Pay-Out Recover TP !</span>
+			</span>
+		</div> 
+		 
+		
+</div>
+
+
+<div class="form-group row" *ngIf="RecoveryType == 'PO Correction'">
+	
+	<div class="col-lg-2">
+			<label>Pay-Out Reward:</label>
+			<input type="number" readonly min="1" formControlName="PayOutReward" class="form-control"> 		 	   
+			<span *ngIf="isSubmitted && FC.PayOutReward.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutReward.errors.required" style="color:red;">Please enter Pay-Out Reward !</span>
+			</span>
+			
+		</div>
+		
+		<div class="col-lg-2">
+			<label>Pay-Out Recover Reward:</label>
+			<input type="number" (keyup)="PayoutRecover($event,'Reward')"  min="1" formControlName="PayOutReward_Recover" class="form-control"> 	 	   
+			<span *ngIf="isSubmitted && FC.PayOutReward_Recover.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutReward_Recover.errors.required" style="color:red;">Please enter Pay-Out Recover Reward !</span>
+			</span>
+		</div> 
+		
+
+<div class="col-lg-2">
+			<label>Pay-Out Scheme:</label>
+			<input type="number" readonly min="1" formControlName="PayOutScheme" class="form-control"> 		 	   
+			<span *ngIf="isSubmitted && FC.PayOutScheme.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutScheme.errors.required" style="color:red;">Please enter Pay-Out Scheme !</span>
+			</span>
+			
+		</div>
+		
+		<div class="col-lg-2">
+			<label>Pay-Out Recover Scheme:</label>
+			<input type="number" (keyup)="PayoutRecover($event,'Scheme')"  min="1" formControlName="PayOutScheme_Recover" class="form-control"> 	 	   
+			<span *ngIf="isSubmitted && FC.PayOutScheme_Recover.errors" class="form-text text-muted">
+				<span *ngIf="FC.PayOutScheme_Recover.errors.required" style="color:red;">Please enter Pay-Out Recover Scheme !</span>
+			</span>
+		</div> 
+
+		
+</div>
+ 
+	 
+<div class="form-group row">	
+	<div class="col-lg-4">	  
+	<label>Recovery Date:</label>
+		<input type="text" formControlName="RecoveryDate" name="RecoveryDate"  bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" class="form-control" placeholder="Recovery Date"/>
+		<span *ngIf="isSubmitted && FC.RecoveryDate.errors" class="form-text text-muted">
+			<span *ngIf="FC.RecoveryDate.errors.required" style="color:red;">Please enter Recovery Date !</span>
+			 
+		</span>
+	</div>
+	
+	<div class="col-lg-6">	  
+	<label>Remark:</label>
+		<input type="text" formControlName="Remark" class="form-control" name="Remark"  placeholder="Remark"/>
+		<span *ngIf="isSubmitted && FC.Remark.errors" class="form-text text-muted">
+			<span *ngIf="FC.Remark.errors.required" style="color:red;">Please enter Remark !</span>
+			 
+		</span>
+	</div>
+	 
+	<div class="col-lg-2"> 
+		 <button style="margin-top: 15%;" type="submit" class="btn btn-primary mr-2">Submit</button>
+	</div>	 
+	
+</div>	
+
+</form>
+ 
+</td>
+</tr>
+    
+  </table> 
+
+ 
+  
+  <div id="snackbar2">{{ErrorMsg}}</div>
+  
+  
+  <div style="height:50%"></div>
+		
+	 
+		
+		
+ 

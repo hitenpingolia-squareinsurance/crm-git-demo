@@ -1,0 +1,257 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+
+  <section class="content">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box">
+          <div class="box-header">
+            <div class="row">
+              <div class="col-md-4">
+                <h3 class="box-title" *ngIf="this.currentUrl == '/user_agent/users'">Users </h3>
+                <h3 class="box-title" *ngIf="this.currentUrl == '/user_agent/pos_social_leads'">POS Social Leads</h3>
+                <h3 class="box-title" *ngIf="this.currentUrl == '/user_agent/pos_leads'">POS Leads</h3>
+                <h3 class="box-title" *ngIf="this.currentUrl == '/user_agent/new_pos'">New POS</h3>
+
+
+                <h3 class="box-title" *ngIf="this.currentUrl == '/user_agent/verified_pos'">Verified Docs</h3>
+                <h3 class="box-title" *ngIf="this.currentUrl == '/user_agent/under_training_pos'">Under Training POS</h3>
+                <h3 class="box-title" *ngIf="this.currentUrl == '/user_agent/verified_posc'">Certified POS</h3>
+                <h3 class="box-title" *ngIf="this.currentUrl == '/user_agent/advisor_pos'">Business Partner</h3>
+                <h3 class="box-title" *ngIf="this.currentUrl == '/user_agent/master_advisor_pos'">Business Adviser</h3>
+                <h3 class="box-title" *ngIf="this.currentUrl == '/user_agent/incomplete_pos'">Incomplete POS</h3>
+                <h3 class="box-title" *ngIf="this.currentUrl == '/user_agent/rejected_pos'">Rejected POS</h3>
+                <h3 class="box-title" *ngIf="this.currentUrl == '/user_agent/all_pos'">All POS</h3>
+                <h3 class="box-title" *ngIf="this.currentUrl == '/user_agent/pos_business'">POS Business</h3>
+                <h3 class="box-title" *ngIf="this.currentUrl == '/user_agent/pos_social_leads'">POS Social Leads</h3>
+
+
+
+              </div>
+              <div class="col-md-6">&nbsp;</div>
+
+
+              <div class="col-md-2">
+                <button *ngIf="this.currentUrl == '/user_agent/pos_social_leads'"
+                  class="btn btn-primary nextBtn pull-right" (click)="PosSocialLeads()" style="margin-right: 5px;"> <i
+                    class="fa fa-plus"> Add More </i> </button>
+              </div>
+
+            </div>
+          </div>
+          <div class="box-body">
+
+            <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+            <div class="mydiv">
+            
+			
+			  <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+        class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th *ngIf="this.currentUrl == '/user_agent/users' ">UserID</th>
+            <th *ngIf="this.currentUrl == '/user_agent/pos_social_leads'">Platform</th>
+            <th
+              *ngIf="this.currentUrl == '/user_agent/new_pos' || this.currentUrl == '/user_agent/all_pos' || this.currentUrl == '/user_agent/under_training_pos' 
+              || this.currentUrl == '/user_agent/verified_posc' || this.currentUrl == '/user_agent/advisor_pos' || 
+              this.currentUrl == '/user_agent/master_advisor_pos' || this.currentUrl == '/user_agent/incomplete_pos' 
+              || this.currentUrl == '/user_agent/rejected_pos' || this.currentUrl == '/user_agent/verified_pos'  ">
+              Agent ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+
+            <th *ngIf="this.currentUrl == '/user_agent/advisor_pos' || this.currentUrl == '/user_agent/master_advisor_pos'">Docs/Details/Extra Action</th>
+
+           
+
+            <th *ngIf="this.currentUrl == '/user_agent/pos_social_leads'">City/State</th>
+            <th *ngIf="this.currentUrl == '/user_agent/pos_social_leads'">Pincode</th>
+            <th *ngIf="this.currentUrl == '/user_agent/pos_social_leads'">Creation Date</th>
+
+            <th *ngIf="this.currentUrl == '/user_agent/pos_leads'">State Completed</th>
+            <th *ngIf="this.currentUrl == '/user_agent/pos_leads' || this.currentUrl == '/user_agent/verified_posc' || this.currentUrl == '/user_agent/all_pos'
+            || this.currentUrl == '/user_agent/under_training_pos' || this.currentUrl == '/user_agent/incomplete_pos'
+            || this.currentUrl == '/user_agent/rejected_pos' || this.currentUrl == '/user_agent/new_pos' || this.currentUrl == '/user_agent/verified_pos' ">
+            Docs/Details/Extra Action</th>
+
+
+            <th *ngIf="this.currentUrl == '/user_agent/users' ">Password</th>
+            <th *ngIf="this.currentUrl == '/user_agent/users' ">Address</th>
+            <th *ngIf="this.currentUrl == '/user_agent/users' ">Image</th>
+
+            <th
+            *ngIf="this.currentUrl == '/user_agent/new_pos' || this.currentUrl == '/user_agent/under_training_pos' 
+            || this.currentUrl == '/user_agent/all_pos' || this.currentUrl == '/user_agent/verified_posc' 
+            || this.currentUrl == '/user_agent/advisor_pos' || this.currentUrl == '/user_agent/master_advisor_pos'
+             || this.currentUrl == '/user_agent/incomplete_pos' || this.currentUrl == '/user_agent/rejected_pos' 
+             || this.currentUrl == '/user_agent/verified_pos' ">
+            Status</th>
+            <th
+              *ngIf="this.currentUrl == '/user_agent/users' || this.currentUrl == '/user_agent/under_training_pos' 
+              || this.currentUrl == '/user_agent/new_pos' || this.currentUrl == '/user_agent/verified_posc' || this.currentUrl == '/user_agent/verified_pos'
+               || this.currentUrl == '/user_agent/advisor_pos' || this.currentUrl == '/user_agent/master_advisor_pos' 
+               || this.currentUrl == '/user_agent/incomplete_pos'  || this.currentUrl == '/user_agent/rejected_pos'  || this.currentUrl == '/user_agent/all_pos'
+                || this.currentUrl == '/user_agent/pos_leads'">
+              Action</th>
+          </tr>
+
+
+        </thead>
+        <tbody *ngIf="dataAr?.length != 0">
+          <tr *ngFor="let row of dataAr">
+            <td>{{row.SrNo}}.</td>
+            <td *ngIf="this.currentUrl == '/user_agent/users' ">{{row.user_id}}</td>
+            <td *ngIf="this.currentUrl == '/user_agent/pos_social_leads'">
+              <label style="pointer-events: none; background-color: black;"
+                class="label">{{row.platform}}</label>
+              <!-- <span style="color:white;" class="btn btn-grd-dark label label-dark" ></span> -->
+            </td>
+            <td
+              *ngIf="this.currentUrl == '/user_agent/new_pos' || this.currentUrl == '/user_agent/under_training_pos' 
+              || this.currentUrl == '/user_agent/all_pos' || this.currentUrl == '/user_agent/verified_posc'  
+              || this.currentUrl == '/user_agent/advisor_pos'  || this.currentUrl == '/user_agent/master_advisor_pos' 
+              || this.currentUrl == '/user_agent/incomplete_pos' || this.currentUrl == '/user_agent/rejected_pos' 
+              || this.currentUrl == '/user_agent/verified_pos' ">
+              {{row.agent_id}}</td>
+
+              
+            <td>{{row.name}}</td>
+            <td>{{row.email}}</td>
+            <td>{{row.mobile}}</td>
+
+
+            <td *ngIf="this.currentUrl == '/user_agent/pos_social_leads'">{{row.city}} / {{row.state}}</td>
+            <td *ngIf="this.currentUrl == '/user_agent/pos_social_leads'">{{row.pincode}}</td>
+  
+            <td *ngIf="this.currentUrl == '/user_agent/pos_social_leads'">{{row.insert_date}}</td>
+
+            <td *ngIf="this.currentUrl == '/user_agent/pos_leads' ">
+              <label style="pointer-events: none;" class="label label-warning" *ngIf="row.reg_level == 1">Stage
+                1</label>
+              <label style="pointer-events: none;" class="label label-warning" *ngIf="row.reg_level == 2">Stage
+                2</label>
+            </td>
+
+
+            <td *ngIf="this.currentUrl == '/user_agent/users' ">{{row.password}}</td>
+            <td *ngIf="this.currentUrl == '/user_agent/users' ">{{row.address}}</td>
+
+            <td
+              *ngIf="row.pos_status ==2 && row.create_pos_permission == 2 || this.currentUrl == '/user_agent/advisor_pos' ">
+              <label class="label label-info" (click)="Documents(row.Id)">Docs</label>&nbsp;
+              <a (click)="PospDetails(row.Id,'agent')"> <label class="label label-info">Details</label></a>&nbsp;
+              <label class="label label-info" (click)="MoreAction(row.Id)">More Action</label>
+
+
+             
+
+            </td>
+
+                
+            <td
+            *ngIf="this.currentUrl == '/user_agent/pos_leads' || this.currentUrl == '/user_agent/verified_posc'  
+            || this.currentUrl == '/user_agent/all_pos' || this.currentUrl == '/user_agent/under_training_pos' 
+            || this.currentUrl == '/user_agent/incomplete_pos' || this.currentUrl == '/user_agent/rejected_pos' 
+            || this.currentUrl == '/user_agent/new_pos' || this.currentUrl == '/user_agent/verified_pos'">
+            <label class="label label-info" (click)="Documents(row.Id)">Docs</label>&nbsp;
+            <a (click)="PospDetails(row.Id,'agent')"> <label class="label label-info">Details</label></a>&nbsp;
+            <label class="label label-info" (click)="MoreAction(row.Id)">MoreAction</label>
+
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;
+          
+          </td>
+
+            <td
+              *ngIf="this.currentUrl == '/user_agent/new_pos' && row.pos_status == 2 && row.create_pos_permission == 1  
+              || this.currentUrl == '/user_agent/all_pos' && row.pos_status == 2 && row.create_pos_permission == 1 || 
+              this.currentUrl == '/user_agent/verified_posc' && row.pos_status == 2 && row.create_pos_permission == 1 ||
+              this.currentUrl == '/user_agent/advisor_pos' && row.pos_status == 2 && row.create_pos_permission == 1 
+              ">
+              <label class="label label-success">POSP/Advisor</label>
+            </td>
+            <td
+              *ngIf="this.currentUrl == '/user_agent/new_pos' && row.pos_status == 2 && row.create_pos_permission == 2 
+              ||  this.currentUrl == '/user_agent/all_pos' && row.pos_status == 2 && row.create_pos_permission == 2 
+              || this.currentUrl == '/user_agent/verified_posc' && row.pos_status == 2 && row.create_pos_permission == 2 
+              || this.currentUrl == '/user_agent/advisor_pos' && row.pos_status == 2 && row.create_pos_permission == 2 
+              || this.currentUrl == '/user_agent/master_advisor_pos' && row.pos_status == 2 && row.create_pos_permission == 2">
+              <label class="label label-success">Master Advisor</label>
+            </td>
+
+            <td
+              *ngIf="this.currentUrl == '/user_agent/new_pos' && row.pos_status == 1 
+              || this.currentUrl == '/user_agent/all_pos' && row.pos_status == 1 || this.currentUrl == '/user_agent/verified_pos' && row.pos_status == 1 ">
+              <label class="label label-success">Verified</label>
+            </td>
+            <td
+              *ngIf="this.currentUrl == '/user_agent/new_pos' && row.pos_status == 2 || this.currentUrl == '/user_agent/all_pos' && row.pos_status == 2 && row.create_pos_permission != 1 || this.currentUrl == '/user_agent/verified_posc' && row.pos_status == 2 && row.create_pos_permission != 1 ">
+              <label class="label label-success">Verified With Posc</label>
+            </td>
+            <td
+              *ngIf="this.currentUrl == '/user_agent/new_pos' && row.pos_status == 0 || this.currentUrl == '/user_agent/all_pos' && row.pos_status == 0">
+              <label class="label label-warning">Pending For QC</label>
+            </td>
+            <td
+              *ngIf="this.currentUrl == '/user_agent/new_pos' && row.pos_status == 3 || this.currentUrl == '/user_agent/all_pos' && row.pos_status == 3 || this.currentUrl == '/user_agent/incomplete_pos' && row.pos_status == 3 ">
+              <label class="label label-warning">Incomplete</label>
+            </td>
+            <td
+              *ngIf="this.currentUrl == '/user_agent/new_pos' &&  row.pos_status == 4 || this.currentUrl == '/user_agent/all_pos' &&  row.pos_status == 4 || this.currentUrl == '/user_agent/under_training_pos' &&  row.pos_status == 4 ">
+              <label class="label label-primary">Under Training</label>
+            </td>
+            <td
+              *ngIf="this.currentUrl == '/user_agent/new_pos' &&  row.pos_status == 6 || this.currentUrl == '/user_agent/all_pos' &&  row.pos_status == 6 || this.currentUrl == '/user_agent/rejected_pos' &&  row.pos_status == 6">
+              <label class="label label-danger">Rejected</label>
+            </td>
+
+
+            <td *ngIf="this.currentUrl == '/user_agent/users' ">
+              <label class="label label-info"> <a style="color: white;" *ngIf="row.image != '' "
+                  href="{{row.image}}" target="_blank">
+                  View</a></label>
+            </td>
+        
+            <td
+              *ngIf="this.currentUrl == '/user_agent/users' || this.currentUrl == '/user_agent/under_training_pos' || 
+              this.currentUrl == '/user_agent/new_pos' || this.currentUrl == '/user_agent/verified_posc' || this.currentUrl == '/user_agent/verified_pos' 
+              || this.currentUrl == '/user_agent/advisor_pos' || this.currentUrl == '/user_agent/master_advisor_pos' 
+              || this.currentUrl == '/user_agent/incomplete_pos' || this.currentUrl == '/user_agent/rejected_pos' 
+              || this.currentUrl == '/user_agent/all_pos' || this.currentUrl == '/user_agent/pos_leads'">
+
+              <!-- <label class="label label-info" (click)="AddProductDetailsComponent('Edit',row.Id)">Edit</label>
+                <label class="fa fa-trash" (click)="DeleteRequest(row.Id,'user_agent')"></label> -->
+              &nbsp;&nbsp;&nbsp;&nbsp;
+
+             <label class="label label-info" (click)="Edit(row.Id)">Edit</label>&nbsp;
+
+              <label *ngIf="row.Status == 1" class="label label-success"
+                (click)="ActiveInactive(row.Id, 0, 'user_agent')">Active</label>
+              <label *ngIf="row.Status == 0" class="label label-danger"
+                (click)="ActiveInactive(row.Id, 1, 'user_agent')">Inactive</label>
+            </td>
+
+
+          </tr>
+        </tbody>
+        <tbody *ngIf="dataAr?.length == 0">
+          <tr>
+            <td colspan="14" align="center">No data available!</td>
+          </tr>
+        <tbody>
+      </table>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

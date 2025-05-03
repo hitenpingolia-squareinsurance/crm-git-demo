@@ -1,0 +1,1377 @@
+ <!--begin::Content-->
+
+<div class="" id=""> 
+ 
+ 
+  
+  <!--begin::Entry-->
+	<div class="">
+		<!--begin::Container-->
+		<div class="">
+							 <div class="row">
+   	<div class="col-lg-12">
+        
+        <!--begin::Form-->
+			<form class="form" [formGroup]="SRForm" (ngSubmit)="AddSR()">
+			
+			
+<!--<div *ngIf="row.Source=='Web' || row.Source=='Excel'">		
+	  
+        <div class="card card-custom" style="margin-bottom:10px;">
+        	<div class="card-header">
+        		<div class="card-title">
+        			<h3 class="card-label">
+        				Update Mapping - {{row.SR_No}}   
+        			</h3>
+					
+						
+			
+        		</div>
+				
+				<div style="margin-top: 25px;">
+					<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+					</div>
+					
+        	</div>
+        	<div class="card-body">
+        		 
+		  <div class="form-group row">
+			
+			
+			<div class="col-lg-3">
+				<label>Select Broker:</label>
+				<select [disabled]="(SRForm.value['LOB_Id']=='Non Motor' || SRForm.value['LOB_Id']=='Health')?true:false" class="form-control" [(ngModel)]="Broker_Id" [ngModelOptions]="{standalone: true}">
+					<option value="">---Select---</option>
+					<option *ngFor="let row of Brokers_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+				</select>
+			</div>
+			
+			<div class="col-lg-3">
+				<label>Select RM:</label>
+				<select class="form-control" (change)="Get_Agents($event,0)" [(ngModel)]="RM_Id" [ngModelOptions]="{standalone: true}">
+					<option value="">---Select---</option>
+					<option *ngFor="let row of RM_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+				</select>
+			</div>
+			
+			<div class="col-lg-3">
+				<label>Select Franchise:</label>
+				<select (change)="onChangeFranchise($event,0)" class="form-control" [(ngModel)]="Franchise_Id" [ngModelOptions]="{standalone: true}">
+					<option value="">---Select---</option>
+					<option *ngFor="let row of Franchisee_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+					 
+				</select>
+			</div>
+			
+			<div class="col-lg-3">
+				<label>Select Agent:</label>
+				<select class="form-control" [(ngModel)]="Agent_Id" [ngModelOptions]="{standalone: true}">
+					<option value="">---Select---</option>
+					<option *ngFor="let row of Agents_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+				</select>
+			</div>
+			
+ 
+		  </div>
+		  
+		  </div>
+		  </div>
+</div> -->			
+            
+            
+<div *ngIf="row.Source=='BMS' || row.Source=='Web' || row.Source=='Excel'">		
+   		 <!--begin::Card-->
+        <div class="card card-custom" style="margin-bottom:10px;">
+        	<div class="card-header">
+        		<div class="card-title">
+        			<h3 class="card-label">
+        				Edit SR - {{row.SR_No}}   
+        			</h3>
+					
+						
+			
+        		</div>
+				
+				<div style="margin-top: 25px;">
+					<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+					</div>
+					
+        	</div>
+        	<div class="card-body">
+        		 
+		  <div class="form-group row">
+			
+			
+			<div class="col-lg-2">
+				<label>Select Broker:</label>
+				<select [disabled]="(SRForm.value['LOB_Id']=='Non Motor' || SRForm.value['LOB_Id']=='Health')?true:false" class="form-control" [(ngModel)]="Broker_Id" [ngModelOptions]="{standalone: true}">
+					<option value="">---Select---</option>
+					<option *ngFor="let row of Brokers_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+				</select>
+			</div>
+			
+			<div class="col-lg-3">
+				<label>Select RM:</label>
+				<select class="form-control" (change)="Get_Agents($event,0)" [(ngModel)]="RM_Id" [ngModelOptions]="{standalone: true}">
+					<option value="">---Select---</option>
+					<option *ngFor="let row of RM_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+				</select>
+			</div>
+			
+			<div class="col-lg-2">
+				<label>Select Franchise:</label>
+				<select (change)="onChangeFranchise($event,0)" class="form-control" [(ngModel)]="Franchise_Id" [ngModelOptions]="{standalone: true}">
+					<option value="">---Select---</option>
+					<option *ngFor="let row of Franchisee_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+					 
+				</select>
+			</div>
+			
+			<div class="col-lg-3">
+				<label>Select Agent:</label>
+				<select class="form-control" (change)="onChangeAgent($event,1)" [(ngModel)]="Agent_Id" [ngModelOptions]="{standalone: true}">
+					<option value="">---Select---</option>
+					<option *ngFor="let row of Agents_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+				</select>
+			</div>
+			
+			<div class="col-lg-2">
+				<label>Select Fleet:</label>
+				<select class="form-control" [(ngModel)]="Fleet_Id" [ngModelOptions]="{standalone: true}">
+					<option disabled value="">---Select---</option>
+					<option value="0">None</option>
+					<option *ngFor="let row of Fleets_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+				</select>
+				 
+			</div>
+			
+ 
+		  </div>
+		  
+		 
+		  
+				 
+				 <div class="form-group row">
+				 
+						<div class="col-lg-3">
+							<label>LOB:</label>
+							
+							<select class="form-control" formControlName="LOB_Id" (change)="File_Types()"> 
+								<option value="">---Select---</option>
+								<option *ngFor="let row of LOB_Ar;" value="{{row.Name}}">{{row.Name}}</option>
+								
+							</select> 
+							<span *ngIf="isSubmitted && FC.LOB_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.LOB_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							
+						</div>
+
+						<div class="col-lg-3">
+							<label>IMD File Type:</label>
+							<select class="form-control" formControlName="File_Type" (change)="Products()">
+								<option value="">---Select---</option>
+								<option *ngFor="let row of File_Type_Ar" value="{{row}}">{{row}}</option>
+							</select>
+							
+							<span *ngIf="isSubmitted && FC.File_Type.errors" class="form-text text-muted">
+								<span *ngIf="FC.File_Type.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							
+						</div>
+						
+						<div class="col-lg-2">
+							<label>Insurer Renewal:</label>
+							<select class="form-control" formControlName="Insurer_Renewal">
+								<option value="">---Select---</option>
+								<option value="Yes">Yes</option>
+								<option value="No">No</option>
+							</select>
+							
+							<span *ngIf="isSubmitted && FC.Insurer_Renewal.errors" class="form-text text-muted">
+								<span *ngIf="FC.Insurer_Renewal.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							
+						</div>
+						
+						<div class="col-lg-2" *ngIf="SRForm.value['LOB_Id'] == 'Motor'">
+							<label>PA Owner:</label>
+							<select class="form-control" formControlName="PA_Owner">
+								<option value="">---Select---</option>
+								<option value="Yes">Yes</option>
+								<option value="No">No</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.PA_Owner.errors" class="form-text text-muted">
+								<span *ngIf="FC.PA_Owner.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+						</div>
+						<div class="col-lg-2" *ngIf="SRForm.value['LOB_Id'] == 'Motor'">
+							<label>PA Owner Tenure:</label>
+							<select class="form-control" formControlName="PA_Owner_Tenure">
+								<option value="">---Select---</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.PA_Owner_Tenure.errors" class="form-text text-muted">
+								<span *ngIf="FC.PA_Owner_Tenure.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+						</div>
+						
+						
+					 
+					</div>
+					
+					
+					<div *ngIf="SRForm.value['LOB_Id'] == 'Motor'">
+					
+					<div class="form-group row">
+						<div class="col-lg-6">
+							<label>Product:</label>
+							<select class="form-control" formControlName="Product_Id"(change)="SubProducts($event)">
+								<option value="0">---Select---</option>
+								<option *ngFor="let row of Products_Ar;" value="{{row.Name}}">{{row.Name}}</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.Product_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.Product_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							
+						</div>
+						<div class="col-lg-6">
+							<label>Sub-Product:</label>
+							<select class="form-control" formControlName="SubProduct_Id" (change)="Segments($event)">
+								<option value="0">---Select---</option>
+								<option *ngFor="let row of SubProducts_Ar;" value="{{row.Name}}">{{row.Name}}</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.SubProduct_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.SubProduct_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							 
+						</div>
+					</div> 
+					
+					
+					<div class="form-group row">
+					
+					<div class="col-lg-4">
+							<label>Segment:</label>
+							 
+							<select class="form-control" formControlName="Segment_Id" (change)="Classes($event)"> <!--(change)="Classes($event)"-->
+								
+								<option [ngValue]="null">---Select---</option>
+								
+								<option *ngFor="let row of Segment_Ar;" [value]="row.Name">{{row.Name}}</option>
+						
+								
+							</select>
+							<span *ngIf="isSubmitted && FC.Segment_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.Segment_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							
+						</div>
+					
+						<div class="col-lg-4">
+							<label>Class:</label>
+							<select class="form-control" formControlName="Class_Id" (change)="Sub_Classes($event)">
+								<option value="">---Select---</option>
+								<option *ngFor="let row of Classes_Ar;" value="{{row.Name}}">{{row.Name}}</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.Class_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.Class_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							
+						</div>
+						
+						<div class="col-lg-4">
+							<label>Sub-Class:</label>
+							<select class="form-control" formControlName="Sub_Class_Id" (change)="Make($event)">
+								<option value="">---Select---</option>
+								<option *ngFor="let row of Sub_Classes_Ar;" value="{{row.Name}}">{{row.Name}}</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.Sub_Class_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.Sub_Class_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							
+						</div>
+						
+						
+					</div>
+					
+					
+					
+					
+					<div class="form-group row">
+						<div class="col-lg-4"> 
+							<label>Make:</label>
+							<select class="form-control" formControlName="Make_Id" (change)="Model($event)">
+								<option value="">---Select---</option>
+								<option *ngFor="let row of Make_Ar;" value="{{row.Name}}">{{row.Name}}</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.Make_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.Make_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+						</div>
+						
+						<div class="col-lg-4"> 
+							<label>Model:</label>
+							<select class="form-control" formControlName="Model_Id" (change)="Variant($event)">
+								<option value="">---Select---</option>
+								<option *ngFor="let row of Models_Ar;" value="{{row.Name}}">{{row.Name}}</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.Model_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.Model_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+						</div>
+						<div class="col-lg-4">
+							<label>Variant:</label>
+							<select class="form-control" formControlName="Variant_Id" (change)="Get_PCV_TP_Premium_Per_Passenger()">
+								<option value="">---Select---</option>
+								<option *ngFor="let row of Variants_Ar;" value="{{row.Name}}">{{row.Name}}</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.Variant_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.Variant_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+						</div>
+						 
+					</div>
+					
+					
+					<div class="form-group row">
+						
+						<div class="col-lg-1">
+						   <label>Seating C</label>
+						   
+						   <input *ngIf="(this.IsSeatingCapcityEdit=='1')"
+							class="form-control" formControlName="Seating_Capcity" type="number" (keyup)="CustomSeatingCUpdate($event)">
+				 			
+							<input *ngIf="(this.IsSeatingCapcityEdit=='0')"
+								class="form-control" formControlName="Seating_Capcity" readonly type="text">
+						     
+						    
+						</div>
+						
+						<div class="col-lg-1">
+						   <label>GVW/CC</label>
+						   <input class="form-control" formControlName="GVW_CC" readonly type="text">
+						    
+						</div>
+						
+						<div class="col-lg-2">
+						   <label>Reg. Type</label>
+						   <select class="form-control" (change)="RegType($event)">
+								<option value="Normal">Normal</option>
+								<option value="Vintage">Vintage</option>
+						   </select>
+						 </div>
+						
+						<div class="col-lg-1">
+						   <label>Reg. No</label>
+						   <input class="form-control AutoUppercase" formControlName="Registration_State_Code" (keyup)="GetRegistrionNo($event,1)" type="text" maxlength="2">
+						   <span *ngIf="isSubmitted && FC.Registration_State_Code.errors" class="form-text text-muted">
+								<span *ngIf="FC.Registration_State_Code.errors.required" style="color:red;">this field required !</span>
+								<span *ngIf="FC.Registration_State_Code.errors.pattern" style="color:red;">allowed only alphabet's !</span>
+								<span *ngIf="FC.Registration_State_Code.errors.minlength" style="color:red;">this field required !</span>
+								<span *ngIf="FC.Registration_State_Code.errors.maxlength" style="color:red;">this field required !</span>
+							</span> 
+							<span *ngIf="SRForm.value['Registration_State_Code'] != ''" class="form-text text-muted">
+								<span style="color:red;">{{StateSearchErrorMsg}}</span>
+							</span> 
+						</div>
+						<div class="col-lg-1">
+						   <label>&nbsp;</label>
+						   <input class="form-control AutoUppercase" formControlName="Registration_District_Code" (keyup)="GetRegistrionNo($event,2)" type="text" maxlength="2">
+						   <span *ngIf="isSubmitted && FC.Registration_District_Code.errors" class="form-text text-muted">
+								<span *ngIf="FC.Registration_District_Code.errors.required" style="color:red;">this field required !</span>
+								<span *ngIf="FC.Registration_District_Code.errors.pattern" style="color:red;">allowed only numbers !</span>
+								<span *ngIf="FC.Registration_District_Code.errors.minlength" style="color:red;">this field required !</span>
+								<span *ngIf="FC.Registration_District_Code.errors.maxlength" style="color:red;">this field required !</span>
+							</span>
+							 
+							<span *ngIf="SRForm.value['Registration_District_Code'] != ''" class="form-text text-muted">
+								<span style="color:red;">{{RTOSearchErrorMsg}}</span>
+							</span>
+						</div>
+						<div class="col-lg-1">
+						   <label>&nbsp;</label>
+						   <input class="form-control AutoUppercase" formControlName="Registration_City_Code" (keyup)="GetRegistrionNo($event,3)" type="text" maxlength="3">
+						   <span *ngIf="isSubmitted && FC.Registration_City_Code.errors" class="form-text text-muted">
+								<span *ngIf="FC.Registration_City_Code.errors.required" style="color:red;">this field required !</span>
+								<span *ngIf="FC.Registration_City_Code.errors.pattern" style="color:red;">allowed only alphanumeric !</span>
+								<span *ngIf="FC.Registration_City_Code.errors.minlength" style="color:red;">this field required !</span>
+								<span *ngIf="FC.Registration_City_Code.errors.maxlength" style="color:red;">this field required !</span>
+							</span>
+						</div>
+						<div class="col-lg-1">
+						   <label>&nbsp;</label>
+						   <input class="form-control AutoUppercase" formControlName="Registration_Code" (keyup)="GetRegistrionNo($event,4)" type="text" maxlength="4">
+						   <span *ngIf="isSubmitted && FC.Registration_Code.errors" class="form-text text-muted">
+								<span *ngIf="FC.Registration_Code.errors.required" style="color:red;">this field required !</span>
+								<span *ngIf="FC.Registration_Code.errors.pattern" style="color:red;">allowed only numbers !</span>
+								<span *ngIf="FC.Registration_Code.errors.minlength" style="color:red;">this field required !</span>
+								<span *ngIf="FC.Registration_Code.errors.maxlength" style="color:red;">this field required !</span>
+							</span>
+						</div>
+					 
+						
+						<div class="col-lg-2">
+							<label>Purchase Date:</label>
+							<input placeholder="DD-MM-YYYY" class="form-control" formControlName="Purchase_Date" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" type="text">
+							<span *ngIf="isSubmitted && FC.Purchase_Date.errors" class="form-text text-muted">
+								<span *ngIf="FC.Purchase_Date.errors.required" style="color:red;">Please choose purchase date !</span>
+							</span>
+						</div>
+						
+						<div class="col-lg-2">
+							<label>Year of Manufacturing:</label>
+							<input class="form-control" formControlName="Manufacture_Year" type="text" maxlength="4">
+							<span *ngIf="isSubmitted && FC.Manufacture_Year.errors" class="form-text text-muted">
+								<span *ngIf="FC.Manufacture_Year.errors.required" style="color:red;">Please enter Year of Manufacturing !</span>
+								<span *ngIf="FC.Manufacture_Year.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+						</div>
+						 
+					</div>
+					
+					<div class="form-group row">
+						<div class="col-lg-6">
+							<label>State:</label>
+							<select class="form-control" formControlName="State_Id" (change)="RTO()">
+								<option value="">---Select---</option>
+								<option *ngFor="let row of States_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.State_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.State_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							
+						</div>
+						
+						<div class="col-lg-6">
+							<label>RTO:</label>
+							<select class="form-control" formControlName="RTO_Id">
+								<option value="">---Select---</option>
+								<option *ngFor="let row of RTO_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.RTO_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.RTO_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+						</div>
+						 
+					</div>
+					
+					
+					
+					<div class="form-group row">
+						 
+						<div class="col-lg-6">
+							<label>Engine No.:</label>
+							<input class="form-control AutoUppercase" formControlName="Engine_No" type="text">
+							<span *ngIf="isSubmitted && FC.Engine_No.errors" class="form-text text-muted">
+								<span *ngIf="FC.Engine_No.errors.required" style="color:red;">Please enter engine no !</span>
+								<span *ngIf="FC.Engine_No.errors.pattern" style="color:red;">Please enter engine no (Space & Special Characters Not Allowed)</span>
+								<span *ngIf="FC.Engine_No.errors.minlength || FC.Engine_No.errors.maxlength" style="color:red;">
+								Engine No must be greater than 5 number and less than 25 number
+								</span>								
+							</span>
+						</div>
+						
+						<div class="col-lg-6">
+							<label>Chasis No.:</label>
+							<input class="form-control AutoUppercase" formControlName="Chasis_No" type="text">
+							<span *ngIf="isSubmitted && FC.Chasis_No.errors" class="form-text text-muted">
+								<span *ngIf="FC.Chasis_No.errors.required" style="color:red;">Please enter chasis no !</span>
+								<span *ngIf="FC.Chasis_No.errors.pattern" style="color:red;">Please enter chasis no (Space & Special Characters Not Allowed)</span>
+								<span *ngIf="FC.Chasis_No.errors.minlength || FC.Chasis_No.errors.maxlength" style="color:red;">
+								Chasis No must be greater than 5 number and less than 25 number
+								</span>
+								 
+							</span>
+						</div>
+						 
+					</div>
+					
+					
+					</div>
+					
+					<div *ngIf="SRForm.value['LOB_Id'] == 'Non Motor' || SRForm.value['LOB_Id'] == 'Health'">
+						<div class="form-group row">
+						
+						<div class="col-lg-3">
+							<label>Segment:</label>
+							 
+							<select class="form-control" formControlName="Segment_Id" (change)="NM_Classess($event)"> <!--(change)="Classes($event)"-->
+								
+								<option value="">---Select---</option>
+								
+								<option *ngFor="let row of Segment_Ar;" value="{{row.Name}}">{{row.Name}}</option>
+						
+								
+							</select>
+							<span *ngIf="isSubmitted && FC.Segment_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.Segment_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							
+						</div>
+						
+						<div class="col-lg-3">
+							<label>Class:</label>
+							<select class="form-control" formControlName="Class_Id" (change)="NM_Products($event)">
+								<option value="">---Select---</option>
+								<option *ngFor="let row of Classes_Ar;" value="{{row.Name}}">{{row.Name}}</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.Class_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.Class_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							
+						</div>
+						
+						<div class="col-lg-3">
+							<label>Product:</label>
+							<select class="form-control" formControlName="Product_Id" (change)="NM_SubProducts($event)">
+								<option value="0">---Select---</option>
+								<option *ngFor="let row of Products_Ar;" value="{{row.Name}}">{{row.Name}}</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.Product_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.Product_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							
+						</div>
+						<div class="col-lg-3" *ngIf="SRForm.value['LOB_Id'] == 'Non Motor'">
+							<label>Sub-Product:</label>
+							<select class="form-control" formControlName="SubProduct_Id">
+								<option selected value="0">---Select---</option>
+								<option *ngFor="let row of SubProducts_Ar;" value="{{row.Name}}">{{row.Name}}</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.SubProduct_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.SubProduct_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							 
+						</div>
+						
+						
+						
+						
+					</div>
+					
+					 
+					
+					</div>
+					
+					
+					<div class="form-group row">
+						<div class="col-lg-6"> 
+						
+							<label>Insurance Company:</label>
+							<select class="form-control" formControlName="Insurance_Company_Id" (change)="Ins_Companies_Branch($event)">
+								<option value="">---Select---</option>
+								<option *ngFor="let row of Ins_Companies_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.Insurance_Company_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.Insurance_Company_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+							
+						</div>
+						<div class="col-lg-6">
+							<label>Insurance Company Branch:</label>
+							<select class="form-control" formControlName="Insurance_Company_Branch_Id">
+								<option value="0">---Select---</option>
+								<option *ngFor="let row of Ins_Branch_Companies_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.Insurance_Company_Branch_Id.errors" class="form-text text-muted">
+								<span *ngIf="FC.Insurance_Company_Branch_Id.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+						</div>
+					</div>
+					
+				 
+					
+					
+					
+					<div class="form-group row">
+					
+						<div class="col-lg-2"> 
+							<label>Insured Type:</label>
+							<select class="form-control" formControlName="Insured_Type">
+								<option value="Individual">Individual</option>
+								<option value="Organization">Organization</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.Insured_Type.errors" class="form-text text-muted">
+							<span *ngIf="FC.Insured_Type.errors.required" style="color:red;">Please enter your Insured Type!</span>
+						</span>
+						</div> 
+						 
+						<div class="col-lg-2" *ngIf="SRForm.value['Insured_Type'] == 'Individual'"> 
+							<label>Salutation:</label>
+							<select class="form-control" formControlName="Salutation_Type">
+								<option value="Mr.">Mr.</option>
+								<option value="Mrs.">Mrs.</option>
+								<option value="Ms.">Ms.</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.Salutation_Type.errors" class="form-text text-muted">
+							<span *ngIf="FC.Salutation_Type.errors.required" style="color:red;">Please enter your salutation!</span>
+						</span>
+						</div>
+					
+						
+						
+						
+						
+						<div class="col-lg-4"> 
+						
+							<label>{{( SRForm.value['Insured_Type'] == 'Organization') ? 'Organization' :'Customer Full' }}  Name :</label>
+							 
+							<input class="form-control AutoCapitlize" formControlName="Customer_Name" type="text">
+							<span *ngIf="isSubmitted && FC.Customer_Name.errors" class="form-text text-muted">
+							<span *ngIf="FC.Customer_Name.errors.required" style="color:red;">Please enter full name!</span>
+							<span *ngIf="FC.Customer_Name.errors.pattern" style="color:red;">Please enter vaild name (Numbers/Special Characters Not Allowed)</span>
+						</span>
+						
+						</div>
+						
+						
+						
+						<div class="col-lg-2">
+							<label>Mobile No:</label>
+							<input class="form-control" formControlName="Customer_Mobile" type="text" maxlength="10">
+							
+							<span *ngIf="isSubmitted && FC.Customer_Mobile.errors" class="form-text text-muted">
+							<span *ngIf="FC.Customer_Mobile.errors.required" style="color:red;">Please enter your mobile no !</span>
+							<span *ngIf="FC.Customer_Mobile.errors.pattern" style="color:red;">Please enter vaild Mobile No</span>
+						</span>
+						
+						</div>
+						
+						<div class="col-lg-2">
+							<label>Alternate No.:</label>
+							<input class="form-control" formControlName="Customer_Alternate_Mobile" type="text" maxlength="12">
+							
+							<span *ngIf="isSubmitted && FC.Customer_Alternate_Mobile.errors" class="form-text text-muted">
+							<span *ngIf="FC.Customer_Alternate_Mobile.errors.required" style="color:red;">Please enter your Alternate no !</span>
+							<span *ngIf="FC.Customer_Alternate_Mobile.errors.pattern" style="color:red;">Please enter vaild Alternate No</span>
+						</span>
+						
+						</div>
+						 
+						
+						 
+					</div>
+					  
+					
+<div class="form-group row" *ngIf="Is_Policy_OD == 1">
+						
+<div class="col-lg-3"> 
+	<label>Policy Start Date (OD):</label>
+	<input placeholder="DD-MM-YYYY" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" type="text" formControlName="Policy_Start_Date_OD">
+	<span *ngIf="isSubmitted && FC.Policy_Start_Date_OD.errors" class="form-text text-muted">
+		<span *ngIf="FC.Policy_Start_Date_OD.errors.required" style="color:red;">Please select policy start date (OD) !</span>
+	</span>
+</div> 
+
+<div class="col-lg-3">
+	<label>Policy End Date (OD):</label>
+	<input placeholder="DD-MM-YYYY" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" type="text" formControlName="Policy_End_Date_OD">
+	<span *ngIf="isSubmitted && FC.Policy_End_Date_OD.errors" class="form-text text-muted">
+		<span *ngIf="FC.Policy_End_Date_OD.errors.required" style="color:red;">Please select policy start date (OD) !</span>
+	</span>
+</div>
+
+	</div>  
+					
+					<div class="form-group row">
+						
+						<div class="col-lg-3">
+							<label>Policy Start Date <span *ngIf="Is_Policy_OD == 1">(TP)</span> :</label>
+							<input placeholder="DD-MM-YYYY" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" formControlName="Policy_Start_Date_TP" type="text">
+							<span *ngIf="isSubmitted && FC.Policy_Start_Date_TP.errors" class="form-text text-muted">
+								<span *ngIf="FC.Policy_Start_Date_TP.errors.required" style="color:red;">Please select policy start date !</span>
+							</span>
+						</div> 
+						
+						<div class="col-lg-3">
+							<label>Policy End Date <span *ngIf="Is_Policy_OD == 1">(TP)</span> :</label>
+							<input placeholder="DD-MM-YYYY" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" formControlName="Policy_End_Date_TP" type="text">
+							<span *ngIf="isSubmitted && FC.Policy_End_Date_TP.errors" class="form-text text-muted">
+								<span *ngIf="FC.Policy_End_Date_TP.errors.required" style="color:red;">Please select policy end date !</span>
+							</span>
+						</div>
+						
+						<div class="col-lg-3">
+							<label>Policy Status:</label>
+							<select class="form-control" formControlName="Policy_Status" (change)="onChangePolicyStatus($event)">
+								<option value="">---Select---</option>
+								<option value="Issued">Issued</option>
+								<option value="Not-Issued">Not Issued</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.Policy_Status.errors" class="form-text text-muted">
+								<span *ngIf="FC.Policy_Status.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+						</div>
+						
+						<div class="col-lg-3" *ngIf="SRForm.value['Policy_Status']=='Issued'">
+							<label>Policy No.:</label>
+							<input class="form-control AutoUppercase" formControlName="Policy_No" type="text">
+							<span *ngIf="isSubmitted && FC.Policy_No.errors" class="form-text text-muted">
+								<span *ngIf="FC.Policy_No.errors.required" style="color:red;">Please enter policy no !</span>
+							</span>
+						</div>
+						 
+					</div>
+                    
+                    
+					
+        	</div>
+            
+        </div>
+        <!--end::Card-->
+		
+		
+		 <!--begin::Card-->
+        <div class="card card-custom" style="margin-bottom:10px;">
+        	<div class="card-header">
+        		<div class="card-title">
+        			<h3 class="card-label">
+        				Previous Policy Details
+        			</h3> 
+					<div *ngIf="SRForm.value['LOB_Id'] == 'Motor'" class="radio-inline">
+                            <label class="radio radio-primary">
+                                <input type="radio" name="Previous_Policy_Status" formControlName="Previous_Policy_Status" value="Yes" /> Yes
+                                <span></span>
+                            </label>
+							<label class="radio radio-primary">
+                                <input type="radio" name="Previous_Policy_Status" formControlName="Previous_Policy_Status" value="No" /> No (Don't Know Case)
+                                <span></span>
+                            </label>
+                    </div>
+        		</div>		
+        	</div>
+        	<div class="card-body" *ngIf="SRForm.value['Previous_Policy_Status'] == 'Yes'">
+				 
+        		 <div class="form-group row">
+				  					
+						<div class="col-lg-4">
+							<label>Previous Insurer :</label>
+							<!--<input class="form-control AutoCapitlize" formControlName="Pre_Insurer_Name" type="text">-->
+							
+							<select class="form-control" formControlName="Pre_Insurer_Name">
+								<option value="">---Select---</option>
+								<option *ngFor="let row of Ins_Companies_Ar;" value="{{row.Name}}">{{row.Name}}</option>
+							</select>
+							
+							<span *ngIf="isSubmitted && FC.Pre_Insurer_Name.errors" class="form-text text-muted">
+								<span *ngIf="FC.Pre_Insurer_Name.errors.required" style="color:red;">Please enter insurer name !</span>
+							</span>
+						</div>
+		 
+						<div class="col-lg-4">
+							<label>Policy No.:</label>
+							<input class="form-control AutoUppercase" formControlName="Pre_Policy_No" type="text">
+							<span *ngIf="isSubmitted && FC.Pre_Policy_No.errors" class="form-text text-muted">
+								<span *ngIf="FC.Pre_Policy_No.errors.required" style="color:red;">Please enter policy no !</span>
+							</span>
+						</div>
+                        
+                        <div class="col-lg-4">
+							<label>Expiry Date.:</label>
+							<input placeholder="DD-MM-YYYY" class="form-control" formControlName="Pre_Expiry_Date" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}"  type="text">
+							<span *ngIf="isSubmitted && FC.Pre_Expiry_Date.errors" class="form-text text-muted">
+								<span *ngIf="FC.Pre_Expiry_Date.errors.required" style="color:red;">Please enter expiry date !</span>
+							</span>
+						</div>
+						 
+					</div>	
+        	</div> 
+        </div>
+        <!--end::Card-->
+		
+		 
+        <!--begin::Card-->
+        <div class="card card-custom" style="margin-bottom:10px;">
+        	<div class="card-header">
+        		<div class="card-title">
+        			<h3 class="card-label">
+        				Payment Details
+        			</h3>
+        		</div>
+        	</div>
+        	<div class="card-body">
+        		 
+                 <div class="form-group row">
+						<div class="col-lg-4">
+							<label>Payment Favour:</label>
+							<select class="form-control" formControlName="Payment_Towards" (change)="onChangePaymentTowards($event)">
+								<option value="">---Select---</option>
+								<option value="Insurance Company">Insurance Company</option>
+								<option value="Accounts">Accounts</option>
+								<option value="Top Notch Insurance">Top Notch Insurance</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.Payment_Towards.errors" class="form-text text-muted">
+								<span *ngIf="FC.Payment_Towards.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+						</div>
+						
+						<div class="col-lg-4">
+							<label>Mode Of Payment:</label>
+							<select class="form-control" formControlName="Mode_Of_Payment">
+								<option value="">---Select---</option>
+								<option value="Cash">Cash</option>
+								<option value="Online">Online</option>
+								<option value="Cheque">Cheque </option>
+								<option value="RTGS">RTGS</option>
+								<option value="NEFT">NEFT</option>
+								<option value="IMPS">IMPS</option>
+								<option value="UPI">UPI</option>
+								<option value="Card">Card</option>
+							</select>
+							<span *ngIf="isSubmitted && FC.Mode_Of_Payment.errors" class="form-text text-muted">
+								<span *ngIf="FC.Mode_Of_Payment.errors.required" style="color:red;">Please select an option !</span>
+							</span>
+						</div>
+						
+						<div class="col-lg-4">
+							<label>Payment/Cheque Ref No.:</label>
+							<input class="form-control AutoUppercase" formControlName="Payment_Cheque_Ref_No" type="text">
+							<span *ngIf="isSubmitted && FC.Payment_Cheque_Ref_No.errors" class="form-text text-muted">
+								<span *ngIf="FC.Payment_Cheque_Ref_No.errors.required" style="color:red;">Please enter Payment/Cheque Ref No !</span>
+							</span>
+						</div>
+						
+						 
+					</div>
+					
+				 
+					
+        	</div>
+            
+        </div>
+        <!--end::Card-->
+         
+        
+		<!--begin::Card--> 
+        <div *ngIf="SRForm.value['LOB_Id'] == 'Motor'" class="card card-custom" style="margin-bottom:10px;">
+        	<div class="card-header">
+        		<div class="card-title">
+        			<h3 class="card-label">
+        				Premium Details 
+						<span *ngIf="SRForm.value['Segment_Id']">
+						
+						- {{SRForm.value['Segment_Id']}} 
+						
+						- ({{Vehicle_Type}})
+						</span>
+        			</h3>
+        		</div>
+        	</div>
+        	<div class="card-body">
+				 
+				  <div class="form-group row">
+						
+						
+							
+						<div class="col-lg-2">
+							<label>TPPD:</label>
+							<input placeholder="0.00" (change)="TPPD()" class="form-control" formControlName="TPPD" min="1" type="number">
+							<span *ngIf="isSubmitted && FC.TPPD.errors" class="form-text text-muted">
+								<span *ngIf="FC.TPPD.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+						</div>
+						</div>
+						
+        		 <div class="form-group row">
+				 
+						<div class="col-lg-2">
+							<label>Final OD :</label>
+							<input placeholder="0.00" class="form-control" (keyup)="Basic_OD()"  formControlName="Basic_OD" min="1" type="number">
+							<span *ngIf="isSubmitted && FC.Basic_OD.errors" class="form-text text-muted">
+								<span *ngIf="FC.Basic_OD.errors.required" style="color:red;">Please enter Final Own Damage Premium !</span>
+								<span *ngIf="FC.Basic_OD.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+						</div> 
+		 
+						<div class="col-lg-2">
+							<label>Basic TP:</label>
+							<input readonly placeholder="0.00" class="form-control" formControlName="Basic_TP" min="1" type="number">
+							<span *ngIf="isSubmitted && FC.Basic_TP.errors" class="form-text text-muted">
+								<span *ngIf="FC.Basic_TP.errors.required" style="color:red;">Please enter Basic Third Party Premium !</span>
+								<span *ngIf="FC.Basic_TP.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+						</div>
+                        
+                        <div class="col-lg-2">
+							<label>Other TP:</label>
+							<input placeholder="0.00" class="form-control" (change)="Other_TP()" formControlName="Other_TP" min="1" type="number">
+							<span *ngIf="isSubmitted && FC.Other_TP.errors" class="form-text text-muted">
+								<span *ngIf="FC.Other_TP.errors.required" style="color:red;">Please enter Other Third Party Premium !</span>
+								<span *ngIf="FC.Other_TP.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+							<span style="color:red;">{{Other_TP_Error_Msg}}</span>
+							
+						</div>
+						
+						<div class="col-lg-2">
+							<label>P A Owner:</label>
+							<input readonly placeholder="0.00" class="form-control" formControlName="PA_Owner_Premium" min="1" type="number">
+							<span *ngIf="isSubmitted && FC.PA_Owner_Premium.errors" class="form-text text-muted">
+								<span *ngIf="FC.PA_Owner_Premium.errors.required" style="color:red;">Please enter P A Owner Premium !</span>
+								<span *ngIf="FC.PA_Owner_Premium.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+						</div>
+						
+						<div class="col-lg-2">
+							<label>Net Premium:</label>
+							<input placeholder="0.00" class="form-control" (keyup)="NetPremium()" formControlName="Net_Premium" min="1" type="number">
+							<span *ngIf="isSubmitted && FC.Net_Premium.errors" class="form-text text-muted">
+								<span *ngIf="FC.Net_Premium.errors.required" style="color:red;">Please enter Net Premium !</span>
+								<span *ngIf="FC.Net_Premium.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+							<span style="color:red;">{{Net_Premium_Error_Msg}}</span>
+						</div>
+						
+						<div class="col-lg-2">
+							<label>Gross Premium:</label>
+							<input placeholder="0.00" class="form-control" (keyup)="EstimatedGrossPremium()" formControlName="Estimated_Gross_Premium" min="1" type="number">
+							<span *ngIf="isSubmitted && FC.Estimated_Gross_Premium.errors" class="form-text text-muted">
+								<span *ngIf="FC.Estimated_Gross_Premium.errors.required" style="color:red;">Please enter Estimated Gross Premium !</span>
+								<span *ngIf="FC.Estimated_Gross_Premium.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+							
+						</div>
+						 
+					</div>
+					
+					
+					<div *ngIf="SRForm.value['Segment_Id']=='Comprehensive' || SRForm.value['Segment_Id'] == 'Standalone Own Damage'" class="form-group row">
+				 
+				   
+					  <div class="col-lg-4">
+							<label>IDV :</label>
+							<input placeholder="0.00" class="form-control" formControlName="IDV" type="text">
+							<span *ngIf="isSubmitted && FC.IDV.errors" class="form-text text-muted">
+								<span *ngIf="FC.IDV.errors.required" style="color:red;">Please enter IDV !</span>
+								<span *ngIf="FC.IDV.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+						</div>
+		 
+						<div class="col-lg-4">
+							<label>NCB%:</label>
+							<select class="form-control" formControlName="NCB">
+							
+							<option value="0">0%</option>
+							<option value="20">20% </option>
+							<option value="25">25%</option>
+							<option value="35">35% </option>
+							<option value="45">45% </option>
+							<option value="50">50% </option>
+							<option value="65">65% </option>
+							
+							</select>
+							
+							<span *ngIf="isSubmitted && FC.NCB.errors" class="form-text text-muted">
+								<span *ngIf="FC.NCB.errors.required" style="color:red;">Please enter NCB !</span>
+								<span *ngIf="FC.NCB.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+						</div>
+                        
+                        <div class="col-lg-4">
+							<label>Discount:</label>
+							<input placeholder="0.00" class="form-control" formControlName="Discount" type="text">
+							<span *ngIf="isSubmitted && FC.Discount.errors" class="form-text text-muted">
+								<span *ngIf="FC.Discount.errors.required" style="color:red;">Please enter Discount !</span>
+								<span *ngIf="FC.Discount.errors.pattern" style="color:red;">Please enter only number !</span>
+							</span>
+						</div>
+						 
+						 
+					</div>
+					
+					
+        	</div>
+            
+        </div>
+        <!--end::Card-->
+		
+		
+		<!--begin::Card-->
+        <div class="card card-custom" style="margin-bottom:10px;">
+        	<div class="card-header">
+        		<div class="card-title">
+        			<h3 class="card-label">
+        				Payout Details
+        			</h3>
+        		</div>
+        	</div>
+        	<div class="card-body">
+        		 
+		 <div class="form-group">
+			 
+<div class="row">			
+				<div class="col-lg-2">
+					<label>OD (%) :</label>
+					<input type="number" min="0" formControlName="Payout_OD" class="form-control">
+				</div> 
+				<div class="col-lg-2">
+					<label>TP (%) :</label>
+					<input type="number" min="0" formControlName="Payout_TP" class="form-control">
+				</div> 
+				<div class="col-lg-2">
+					<label>Net (%) :</label>
+					<input type="number" min="0" formControlName="Payout_Net" class="form-control">
+				</div> 
+				<div class="col-lg-2">
+					<label>Reward (%) :</label>
+					<input type="number" min="0" formControlName="Payout_Reward" class="form-control">
+				</div> 
+				
+				<div class="col-lg-2">
+					<label>Scheme (%) :</label>
+					<input type="number" min="0" formControlName="Payout_Scheme" class="form-control">
+				</div> 
+				
+				<div class="col-lg-2">
+					<label>Payout MOD :</label>
+					<select class="form-control" formControlName="Payout_MOD">
+						<option value="">---Select---</option>
+						<option value="Advance">Advance</option>
+						<option value="Weekly">Weekly</option>
+						<option value="Monthly">Monthly</option>
+					</select>
+					
+				</div> 
+</div>
+
+<div class="row">			
+				<div class="col-lg-2">
+					<label>OD Amount :</label>
+					<input type="number" min="0" formControlName="Payout_OD_Amount" class="form-control">
+				</div> 
+				<div class="col-lg-2">
+					<label>TP Amount :</label>
+					<input type="number" min="0" formControlName="Payout_TP_Amount" class="form-control">
+				</div> 
+				<div class="col-lg-2">
+					<label>Net Amount :</label>
+					<input type="number" min="0" formControlName="Payout_Net_Amount" class="form-control">
+				</div> 
+				<div class="col-lg-2">
+					<label>Reward Amount :</label>
+					<input type="number" min="0" formControlName="Payout_Reward_Amount" class="form-control">
+				</div> 
+				
+				<div class="col-lg-2">
+					<label>Scheme Amount :</label>
+					<input type="number" min="0" formControlName="Payout_Scheme_Amount" class="form-control">
+				</div>
+
+				<div class="col-lg-2">
+					<label>Total Amount :</label>
+					<input type="number" min="0" formControlName="Payout_Total_Amount" class="form-control">
+				</div>				
+				 
+</div>
+
+
+<div class="row">				
+				<div class="col-lg-12">
+					<label>Remark :</label>
+					
+					<textarea class="form-control" formControlName="Payout_Remark"></textarea>
+				 
+				</div> 
+</div>
+			 
+			</div>
+			 
+        	</div>
+            
+        </div>
+        <!--end::Card-->
+		
+		
+		<!--begin::Card-->
+        <div *ngIf="SRForm.value['LOB_Id'] == 'Non Motor' || SRForm.value['LOB_Id'] == 'Health'" class="card card-custom" style="margin-bottom:10px;">
+        	<div class="card-header">
+        		<div class="card-title">
+        			<h3 class="card-label">
+        				Premium Details 
+        			</h3>
+        		</div>
+        	</div>
+        	<div class="card-body">
+				 
+        		 <div class="form-group row">
+				 
+				 <div class="col-lg-3"> 
+					<label>Estimated Gross:</label>
+					<input placeholder="0.00" class="form-control" (keyup)="NM_EstimatedGrossPremium($event)" formControlName="Estimated_Gross_Premium" min="1" type="number">
+					<span *ngIf="isSubmitted && FC.Estimated_Gross_Premium.errors" class="form-text text-muted">
+						<span *ngIf="FC.Estimated_Gross_Premium.errors.required" style="color:red;">Please enter Estimated Gross Premium !</span>
+						<span *ngIf="FC.Estimated_Gross_Premium.errors.pattern" style="color:red;">Please enter only number !</span>
+					</span>
+					
+				</div>
+				  
+				<div class="col-lg-3">
+					<label>Net Premium:</label>
+					<input placeholder="0.00" class="form-control" (keyup)="NM_NetPremium($event)" formControlName="Net_Premium" min="1" type="number">
+					<span *ngIf="isSubmitted && FC.Net_Premium.errors" class="form-text text-muted">
+						<span *ngIf="FC.Net_Premium.errors.required" style="color:red;">Please enter Net Premium !</span>
+						<span *ngIf="FC.Net_Premium.errors.pattern" style="color:red;">Please enter only number !</span>
+					</span>
+					 
+				</div>
+				
+				<div class="col-lg-3" *ngIf="SRForm.value['LOB_Id'] == 'Non-Motor'">
+					<label>Terrorism Premium:</label>
+					<input placeholder="0.00" class="form-control" formControlName="Terrorism_Premium" min="1" type="number">
+					<span *ngIf="isSubmitted && FC.Terrorism_Premium.errors" class="form-text text-muted">
+						<span *ngIf="FC.Terrorism_Premium.errors.required" style="color:red;">Please enter Terrorism Premium !</span>
+						<span *ngIf="FC.Terrorism_Premium.errors.pattern" style="color:red;">Please enter only number !</span>
+					</span>
+					 
+				</div>
+				
+				<div class="col-lg-3">
+					<label>Sum Insured:</label>
+					<input placeholder="0.00" class="form-control" formControlName="Sum_Insured" min="1" type="number">
+					<span *ngIf="isSubmitted && FC.Sum_Insured.errors" class="form-text text-muted">
+						<span *ngIf="FC.Sum_Insured.errors.required" style="color:red;">Please enter Sum Insured !</span>
+						<span *ngIf="FC.Sum_Insured.errors.pattern" style="color:red;">Please enter only number !</span>
+					</span>
+					 
+				</div>
+			 
+				 
+			</div>
+					 
+        	</div>
+            
+        </div>
+        <!--end::Card-->
+ 
+        
+<!--begin::Card-->
+<div class="card card-custom" style="margin-bottom:10px;">
+<div class="card-header">
+	<div class="card-title">
+		<h3 class="card-label">
+			SR Actions
+		</h3>
+	</div>
+
+</div>
+<div class="card-body">
+	  
+	  <div>
+		<!-- UW OR OPS -->
+		 
+		
+		<div>
+			
+			<div>
+			
+			 <div class="form-group row">
+				
+				<div class="col-lg-4">
+					<label>Sales Support User:</label>
+					<select formControlName="Underwriter_Emp_Id"  class="form-control"> 
+						<option value="0">---Select---</option>
+						<option *ngFor="let row of SalesSupportEmp_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+					</select>
+					 
+					<span *ngIf="isSubmitted && FC.Underwriter_Emp_Id.errors" class="form-text text-muted">
+						<span *ngIf="FC.Underwriter_Emp_Id.errors.required" style="color:red;">Please choose an option !</span>
+					</span>
+				</div>
+				
+					<div class="col-lg-4">
+						<label>Accounts User :</label>
+						<select formControlName="Accounts_Id"  class="form-control"> 
+							<option value="0">---Select---</option>
+							<option *ngFor="let row of AccountsEmp_Ar;" value="{{row.Id}}">{{row.Name}}</option>
+						</select>
+						
+						 
+						
+						<span *ngIf="isSubmitted && FC.Accounts_Id.errors" class="form-text text-muted">
+							<span *ngIf="FC.Accounts_Id.errors.required" style="color:red;">Please choose an option !</span>
+						</span>
+					</div>
+
+				 <div class="col-lg-4">
+						<label>Operations User :</label>
+						<select formControlName="Operation_Id" class="form-control"> 
+							<option value="0">---Select---</option>
+							<option *ngFor="let row of OperationsEmp_Ar;" value="{{row.Id}}">
+							{{row.Name}}
+							</option>
+						</select>
+						
+						 
+						
+						<span *ngIf="isSubmitted && FC.Operation_Id.errors" class="form-text text-muted">
+							<span *ngIf="FC.Operation_Id.errors.required" style="color:red;">Please choose an option !</span>
+						</span>
+						
+					</div> 					
+					
+					
+					
+			 </div>
+		
+			</div>
+	    </div>
+		
+		 
+	</div><!-- End UW OR OPS -->
+	
+	 
+	
+	
+<div class="form-group row">
+ 
+		
+	<div class="col-lg-12">
+		<label>Update Remark:</label>
+		<input class="form-control" formControlName="AssignRemark" type="text">
+		<span *ngIf="isSubmitted && FC.AssignRemark.errors" class="form-text text-muted">
+			<span *ngIf="FC.AssignRemark.errors.required" style="color:red;">Please enter Remark !</span>
+		</span>
+	</div>
+						
+</div>
+
+	 
+</div>
+
+</div> 
+<!--end::Card-->
+
+
+<!--begin::Card-->
+<div class="card card-custom" style="margin-bottom:10px;">
+<div class="card-header">
+	<div class="card-title">
+		<h3 class="card-label">
+			Documents 
+		</h3>
+	</div>
+
+</div>
+<div class="card-body">
+	<table class="table table-bordered">
+    
+	<thead>
+      <tr>
+        <th>Document Name</th>
+        <th>Document View</th>
+        <th>Upload</th>
+        <th>Upload Date</th>
+      </tr>
+    </thead>
+    <tbody>
+	
+	<tr *ngFor="let r of Documents;">
+        <td>{{r.Document_Type}}</td>
+        <td><a *ngIf="r.Document_File_Name!=''" (click)="ViewDocument(r.Document_File_Name)" href="javascript:;">Click to View</a> </td>
+        <td>
+	 	
+			<input type="file" class="form-control" *ngIf="r.Document_Type=='RC_Motor_Registraion'" formControlName="RC_Motor_Registraion" (change)="UploadDocs($event,r.Document_Type)">
+			<input type="file" class="form-control" *ngIf="r.Document_Type=='Previous_Policy_Copy'" formControlName="Previous_Policy_Copy" (change)="UploadDocs($event,r.Document_Type)">
+			<input type="file" class="form-control" *ngIf="r.Document_Type=='Cheque_Payment_Recipt'" formControlName="Cheque_Payment_Recipt" (change)="UploadDocs($event,r.Document_Type)">
+			<input type="file" class="form-control" *ngIf="r.Document_Type=='Mandate_Letter'" formControlName="Mandate_Letter" (change)="UploadDocs($event,r.Document_Type)">
+			<input type="file" class="form-control" *ngIf="r.Document_Type=='Invoice'" formControlName="Invoice" (change)="UploadDocs($event,r.Document_Type)">
+			<input type="file" class="form-control" *ngIf="r.Document_Type=='Renewal_Notice'" formControlName="Renewal_Notice" (change)="UploadDocs($event,r.Document_Type)">
+			<input type="file" class="form-control" *ngIf="r.Document_Type=='Other'" formControlName="Other" (change)="UploadDocs($event,r.Document_Type)">
+			<input type="file" class="form-control" *ngIf="r.Document_Type=='Policy_PDF'" formControlName="PolicyPDF" (change)="UploadDocs($event,'PolicyPDF')">
+		 	
+		</td>
+        <td><span *ngIf="r.Document_File_Name!=''">{{r.Upload_Date_Format}}</span></td>
+      </tr>
+	    
+    </tbody>
+  </table>
+  
+</div> 
+</div> 
+
+<!--begin::Card-->
+
+</div>
+
+<div *ngIf="api.GetUserData('User_Id_Dec')==1" class="card card-custom" style="margin-bottom:10px;">
+<div class="card-header">
+	<div class="card-title">
+		<h3 class="card-label">
+			Admin Edit Authentication 
+		</h3>
+	</div>
+
+</div>
+<div class="card-body">
+
+ <div class="form-group row">	
+	
+	<div class="col-lg-6">
+					<label>Employee Code:</label>
+					<input type="text" class="form-control" formControlName="Employee_Code">
+					<span *ngIf="isSubmitted && FC.Employee_Code.errors" class="form-text text-muted">
+						<span *ngIf="FC.Employee_Code.errors.required" style="color:red;">Please enter Employee Code !</span>
+					</span>
+					 
+				</div>
+		<div class="col-lg-6">
+					<label>Password:</label>
+					<input type="password" class="form-control" formControlName="Employee_Password">
+					<span *ngIf="isSubmitted && FC.Employee_Password.errors" class="form-text text-muted">
+						<span *ngIf="FC.Employee_Password.errors.required" style="color:red;">Please enter login password !</span>
+					</span>
+					 
+			</div>
+		<div class="col-lg-4">	
+		
+			<label style="margin-top: 8%;">
+				<input type="checkbox" [(ngModel)]="Is_Remember" [ngModelOptions]="{standalone: true}" name="remember"> Remember me
+			</label>
+		 </div>
+				
+	</div>
+  
+</div> 
+</div> 
+<!--begin::End-->
+
+        
+<div class="card-footer">
+	<div class="row">
+	 
+		<div class="col-lg-12 text-right">
+		
+		<input type="hidden" formControlName="AssignActionType">
+	
+	  
+		
+		 	 
+			<div>
+				 
+				<button (click)="SubmitActions('UpdateByUser')" type="submit" class="btn btn-primary mr-2">Update</button>
+			</div> 
+		 
+		 
+			 
+		</div>
+	</div>
+</div>
+        
+        </form>
+			<!--end::Form-->
+    </div>
+     
+</div>
+					</div>
+		<!--end::Container-->
+	</div>
+<!--end::Entry-->
+  
+  
+</div>
+<!--end::Content--> 

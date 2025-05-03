@@ -1,0 +1,78 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+
+  <section class="content">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box">
+          <div class="box-header">
+            <div class="row">
+              <div class="col-md-4">
+                <h3 class="box-title">Hospital List </h3>
+              </div>
+              <div class="col-md-6">&nbsp;</div>
+              <div class="col-md-2">
+                <button class="btn btn-primary nextBtn pull-right" (click)="AddHospitalList()"
+                  style="margin-right: 5px;"> <i class="fa fa-plus"> Add Hospital List </i></button>
+
+              </div>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="mydiv">
+              <table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Company</th>
+                    <th>Plan</th>
+                    <th>Hospital Name</th>
+                    <th>Hospital Address</th>
+                    <th>Pincode</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{row.SrNo}}</td>
+                    <td>{{row.Company}}</td>
+                    <td>{{row.Plan}}</td>
+                    <td>{{row.HospitalName}}</td>
+                    <td>{{row.HospitalAddress}}</td>
+                    <td>{{row.Pincode}}</td>
+                    <td>{{row.City}}</td>
+                    <td>{{row.State}}</td>
+                    <td>
+                      <label class="fa fa-trash" (click)="DeleteRequest(row.Id,'hospital_health_data')"></label>
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                      <label *ngIf="row.Status == 1" class="fa fa-close "
+                        (click)="ActiveInactive(row.Id, 0, 'hospital_health_data')"></label>
+                      <label *ngIf="row.Status == 0" class="fa fa-check"
+                        (click)="ActiveInactive(row.Id, 1, 'hospital_health_data')"></label>
+
+                    </td>
+
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

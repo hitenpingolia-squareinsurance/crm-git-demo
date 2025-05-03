@@ -1,0 +1,53 @@
+ 	 
+  <div class="box-default">
+    <div class="box-header with-border">
+      <h3 class="box-title" *ngIf="Status!='fixed'">Reject Form</h3>
+      <h3 class="box-title" *ngIf="Status=='fixed'">Reject Details</h3>
+
+      <div class="box-tools pull-right">
+        
+        <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+      </div>
+    </div> 
+
+<form [formGroup]="UpdateFollowForm" (ngSubmit)="UpdateFollowFormS()" *ngIf="Status!='fixed'">   
+    
+    <div class="box-body">
+      <div class="row">
+        
+        
+<div class="form-group row">	
+    
+      
+    
+    
+    
+    
+    <div class="col-lg-6">
+        <label>Remarks:</label>
+        <textarea type="text" formControlName="Remarks" class="form-control" maxlength="1000"></textarea> 	   
+        <span *ngIf="isSubmitted && FC.Remarks.errors" class="form-text text-muted">
+            <span *ngIf="FC.Remarks.errors.required" style="color:red;">Field is required..!</span>
+        </span>
+        
+    </div>
+   
+     
+</div>
+
+	
+
+</div>	
+</div>	
+ <div class="box-footer">
+        <button type="button" (click)="CloseModel()" class="btn btn-default pull-right">Cancel</button>
+        <button style="margin-right: 1%;" type="submit" class="btn btn-info pull-right">Update</button>
+    </div>
+</form>	
+
+<p *ngIf="Status=='fixed'">
+
+ {{ Discription }}
+</p>
+
+</div>

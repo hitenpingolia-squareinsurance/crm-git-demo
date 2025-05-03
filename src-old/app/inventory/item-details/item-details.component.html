@@ -1,0 +1,69 @@
+<table>
+
+  <tr>
+    <td colspan="1" align="center">
+      <b>NO : {{ItemDetails.UniqueId}}</b>
+
+    </td>
+
+
+    <td colspan="1" align="center">
+      <label *ngIf="ItemStatus == '1'" class="label label-info">IN
+        Queue</label>
+      <label *ngIf="ItemStatus == '2'" class="label label-pending">Item
+        Occupied</label>
+      <label *ngIf="ItemStatus == '3'" class="label label-success">Item
+        Distribute</label>
+      <label *ngIf="ItemStatus == '4'" class="label label-danger">Item
+        Damaged</label>
+    </td>
+    
+    <td *ngIf="ItemStatus == '3'" colspan="2">
+      <b>Current User Name : {{ ResponseData['Name']}} - {{ResponseData['EmployeeId']}}</b>
+    </td>
+    <td colspan="2" align="center">
+      <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+    </td>
+  </tr>
+
+  <tbody>
+    <tr class="ValueTD">
+      <td colspan="6">Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Item Id</b>: {{ItemDetails.UniqueId}}</td>
+      <td colspan="2"><b>Item Name</b>: {{ItemDetails.ItemName}}</td>
+      <td colspan="2"><b>Item Model Name</b>: {{ItemDetails.ModelName}}</td>
+    </tr>
+  </tbody>
+  <tbody>
+
+
+
+    <tr class="ValueTD" colspan="3">
+      <td colspan="6">Item Specifications</td>
+    </tr>
+
+
+    <tr *ngFor="let row of ItemSpecifications">
+      <td colspan="6"><b>{{row.Name}}</b>: {{row.FieldVal}}</td>
+    </tr>
+
+    <tr class="ValueTD" colspan="3">
+      <td colspan="6">Item Creatation Logs</td>
+    </tr>
+
+
+
+    <tr *ngFor="let row of ResponseData['ItemCreatationLogs']">
+      <!-- <td colspan="2"><b>Log Id</b>: {{row.UniqueId}}</td> -->
+      <td colspan="2"><b>Log Type</b>: {{row.LogType}}</td>
+      <td colspan="2"><b>Action User Id</b>: {{row.ActionUserId}} - {{row.ActionCode}}</td>
+      <td colspan="2"><b>Log Date</b>: {{row.AddStamp}}</td>
+    </tr>
+
+  </tbody>
+
+
+
+</table>

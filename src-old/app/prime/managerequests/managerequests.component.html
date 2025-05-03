@@ -1,0 +1,181 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+
+
+	<!-- Main content -->
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<h3 *ngIf="ActivePage == 'Default'" class="box-title">Prime Requests</h3>
+						<h3 *ngIf="ActivePage == 'ManageRequests'" class="box-title">Manage Prime Requests</h3>
+					</div>
+					<!-- /.box-header -->
+
+
+					<div class="box-body">
+
+						<form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+
+							<div class="row"  >
+
+
+
+								<div class="col-sm-2" [ngClass]="ActionType=='ManageRequests'?'displays':'hides'">
+									<ng-multiselect-dropdown class="form-control" name="Ticket_Status"
+										placeholder="Select Type" [data]="QuoteTypes" formControlName="RequestType"
+										[settings]="dropdownSettings1" (onSelect)="onItemSelect($event,'Claim_Status')"
+										(onDeSelect)="onItemDeSelect($event,'Claim_Status')">
+									</ng-multiselect-dropdown>
+
+									<span *ngIf="isSubmitted && formControls.RequestType.errors"
+										class="ValidationError">
+										<span *ngIf="formControls.RequestType.errors.required">Field is
+											required</span></span>
+
+								</div>
+
+								<div class="col-sm-3">
+									<input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+										formControlName="DateOrDateRange" bsDaterangepicker
+										[bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+
+									<span *ngIf="isSubmitted && formControls.DateOrDateRange.errors"
+										class="ValidationError">
+										<span *ngIf="formControls.DateOrDateRange.errors.required">Date is
+											required</span>
+									</span>
+								</div>
+
+
+								<div class="col-sm-2">
+									<ng-multiselect-dropdown class="form-control" name="Ticket_Status"
+										placeholder="Select  Status" [data]="TicketStatus_Ar"
+										formControlName="Ticket_Status" [settings]="dropdownSettings"
+										(onSelect)="onItemSelect($event,'Claim_Status')"
+										(onDeSelect)="onItemDeSelect($event,'Claim_Status')">
+									</ng-multiselect-dropdown>
+
+								</div>
+
+								<div class="col-sm-3">
+
+									<input type="text" formControlName="SearchValue" name="SearchValue"
+										class="form-control" placeholder="Search">
+
+								</div>
+
+
+								<div class="col-sm-2" style="text-align: right;">
+
+
+									<input type="submit" class="btn btn-info" value="Search">
+									&nbsp;&nbsp;
+									<button (click)="ClearSearch()" type="button" style="font-size: small;"
+										class="btn btn-danger" value="Reset"> <i class="fa fa-close"> Reset</i>
+									</button>
+
+								</div>
+
+							</div>
+
+						</form>
+
+
+						<hr>
+						<!-- <button class="btn" (click)="AddPrimeRequest(8396)">Add Prime Request</button> -->
+
+
+
+						<div class="mydiv">
+
+
+
+							<table datatable [dtOptions]="dtOptions" id="example2"
+								class="table table-bordered table-hover">
+								<thead>
+									<tr>
+
+										<th>S.No</th>
+										<th>Action</th>
+										<th>Status</th>
+										<th>Remarks</th>
+										<th>Creator</th>
+										<th>Agent Details</th>
+										<th>TimeStamp</th>
+
+
+									</tr>
+								</thead>
+
+								<tbody *ngIf="dataAr?.length != 0">
+
+									<tr *ngFor="let row of dataAr; let i=index;">
+										<td>{{row.SrNo}}.</td>
+										<td>
+
+
+
+
+
+											<label *ngIf="row.Status==0 && ( row.Assigner_Id=='' || row.Assigner_Id==0)"
+												class="btn btn-success btnCustomess" style="cursor: pointer;"
+												(click)="AcceptRequest(row.Id)">Accept</label>
+
+
+
+											<select *ngIf="row.Status==0 && row.Assigner_Id!=''"
+												(change)="ChangeRequest($event,row.Id)">
+												<option>Select</option>
+												<option value="2">Reject</option>
+												<option value="3">Approve</option>
+											</select>
+
+										</td>
+										<td>
+											<a *ngIf="row.Status == '0'"><span
+													class="label label-default">Pending</span></a>
+											<a *ngIf="row.Status == '2'" href="javascript:void(0)"
+												(click)="ShowRejectDetails(row.Id)"><span
+													class="label label-primary">Rejected</span></a>
+											<a *ngIf="row.Status == '3'"><span
+													class="label label-success">Approved</span>
+
+											</a>
+
+										</td>
+
+										<td>{{row.Remarks}}</td>
+
+										<td>{{ row.Creator }}</td>
+										<td>{{ row.Agent_Details }}</td>
+										<td>{{ row.Add_Stamp }}</td>
+
+									</tr>
+
+								</tbody>
+
+								<tbody *ngIf="dataAr?.length == 0">
+									<tr>
+										<td colspan="8" align="center">No data Available !</td>
+									</tr>
+								<tbody>
+
+							</table>
+
+						</div>
+					</div>
+					<!-- /.box-body -->
+				</div>
+				<!-- /.box -->
+			</div>
+			<!-- /.col -->
+		</div>
+		<!-- /.row -->
+	</section>
+	<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

@@ -1,0 +1,313 @@
+<section class="custom-scrool" id="click-close">
+  <div class="">
+    <div class="main_card_form ">
+      <div class="main_header">
+        <h4 class="header_title">Update Form</h4>
+        <button type="button" (click)="CloseModel()" class="close closeModelButton"><i class="fa fa-close"></i></button>
+        <div class="call-precess" id="callProcess" style="display:none;">
+          <div class="call-align">
+            <img src="assets/image/calling.gif" alt="">
+          </div>
+          <div class="heading-call">Call in Progress....</div>
+        </div>
+      </div>
+      <hr>
+      <div class="modal_body ">
+
+        <div class="row">
+          <!-- <div class="col-md-4" *ngFor="let row of dataAr; let i = index">
+                <input type="checkbox" (change)="onCheckboxChange(row.title, i)">
+                <label>{{ row.title }}</label>
+              </div> -->
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <form [formGroup]="AddFieldForm" (ngSubmit)="SubBtn()">
+              <div class="row">
+
+                <div class="col-sm-4">
+                  <div class="category_list">
+                    <label>LOB</label>
+                    <input type="text" class="form-control" formControlName="LOB" disabled>
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('LOB').hasError('required') && (AddFieldForm.get('LOB').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      This field is Required
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-4" *ngIf=" pro == 'Motor'">
+                  <div class="category_list">
+                    <label>Product</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="Product" [data]="product"
+                      formControlName="product" [settings]="dropdownSettingsmultiselect"
+                      (ngModelChange)="onProduct($event)">
+                    </ng-multiselect-dropdown>
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('product').hasError('required') && (AddFieldForm.get('product').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      This field is Required
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-4" *ngIf=" pro == 'Health'">
+                  <div class="category_list">
+                    <label>Company</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Company" [data]="company"
+                      formControlName="company" [settings]="dropdownSettingsmultiselect" (ngModelChange)="onClose()">
+                    </ng-multiselect-dropdown>
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('company').hasError('required') && (AddFieldForm.get('company').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      This field is Required
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-4" *ngIf="pro!== 'Motor' && pro!== '' || addLOB == 0">
+                  <div class="category_list">
+                    <label for="state">Product Name</label>
+                    <input type="text" class="form-control" formControlName="product" placeholder="Product Name">
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('product').hasError('required') && (AddFieldForm.get('product').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      This field is Required
+                    </div>
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('product').hasError('pattern') && (AddFieldForm.get('product').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      This field is Required
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-4" *ngIf="pro!== 'Motor'">
+                  <div class="category_list">
+                    <label for="state">Policy Type</label>
+                    <input type="text" class="form-control" formControlName="policyType" placeholder="Policy Type">
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('policyType').hasError('required') && (AddFieldForm.get('policyType').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      This field is Required
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-4" *ngIf=" pro == 'Motor'">
+                  <div class="category_list">
+                    <label>Policy Type</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Policy Type" [data]="policyType"
+                      formControlName="policyType" [settings]="dropdownSettingsmultiselect" (ngModelChange)="onClose()">
+                    </ng-multiselect-dropdown>
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('policyType').hasError('required') && (AddFieldForm.get('policyType').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      This field is Required
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-4" *ngIf=" plan == 'TW' || plan == 'PC' || pro!== 'Motor'">
+                  <div class="category_list">
+                    <label for="state">Plan Type</label>
+                    <input type="text" class="form-control" formControlName="planType" placeholder="Plan Type">
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('planType').hasError('required') && (AddFieldForm.get('planType').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      This field is Required
+                    </div>
+
+                  </div>
+                </div>
+
+
+
+                <div class="col-sm-4" *ngIf=" plan == 'GCV' || plan == 'PCV' || plan == 'Misc D'">
+                  <div class="category_list">
+                    <label for="state">Sub Product</label>
+                    <input type="text" class="form-control" formControlName="subProduct" placeholder="Plan Type">
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('subProduct').hasError('required') && (AddFieldForm.get('subProduct').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      This field is Required
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-4" *ngIf=" plan == 'GCV' || plan == 'Misc D'">
+                  <div class="category_list">
+                    <label for="state">Class</label>
+                    <input type="text" class="form-control" formControlName="class" placeholder="Class">
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('class').hasError('required') && (AddFieldForm.get('class').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      This field is Required
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-4" *ngIf=" pro == 'Motor'">
+                  <div class="category_list">
+                    <label for="state">Sub Class</label>
+                    <input type="text" class="form-control" formControlName="subclass" placeholder="Sub Class">
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('subclass').hasError('required') && (AddFieldForm.get('subclass').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      This field is Required
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="col-sm-4" *ngIf=" pro == 'Motor'">
+                  <div class="category_list">
+                    <label for="">File Type</label>
+                    <div class="cat-list-inline">
+                      <div class="form-check form-check-inline">
+                        <input type="checkbox" id="yesRadio" formControlName="new"
+                          [checked]="AddFieldForm.get('new').value =='1'"
+                          (change)="toggleCheckbox($event.target.checked, 'new')" [value]="1">
+                        <label for="state">New</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="checkbox" id="yesRadio" formControlName="renewal"
+                          [checked]="AddFieldForm.get('renewal').value =='1'"
+                          (change)="toggleCheckbox($event.target.checked, 'renewal')" [value]="1">
+                        <label for="state">Renewal</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="checkbox" id="yesRadio" formControlName="used"
+                          [checked]="AddFieldForm.get('used').value =='1'"
+                          (change)="toggleCheckbox($event.target.checked, 'used')" [value]="1">
+                        <label for="state">Used</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="checkbox" id="state" formControlName="rollover"
+                          [checked]="AddFieldForm.get('rollover').value =='1'"
+                          (change)="toggleCheckbox($event.target.checked, 'rollover')" [value]="1">
+                        <label for="state">Rollover</label>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="col-sm-4" *ngIf=" pro == 'Motor'">
+                  <div class="category_list">
+                    <label for="state">TP Premium</label>
+                    <input type="number" class="form-control" formControlName="premium" placeholder="TP Premium">
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('premium').hasError('required') && (AddFieldForm.get('premium').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      This field is Required
+                    </div>
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('premium').hasError('min') && (AddFieldForm.get('premium').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      Value must be greater than or equal to 1
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-4" *ngIf=" pro == 'Motor'">
+                  <div class="category_list">
+                    <label for="state">Per Passenger Cost</label>
+                    <input type="number" class="form-control" formControlName="passenger"
+                      placeholder="Per Passenger Cost" min="1">
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('passenger').hasError('required') && (AddFieldForm.get('passenger').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      This field is Required
+                    </div>
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('passenger').hasError('min') && (AddFieldForm.get('passenger').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      Value must be greater than or equal to 0
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-4">
+                  <div class="category_list">
+                    <label>IRDIA Product Status</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="IRDIA Product Status" [data]="irdia"
+                      formControlName="irdia" [settings]="dropdownSettingsmultiselect" (ngModelChange)="onClose()">
+                    </ng-multiselect-dropdown>
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('irdia').hasError('required') && (AddFieldForm.get('irdia').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      This field is Required
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-4">
+                  <div class="category_list">
+                    <label for="state">Limit Sum Insured</label>
+                    <input type="number" class="form-control" formControlName="limit" placeholder="Limit Sum Insured">
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('limit').hasError('required') && (AddFieldForm.get('limit').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      This field is Required
+                    </div>
+                    <div
+                      *ngIf="isSubmitted && AddFieldForm.get('limit').hasError('min') && (AddFieldForm.get('limit').touched || AddFieldForm.dirty)"
+                      class="text-danger">
+                      Value must be greater than or equal to 0
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row" *ngIf="pro === 'Life'" >
+                <h3 style="margin-left:16px;">EDIT GST</h3>
+              
+                <div class="col-sm-4">
+                  <label>1st Year Gst* :</label>
+                  <input type="text" placeholder="1st Year Gst" class="form-control" formControlName="year_1_gst">
+                  <div *ngIf="isSubmitted && AddFieldForm.get('year_1_gst').errors" class="ValidationError">
+                    <div *ngIf="AddFieldForm.get('year_1_gst').errors.required">1st year GST required!</div>
+                    <div *ngIf="AddFieldForm.get('year_1_gst').errors.pattern">Invalid Value!</div>
+                  </div>
+                </div>
+              
+                <div class="col-sm-4">
+                  <label>2nd Year Gst* :</label>
+                  <input type="text" placeholder="2nd Year Gst" class="form-control" formControlName="year_2_gst">
+                  <div *ngIf="isSubmitted && AddFieldForm.get('year_2_gst').errors" class="ValidationError">
+                    <div *ngIf="AddFieldForm.get('year_2_gst').errors.required">2nd year GST required!</div>
+                    <div *ngIf="AddFieldForm.get('year_2_gst').errors.pattern">Invalid Value!</div>
+                  </div>
+                </div>
+              
+                <div class="col-sm-4">
+                  <label>Effective Date* :</label>
+                  <input type="text" class="form-control" bsDatepicker [bsConfig]="{ adaptivePosition: true,dateInputFormat: 'DD-MM-YYYY' }"
+                         formControlName="effective_date">
+                  <div *ngIf="isSubmitted && AddFieldForm.get('effective_date').errors" class="ValidationError">
+                      <div *ngIf="AddFieldForm.get('effective_date').errors.required">Effective date required!</div>
+                      <div *ngIf="AddFieldForm.get('effective_date').errors.pattern">Invalid Value!</div>
+                  </div>
+                </div>
+                
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="float-end pull-right">
+                    <button type="submit" class="btn btn_primary btn-success">Submit</button>
+                    &nbsp;&nbsp;
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

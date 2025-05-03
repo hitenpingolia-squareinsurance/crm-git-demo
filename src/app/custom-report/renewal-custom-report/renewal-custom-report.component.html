@@ -1,0 +1,291 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 *ngIf="ActivePage == 'Default'" class="box-title">Custom Renewal Report</h3>
+                    </div>
+                    <app-bms-filter (postCreated)="SearchData($event)"></app-bms-filter>
+
+                    <div class="box-body">
+                        <hr>
+                        <div class="mydiv" style="display:none">
+
+                            <table datatable [dtOptions]="dtOptions" id="Table1"
+                                class="table table-bordered table-hover" style="display:none;">
+                                <thead>
+                                    <tr>
+
+                                        <th>S.No</th>
+
+
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngIf="dataArToDate?.length != 0">
+
+                                    <tr *ngFor="let row of dataArToDate; let i=index;">
+                                        <td>{{row.SrNo}}</td>
+
+                                    </tr>
+
+                                </tbody>
+                                <tbody *ngIf="dataArToDate?.length == 0">
+                                    <tr>
+                                        <td colspan="8" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+
+                            </table>
+                        </div>
+                        <div *ngIf="ShowDIv == 1" class="d_flex flex_End">
+                            <button type="button" class="btn btn-info" (click)="downloadAsPDF()">
+                                {{DownloadPdf}}</button>
+                        </div>
+
+                        <div *ngIf="ShowDIv == 1" id="contentToConvert">
+                            <div class="row" id="TableGraph">
+
+
+                                <div class="col-lg-12 col-md-12">
+                                    <h3 class="box-title text_center fw_600">Report Table View</h3>
+
+                                </div>
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="main_card">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+
+                                                    <th colspan="1"> Date Range </th>
+                                                    <th colspan="4" style="background: #007ffc24;">{{ToDateValue}}
+                                                    </th>
+                                                    <th colspan="4" style="background: #00f7964a;">{{FromDateValue}}
+                                                    </th>
+
+                                                </tr>
+
+                                                <tr>
+
+                                                    <th>Name</th>
+
+                                                    <th style="background: #007ffc24;">Base NOPs</th>
+                                                    <th style="background: #007ffc24;">Base Business</th>
+                                                    <th style="background: #007ffc24;">Renewed NOPs</th>
+                                                    <th style="background: #007ffc24;">Renewed Business</th>
+
+
+
+                                                    <th style="background: #00f7964a;">Base NOPs</th>
+                                                    <th style="background: #00f7964a;">Base Business</th>
+                                                    <th style="background: #00f7964a;">Renewed NOPs</th>
+                                                    <th style="background: #00f7964a;">Renewed Business</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody *ngIf="dataArValuee?.length != 0">
+
+                                                <tr *ngFor="let row of dataArValuee; let i=index;">
+                                                    <td>{{row.Name}}</td>
+
+                                                    <td style="background: #007ffc24;">{{row.TotalToNop}}</td>
+                                                    <td style="background: #007ffc24;">{{row.TotalToBusiness}}</td>
+                                                    <td style="background: #007ffc24;">{{row.ToRenewedNop}} <span
+                                                            style="  background-color: #0050e347;font-weight: 800; position: absolute;  right: 0; padding: 2px;  border-radius: 5px; "><i
+                                                                aria-hidden="true"></i>
+                                                            {{((row.ToRenewedNop/row.TotalToNop)*100).toFixed(2)}}
+                                                            %</span>
+
+                                                    </td>
+                                                    <td style="background: #007ffc24;">{{row.ToRenewedBusiness}}
+
+                                                        <span style="background-color: #0050e347;
+                                                        font-weight: 800;
+                                                        position: absolute;
+                                                        right: 0;
+                                                        padding: 2px;
+                                                        border-radius: 5px;"><i aria-hidden="true"></i>
+                                                            {{((row.ToRenewedBusiness/row.TotalToBusiness)*100).toFixed(2)}}
+                                                            %</span>
+                                                    </td>
+
+
+
+
+                                                    <td style="background: #00f7964a;">{{row.TotalFromNop}}
+                                                        <!-- <span style="background-color: #00bb1c;" *ngIf="row.GrowthTotalNopCheck=='PositiveNumber'" class="label label-info label-inline mr-1"><i     class="fa fa-arrow-up" aria-hidden="true"></i> {{row.GrowthTotalNop }}%</span>
+                                                        <span style="background-color: red;" *ngIf="row.GrowthTotalNopCheck=='NegativeNumber'" class="label label-danger label-inline mr-1"><i     class="fa fa-arrow-down" aria-hidden="true"></i> {{row.GrowthTotalNop }}%</span> -->
+                                                    </td>
+
+
+
+
+                                                    <td style="background: #00f7964a;">{{row.TotalFromBusiness}}
+                                                        <!-- <span style="background-color: #00bb1c;" *ngIf="row.GrowthTotalBusinessCheck=='PositiveNumber'" class="label label-info label-inline mr-1"><i     class="fa fa-arrow-up" aria-hidden="true"></i> {{row.GrowthTotalBusiness }}%</span>
+                                                        <span style="background-color: red;" *ngIf="row.GrowthTotalBusinessCheck=='NegativeNumber'" class="label label-danger label-inline mr-1"><i     class="fa fa-arrow-down" aria-hidden="true"></i> {{row.GrowthTotalBusiness }}%</span> -->
+                                                    </td>
+
+
+
+                                                    <td style="background: #00f7964a;">{{row.FromRenewedNop}}
+                                                        <!-- <span style="background-color: #00bb1c;" *ngIf="row.GrowthTotalRenewedNopCheck=='PositiveNumber'" class="label label-info label-inline mr-1"><i     class="fa fa-arrow-up" aria-hidden="true"></i> {{row.GrowthTotalRenewedNop }}%</span>
+                                                        <span style="background-color: red;" *ngIf="row.GrowthTotalRenewedNopCheck=='NegativeNumber'" class="label label-danger label-inline mr-1"><i     class="fa fa-arrow-down" aria-hidden="true"></i> {{row.GrowthTotalRenewedNop }}%</span> -->
+
+
+                                                        <span style=" 
+                                                        background-color: #06eba6a1;
+                                                        font-weight: 800;
+                                                        position: absolute;
+                                                        right: 0;
+                                                        padding: 2px;
+                                                        border-radius: 5px;                                                 
+                                                        "><i aria-hidden="true"></i>
+                                                            {{((row.FromRenewedNop/row.TotalFromNop)*100).toFixed(2)}}
+                                                            %</span>
+                                                    </td>
+
+
+                                                    <td style="background: #00f7964a;">{{row.FromRenewedBusiness}}
+                                                        <!-- <span style="background-color: #00bb1c;" *ngIf="row.GrowthTotalRenewedBusinessCheck=='PositiveNumber'" class="label label-info label-inline mr-1"><i       aria-hidden="true"></i> {{row.GrowthTotalRenewedBusiness }}%</span>
+                                                        <span style="background-color: red;" *ngIf="row.GrowthTotalRenewedBusinessCheck=='NegativeNumber'" class="label label-danger label-inline mr-1"><i     class="fa fa-arrow-down" aria-hidden="true"></i> {{row.GrowthTotalRenewedBusiness }}%</span> -->
+
+
+                                                        <span style="  background-color: #06eba6a1;
+                                                        font-weight: 800;
+                                                        position: absolute;
+                                                        right: 0;
+                                                        padding: 2px;
+                                                        border-radius: 5px;"><i aria-hidden="true"></i>
+                                                            {{((row.FromRenewedBusiness/row.TotalFromBusiness)*100).toFixed(2)}}
+                                                            %</span>
+                                                    </td>
+
+
+
+
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Total</td>
+                                                    <td style="background: #007ffc24;">{{TotalToNop}}</td>
+                                                    <td style="background: #007ffc24;">{{TotalToBusiness}}</td>
+                                                    <td style="background: #007ffc24;">{{ToRenewedNop}}
+
+                                                        <span
+                                                            style=" background-color: #0050e347; font-weight: 800; position: absolute; right: 0; padding: 2px; border-radius: 5px;   "><i
+                                                                aria-hidden="true"></i>
+                                                            {{((ToRenewedNop/TotalToNop)*100).toFixed(2)}} %</span>
+
+
+                                                    </td>
+                                                    <td style="background: #007ffc24;">{{ToRenewedBusiness}}
+
+
+                                                        <span
+                                                            style="   background-color: #0050e347;
+                                                        font-weight: 800;
+                                                        position: absolute;
+                                                        right: 0;
+                                                        padding: 2px;
+                                                        border-radius: 5px;                                                                                                                                                                                                                    "><i
+                                                                aria-hidden="true"></i>
+                                                            {{((ToRenewedBusiness/TotalToBusiness)*100).toFixed(2)}}
+                                                            %</span>
+
+                                                    </td>
+
+
+                                                    <td style="background: #00f7964a;">{{TotalFromNop}}
+
+
+                                                        <!-- <span style="background-color: #00bb1c;" *ngIf="GrowthCheckTotalNop=='PositiveNumber'" class="label label-info label-inline mr-1"><i     class="fa fa-arrow-up" aria-hidden="true"></i> {{GrowthTotalNop }}%</span>
+                                                        <span style="background-color: red;" *ngIf="GrowthCheckTotalNop=='NegativeNumber'" class="label label-danger label-inline mr-1"><i     class="fa fa-arrow-down" aria-hidden="true"></i> {{GrowthTotalNop }}%</span> -->
+
+
+                                                    </td>
+
+
+
+
+                                                    <td style="background: #00f7964a;">{{TotalFromBusiness}}
+                                                        <!-- <span style="background-color: #00bb1c;" *ngIf="GrowthCheckTotalBusiness=='PositiveNumber'" class="label label-info label-inline mr-1"><i     class="fa fa-arrow-up" aria-hidden="true"></i> {{GrowthTotalBusiness }}%</span>
+                                                        <span style="background-color: red;" *ngIf="GrowthCheckTotalBusiness=='NegativeNumber'" class="label label-danger label-inline mr-1"><i     class="fa fa-arrow-down" aria-hidden="true"></i> {{GrowthTotalBusiness }}%</span> -->
+
+
+
+                                                    </td>
+
+
+                                                    <td style="background: #00f7964a;">{{FromRenewedNop}}
+
+
+                                                        <!-- <span style="background-color: #00bb1c;" *ngIf="GrowthCheckRenewedNop=='PositiveNumber'" class="label label-info label-inline mr-1"><i     class="fa fa-arrow-up" aria-hidden="true"></i> {{GrowthRenewedNop }}%</span>
+                                                        <span style="background-color: red;" *ngIf="GrowthCheckRenewedNop=='NegativeNumber'" class="label label-danger label-inline mr-1"><i     class="fa fa-arrow-down" aria-hidden="true"></i> {{GrowthRenewedNop }}%</span> -->
+
+
+                                                        <span
+                                                            style="   background-color: #06eba6a1;
+                                                        font-weight: 800;
+                                                        position: absolute;
+                                                        right: 0;
+                                                        padding: 2px;
+                                                        border-radius: 5px;                                                                                                                                                                                                                    "><i
+                                                                aria-hidden="true"></i>
+                                                            {{((FromRenewedNop/TotalFromNop)*100).toFixed(2)}} %</span>
+                                                    </td>
+
+
+                                                    <td style="background: #00f7964a;">{{FromRenewedBusiness}}
+
+                                                        <!-- <span style="background-color: #00bb1c;" *ngIf="GrowthCheckRenewedBusiness=='PositiveNumber'" class="label label-info label-inline mr-1"><i     class="fa fa-arrow-up" aria-hidden="true"></i> {{GrowthRenewedBusiness }}%</span>
+                                                        <span style="background-color: red;" *ngIf="GrowthCheckRenewedBusiness=='NegativeNumber'" class="label label-danger label-inline mr-1"><i     class="fa fa-arrow-down" aria-hidden="true"></i> {{GrowthRenewedBusiness }}%</span> -->
+
+
+                                                        <span
+                                                            style="   background-color: #06eba6a1;
+                                                        font-weight: 800;
+                                                        position: absolute;
+                                                        right: 0;
+                                                        padding: 2px;
+                                                        border-radius: 5px;                                                                                                                                                                                                                    "><i
+                                                                aria-hidden="true"></i>
+                                                            {{((FromRenewedBusiness/TotalFromBusiness)*100).toFixed(2)}}
+                                                            %</span>
+                                                    </td>
+
+                                                </tr>
+
+                                            </tbody>
+                                            <tbody *ngIf="dataArValuee?.length == 0">
+                                                <tr>
+                                                    <td colspan="8" align="center">No data Available !</td>
+                                                </tr>
+                                            <tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+
+
+<!-- /.content-wrapper -->

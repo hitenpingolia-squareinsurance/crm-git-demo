@@ -1,0 +1,503 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">64 VB Report </div>
+          </div>
+
+          <div *ngIf="!hasAccess" class="error-message">
+            <div class="container" style="text-align: center;">
+              <img src="assets/Authorised.png" alt="">
+              <h4>{{ errorMessage }}</h4>
+            </div>
+
+          </div>
+
+          <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+
+            <table>
+              <tr>
+                <th>Type</th>
+                <th>Booked</th>
+                <th>Un-Booked</th>
+                <th>Cancelled</th>
+                <th>Total</th>
+              </tr>
+              <tr>
+                <td>SR</td>
+                <td>{{TotalBookedSR}}</td>
+                <td>{{TotalUnBookedSR}}</td>
+                <td>{{TotalCancelledSR}}</td>
+                <td>{{TotalSR}}</td>
+              </tr>
+
+              <tr>
+                <td>Business</td>
+                <td>{{TotalBookedPremium}}</td>
+                <td>{{TotalUnBookedPremium}}</td>
+                <td>{{TotalCancelledNetPremium}}</td>
+                <td>{{TotalNetPremium}}</td>
+              </tr>
+
+              <tr>
+                <td>Revenue</td>
+                <td>{{TotalBookedRevenue}}</td>
+                <td>{{TotalUnBookedRevenue}}</td>
+                <td>{{TotalCancelledRevenue}}</td>
+                <td>{{TotalRevenue}}</td>
+              </tr>
+
+            </table>
+
+            <hr>
+            <div>
+              <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <a role="button" class="fa fa-filter"><span>Filters</span><i
+                      class="fa fa-angle-down pull-right"></i></a>
+                </button>
+              </div>
+            </div>
+
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div>
+                <!-- filter  -->
+                <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+                  <div class="row">
+                    <div class="col-sm-3"
+                      *ngIf="(this.api.GetUserData('Code') == 'SIB101' || this.api.GetUserData('Code') == 'SIB102')">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Business Line"
+                          [data]="BusinessLine_Ar" formControlName="Business_Line_Id"
+                          [settings]="dropdownSettingsingleselect1" (onSelect)="GetVerticalData()"
+                          (onDeSelect)="SearchComponentsData()"> </ng-multiselect-dropdown>
+                      </div>
+
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Vertical" [data]="Vertical_Ar"
+                          formControlName="Vertical_Id" [settings]="dropdownSettingsmultiselect"
+                          (onSelect)="GetEmployees()" (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                      </div>
+
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Service Location"
+                          [data]="Service_Location_Ar" formControlName="Service_Location_Id"
+                          [settings]="dropdownSettingsmultiselect" (onSelect)="GetEmployees()"
+                          (onDeSelect)="GetEmployees()">
+                        </ng-multiselect-dropdown>
+                      </div>
+
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" name="Emp_Id" placeholder="Select Employee"
+                          [data]="Emps_Ar" formControlName="Emp_Id" [settings]="dropdownSettingsmultiselect"
+                          (onSelect)="GetAgents('1')" (onDeSelect)="GetAgents('1')"> </ng-multiselect-dropdown>
+                      </div>
+
+                    </div>
+
+                    <div class="col-sm-3"
+                      *ngIf="(this.api.GetUserData('Code') != 'SIB101' && this.api.GetUserData('Code') != 'SIB102')">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Report Type" [data]="ReportTypeData"
+                          formControlName="RM_Search_Type" [settings]="dropdownSettingsingleselect1"
+                          (onSelect)="SetReportType()" (onDeSelect)="SetReportType()" [(ngModel)]="reportTypeVal"
+                          [disabled]="ReportTypeDisable">
+                        </ng-multiselect-dropdown>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+
+                    <div class="col-sm-3"
+                      *ngIf="(this.api.GetUserData('Code') == 'SIB101' || this.api.GetUserData('Code') == 'SIB102')">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Report Type" [data]="ReportTypeData"
+                          formControlName="RM_Search_Type" [settings]="dropdownSettingsingleselect1"
+                          (onSelect)="SetReportType()" (onDeSelect)="SetReportType()" [(ngModel)]="reportTypeVal"
+                          [disabled]="ReportTypeDisable">
+                        </ng-multiselect-dropdown>
+                      </div>
+
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Agents" [data]="Agents_Ar"
+                          formControlName="Agent_Id" [settings]="dropdownSettingsmultiselect">
+                        </ng-multiselect-dropdown>
+                      </div>
+
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select LOB" [data]="SRLOB_Ar"
+                          formControlName="SRLOB" [settings]="dropdownSettingsmultiselect" (onSelect)="GetProducts()"
+                          (onDeSelect)="GetProducts()">
+                        </ng-multiselect-dropdown>
+                      </div>
+
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Product" [data]="Products_Ar"
+                          formControlName="Product_Id"
+                          [settings]="dropdownSettingsmultiselect"></ng-multiselect-dropdown>
+                      </div>
+
+                    </div>
+
+                    <div class="col-sm-3"
+                      *ngIf="(this.api.GetUserData('Code') != 'SIB101' && this.api.GetUserData('Code') != 'SIB102')">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Ins Company"
+                          [data]="Companies_Ar" formControlName="Company_Id"
+                          [settings]="dropdownSettingsmultiselect"></ng-multiselect-dropdown>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+
+                    <div class="col-sm-3"
+                      *ngIf="(this.api.GetUserData('Code') == 'SIB101' || this.api.GetUserData('Code') == 'SIB102')">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Ins Company"
+                          [data]="Companies_Ar" formControlName="Company_Id"
+                          [settings]="dropdownSettingsmultiselect"></ng-multiselect-dropdown>
+                      </div>
+
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select SR Status"
+                          [data]="SRStatus_Ar" formControlName="SRStatus" [settings]="dropdownSettingsingleselect1">
+                        </ng-multiselect-dropdown>
+                        <span *ngIf="isSubmitted && FC.SRStatus.errors" class="form-text text-muted">
+                          <span *ngIf="FC.SRStatus.errors.required" style="color:red;">Please choose business
+                            type!</span>
+                        </span>
+                      </div>
+
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select SR Type" [data]="SRType_Ar"
+                          formControlName="SR_Type" [settings]="dropdownSettingsmultiselect1"></ng-multiselect-dropdown>
+                      </div>
+
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Source" [data]="SRSource_Ar"
+                          formControlName="SR_Source_Type"
+                          [settings]="dropdownSettingsmultiselect1"></ng-multiselect-dropdown>
+                      </div>
+
+                    </div>
+
+                    <div class="col-sm-3"
+                      *ngIf="(this.api.GetUserData('Code') != 'SIB101' && this.api.GetUserData('Code') != 'SIB102')">
+                      <div class="form-group">
+                        <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                          formControlName="DateOrDateRange" bsDaterangepicker
+                          [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                        <!-- <span *ngIf="isSubmitted && FC.DateOrDateRange.errors" class="form-text text-muted">
+                        <span *ngIf="FC.DateOrDateRange.errors.required" style="color:red;">Please choose Date or
+                          Date-Range!</span>
+                      </span> -->
+                      </div>
+
+                    </div>
+
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <input type="text" placeholder="SR No./Policy/Vehicle No." class="form-control"
+                          formControlName="searchval">
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+
+                    <div class="col-sm-3"
+                      *ngIf="(this.api.GetUserData('Code') == 'SIB101' || this.api.GetUserData('Code') == 'SIB102')">
+                      <div class="form-group"></div>
+                      <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                        formControlName="DateOrDateRange" bsDaterangepicker
+                        [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                      <!-- <span *ngIf="isSubmitted && FC.DateOrDateRange.errors" class="form-text text-muted">
+                        <span *ngIf="FC.DateOrDateRange.errors.required" style="color:red;">Please choose Date or
+                          Date-Range!</span>
+                      </span> -->
+                    </div>
+
+                    <div class="col-sm-6"
+                      *ngIf="(this.api.GetUserData('Code') == 'SIB101' || this.api.GetUserData('Code') == 'SIB102')">
+                    </div>
+                    <div class="col-sm-9"
+                      *ngIf="(this.api.GetUserData('Code') != 'SIB101' && this.api.GetUserData('Code') != 'SIB102')">
+                    </div>
+
+                    <div class="col-sm-3" style="text-align: right;">
+                      <input
+                        *ngIf="(UserRights['Is_64VB_Report_Export'] == 1 && urlSegment == '64VB-manager' && dataAr?.length != 0 )"
+                        (click)="ExportExcel()" type="button" class="btn btn-success" value="Export">&nbsp;&nbsp;
+                      <!-- <input type="submit" class="btn btn-info" value="Search"> -->
+                      <button type="submit" class="btn btn-info" style="font-size: small;" value="Search">
+                        <i class="fa fa-search">
+                          Search</i></button>
+                      &nbsp;&nbsp;
+                      <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                        value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                    </div>
+
+                  </div>
+                </form>
+              </div>
+            </div>
+
+
+
+
+            <hr>
+            <!--begin: Datatable-->
+            <div *ngIf="checkedList?.length>0 && urlSegment == '64VB-manager'" class="row">
+              <div class="col-sm-2">
+                <ng-multiselect-dropdown class="form-control" placeholder="Select Status" [data]="UpdatedStatus_Ar"
+                  [(ngModel)]="UpdatedStatus" [settings]="dropdownSettingsingleselect1"></ng-multiselect-dropdown>
+              </div>
+
+              <div class="col-sm-3">
+                <input class="form-control" [(ngModel)]="Remark" placeholder="Remark">
+              </div>
+
+              <div class="col-sm-3">
+                <input type="button" (click)="UpdateStatus()" class="btn btn-info" value="Update">&nbsp;&nbsp;
+                <input (click)="CancelStatusUpdate()" type="button" class="btn btn-danger" value="Cancel">
+              </div>
+              <hr>
+
+            </div>
+
+            <!-- <div class=" mydiv table-responsive">
+             
+              <table datatable [dtOptions]="dtOptions"
+                class="row-border hover table table-bordered table-hover table-checkable " id="kt_datatable"
+                style="margin-top: 13px !important; width: 100% !important">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Details</th>
+                    <th>Booking&nbsp;Date/Status</th>
+                    <th>SR&nbsp;No</th>
+                    <th>LOB</th>
+                    <th>Customer&nbsp;Name</th>
+                    <th>Agent</th>
+                    <th>RM</th>
+                    <th>Registration&nbsp;No</th>
+                    <th>Gross&nbsp;Premium</th>
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr; let i=index;">
+
+                    <td *ngIf="urlSegment != '64VB-manager'">{{ row.SrNo }}</td>
+
+                    <td
+                      *ngIf="UserRights['Is_64VB_Report'] == 1 && UserRights['Is_64VB_Report_Manage'] == 1 && urlSegment == '64VB-manager'">
+                      <input type="checkbox" [(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}"
+                        (change)="isAllSelected()">
+                    </td>
+
+                    <td>
+                      <a href="javascript:;" (click)="SrPopup(1, row.Id, row.LOB_Name)">
+                        <span style="margin-right: 5px;" class="label label-primary label-inline mr-2">Details</span>
+                      </a>
+
+                      <a *ngIf="row.Status=='0'" title="SR-Actions" href="javascript:;" style="cursor:not-allowed;">
+                        <span class="label label-danger label-inline mr-2">Cancelled</span>
+                      </a>
+
+                    </td>
+
+                    <td> {{ row.Booking_Date }}<br>
+                      <span *ngIf="row.SR_Type == 'Normal'" class="label label-warning label-inline mr-2">Normal</span>
+                      <span *ngIf="row.SR_Type == 'Endorsement'" class="label label-default label-inline mr-2">Endorsement</span>
+                      <span *ngIf="row.SR_Type == 'Short'" class="label label-primary label-inline mr-2">Short</span>
+                      <span *ngIf="row.SR_Type == 'Recovery'" class="label label-danger label-inline mr-2">Recovery</span>
+                      <span *ngIf="row.SR_Type == 'Extra-Payout'" class="label label-danger label-inline mr-2">Extra Reward</span>
+
+                      <div style="margin-top:4px;">
+                        <span *ngIf="row.SR_Status == 'Complete'"
+                          class="label label-success label-inline mr-2">Booked</span>
+                        <span *ngIf="row.SR_Status == 'Pending'"
+                          class="label label-danger label-inline mr-2">UnBooked</span>
+                        <span *ngIf="row.SR_Status == 'Cancelled'"
+                          class="label label-danger label-inline mr-2">Cancelled</span>
+                        <span *ngIf="row.SR_Status == 'Recovery'"
+                          class="label label-danger label-inline mr-2">Recovery</span>
+                      </div>
+                    </td>
+
+                    <td>{{ row.SR_No }}</td>
+                    <td>{{ row.LOB_Name }}</td>
+                    <td>{{ row.Customer_Name }}</td>
+                    <td>{{ row.Agent_Name }}</td>
+                    <td>{{ row.RM_Name }}</td>
+                    <td>{{ row.Registration_No }}</td>
+                    <td>{{ row.Estimated_Gross_Premium }}</td>
+
+                  </tr>
+                </tbody>
+
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="10" align="center">No data available !</td>
+                  </tr>
+                <tbody>
+              </table>
+
+            </div> -->
+
+
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="custom_table tables_layout_design">
+
+                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+                <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                  <li class="table-row tablerow{{(i % 10) + 1}}" *ngFor="let row of dataAr; let i=index;">
+
+                    <span class="addon_tag_name">{{row.LOB_Name }}</span>
+
+                    <p class="life_status_label">
+                      <span>
+                        <a *ngIf="row.SR_Type == 'Normal'" class="label label-warning label-inline mr-2">Normal</a>
+                        <a *ngIf="row.SR_Type == 'Endorsement'"
+                          class="label label-default label-inline mr-2">Endorsement</a>
+                        <a *ngIf="row.SR_Type == 'Short'" class="label label-primary label-inline mr-2">Short</a>
+                        <a *ngIf="row.SR_Type == 'Recovery'" class="label label-danger label-inline mr-2">Recovery</a>
+                        <a *ngIf="row.SR_Type == 'Extra-Payout'" class="label label-danger label-inline mr-2">Extra
+                          Reward</a>
+
+                      </span>
+                    </p>
+
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15 mt_15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl" *ngIf="urlSegment != '64VB-manager'">{{row.SrNo}}</div>
+                        <div  *ngIf="UserRights['Is_64VB_Report'] == 1 && UserRights['Is_64VB_Report_Manage'] == 1 && urlSegment == '64VB-manager'">
+                          <input type="checkbox" [(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}"
+                            (change)="isAllSelected()">
+                        </div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+
+                            <div>Customer</div>
+
+                            <strong class="fs_18"><span>{{row.Customer_Name}}</span></strong>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>RM</div>
+                            <strong class="fs_18" id="emailToCopy">{{row.RM_Name}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Agent</div>
+                            <strong class="fs_18">{{row.Agent_Name}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+                        <div class="label_chips mutual_fund_lob" *ngIf="row.SR_No != ''">
+                          <span>SR No - {{row.SR_No}}</span>
+                        </div>
+                        <div class="label_chips health_lob" *ngIf="row.Registration_No != '' && row.Registration_No != undefined">
+                          <span>Registration No - {{row.Registration_No}}</span>
+                        </div>
+                        <div class="label_chips life_lob" *ngIf="row.Estimated_Gross_Premium != ''">
+                          <span>Gross Premium - {{row.Estimated_Gross_Premium}}</span>
+                        </div>
+                        <div class="label_chips real_estate_lob" *ngIf="row.Booking_Date != ''">
+                          <span>Booking Date : {{row.Booking_Date}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="last_row">
+                      <div class="effective_date">
+                        <div class="d_flex">
+                          <span *ngIf="row.SR_Status == 'Complete'"
+                            class="label label-success label-inline mr-2" style="padding: 5px 8px;">Booked</span>
+                          <span *ngIf="row.SR_Status == 'Pending'"
+                            class="label label-danger label-inline mr-2" style="padding: 5px 8px;">UnBooked</span>
+                          <span *ngIf="row.SR_Status == 'Cancelled'"
+                            class="label label-danger label-inline mr-2" style="padding: 5px 8px;">Cancelled</span>
+                          <span *ngIf="row.SR_Status == 'Recovery'"
+                            class="label label-danger label-inline mr-2" style="padding: 5px 8px;">Recovery</span>
+                        </div>
+                      </div>
+
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                          <button class="btn btn-success" (click)="SrPopup(1, row.Id, row.LOB_Name)" style="padding: 2px 10px;">Details</button>
+                      </div>
+
+                    </div>
+                  </li>
+                </ul>
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

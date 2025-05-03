@@ -1,0 +1,148 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Recovery Report</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div>
+              <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <a role="button" class="fa fa-filter"><span>Filters</span><i
+                      class="fa fa-angle-down pull-right"></i></a>
+                </button>
+              </div>
+            </div>
+
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+                <!-- filter  -->
+                <app-bms-filter (postCreated)="SearchData($event)"></app-bms-filter>
+              </div>
+            </div>
+
+
+            <hr>
+            <div class=" mydiv table-responsive">
+              <!-- table  -->
+              <table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>
+                      <input [(ngModel)]="masterSelected" name="list_name" value="m1" type="checkbox">
+                    </th>
+                    <th>Action</th>
+                    <th>Recovery Date</th>
+                    <th style="text-align:center;">Product Details</th>
+                    <th style="text-align:center;">Payout Details</th>
+                    <th>Policy No</th>
+                    <th>Agent</th>
+                    <th>RM</th>
+                    <th>Remark</th>
+                    <th>Creation Date</th>
+
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>
+                      {{(i+1)}}.
+                    </td>
+                    <td>
+                      <a href="javascript:;" (click)="ViewSR(row.Id)"><span style="margin-right: 5px;"
+                          class="label label-primary">Details</span></a>
+                    </td>
+
+                    <td>
+                      {{row.Booking_Date}}
+                    </td>
+
+                    <td>
+                      <table style="font-size: 12px;" class="PayoutTable">
+                        <tr>
+
+                          <td>Product</td>
+                          <td>Sub-Product</td>
+                          <td>Segment</td>
+
+                        </tr>
+                        <tr>
+
+                          <td>{{row.Product_Id}}</td>
+                          <td>{{row.SubProduct_Id}}</td>
+                          <td>{{row.Segment_Id}}</td>
+
+                        </tr>
+                      </table>
+                    </td>
+
+                    <td>
+                      <table class="PayoutTable">
+                        <tr>
+                          <td>OD%</td>
+                          <td>OD AMT</td>
+                          <td>TP%</td>
+                          <td>TP AMT</td>
+
+                          <td>Reward</td>
+                          <td>Scheme</td>
+                          <td>Total</td>
+                        </tr>
+                        <tr>
+                          <td>{{row.Web_Agent_Payout_OD}}</td>
+                          <td>{{row.Web_Agent_Payout_OD_Amount}}</td>
+                          <td>{{row.Web_Agent_Payout_TP}}</td>
+                          <td>{{row.Web_Agent_Payout_TP_Amount}}</td>
+
+                          <td>{{row.Web_Agent_Reward_Amount}}</td>
+                          <td>{{row.Web_Agent_Scheme_Amount}}</td>
+                          <td>{{row.Web_Agent_Total_Amount}}</td>
+
+
+
+                        </tr>
+
+                      </table>
+                    </td>
+
+                    <td>{{row.Policy_No}}
+                      <span style="margin-right: 5px;" class="label label-info">{{row.LOB_Id}}</span>
+
+                      <span *ngIf="row.Source == 'Web'" style="margin-right: 5px;"
+                        class="label label-success">Online</span>
+                      <span *ngIf="(row.Source == 'BMS' || row.Source == 'Excel')" style="margin-right: 5px;"
+                        class="label label-warning">Offline</span>
+                      <span *ngIf="(row.Policy_Type == '2' || row.Policy_Type == '3')" style="margin-right: 5px;"
+                        class="label label-warning">Non POS</span>
+                      <span *ngIf="row.Policy_Type == '1'" style="margin-right: 5px;"
+                        class="label label-info">POS</span>
+                    </td>
+
+                    <td>{{row.Agent_Name}}</td>
+                    <td>{{row.RM_Name}}</td>
+                    <td>{{row.RecoveryRemark}}</td>
+                    <td>{{row.Create_Date}}</td>
+                  </tr>
+
+                </tbody>
+
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="9" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,374 @@
+<section class="inner_page_css ">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Life Renewals Report</div>
+          </div>
+
+          <div class="main_body main_card_height_scroll_withoutfooter">
+
+            <div class="row">
+              <section class="pt-5 pb-5">
+                <div class="box-blog">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="col-md-12">
+                        <div class="uprenewal">
+                          <h2>Upcoming Renewals</h2>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 col-md-6 margin-30px-bottom xs-margin-20px-bottom">
+                        <div class="services-block-three"> <a style="cursor: default !important;"
+                            (click)="ChangeStatus([{Id:'Today',Name:'Today'}])">
+                            <div class="padding-15px-bottom"> <i class="fa fa-eercast"></i> </div>
+                            <h4>{{MonthRenewal.Day1}}</h4>
+                            <p class="xs-font-size13 xs-line-height-22">Today's</p>
+                          </a> </div>
+                      </div>
+
+                      <div class="col-lg-4 col-md-6 margin-30px-bottom xs-margin-20px-bottom">
+                        <div class="services-block-three"> <a style="cursor: default !important;"
+                            (click)="ChangeStatus([{Id:'15_Days',Name:'15 Days'}])" href="javascript:void(0)">
+                            <div class="padding-15px-bottom"> <i class="fa fa-sun-o" aria-hidden="true"></i> </div>
+                            <h4>{{MonthRenewal.Day15}}</h4>
+                            <p class="xs-font-size13 xs-line-height-22">Next 15 day's</p>
+                          </a> </div>
+                      </div>
+
+                      <div class="col-lg-4 col-md-6 margin-30px-bottom xs-margin-20px-bottom">
+                        <div class="services-block-three"> <a style="cursor: default !important;"
+                            (click)="ChangeStatus([{Id:'30_Days',Name:'30 Days'}])" href="javascript:void(0)">
+                            <div class="padding-15px-bottom"> <i class="fa fa-object-ungroup"></i> </div>
+                            <h4>{{MonthRenewal.Day30}}</h4>
+                            <p class="xs-font-size13 xs-line-height-22">Next 30 day's</p>
+                            <!--<span>1 Cars</span> <span>1 Bikes</span>-->
+                          </a> </div>
+                      </div>
+
+                      <!-- end -->
+                    </div>
+                    <div class="col-md-4">
+
+                      <div class="col-md-12">
+                        <div class="uprenewal">
+                          <h2>Missed Renewals</h2>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6 col-md-6 margin-30px-bottom xs-margin-20px-bottom">
+                        <div class="services-block-three"> <a style="cursor: default !important;"
+                            href="javascript:void(0)">
+                            <div class="padding-15px-bottom"> <i class="fa fa-calendar" aria-hidden="true"></i> </div>
+                            <h4>{{MonthRenewal.ThisMonth}}</h4>
+                            <p class="xs-font-size13 xs-line-height-22">This Month</p>
+                          </a> </div>
+                      </div>
+
+                      <div class="col-lg-6 col-md-6 margin-30px-bottom xs-margin-20px-bottom">
+                        <div class="services-block-three"> <a style="cursor: default !important;"
+                            href="javascript:void(0)">
+                            <div class="padding-15px-bottom"> <i class="fa fa-th-list" aria-hidden="true"></i> </div>
+                            <h4>{{MonthRenewal.LastMonth}}</h4>
+                            <p class="xs-font-size13 xs-line-height-22">Last Month</p>
+                          </a> </div>
+                      </div>
+
+                      <!-- end -->
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="col-md-12">
+                        <div class="uprenewal">
+                          <h2>Total Missed</h2>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12 col-md-6 margin-30px-bottom xs-margin-20px-bottom">
+                        <div class="services-block-three"> <a style="cursor: default !important;"
+                            href="javascript:void(0)">
+                            <div class="padding-15px-bottom"> <i class="fa fa-calendar" aria-hidden="true"></i> </div>
+                            <h4>{{MonthRenewal.LostThisMonthRenewal}}</h4>
+                            <p class="xs-font-size13 xs-line-height-22">All Missed Renewals</p>
+                          </a> </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <div class="box box-default"
+              style="margin-bottom: 0px !important; margin-top: 0px !important; position: relative;">
+              <form *ngIf="checkedList?.length==0" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+                <div class="row">
+                  <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Financial Year" [data]="Year_Ar"
+                      [(ngModel)]="SelectedYear" formControlName="Financial_Year"
+                      [settings]="dropdownSettingsingleselect" (onSelect)="CheckDateLimit($event)"
+                      (onDeSelect)="CheckDateLimit($event)"> </ng-multiselect-dropdown>
+                    <span *ngIf="isSubmitted && FC.Financial_Year.errors" class="form-text text-muted">
+                      <span *ngIf="FC.Financial_Year.errors.required" style="color:red;">Please Select Financial Year
+                        !</span>
+                    </span>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Vertical" [data]="Vertical_Ar"
+                      formControlName="Vertical_Id" [settings]="dropdownSettingsingleselect" (onSelect)="GetEmployees()"
+                      (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Service Location"
+                      [data]="Region_Ar" formControlName="Region_Id" [settings]="dropdownSettingsingleselect"
+                      (onSelect)="GetEmployees()" (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Employee" [data]="Emps_Ar"
+                      formControlName="Emp_Id" [settings]="dropdownSettingsingleselect" (onSelect)="GetAgents('1')"
+                      (onDeSelect)="GetAgents('1')"> </ng-multiselect-dropdown>
+                  </div>
+
+                </div>
+
+                <div class="row"  >
+                  <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Report Type"
+                      [data]="ReportTypeData" [(ngModel)]="SelectedReportType" formControlName="Report_Type"
+                      [settings]="dropdownSettingsingleselect" (onSelect)="SetReportType()"
+                      (onDeSelect)="SetReportType()" [disabled]="ReportTypeDisable"> </ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" [placeholder]="Agents_Placeholder" [data]="Agents_Ar"
+                      formControlName="Agent_Id" [settings]="dropdownSettingsmultiselect"> </ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Ins Company" [data]="Companies_Ar"
+                      formControlName="Company_Id" [settings]="dropdownSettingsmultiselect"> </ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Source" [data]="SRSource_Ar"
+                      formControlName="SR_Source_Type" [settings]="dropdownSettingsmultiselect1"
+                      (onSelect)="onItemSelect($event,'Source')"> </ng-multiselect-dropdown>
+                  </div>
+
+                </div>
+
+                <div class="row"  >
+                  <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Status" [data]="Status_Ar"
+                      [(ngModel)]="SelectedCurrentStatus" formControlName="Status"
+                      [settings]="dropdownSettingsingleselect1" (onSelect)="EnableDisableMonthFilter('Status')"
+                      (onDeSelect)="EnableDisableMonthFilter('Status')"> </ng-multiselect-dropdown>
+                    <span *ngIf="isSubmitted && FC.Status.errors" class="form-text text-muted">
+                      <span *ngIf="FC.Status.errors.required" style="color:red;">Please Select Status !</span>
+                    </span>
+                  </div>
+
+                  <div class="col-sm-3"
+                    *ngIf="(SearchForm.value['Status'].length > 0 && SearchForm.value['Status'][0]['Id'] == 'Due')">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Month" [data]="Months_Ar"
+                      [(ngModel)]="SelectedCurrentMonth" formControlName="Month_Name"
+                      [settings]="dropdownSettingsingleselect1" [disabled]="DisableMonthField">
+                    </ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-3"
+                    *ngIf="(SearchForm.value['Status'].length > 0 && SearchForm.value['Status'][0]['Id'] != 'Due' && SearchForm.value['Status'][0]['Id'] != 'Grace')">
+                    <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                      formControlName="DateOrDateRange" bsDaterangepicker
+                      [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }" [minDate]="minDate"
+                      [maxDate]="maxDate">
+                    <span *ngIf="isSubmitted && FC.DateOrDateRange.errors" class="form-text text-muted">
+                      <span *ngIf="FC.DateOrDateRange.errors.required" style="color:red;">Please Select Date OR
+                        Date-Range !</span>
+                    </span>
+                  </div>
+
+                  <div class="col-sm-3"
+                    *ngIf="(SearchForm.value['Status'].length > 0 && SearchForm.value['Status'][0]['Id'] == 'Grace')">
+                    <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                      formControlName="DateOrDateRange" readonly>
+                    <span *ngIf="isSubmitted && FC.DateOrDateRange.errors" class="form-text text-muted">
+                      <span *ngIf="FC.DateOrDateRange.errors.required" style="color:red;">Please Select Date OR
+                        Date-Range !</span>
+                    </span>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <input type="text" formControlName="GlobalSearch" placeholder="Search SR No/Policy/Vehicle No."
+                      class="form-control">
+                  </div>
+
+                  <div class="col-lg-3">
+                    <input type="submit" class="btn btn-info" value="Search"> &nbsp;&nbsp;
+                    <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                      value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="box-body">
+                <hr>
+                <div class="cs_tabs_btns">
+                  <a (click)="SetActiveTab(1)" [ngClass]="(ActiveTab == 1?'btn btn-primary':'btn btn-info')">
+                    Installments </a>
+                  <a (click)="SetActiveTab(2)" [ngClass]="(ActiveTab == 2?'btn btn-primary':'btn btn-info')"> 1st Year
+                    Renewal </a>
+                  <a (click)="SetActiveTab(3)" [ngClass]="(ActiveTab == 3?'btn btn-primary':'btn btn-info')"> 2nd Year
+                    Renewal </a>
+                  <a (click)="SetActiveTab(4)" [ngClass]="(ActiveTab == 4?'btn btn-primary':'btn btn-info')"> 3rd Year
+                    Renewal </a>
+                  <a (click)="SetActiveTab(5)" [ngClass]="(ActiveTab == 5?'btn btn-primary':'btn btn-info')"> >3 Year
+                    Renewal </a>
+                </div>
+
+                <table id="Table1" class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td><label>Label / Status</label></td>
+                      <td><label> Total </label></td>
+                      <td><label> Pending</label></td>
+                      <td><label> Renewed</label></td>
+                      <td><label> Lost</label></td>
+                    </tr>
+
+                    <tr>
+                      <td><label>No Of Cases</label></td>
+                      <td><span> {{TotalRes}}</span></td>
+                      <td><span> {{TotalPending}}</span></td>
+                      <td><span> {{TotalRenewed}}</span></td>
+                      <td><span> {{TotalLost}}</span></td>
+                    </tr>
+
+                    <tr>
+                      <td><label>Premium</label></td>
+                      <td><span> {{TotalPremium}}</span></td>
+                      <td><span> {{TotalPendingPremium}}</span></td>
+                      <td><span> {{TotalRenewedPremium}}</span></td>
+                      <td><span> {{TotalLostPremium}}</span></td>
+                    </tr>
+
+                  </thead>
+                </table>
+                <hr>
+
+                <div class="table-responsive mydiv">
+                  <table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th>Action&nbsp;/&nbsp;Details </th>
+                        <th>SR&nbsp;No&nbsp;/&nbsp;Proposer&nbsp;Type</th>
+                        <th>Risk&nbsp;Start&nbsp;Date</th>
+                        <th>Renewal&nbsp;Date&nbsp;/&nbsp;Payment&nbsp;Frequency</th>
+                        <th>Net&nbsp;/&nbsp;Gross&nbsp;Premium</th>
+                        <th>Renewal&nbsp;Status</th>
+                        <th>Customer&nbsp;Name&nbsp;/&nbsp;Policy&nbsp;No</th>
+                      </tr>
+                    </thead>
+
+                    <tbody *ngIf="dataAr?.length != 0">
+                      <tr *ngFor="let row of dataAr; let i=index;">
+                        <td>{{row.SrNo}}.</td>
+
+                        <td>
+                          <a href="javascript:;" *ngIf="(row.Renewal_Status == 0 && row.ShowAction == 'Yes')"
+                            (click)="UpdateRenewalAction(row.Id, row.Track_Id)"><span style="margin-right: 5px;"
+                              class="label label-default">Action</span></a>
+
+                          <span>
+                            <a href="javascript:;" (click)="SrPopup(1,row.Id)"><span style="margin-right: 5px;"
+                                class="label label-info">Details</span></a>
+                          </span><br>
+
+                          <span>
+                            <a href="javascript:;" (click)="ViewRenewalTrack(row.Id, row.ShowAction )"><span
+                                style="margin-right: 5px;" class="label label-primary">Payment Track</span></a>
+                          </span>
+
+                          <!-- <span *ngIf="(row.ChangePayFrequency == 'Yes' && row.ShowAction == 'Yes')"><br>
+                            <a href="javascript:;" (click)="UpdatePaymentFrequency(row.Id, row.RenewalYear)"><span
+                                style="margin-right: 5px;" class="label label-primary">Payment Frequency</span></a>
+                          </span> -->
+
+                          <span *ngIf="(row.ShowAction == 'Yes' && row.Renewal_Status == 0)">
+                            <a href="javascript:;"
+                              (click)="UpdateRenewalDate(row.Id, row.RenewalYear, row.Renewal_Sequence, row.Renewal_Date, row.LI_Payment_Frequency, row.Track_Id)"><span
+                                style="margin-right: 5px;" class="label label-primary">Renewal Date</span></a>
+                          </span>
+                        </td>
+
+                        <td>
+                          <span *ngIf="row.LOB_Name=='LI'">LI</span>{{row.SR_No}}<br>
+                          <span style="margin-right: 5px; cursor:not-allowed;"
+                            *ngIf="row.LI_Proposer_Type== 'Individual'" class="label label-primary">Individual</span>
+                          <span style="margin-right: 5px; cursor:not-allowed;" *ngIf="row.LI_Proposer_Type== 'Group'"
+                            class="label label-primary">Group</span>
+                        </td>
+
+                        <td>{{row.Policy_Issuance_Date}}</td>
+
+                        <td>{{row.Renewal_Date}}<br>
+                          <span style="margin-right: 5px; cursor:not-allowed;"
+                            *ngIf="row.LI_Payment_Frequency== 'Monthly'" class="label label-primary">Monthly</span>
+                          <span style="margin-right: 5px; cursor:not-allowed;"
+                            *ngIf="row.LI_Payment_Frequency== 'Quarterly'" class="label label-warning">Quarterly</span>
+                          <span style="margin-right: 5px; cursor:not-allowed;"
+                            *ngIf="row.LI_Payment_Frequency== 'Half Yearly'" class="label label-success">Half
+                            Yearly</span>
+                          <span style="margin-right: 5px; cursor:not-allowed;"
+                            *ngIf="row.LI_Payment_Frequency== 'Yearly'" class="label label-danger">Yearly</span>
+                        </td>
+
+                        <td>
+                          <strong>Net :</strong>{{ row.Net_Premium}}<br>
+                          <strong>Gross :</strong>{{ row.Estimated_Gross_Premium}}
+                        </td>
+
+                        <td>
+                          <span style="margin-right: 5px; cursor:not-allowed;"
+                            *ngIf="row.Renewal_Status == 0 && ShowDateFilter == 'No'"
+                            class="label label-warning">Pending</span>
+                          <span style="margin-right: 5px; cursor:not-allowed;"
+                            *ngIf="row.Renewal_Status == 1 && ShowDateFilter == 'No'"
+                            class="label label-success">Complete</span>
+                          <span style="margin-right: 5px;background: black; cursor:not-allowed;"
+                            *ngIf="ShowDateFilter == 'Yes'" class="label label_new">{{ row.Lapsed_Days }}</span>
+                        </td>
+
+                        <td>{{row.Customer_Name}}<br>
+                          <span>{{row.Policy_No}}</span>
+                        </td>
+
+                      </tr>
+                    </tbody>
+
+                    <tbody *ngIf="dataAr?.length == 0">
+                      <tr>
+                        <td colspan="9" align="center">No data Available !</td>
+                      </tr>
+                    <tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

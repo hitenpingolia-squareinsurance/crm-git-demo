@@ -1,0 +1,1551 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+  <div class="container-fluid">
+    <div class="main_card_form ">
+      <div class="main_header">
+        <div class="header_title">Lead Management</div>
+        <div class="call-precess" id="callProcess" style="display:none;">
+          <div class="call-align">
+            <img src="assets/image/calling.gif" alt="">
+          </div>
+          <div class="heading-call">Call in Progress....</div>
+        </div>
+      </div>
+
+      <div class="main_body main_card_height_scroll_withoutfooter">
+
+        <div class="btn_list_group">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="row">
+                <div class="col-md-8">
+                  <div id="exTab1">
+                    <ul class="nav nav-pills">
+
+                      <li [ngClass]="(active_tab == 'Follow Up'?'active':'')"><a data-toggle="tab" href="#3a"
+                          (click)="SetActiveTab('Follow Up')" class="followup-active">Follow
+                          Up</a></li>
+
+                      <li [ngClass]="(active_tab == 'Pending'?'active':'')"><a data-toggle="tab" href="#2a"
+                          (click)="SetActiveTab('Pending')" class="pending-active">My
+                          Lead</a></li> 
+
+                      <li [ngClass]="(active_tab == 'Converted'?'active':'')"><a data-toggle="tab" href="#3a"
+                          (click)="SetActiveTab('Converted')"
+                          class="converted-active">Converted</a></li>
+
+                      <li [ngClass]="(active_tab == 'Close'?'active':'')"><a data-toggle="tab" href="#3a"
+                          (click)="SetActiveTab('Close')"
+                          class="close-active">Close</a></li>
+
+                      <li [ngClass]="(active_tab == 'Lost'?'active':'')"><a data-toggle="tab" href="#3a"
+                          (click)="SetActiveTab('Lost')"
+                          class="lost-active">Lost</a></li>
+
+                      <li [ngClass]="(active_tab == 'Transfered'?'active':'')"><a data-toggle="tab" href="#3a"
+                          (click)="SetActiveTab('Transfered')"
+                          class="transfered-active">Transfered</a></li>
+
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="dsr-fillter">
+                    <button class="img_btn" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                      href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" title="Filter"><img
+                        src="../../../assets/image/filter.svg" alt="Filter"></button>
+                    <button class="btn btn-info3" type="button" (click)="SetActiveTab('Pending')">
+                      <i class="fa fa-refresh" aria-hidden="true"></i> New ({{ new_lead }})
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <app-common-filter (postCreated)="SearchData($event)"></app-common-filter>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="row">
+          <div class="col-md-12">
+
+            <div class="tab-content"> -->
+        <!-- <div role="tabpanel" class="tab-pane fade in active" id="All"> -->
+
+
+          <div class="row" *ngIf="active_tab=='Follow Up'"> 
+            <div class="col-md-12">
+              <div class="btn-group custom-group">
+                <a (click)="onButtonChange('1')" [class.active]="activeCheck == '1'" class="btn btn-primary" aria-current="page">Today</a>
+                <a (click)="onButtonChange('2')" [class.active]="activeCheck == '2'" class="btn btn-primary">Tomorrow</a>
+                <a (click)="onButtonChange('3')" [class.active]="activeCheck == '3'" class="btn btn-primary">Missing Follow Up</a>
+                <a (click)="onButtonChange('4')" [class.active]="activeCheck == '4'" class="btn btn-primary">All </a>
+              </div>
+            </div>
+          </div><br>
+        <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+
+
+          <!-- <div class="custom_table"> -->
+          <div class="custom_table tables_layout_design">
+            <table datatable [dtOptions]="dtOptions" class="row-border table" id="Table1">
+              <thead>
+                <tr>
+                  <th></th>
+                </tr>
+              </thead>
+            </table>
+
+            <ul class="responsive-table">
+              <!-- <li class="table-row" *ngFor="let row of dataAr; let i=index;"> -->
+              <li class="table-row" *ngFor="let row of this.dataAr; let i=index;">
+                <!-- <span *ngIf="row.Emp_id == loginEmpid" class="addon_tag_name">Direct</span> -->
+                <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm"> <!-- mt15 -->
+                  <div class="agents_data agents_data1">
+                    <div class="icon_re_cl">{{ i + 1 }}</div>
+                    <div class="agent_name_mobile">
+                      <div class="agent_data">
+                        <div>Name</div>
+                        <strong class="fs_18">{{ row.Name }}</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="agents_data agents_data2">
+                    <div class="agent_name_mobile">
+                      <div class="agent_data">
+
+                        <div>Mobile No.</div>
+                        <strong class="fs_18" (click)="toggleMobileDisplay(i,row.call_permmision)">
+
+                          
+                          <span class="link user" [ngClass]="row.verified == '1' ? 'verified' : 'unverified'"
+                            [attr.data-tooltip]="row.verified == '1' ? 'Verified User' : 'Unverified User'">
+                          </span>
+                          {{ isMobileMaskedMap[i] ? maskMobileNumber(row.Mobile) : row.Mobile }}</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="agents_data agents_data3">
+                    <div class="agent_name_mobile">
+                      <div class="agent_data">
+                        <div>Employee Name & Code</div><strong class="fs_18">{{ row.emp_name
+                          }}({{ row.emp_code
+                          }})</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="last_row_div">
+
+
+                  <div class="d_flex">
+
+                    <div class="label_chips motor_lob dark">
+                      <span>Source : {{ row.Source }} {{row.leadSource}}</span>&nbsp;&nbsp;
+                    </div>
+
+                    <div class="label_chips health_lob">
+                      <span>ID: {{ row.lead_id }}</span>&nbsp;&nbsp;
+                    </div>
+
+                    <div class="label_chips health_lob" *ngIf="row.lead_type != '' ">
+                      <span>LOB : {{ row.lead_type }}</span>&nbsp;&nbsp;
+                    </div>
+
+
+
+                    <div class="label_chips non_motor_lob">
+                      <span>DATE : {{row.Date}} </span>&nbsp;&nbsp;
+                    </div>
+                    <div class="label_chips motor_lob">
+                      <span>AGE : {{ row.LeadAge }} </span>&nbsp;&nbsp;
+                    </div>
+                    <div class="label_chips non_motor_lob" *ngIf="row.quotation_status != '0' ">
+                      <span
+                        *ngIf="row.lead_type == 'Motor' || row.lead_type == 'Health' || row.lead_type == 'Life' || row.lead_type == 'Nonmotor' || row.lead_type == 'Travel' || row.lead_type == 'Pa' ">Stage
+                        :
+                        <label *ngIf="row.quotation_status == '1' " class="label label-primary">Quotation</label>
+                        <label *ngIf="row.quotation_status == '3' " class="label label-warning">Payment
+                          Page</label>
+                        <label *ngIf="row.quotation_status == '2' " class="label label-info">Proposal</label>
+                        <label *ngIf="row.quotation_status == '4' " class="label label-success">Converted</label>
+                      </span>
+                    </div>
+                  </div>
+                  <!-- Prospect Call Related Section End-->
+
+
+                </div>
+
+                <div class="last_row">
+                  <div class="d_flex effective_date"> </div>
+
+                  <!-- Business Call && Club Related Section Start-->
+                  <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom" *ngIf="row.net_premium != null && row.net_premium != ''">
+                      <a >Premium - {{row.net_premium}} </a>
+                    </div>
+
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom" *ngIf="row.pos_status != null && row.pos_status != ''">
+                      <a *ngIf="row.pos_status == 1" >Status - Active </a>
+                      <a *ngIf="row.pos_status == 0" >Status - In-Active </a>
+                    </div> 
+
+
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom" *ngIf="row.posId != null && row.posId != '' && row.Source === 'Become Posp'">
+                      <a (click)="PospDetails(row.posPrimaryId,'agent')">POS Details</a>
+                    </div>
+
+
+                    <a style="cursor: pointer;" *ngIf="row.quotation_status !== '0' && row.Emp_id == loginEmpid && row.Source !='Become Posp'"
+                      (click)="updateQuottionStatus( row.quotation_id,row.lead_mainID, row.lead_type)"
+                      class="btn-bg">Proceed</a>
+                      
+                      <a style="cursor: pointer;"
+                      *ngIf="(['Pending', 'Follow Up', 'Transfered'].includes(active_tab)) && (row.Source === 'Become Posp')"
+                      (click)="updatePospStatus(row.Mobile)" class="btn-bg">Proceed</a>
+                    <a style="cursor: pointer;" *ngIf="row.Emp_id == loginEmpid && row.call_permmsion == true"
+                      (click)="CallApi(row.Mobile,row.lead_mainID)" class="btn-bg">Call</a>
+
+                    <a data-toggle="modal" (click)="getDetails(row.lead_mainID)" data-target="#AddCatSubCatOOOO"
+                      data-backdrop="static" data-keyboard="false">View
+                      Details</a>
+                      
+                    <!-- <a style="cursor: pointer;" class=" btn-bg1"  *ngIf="row.status == '1'" (click)="ChangeStatusRenewals(2 ,row.lead_mainID,'Button')">Activity Track >></a> -->
+
+                    <div>
+                      <a data-toggle="modal" class="details" *ngIf="row.status == '1'"
+                        (click)="FollowUpPopup_open(2 ,row.lead_mainID ,'Button',row.Emp_id,row.LeadAge,i,row.Date,row.lead_id)"
+                        data-target="#followUpPopup" data-backdrop="static" data-keyboard="false">Follow
+                        Up</a>
+                      <a data-toggle="modal" class="details" *ngIf="row.status == '2' "
+                        (click)="FollowUpPopup_open(2 ,row.lead_mainID ,'Button',row.Emp_id,row.LeadAge,i,row.Date,row.lead_id)"
+                        data-target="#followUpPopup" data-backdrop="static" data-keyboard="false">Follow
+                        Up</a>
+                      <a data-toggle="modal" class="details" *ngIf="row.status == '3' "
+                        (click)="FollowUpPopup_open(3 ,row.lead_mainID ,'Button',row.Emp_id,row.LeadAge,i,row.Date,row.lead_id)"
+                        data-target="#followUpPopup" data-backdrop="static" data-keyboard="false"> Follow
+                        Up</a>
+                      <a data-toggle="modal" class="details" *ngIf="row.status == '4' "
+                        (click)="FollowUpPopup_open(4 ,row.lead_mainID ,'Button',row.Emp_id,row.LeadAge,i,row.Date,row.lead_id)"
+                        data-target="#followUpPopup" data-backdrop="static" data-keyboard="false">Follow
+                        Up</a>
+                      <a data-toggle="modal" class="details" *ngIf="row.status == '6' "
+                        (click)="FollowUpPopup_open(6 ,row.lead_mainID ,'Button',row.Emp_id,row.LeadAge,i,row.Date,row.lead_id)"
+                        data-target="#followUpPopup" data-backdrop="static" data-keyboard="false">Follow
+                        Up</a>
+
+
+                    </div>
+
+                  </div>
+                  
+                  <!-- Business Call && Club Related Section End-->
+
+                </div>
+              </li>
+
+
+
+            </ul>
+            <div class="row" *ngIf="dataAr?.length == 0">
+              <div class="col-md-12">
+                <div class="no_data_found">
+                  <span><img src="assets/image/no_data_banner.jpg"></span>
+                  <small>No data available !</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- </div> -->
+
+          <!-- </div>
+
+            </div>
+          </div> -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div id="AddCatSubCatOOOO" class="modal fade" role="dialog" style="z-index: 1042 !important;">
+  <div class="modal-dialog cs_table_data"
+    style="width: calc(100% - 230px);margin: 30px auto;margin-left: 230px;height: calc(100% - 60px);">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form bg-2">
+            <div class="main_header">
+              <div class="header_title">Details</div>
+            </div>
+            <div class="cs_modal_body" style="height: calc(100vh - 166px);overflow-y: scroll;">
+              <div class="view_more_cases">
+                <div class="case_table_de">
+                  <div class="status_row warnings">
+                    <div class="number_row_text">{{FieldFetch.lead_id}}</div>
+                  </div>
+                  <span *ngIf="FieldFetch.quotation_status != '0' && FieldFetch.lead_type == 'Health' ">
+                    <ul *ngIf="FieldFetch.quotation_status == '1' ">
+                      <li>
+                        <span>Quotation Id</span>
+                        <strong>{{logData.quote_id}}</strong>
+                      </li>
+                      <li>
+                        <span>Customer Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Customer Mobile No.</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+
+                      <li>
+                        <span>Plan Type</span>
+                        <strong>{{logData.plan}}</strong>
+                      </li>
+                      <li>
+                        <span>Medical History</span>
+                        <strong>{{logData.medical_history}}</strong>
+                      </li>
+
+                    </ul>
+                    <ul *ngIf="FieldFetch.quotation_status == '2' ">
+                      <li>
+                        <span>Quotation Id</span>
+                        <strong>{{logData.quote_id}}</strong>
+                      </li>
+                      <li>
+                        <span>Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Customer Mobile No.</span>
+                        <strong>{{FieldFetch.mobile}}</strong>
+                      </li>
+                      <li>
+                        <span>Proposer D.O.B</span>
+                        <strong>{{logData.proposer_dob}}</strong>
+                      </li>
+                      <li>
+                        <span>Proposer Gender</span>
+                        <strong>{{logData.gender_proposor}}</strong>
+                      </li>
+                      <li>
+                        <span>Proposer Marital Status</span>
+                        <strong>{{logData.proposer_marital_status}}</strong>
+                      </li>
+                      <li>
+                        <span>Ckyc Document Type</span>
+                        <strong>{{logData.ckyc_document_type}}</strong>
+                      </li>
+                      <li>
+                        <span>Document Number</span>
+                        <strong>{{logData.document_number}}</strong>
+                      </li>
+
+                    </ul>
+                  </span>
+                  <span *ngIf="FieldFetch.quotation_status != '0' && FieldFetch.lead_type == 'Motor' ">
+                    <ul *ngIf="FieldFetch.quotation_status == '1' ">
+                      <li>
+                        <span>Quotation Id</span>
+                        <strong>{{logData.quote_id}}</strong>
+                      </li>
+                      <li>
+                        <span>Plan Type</span>
+                        <strong>{{logData.plan}}</strong>
+                      </li>
+                      <li>
+                        <span>Medical History</span>
+                        <strong>{{logData.medical_history}}</strong>
+                      </li>
+                      <li>
+                        <span>Customer Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Customer Mobile No.</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                      <li>
+                        <span>Email</span>
+                        <strong>{{logData.email}}</strong>
+                      </li>
+                      <li>
+                        <span>Registration Number</span>
+                        <strong>{{logData.registration_no}}</strong>
+                      </li>
+                      <li>
+                        <span>Registration Date</span>
+                        <strong>{{logData.registration_date}}</strong>
+                      </li>
+                      <li>
+                        <span>Make</span>
+                        <strong>{{logData.make}}</strong>
+                      </li>
+                      <li>
+                        <span>Model</span>
+                        <strong>{{logData.model}}</strong>
+                      </li>
+                      <li>
+                        <span>Variant</span>
+                        <strong>{{logData.variant}}</strong>
+                      </li>
+                      <li>
+                        <span>Registration Year</span>
+                        <strong>{{logData.reg_year}}</strong>
+                      </li>
+                      <li>
+                        <span>Vehicle owned by</span>
+                        <strong>{{logData.vehicle_owned_by}}</strong>
+                      </li>
+                      <li>
+                        <span>Policy Expiery Date</span>
+                        <strong>{{logData.policy_expiery_date}}</strong>
+                      </li>
+                      <li>
+                        <span>Fuel Type</span>
+                        <strong>{{logData.fuel_type}}</strong>
+                      </li>
+                      <li>
+                        <span>Purchase Date</span>
+                        <strong>{{logData.purchase_date}}</strong>
+                      </li>
+                      <li>
+                        <span>Manufacture Date</span>
+                        <strong>{{logData.manufacture_date}}</strong>
+                      </li>
+                    </ul>
+                    <ul *ngIf="FieldFetch.quotation_status == '2' ">
+                      <li>
+                        <span>Quotation Id</span>
+                        <strong>{{logData.quote_id}}</strong>
+                      </li>
+                      <li>
+                        <span>Customer Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Email</span>
+                        <strong>{{logData.email}}</strong>
+                      </li>
+
+                      <li>
+                        <span>Customer Mobile No.</span>
+                        <strong>{{logData.mobile}} </strong>
+                      </li>
+                      <li>
+                        <span>Pan Card</span>
+                        <strong>{{logData.pan_card}}</strong>
+                      </li>
+                      <li>
+                        <span>Registration Number</span>
+                        <strong>{{logData.registration_no}}</strong>
+                      </li>
+                      <li>
+                        <span>Proposer Marital Status</span>
+                        <strong>{{logData.marital_status}}</strong>
+                      </li>
+                      <li>
+                        <span>Make</span>
+                        <strong>{{logData.make}}</strong>
+                      </li>
+                      <li>
+                        <span>Model</span>
+                        <strong>{{logData.model}}</strong>
+                      </li>
+                      <li>
+                        <span>Variant</span>
+                        <strong>{{logData.variant}}</strong>
+                      </li>
+                      <li>
+                        <span>Registration Year</span>
+                        <strong>{{logData.reg_year}}</strong>
+                      </li>
+                      <li>
+                        <span>Vehicle owned by</span>
+                        <strong>{{logData.vehicle_owned_by}}</strong>
+                      </li>
+                      <li>
+                        <span>Policy Expiery Date</span>
+                        <strong>{{logData.policy_expiery_date}}</strong>
+                      </li>
+                      <li>
+                        <span>Fuel Type</span>
+                        <strong>{{logData.fuel_type}}</strong>
+                      </li>
+                      <li>
+                        <span>Manufacture Date</span>
+                        <strong>{{logData.manufacture_date}}</strong>
+                      </li>
+                    </ul>
+                  </span>
+                  <span *ngIf="FieldFetch.quotation_status != '0' && FieldFetch.lead_type == 'Life' ">
+                    <ul *ngIf="FieldFetch.quotation_status == '1' ">
+                      <li>
+                        <span>Quotation Id</span>
+                        <strong>{{logData.quote_id}}</strong>
+                      </li>
+                      <li>
+                        <span>Occupation Type</span>
+                        <strong> {{logData.occupationType}}</strong>
+                      </li>
+                      <li>
+                        <span>Tobacco User</span>
+                        <strong>{{logData.tobaco}}</strong>
+                      </li>
+                      <li>
+                        <span>Customer Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Customer Mobile No.</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                      <li>
+                        <span>Email</span>
+                        <strong>{{logData.email}}</strong>
+                      </li>
+                      <li>
+                        <span>Sum Assured</span>
+                        <strong> {{logData.suminsured}}</strong>
+                      </li>
+                      <li>
+                        <span>Gender</span>
+                        <strong>{{logData.gender}}</strong>
+                      </li>
+                      <li>
+                        <span>Date Of Birth</span>
+                        <strong>{{logData.dob}}</strong>
+                      </li>
+                      <li>
+                        <span>Premium Payment Option</span>
+                        <strong>{{logData.payment_option}}</strong>
+                      </li>
+                      <li>
+                        <span>Pay Mode</span>
+                        <strong *ngIf="logData.paymode == '0' ">{{logData.paymode}}</strong>
+                        <strong *ngIf="logData.paymode != '0' ">Monthly</strong>
+                      </li>
+                      <li>
+                        <span>Payout option </span>
+                        <strong>{{logData.payout_option}}</strong>
+                      </li>
+                    </ul>
+                  </span>
+                  <span *ngIf="FieldFetch.quotation_status == 0 ">
+                    <span *ngIf="FieldFetch.lead_type == 'Pet Insurance'">
+                      <ul>
+                        <li>
+                          <span>Name</span>
+                          <strong>{{logData.name}}</strong>
+                        </li>
+                        <li>
+                          <span>Mobile Number</span>
+                          <strong>{{FieldFetch.mobile}}</strong>
+                        </li>
+                        <li>
+                          <span>City</span>
+                          <strong>{{logData.city}}</strong>
+                        </li>
+
+                      </ul>
+
+                    </span>
+                    <span *ngIf="FieldFetch.lead_type == 'Insurance Audit' && FieldFetch.source == 'landing page' ">
+
+                      <ul>
+                        <li *ngFor="let row of logData.Client_details; ">
+                          <span>{{row.name}}</span>
+                          <strong>{{row.val}}</strong>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li *ngFor="let row of logData.ConcernPersonDetails; ">
+                          <span>{{row.name}}</span>
+                          <strong>{{row.val}}</strong>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li *ngFor="let row of logData.Burglary; ">
+                          <span>{{row.name}}</span>
+                          <strong *ngIf="row.name !== 'Document'">{{row.val}}</strong>
+                          <strong *ngIf="row.name == 'Document'" (click)="docdownload(row.val)">View</strong>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li *ngFor="let row of logData.Fire; ">
+                          <span>{{row.name}}</span>
+                          <strong *ngIf="row.name !== 'Document'">{{row.val}}</strong>
+                          <strong *ngIf="row.name == 'Document'" (click)="docdownload(row.val)">View</strong>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li *ngFor="let row of logData.Marine; ">
+                          <span>{{row.name}}</span>
+                          <strong *ngIf="row.name !== 'Document'">{{row.val}}</strong>
+                          <strong *ngIf="row.name == 'Document'" (click)="docdownload(row.val)">View</strong>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li *ngFor="let row of logData.WC; ">
+                          <span>{{row.name}}</span>
+                          <strong *ngIf="row.name !== 'Document'">{{row.val}}</strong>
+                          <strong *ngIf="row.name == 'Document'" (click)="docdownload(row.val)">View</strong>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li *ngFor="let row of logData.WC; ">
+                          <span>{{row.name}}</span>
+                          <strong *ngIf="row.name !== 'Document'">{{row.val}}</strong>
+                          <strong *ngIf="row.name == 'Document'" (click)="docdownload(row.val)">View</strong>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li *ngFor="let row of logData.Other; ">
+                          <span>{{row.name}}</span>
+                          <strong *ngIf="row.name !== 'Document'">{{row.val}}</strong>
+                          <strong *ngIf="row.name == 'Document'" (click)="docdownload(row.val)">View</strong>
+                        </li>
+                      </ul>
+
+                    </span>
+                    <span *ngIf="FieldFetch.lead_type == 'Corporate Insurance' && FieldFetch.source == 'landing page' ">
+                      <ul>
+                        <li>
+                          <span>Company Name</span>
+                          <strong>{{logData.company_name}}</strong>
+                        </li>
+                        <li>
+                          <span>Mobile Number</span>
+                          <strong>{{logData.mobile}}</strong>
+                        </li>
+                        <li>
+                          <span>Email</span>
+                          <strong>{{logData.email}}</strong>
+                        </li>
+                        <li>
+                          <span>Remark</span>
+                          <strong>{{logData.remarks}}</strong>
+                        </li>
+                        <li>
+                          <span>City</span>
+                          <strong>{{logData.city}}</strong>
+                        </li>
+
+                        <li>
+                          <span>Insurance Type</span>
+                          <strong>{{logData.ins_type}}</strong>
+                        </li>
+
+                      </ul>
+
+
+                    </span>
+
+                    <span *ngIf="FieldFetch.source == 'product page'">
+                      <ul *ngIf="FieldFetch.lead_type == 'Car' || FieldFetch.lead_type == 'Bike'">
+                        <li>
+                          <span>Vehicle Number</span>
+                          <strong>{{logData.VehicleNumber}}</strong>
+                        </li>
+                        <li>
+                          <span>Mobile Number</span>
+                          <strong>{{logData.mobile}}</strong>
+                        </li>
+
+                      </ul>
+                    </span>
+
+                    <ul *ngIf="FieldFetch.source == 'schedule a callback' ">
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{FieldFetch.mobile}}</strong>
+                      </li>
+
+                    </ul>
+                    <ul *ngIf="FieldFetch.source == 'contact us' ">
+                      <li>
+                        <span>Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Email</span>
+                        <strong>{{logData.email}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                      <li>
+                        <span>Message</span>
+                        <strong>{{logData.msg}}</strong>
+                      </li>
+                    </ul>
+                    <ul *ngIf="FieldFetch.source == 'advisor connect' ">
+                      <li *ngIf="logData.name !== '' ">
+                        <span>Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+
+                      <li>
+                        <span>Type</span>
+                        <strong>{{logData.type}}</strong>
+                      </li>
+                    </ul>
+                    <ul *ngIf="FieldFetch.lead_type == 'Travel' ">
+                      <li>
+                        <span>Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                    </ul>
+                    <ul *ngIf="FieldFetch.lead_type == 'Health' ">
+                      <li>
+                        <span>Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                    </ul>
+                    <ul *ngIf="FieldFetch.lead_type == 'Life' ">
+                      <li>
+                        <span>Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                    </ul>
+                    <ul *ngIf="FieldFetch.lead_type == 'Property' ">
+                      <li>
+                        <span>Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                    </ul>
+                    <ul *ngIf="FieldFetch.lead_type == 'Marine' ">
+                      <li>
+                        <span>Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                    </ul>
+
+                    <ul *ngIf="FieldFetch.lead_type == 'Nonmotor' ">
+
+                      <li>
+                        <span>Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                      <li>
+                        <span>Email</span>
+                        <strong>{{logData.email}}</strong>
+                      </li>
+                      <li>
+                        <span>Pincode</span>
+                        <strong>{{logData.pincode}}</strong>
+                      </li>
+                      <li>
+                        <span>User Type</span>
+                        <strong>{{logData.user_type}}</strong>
+                      </li>
+                      <li>
+                        <span>Insure Type</span>
+                        <strong>{{logData.insure_type}}</strong>
+                      </li>
+                      <li>
+                        <span>Cost of Construction</span>
+                        <strong>{{logData.costofconstruction}}</strong>
+                      </li>
+                      <li>
+                        <span>Value of Household Items</span>
+                        <strong>{{logData.value_of_household_items}}</strong>
+                      </li>
+                    </ul>
+
+                  </span>
+
+                  <span *ngIf="FieldFetch.quotation_status != '0' && FieldFetch.lead_type == 'Nonmotor' ">
+                    <ul *ngIf="FieldFetch.quotation_status == '1' ">
+                      <li>
+                        <span>Quotation Id</span>
+                        <strong>{{logData.quote_id}}</strong>
+                      </li>
+                      <li>
+                        <span>Plan Type</span>
+                        <strong>{{logData.plan}}</strong>
+                      </li>
+                      <li>
+                        <span>Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                      <li>
+                        <span>Sum Insured</span>
+                        <strong>{{logData.suminsured}}</strong>
+                      </li>
+                      <li>
+                        <span>Estimated Date Of Shipment</span>
+                        <strong>{{logData.estimeted_dateof_shipment}}</strong>
+                      </li>
+                      <li>
+                        <span>Commodity</span>
+                        <strong>{{logData.Commodity}}</strong>
+                      </li>
+                      <li>
+                        <span>Additional details of Commodity</span>
+                        <strong>{{logData.Additional_details_of_Commodity}}</strong>
+                      </li>
+                      <li>
+                        <span>Bulk Cargo</span>
+                        <strong>{{logData.Bulk_Cargo_Dimensional}}</strong>
+                      </li>
+                      <li>
+                        <span>Packing</span>
+                        <strong>{{logData.Packing}}</strong>
+                      </li>
+                      <li>
+                        <span>Conveyance</span>
+                        <strong>{{logData.Conveyance}}</strong>
+                      </li>
+                      <li>
+                        <span>Coverage</span>
+                        <strong>{{logData.Coverage}}</strong>
+                      </li>
+                      <li>
+                        <span>Voyage From Country</span>
+                        <strong>{{logData.voyageFrom}}</strong>
+                      </li>
+                      <li>
+                        <span>Voyage To Country</span>
+                        <strong>{{logData.voyageFrom}}</strong>
+                      </li>
+                      <li>
+                        <span>Port/Transit From</span>
+                        <strong>{{logData.voyageFromPort}}</strong>
+                      </li>
+                      <li>
+                        <span>Port/Transit To</span>
+                        <strong>{{logData.voyageFromPort}}</strong>
+                      </li>
+                      <li>
+                        <span>Invoice Currency Type</span>
+                        <strong>{{logData.Currency_type}}</strong>
+                      </li>
+                      <li>
+                        <span>Basis of Valuation</span>
+                        <strong>{{logData.Basis_of_Valuation}}</strong>
+                      </li>
+                      <li>
+                        <span>Basis of Valuation Uplift</span>
+                        <strong>{{logData.chose_Valuation_percentage}}</strong>
+                      </li>
+                      <li>
+                        <span>Basis of Valuation Uplift</span>
+                        <strong>{{logData.chose_Valuation_percentage}}</strong>
+                      </li>
+                      <li>
+                        <span>Currency Value</span>
+                        <strong>{{logData.Currency_value}}</strong>
+                      </li>
+                    </ul>
+                    <ul *ngIf="FieldFetch.quotation_status == '2' ">
+                      <li>
+                        <span>Quotation Id</span>
+                        <strong>{{logData.quote_id}}</strong>
+                      </li>
+
+                      <li>
+                        <span>Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                      <li>
+                        <span>Email</span>
+                        <strong>{{logData.email}}</strong>
+                      </li>
+                      <li>
+                        <span>Proposer Dob</span>
+                        <strong>{{logData.proposer_dob}}</strong>
+                      </li>
+                      <li>
+                        <span>Invoice Date</span>
+                        <strong>{{logData.invoice_date}}</strong>
+                      </li>
+
+                      <li>
+                        <span>Proposer Document</span>
+                        <strong>{{logData.proposer_document}}</strong>
+                      </li>
+                      <li>
+                        <span>Proposer Document No</span>
+                        <strong>{{logData.proposer_document_no}}</strong>
+                      </li>
+                      <li>
+                        <span>Bank Name</span>
+                        <strong>{{logData.bank_name}}</strong>
+                      </li>
+                      <li>
+                        <span>Claims</span>
+                        <strong>{{logData.Claims}}</strong>
+                      </li>
+                      <li>
+                        <span>Shipper Consignee</span>
+                        <strong>{{logData.shipper_consignee}}</strong>
+                      </li>
+                      <li>
+                        <span>Vessel Name</span>
+                        <strong>{{logData.vessel_name}}</strong>
+                      </li>
+                      <li>
+                        <span>Bill Of Lading</span>
+                        <strong>{{logData.bill_of_lading}}</strong>
+                      </li>
+
+                    </ul>
+                  </span>
+                  <span *ngIf="FieldFetch.quotation_status != '0' && FieldFetch.lead_type == 'Pa' ">
+                    <ul *ngIf="FieldFetch.quotation_status == '1' ">
+                      <li>
+                        <span>Quotation Id</span>
+                        <strong>{{logData.quote_id}}</strong>
+                      </li>
+                      <li>
+                        <span>Customer Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Customer Mobile No.</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+
+                      <li>
+                        <span>Plan Type</span>
+                        <strong>{{logData.plan}}</strong>
+                      </li>
+                      <li>
+                        <span>Medical History</span>
+                        <strong>{{logData.medical_history}}</strong>
+                      </li>
+                      <li>
+                        <span>Occupation</span>
+                        <strong>{{logData.occupation}}</strong>
+                      </li>
+                      <li>
+                        <span>Anual Income</span>
+                        <strong>{{logData.anual_income}}</strong>
+                      </li>
+
+                    </ul>
+                    <ul *ngIf="FieldFetch.quotation_status == '2' ">
+                      <li>
+                        <span>Quotation Id</span>
+                        <strong>{{logData.quote_id}}</strong>
+                      </li>
+                      <li>
+                        <span>Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Proposer D.O.B</span>
+                        <strong>{{logData.proposer_dob}}</strong>
+                      </li>
+                      <li>
+                        <span>Proposer Gender</span>
+                        <strong>{{logData.gender_proposor}}</strong>
+                      </li>
+
+                      <li>
+                        <span>Document Type</span>
+                        <strong>{{logData.proposer_document}}</strong>
+                      </li>
+                      <li>
+                        <span>Document Number</span>
+                        <strong>{{logData.proposer_document_no}}</strong>
+                      </li>
+
+                    </ul>
+                  </span>
+                  <span *ngIf="FieldFetch.quotation_status == 6 ">
+                    <ul *ngIf="FieldFetch.lead_type == 'Motor' && FieldFetch.source == 'home page' ">
+
+
+                      <li>
+                        <span>Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Email</span>
+                        <strong>{{logData.email}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+
+                      <li>
+                        <span>Product Type</span>
+                        <strong>{{logData.product}}</strong>
+                      </li>
+
+                      <li>
+                        <span>Make</span>
+                        <strong>{{logData.make}}</strong>
+                      </li>
+
+                      <li>
+                        <span>Model</span>
+                        <strong>{{logData.model}}</strong>
+                      </li>
+
+                      <li>
+                        <span>Fuel</span>
+                        <strong>{{logData.fuel}}</strong>
+                      </li>
+                      <li>
+                        <span>Variant</span>
+                        <strong>{{logData.variant}}</strong>
+                      </li>
+                      <li>
+                        <span>Insurer Name</span>
+                        <strong>{{logData.insurerName}}</strong>
+                      </li>
+                      <li>
+                        <span>Manufacture Year</span>
+                        <strong>{{logData.manufactureYear}}</strong>
+                      </li>
+                      <li>
+                        <span>Engine No</span>
+                        <strong>{{logData.engineNo}}</strong>
+                      </li>
+                      <li>
+                        <span>Chassis No</span>
+                        <strong>{{logData.chassisNo}}</strong>
+                      </li>
+                      <li>
+                        <span>Registration Date</span>
+                        <strong>{{logData.RegistrationDate}}</strong>
+                      </li>
+                      <li>
+                        <span>Registration Number</span>
+                        <strong>{{logData.registration_number}}</strong>
+                      </li>
+
+                    </ul>
+                    <ul *ngIf="FieldFetch.lead_type == 'Health' && FieldFetch.source == 'home page' ">
+                      <li>
+                        <span>Name</span>
+                        <strong>{{FieldFetch.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Email</span>
+                        <strong>{{FieldFetch.email}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{FieldFetch.mobile}}</strong>
+                      </li>
+
+
+                      <li>
+                        <span>Gender</span>
+                        <strong>{{logData.gender}}</strong>
+                      </li>
+
+                      <li>
+                        <span>Pincode</span>
+                        <strong>{{logData.pincode}}</strong>
+                      </li>
+                      <li>
+                        <span>Medical History</span>
+                        <strong>{{logData.medical}}</strong>
+                      </li>
+
+
+                    </ul>
+                    <ul *ngIf="FieldFetch.lead_type == 'Travel' && FieldFetch.source == 'home page' ">
+                      <li>
+                        <span>Name</span>
+                        <strong>{{FieldFetch.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Email</span>
+                        <strong>{{FieldFetch.email}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{FieldFetch.mobile}}</strong>
+                      </li>
+
+                    </ul>
+                    <ul *ngIf="FieldFetch.lead_type == 'Marine' && FieldFetch.source == 'home page' ">
+                      <li>
+                        <span>Estimeted Date of shipment</span>
+                        <strong>{{logData.estimeted_dateof_shipment}}</strong>
+                      </li>
+                      <li>
+                        <span>Additional Details of Commodity</span>
+                        <strong>{{logData.Additional_details_of_Commodity}}</strong>
+                      </li>
+
+                      <li>
+                        <span>Currency Value</span>
+                        <strong>{{logData.currencyValue}}</strong>
+                      </li>
+                      <li>
+                        <span>Cargo SumInsured</span>
+                        <strong>{{logData.CargoSumInsured}}</strong>
+                      </li>
+                      <li>
+                        <span>Invoice Value Currency</span>
+                        <strong>{{logData.Invoice_Value_Currency}}</strong>
+                      </li>
+                      <li>
+                        <span>Plan Type</span>
+                        <strong>{{logData.planType}}</strong>
+                      </li>
+                      <li>
+                        <span>Commodity</span>
+                        <strong>{{logData.Commodity}}</strong>
+                      </li>
+                      <li>
+                        <span>Conveyance</span>
+                        <strong>{{logData.Conveyance}}</strong>
+                      </li>
+                      <li>
+                        <span>Bulk Cargo Dimensional</span>
+                        <strong>{{logData.Bulk_Cargo_Dimensional}}</strong>
+                      </li>
+                      <li>
+                        <span>Packing</span>
+                        <strong>{{logData.Packing}}</strong>
+                      </li>
+                      <li>
+                        <span>Currency</span>
+                        <strong>{{logData.Currency}}</strong>
+                      </li>
+                      <li>
+                        <span>Voyage From</span>
+                        <strong>{{logData.voyageFrom}}</strong>
+                      </li>
+                      <li>
+                        <span>Voyage From Port</span>
+                        <strong>{{logData.voyageFromPort}}</strong>
+                      </li>
+                      <li>
+                        <span>Voyage To </span>
+                        <strong>{{logData.voyageto}}</strong>
+                      </li>
+                      <li>
+                        <span>Valuation</span>
+                        <strong>{{logData.Valuation}}</strong>
+                      </li>
+
+
+                    </ul>
+                    <ul *ngIf="FieldFetch.lead_type == 'Pa' && FieldFetch.source == 'home page' ">
+                      <li>
+                        <span>Name</span>
+                        <strong>{{FieldFetch.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Email</span>
+                        <strong>{{FieldFetch.email}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{FieldFetch.mobile}}</strong>
+                      </li>
+
+
+                      <li>
+                        <span>Gender</span>
+                        <strong>{{logData.gender}}</strong>
+                      </li>
+
+                      <li>
+                        <span>Pincode</span>
+                        <strong>{{logData.pincode}}</strong>
+                      </li>
+                      <li>
+                        <span>Annual Income</span>
+                        <strong>{{logData.annual_income}}</strong>
+                      </li>
+                      <li>
+                        <span>Occupation</span>
+                        <strong>{{logData.occupation}}</strong>
+                      </li>
+                      <li>
+                        <span>Medical History</span>
+                        <strong>{{logData.medical}}</strong>
+                      </li>
+
+
+                    </ul>
+                    <ul *ngIf="FieldFetch.lead_type == 'Life' && FieldFetch.source == 'home page' ">
+                      <li>
+                        <span>Name</span>
+                        <strong>{{FieldFetch.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Email</span>
+                        <strong>{{FieldFetch.email}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{FieldFetch.mobile}}</strong>
+                      </li>
+                      <li>
+                        <span>Gender</span>
+                        <strong>{{logData.gender}}</strong>
+                      </li>
+                      <li>
+                        <span>Date Of Birth</span>
+                        <strong>{{logData.dateOfBirth}}</strong>
+                      </li>
+
+                      <li>
+                        <span>Medical History</span>
+                        <strong>{{logData.medical}}</strong>
+                      </li>
+
+
+                    </ul>
+
+                    <ul *ngIf="FieldFetch.source == 'contact us' ">
+                      <li>
+                        <span>Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Email</span>
+                        <strong>{{logData.email}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                      <li>
+                        <span>Message</span>
+                        <strong>{{logData.msg}}</strong>
+                      </li>
+                    </ul>
+                    <ul *ngIf="FieldFetch.source == 'advisor connect' ">
+
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                      <li>
+                        <span>LOB</span>
+                        <strong>{{logData.type}}</strong>
+                      </li>
+                    </ul>
+                    <ul *ngIf="FieldFetch.source == 'become posp' ">
+
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                    </ul>
+                    <ul *ngIf="FieldFetch.source == 'schedule a call back' ">
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                    </ul>
+                    <ul *ngIf="FieldFetch.lead_type == 'Nonmotor' ">
+
+                      <li>
+                        <span>Name</span>
+                        <strong>{{logData.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+                      <li>
+                        <span>Email</span>
+                        <strong>{{logData.email}}</strong>
+                      </li>
+                      <li>
+                        <span>Pincode</span>
+                        <strong>{{logData.pincode}}</strong>
+                      </li>
+                      <li>
+                        <span>User Type</span>
+                        <strong>{{logData.user_type}}</strong>
+                      </li>
+                      <li>
+                        <span>Insure Type</span>
+                        <strong>{{logData.insure_type}}</strong>
+                      </li>
+                      <li>
+                        <span>Cost of Construction</span>
+                        <strong>{{logData.costofconstruction}}</strong>
+                      </li>
+                      <li>
+                        <span>Value of Household Items</span>
+                        <strong>{{logData.value_of_household_items}}</strong>
+                      </li>
+                    </ul>
+                    <ul
+                      *ngIf="(FieldFetch.lead_type == 'Life' || FieldFetch.lead_type == 'Health' || FieldFetch.lead_type == 'Pa' || FieldFetch.lead_type == 'Travel')  && FieldFetch.source == 'product page' ">
+                      <li>
+                        <span>Name</span>
+                        <strong>{{FieldFetch.name}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{FieldFetch.mobile}}</strong>
+                      </li>
+                    </ul>
+
+                    <ul *ngIf="(FieldFetch.lead_type == 'Motor')  && FieldFetch.source == 'product page' ">
+                      <li>
+                        <span>Vehicle Number</span>
+                        <strong>{{logData.VehicleNumber}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{FieldFetch.mobile}}</strong>
+                      </li>
+                    </ul>
+                    <ul *ngIf="(FieldFetch.lead_type == 'Insurance Audit')  && FieldFetch.source == 'landing page' ">
+                      <li>
+                        <span>Name </span>
+                        <strong>{{logData.ClientName}}</strong>
+                      </li>
+                      <li>
+                        <span>Client Address</span>
+                        <strong>{{logData.ClientAddress}}</strong>
+                      </li>
+                      <li>
+                        <span>Concern Name</span>
+                        <strong>{{logData.ConcernName}}</strong>
+                      </li>
+                      <li>
+                        <span>Concern Email</span>
+                        <strong>{{logData.ConcernEmail}}</strong>
+                      </li>
+                      <li>
+                        <span>Nature of Work</span>
+                        <strong>{{logData.ConcernNatureofWork}}</strong>
+                      </li>
+                      <li>
+                        <span>Mobile</span>
+                        <strong>{{logData.mobile}}</strong>
+                      </li>
+
+                    </ul>
+
+                  </span>
+
+                  
+                </div>
+              </div>
+            </div>
+
+            <div class="bottom-section">
+              <button type="button" id="ClosePOUPUP" class="mr_5  Save_click" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="followUpPopup" class="modal fade" role="dialog" style="z-index: 1042 !important;">
+  <div class="modal-dialog cs_table_data"
+    style="width: calc(100% - 230px);margin: 30px auto;margin-left: 230px;height: calc(100% - 60px);">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form custom-modal bg-2">
+            <div class="main_header">
+              <div class="header_title">Details</div>
+              <div></div>
+            </div>
+            <div class="cs_modal_body" style="height: calc(100vh - 166px);overflow-y: scroll;">
+              <div class="view_more_cases">
+                <div class="case_table_de span-align">
+                  <div class="detailsleadpostlabel"><span>Lead Id : {{leadId}}</span><span>Lead Reveive Date : {{leadRevievedate}}</span></div>
+              
+                  <div class=" box-default bg-2 m-0" *ngIf="showFollowUpForm">
+                    <form [formGroup]="UpdateFollowForm" (ngSubmit)="UpdateFollowFormS()">
+                      <!-- /.box-header -->
+                      <div class="box-body">
+                        <div class="">
+
+                          <div class=" row">
+
+                            <div class="col-lg-3">
+                              <div class="input-group">
+                                <label>Status:</label>
+                                <ng-multiselect-dropdown class="form-control" [placeholder]="'Select Status'"
+                                  [data]="statusOptions" [(ngModel)]="this.selectedStatus"
+                                  (onSelect)="UpdateStatusValue($event)" formControlName="Status"
+                                  [settings]="dropdownSettingsSingleselect"> </ng-multiselect-dropdown>
+
+                              </div>
+                              <div *ngIf="isSubmitted && Followup_control.Status.errors" class="form-text text-muted">
+                                <div *ngIf="Followup_control.Status.errors.required" style="color:red;">Field is
+                                  required..!</div>
+                              </div>
+                            </div>
+
+                            <div class="col-lg-3" *ngIf="DateTimesShow">
+                              <div class="input-group">
+                                <label> Date:</label>
+                                <input type="text" class="form-control" bsDatepicker [minDate]="today"
+                                  [maxDate]="Nextes" formControlName="Dates" class="form-control">
+                                <div *ngIf="isSubmitted && Followup_control.Dates.errors" class="form-text text-muted">
+                                  <div *ngIf="Followup_control.Dates.errors.required" style="color:red;">Field is
+                                    required..!</div>
+                                </div>
+                              </div>
+
+                            </div>
+
+                            <div class="col-lg-3" *ngIf="DateTimesShow">
+                              <div class="input-group">
+                                <label> Time:</label>
+                                <input type="time" class="form-control" formControlName="Times" class="form-control"
+                                  [(ngModel)]="selectedTime" (ngModelChange)="onTimeChange($event)">
+                                <div *ngIf="isSubmitted && Followup_control.Times.errors" class="form-text text-muted">
+                                  <div *ngIf="Followup_control.Times.errors.required" style="color:red;">Field is
+                                    required..!</div>
+                                </div>
+                                <div *ngIf="isSubmitted && UpdateFollowForm.get('Times').hasError('timeInvalid')"
+                                  class="form-text text-muted">
+                                  <div style="color:red;">Time should be greater than the current time..!</div>
+                                </div>
+                              </div>
+
+                            </div>
+
+                            <div class="col-lg-3">
+                              <div class="input-group">
+                                <label>Remarks:</label>
+                                <ng-multiselect-dropdown class="form-control" [placeholder]="'Select Remarks'"
+                                  [data]="RemarksOptions" formControlName="Remarks" (onSelect)="onSelectRemarks($event)"
+                                  [settings]="dropdownSettingsSingleselect"> </ng-multiselect-dropdown>
+                              </div>
+                              <div *ngIf="isSubmitted && Followup_control.Remarks.errors" class="form-text text-muted">
+                                <div *ngIf="Followup_control.Remarks.errors.required" style="color:red;">Field is
+                                  required..!</div>
+                              </div>
+                            </div>
+
+                            <div class="col-lg-6" *ngIf="isOtherSelected">
+                              <div class="input-group">
+                                <label>Other Remark:</label>
+                                <textarea type="text" formControlName="OtherRemark" class="form-control"
+                                  maxlength="1000"></textarea>
+                                <div *ngIf="isSubmitted && Followup_control.OtherRemark.errors"
+                                  class="form-text text-muted">
+                                  <div *ngIf="Followup_control.OtherRemark.errors.required" style="color:red;">Field is
+                                    required..!</div>
+                                </div>
+                              </div>
+                            </div> 
+
+
+                            <div class="col-lg-6">
+                              <div class="input-group">
+                                <label>Breif:</label>
+                                <textarea type="text" formControlName="breif" class="form-control"
+                                  maxlength="1000"></textarea>
+                                <div *ngIf="isSubmitted && Followup_control.breif.errors"
+                                  class="form-text text-muted">
+                                  <div *ngIf="Followup_control.breif.errors.required" style="color:red;">Field is
+                                    required..!</div>
+                                </div>
+                              </div>
+                            </div> 
+
+
+
+                            <div class="col-lg-6">
+                              <div class="logs-btn-align">
+                                <button [disabled]="buttonDisable" type="submit"
+                                  class="btn btn-info pull-right">Update</button>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                      <!-- <div class="box-footer">
+                          <button type="button" (click)="CloseModel()" class="btn btn-default pull-right">Cancel</button>
+                          <button style="margin-right: 1%;" [disabled]="buttonDisable" type="submit"
+                            class="btn btn-info pull-right">Update</button>
+                        </div> -->
+                    </form>
+
+                  </div>
+
+                  <div class=" box-default box-pro m-0">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Follow Up Logs<span class="logs-timer">Age : <span
+                            id="ageSpan"></span></span></h3>
+                    </div>
+
+
+                    <div class="modal-body card-box" id="show_ac_details" [innerHTML]="dataArr"> </div>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="bottom-section">
+              <button type="button" id="ClosePOUPUP1" class="mr_5 Save_click" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

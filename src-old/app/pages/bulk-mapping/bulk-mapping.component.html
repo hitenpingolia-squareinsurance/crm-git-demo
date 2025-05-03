@@ -1,0 +1,89 @@
+<div class="content-wrapper">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Bulk Mapping</h3>
+                    </div>
+
+                    <form class="form" (ngSubmit)="Submit()" [formGroup]="AddMapping">
+                        <div>
+                            <div class="box box-primary box-solid doc-required">
+
+                                <div class="box-body">
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <div class="col-md-4">
+                                                <label for="CustomerName">Mapping Type *</label>
+                                                <select name="lob" formControlName="customertype" class="form-control"
+                                                    data-parsley-required="true">
+                                                    <option value="">Select Customer Type</option>
+                                                    <option value="POS">POS</option>
+                                                    <option value="Sp">SP</option>
+                                                </select>
+                                                <span *ngIf="isSubmitted && formControls.customertype.errors"
+                                                    class="ValidationError">
+                                                    <span *ngIf="formControls.customertype.errors.required">Customer
+                                                        Type is required</span>
+                                                </span>
+                                            </div>
+
+                                            <div class="form-group Vineet old_2 col-md-3 doctype_OLD">
+                                                <label for="CustomerName">Bulk Mapping File *</label>
+
+                                                <label class="form-control btn fileUpload btn-default"
+                                                    [ngClass]="(this.file_image==1 ? 'ImageUploaded' : 'else' )"
+                                                    name="button" value="PreviousPolicy">
+                                                    <input type="file" (change)="UploadDocs($event,'file')" id="file"
+                                                        name="BulkMapping_File"
+                                                        accept="image/png, image/gif, image/jpeg ,application/pdf"
+                                                        formControlName="file" style="display:none;" />
+                                                    <i class="fas fa-user-alt">
+                                                        <b>Mapping File*</b>
+                                                    </i>
+                                                </label>
+                                                <div *ngIf="isSubmitted && formControls.file.errors "
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.file.errors.required">
+                                                        Please
+                                                        Select file!
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label for="CustomerMobileNo">Remarks </label>
+                                                <input class="form-control" type="text" name="CustomerMobileNo"
+                                                    id="CustomerMobileNo" placeholder="Enter Remarks"
+                                                    formControlName="remarks">
+                                                <div *ngIf="isSubmitted && formControls.remarks.errors "
+                                                    class="ValidationError">
+                                                    <div *ngIf="formControls.remarks.errors.required">
+                                                        Please
+                                                        Enter
+                                                        Remarks !</div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="box-footer">
+                            <!--<button type="submit" class="btn btn-default">Cancel</button>-->
+                            <button type="submit" 
+                                class="Save-click btn-info pull-right">Submit
+                                Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

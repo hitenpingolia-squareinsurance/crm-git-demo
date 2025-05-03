@@ -1,0 +1,115 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form" *ngIf="this.UrlSegment == '/partner-directory/partner-directory'">
+          <div class="main_header d_flex flex_Equal flex_Middel">
+            <div class="header_title">Partner Directory</div>
+          </div>
+
+
+          <div class="main_body main_card_height_scroll_withoutfooter box-body">
+            <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+
+
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+
+              <div class="custom_table tables_layout_design">
+
+                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+
+                <!--======= Refer Table  =========-->
+                <ul class="responsive-table">
+                  <li class="table-row" *ngFor="let row of dataAr; let i=index;">
+
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{ row.SrNo }}</div>
+
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div> Name </div>
+                            <strong class="fs_18"><a (click)="EmpDetails(row.Id, 1)" >
+                            <!-- <strong class="fs_18"><a (click)="Emp(row.Id, 1)" data-toggle="modal" data-target="#exampleModal"> -->
+                              {{ row.Name }} -
+                                {{row.agent_id}}</a></strong>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <span class="label label-primary" *ngIf="Masking =='Mobile'+i"
+                              (click)="ShowMaskingField('TempMobile')"> Mobile : {{row.Mobile}}</span>
+
+                            <span class="label label-primary" *ngIf="Masking != 'Mobile'+i"
+                              (click)="ShowMaskingField('Mobile'+i)"> Mobile : ****</span>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <span class="label label-primary" *ngIf="Masking == 'Email'+i"
+                              (click)="ShowMaskingField('TempEmail')"> Email : {{row.Email}} <span
+                                (click)="CopyText(row.Email)" class="fa fa-copy"></span></span>
+
+                            <span class="label label-primary" *ngIf="Masking != 'Email'+i"
+                              (click)="ShowMaskingField('Email'+i)"> Email : ****</span>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+
+
+                        <div class="label_chips motor_lob" style="width: auto;">
+                          <span>Reporting Manager : {{ row.Reporting_Manager
+                            }} - {{row.Reporting_Manager_Id}} </span>&nbsp;&nbsp;
+                        </div>
+
+                        <div class="label_chips finance_lob" style="width: auto;">
+                          <span>POS Type :{{ row.postype == 0 ? 'Non-Life' : 'Life and Non-Life' }}</span>
+                        </div>
+                        <div class="label_chips non_motor_lob" style="width: auto;">
+                          <span>Status : {{ row.status == 1 ? 'Active' : 'Inactive' }}</span>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+                  </li>
+                </ul>
+                <!--======= Refer Table END =========-->
+
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+

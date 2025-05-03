@@ -1,0 +1,42 @@
+<form class="form" [formGroup]="SearchForm" (ngSubmit)="ExportReport()">
+  <table class="table table-bordered">
+    <thead>
+     <tr>
+      <th style="text-align: center; background-color: #2cb2b3; color: white;">Export Data
+        <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+      </th>
+     </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <div class="row"  >
+            <div class="col-sm-6">
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Year" [data]="YearArray" [(ngModel)]="SelectedYear" formControlName="Year_Name" [settings]="dropdownSettingsingleselect1"> </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.Year_Name.errors " class="ValidationError">
+                <div *ngIf="formControls.Year_Name.errors.required">Please Select Year! </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Month" [data]="MonthArray" [(ngModel)]="SelectedCurrentMonth" formControlName="Month_Name" [settings]="dropdownSettingsingleselect1"> </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.Month_Name.errors " class="ValidationError">
+                <div *ngIf="formControls.Month_Name.errors.required">Please Select Month! </div>
+              </div>
+            </div>
+
+          </div>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Export">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

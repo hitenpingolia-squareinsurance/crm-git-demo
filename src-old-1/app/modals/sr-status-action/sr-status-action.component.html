@@ -1,0 +1,172 @@
+<div class=" box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Action Form</h3>
+    <div class="box-tools pull-right">
+      <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+    </div>
+  </div>
+  <form [formGroup]="ActionForm" (ngSubmit)="SubmitActionForm()">
+
+    <!--=== IF LOB IS LIFE START ===-->
+    <div class="box-body" *ngIf="(Lob_Name == 'LI' && StepData['LOB_Id'] == 'LI')">
+
+      <div class="form-group">
+        <div class="row"
+          *ngIf="StepData['LI_Proposer_Type'] == 'Individual' || StepData['LI_Proposer_Type'] == 'Joint Life'">
+          <div *ngIf="Id!=0" class="xyz col-md-12">
+            <label>Status:</label>
+
+            <select formControlName="SR_Status" class="form-control">
+              <option disabled selected value="">Select Status</option>
+              <option *ngIf=" StepData['SR_Status']==0" value="1">Accept</option>
+              <option *ngIf="StepData['SR_Status']==1" value="2">Case to Insurer</option>
+              <option *ngIf="StepData['SR_Status']==2" value="3">Login</option>
+              <option
+                *ngIf="(StepData['LI_Proposer_Type'] == 'Individual' || StepData['LI_Proposer_Type'] == 'Joint Life') && (StepData['SR_Status'] !=0 && StepData['SR_Status']!=1 && StepData['SR_Status']!=2 && (StepData['SR_Status']==3 || StepData['SR_Status']<6) && StepData['Plvc_Status'] ==0)"
+                value="4">Video PLVC/Customer Declaration</option>
+              <option
+                *ngIf="(StepData['LI_Proposer_Type'] == 'Individual' || StepData['LI_Proposer_Type'] == 'Joint Life') && (StepData['SR_Status'] !=0 && StepData['SR_Status']!=1 && StepData['SR_Status']!=2 && (StepData['SR_Status']==3 || StepData['SR_Status']<6) && StepData['Medical_Status'] ==0)"
+                value="5">Pending For Medical</option>
+              <option
+                *ngIf="StepData['SR_Status'] !=0 && StepData['SR_Status']!=1 && StepData['SR_Status']!=2 && (StepData['SR_Status']==3 || StepData['SR_Status']<6)"
+                value="6">Underwriting</option>
+              <option
+                *ngIf="StepData['SR_Status'] !=0 && StepData['SR_Status']!=1 && StepData['SR_Status']!=2 && (StepData['SR_Status']==3 || StepData['SR_Status']<7)"
+                value="7">Pending For Policy Issuance</option>
+              <option
+                *ngIf="StepData['SR_Status'] !=0 && StepData['SR_Status']!=1 && StepData['SR_Status']!=2 && (StepData['SR_Status']==3 || StepData['SR_Status']<8)"
+                value="8">Booked</option>
+            </select>
+
+          </div>
+        </div>
+
+        <div class="row" *ngIf="StepData['LI_Proposer_Type'] == 'Group'">
+          <div *ngIf="Id!=0" class="xyz col-md-12">
+            <label>Status:</label>
+
+            <select formControlName="SR_Status" class="form-control">
+              <option disabled selected value="">Select Status</option>
+              <option *ngIf="StepData['SR_Status']<6" value="6">Underwriting</option>
+              <option *ngIf="StepData['SR_Status']<7" value="7">Pending For Policy Issuance</option>
+              <option *ngIf="StepData['SR_Status']<8" value="8">Booked</option>
+            </select>
+          </div>
+        </div>
+
+        <!--=== For Accept Option ===-->
+        <div class="row">
+          <div class="xyz col-md-12"
+            *ngIf="(StepData['SR_Status']==0) && (StepData['LI_Proposer_Type'] == 'Individual' || StepData['LI_Proposer_Type'] == 'Joint Life')">
+            <label>BI Document:</label>
+            <input type="file" class="form-control" formControlName="BI_Document" name="BI_Document"
+              (change)="UploadDocs($event,'BI_Document')">
+          </div>
+        </div>
+
+        <!--=== For Case to Insurer ===-->
+        <div
+          *ngIf="(StepData['SR_Status']==1 || ((StepData['SR_Status']==0) && (StepData['LI_Proposer_Type'] == 'Individual' || StepData['LI_Proposer_Type'] == 'Joint Life')))"
+          class="row">
+          <div class="xyz col-md-12">
+            <label>Send Mail To:</label>
+            <input type="text" class="form-control" formControlName="Insurer_To_Email" name="Insurer_To_Email">
+          </div>
+
+          <div formArrayName="Insurer_CC_Array">
+            <div class="row" *ngFor="let c of Insurer_CC_Array_FN().controls; let i=index" [formGroupName]="i">
+
+              <div class="xyz col-md-10">
+                <label>Send Mail CC:</label>
+                <input type="text" class="form-control" formControlName="Insurer_CC_Email" name="Insurer_CC_Email">
+              </div>
+
+              <div class="col-md-2">
+                <button *ngIf="i==0" type="button" (click)="addPrevious_CC()" class="btn btn-primary">
+                  <i style="color:#fff;" class="fa fa-plus"></i></button>
+                <button *ngIf="i!=0" (click)="removePrevious_CC(i)" class="btn btn-danger">
+                  <i class="fa fa-close"></i></button>
+              </div>
+
+
+            </div>
+          </div>
+
+        </div>
+
+        <!--=== For Login Status ===-->
+        <div *ngIf="(StepData['SR_Status']==2)" class="row">
+          <div class="col-md-12">
+            <label>Login Date:</label>
+            <input type="text" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}"
+              formControlName="Login_Date" name="Login_Date">
+          </div>
+
+          <div class="col-md-12">
+            <label>Proposal Form:</label>
+            <input type="file" class="form-control" formControlName="Proposal_Form" name="Proposal_Form"
+              (change)="UploadDocs($event,'Proposal_Form')">
+          </div>
+        </div>
+
+        <div *ngIf="(ActionForm.value['SR_Status']=='8')" class="row">
+
+          <div class="xyz col-md-12">
+            <label> Policy Issuance/Risk Start Date:</label>
+            <input type="text" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}"
+              (bsValueChange)="GetBookingDate($event, 'Policy_Iss_Date')" formControlName="Policy_Issuance_Date"
+              name="Policy_Issuance_Date" autocomplete="off">
+          </div>
+
+          <div class="xyz col-md-12">
+            <label>Booking Date:</label>
+            <input type="text" class="form-control" formControlName="Booking_Date" name="Booking_Date" readonly>
+          </div>
+
+          <div class="xyz col-md-12">
+            <label>Next Renewal Date:</label>
+            <input type="text" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}"
+              formControlName="Renewal_Date" name="Renewal_Date">
+          </div>
+
+          <div class="xyz col-md-12">
+            <label>Policy No:</label>
+            <input type="text" class="form-control" formControlName="Policy_No" name="Policy_No">
+          </div>
+
+          <div class="xyz col-md-12">
+            <label>Policy PDF:</label>
+            <input type="file" (change)="UploadDocs($event,'Policy_PDF')" formControlName="Policy_Pdf"
+              class="form-control">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class='xyz col-md-12'>
+            <label>Remark:</label>
+            <textarea class="form-control" formControlName="Remark" name="Remark"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <div class='col-md-12'>
+          <button
+            *ngIf="Id!=0 && (User_Rights.Is_Operation==1 || User_Rights.Underwriter_Motor==1 || User_Rights.Underwriter_Non_Motor==1 || User_Rights.Underwriter_Health==1 || User_Rights.Is_Sales_Support==1)"
+            (click)="Reject()" class="btn btn-danger nextBtn pull-right" type="button"
+            style="margin-left: 10px;">Reject</button>
+
+          <button class="btn btn-primary nextBtn pull-right" type="submit">
+
+            <span
+              *ngIf="(User_Rights.Is_Operation==1 || User_Rights.Underwriter_Motor==1 || User_Rights.Underwriter_Non_Motor==1 || User_Rights.Underwriter_Health==1 || User_Rights.Is_Sales_Support==1)">Submit</span>
+
+            <!-- <span *ngIf="(User_Rights.Is_Sales==1)">Submit</span> -->
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--=== IF LOB IS LIFE END ===-->
+
+  </form>
+</div>

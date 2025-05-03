@@ -1,0 +1,231 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header flex-header">
+                        <div class="header_title ">View Offline Requests</div>
+                        <div class="tabs-flex">
+                            <div class="tab tab1">
+                                <a routerLink="/offline-quote/view-requests" class="active"
+                                    rel="noopener noreferrer">View Offline Requests</a>
+                            </div>
+                            <div class="tab tab2">
+                                <a routerLink="/offline-quote/view-health-requests" rel="noopener noreferrer">View
+                                    Offline Health Requests</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+                        <div>
+                            <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                                <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                    data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                    aria-controls="collapseOne">
+                                    <a role="button" class="fa fa-filter"><span>Filters</span><i
+                                            class="fa fa-angle-down pull-right"></i></a>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <!-- filter  -->
+                                <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+                            </div>
+                        </div>
+
+                        <hr>
+
+
+
+
+                        <table class="table table-bordered table-hover">
+
+                            <thead>
+                                <tr>
+                                    <td *ngFor="let row1 of FilterDatatype; ">
+                                        <label *ngIf="row1.quote_status == 1">
+                                            Quote Requested
+                                        </label>
+                                        <label *ngIf="row1.quote_status == 2">
+                                            Quote Released
+                                        </label>
+                                        <label *ngIf="row1.quote_status == 3">
+                                            Quote Accepted
+                                        </label>
+                                        <label *ngIf="row1.quote_status == 4">
+                                            Payment URL Shared / Payment For Cheque / Payment For Cash
+                                        </label>
+                                        <label *ngIf="row1.quote_status == 5">
+                                            Pending For Approval
+                                        </label>
+                                        <label *ngIf="row1.quote_status == 6">
+                                            Complete
+                                        </label>
+                                        <label *ngIf="row1.quote_status == 0">
+                                            Rejected
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td *ngFor="let row1 of FilterDatatype; ">
+                                        <label>
+                                            {{row1.Id}}
+                                        </label>
+                                    </td>
+                                </tr>
+                            </thead>
+
+                        </table>
+                        <div class=" mydiv table-responsive">
+                            <table datatable [dtOptions]="dtOptions" id="Table1"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <!-- <th>LOB / Type </th> -->
+                                        <th>Quotation</th>
+                                        <th>File Type</th>
+                                        <th>Vehicle No</th>
+                                        <th>Customer Details</th>
+                                        <th>Assignee</th>
+                                        <th>Status</th>
+                                        <!-- <th>Company</th> -->
+                                        <th>Create Date</th>
+                                        <!-- <th>Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr; let i=index;"   [ngClass]="(row.priority=='High' ? 'BackgroundColorRed' : 'else' )">
+                                        
+                                        <td>{{row.SrNo}}</td>
+                                        <td>
+                                            <a routerLink="/offline-quote/view-Details-quote/{{row.Quotation_Id}}"><span
+                                                    class="label label-default">{{row.Quotation_Id}}</span></a>
+
+                                            <br>
+
+                                            <a *ngIf="row.Status == 'Completed'" alt="Click here to check SR details"
+                                                (click)="SrPopup(1,row.SrId)"><span
+                                                    class="label label-default">{{row.FullSrNo}}</span></a>
+
+
+                                            <label *ngIf="row.QueryTotalTime != ''"> {{row.QueryTotalTime}} </label>
+                                            <br>
+                                            <!-- (row.Punching_team == '' || row.Punching_team == null) && -->
+                                            <button style="margin-top:4px;" type="button"
+                                                *ngIf=" row.Status == 'Quote Accepted' && currentUrl == '/offline-quote/view-punching-team' && row.Punching_team == null"
+                                                (click)="AcceptPunchingTeamQuote(row.Quotation_Id)"
+                                                class="label label-info">Accept</button>
+
+                                            <br>
+
+                                            <label style="margin-top:4px;"
+                                                *ngIf=" row.Status == 'Quote Accepted' && currentUrl == '/offline-quote/view-punching-team' && row.Punching_team == null && row.punchingAEmployeeFlagDATA != ''">
+                                                <img class="img-fluid" src="assets/dist/img/bhagwaflag.gif"
+                                                    style="width: 30px;">{{row.punchingAEmployeeFlagDATA}}</label>
+
+                                            <label style="margin-top:4px;"
+                                                *ngIf="currentUrl == '/offline-quote/view-punching-team'  && row.priority != ''">
+                                                {{row.priority}}</label>
+
+
+
+                                            <button style="margin-top:4px;" type="button"
+                                                *ngIf=" row.Status == 'Pending for Accounts' && currentUrl == '/offline-quote/view-Account-team' && row.Account_team == null"
+                                                (click)="AcceptAccountTeamQuote(row.Quotation_Id)"
+                                                class="label label-info">Accept</button>
+                                            <button style="margin-top:4px;" type="button"
+                                                *ngIf=" row.Status == 'Pending for Accounts' && currentUrl == '/offline-quote/view-Account-team' && row.Account_team != null"
+                                                (click)="ApprovedAccountTeam(row.Id,row.Quotation_Id)"
+                                                class="label label-info">Approved</button>
+                                            <br>
+
+                                            <button style="margin-top:4px;" type="button"
+                                                *ngIf=" row.Status == 'Pending for Accounts' && currentUrl == '/offline-quote/view-Account-team' && row.Account_team != null"
+                                                (click)="RejectAccountTeam(row.Id,row.Quotation_Id)"
+                                                class="label label-danger">Cancel</button>
+
+                                        </td>
+                                        <td>{{row.BusniessType}}</td>
+                                        <td>{{row.Vehicle_No}}</td>
+                                        <td> <b>Name - </b> {{row.CustomerName}}<br> <b>Mobile - </b>
+                                            {{row.CustomerMobile}}<br> <b>Email -
+                                            </b> {{row.CustomerEmail}}</td>
+                                        <td>{{row.AssignUser}}</td>
+
+
+                                        <td *ngIf="row.RejectedStatus != 1">
+                                            <label class="label label-warning">{{row.Status}}</label>
+                                            <br>
+                                            <label class="label label-info"
+                                                (click)="ViewOfflineQuoteDetails(row.Quotation_Id)">Details</label>
+                                        </td>
+                                        <td *ngIf="row.RejectedStatus == 1">
+                                            <label class="label label-danger ">Rejected</label> <br>
+
+                                            <label class="label label-info"
+                                                (click)="ViewOfflineQuoteDetails(row.Quotation_Id)">Details</label> <br>
+                                            <span><b> Rejected Remarks => </b> {{row.RejectedRemarks}} </span> <br>
+                                        </td>
+                                        <!-- <td>{{row.CreateDate}}</td> -->
+                                        <td>{{row.CreateDate}}</td>
+
+                                        <!-- <td>
+                                            <table class=" PayoutTable">
+
+                                                <tr *ngIf="row.QuoteAccpt != ''">
+                                                    <td>Create - Accept</td>
+                                                    <td> <label *ngIf="row.QuoteAccpt != ''"> {{row.QuoteAccpt}}
+                                                        </label> </td>
+                                                </tr>
+
+
+                                                <tr *ngIf="row.QuoteRelashed != ''">
+                                                    <td>Accept - Release</td>
+                                                    <td> <label *ngIf="row.QuoteRelashed != ''"> {{row.QuoteRelashed}}
+                                                        </label> </td>
+                                                </tr>
+
+
+                                                <tr *ngIf="row.AccptSharedQuote != ''">
+                                                    <td>Release - Accept Shared Quote</td>
+                                                    <td> <label *ngIf="row.AccptSharedQuote != ''">
+                                                            {{row.AccptSharedQuote}} </label> </td>
+                                                </tr>
+
+                                                <tr *ngIf="row.PaymentTime != ''">
+                                                    <td>Accept - Release</td>
+                                                    <td> <label *ngIf="row.PaymentTime != ''"> {{row.PaymentTime}}
+                                                        </label> </td>
+                                                </tr>
+
+                                                <tr *ngIf="row.policyCompletedTime != ''">
+                                                    <td>Payment URL Shared - Completed</td>
+                                                    <td> <label *ngIf="row.policyCompletedTime != ''">
+                                                            {{row.policyCompletedTime}} </label> </td>
+                                                </tr>
+
+
+                                            </table>
+
+                                        </td> -->
+
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="8" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

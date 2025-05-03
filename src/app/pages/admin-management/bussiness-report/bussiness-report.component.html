@@ -1,0 +1,231 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+
+
+	<!-- Main content -->
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">Bussiness Report</h3>
+					</div>
+					<!-- /.box-header -->
+
+
+					<div class="box-body">
+
+
+						<form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+							<div class="row">
+
+								<div class="col-sm-4">
+
+
+
+									<select (change)="GetEmployees($event)" formControlName="Vertical_Id"
+										class="form-control">
+										<option value="0">Select Vertical</option>
+
+										<option *ngFor="let r of Vertical_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+									</select>
+
+								</div>
+
+								<div class="col-sm-4">
+									<select (change)="GetSubBranches($event)" formControlName="Region_Id"
+										class="form-control">
+										<option value="0">Select Region</option>
+										<option value="0">None</option>
+										<option *ngFor="let r of Region_Ar;" value="{{r.id}}">{{r.text}}</option>
+									</select>
+								</div>
+
+								<div class="col-sm-4">
+									<select (change)="GetEmployees($event)" formControlName="Sub_Region_Id"
+										class="form-control">
+										<option value="0">Select Region-Branch</option>
+										<option value="0">None</option>
+										<option *ngFor="let r of Sub_Branch_Ar;" value="{{r.id}}">{{r.text}}</option>
+									</select>
+								</div>
+
+
+							</div>
+
+
+							<div class="row"  >
+
+								<div class="col-sm-6">
+
+									<ng-multiselect-dropdown class="form-control" name="Emp_Id"
+										[placeholder]="Employee_Placeholder" [data]="Emps_Ar" formControlName="Emp_Id"
+										[settings]="dropdownSettings" (onSelect)="onItemSelect($event,'Employee')"
+										(onDeSelect)="onItemDeSelect($event,'Employee')">
+									</ng-multiselect-dropdown>
+
+
+								</div>
+
+								<!--<div class="col-sm-4">
+
+		<ng-multiselect-dropdown  class="form-control"
+		name="Emp_Id"
+		placeholder="Select Hierarchy"
+		[data]="Emps_Ar"
+		formControlName="Emp_Id"
+		[settings]="dropdownSettings"
+		(onSelect)="onItemSelect($event,'Employee')"
+		(onDeSelect)="onItemDeSelect($event,'Employee')"
+		>
+		</ng-multiselect-dropdown>
+
+
+		</div>-->
+
+								<div class="col-sm-6">
+
+									<ng-multiselect-dropdown class="form-control" name="Agent_Id"
+										[placeholder]="Agents_Placeholder" [data]="Agents_Ar" formControlName="Agent_Id"
+										[settings]="AgentdropdownSettings">
+									</ng-multiselect-dropdown>
+								</div>
+
+							</div>
+
+
+							<div class="row"  >
+
+								<div class="col-sm-2">
+
+									<ng-multiselect-dropdown class="form-control" name="SRLOB" placeholder="Select LOB"
+										[data]="SRLOB_Ar" formControlName="SRLOB" [settings]="LOB_dropdownSettings"
+										(onSelect)="onItemSelect($event,'LOB')"
+										(onDeSelect)="onItemDeSelect($event,'LOB')">
+									</ng-multiselect-dropdown>
+
+								</div>
+
+								<div class="col-sm-5">
+
+									<ng-multiselect-dropdown class="form-control" name="Product_Id"
+										placeholder="Select Product" [data]="Products_Ar" formControlName="Product_Id"
+										[settings]="dropdownSettings">
+									</ng-multiselect-dropdown>
+
+
+								</div>
+
+								<div class="col-sm-5">
+
+									<ng-multiselect-dropdown class="form-control" name="Company_Id"
+										placeholder="Select Ins Company" [data]="Companies_Ar"
+										formControlName="Company_Id" [settings]="dropdownSettings">
+									</ng-multiselect-dropdown>
+
+
+								</div>
+
+
+
+
+							</div>
+							<div class="row"  >
+
+								<div class="col-sm-2">
+
+									<ng-multiselect-dropdown class="form-control" name="SR_Source_Type"
+										placeholder="Select Source" [data]="SRSource_Ar"
+										formControlName="SR_Source_Type" [settings]="LOB_dropdownSettings"
+										(onSelect)="onItemSelect($event,'Source')">
+									</ng-multiselect-dropdown>
+
+								</div>
+
+								<div class="col-sm-3">
+									<input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+										formControlName="DateOrDateRange" bsDaterangepicker
+										[bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+								</div>
+								<div class="col-sm-4"></div>
+
+								<div class="col-lg-3" style="text-align: right;">
+
+									<!--<input (click)="ExportExcel()" type="button" class="btn btn-success" value="Export">
+				&nbsp;&nbsp;-->
+									<input type="submit" class="btn btn-info" value="Search">
+									&nbsp;&nbsp;
+									<button (click)="ClearSearch()" type="button" style="font-size: small;"
+										class="btn btn-danger" value="Reset"> <i class="fa fa-close"> Reset</i>
+									</button>
+								</div>
+
+							</div>
+
+						</form>
+
+
+						<hr>
+
+						<table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+							<thead>
+								<tr>
+
+									<th>S.No</th>
+									<th>Action</th>
+									<th>Product</th>
+									<th>Quotation Id</th>
+									<th>Control Id</th>
+									<th>Policy No</th>
+									<th>Agent</th>
+									<th>RM</th>
+									<th>Creation Date</th>
+
+								</tr>
+							</thead>
+
+							<tbody *ngIf="dataAr?.length != 0">
+
+								<tr *ngFor="let row of dataAr; let i=index;">
+									<td>{{row.SrNo}}.</td>
+									<td>
+
+										<a href="javascript:;" (click)="ViewSR(row.Id)"><span style="margin-right: 5px;"
+												class="label label-primary">Details</span></a>
+
+
+									</td>
+									<td>{{row.LOB_Id}}</td>
+									<td>{{row.Quotation_Id}}</td>
+									<td>{{row.Control_Id}}</td>
+
+									<td>{{row.Policy_No}}</td>
+
+									<td>{{row.Agent_Name}}</td>
+									<td>{{row.RM_Name}}</td>
+									<td>{{row.Create_Date}}</td>
+								</tr>
+
+							</tbody>
+
+							<tbody *ngIf="dataAr?.length == 0">
+								<tr>
+									<td colspan="9" align="center">No data Available !</td>
+								</tr>
+							<tbody>
+
+						</table>
+					</div>
+					<!-- /.box-body -->
+				</div>
+				<!-- /.box -->
+			</div>
+			<!-- /.col -->
+		</div>
+		<!-- /.row -->
+	</section>
+	<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

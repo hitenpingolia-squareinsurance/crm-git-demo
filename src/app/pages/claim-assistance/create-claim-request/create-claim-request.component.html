@@ -1,0 +1,834 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Create Claim Assistance</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+
+
+            <form [formGroup]="AddForm">
+
+              <div class="box box-primary box-solid doc-required">
+                <div class="box-header with-border">
+                  <h3 class="lead box-title" align="center">Intimator’s Details</h3>
+                </div>
+                <div class="box-body">
+
+                  <div class="row">
+                    <div class="col-md-12">
+
+                      <div class="form-group col-md-3">
+                        <label>Intimated To Insurer</label>
+                        <select class="form-control" formControlName="Intimated_To_Insurer">
+                          <option disabled value=''>Select</option>
+                          <option value='Yes'> Yes </option>
+                          <option value='No'> No </option>
+                        </select>
+                        <span *ngIf="isSubmitted && FC.Intimated_To_Insurer.errors" class="ValidationError">
+                          <span *ngIf="FC.Intimated_To_Insurer.errors.required">Intimated
+                            To Insurer is required</span>
+                          <span *ngIf="FC.Intimated_To_Insurer.errors.pattern">Special
+                            characters not allowed</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label>Claim Intimated By</label>
+                        <select class="form-control" formControlName="Claim_Intimated_By">
+                          <option value="" disabled>Select</option>
+                          <option value="Insured">Insured</option>
+                          <option value="Insured Relative"> Insured Relative </option>
+                          <option value="Agent"> Agent</option>
+                          <option value="Employee"> Employee </option>
+                          <option value="Garage"> Garage </option>
+                          <option value="Driver"> Driver </option>
+                        </select>
+                        <span *ngIf="isSubmitted && FC.Claim_Intimated_By.errors" class="ValidationError">
+                          <span *ngIf="FC.Claim_Intimated_By.errors.required">Please
+                            select Claim Intimated By</span>
+                          <span *ngIf="FC.Claim_Intimated_By.errors.pattern">Special
+                            characters not allowed</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3" *ngIf="AddForm.value['Intimated_To_Insurer'] == 'Yes'">
+                        <label>Date of Intimation</label>
+                        <input type='text' class="form-control" (click)="DateValueblank('loss')"
+                          formControlName="Intimation_Date" bsDatepicker [maxDate]="MaxDate">
+                        <span *ngIf="isSubmitted && FC.Intimation_Date.errors" class="ValidationError">
+                          <span *ngIf="FC.Intimation_Date.errors.required">Intimation
+                            Date is required</span>
+                          <span *ngIf="FC.Intimation_Date.errors.pattern">Special
+                            characters not allowed</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3" *ngIf="AddForm.value['Intimated_To_Insurer'] == 'Yes'">
+                        <label>Time of Intimation</label>
+                        <input type='time' class="form-control" formControlName="Intimation_Time">
+                        <span *ngIf="isSubmitted && FC.Intimation_Time.errors" class="ValidationError">
+                          <span *ngIf="FC.Intimation_Time.errors.required">Intimation
+                            Time is required</span>
+                          <span *ngIf="FC.Intimation_Time.errors.pattern">Special
+                            characters not allowed</span>
+
+                        </span>
+                      </div>
+
+
+                      <div class="form-group col-md-3" *ngIf="AddForm.value['Intimated_To_Insurer'] == 'Yes'">
+                        <label>Claim/Intimation No.</label>
+                        <input type='text' class="form-control" formControlName="Claim_Intimation_No">
+                        <span *ngIf="isSubmitted && FC.Claim_Intimation_No.errors" class="ValidationError">
+                          <span *ngIf="FC.Claim_Intimation_No.errors.required">Claim
+                            Intimation No is required</span>
+                          <span *ngIf="FC.Claim_Intimation_No.errors.pattern">Special
+                            characters not allowed</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label>Intimator Name</label>
+                        <input type="text" class="form-control" formControlName="Intimator_Name">
+                        <span *ngIf="isSubmitted && FC.Intimator_Name.errors" class="ValidationError">
+                          <span *ngIf="FC.Intimator_Name.errors.required">Please enter
+                            intimator name</span>
+                          <span *ngIf="FC.Intimator_Name.errors.pattern">Special
+                            characters not allowed</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label>Intimated Contact No.</label>
+                        <input type="text" class="form-control" maxlength="10" formControlName="Intimator_Contact_No">
+                        <span *ngIf="isSubmitted && FC.Intimator_Contact_No.errors" class="ValidationError">
+                          <span *ngIf="FC.Intimator_Contact_No.errors.required">Please
+                            enter intimator Contact no.</span>
+                          <span *ngIf="FC.Intimator_Contact_No.errors.pattern">Enter
+                            valid Mobile Number.</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label>Alternate No.</label>
+                        <input type="text" class="form-control" maxlength="10" formControlName="Alternate_No">
+                        <span *ngIf="isSubmitted && FC.Alternate_No.errors" class="ValidationError">
+                          <span *ngIf="FC.Alternate_No.errors.required">Please enter
+                            alternate no.</span>
+                          <span *ngIf="FC.Alternate_No.errors.pattern">Enter valid
+                            Mobile Number.</span>
+
+                        </span>
+                      </div>
+
+
+                      <div class="form-group col-md-3">
+                        <label>WhatsApp No.</label>
+                        <input type="text" class="form-control" maxlength="10" formControlName="WhatsApp_No">
+                        <span *ngIf="isSubmitted && FC.WhatsApp_No.errors" class="ValidationError">
+                          <span *ngIf="FC.WhatsApp_No.errors.required">Please enter
+                            WhatsApp No.</span>
+                          <span *ngIf="FC.WhatsApp_No.errors.pattern">Enter valid
+                            Mobile Number.</span>
+
+                        </span>
+                      </div>
+
+
+                      <div class="form-group col-md-3">
+                        <label>Mail Id</label>
+                        <input type='email' class="form-control" formControlName="Mail_Id">
+                        <span *ngIf="isSubmitted && FC.Mail_Id.errors" class="ValidationError">
+                          <span *ngIf="FC.Mail_Id.errors.required">Please enter mail
+                            id</span>
+                          <span *ngIf="FC.Mail_Id.errors.pattern">Enter valid Email
+                            ID.</span>
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label>Reason of Delay Intimation</label>
+                        <input type="text" class="form-control" formControlName="Reason_Delay_Intimation">
+                        <span *ngIf="isSubmitted && FC.Reason_Delay_Intimation.errors" class="ValidationError">
+                          <span *ngIf="FC.Reason_Delay_Intimation.errors.required">Reason
+                            Delay Intimation is required</span>
+                          <span *ngIf="FC.Reason_Delay_Intimation.errors.pattern">Special
+                            characters not allowed</span>
+
+                        </span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="box box-primary box-solid doc-required">
+                <div class="box-header with-border">
+                  <h3 class="lead box-title" align="center">Customer Details</h3>
+                </div>
+                <div class="box-body">
+
+                  <div class="row">
+
+                    <div class="col-md-3">
+                      <label for="CustomerEmailId">Customer Email</label>
+                      <input class="form-control" type="email" formControlName="customeremail" name="CustomerEmailId"
+                        id="CustomerEmailId" placeholder="Customer Email" required>
+                      <div *ngIf="isSubmitted && FC.customeremail.errors" class="ValidationError">
+                        <div *ngIf="FC.customeremail.errors.required">Please
+                          Enter
+                          Customer
+                          Email!</div>
+                        <span *ngIf="FC.customeremail.errors.pattern">Enter valid
+                          Email</span>
+
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="CustomerMobileNo">Mobile Number</label>
+                      <input class="form-control" type="text" name="CustomerMobileNo" id="CustomerMobileNo"
+                        placeholder="Enter Mobile Number" formControlName="customermobileno" maxlength="10" required>
+                      <div *ngIf="isSubmitted && FC.customermobileno.errors" class="ValidationError">
+                        <div *ngIf="FC.customermobileno.errors.required">
+                          Please
+                          Enter
+                          Mobile
+                          no.!</div>
+                        <span *ngIf="FC.customermobileno.errors.pattern">Enter valid
+                          Mobile Number</span>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <label class="form-control-label" for="RegistrationNumber">Registration
+                        Number</label>
+
+                      <div class="outer_input" id="register_number">
+                        <input class="myinput AutoUppercase" formControlName="Registration_State_Code" type="text"
+                          maxlength="2" placeholder="XX">
+                        -
+                        <input class="myinput AutoUppercase" formControlName="Registration_District_Code"
+                          placeholder="XX" type="text" appOnlynumber maxlength="2">
+                        <b>
+                          - </b>
+
+                        <input class="myinput AutoUppercase" placeholder="XXX" formControlName="Registration_City_Code"
+                          type="text" maxlength="3">
+
+                        <b>
+                          - </b>
+
+                        <input class="myinput AutoUppercase" formControlName="Registration_Code" type="text"
+                          placeholder="XXXX" appOnlynumber maxlength="4">
+
+                        <div *ngIf="isSubmitted && FC.Registration_State_Code.errors" class="ValidationError">
+                          <div *ngIf="FC.Registration_State_Code.errors.required"> Please Enter State Code!</div>
+                          <div *ngIf="FC.Registration_State_Code.errors.pattern"> Please Enter State Code!</div>
+                        </div>
+
+                        <div *ngIf="isSubmitted && FC.Registration_District_Code.errors" class="ValidationError">
+                          <div *ngIf="FC.Registration_District_Code.errors.required"> Please Enter District number!
+                          </div>
+                          <div *ngIf="FC.Registration_District_Code.errors.pattern"> Please Enter Valid number!</div>
+                        </div>
+
+                        <div *ngIf="isSubmitted && FC.Registration_City_Code.errors" class="ValidationError">
+                          <div *ngIf="FC.Registration_City_Code.errors.required"> Please Enter City Code!</div>
+                          <div *ngIf="FC.Registration_City_Code.errors.pattern"> Please Enter City Code!</div>
+                        </div>
+
+
+                        <div *ngIf="isSubmitted &&   FC.Registration_Code.errors" class="ValidationError">
+                          <div *ngIf="FC.Registration_Code.errors.required">Please Enter Registration number!
+                          </div>
+                          <div *ngIf="FC.Registration_Code.errors.pattern"> Please Enter Valid Registration number!
+                          </div>
+
+                        </div>
+
+
+                      </div>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+
+              <!-- Accident Details -->
+
+              <div class="box box-primary box-solid doc-required">
+                <div class="box-header with-border">
+                  <h3 class="lead box-title" align="center">Accident Details</h3>
+                </div>
+                <div class="box-body">
+
+                  <div class="row">
+                    <div class="col-md-12">
+
+                      <div class="form-group col-md-3">
+                        <label>Select Loss Type</label>
+                        <select class="form-control" style="width: 100%;" formControlName="LossType">
+                          <option disabled value=''> Select </option>
+                          <option value='OD'>OD</option>
+                          <option value='TP'>TP</option>
+                          <!-- <option value='Health'>Health</option> -->
+
+                        </select>
+                        <span *ngIf="isSubmitted && FC.LossType.errors" class="ValidationError">
+                          <span *ngIf="FC.LossType.errors.required">Loss Type is
+                            required</span>
+                          <span *ngIf="FC.LossType.errors.pattern">Special characters
+                            not allowed</span>
+
+                        </span>
+
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label>Select Cause Of Loss Type</label>
+                        <select class="form-control" style="width: 100%;" formControlName="CauseOfLossType">
+                          <option disabled value=''> Select </option>
+                          <option *ngIf="AddForm.value['LossType'] == 'OD'" value='Fire'>Fire</option>
+                          <option *ngIf="AddForm.value['LossType'] == 'OD'" value='Accident'>Accident</option>
+                          <option *ngIf="AddForm.value['LossType'] == 'TP'" value='TP'>Third-Party</option>
+                          <option *ngIf="AddForm.value['LossType'] == 'Health'" value='Accidental'>Accidental</option>
+                          <option *ngIf="AddForm.value['LossType'] == 'OD'" value='Theft'>Theft</option>
+                          <option *ngIf="AddForm.value['LossType'] == 'Health'" value='Medical'>Medical</option>
+
+                          <!-- <option value='Others'>Others</option> -->
+                        </select>
+                        <span *ngIf="isSubmitted && FC.CauseOfLossType.errors" class="ValidationError">
+                          <span *ngIf="FC.CauseOfLossType.errors.required">Cause of
+                            Loss is required</span>
+                          <span *ngIf="FC.CauseOfLossType.errors.pattern">Special
+                            characters not allowed</span>
+
+                        </span>
+
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label>Date Of Loss</label>
+                        <input type='text' class="form-control" formControlName="Date_Lose" bsDatepicker
+                          (click)="DateValueblank('Survey')" [maxDate]="MaxDateLoss"
+                          (click)="IntimationDate(this.AddForm.value['Intimation_Date'])">
+                        <span *ngIf="isSubmitted && FC.Date_Lose.errors" class="ValidationError">
+                          <span *ngIf="FC.Date_Lose.errors.required">Loss Date is
+                            required</span>
+                          <span *ngIf="FC.Date_Lose.errors.pattern">Special characters
+                            not allowed</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label>Time of Loss</label>
+                        <input type='time' class="form-control" formControlName="Time_Lose">
+                        <span *ngIf="isSubmitted && FC.Time_Lose.errors" class="ValidationError">
+                          <span *ngIf="FC.Time_Lose.errors.required">Loss Time is
+                            required</span>
+                          <span *ngIf="FC.Time_Lose.errors.pattern">Special characters
+                            not allowed</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label> Estimated Amount </label>
+                        <input type='text' maxlength="15" class="form-control" formControlName="Estimated_Amount">
+                        <span *ngIf="isSubmitted && FC.Estimated_Amount.errors" class="ValidationError">
+                          <span *ngIf="FC.Estimated_Amount.errors.required">Estimated
+                            Amount is required</span>
+                          <span *ngIf="FC.Estimated_Amount.errors.pattern">Enter valid
+                            Amount.</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label>Location / Garage Name </label>
+                        <input type='Text' class="form-control" formControlName="Accident_Garage_Name">
+                        <span *ngIf="isSubmitted && FC.Accident_Garage_Name.errors" class="ValidationError">
+                          <span *ngIf="FC.Accident_Garage_Name.errors.required">Accident
+                            Garage Name is required</span>
+                          <span *ngIf="FC.Accident_Garage_Name.errors.pattern">Special
+                            characters not allowed</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label> Location / Garage near Landmark </label>
+                        <input type='Text' class="form-control" formControlName="Accident_Garage_Near_LandMark">
+                        <span *ngIf="isSubmitted &&
+                    FC.Accident_Garage_Near_LandMark.errors" class="ValidationError">
+                          <span *ngIf="FC.Accident_Garage_Near_LandMark.errors.required">Accident
+                            Garage Near Landmark is
+                            required</span>
+                          <span *ngIf="FC.Accident_Garage_Near_LandMark.errors.pattern">Special
+                            characters not allowed</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label>Location / Garage Pincode</label>
+                        <ng-multiselect-dropdown name="Pincode" class="form-control" placeholder="--Select--"
+                          [data]="Pincode_Ar" formControlName="Garage_Pincode" [settings]="dropdownSettings2"
+                          (keyup)="SearchPincodes($event,1)" (onSelect)="GetPincodeDetails($event,'Garage')">
+                        </ng-multiselect-dropdown>
+                        <span *ngIf="isSubmitted && FC.Garage_Pincode.errors" class="ValidationError">
+                          <span *ngIf="FC.Garage_Pincode.errors.required">Pincode is
+                            required</span>
+                          <span *ngIf="FC.Garage_Pincode.errors.pattern">Enter valid
+                            Pincode.</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label>Location / Garage State</label>
+                        <input type='text' class="form-control" formControlName="Garage_State_Id">
+                        <span *ngIf="isSubmitted && FC.Garage_State_Id.errors" class="ValidationError">
+                          <span *ngIf="FC.Garage_State_Id.errors.required">State is
+                            required</span>
+                          <span *ngIf="FC.Garage_State_Id.errors.pattern">Special
+                            characters not allowed</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label>Location / Garage District</label>
+                        <input type='text' class="form-control" formControlName="Garage_District_Id">
+                        <span *ngIf="isSubmitted && FC.Garage_District_Id.errors" class="ValidationError">
+                          <span *ngIf="FC.Garage_District_Id.errors.required">District
+                            is required</span>
+                          <span *ngIf="FC.Garage_District_Id.errors.pattern">Special
+                            characters not allowed</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label>Location / Garage City</label>
+                        <input type='text' class="form-control" formControlName="Garage_City_Id">
+                        <span *ngIf="isSubmitted && FC.Garage_City_Id.errors" class="ValidationError">
+                          <span *ngIf="FC.Garage_City_Id.errors.required">City is
+                            required</span>
+                          <span *ngIf="FC.Garage_City_Id.errors.pattern">Special
+                            characters not allowed</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label>FIR</label>
+                        <select class="form-control" style="width: 100%;" formControlName="Fir_Status">
+                          <option disabled value=''> Select</option>
+                          <option value='Yes'> Yes </option>
+                          <option value='No'> No </option>
+                        </select>
+                        <span *ngIf="isSubmitted && FC.Fir_Status.errors" class="ValidationError">
+                          <span *ngIf="FC.Fir_Status.errors.required">FIR is required</span>
+                          <span *ngIf="FC.Fir_Status.errors.pattern">FIR is required</span>
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3" *ngIf="AddForm.value['Fir_Status'] == 'Yes'">
+                        <label>FIR Remarks</label>
+                        <input type="text" class="form-control" formControlName="Fir_Remarks">
+                        <span *ngIf="isSubmitted && FC.Fir_Remarks.errors" class="ValidationError">
+                          <span *ngIf="FC.Fir_Remarks.errors.required">FIR Remarks is
+                            required</span>
+                          <span *ngIf="FC.Fir_Remarks.errors.pattern">FIR Remarks
+                            required</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label>Third Party Loss</label>
+                        <select class="form-control" style="width: 100%;" formControlName="Tp_loss_Status">
+                          <option disabled value=''> Select</option>
+                          <option value='Yes'> Yes </option>
+                          <option value='No'> No </option>
+                        </select>
+                        <span *ngIf="isSubmitted && FC.Tp_loss_Status.errors" class="ValidationError">
+                          <span *ngIf="FC.Tp_loss_Status.errors.required">Tp Loss
+                            Status is required</span>
+                          <span *ngIf="FC.Tp_loss_Status.errors.pattern">Special
+                            characters not allowed</span>
+
+                        </span>
+                      </div>
+
+                      <div class="form-group col-md-3" *ngIf="AddForm.value['Tp_loss_Status'] == 'Yes'">
+                        <label>Tp Loss Remarks</label>
+                        <input type="text" class="form-control" formControlName="Tp_loss_Remarks">
+                        <span *ngIf="isSubmitted && FC.Tp_loss_Remarks.errors" class="ValidationError">
+                          <span *ngIf="FC.Tp_loss_Remarks.errors.required">Tp Loss
+                            Remarks is required</span>
+                          <span *ngIf="FC.Tp_loss_Remarks.errors.pattern">Special
+                            characters not allowed</span>
+
+                        </span>
+                      </div>
+
+
+
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Driver Details -->
+
+              <div *ngIf="AddForm.value['LossType'] == 'OD'" class="box box-primary  box-solid doc-required">
+                <div class="box-header with-border">
+                  <h3 class="lead box-title" align="center">Driver Details</h3>
+                </div>
+                <div class="box-body">
+                  <div class="row">
+
+                    <div class="form-group col-md-2">
+                      <label>Driver Name</label>
+                      <input type="text" class="form-control" formControlName="Driver_Name">
+                      <span *ngIf="isSubmitted && FC.Driver_Name.errors" class="ValidationError">
+                        <span *ngIf="FC.Driver_Name.errors.required">Please enter
+                          driver name</span>
+                        <span *ngIf="FC.Driver_Name.errors.pattern">Special characters
+                          not allowed</span>
+
+                      </span>
+                    </div>
+
+
+                    <div class="form-group col-md-2">
+                      <label>Driver Contact No.</label>
+                      <input type="text" class="form-control" maxlength="10" formControlName="Driver_Contact_No">
+                      <span *ngIf="isSubmitted && FC.Driver_Contact_No.errors" class="ValidationError">
+                        <span *ngIf="FC.Driver_Contact_No.errors.required">Please
+                          enter driver contact no.</span>
+                        <span *ngIf="FC.Driver_Contact_No.errors.pattern">Enter valid
+                          Mobile Number.</span>
+
+                      </span>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label>Driver DL No.</label>
+                      <input type="text" class="form-control" formControlName="Driver_DL_No">
+                      <span *ngIf="isSubmitted && FC.Driver_DL_No.errors" class="ValidationError">
+                        <span *ngIf="FC.Driver_DL_No.errors.required">Please enter
+                          driver DL no.</span>
+                        <span *ngIf="FC.Driver_DL_No.errors.pattern">Enter valid DL
+                          Number.</span>
+
+                      </span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <!-- Spot Surveyor Details -->
+
+              <div *ngIf="AddForm.value['LossType'] == 'OD'" class="box box-primary box-solid doc-required">
+                <div class="box-header with-border">
+                  <h3 class="lead box-title" align="center">Spot Survey Details</h3>
+                </div>
+                <div class="box-body">
+
+                  <div class="row">
+
+                    <div class="form-group col-md-3">
+                      <label>Spot Survey</label>
+
+                      <select (change)="onChangeSurvey_Status($event,'Spot-Survey')" class="form-control"
+                        style="width: 100%;" formControlName="Spot_Survey_Status">
+                        <!-- <option disabled value=''> Select</option> -->
+                        <option value='Yes'> Done </option>
+                        <option value='No'> Not Done </option>
+                      </select>
+                      <span *ngIf="isSubmitted && FC.Survey_Status.errors" class="ValidationError">
+                        <span *ngIf="FC.Survey_Status.errors.required">Survey is
+                          required</span>
+                        <span *ngIf="FC.Survey_Status.errors.pattern">Special
+                          characters not allowed</span>
+
+                      </span>
+                    </div>
+
+                    <div class="form-group col-md-3" *ngIf="AddForm.value['Spot_Survey_Status'] == 'Yes'">
+                      <label>Spot Survey Date</label>
+                      <input type='text' class="form-control" formControlName="Spot_Survey_Date"
+                        (click)="IntimationDate(this.AddForm.value['Date_Lose'])" bsDatepicker
+                        [minDate]="MinDateSurvey">
+                      <span *ngIf="isSubmitted && FC.Spot_Survey_Date.errors" class="ValidationError">
+                        <span *ngIf="FC.Spot_Survey_Date.errors.required">Survey
+                          Date-Time is required</span>
+                        <span *ngIf="FC.Spot_Survey_Date.errors.pattern">Special
+                          characters not allowed</span>
+
+                      </span>
+                    </div>
+                    <div class="form-group col-md-3" *ngIf="AddForm.value['Spot_Survey_Status'] == 'Yes'">
+                      <label>Spot Survey Time</label>
+                      <input type='time' class="form-control" formControlName="Spot_Survey_Time">
+                      <span *ngIf="isSubmitted && FC.Spot_Survey_Time.errors" class="ValidationError">
+                        <span *ngIf="FC.Spot_Survey_Time.errors.required">Spot Survey
+                          Time is required</span>
+                        <span *ngIf="FC.Spot_Survey_Time.errors.pattern">Special
+                          characters not allowed</span>
+
+                      </span>
+                    </div>
+
+
+
+                    <div class="form-group col-md-3" *ngIf="AddForm.value['Spot_Survey_Status'] == 'Yes'">
+                      <label>Spot Surveyor Name</label>
+                      <input type='text' class="form-control" formControlName="Spot_Surveyor_Name">
+                      <span *ngIf="isSubmitted && FC.Spot_Surveyor_Name.errors" class="ValidationError">
+                        <span *ngIf="FC.Spot_Surveyor_Name.errors.required">Surveyor
+                          Name is required</span>
+                        <span *ngIf="FC.Spot_Surveyor_Name.errors.pattern">Special
+                          characters not allowed</span>
+                      </span>
+                    </div>
+
+                    <div class="form-group col-md-3" *ngIf="AddForm.value['Spot_Survey_Status'] == 'Yes'">
+                      <label>Spot Surveyor Mobile</label>
+                      <input maxlength="10" type='text' class="form-control" formControlName="Spot_Surveyor_Mobile">
+                      <span *ngIf="isSubmitted && FC.Spot_Surveyor_Mobile.errors" class="ValidationError">
+
+                        <span *ngIf="FC.Spot_Surveyor_Mobile.errors.required">Surveyor
+                          Mobile is required</span>
+                        <span *ngIf="FC.Spot_Surveyor_Mobile.errors.pattern">Enter
+                          valid Mobile Number.</span>
+                      </span>
+                    </div>
+                    <div class="form-group col-md-3" *ngIf="AddForm.value['Spot_Survey_Status'] == 'Yes'">
+                      <label>Spot Location</label>
+                      <input type='text' class="form-control" formControlName="Spot_Surveyor_location">
+                      <span *ngIf="isSubmitted && FC.Spot_Surveyor_location.errors" class="ValidationError">
+                        <span *ngIf="FC.Spot_Surveyor_location.errors.required">Surveyor
+                          location is required</span>
+                        <span *ngIf="FC.Spot_Surveyor_location.errors.pattern">Special
+                          characters not allowed</span>
+
+                      </span>
+                    </div>
+
+                    <div class="form-group col-md-3" *ngIf="AddForm.value['Spot_Survey_Status'] == 'Yes'">
+                      <label>Pincode</label>
+                      <ng-multiselect-dropdown name="Spot_Pincode" class="form-control" placeholder="--Select--"
+                        [data]="Pincode_Ar" formControlName="Spot_Pincode" [settings]="dropdownSettings2"
+                        (keyup)="SearchPincodes($event,1)" (onSelect)="GetPincodeDetails($event,'Spot_Survey')">
+                      </ng-multiselect-dropdown>
+                      <span *ngIf="isSubmitted && FC.Spot_Pincode.errors" class="ValidationError">
+                        <span *ngIf="FC.Spot_Pincode.errors.required">Pincode is
+                          required</span>
+                        <span *ngIf="FC.Spot_Pincode.errors.pattern">Enter valid
+                          Pincode.</span>
+
+                      </span>
+                    </div>
+
+                    <div class="form-group col-md-3" *ngIf="AddForm.value['Spot_Survey_Status'] == 'Yes'">
+                      <label>State</label>
+                      <input type='text' class="form-control" formControlName="Spot_State_Id">
+                      <span *ngIf="isSubmitted && FC.Spot_State_Id.errors" class="ValidationError">
+                        <span *ngIf="FC.Spot_State_Id.errors.required">State is
+                          required</span>
+                        <span *ngIf="FC.Spot_State_Id.errors.pattern">State is
+                          required</span>
+                      </span>
+                    </div>
+
+                    <div class="form-group col-md-3" *ngIf="AddForm.value['Spot_Survey_Status'] == 'Yes'">
+                      <label>District</label>
+                      <input type='text' class="form-control" formControlName="Spot_District_Id">
+                      <span *ngIf="isSubmitted && FC.Spot_District_Id.errors" class="ValidationError">
+                        <span *ngIf="FC.Spot_District_Id.errors.required">District is
+                          required</span>
+                        <span *ngIf="FC.Spot_District_Id.errors.pattern">District is
+                          required</span>
+                      </span>
+                    </div>
+
+                    <div class="form-group col-md-3" *ngIf="AddForm.value['Spot_Survey_Status'] == 'Yes'">
+                      <label>City</label>
+                      <input type='text' class="form-control" formControlName="Spot_City_Id">
+                      <span *ngIf="isSubmitted && FC.Spot_City_Id.errors" class="ValidationError">
+                        <span *ngIf="FC.Spot_City_Id.errors.required">City is required</span>
+                        <span *ngIf="FC.Spot_City_Id.errors.pattern">City is required</span>
+                      </span>
+                    </div>
+
+
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Assessment Surveyor Details -->
+
+              <div class="box box-primary box-solid doc-required">
+                <div class="box-header with-border">
+                  <h3 class="lead box-title" align="center">Assessment Surveyor Details </h3>
+                </div>
+                <div class="box-body">
+
+                  <div class="row">
+
+                    <div class="form-group col-md-3">
+                      <label>Survey</label>
+                      <select (change)="onChangeSurvey_Status($event,'Survey')" class="form-control"
+                        style="width: 100%;" formControlName="Survey_Status">
+                        <option disabled value=''> Select</option>
+                        <option value='Yes'> Done </option>
+                        <option value='No'> Not Done </option>
+                      </select>
+                      <span *ngIf="isSubmitted && FC.Survey_Status.errors" class="ValidationError">
+                        <span *ngIf="FC.Survey_Status.errors.required">Survey is
+                          required</span>
+                        <span *ngIf="FC.Survey_Status.errors.pattern">Survey is
+                          required</span>
+                      </span>
+                    </div>
+
+
+
+                    <div class="form-group col-md-3" *ngIf="AddForm.value['Survey_Status'] == 'Yes'">
+                      <label>Survey Date</label>
+                      <input type='text' class="form-control" formControlName="Survey_Date" bsDatepicker
+                        (click)="IntimationDate(this.AddForm.value['Date_Lose'])" [minDate]="MinDateSurvey">
+                      <span *ngIf="isSubmitted && FC.Survey_Date.errors" class="ValidationError">
+                        <span *ngIf="FC.Survey_Date.errors.required">Survey Date is
+                          required</span>
+                        <span *ngIf="FC.Survey_Date.errors.pattern">Special characters
+                          not allowed</span>
+
+                      </span>
+                    </div>
+                    <div class="form-group col-md-3" *ngIf="AddForm.value['Survey_Status'] == 'Yes'">
+                      <label>Survey Time</label>
+                      <input type='time' class="form-control" formControlName="Survey_Time">
+                      <span *ngIf="isSubmitted && FC.Survey_Time.errors" class="ValidationError">
+                        <span *ngIf="FC.Survey_Time.errors.required">Time is required</span>
+                        <span *ngIf="FC.Survey_Time.errors.pattern">Special characters
+                          not allowed</span>
+
+                      </span>
+                    </div>
+
+
+
+                    <div class="form-group col-md-3" *ngIf="AddForm.value['Survey_Status'] == 'Yes'">
+                      <label>Surveyor Name</label>
+                      <input type='text' class="form-control" formControlName="Surveyor_Name">
+                      <span *ngIf="isSubmitted && FC.Surveyor_Name.errors" class="ValidationError">
+                        <span *ngIf="FC.Surveyor_Name.errors.required">Surveyor Name
+                          is required</span>
+                        <span *ngIf="FC.Surveyor_Name.errors.pattern">Special
+                          characters not allowed</span>
+                      </span>
+                    </div>
+                    <div class="form-group col-md-3" *ngIf="AddForm.value['Survey_Status'] == 'Yes'">
+                      <label>Surveyor Mobile</label>
+                      <input maxlength="10" type='text' class="form-control" formControlName="Surveyor_Mobile">
+                      <span *ngIf="isSubmitted && FC.Surveyor_Mobile.errors" class="ValidationError">
+                        <span *ngIf="FC.Surveyor_Mobile.errors.required">Surveyor
+                          Mobile is required</span>
+                        <span *ngIf="FC.Surveyor_Mobile.errors.pattern">Please enter
+                          vaild mobile no</span>
+                      </span>
+                    </div>
+
+                    <div class="form-group col-md-4" *ngIf="AddForm.value['Survey_Status'] == 'Yes'">
+                      <label>Surveyor Mail Id.</label>
+                      <input type="email" class="form-control" formControlName="Survey_Mail_Id">
+                      <span *ngIf="isSubmitted && FC.Survey_Mail_Id.errors" class="ValidationError">
+                        <span *ngIf="FC.Survey_Mail_Id.errors.required">Survey is
+                          required</span>
+                        <span *ngIf="FC.Survey_Mail_Id.errors.pattern">Enter valid
+                          Email ID.</span>
+                      </span>
+                    </div>
+
+
+
+                    <div class="form-group col-md-4" *ngIf="AddForm.value['Survey_Status'] == 'Yes'">
+                      <label>Survey Type</label>
+                      <select class="form-control" formControlName="Survey_Type">
+                        <option disable value=''> Select</option>
+                        <option value='Loss Assessment'> Loss Assessment </option>
+                        <option value='Final'> Final </option>
+                      </select>
+                      <span *ngIf="isSubmitted && FC.Survey_Type.errors" class="ValidationError">
+                        <span *ngIf="FC.Survey_Type.errors.required">Survey is
+                          required</span>
+                        <span *ngIf="FC.Survey_Type.errors.pattern">Survey is required</span>
+                      </span>
+                    </div>
+
+
+
+
+                  </div>
+                </div>
+
+              </div>
+              <!-- <div class="row">
+
+          <div class="form-group col-md-3">
+            <label>Remark</label>
+            <input type='text' class="form-control" formControlName="Remark">
+            <span *ngIf="isSubmitted && FC.Remark.errors" class="ValidationError">
+              <span *ngIf="FC.Remark.errors.required">Remark is required</span>
+              <span *ngIf="FC.Remark.errors.pattern">Special characters not allowed</span>
+            </span>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Document</label>
+            <input type='file' (change)="UploadDocs($event,'Other_Doc')" formControlName="Other_Doc"
+              class="form-control">
+          </div>
+
+        </div> -->
+              <!-- /.row -->
+
+              <!-- /.box-body -->
+            </form>
+          </div>
+          <div class="main_footer">
+            <!--<button type="submit" class="btn btn-default">Cancel</button>-->
+            <button type="submit" [disabled]="buttonDisable" class="btn btn-info1 pull-right"
+              (click)="CreateClaim()">Submit Request</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

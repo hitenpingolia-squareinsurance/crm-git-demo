@@ -1,0 +1,222 @@
+<section class="inner_page_css main_dashboard_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+                            <div>
+                                Data Dictionary
+                            </div>
+
+                        </div>
+                    </div>
+                    <div *ngIf="!hasAccess" class="error-message">
+                        <div class="container" style="text-align: center;">
+                          <img src="assets/Authorised.png" alt="">
+                          <!-- <h4>{{ errorMessage }}</h4> -->
+                        </div>
+            
+                    </div>
+
+                    <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+                        <div class="filterquotesrow">
+                            <button class="btn btn-info" style="margin-right:10px;" data-toggle="modal" data-target="#BulkUpload"
+                            data-backdrop="static" data-keyboard="false">
+                                Upload Excel&nbsp;<i style="color: white;" class="fa fa-file"></i>
+                            </button>
+                        </div>
+                        <div class="custom_table tables_layout_design">
+                            <table datatable [dtOptions]="otOptions" id="Table1" class="row-border table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <ul class="responsive-table" *ngIf="dataArr?.length !== 0">
+                                <li class="table-row tablerow" *ngFor="let row of dataArr; let i=index;">
+                                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                                        <div class="agents_data agents_data1">
+                                            <div class="icon_re_cl">{{row.SrNo}}.</div>
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div>Employee Name - (Code)</div>
+
+                                                    <strong class="fs_18"><span>
+                                                            {{row.EmployeeName}} - ({{row.EmployeeID}})
+                                                        </span></strong>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="agents_data agents_data2">
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div>Mapping Id</div>
+                                                    <div>
+                                                        <strong>{{row.UniqueId}}</strong>&nbsp;&nbsp;
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="agents_data agents_data3">
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div>Date</div>
+                                                    <strong class="fs_18"><span>
+                                                            {{row.CreatedAt | date: 'dd-MM-yyyy'}}
+                                                        </span></strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="last_row_div">
+                                        <div class="d_flex custon-234">
+                                            <div class="label_chips health_lob">
+                                                <span>Total Records : {{row.TotalCount}}</span>&nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="label_chips motor_lob">
+                                                <span>Uploaded Records : {{row.ActiveCount}}</span>&nbsp;&nbsp;
+                                            </div>
+
+                                            <div class="label_chips finance_lob">
+                                                <span>Failed Records : {{row.InactiveCount}}</span>&nbsp;&nbsp;
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="last_row">
+                                        <div class="effective_date">
+                                            
+                                        </div>
+                                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                            <div class="row">
+                                                <button style="padding:3px 10px; margin-right:10px;" type="button"
+                                                    class="btn btn-primary" (click)="downloadFile(row.FilePath)">Download File</button>
+
+                                                <button style="padding:3px 10px; margin-right:10px;" type="button"
+                                                    class="btn btn-info" [routerLink]="['/data_dictionary/view-data-list', row.UniqueId]">View</button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </li>
+                            </ul>
+                            <div class="row" *ngIf="dataArr?.length === 0">
+                                <div class="col-md-12">
+                                    <div class="no_data_found">
+                                        <span><img src="assets/image/no_data_banner.jpg"></span>
+                                        <small>No data available !</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal -->
+
+
+<div id="BulkUpload" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_header">
+                            <div class="header_title">
+                                Bulk Upload
+                            </div>
+                        </div>
+                        <form class="form" [formGroup]="bulkUploadForm" (ngSubmit)="onSubmitBulkUploadForm()">
+                            <div class="main_body main_card_height_scroll">
+                                <div class="row">
+
+                                    <div class="col-md-10">
+                                        <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i> Basic Details
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2" (click)="downloadCSV()">
+                                        <div class="form_sub_title"><i class="fa fa-download mr_5"></i> Download
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="input_group">
+                                            <label for="UserType">Uploaded By</label>
+                                            <ng-multiselect-dropdown [settings]="dropdownMultiSelectSettingsType"
+                                                class="form-control" formControlName="UploadedBy"
+                                                placeholder="Select User Type" [data]="UserTypesData"
+                                                (onSelect)="onUserTypeSelect($event)"
+                                                required></ng-multiselect-dropdown>
+                                            <span
+                                                *ngIf="SubmitbulkUploadForm && formcontrolsbulkUploadForm['UploadedBy'].errors"
+                                                class="ValidationError">
+                                                <span *ngIf="formcontrolsbulkUploadForm['UploadedBy'].errors">User
+                                                    Type
+                                                    is
+                                                    required</span>
+                                            </span>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6" *ngIf="showEmployeeDropdown">
+                                        <div class="input_group">
+                                            <label for="Employee">Select Employee</label>
+                                            <ng-multiselect-dropdown [settings]="dropdownMultiSelectSettingsType"
+                                            class="form-control" formControlName="Employee"
+                                                placeholder="Select Employee" [data]="employeeData"
+                                                required></ng-multiselect-dropdown>
+                                            <span
+                                                *ngIf="SubmitbulkUploadForm && formcontrolsbulkUploadForm['Employee'].errors"
+                                                class="ValidationError">
+                                                <span
+                                                    *ngIf="formcontrolsbulkUploadForm['Employee'].errors">Employee
+                                                    is required</span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="input_group">
+                                            <label>Upload CSV</label>
+                                            <label class="form_control fileUpload_btn d_flex flex_Center flex_Middel"
+                                                name="button" value="Upload CSV">
+                                                <input type="file" (change)="UploadDocs($event,'file')" id="file"
+                                                    name="file" multiselected formControlName="file" />
+                                            </label>
+                                            <span *ngIf="SubmitbulkUploadForm && formcontrolsbulkUploadForm['file'].errors"
+                                                class="ValidationError">
+                                                <span *ngIf="formcontrolsbulkUploadForm['file'].errors">CSV
+                                                    File required</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="main_footer">
+                                <button type="button" id="close2" class="mr_5 btn-danger Save_click"
+                                    (click)="resetbulkUploadForm()" data-dismiss="modal">Close</button>
+                                <button type="submit" class="Save_click">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,442 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header d_flex flex_Equal flex_Middel">
+            <div class="header_title">{{DataAr.Name}} - Quotations</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+
+            <div class="row">
+              <div class="col-md-3" style="float: right;">
+                <div class="dsr-fillter">
+                  <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                    data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <a role="button" class="fa fa-filter"><span>Filters</span><i
+                        class="fa fa-angle-down pull-right"></i></a>
+                  </button>
+                </div>
+                <div class="dsr-fillter">
+                  <button class=" btn btn-info1" role="tab" id="headingTwo" data-toggle="collapse"
+                    style="background-color: #bd94de;" data-parent="#accordion" href="#collapseTwo" aria-expanded="true"
+                    aria-controls="collapseTwo">
+                    <a role="button"><span>User Details</span></a>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+                <!-- filter  -->
+                <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+
+              </div>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+              <div class="panel-body">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="col-4" style="font-weight: 700; margin-bottom:8px;"><span
+                          style="color: #00000094;font-weight: bolder;">Name - </span>{{DataAr.Name}}</div>
+                      <div class="col-4" style="font-weight: 700;  margin-bottom:8px;"><span
+                          style="color: #00000094;font-weight: bolder;">Code - </span>{{DataAr.AgentId}}</div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="col-4" style="font-weight: 700;  margin-bottom:8px;"><span
+                          style="color: #00000094;font-weight: bolder;">RM Name - </span>{{DataAr.RmName}} {{DataAr.RmCode}}</div>
+                      <div class="col-4" style="font-weight: 700;  margin-bottom:8px;"><span
+                          style="color: #00000094;font-weight: bolder;">Tele RM - </span>{{DataAr.TeleRM}}</div>
+                    </div>
+                    <div class="col-md-">
+                      <div class="col-4" style="font-weight: 700;  margin-bottom:8px;"><span
+                          style="color: #00000094;font-weight: bolder;">Joining Date - </span>{{DataAr.Joining |
+                        date:'dd-MM-yyyy'}}</div>
+                      <div class="col-4" style="font-weight: 700;  margin-bottom:8px;"><span
+                          style="color: #00000094;font-weight: bolder;">Last Login - </span>{{DataAr.LastLoginDate |
+                        date:'dd-MM-yyyy'}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Buisness Details -->
+            <div id="exTab1">
+
+              <ul class="nav nav-pills">
+                <li routerLinkActive="active" (click)="Tab_changeNew()">
+                  <a [routerLink]="['business']">Business</a>
+                </li>
+                <li routerLinkActive="active" (click)="Tab_changeNew()">
+                  <a [routerLink]="['dsr']">DSR</a>
+                </li>
+                <li routerLinkActive="active" (click)="Tab_changeNew()">
+                  <a [routerLink]="['offline-quote']">Offline Quote</a>
+                </li>
+                <li routerLinkActive="active" (click)="Tab_changeNew()">
+                  <a [routerLink]="['gems']">Gems</a>
+                </li>
+                <li routerLinkActive="active" (click)="Tab_changeNew()">
+                  <a [routerLink]="['renewal']">Renewal</a>
+                </li>
+                <li routerLinkActive="active" (click)="Tab_changeNew()">
+                  <a [routerLink]="['claims']">Claims</a>
+                </li>
+                <li routerLinkActive="active" (click)="Tab_changeNew()">
+                  <a [routerLink]="['my_client']">My Client</a>
+                </li>
+              </ul>
+
+
+            </div>
+            <div class="tab-pane coming-soon" id="dsr" *ngIf="this.urlSegments == 'dsr' || this.urlSegments == 'my_client'">
+              <h3>Comming Soon. We are working on it to provide you with more assistance in serving your clients.</h3>
+            </div>
+
+
+            <!-- buisness Details end -->
+            <hr style="margin: 10px 0px;">
+            <table class="table table-bordered" *ngIf="this.urlSegments == 'gems'">
+
+              <thead>
+
+                <tr>
+                  <th>Quarter</th>
+                  <th>Quarter Business</th>
+                  <th>Club Category</th>
+                  <th>Eligibility</th>
+                  <th>Reward Point</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr *ngFor="let row of dataAr;">
+                  <td>
+                    <span *ngIf="row.Quarter=='First'"> April-June</span>
+                    <span *ngIf="row.Quarter=='Second'"> July-September</span>
+                    <span *ngIf="row.Quarter=='Third'"> October-December</span>
+                    <span *ngIf="row.Quarter=='Fourth'"> January-March</span>
+                  </td>
+                  <td>{{ row.Total_Business_Quarter }}</td>
+                  <td>{{row.ClubCategory}}</td>
+                  <td>{{row.Reason}}</td>
+                  <td>{{row.Reward_Points}}</td>
+
+                </tr>
+              </tbody>
+            </table>
+            <div class="table-responsive">
+              <table id="Table1" class="table custom_stripd_table" *ngIf="this.urlSegments === 'renewal'">
+                <thead>
+                  <tr>
+                    <td><label>Label / Status</label></td>
+                    <td><label> Base Renewals </label></td>
+                    <td><label> Pending </label></td>
+                    <td><label> Follow Up</label></td>
+                    <td><label> Renewed </label></td>
+                    <td><label> Lost</label></td>
+                    <td><label> Missed</label></td>
+                  </tr>
+                  <tr>
+                    <td><label>No Of Cases</label></td>
+                    <td>
+                      <span>
+                        {{TotalRenewalFilteredRecords}}
+                      </span>
+                    </td>
+                    <td *ngFor="let row1 of FilterDatatype; ">
+                      <span>
+                        {{row1.TotalRecord}}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label>Premium</label></td>
+                    <td>
+                      <span>
+                        {{NetPremiumFilteredRecords}}
+                      </span>
+                    </td>
+                    <td *ngFor="let row1 of FilterDatatype; ">
+                      {{row1.NetPremium}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label>Ratio NOPs</label></td>
+                    <td>
+                      <span>
+                        100%
+                      </span>
+                    </td>
+                    <td *ngFor="let row1 of FilterDatatype; ">
+                      {{row1.Ratio}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label>Ratio Busniess</label></td>
+                    <td>
+                      <span>
+                        100%
+                      </span>
+                    </td>
+                    <td *ngFor="let row1 of FilterDatatype; ">
+                      {{((row1.NetPremium/NetPremiumFilteredRecords)*100).toFixed(2)}}
+                    </td>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+
+            <div class="d_flex flex_Equal flex_wrap flex_Middel  position-relative" style="justify-content:space-around"
+              *ngIf="this.urlSegments == 'business' || this.urlSegments == 'offline-quote'">
+              <div class="c-dashboardInfo width_dev_eight" style="margin-right:20px;">
+                <div class="wrap" style="
+               width:220px;">
+                  <ul>
+                    <li style="padding:10px; padding-left: 20px;"><Strong style="font-size:15px;">Quotations</Strong>
+                      <label style="font-size:16px;">{{ totalQuotationIds }}</label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="c-dashboardInfo width_dev_eight" style="margin-right:20px;">
+                <div class="wrap" style="
+               width:220px;">
+                  <ul>
+                    <li style="padding:10px; padding-left: 50px;"><Strong style="font-size:15px;">Policy</Strong> <label
+                        style="font-size:16px;">{{ PaymentStatus }}</label></li>
+                  </ul>
+                </div>
+              </div>
+
+
+              <div class="c-dashboardInfo width_dev_eight" style="margin-right:20px;">
+                <div class="wrap" style="
+               width:220px;">
+                  <ul>
+                    <li style="padding:10px; padding-left: 20px;"><Strong style="font-size:15px;">Conversion</Strong>
+                      <label style="font-size:16px;">{{ Conversion }}</label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="c-dashboardInfo width_dev_eight" style="margin-right:20px;"
+                *ngIf="this.urlSegments == 'business'">
+                <div class="wrap" style="
+               width:220px;">
+                  <ul>
+                    <li style="padding:10px; padding-left: 20px;"><Strong style="font-size:15px;">Net Premium</Strong>
+                      <label style="font-size:16px;">{{ Net_premium }}</label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;"
+              *ngIf="this.urlSegments == 'business' || this.urlSegments == 'offline-quote' || this.urlSegments == 'renewal' || this.urlSegments == 'claims'">
+              <div class="custom_table tables_layout_design">
+                <table  id="kt_datatable">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+
+                <!--======= Refer Table  =========-->
+                <ul class="responsive-table">
+
+                      <cdk-virtual-scroll-viewport
+                      #scroller
+                      itemSize="72"
+                      class="content mt_0"
+                    >
+                      <mat-list>
+                        <ng-container
+                          *cdkVirtualFor="let row of dataAr; let i = index"
+                        >
+                          <mat-list-item>
+
+                          <li class="table-row">
+
+
+                            <span class="addon_tag_name">{{row.LOB }}</span>
+
+                            <p class="life_status_label" *ngIf="this.urlSegments == 'claims'">
+                              <span *ngIf="row.manager_id == 0" class="btn btn-primary">Accept</span>
+                              <span *ngIf="row.Status == 1" class="btn btn-primary"> Panding</span>
+                              <span *ngIf="row.Status == 2" class="btn btn-primary">Process</span>
+                              <span *ngIf="row.Status == 3" class="btn btn-success">Approve</span>
+                              <span *ngIf="row.Status == 4" class="btn btn-danger">Close</span>
+                              <span *ngIf="row.Status == 5" class="btn btn-danger">Rejected</span>
+                              <span *ngIf="row.Status == 6" class="btn btn-warning">Re-open</span>
+                              <span *ngIf="row.Status == 7" class="btn btn-warning">Partially-Settled</span>
+                              <span *ngIf="row.Status == 8" class="btn btn-warning">Settled</span>
+                            </p>
+                            <p class="life_status_label"
+                              *ngIf="this.urlSegments == 'offline-quote' || this.urlSegments == 'renewal'">
+                              <span *ngIf="row.Status != ''" class="btn btn-warning">{{row.Status}}</span>
+                            </p>
+
+                            <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                              <div class="agents_data agents_data1">
+                                <div class="icon_re_cl" *ngIf="this.urlSegments != 'renewal'">{{ row.SrNo }}</div>
+                                <div class="icon_re_cl" *ngIf="this.urlSegments == 'renewal'">{{ i + 1  }}</div>
+                                <div class="agent_name_mobile">
+                                  <div class="agent_data">
+                                    <div> Name </div>
+                                    <strong class="fs_18">{{ row.Name ? row.Name : row.CustomerName }}</strong>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="agents_data agents_data2" *ngIf="row.Mobile || row.Customer_Mobile_Alert">
+                                <div class="agent_name_mobile">
+                                  <div class="agent_data">
+                                    <div> Mobile No.</div>
+                                    <strong class="fs_18">{{ row.Mobile ? row.Mobile : row.Customer_Mobile_Alert}}</strong>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="agents_data agents_data2" *ngIf="row.Email || row.Customer_Email_Alert">
+                                <div class="agent_name_mobile">
+                                  <div class="agent_data">
+                                    <div> Email :</div>
+                                    <strong class="fs_18">{{ row.Email ? row.Email : row.Customer_Email_Alert }}</strong>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="agents_data agents_data3">
+                                <div class="agent_name_mobile">
+                                  <div class="agent_data" *ngIf="this.urlSegments !== 'claims'">
+                                    <div *ngIf="row.LOB == 'Motor' || row.LOB == 'Non-Motor' ">Registration No.</div><strong
+                                      class="fs_18">{{ row.Vehicle_No }}</strong>
+                                    <div *ngIf="row.LOB == 'Health' || row.LOB == 'Personal Accident'">Sum Insured</div><strong
+                                      class="fs_18">{{ row.HealthSuminsured }}</strong>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="last_row_div">
+                              <div class="d_flex custon-234">
+
+                                <div class="label_chips motor_lob" style="width: auto;">
+                                  <span (click)="ViewOfflineQuoteDetails(row.Quotation_Id)">Quotation id : {{ row.Quotation_Id
+                                    }} </span>&nbsp;&nbsp;
+                                </div>
+
+                                <div class="label_chips finance_lob" style="width: auto;"
+                                  *ngIf="row.Company || row.Company_Name">
+                                  <span>Company : {{ row.Company ? row.Company : row.Company_Name }}</span>
+                                </div>
+                             
+
+                                <button class="btn btn-success proceed" *ngIf="this.urlSegments == 'business'">
+                                  <a (click)="QuoteToWeb(row.Action)"><label style=" color: #fff;">Proceed</label> </a></button>
+                            
+                              </div>
+                            </div>
+
+                            <div class="last_row" *ngIf="this.urlSegments == 'renewal'">
+                              <div class="d_flex effective_date">
+                                <div class="date_text" *ngIf="row.ExpiryDate">
+                                  <span class="fs_12">Policy Expiry Date : </span>
+                                  <span class="fs_12">{{ row.ExpiryDate }}</span>
+                                </div>
+
+
+                                <div class="date_text" *ngIf="row.ExpiryDays">
+                                  <span class="fs_12">Expiry In : </span>
+                                  <span class="fs_12"> {{ row.ExpiryDays == 'Today' ? 'Today' : row.ExpiryDays + ' days'
+                                    }}</span>
+                                </div>
+
+                              </div>
+                            </div>
+
+                            <div class="last_row"
+                              *ngIf="this.urlSegments != 'offline-quote' && this.urlSegments != 'renewal' && this.urlSegments != 'claims'">
+                              <div class="d_flex effective_date">
+                                <div class="date_text" *ngIf="row.PolicyType && row.PolicyType != 0">
+                                  <span class="fs_12">Policy Type : </span>
+                                  <span class="fs_12">{{row.PolicyType}}</span>
+                                </div>
+
+                                <div class="date_text"
+                                  *ngIf="row.PolicyExpiry && row.LOB != 'Health' && row.PolicyExpiry != '0000-00-00'">
+                                  <span class="fs_12">Policy Expiry Date : </span>
+                                  <span class="fs_12">{{ row.PolicyExpiry | date: 'dd-MM-yyyy' }}</span>
+                                </div>
+
+
+                                <div class="date_text" *ngIf="row.QuoteDetails != ' ' &&  row.LOB != 'Health' ">
+                                  <span class="fs_12">Vehicle : </span>
+                                  <span class="fs_12">{{ row.QuoteDetails }}</span>
+                                </div>
+
+                              </div>
+                            </div>
+
+                            <div class="last_row" *ngIf="this.urlSegments === 'offline-quote'">
+                              <div class="d_flex effective_date">
+                                <div class="date_text">
+                                  <span class="fs_12">Busniess Type : </span>
+                                  <span class="fs_12">{{row.PolicyType}}</span>
+                                </div>
+                                <div class="date_text" *ngIf="row.QuoteDetails != ' ' &&  row.LOB != 'Health' ">
+                                  <span class="fs_12">Vehicle : </span>
+                                  <span class="fs_12">{{ row.QuoteDetails }}</span>
+                                </div>
+                              </div>
+
+
+                            </div>
+
+                          </li>
+                      
+                        <mat-divider></mat-divider>
+                      </mat-list-item>
+                    </ng-container>
+
+                      <div
+                        class="spinner-item"
+                        *ngIf="loading"
+                        style="display: block; margin: auto; width: 50px"
+                      >
+                        <mat-progress-spinner
+                          [mode]="'indeterminate'"
+                          [diameter]="50"
+                        ></mat-progress-spinner>
+                      </div>
+                      <div class="row" *ngIf="dataAr?.length == 0">
+                        <div class="col-md-12">
+                          <div class="no_data_found">
+                            <span><img src="assets/image/no_data_banner.jpg"></span>
+                            <small>No data available !</small>
+                          </div>
+                        </div>
+                      </div>
+                    
+                    </mat-list>
+                  </cdk-virtual-scroll-viewport>
+                </ul>
+                <!-- ======= Refer Table END ========= -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,94 @@
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header">
+              <div class="row">
+                <div class="col-md-4">
+                  <h3 class="box-title">Send Notification Message</h3>
+                </div>
+                <div class="col-md-8">&nbsp;</div>
+               
+              </div>
+            </div>
+            <div class="box-body">
+
+
+                <form (ngSubmit)="submit()" [formGroup]="sendNotificationForm">
+
+
+                    <div class="popup-content-body">
+                        <div class="row">
+
+                            
+                            <div class="col-md-6">
+                                <label>Type</label>
+                                <ng-multiselect-dropdown class="form-control" [data]="Type"
+                                formControlName="type" [settings]="dropdownSettingsType">
+                                </ng-multiselect-dropdown>
+                                <div *ngIf="isSubmitted && formControls.type.errors" class="Validationerrors">
+                                    <div *ngIf="formControls.type.errors.required"><span style="color: red;">Please Select
+                                            Type!</span></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Title</label>
+                                <input  type="text" class="form-control" formControlName="title">
+                                <div *ngIf="isSubmitted && formControls.title.errors" class="Validationerrors">
+                                    <div *ngIf="formControls.title.errors.required"><span style="color: red;">Please enter
+                                            title!</span></div>
+                                </div>
+                            </div>
+
+                     
+                            <div class="col-md-6">
+                            <label>Attachement</label>
+                            <input type="file" formControlName="attachement" (change)="UploadDocs($event,'attachement')"
+                                class="form-control">
+                            <div *ngIf="isSubmitted && formControls.attachement.errors" class="Validationerrors">
+                                <div *ngIf="formControls.attachement.errors.required"><span style="color: red;">Please choose
+                                    Attachement!</span></div>
+                            </div>
+                            </div>
+                
+                
+                            <div class="col-md-6">
+                                <label >Message</label>
+                                <textarea class="form-control" formControlName="message" style="height: 35px;"></textarea>
+                                <div *ngIf="isSubmitted && formControls.message.errors" class="Validationerrors">
+                                    <div *ngIf="formControls.message.errors.required"><span style="color: red;">Please enter
+                                            message!</span></div>
+                                </div>
+                            </div>
+                  
+                
+                            <div class="button-div-yes-no" align="right" style="margin-right: 14px; margin-top: 150px;" >
+                                <button type="submit" class="btn btn-primary">Submit</button>&nbsp;
+                                <button type="reset" click="ResetDT()" class="btn btn-danger">Reset</button>
+
+                            </div>
+                          
+
+
+                        </div>
+                    </div>
+                
+                </form>
+                
+              
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </div>

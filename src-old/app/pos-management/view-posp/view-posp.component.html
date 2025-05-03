@@ -1,0 +1,635 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title" *ngIf="urlSegmentSub == 'Posp-leads'">POSP Leads</div>
+              <div class="header_title" *ngIf="urlSegmentSub == 'Under-Training-Posp'">Under Training Leads</div>
+              <div class="header_title" *ngIf="urlSegmentSub == 'New-Posp'">New POSP Leads</div>
+              <div class="header_title" *ngIf="urlSegmentSub == 'Verified-Docs'">Verified Docs</div>
+              <div class="header_title" *ngIf="urlSegmentSub == 'Verified-Posp'">Certified POSP</div>
+              <div class="header_title" *ngIf="urlSegmentSub == 'Incomplete-Posp'">Incomplete POSP</div>
+              <div class="header_title" *ngIf="urlSegmentSub == 'Rejected-Posp'">Rejected POSP</div>
+              <div class="header_title" *ngIf="urlSegmentSub == 'Noc-Released'">NOC Released POSP</div>
+              <div class="header_title" *ngIf="urlSegmentSub == 'life-Training-Posp'">life Training Posp</div>
+            </div>
+            <div *ngIf="!hasAccess" class="error-message">
+                <div class="container" style="text-align: center;">
+                  <img src="assets/Authorised.png" alt="">
+                  <h4>{{ errorMessage }}</h4>
+                </div>
+                
+              </div>
+    
+              <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+              <div class="filterquotesrow">
+                <button class="btn btninfo1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><a role="button"><i class="fa fa-filter"></i><span>Filters</span><i class="fa fa-angle-down"></i></a></button>
+                <button type="button" class="btn btninfo1" *ngIf="urlSegmentSub == 'Verified-Posp' && checkckeckboxcheck == 1 " (click)="getSelectedRows()">Change Status</button>
+                <button *ngIf="urlSegmentSub == 'Verified-Posp' && dataAr?.length != 0" type="button" class="btn btninfo1" (click)="UpdatePospReporting( '','','TeleRm')" data-toggle="modal" data-target="#ChangePospReportingId" data-backdrop="static" data-keyboard="false">  Update Tele RM</button>
+                <button *ngIf="urlSegmentSub == 'Verified-Posp' && dataAr?.length != 0 " type="button" class="btn btninfo1" (click)="UpdatePospReporting( '','','CoreRM')" data-toggle="modal" data-target="#ChangePospReportingId" data-backdrop="static" data-keyboard="false">Update Core RM</button>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panelbody">
+                    <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+                </div>
+              </div>
+              <div class="custom_table ERRINGtables_layout_design">
+                <table datatable [dtOptions]="dtOptions" class="row-border table" id="Table1">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+                <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                  <li class="table-row tablerow{{(i % 10) + 1}}" *ngFor="let row of dataAr; let i=index;">
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{row.SrNo}}</div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            
+                            <div>Name </div>
+
+
+                            <strong class="fs_18">{{row.row.name}} <span *ngIf="row.row.title != '' && row.row.title != null"> - {{row.row.title}}</span> <span *ngIf="row.posType == 'emitra' && urlSegmentSub == 'Posp-leads'">- {{row.posType}}</span></strong>
+                         
+                        
+                        
+                        </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Email</div>
+                            <strong class="fs_18" id="emailToCopy">{{row.row.email}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Mobile</div>
+                            <strong class="fs_18">{{row.row.mobile}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="last_row_div" *ngIf="urlSegmentSub != 'Posp-leads'">
+                      <div class="d_flex custon-234">
+                        <div class="label_chips mutual_fund_lob" *ngIf="urlSegmentSub !='Posp-leads' && row.row.agent_id !=''">
+                            <span>POSP Id: {{row.row.agent_id}}  </span>
+                        </div>
+                        <div class="label_chips growth_negative" *ngIf="row.coll_data=='no_coll'" >
+                            <span>DND</span>
+                         </div>
+                         <div class="label_chips growth_positive"  *ngIf="row.row.create_pos_permission ==2" >
+                            <span>BA</span>
+                         </div>
+                         <div class="label_chips growth_positive"  *ngIf="row.row.create_pos_permission ==1" >
+                            <span>BP</span>
+                         </div>
+                        <div class="label_chips non_motor_lob" *ngIf="urlSegmentSub =='Posp-leads' && (row.row.reg_level != '' && row.row.reg_level != null) ">
+                          <span *ngIf="(row.row.reg_level =='1' || row.row.reg_level =='2')">Stage : {{row.row.reg_level}}</span>
+                        </div>
+                        <div class="label_chips real_estate_lob"  *ngIf="row.posType == 'emitra' " style="text-transform: capitalize;">
+                          <span>{{row.posType}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="last_row">
+                      <div class="effective_date">
+                        <div class="d_flex">
+                            <a *ngIf="WhatsAppCheck==false" href="https://web.whatsapp.com/send?phone={{row.row.mobile}}&text=" class="btn btnsuccess" title="Share on whatsapp" target="_blank"><i class="fa fa-whatsapp"></i><span>Share on whatsapp</span></a>
+                            <a *ngIf="WhatsAppCheck==true" href="whatsapp://send?phone={{row.row.mobile}}&text=" class="btn btnsuccess" title="Share on whatsapp"><i class="fa fa-whatsapp"></i><span>Share on whatsapp</span></a>
+                            <a class="btn btnprimary" (click)="PospDetails(row.Id,'agent')" title="Details"><i class="fa fa-info"></i><span>POS Details</span></a>
+                            <a class="btn btnsuccess1" (click)="UpdateDocs(row.Id,'agent')" title="Update Docs"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-19.3c-2.7 1.1-5.4 2-8.2 2.7l-60.1 15c-3 .7-6 1.2-9 1.4c-.9 .1-1.8 .2-2.7 .2l-64 0c-6.1 0-11.6-3.4-14.3-8.8l-8.8-17.7c-1.7-3.4-5.1-5.5-8.8-5.5s-7.2 2.1-8.8 5.5l-8.8 17.7c-2.9 5.9-9.2 9.4-15.7 8.8s-12.1-5.1-13.9-11.3L144 381l-9.8 32.8c-6.1 20.3-24.8 34.2-46 34.2L80 448c-8.8 0-16-7.2-16-16s7.2-16 16-16l8.2 0c7.1 0 13.3-4.6 15.3-11.4l14.9-49.5c3.4-11.3 13.8-19.1 25.6-19.1s22.2 7.8 25.6 19.1l11.6 38.6c7.4-6.2 16.8-9.7 26.8-9.7c15.9 0 30.4 9 37.5 23.2l4.4 8.8 8.9 0c-3.1-8.8-3.7-18.4-1.4-27.8l15-60.1c2.8-11.3 8.6-21.5 16.8-29.7L384 203.6l0-43.6-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0 128 128 0L256 0zM549.8 139.7c-15.6-15.6-40.9-15.6-56.6 0l-29.4 29.4 71 71 29.4-29.4c15.6-15.6 15.6-40.9 0-56.6l-14.4-14.4zM311.9 321c-4.1 4.1-7 9.2-8.4 14.9l-15 60.1c-1.4 5.5 .2 11.2 4.2 15.2s9.7 5.6 15.2 4.2l60.1-15c5.6-1.4 10.8-4.3 14.9-8.4L512.1 262.7l-71-71L311.9 321z"/></svg><span>POS Update Docs</span></a>
+                            <a class="btn btnsuccess2" data-toggle="modal" data-target="#Add_More_data" (click)="value_Update(row.row.id)" title="Add Mobile Number"><i class="fa fa-phone"></i><span>Add Mobile Number</span></a>
+                            <a class="btn btndangeract" *ngIf="(row.row.delete_status == '0')" (click)="UpdateStatusPosp(row.row.agent_id, 1, 'delete_status',row.Id,'remark')"><i class="fa fa-trash-o"></i><span>Delete</span></a>
+                            <a *ngIf="(urlSegmentSub == 'Incomplete-Posp')" class="btn btnprimary" routerLink="/Mypos/Edit-pos/{{row.row.id}}" id="new"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l293.1 0c-3.1-8.8-3.7-18.4-1.4-27.8l15-60.1c2.8-11.3 8.6-21.5 16.8-29.7l40.3-40.3c-32.1-31-75.7-50.1-123.9-50.1l-91.4 0zm435.5-68.3c-15.6-15.6-40.9-15.6-56.6 0l-29.4 29.4 71 71 29.4-29.4c15.6-15.6 15.6-40.9 0-56.6l-14.4-14.4zM375.9 417c-4.1 4.1-7 9.2-8.4 14.9l-15 60.1c-1.4 5.5 .2 11.2 4.2 15.2s9.7 5.6 15.2 4.2l60.1-15c5.6-1.4 10.8-4.3 14.9-8.4L576.1 358.7l-71-71L375.9 417z"/></svg><span>Edit Details</span></a>
+                            <a *ngIf="(urlSegmentSub == 'Under-Training-Posp')" class="btn btnprimary" routerLink="/Mypos/Edit-pos/{{row.row.id}}" id="new"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l293.1 0c-3.1-8.8-3.7-18.4-1.4-27.8l15-60.1c2.8-11.3 8.6-21.5 16.8-29.7l40.3-40.3c-32.1-31-75.7-50.1-123.9-50.1l-91.4 0zm435.5-68.3c-15.6-15.6-40.9-15.6-56.6 0l-29.4 29.4 71 71 29.4-29.4c15.6-15.6 15.6-40.9 0-56.6l-14.4-14.4zM375.9 417c-4.1 4.1-7 9.2-8.4 14.9l-15 60.1c-1.4 5.5 .2 11.2 4.2 15.2s9.7 5.6 15.2 4.2l60.1-15c5.6-1.4 10.8-4.3 14.9-8.4L576.1 358.7l-71-71L375.9 417z"/></svg><span>Edit Details</span></a>
+                            <a *ngIf="(urlSegmentSub == 'Verified-Docs')" class="btn btnprimary" routerLink="/Mypos/Edit-pos/{{row.row.id}}" id="new"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l293.1 0c-3.1-8.8-3.7-18.4-1.4-27.8l15-60.1c2.8-11.3 8.6-21.5 16.8-29.7l40.3-40.3c-32.1-31-75.7-50.1-123.9-50.1l-91.4 0zm435.5-68.3c-15.6-15.6-40.9-15.6-56.6 0l-29.4 29.4 71 71 29.4-29.4c15.6-15.6 15.6-40.9 0-56.6l-14.4-14.4zM375.9 417c-4.1 4.1-7 9.2-8.4 14.9l-15 60.1c-1.4 5.5 .2 11.2 4.2 15.2s9.7 5.6 15.2 4.2l60.1-15c5.6-1.4 10.8-4.3 14.9-8.4L576.1 358.7l-71-71L375.9 417z"/></svg><span>Edit Details</span></a>
+                            <a *ngIf="(urlSegmentSub == 'New-Posp')" class="btn btnprimary" routerLink="/Mypos/Edit-pos/{{row.row.id}}" id="new"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l293.1 0c-3.1-8.8-3.7-18.4-1.4-27.8l15-60.1c2.8-11.3 8.6-21.5 16.8-29.7l40.3-40.3c-32.1-31-75.7-50.1-123.9-50.1l-91.4 0zm435.5-68.3c-15.6-15.6-40.9-15.6-56.6 0l-29.4 29.4 71 71 29.4-29.4c15.6-15.6 15.6-40.9 0-56.6l-14.4-14.4zM375.9 417c-4.1 4.1-7 9.2-8.4 14.9l-15 60.1c-1.4 5.5 .2 11.2 4.2 15.2s9.7 5.6 15.2 4.2l60.1-15c5.6-1.4 10.8-4.3 14.9-8.4L576.1 358.7l-71-71L375.9 417z"/></svg><span>Edit Details</span></a>
+                            <a *ngIf="(urlSegmentSub == 'Posp-leads')" class="btn btnprimary" routerLink="/Mypos/Edit-pos/{{row.row.id}}" id="new"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l293.1 0c-3.1-8.8-3.7-18.4-1.4-27.8l15-60.1c2.8-11.3 8.6-21.5 16.8-29.7l40.3-40.3c-32.1-31-75.7-50.1-123.9-50.1l-91.4 0zm435.5-68.3c-15.6-15.6-40.9-15.6-56.6 0l-29.4 29.4 71 71 29.4-29.4c15.6-15.6 15.6-40.9 0-56.6l-14.4-14.4zM375.9 417c-4.1 4.1-7 9.2-8.4 14.9l-15 60.1c-1.4 5.5 .2 11.2 4.2 15.2s9.7 5.6 15.2 4.2l60.1-15c5.6-1.4 10.8-4.3 14.9-8.4L576.1 358.7l-71-71L375.9 417z"/></svg><span>Edit Details</span></a>
+                            <a class="btn btnsuccess1" *ngIf="(row.row.pos_status == '2')" (click)="SendMail(row.row.id,'Certified Mail')" title="Send Mail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0l57.4-43c23.9-59.8 79.7-103.3 146.3-109.8l13.9-10.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176 0 384c0 35.3 28.7 64 64 64l296.2 0C335.1 417.6 320 378.5 320 336c0-5.6 .3-11.1 .8-16.6l-26.4 19.8zM640 336a144 144 0 1 0 -288 0 144 144 0 1 0 288 0zm-76.7-43.3c6.2 6.2 6.2 16.4 0 22.6l-72 72c-6.2 6.2-16.4 6.2-22.6 0l-40-40c-6.2-6.2-6.2-16.4 0-22.6s16.4-6.2 22.6 0L480 353.4l60.7-60.7c6.2-6.2 16.4-6.2 22.6 0z"/></svg><span>Send Mail</span></a>
+                            <a class="btn btnsuccess2" *ngIf="row.row.pos_status === '2' && this.urlSegmentSub === 'Verified-Posp'" (click)="Download_Agreement(row.row.id)" title="Download Agreement"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0 128 128 0L256 0zM80 64l64 0c8.8 0 16 7.2 16 16s-7.2 16-16 16L80 96c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l64 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-64 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm54.2 253.8c-6.1 20.3-24.8 34.2-46 34.2L80 416c-8.8 0-16-7.2-16-16s7.2-16 16-16l8.2 0c7.1 0 13.3-4.6 15.3-11.4l14.9-49.5c3.4-11.3 13.8-19.1 25.6-19.1s22.2 7.7 25.6 19.1l11.6 38.6c7.4-6.2 16.8-9.7 26.8-9.7c15.9 0 30.4 9 37.5 23.2l4.4 8.8 54.1 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-64 0c-6.1 0-11.6-3.4-14.3-8.8l-8.8-17.7c-1.7-3.4-5.1-5.5-8.8-5.5s-7.2 2.1-8.8 5.5l-8.8 17.7c-2.9 5.9-9.2 9.4-15.7 8.8s-12.1-5.1-13.9-11.3L144 349l-9.8 32.8z"/></svg><span>Download POS Agreement</span></a>
+                            <a class="btn btnsuccess1" *ngIf="row.row.pos_status === '2' && this.urlSegmentSub === 'Verified-Posp'" (click)="Download_Certificate(row.row.id)" title="Download Certificate"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 464l48 0 0 48-48 0c-35.3 0-64-28.7-64-64L0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 304l-48 0 0-144-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z"/></svg><span>Download POS Certificate</span></a>
+                            <div *ngIf="urlSegmentSub == 'Verified-Posp'" class="checkboxcstnew">
+                                <label class="toggle" for="pospEnableDisable{{(i % 10000) + 1}}" [ngClass]="{'enableclass': row.square_branding_policy_pdf == '1', 'disableclass': row.square_branding_policy_pdf == '0'}">
+                                    <input type="checkbox" [(ngModel)]="row.selected" (change)="selectRow(row)" class="toggleinput" id="pospEnableDisable{{(i % 10000) + 1}}" />
+                                    <span>{{ row.square_branding_policy_pdf == '1' ? 'Enable' : 'Disable' }}</span>
+                                </label>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                        <span class="finance_lobstatus" *ngIf="urlSegmentSub != 'Posp-leads'">
+                            <a *ngIf="(row.row.pos_status == '0')" (click)="Transfer(row.row.id,row.row.pos_status,'Action')" id="new" class="btn btnindigo">Pending For QC</a>
+                            <a *ngIf="(row.row.pos_status == '1')" (click)="Transfer(row.row.id,row.row.pos_status,'Action')" id="new" class="btn btnsucess">Verified</a>
+                            <a *ngIf="(row.row.pos_status == '3')" (click)="Transfer(row.row.id,row.row.pos_status,'Action')" id="new" class="btn btnwarning">Incomplete</a>
+                            <a *ngIf="(row.row.pos_status == '6')" (click)="Transfer(row.row.id,row.row.pos_status,'Action')" id="new" class="btn btndanger">Rejected</a>
+                        </span>
+
+                        
+                        <a class="btnbg2inactive" *ngIf="(row.row.status == '0') && urlSegmentSub == 'Verified-Posp'" (click)="UpdateStatusPosp(row.row.agent_id, 1, 'status',row.Id,'remark')">InActive</a>
+                        <a class="btnbg1active" *ngIf="(row.row.status == '1') && urlSegmentSub == 'Verified-Posp'" (click)="UpdateStatusPosp(row.row.agent_id, 0, 'status',row.Id,'remark')">Active</a>
+                        <a *ngIf="urlSegmentSub =='Posp-leads'" class="btnbg1" (click)="Transfer(row.row.id,row.row.pos_status,'Action')" id="new">Transfer</a>
+
+
+                        <a *ngIf="row.row.pos_status == '2' && this.urlSegmentSub == 'Verified-Posp'" class="btnbg2" (click)="UpdatePospReporting(row.row.id,row.row.agent_id,'ChangeRM')" data-toggle="modal" data-target="#ChangePospReportingId" data-backdrop="static" data-keyboard="false">Change POSP Reporting</a>
+
+
+                        <span>
+                            <a class="btnbg2inactive" *ngIf="(row.row.status == '0') && (urlSegmentSub == 'Verified-Posp' || urlSegmentSub == 'Under-Training-Posp')" (click)="UpdateStatusPosp(row.row.agent_id, 1, 'status',row.Id,'remark')">InActive</a></span>
+
+
+                        <span *ngIf="urlSegmentSub === 'Under-Training-Posp'"><a class="btnbg4" (click)="Transfer(row.row.id,row.row.pos_status,'Action')">{{row.ButtonValue}}</a></span>
+                        <span *ngIf="urlSegmentSub === 'Under-Training-Posp'"><a class="btnbg3" *ngIf="(row.PassBtn != '')" (click)="passManual(row.row.id,'Motor')">{{row.PassBtn}}</a></span>
+                        <span *ngIf="urlSegmentSub === 'Under-Training-Posp'"><a class="btnbg2" (click)="SendMail(row.row.id,'Training Mail')">Resend Training Mail</a></span>
+                        <span *ngIf="urlSegmentSub === 'Under-Training-Posp'"><a class="btnbg3resign" (click)="showRejectedPospDetails(row.row.id,row.row.agent_id,row.row.name)" data-toggle="modal" data-target="#RejectPosp" data-backdrop="static" data-keyboard="false">Reject POSP</a></span>
+                        <span *ngIf="urlSegmentSub === 'life-Training-Posp'"><a class="btnbg" (click)="Transfer(row.row.id,row.row.pos_status,'Life')">{{row.ButtonValue}}</a></span>
+                        <span *ngIf="urlSegmentSub === 'life-Training-Posp'"><a class="btnbg1" *ngIf="(row.PassBtn != '')" class="btn btn-danger1" (click)="passManual(row.row.id,'Life')">{{row.PassBtn}}</a></span>
+                        <div class="btn-group dropup" *ngIf="urlSegmentSub != 'Rejected-Posp' && urlSegmentSub != 'Posp-leads' && urlSegmentSub != 'New-Posp' && urlSegmentSub != 'Incomplete-Posp' && urlSegmentSub != 'Verified-Docs' && urlSegmentSub != 'Under-Training-Posp'">
+                            <button type="button" class="btn btnsecondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">More..&nbsp;&nbsp;<i class="fa fa-angle-up"></i></button>
+                            <div class="dropdown-menu">
+                                <a class="dropdownitem" *ngIf="row.row.pos_status === '2' && this.urlSegmentSub === 'Verified-Posp'" (click)="Conversational_Settings(row.row.agent_id)">Conversational Settings - DND</a>
+
+                                <a class="dropdownitem" *ngIf="row.row.pos_status === '2' && this.urlSegmentSub === 'Verified-Posp' && row.geo_tag == 1" (click)="GeoTagButton(row.row.id,row.row.email,row.row.mobile,row.geo_tag)">Geo Tag</a>
+                                <a class="dropdownitem" *ngIf="row.row.pos_status === '2' && this.urlSegmentSub === 'Verified-Posp' && row.geo_tag == 0" (click)="GeoTagButton(row.row.id,row.row.email,row.row.mobile,row.geo_tag)">Geo Tag</a>
+                                <a class="dropdownitem" *ngIf="(row.row.pos_status == '7' && row.row.pos_noc_status == 2)" (click)="ViewDocument(row.row.pos_noc_pdf)">NOC Letter </a>
+                                <a class="dropdownitem" *ngIf="row.row.pos_status == '2' && this.urlSegmentSub === 'Verified-Posp' && row.advisor == '0'" (click)="AddAdvisor(row.row.id,row.row.agent_id,'Add','agent')">Add As Advisor</a>
+                                <a class="dropdownitem" *ngIf="row.row.pos_status == '2' && this.urlSegmentSub === 'Verified-Posp' && row.advisor == '1'" (click)="AddAdvisor(row.row.id,row.row.agent_id,'Edit','agent')">Update Advisor</a>
+                                <a class="dropdownitem" *ngIf="(row.row.create_pos_permission != '2' && row.row.pos_status == '2')" (click)="UpdateBABPstatus(row.row.id,'BA',2)">Create Business Advisor</a>
+                                <a class="dropdownitem" *ngIf="(row.row.create_pos_permission != '1' && row.row.pos_status == '2')" (click)="UpdateBABPstatus(row.row.id,'BP',1)">Create Business Partner</a>
+                                <a class="dropdownitem" *ngIf="row.agreementStatus == '0' && row.row.pos_status == '2' && this.urlSegmentSub === 'Verified-Posp' " (click)="SendAgreementMail(row.row.id,row.row.agent_id)">Become ePartner</a>
+                                <a class="dropdownitem" *ngIf="row.agreementStatus == '1' && row.row.pos_status == '2' && this.urlSegmentSub === 'Verified-Posp' && row.title == '' " (click)="UrlRedirection(row.row.id,row.row.agent_id,row.agreementStatus)">ePartner</a>
+                                <a class="dropdownitem" *ngIf="row.agreementStatus == '1' && row.row.pos_status == '2' && this.urlSegmentSub === 'Verified-Posp' && row.title != ''" (click)="UrlRedirection(row.row.id,row.row.agent_id,row.agreementStatus)">ePartner</a>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- <section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+                            <div *ngIf="urlSegmentSub == 'Posp-leads'">POSP Leads</div>
+                            <div *ngIf="urlSegmentSub == 'Under-Training-Posp'">Under Training Leads</div>
+                            <div *ngIf="urlSegmentSub == 'New-Posp'">New POSP Leads</div>
+                            <div *ngIf="urlSegmentSub == 'Verified-Docs'">Verified Docs</div>
+                            <div *ngIf="urlSegmentSub == 'Verified-Posp'">Certified POSP</div>
+                            <div *ngIf="urlSegmentSub == 'Incomplete-Posp'">Incomplete POSP</div>
+                            <div *ngIf="urlSegmentSub == 'Rejected-Posp'">Rejected POSP</div>
+                            <div *ngIf="urlSegmentSub == 'Noc-Released'">NOC Released POSP</div>
+                        </div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+                        <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+                        <button type="button" style="font-size: small; color:white;   padding: 6px; margin-left: 5px;" class="btn btn-primary nextBtn pull-right setmargin" *ngIf="urlSegmentSub == 'Verified-Posp' && checkckeckboxcheck == 1 " (click)="getSelectedRows()"
+                                    >Change Status</button> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+
+                                    <button *ngIf="urlSegmentSub == 'Verified-Posp' && dataAr?.length != 0" style="font-size: small; color:white;   padding: 6px; margin-left: 5px;" type="button"
+                                        class="btn btn-warning"  class=" pull-right btn btn-primary btn-info"
+                                        (click)="UpdatePospReporting( '','','TeleRm')" data-toggle="modal" data-target="#ChangePospReportingId"
+                                        data-backdrop="static" data-keyboard="false">  Update Tele RM</button>
+
+                                    <button *ngIf="urlSegmentSub == 'Verified-Posp' && dataAr?.length != 0 " style="font-size: small; color:white;   padding: 6px; margin-left: 5px;" type="button"
+                                        class="btn btn-warning" class=" pull-right btn btn-primary btn-info"
+                                        (click)="UpdatePospReporting( '','','CoreRM')" data-toggle="modal" data-target="#ChangePospReportingId"
+                                        data-backdrop="static" data-keyboard="false">Update Core RM</button>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+
+                        <hr>
+                        <div class=" mydiv table-responsive">
+                            <table datatable [dtOptions]="dtOptions" id="Table1" style="font-size: 12px;"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th *ngIf="urlSegmentSub == 'Verified-Posp'">Square Branding Status</th>
+                                        <th>S.No</th>
+                                        <th *ngIf="urlSegmentSub !='Posp-leads'">POSP Id</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th *ngIf="urlSegmentSub =='Posp-leads'">Stage Completed</th>
+                                        <th>Docs / Details / More Action</th>
+                                        <th *ngIf="urlSegmentSub !='Posp-leads'">Status</th>
+                                        <th
+                                            *ngIf="urlSegmentSub =='Under-Training-Posp' || urlSegmentSub =='life-Training-Posp' ">
+                                            Exam Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr; let i=index;">
+                                        <td *ngIf="urlSegmentSub == 'Verified-Posp'">
+                                            <input type="checkbox" class="form-contol" [(ngModel)]="row.selected" (change)="selectRow(row)" /><br>
+                                            <label class="label label-success" *ngIf="urlSegmentSub == 'Verified-Posp' && row.square_branding_policy_pdf == '1'">
+
+                                                <span style="color: white; size: 20px;">Enable</span>
+                                              </label>
+
+                                              <label class="label label-danger" *ngIf="urlSegmentSub == 'Verified-Posp' && row.square_branding_policy_pdf == '0'">
+
+                                                <span style="color: white; size: 20px;">Disable</span>
+                                              </label>
+                                          </td>
+                                        <td>{{row.SrNo}}</td>
+                                        <td *ngIf="urlSegmentSub != 'Posp-leads'">{{row.row.agent_id}}
+                                            <label *ngIf="row.coll_data=='no_coll'" class="text-danger">DND</label>
+
+                                            <br>
+                                            <label *ngIf="row.row.create_pos_permission ==1" class="text-Success">BP</label>
+                                            <label *ngIf="row.row.create_pos_permission ==2" class="text-Success">BA</label>
+                                            <br>
+
+                                            <label class="label label-success" *ngIf="row.posType == 'emitra' ">{{row.posType}}</label>
+                                        </td>
+                                        <td>{{row.row.name}} <br>
+                                            <label class="label label-success" *ngIf="row.posType == 'emitra' && urlSegmentSub == 'Posp-leads'">{{row.posType}}</label>
+                                        </td>
+                                        <td>
+                                            <span class="label label-primary" *ngIf="Masking == 'Email'+i"
+                                                (click)="ShowMaskingField('TempEmail')"> Email : {{row.row.email}} <span
+                                                    (click)="CopyText(row.row.email)" class="fa fa-copy"></span></span>
+                                            <span class="label label-primary" *ngIf="Masking != 'Email'+i"
+                                                (click)="ShowMaskingField('Email'+i)"> Email : ****</span>
+                                        </td>
+                                        <td>
+                                            <span class="label label-primary" *ngIf="Masking =='Mobile'+i"
+                                                (click)="ShowMaskingField('TempMobile')"> Mobile :
+                                                {{row.row.mobile}}</span>
+                                            <span class="label label-primary" *ngIf="Masking != 'Mobile'+i"
+                                                (click)="ShowMaskingField('Mobile'+i)"> Mobile : ****</span>
+
+                                            <a *ngIf="WhatsAppCheck==false"
+                                                href="https://web.whatsapp.com/send?phone={{row.row.mobile}}&text="
+                                                title="Share on whatsapp" target="_blank"><label _ngcontent-sqe-c9=""
+                                                    class="label label-success"><i _ngcontent-sqe-c9=""
+                                                        class="fa fa-whatsapp"></i> WhatsApp </label></a>
+
+                                            <a *ngIf="WhatsAppCheck==true"
+                                                href="whatsapp://send?phone={{row.row.mobile}}&text="
+                                                title="Share on whatsapp"><label _ngcontent-sqe-c9=""
+                                                    class="label label-success"><i _ngcontent-sqe-c9=""
+                                                        class="fa fa-whatsapp"></i> WhatsApp </label></a>
+
+                                        </td>
+                                        <td *ngIf="urlSegmentSub =='Posp-leads'"> <span
+                                                *ngIf="(row.row.reg_level =='1' || row.row.reg_level =='2')"
+                                                class="btn btn-black">Stage
+                                                {{row.row.reg_level}}</span> </td>
+
+                                        <td>
+                                            <a (click)="UpdateDocs(row.Id,'agent')"> <label class="btn btn-info">Update
+                                                    Docs</label></a> &nbsp; &nbsp;
+                                            <a (click)="PospDetails(row.Id,'agent')"> <label
+                                                    class="btn btn-info">Details</label></a> &nbsp; &nbsp;
+
+
+                                            <a (click)="AppPOSPRights(row.row.agent_id)"> <label
+                                                    class="btn btn-info">POSP Right</label></a> &nbsp; &nbsp;
+                                            <a *ngIf="row.row.pos_status === '2' && this.urlSegmentSub === 'Verified-Posp'"
+                                                (click)="Conversational_Settings(row.row.agent_id)"> <label
+                                                    class="btn btn-info">Conversational Settings - DND</label></a>
+                                            &nbsp;
+                                            &nbsp;
+
+                                            <a *ngIf="row.row.pos_status === '2' && this.urlSegmentSub === 'Verified-Posp'"
+                                                (click)="Download_Certificate(row.row.id)"> <label
+                                                    class="btn btn-info">Download Certificate</label></a>
+                                            &nbsp;
+                                            &nbsp;
+
+                                            <a *ngIf="row.row.pos_status === '2' && this.urlSegmentSub === 'Verified-Posp'"
+                                                (click)="Download_Agreement(row.row.id)"> <label
+                                                    class="btn btn-info">Download Agreement</label></a>
+                                            &nbsp;
+                                            &nbsp;
+                                            <a><label class="btn btn-info" data-toggle="modal"
+                                                    data-target="#Add_More_data" (click)="value_Update(row.row.id)">Add
+                                                    Mobile</label></a>
+                                            &nbsp;
+                                            &nbsp;
+                                            <a *ngIf="row.row.pos_status === '2' && this.urlSegmentSub === 'Verified-Posp' && row.geo_tag == 1"
+                                            (click)="GeoTagButton(row.row.id,row.row.email,row.row.mobile,row.geo_tag)"><label
+                                                class="btn btn-success">Geo Tag</label></a>
+
+                                                <a *ngIf="row.row.pos_status === '2' && this.urlSegmentSub === 'Verified-Posp' && row.geo_tag == 0"
+                                                (click)="GeoTagButton(row.row.id,row.row.email,row.row.mobile,row.geo_tag)"><label
+                                                    class="btn btn-info">Geo Tag</label></a>
+                                                &nbsp;
+                                                &nbsp;
+                                        </td>
+                                        <td *ngIf="urlSegmentSub != 'Posp-leads'">
+                                            <a *ngIf="(row.row.pos_status == '0' || row.row.pos_status == '1' || row.row.pos_status == '3' || row.row.pos_status == '6' )"
+                                                style="cursor:pointer;  "
+                                                (click)="Transfer(row.row.id,row.row.pos_status,'Action')" id="new">
+                                                <span *ngIf="(row.row.pos_status == '0')" class="btn btn-indigo">Pending
+                                                    For QC</span>
+                                                <span *ngIf="(row.row.pos_status == '1')"
+                                                    class="btn btn-indigo">Verified</span>
+                                                <span *ngIf="(row.row.pos_status == '3')"
+                                                    class="btn btn-warning">Incomplete</span>
+                                                <span *ngIf="(row.row.pos_status == '6')"
+                                                    class="btn btn-danger">Rejected</span>
+                                            </a>
+                                            <span *ngIf="(row.row.pos_status == '2')" class="btn btn-success">Verified
+                                                with POSC</span>
+                                            <span *ngIf="(row.row.pos_status == '4')" class="btn btn-primary">Under
+                                                Training</span>
+                                            <span *ngIf="(row.row.pos_status == '7' && row.row.pos_noc_status == 2)"
+                                                (click)="ViewDocument(row.row.pos_noc_pdf)" class="btn btn-primary">NOC
+                                                Letter </span>
+                                            <label *ngIf="(row.row.pos_status == '2')" class="btn btn-info1"
+                                                style="cursor: pointer;"
+                                                (click)="SendMail(row.row.id,'Certified Mail')">Send Mail</label>
+                                            <label
+                                                *ngIf="row.row.pos_status == '2' && this.urlSegmentSub == 'Verified-Posp' && row.advisor == '0'"
+                                                (click)="AddAdvisor(row.row.id,row.row.agent_id,'Add','agent')"
+                                                class="label label-primary">Add As Advisor</label>
+                                            <label
+                                                *ngIf="row.row.pos_status == '2' && this.urlSegmentSub == 'Verified-Posp' && row.advisor == '1'"
+                                                (click)="AddAdvisor(row.row.id,row.row.agent_id,'Edit','agent')"
+                                                class="label label-primary">Update Advisor</label>
+
+
+<br>
+
+
+                                                <label *ngIf="(row.row.create_pos_permission != '2' && row.row.pos_status == '2')" class="btn btn-info1" style="cursor: pointer;"
+                                                    (click)="UpdateBABPstatus(row.row.id,'BA',2)">Create Business
+                                                    Advisor</label>
+
+                                                <label *ngIf="(row.row.create_pos_permission != '1' && row.row.pos_status == '2')" class="btn btn-info1" style="cursor: pointer;"
+                                                    (click)="UpdateBABPstatus(row.row.id,'BP',1)">Create Business
+                                                    Partner</label>
+
+
+
+
+                                            <span
+                                                *ngIf="row.agreementStatus == '0' && row.row.pos_status == '2' && this.urlSegmentSub == 'Verified-Posp' "
+                                                (click)="SendAgreementMail(row.row.id,row.row.agent_id)"
+                                                class="btn btn-warning">Become ePartner</span>
+                                            <span
+                                                *ngIf="row.agreementStatus == '1' && row.row.pos_status == '2' && this.urlSegmentSub == 'Verified-Posp' && row.title == '' "
+                                                (click)="UrlRedirection(row.row.id,row.row.agent_id,row.agreementStatus)"
+                                                class="btn btn-warning">ePartner</span>
+                                            <span
+                                                *ngIf="row.agreementStatus == '1' && row.row.pos_status == '2' && this.urlSegmentSub == 'Verified-Posp' && row.title != ''"
+                                                (click)="UrlRedirection(row.row.id,row.row.agent_id,row.agreementStatus)"
+                                                class="btn btn-success">ePartner</span>
+
+                                        </td>
+
+                                        <td *ngIf="urlSegmentSub == 'Under-Training-Posp'">
+                                            <label class="btn btn-success" style="cursor: pointer;"
+                                                (click)="Transfer(row.row.id,row.row.pos_status,'Action')">{{row.ButtonValue}}</label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label *ngIf="(row.PassBtn != '')" class="btn btn-danger1"
+                                                style="cursor: pointer;"
+                                                (click)="passManual(row.row.id,'Motor')">{{row.PassBtn}}</label>
+                                            <label class="btn btn-info1" style="cursor: pointer;"
+                                                (click)="SendMail(row.row.id,'Training Mail')">Resend Training
+                                                Mail</label>
+
+                                            <a style="color:white;" class=" pull-right btn btn-primary btn-info"
+                                                (click)="showRejectedPospDetails(row.row.id,row.row.agent_id,row.row.name)"
+                                                data-toggle="modal" data-target="#RejectPosp" data-backdrop="static"
+                                                data-keyboard="false">Reject POSP</a>
+                                        </td>
+
+                                        <td *ngIf="urlSegmentSub == 'life-Training-Posp'">
+                                            <label class="btn btn-success" style="cursor: pointer;"
+                                                (click)="Transfer(row.row.id,row.row.pos_status,'Life')">{{row.ButtonValue}}</label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+
+                                            <label *ngIf="(row.PassBtn != '')" class="btn btn-danger1"
+                                                style="cursor: pointer;"
+                                                (click)="passManual(row.row.id,'Life')">{{row.PassBtn}}</label>
+
+                                        </td>
+
+                                        <td>
+                                            <label class="btn btn-warning" *ngIf="(row.row.status == '0') && urlSegmentSub == 'Verified-Posp'"
+                                                style="cursor: pointer;"
+                                                (click)="UpdateStatusPosp(row.row.agent_id, 1, 'status',row.Id, 'remark')">InActive</label>
+                                            <label class="btn btn-success" *ngIf="(row.row.status == '1') && urlSegmentSub == 'Verified-Posp'"
+                                                style="cursor: pointer;"
+                                                (click)="UpdateStatusPosp(row.row.agent_id, 0, 'status',row.Id, 'remark')">Active</label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label class="btn btn-danger1" *ngIf="(row.row.delete_status == '0')"
+                                                style="cursor: pointer;"
+                                                (click)="UpdateStatusPosp(row.row.agent_id, 1, 'delete_status',row.Id, 'remark')">Delete</label>
+                                            &nbsp; &nbsp;&nbsp; &nbsp;
+                                            <a *ngIf="urlSegmentSub =='Posp-leads'" style="cursor:pointer; "
+                                                (click)="Transfer(row.row.id,row.row.pos_status,'Action')" id="new">
+                                                <span class="btn btn-primary">Transfer</span>
+                                            </a>
+                                            <a *ngIf="(urlSegmentSub == 'Incomplete-Posp')" style="cursor:pointer; "
+                                                routerLink="/Mypos/Edit-pos/{{row.row.id}}" id="new">
+                                                <span class="btn btn-primary"> Edit-POS</span>
+                                            </a>
+                                            <a *ngIf="(urlSegmentSub == 'Under-Training-Posp')" style="cursor:pointer; "
+                                                routerLink="/Mypos/Edit-pos/{{row.row.id}}" id="new">
+                                                <span class="btn btn-primary"> Edit-POS</span>
+                                            </a>
+                                            <a *ngIf="(urlSegmentSub == 'Verified-Docs')" style="cursor:pointer; "
+                                                routerLink="/Mypos/Edit-pos/{{row.row.id}}" id="new">
+                                                <span class="btn btn-primary"> Edit-POS</span>
+                                            </a>
+                                            <a *ngIf="(urlSegmentSub == 'New-Posp')" style="cursor:pointer; "
+                                                routerLink="/Mypos/Edit-pos/{{row.row.id}}" id="new">
+                                                <span class="btn btn-primary"> Edit-POS</span>
+                                            </a>
+                                            <a *ngIf="(urlSegmentSub == 'Posp-leads')" style="cursor:pointer; "
+                                                routerLink="/Mypos/Edit-pos/{{row.row.id}}" id="new">
+                                                <span class="btn btn-primary"> Edit-POS</span>
+                                            </a>
+
+                                            &nbsp;
+                                            &nbsp;
+                                            <a *ngIf="row.row.pos_status === '2' && this.urlSegmentSub === 'Verified-Posp'" style="color:white;"
+                                                class=" pull-right btn btn-primary btn-info" (click)="UpdatePospReporting(row.row.id,row.row.agent_id,'ChangeRM')"
+                                                data-toggle="modal" data-target="#ChangePospReportingId" data-backdrop="static" data-keyboard="false">Change POSP
+                                                Reporting</a>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="8" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<!--POS VERFICATION MODAL END-->
+
+<div id="RejectPosp" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_header">
+                            <div class="header_title">REJECT POSP ->
+                                {{RejectedPospName}} - {{RejectedPospAgentId}}
+                            </div>
+                        </div>
+                        <form class="form" [formGroup]="RejectAgentForm">
+                            <div class="main_body main_card_height_scroll">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i>
+                                            Basic Details
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="input_group">
+                                            <label for="CustomerName">Remarks
+                                                <span *ngIf="isSubmitted2 && formControls2.Remark.errors"
+                                                    class="ValidationError">
+                                                    <span *ngIf="formControls2.Remark.errors.required">Remarks
+                                                        is
+                                                        required</span>
+                                                </span>
+                                            </label>
+                                            <textarea class="form_control icon_cs" type="text" formControlName="Remark"
+                                                required name="Remarks" id="Remarks"
+                                                placeholder="Enter Remarks"> </textarea>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="main_footer">
+                                <button type="button" id="ClosePOUPUP" class="mr_5 btn-danger Save_click"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="Save_click"
+                                    (click)="RejectUnderTrainingPosp(RejectedPospId)">Reject</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Add_More_data" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Mobile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select class="form-control" [(ngModel)]="selectedOption">
+                    <option *ngFor="let option of options">{{ option }}</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closemodal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="submitFormData()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ChangePospReportingId" tabindex="-1" role="dialog" aria-labelledby="ChangePospReporting"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Change POSP RM</h5>
+                <button type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form" [formGroup]="UpdatePospReportingForm">
+
+                <div class="modal-body" *ngIf="this.UpdateRmType !== 'ChangeRM'">
+                    <ng-multiselect-dropdown class="form-control" name="posp" placeholder="Please Select POSP"
+                        [(ngModel)]="ChangePospData" [data]="MapapingPosData" formControlName="posp" required
+                        [settings]="dropdownMultiselectSettingsType">
+                    </ng-multiselect-dropdown>
+                </div>
+
+
+                <div class="modal-body">
+                    <ng-multiselect-dropdown class="form-control" name="vertical" placeholder="Please Select Vertical"
+                        [(ngModel)]="ChangePospVertical" [data]="VerticalData" formControlName="vertical"
+                        (onSelect)="getEmployee(1)" [settings]="dropdownSettingsType">
+                    </ng-multiselect-dropdown>
+                </div>
+
+
+
+                <div class="modal-body">
+                    <ng-multiselect-dropdown class="form-control" name="reference"
+                        placeholder="Please Select Reporting Maneger" [(ngModel)]="ChangePospRm"
+                        [data]="AlLEmployeeData" formControlName="reference" [settings]="dropdownSettingsType">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closemodal">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="ChangePospReporting()">Submit</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="PospReportingDetails" tabindex="-1" role="dialog" aria-labelledby="PospReportning"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div>
+            <!-- <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Change POSP RM</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div> -->
+            <div [innerHTML]="dataArra">
+
+
+            </div>
+        </div>
+    </div>
+</div>

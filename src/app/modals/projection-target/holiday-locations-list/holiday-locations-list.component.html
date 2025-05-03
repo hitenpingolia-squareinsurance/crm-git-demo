@@ -1,0 +1,108 @@
+<div class="row">
+  <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+</div>
+
+<div class="table-responsive mydiv">
+  <table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover"
+    style="width: 100% !important;">
+    <thead>
+      <tr>
+        <th colspan="6" style="text-align: center; background-color: #2cb2b3; color: white;">Holiday Locations List
+
+          <button *ngIf="ShowAddMoreBtn == 'Yes' && Is_Action == 'Yes'" class="btn btn-primary"
+            (click)="ShowAddMoreForm()">+ Add
+            More</button>
+        </th>
+      </tr>
+
+      <tr *ngIf="ShowAddMoreBtn == 'No'">
+        <th colspan="6" style="text-align: right !important; background-color: #fff !important; color: white;">
+          <div class="row">
+            <div class="col-sm-12">
+              <form [formGroup]="AddMoreForm" (ngSubmit)="AddMoreHolidayLocation()">
+
+                <div class="row"  >
+                  <div class="col-sm-6">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Service Location"
+                      [data]="Locations_Array" formControlName="Service_Location"
+                      [settings]="dropdownSettingMultipleSelect"> </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted1 && formControls1.Service_Location.errors " class="ValidationError">
+                      <div *ngIf="formControls1.Service_Location.errors.required">Please select Service Location!</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-4">
+                    <input type="submit" class="btn btn-success" value="Submit">&nbsp;&nbsp;
+                    <input (click)="CancelAddMore()" type="button" class="btn btn-warning" value="Cancel">
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </th>
+      </tr>
+
+      <tr>
+        <th colspan="6" style="text-align: right !important; background-color: #fff !important; color: white;">
+          <div class="row">
+            <div class="col-sm-12">
+              <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+                <div class="row"  >
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" placeholder="Search Location" formControlName="SearchValue">
+                    <div *ngIf="isSubmitted && formControls.SearchValue.errors " class="ValidationError">
+                      <div *ngIf="formControls.SearchValue.errors.required">Please enter value! </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <input type="submit" class="btn btn-info" value="Search">&nbsp;&nbsp;
+                    <input (click)="ClearSearch()" type="button" class="btn btn-warning" value="Reset">
+                  </div>
+
+                  <div class="col-sm-4" *ngIf="checkedList.length > 0">
+                    <input (click)="RemoveLocation()" type="button" class="btn btn-danger" value="Delete">
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </th>
+      </tr>
+
+      <tr>
+        <th *ngIf="Is_Action != 'Yes'">Sr&nbsp;No</th>
+
+        <th *ngIf="Is_Action == 'Yes'"><input [(ngModel)]="masterSelected" name="list_name" value="m1"
+            (change)="checkUncheckAll()" type="checkbox">
+        </th>
+
+        <th>Location Name</th>
+      </tr>
+    </thead>
+
+    <tbody *ngIf="dataAr?.length != 0">
+      <tr *ngFor="let row of dataAr; let i=index;">
+        <td *ngIf="Is_Action != 'Yes'">{{row.SNo}} </td>
+        <td *ngIf="Is_Action == 'Yes'">
+          <input type="checkbox" [(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}"
+            (change)="isAllSelected()">
+        </td>
+
+        <td><strong>{{row.Location_Name}}</strong></td>
+
+
+      </tr>
+    </tbody>
+
+    <tbody *ngIf="dataAr?.length == 0">
+      <tr>
+        <td colspan="3" align="center">No data Available !</td>
+      </tr>
+    <tbody>
+
+  </table>
+</div>

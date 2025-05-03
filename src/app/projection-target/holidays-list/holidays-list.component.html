@@ -1,0 +1,299 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="inner_page_css main_dashboard_css">
+  <!-- Content Header (Page header) -->
+
+  <!-- Main content -->
+  <section class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header d_flex flex_Equal flex_Middel">
+            
+              <div class="header_title">Holidays List</div>
+          </div>
+          <!-- /.box-header -->
+
+          <div *ngIf="!hasAccess" class="error-message">
+            <div class="container" style="text-align: center;">
+              <img src="assets/Authorised.png" alt="">
+              <h4>{{ errorMessage }}</h4>
+            </div>
+            
+          </div>
+
+          <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+            
+            <div class="col-md-12" style="text-align: end;">
+              <button class="btn btn-info" (click)="AddNewHoliday()" style="cursor: pointer; margin-right: 10px;"> + Add New</button>
+              <button type="button" class="btn btn-info" data-toggle="modal" (click)="GetDetails()" data-target="#exampleModal">
+                + Saturday
+              </button>
+            </div>
+            <br><br>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="false">
+              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Holidays List</h5>
+                    <button type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="false">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form [formGroup]="saturdayForm" (ngSubmit)="AddSaturday()" class="working_day">
+                      <div class="dropdown_day" *ngFor="let option of saturdayOptions">
+                        <div >
+                          <div class="working_heading">{{ option.Name }}</div>
+                          <ul>
+                            <li>
+                              <span>Working</span>
+                              <input type="radio" id="working_{{option.id}}"
+                                [formControlName]="option.Name + '_status'" value="working"
+                               />
+                            </li>
+                            <li>
+                              <span>Not Working</span>
+                              <input type="radio" id="notworking_{{option.id}}"
+                                [formControlName]="option.Name + '_status'" value="notWorking"
+                                 />
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-info">Submit</button>
+                      </div>
+                    </form>
+                  </div>
+                
+                </div>
+              </div>
+            </div>
+
+            <!-- <form [formGroup]="saturdayForm" (ngSubmit)="AddSaturday()">
+              <div class="row">
+                <div class="col-xs-10">
+                  <div class="dropdown" style="margin-top: 10px;">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                      + Saturday
+                    </button>
+                <ul class="dropdown-menu dropdown-234">
+                      <li *ngFor="let option of saturdayOptions">
+                        
+                            <div class="dropdown_list">
+                              <div class="day-view">
+                                <span>{{ option.Name }}</span>
+                              </div>
+                              <div class="dropdown_day">
+                                <ul>
+                                  <li>
+                                    <span for="working">Working</span>
+                              <input type="radio" id="working"  [formControlName]="option.Name + '_working'"  [checked]="!option.isWorking" value="working" />
+                                  </li>
+                                  <li>
+                                    <span for="notworking">Not Working</span>
+                              <input type="radio" id="notworking"  [formControlName]="option.Name + '_notWorking'" [checked]="option.isWorking" value="notWorking" />
+                                  </li>
+
+                                </ul>
+                                
+                              
+                              </div>
+                            </div>
+                   
+                      </li>
+                      <div class="col-xs-2">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                      </div>
+                    </ul> 
+                    <ul class="dropdown-menu dropdown-234">
+                      <li *ngFor="let option of saturdayOptions">
+                        <div class="dropdown_list">
+                          <div class="day-view">
+                            <span>{{ option.Name }}</span>
+                          </div>
+                          <div class="dropdown_day">
+                            <ul>
+                              <li>
+                                <span>Working</span>
+                                <input type="radio" id="working_{{option.id}}"
+                                  [formControlName]="option.Name + '_status'" value="working"
+                                  [checked]="!option.isWorking" />
+                              </li>
+                              <li>
+                                <span>Not Working</span>
+                                <input type="radio" id="notworking_{{option.id}}"
+                                  [formControlName]="option.Name + '_status'" value="notWorking"
+                                  [checked]="option.isWorking" />
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </li>
+                      <div class="col-xs-2">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                      </div>
+                    </ul>
+
+
+                  </div>
+                </div>
+              </div>
+            </form> -->
+
+
+
+
+            <!-- </div> -->
+
+
+            <div>
+
+
+              <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" id="Table1" class="row-border table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+                <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                  <li class="table-row tablerow" *ngFor="let row of dataAr; let i=index;">
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15" style="margin-top: 15px;">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{ row.SrNo }}.</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Remarks</div>
+                              <strong class="fs_18"><span>
+                                {{ row.HolidayRemark }}
+                              </span></strong>
+                              
+                            </div>
+
+                            
+
+                          </div>
+                      </div>
+                      <!-- <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data" *ngIf="row.HolidayRemark != ''">
+                            <div>Remarks</div>
+                            <strong class="fs_18"><span>{{ row.HolidayRemark }}</span></strong>
+                          </div>
+                        </div>
+                        
+                        
+                      </div> -->
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data" *ngIf="row.HolidayDate != ''">
+                            <div>Holiday Date</div>
+                            <strong class="fs_18"><span>{{ row.HolidayDate }}</span></strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+
+                        <div class="label_chips health_lob" style="margin-right: 5px; cursor:pointer;" *ngIf="row.IsAction != 'Yes'">
+                          Not allowed
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="last_row">
+                      <div class="effective_date">
+                        <div class="d_flex">
+                         
+                        </div>
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                        <div class="row">
+                          <button class="btn btn-warning" style="padding:3px 10px; margin-right:10px;" (click)="ViewLocationList(row.Id, row.IsAction)">List</button>
+                          <button *ngIf="row.IsAction == 'Yes'" style="padding:3px 10px; margin-right:10px;" (click)="DeleteHoliday(row.Id)" class="label label-danger"
+                          style="margin-right: 5px;">Delete</button>
+
+                          
+  
+                        
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+
+
+
+
+
+
+
+              <!-- <table datatable [dtOptions]="dtOptions"
+                class="row-border hover table table-bordered table-hover table-checkable" id="kt_datatable"
+                style="margin-top: 13px !important; width: 100% !important">
+
+                <thead>
+                  <tr>
+                    <th>Sr.No</th>
+                    <th>Holiday&nbsp;Date</th>
+                    <th>Remark</th>
+                    <th>Location</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{ row.SrNo }}.</td>
+                    <td>{{ row.HolidayDate }}</td>
+                    <td>{{ row.HolidayRemark }}</td>
+                    <td> <span (click)="ViewLocationList(row.Id, row.IsAction)" class="label label-primary"
+                        style="margin-right: 5px; cursor:pointer;">List</span></td>
+
+                    <td>
+                      <span *ngIf="row.IsAction == 'Yes'" (click)="DeleteHoliday(row.Id)" class="label label-danger"
+                        style="margin-right: 5px;">Delete</span>
+
+                      <span *ngIf="row.IsAction != 'Yes'" class="label label-warning"
+                        style="margin-right: 5px; cursor:not-allowed;">Not allowed</span>
+                    </td>
+
+                  </tr>
+                </tbody>
+
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="5" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+
+              </table> -->
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+
+</div>
+<!-- /.content-wrapper -->

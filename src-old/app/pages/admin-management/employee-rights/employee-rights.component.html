@@ -1,0 +1,455 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+
+  <!-- Main content -->
+  <section class="content">
+
+
+
+
+
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Assign Rights</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+
+
+            <div class="row">
+              <div class="col-md-12">
+
+
+                <form [formGroup]="empForm" (ngSubmit)="onSubmit()">
+
+                  <div formArrayName="MainMenu">
+
+                    <ul *ngFor="let employee of MainMenu().controls; let empIndex=index" class="list-group">
+
+                      <li [formGroupName]="empIndex" class="list-group-item">
+
+                        <div class="checkbox">
+                          <label><input type="checkbox" value="{{empIndex}}"
+                              formControlName="MainMenu_Status">{{Menus[empIndex]['Name']}}</label>
+                        </div>
+
+                        <input type="text" formControlName="MainMenu_Id" style="display:none;">
+
+                        <!--<button (click)="removeEmployee(empIndex)">Remove</button>-->
+
+
+                        <ul formArrayName="SubMenus" class="list-group">
+
+                          <li *ngFor="let skill of employeeSkills(empIndex).controls; let skillIndex=index"
+                            class="list-group-item">
+
+
+                            <table [formGroupName]="skillIndex" class="table table-bordered">
+                              <tr>
+                                <th colspan="4">
+                                  <div style="float: left;margin-right: 2%;">
+                                    <div class="checkbox">
+                                      <label><input type="checkbox" formControlName="Create">Create Request</label>
+                                    </div>
+                                  </div>
+
+
+                                </th>
+                              </tr>
+
+                              <tr>
+
+                                <th>
+                                  <div class="radio">
+                                    <label><input type="radio" formControlName="ViewType" [name]="skillIndex"
+                                        value="All">All</label>
+                                  </div>
+                                </th>
+                                <th>
+                                  <div class="radio">
+                                    <label><input type="radio" formControlName="ViewType" [name]="skillIndex"
+                                        value="Hierarchy">Hierarchy</label>
+                                  </div>
+                                </th>
+                                <th>
+                                  <div class="radio">
+                                    <label><input type="radio" formControlName="ViewType" [name]="skillIndex"
+                                        value="Self">Self</label>
+                                  </div>
+                                </th>
+                                <th>
+                                  <div class="checkbox">
+                                    <label><input type="checkbox" formControlName="ExcelExport"
+                                        value="Excel_Export">Excel Export</label>
+                                  </div>
+                                </th>
+
+                              </tr>
+                              <tr>
+
+
+                                <td colspan="4">
+                                  <div class="checkbox">
+                                    <label><input type="checkbox" formControlName="Manage_Requests">Manage
+                                      Requests</label>
+                                  </div>
+                                </td>
+
+                              </tr>
+                              <tr>
+
+                                <td colspan="4">
+                                  <ng-multiselect-dropdown class="form-control" name="InsuranceCompanies" class=""
+                                    placeholder="--Select Insurance Companies--" [data]="Ins_Ar"
+                                    formControlName="InsuranceCompanies" [settings]="dropdownSettings">
+                                  </ng-multiselect-dropdown>
+                                </td>
+                              </tr>
+
+
+                              <tr>
+
+
+                                <td *ngIf="Menus[empIndex]['Name'] == 'Raise Ticket'" colspan="4">
+                                  <div>
+                                    <label>Manage Query Requests</label>
+                                  </div>
+                                </td>
+
+                              </tr>
+                              <tr *ngIf="Menus[empIndex]['Name'] == 'Raise Ticket'">
+
+                                <td colspan="4">
+                                  <ng-multiselect-dropdown class="form-control" name="Manage_Sub_Requests" class=""
+                                    placeholder="--Select Manage Query Requests--" [data]="Manage_Sub_Requests_Ar"
+                                    formControlName="Manage_Sub_Requests" [settings]="dropdownSettings">
+                                  </ng-multiselect-dropdown>
+                                </td>
+                              </tr>
+
+
+                              <!--<button (click)="removeEmployeeSkill(empIndex,skillIndex)">Remove</button>-->
+
+                            </table>
+
+
+
+                            <table [formGroupName]="skillIndex" class="table table-bordered">
+                              <tr>
+                                <th colspan="4">
+                                  <div style="float: left;margin-right: 2%;">
+                                    <div class="checkbox">
+                                      <label><input type="checkbox" formControlName="Create">Create Request</label>
+                                    </div>
+
+                                    <div class="checkbox">
+                                      <label><input type="checkbox" formControlName="View">View Requests</label>
+                                    </div>
+                                  </div>
+                                </th>
+                              </tr>
+
+                              <tr>
+
+                                <th>
+                                  <div class="radio">
+                                    <label><input type="radio" formControlName="ViewType" [name]="skillIndex"
+                                        value="All">All</label>
+                                  </div>
+                                </th>
+                                <th>
+                                  <div class="radio">
+                                    <label><input type="radio" formControlName="ViewType" [name]="skillIndex"
+                                        value="Hierarchy">Hierarchy</label>
+                                  </div>
+                                </th>
+                                <th>
+                                  <div class="radio">
+                                    <label><input type="radio" formControlName="ViewType" [name]="skillIndex"
+                                        value="Self">Self</label>
+                                  </div>
+                                </th>
+                                <th>
+                                  <div class="checkbox">
+                                    <label><input type="checkbox" formControlName="ExcelExport"
+                                        value="Excel_Export">Excel Export</label>
+                                  </div>
+                                </th>
+
+                              </tr>
+                              <tr>
+
+
+                                <td colspan="4">
+                                  <div class="checkbox">
+                                    <label><input type="checkbox" formControlName="Manage_Requests">Manage
+                                      Requests</label>
+                                  </div>
+                                </td>
+
+                              </tr>
+                              <tr>
+
+                                <td colspan="4">
+                                  <ng-multiselect-dropdown class="form-control" name="InsuranceCompanies" class=""
+                                    placeholder="--Select Insurance Companies--" [data]="Ins_Ar"
+                                    formControlName="InsuranceCompanies" [settings]="dropdownSettings">
+                                  </ng-multiselect-dropdown>
+                                </td>
+                              </tr>
+
+
+                              <tr>
+
+
+                                <td *ngIf="Menus[empIndex]['Name'] == 'Raise Ticket'" colspan="4">
+                                  <div>
+                                    <label>Manage Query Requests</label>
+                                  </div>
+                                </td>
+
+                              </tr>
+                              <tr *ngIf="Menus[empIndex]['Name'] == 'Raise Ticket'">
+
+                                <td colspan="4">
+                                  <ng-multiselect-dropdown class="form-control" name="Manage_Sub_Requests" class=""
+                                    placeholder="--Select Manage Query Requests--" [data]="Manage_Sub_Requests_Ar"
+                                    formControlName="Manage_Sub_Requests" [settings]="dropdownSettings">
+                                  </ng-multiselect-dropdown>
+                                </td>
+                              </tr>
+
+
+                              <!--<button (click)="removeEmployeeSkill(empIndex,skillIndex)">Remove</button>-->
+
+                            </table>
+
+                          </li>
+
+                          <li *ngFor="let skill of employeeSkills(empIndex).controls; let skillIndex=index"
+                            class="list-group-item">
+
+
+                            <table [formGroupName]="skillIndex" class="table table-bordered">
+                              <tr>
+                                <th colspan="4">
+                                  <div style="float: left;margin-right: 2%;">
+                                    <div class="checkbox">
+                                      <label><input type="checkbox" formControlName="Create">Create Request</label>
+                                    </div>
+                                  </div>
+
+
+                                </th>
+                              </tr>
+
+                              <tr>
+
+                                <th>
+                                  <div class="radio">
+                                    <label><input type="radio" formControlName="ViewType" [name]="skillIndex"
+                                        value="All">All</label>
+                                  </div>
+                                </th>
+                                <th>
+                                  <div class="radio">
+                                    <label><input type="radio" formControlName="ViewType" [name]="skillIndex"
+                                        value="Hierarchy">Hierarchy</label>
+                                  </div>
+                                </th>
+                                <th>
+                                  <div class="radio">
+                                    <label><input type="radio" formControlName="ViewType" [name]="skillIndex"
+                                        value="Self">Self</label>
+                                  </div>
+                                </th>
+                                <th>
+                                  <div class="checkbox">
+                                    <label><input type="checkbox" formControlName="ExcelExport"
+                                        value="Excel_Export">Excel Export</label>
+                                  </div>
+                                </th>
+
+                              </tr>
+                              <tr>
+
+
+                                <td colspan="4">
+                                  <div class="checkbox">
+                                    <label><input type="checkbox" formControlName="Manage_Requests">Manage
+                                      Requests</label>
+                                  </div>
+                                </td>
+
+                              </tr>
+                              <tr>
+
+                                <td colspan="4">
+                                  <ng-multiselect-dropdown class="form-control" name="InsuranceCompanies" class=""
+                                    placeholder="--Select Insurance Companies--" [data]="Ins_Ar"
+                                    formControlName="InsuranceCompanies" [settings]="dropdownSettings">
+                                  </ng-multiselect-dropdown>
+                                </td>
+                              </tr>
+
+
+                              <tr>
+
+
+                                <td *ngIf="Menus[empIndex]['Name'] == 'Raise Ticket'" colspan="4">
+                                  <div>
+                                    <label>Manage Query Requests</label>
+                                  </div>
+                                </td>
+
+                              </tr>
+                              <tr *ngIf="Menus[empIndex]['Name'] == 'Raise Ticket'">
+
+                                <td colspan="4">
+                                  <ng-multiselect-dropdown class="form-control" name="Manage_Sub_Requests" class=""
+                                    placeholder="--Select Manage Query Requests--" [data]="Manage_Sub_Requests_Ar"
+                                    formControlName="Manage_Sub_Requests" [settings]="dropdownSettings">
+                                  </ng-multiselect-dropdown>
+                                </td>
+                              </tr>
+
+
+                              <!--<button (click)="removeEmployeeSkill(empIndex,skillIndex)">Remove</button>-->
+
+                            </table>
+
+
+
+                            <table [formGroupName]="skillIndex" class="table table-bordered">
+                              <tr>
+                                <th colspan="4">
+                                  <div style="float: left;margin-right: 2%;">
+                                    <div class="checkbox">
+                                      <label><input type="checkbox" formControlName="Create">Create Request</label>
+                                    </div>
+
+                                    <div class="checkbox">
+                                      <label><input type="checkbox" formControlName="View">View Requests</label>
+                                    </div>
+                                  </div>
+                                </th>
+                              </tr>
+
+                              <tr>
+
+                                <th>
+                                  <div class="radio">
+                                    <label><input type="radio" formControlName="ViewType" [name]="skillIndex"
+                                        value="All">All</label>
+                                  </div>
+                                </th>
+                                <th>
+                                  <div class="radio">
+                                    <label><input type="radio" formControlName="ViewType" [name]="skillIndex"
+                                        value="Hierarchy">Hierarchy</label>
+                                  </div>
+                                </th>
+                                <th>
+                                  <div class="radio">
+                                    <label><input type="radio" formControlName="ViewType" [name]="skillIndex"
+                                        value="Self">Self</label>
+                                  </div>
+                                </th>
+                                <th>
+                                  <div class="checkbox">
+                                    <label><input type="checkbox" formControlName="ExcelExport"
+                                        value="Excel_Export">Excel Export</label>
+                                  </div>
+                                </th>
+
+                              </tr>
+                              <tr>
+
+
+                                <td colspan="4">
+                                  <div class="checkbox">
+                                    <label><input type="checkbox" formControlName="Manage_Requests">Manage
+                                      Requests</label>
+                                  </div>
+                                </td>
+
+                              </tr>
+                              <tr>
+
+                                <td colspan="4">
+                                  <ng-multiselect-dropdown class="form-control" name="InsuranceCompanies" class=""
+                                    placeholder="--Select Insurance Companies--" [data]="Ins_Ar"
+                                    formControlName="InsuranceCompanies" [settings]="dropdownSettings">
+                                  </ng-multiselect-dropdown>
+                                </td>
+                              </tr>
+
+
+                              <tr>
+
+
+                                <td *ngIf="Menus[empIndex]['Name'] == 'Raise Ticket'" colspan="4">
+                                  <div>
+                                    <label>Manage Query Requests</label>
+                                  </div>
+                                </td>
+
+                              </tr>
+                              <tr *ngIf="Menus[empIndex]['Name'] == 'Raise Ticket'">
+
+                                <td colspan="4">
+                                  <ng-multiselect-dropdown class="form-control" name="Manage_Sub_Requests" class=""
+                                    placeholder="--Select Manage Query Requests--" [data]="Manage_Sub_Requests_Ar"
+                                    formControlName="Manage_Sub_Requests" [settings]="dropdownSettings">
+                                  </ng-multiselect-dropdown>
+                                </td>
+                              </tr>
+
+
+                              <!--<button (click)="removeEmployeeSkill(empIndex,skillIndex)">Remove</button>-->
+
+                            </table>
+
+                          </li>
+                          <!--<button type="button" (click)="addEmployeeSkill(empIndex)">Add Skill</button>-->
+                        </ul>
+
+
+                      </li>
+
+                    </ul>
+                  </div>
+
+
+                  <div class="box-footer">
+
+                    <button type="submit" class="btn btn-info pull-right">Update Rights</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+
+
+
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
+
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

@@ -1,0 +1,13 @@
+
+
+ <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+    <p class="TDHeading" style="padding:8px;">Details</p>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="view_data_css">
+                <p *ngFor="let rVALUE of data.log_data;"><span>{{rVALUE.Name}} :-</span><strong>{{rVALUE.Value}}</strong></p>
+            </div>
+        </div>
+    </div>
+
+

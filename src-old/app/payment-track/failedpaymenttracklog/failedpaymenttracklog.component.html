@@ -1,0 +1,72 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+
+  <section class="content">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box">
+          <div class="box-header">
+            <div class="row">
+              <div class="col-md-4">
+                <h3 class="box-title">Failed Payment Track Log  </h3>
+              </div>
+              <div class="col-md-6">&nbsp;</div>
+             
+            </div>
+          </div>
+          <div class="box-body">
+
+            <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+
+            <div class="mydiv">
+              <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Request Response ID</th>
+                    <th>Quotation Id</th>
+                    <th>Company</th>
+                    <th>Group Id</th>
+                    <th>Dublicate</th>
+                    <th>Time</th>
+                    <th>Failed Update</th>
+                    <th>Success</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr">
+
+                    <td>{{row.SrNo}}.</td>
+                    <td>{{row.RequestResponseId}}</td>
+                    <td>{{row.QuotationId}}</td>
+                    <td>{{row.Company}}</td>
+                    <td>{{row.GroupId}}</td>
+                    <td>{{row.Duplicate}}</td>
+                    <td>{{row.Time}}</td>
+                    <td>{{row.FailedUpdate}}</td>
+                    <td>{{row.Success}}</td>
+
+
+
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="14" align="center">No data available!</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

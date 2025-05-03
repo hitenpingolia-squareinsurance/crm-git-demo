@@ -1,0 +1,87 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header d_flex flex_Equal flex_Middel">
+                        <div class="header_title">Invoices</div>
+                        <button class="btn btn-success" (click)="GenerateInvoiceComponent(this.id)">Generate Invoice</button>
+                    </div>
+
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+                        <div class="name_data">
+                            <div class="main_name_data">
+                                <div class="name_row">
+                                    <p>Name :</p>
+                                    <span>{{Name}}</span>
+                                </div>
+                                <div class="name_row">
+                                    <p>Code :</p>
+                                    <span>{{agentCode}}</span>
+                                </div>                                 
+                            </div>
+                            <div  class="main_name_data">
+                                <div class="name_row">
+                                    <p>Total Earning :</p>
+                                    <span>&#x20B9;{{totalEarning}}</span>
+                                </div>
+                            </div>
+                           
+                        </div>
+
+                        <div class="mydiv table-responsive">
+                            <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                                <thead>     
+                                    <tr>
+                                        <th>SR.No</th>
+                                        <th>Invoice Id</th>
+                                        <th>Invoice Month</th>
+                                        <th>Invoice Financial Year</th>
+                                        <th>Invoice Amount</th>
+                                        <th>Invoice Date</th>
+                                        <th>Status</th>
+                                    </tr>                    
+                                </thead>
+
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr">
+                                        <td>{{row.SrNo}}.</td>
+                                        <td>{{row.invoice_id}}
+                                            <a style="color:white;" class="  btn btn-primary btn-info"
+                                            (click)="SendMail(row.id)"
+                                            data-toggle="modal" data-target="#RejectPosp" data-backdrop="static"
+                                            data-keyboard="false"> <i class="fa fa-envelope"></i></a>
+                                            <a style="color:white;" class=" pull-right btn btn-primary btn-info"
+                                            (click)="Download(row.id)"
+                                            data-toggle="modal" data-target="#RejectPosp" data-backdrop="static"
+                                            data-keyboard="false"> <i class="fa fa-download"></i></a>
+                                        </td>
+                                        <td>{{row.months}}</td>
+                                        <td>{{row.FinancialYear}}</td>
+                                        <td>{{row.invoiceamount}}</td>
+                                        <td>{{row.invoicedate}}</td>                                        
+                                        <td>
+                                            <label class="label label-success" *ngIf="row.status == 1">Paid
+                                            </label>
+                                            {{row.account_update_date}}
+                    
+                                          <label class="label label-danger" *ngIf="row.status == 0"
+                                            (click)="ChanagePaymentstatus(row.id)">Un-Paid</label>
+                                        </td>                                        
+                                    </tr>
+                                </tbody>
+
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                    <td colspan="14" align="center">No data available!</td>
+                                    </tr>
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

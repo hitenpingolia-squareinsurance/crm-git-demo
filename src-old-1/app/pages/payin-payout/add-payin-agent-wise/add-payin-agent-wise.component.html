@@ -1,0 +1,225 @@
+<section class="inner_page_css main_dashboard_css">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="main_card_form">
+					<div class="main_header">
+						<div class="header_title">
+							<!-- title  -->
+							Agents Pay-In
+						</div>
+					</div>
+					<div class="main_body main_card_height_scroll_withoutfooter">
+						<div>
+							<div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+								<button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+									data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+									aria-controls="collapseOne">
+									<a role="button" class="fa fa-filter"><span>Filters</span><i
+											class="fa fa-angle-down pull-right"></i></a>
+								</button>
+							</div>
+						</div>
+
+						<div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+							aria-labelledby="headingOne">
+							<div class="panel-body">
+								<!-- filter  -->
+								<form [formGroup]="PayInForm" (ngSubmit)="SearchBtn()">
+									<div class="row"  >
+
+
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown class="form-control" name="Ins_Compaines_Ids"
+												placeholder="Select Ins Company" [data]="Ins_Companies_Ar"
+												formControlName="Ins_Compaines_Ids"
+												[settings]="ins_Company_dropdownSettings"
+												(onSelect)="onItemSelect($event,'InsuranceCompany')">
+											</ng-multiselect-dropdown>
+										</div>
+
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown class="form-control" name="LOB_Ids"
+												placeholder="Select LOB" [data]="LOB_Ar" formControlName="LOB_Ids"
+												[settings]="ins_Company_dropdownSettings"
+												(onSelect)="onItemSelect($event,'LOB')"
+												(onDeSelect)="onItemDeSelect($event,'LOB')">
+											</ng-multiselect-dropdown>
+
+										</div>
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown class="form-control" name="Product_Ids"
+												[placeholder]="'Select Products'" [data]="Products_Ar"
+												formControlName="Product_Ids" [settings]="dropdownSettings"
+												(onSelect)="onItemSelect($event,'Product')"
+												(onDeSelect)="onItemDeSelect($event,'Product')"
+												(onSelectAll)="onSelectAll($event,'Product')"
+												(onDeSelectAll)="onDeSelectAll($event,'Product')">
+											</ng-multiselect-dropdown>
+
+
+										</div>
+
+										<div class="col-sm-3">
+
+											<ng-multiselect-dropdown class="form-control" name="SubProduct_Ids"
+												[placeholder]="'Select Sub-Products'" [data]="SubProducts_Ar"
+												formControlName="SubProduct_Ids" [settings]="dropdownSettings"
+												(onSelect)="onItemSelect($event,'SubProduct')"
+												(onDeSelect)="onItemDeSelect($event,'SubProduct')"
+												(onSelectAll)="onSelectAll($event,'SubProduct')"
+												(onDeSelectAll)="onDeSelectAll($event,'SubProduct')">
+											</ng-multiselect-dropdown>
+
+
+										</div>
+
+									</div>
+
+
+									<div class="row"  >
+
+
+
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown class="form-control" name="Segment_Ids"
+												[placeholder]="'Select Segments'" [data]="Segment_Ar"
+												formControlName="Segment_Ids" [settings]="dropdownSettings"
+												(onSelect)="onItemSelect($event,'Segment')"
+												(onDeSelect)="onItemDeSelect($event,'Segment')"
+												(onSelectAll)="onSelectAll($event,'Segment')"
+												(onDeSelectAll)="onDeSelectAll($event,'Segment')">
+											</ng-multiselect-dropdown>
+
+
+										</div>
+
+										<div class="col-sm-3">
+											<input type="text" placeholder="Select Date OR Date-Range"
+												class="form-control" formControlName="DateOrDateRange" bsDaterangepicker
+												[bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+										</div>
+
+
+										<div class="col-sm-3">
+
+											<!-- <input type="submit" class="btn btn-info" value="Search"> -->
+
+											<button type="submit" class="btn btn-info" style="font-size: small;"
+												value="Search">
+												<i class="fa fa-search">
+													Search</i></button>
+											&nbsp;&nbsp;
+											<input (click)="ClearSearch()" type="button" class="btn btn-danger"
+												value="Reset">
+											&nbsp;&nbsp;
+											<a routerLink="/payin-payout/add-payin/agent-wise" href="javascript:;">
+												<input type="button" class="btn btn-primary" value="Add New">
+											</a>
+
+
+										</div>
+
+									</div>
+
+
+
+
+									<!-- <div class="row"  >
+		
+		
+		
+									 
+										<div class="col-sm-6"></div>
+		
+										
+									</div> -->
+
+								</form>
+							</div>
+						</div>
+
+
+						<hr>
+						<div class=" mydiv table-responsive">
+							<table datatable [dtOptions]="dtOptions" style="width: 100%;"
+								class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>No</th>
+
+
+										<th>Actions</th>
+										<th>Effective Date</th>
+
+										<th>Agent Name/Code</th>
+										<th>Insurance Company</th>
+										<th>LOB</th>
+
+										<th>PayIn OD</th>
+										<th>PayOut OD</th>
+
+										<th>PayIn TP</th>
+										<th>PayOut TP</th>
+
+										<th>PayIn Reward</th>
+										<th>PayOut Reward</th>
+
+										<th>PayIn Scheme</th>
+										<th>PayOut Scheme</th>
+
+
+									</tr>
+								</thead>
+								<tbody *ngIf="dataAr?.length != 0">
+									<tr *ngFor="let row of dataAr">
+										<td>{{ row.SrNo }}</td>
+
+										<td>
+
+											<!--<a (click)="ViewPayIn(row.Id)" href="javascript:void(0)">
+							<span style="margin-right: 5px;" class="label label-success label-inline mr-2 ng-star-inserted">View</span>
+						</a>-->
+
+											<a (click)="DeletePayIn(row.Id)" href="javascript:void(0)">
+												<span style="margin-top: 5%;"
+													class="label label-danger label-inline mr-2 ng-star-inserted">Delete</span>
+											</a>
+										</td>
+
+										<td>
+											<p style="width:75px;">{{row.Effective_Date}}</p>
+										</td>
+
+										<td>{{row.Agent_Name}}</td>
+										<td>{{row.Ins_Compaines_Ids}}</td>
+										<td>{{row.LOB}}</td>
+										<td>{{row.PayInOD}}</td>
+										<td>{{row.PayOutOD}}</td>
+
+										<td>{{row.PayInTP}}</td>
+										<td>{{row.PayOutTP}}</td>
+
+
+										<td>{{row.PayInReward}}</td>
+										<td>{{row.PayOutReward}}</td>
+
+										<td>{{row.PayInScheme}}</td>
+										<td>{{row.PayOutScheme}}</td>
+
+
+									</tr>
+								</tbody>
+								<tbody *ngIf="dataAr?.length == 0">
+									<tr>
+										<td colspan="14" align="center">No data available !</td>
+									</tr>
+								<tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

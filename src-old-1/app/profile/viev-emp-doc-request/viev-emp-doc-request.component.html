@@ -1,0 +1,215 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+    <div class="container-fluid">
+      <div class="main_card_form ">
+        <div class="main_header">
+          <div class="header_title">View Document</div>       
+        </div>
+        <div class="main_body main_card_height_scroll_withoutfooter">
+          <div class="btn_list_group">
+            <div aria-multiselectable="true" class="panel-group" id="accordion" role="tablist">
+              <div class="panel panel-default">
+                <div class="row">
+                  <div class="col-md-8"></div>
+                  <div class="col-md-4">
+                    <div class="dsr-fillter">
+                      <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <a role="button" class="fa fa-filter"><span>Filters</span><i class="fa fa-angle-down pull-right"></i></a>
+                      </button>
+                      <button class="btn btn-info3" *ngIf="urlSegment == 'view_request'" routerLink="/meeting_request/add_request">
+                        <a role="button" class="fa fa-plus"><span>Add Meeting Request</span></a>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div aria-labelledby="headingOne" class="panel-collapse collapse" id="collapseOne" role="tabpanel" aria-expanded="false" style="height: 0px;">
+                  <div class="panel-body">
+                    <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+                      <div class="col-sm-3" *ngIf="this.urlSegment == 'view_docs_manager' ">
+                        <ng-multiselect-dropdown class="form-control" name="QuoteType" placeholder="QuoteType" [data]="QuoteTypes"
+                          formControlName="QuoteType" [settings]="dropdownSettingsingleselect"  [(ngModel)]="QuoteTypeVal"></ng-multiselect-dropdown>
+                        <!-- <span *ngIf="isSubmitted && formControls.QuoteType.errors" class="ValidationError">
+                          <span *ngIf="formControls.QuoteType.errors.required">Quote Type is required</span></span> -->
+                      </div>
+
+                      <div class="col-sm-3" *ngIf="this.urlSegment == 'view_docs_manager' ">
+                        <ng-multiselect-dropdown class="form-control" name="status" placeholder="Status" [data]="statusData"
+                          formControlName="status" [settings]="dropdownSettingsingleselect1"> </ng-multiselect-dropdown>
+                      </div>
+                  
+                  
+                      <div class="col-sm-3"><input type="text" formControlName="SearchValue"
+                        name="SearchValue" class="form-control" placeholder="Search"></div>
+
+                          <button type="submit" class="btn btn-info" style="font-size: small;" value="Search"> <i class="fa fa-search"  >
+                            Search</i> </button>
+                        &nbsp;&nbsp;
+                        <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger" value="Reset"> <i
+                            class="fa fa-close"> Reset</i> </button>
+
+                    </form>
+
+                    <!-- <app-square-filter (postCreated)="SearchData($event)"></app-square-filter> -->
+                  </div>
+                </div>                
+              </div>
+            </div>
+          </div>   
+          <div class="row">
+            <div class="col-md-12">
+              <div class="tab-content">
+                <div class="tab-pane fade in active" id="All" role="tabpanel">
+                  <div class="custom_table">
+                    <ul class="responsive-table">  
+                      <cdk-virtual-scroll-viewport #scroller itemSize="72" class="content mt_0">
+                        <mat-list>
+                          <ng-container *cdkVirtualFor="let row of this.post; let i=index">
+                            <mat-list-item>
+                              <li class="table-row">
+                                <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                                  <div class="agents_data agents_data1">
+                                    <div class="icon_re_cl">{{ i + 1 }}</div>
+                                    <div class="agent_name_mobile">
+                                      <div class="agent_data">
+                                        <div>Profile</div>
+                                        <strong class="fs_18">{{ row.doc_type }}</strong>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="agents_data agents_data2">
+                                    <div class="agent_name_mobile">
+                                      <div class="agent_name_mobile">
+                                        <div class="agent_data">
+                                          <div>Profile Image</div>
+                                          <strong class="fs_18"><label class="label label-info">  <a style="color: white;" *ngIf="row.document != '' " href="{{row.document}}" target="_blank">View</a></label>
+                                          </strong>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>             
+                                  <div class="agents_data agents_data3">
+                                    <div class="agent_name_mobile">  
+                                      <div class="agent_data">
+                                        <div>Status</div>
+                                        <strong class="fs_18">
+                                          <label class="label label-warning" *ngIf="row.last_action_date == '' ">Pending</label>
+
+                                       
+                                          <label class="label label-info" *ngIf="(row.last_action_date != '') && row.approval_status == 1">Approve</label>
+                                          <label class="label label-warning" *ngIf="(row.last_action_date != '') && row.approval_status == 0 ">Deny</label>
+                                        </strong>
+                                      </div>                                    
+                                    </div>
+                                  </div>
+                                </div>
+  
+                                <div class="last_row_div">
+                                    &nbsp;
+                                  <div class="d_flex">
+                                    <div class="label_chips motor_lob dark" *ngIf="urlSegment == 'view_docs_manager'">
+                                      <span>Request By Name : {{ row.requested_by }} </span>
+                                    </div>
+
+                                    <div class="label_chips non_motor_lob" *ngIf="urlSegment == 'view_docs_manager'">
+                                      <span>Request By Code : {{row.requested_by_empcode}} </span>
+                                    </div>
+
+                                    <div class="label_chips non_motor_lob">
+                                      <span>Add Stamp : {{row.add_stamp}} </span>
+                                    </div>
+
+                                    <div class="label_chips non_motor_lob">
+                                      <span>Update Date : {{row.last_action_date}} </span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="last_row ">
+
+                                  <span class="remark"  *ngIf="row.remark != '' ">Remark : {{row.remark}} </span>
+                                  <div class="status">
+                                    <button *ngIf="urlSegment == 'view_docs_manager' && row.manager_id != 0 && row.last_action_date == '' " (click)="Remark('Approve',row.id,1)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                      Approve
+                                    </button>
+  
+                                      <!-- <div *ngIf="urlSegment == 'view_docs_manager' && row.manager_id != 0 && row.last_action_date == '' " class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                           <a (click)="ProfileApproveDeny('Approve',row.id,1)">Approve</a>
+                                      </div> -->
+  
+                                      <button *ngIf="urlSegment == 'view_docs_manager' && row.manager_id != 0 && row.last_action_date == '' " (click)="Remark('Deny',row.id,0)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                        Deny
+                                      </button>
+                                  </div>
+                                  
+
+
+                                    <!-- <div *ngIf="urlSegment == 'view_docs_manager' && row.manager_id != 0 && row.last_action_date == '' " class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                        <a (click)="ProfileApproveDeny('Deny',row.id,0)">Deny</a>
+                                    </div>                           -->
+                                  <div *ngIf="urlSegment == 'view_docs_manager' && (row.manager_id == 0 || row.manager_id == '')" class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                      <a (click)="AcceptManager('Accept',row.id)">Accept</a>
+                                  </div>
+                                </div>
+                              </li>
+  
+                              <mat-divider></mat-divider>
+                            </mat-list-item>
+                          </ng-container>
+  
+                          <div class="spinner-item" *ngIf="loading" style="display: block;margin: auto; width: 50px;">
+                            <mat-progress-spinner [mode]="'indeterminate'" [diameter]="50"></mat-progress-spinner>
+                          </div>
+  
+                          <ul class="responsive-table" *ngIf="this.loading == false && post.length == 0">
+                            <li class="table-row">
+                              <div class="no_data_found">No docs available !</div>
+                            </li>
+                          </ul>
+                        </mat-list>
+                      </cdk-virtual-scroll-viewport>  
+                    </ul>       
+                  </div>  
+                </div>
+              </div>  
+            </div>
+          </div>       
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+  <div class="modal" id="myModal" data-bs-backdrop='static'>
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <form (ngSubmit)="submitRemark()" [formGroup]="UploadRemark" style="margin-top: -15px;">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Remark</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+          
+            <!-- Modal Body -->
+            <div class="modal-body">
+            <input type="text" class="form-control" formControlName="remark">
+              <div *ngIf="isSubmitted && formControls.remark.errors" class="ValidationError">
+                <div *ngIf="formControls.remark.errors.required">Please enter remark </div>
+              </div>
+            </div>
+          
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+              <button type="button" id="closeModel" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button class="btn btn-primary nextBtn pull-right" style="margin-right: 5px;" type="submit">Submit</button>              <!-- Add any other buttons you need -->
+            </div>
+
+        </form>
+  
+      </div>
+    </div>
+  </div>

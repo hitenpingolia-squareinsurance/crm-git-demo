@@ -1,0 +1,97 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+
+  <section class="content">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box">
+          <div class="box-header">
+            <div class="row">
+              <div class="col-md-4">
+                <h3 class="box-title">Bourcher List </h3>
+              </div>
+              <div class="col-md-6">&nbsp;</div>
+              <div class="col-md-2">
+                <button class="btn btn-primary nextBtn pull-right" (click)="AddBourcherHealth()"
+                  style="margin-right: 5px;"> <i class="fa fa-plus"> Add Bourcher List </i></button>
+
+              </div>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="mydiv">
+              <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+              class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Company Name</th>
+                  <th>LOB</th>
+                  <th>Product</th>
+
+                  <th>Policy Wording</th>
+                  <th>Proposal Form</th>
+                  <th>Claim Form</th>
+                  <th>Brochure</th>
+                  <th>Action</th>
+
+
+                </tr>
+              </thead>
+              <tbody *ngIf="dataAr?.length != 0">
+                <tr *ngFor="let row of dataAr">
+                  <td>{{row.SrNo}}.</td>
+                  <td>{{row.company_name}}</td>
+                  <td>{{row.lob}}</td>
+                  <td>{{row.product}}</td>
+                  <td>
+                    <label class="label label-info">  <a style="color: white;" *ngIf="row.policy_wording != '' " href="{{row.policy_wording}}" target="_blank"
+                   >
+                    View</a></label>
+                  </td> 
+                  <td>
+                    <label class="label label-info">  <a style="color: white;" *ngIf="row.proposal_form != '' " href="{{row.proposal_form}}" target="_blank"
+                   >
+                    View</a></label>
+                  </td> 
+                  <td>
+                    <label class="label label-info">  <a style="color: white;" *ngIf="row.claim_form != '' " href="{{row.claim_form}}" target="_blank"
+                   >
+                    View</a></label>
+                  </td> 
+                  <td>
+                    <label class="label label-info">  <a style="color: white;" *ngIf="row.brochure != '' " href="{{row.brochure}}" target="_blank"
+                   >
+                    View</a></label>
+                  </td> 
+                 
+                  <td>
+                    <!-- <label class="label label-info" (click)="AddProductDetailsComponent('Edit',row.Id)">Edit</label> -->
+                    <!-- <label class="fa fa-trash" (click)="DeleteRequest(row.Id,'docs_tool')"></label> -->
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <label *ngIf="row.Status == 1" class="fa fa-close"
+                      (click)="ActiveInactive(row.Id, 0, 'docs_tool')"></label>
+                    <label *ngIf="row.Status == 0" class="fa fa-check"
+                      (click)="ActiveInactive(row.Id, 1, 'docs_tool')"></label>
+                  </td>
+
+                </tr>
+              </tbody>
+              <tbody *ngIf="dataAr?.length == 0">
+                <tr>
+                  <td colspan="14" align="center">No data available!</td>
+                </tr>
+              <tbody>
+            </table>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

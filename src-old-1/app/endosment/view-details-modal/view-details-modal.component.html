@@ -1,0 +1,177 @@
+<table class="table table-bordered">
+  <!-- <thead>
+  <tr>
+      <th colspan="5" class="coustom-th-td"><b></b></th>
+  </tr>
+  </thead> -->
+
+  <thead>
+    <tr class="">
+      <td colspan="5" align="center">
+        <b>Endorsement Details</b>
+
+            <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+      </td>
+    </tr>
+
+  </thead>
+
+  <tbody>
+    <tr class="ValueTD">
+      <td>Detail Type</td>
+      <td>Previous Value</td>
+      <td>New Value</td>
+    </tr>
+
+    <tr *ngFor="let data of requestData">
+      <td>{{data.Col_Name}}</td>
+      <td>{{data.Old_Value | uppercase}}</td>
+      <td>{{data.Col_Value | uppercase}}</td>
+    </tr>
+
+  </tbody>
+</table>
+
+<table class="table table-bordered">
+  <tbody>
+
+    <tr *ngIf="NameUpdateReason != '' && NameUpdateReason != null">
+      <td><strong>Name Update Reason</strong></td>
+      <td>{{NameUpdateReason}}</td>
+    </tr>
+
+    <tr *ngIf="NcbUpdateReason != '' && NcbUpdateReason != null">
+      <td><strong>NCB Update Reason</strong></td>
+      <td>{{NcbUpdateReason}}</td>
+    </tr>
+
+  </tbody>
+</table>
+
+<table class="table table-bordered" *ngIf="RcFrontDoc != '' || RcBackDoc != '' || RequestLetterDoc != '' || SupportingDoc != '' || EndorsementCopyDoc != ''">
+
+  <thead>
+    <tr>
+      <th colspan="4" class="ValueTD" style="text-align: center;"><b>Document Details</b></th>
+    </tr>
+
+    <!-- <tr>
+      <td>Document Name</td>
+      <td>Document View</td>
+    </tr> -->
+  </thead>
+
+  <tbody>
+    <tr class="ValueTD">
+      <td>Document Name</td>
+      <td>View Document</td>
+    </tr>
+
+    <tr *ngIf="RcFrontDoc != ''">
+      <td>Rc Front</td>
+      <td><a (click)="ViewDocument(RcFrontDoc)" href="javascript:;">Click to View</a> </td>
+    </tr>
+
+    <tr *ngIf="RcBackDoc != ''">
+      <td>Rc Back</td>
+      <td><a (click)="ViewDocument(RcBackDoc)" href="javascript:;">Click to View</a> </td>
+    </tr>
+
+    <tr *ngIf="RequestLetterDoc != ''">
+      <td>Request Letter</td>
+      <td><a (click)="ViewDocument(RequestLetterDoc)" href="javascript:;">Click to View</a> </td>
+    </tr>
+
+    <tr *ngIf="SupportingDoc != ''">
+      <td>Supporting Document</td>
+      <td><a (click)="ViewDocument(SupportingDoc)" href="javascript:;">Click to View</a> </td>
+    </tr>
+
+    <tr *ngIf="EndorsementCopyDoc != ''">
+      <td>Endorsement Copy</td>
+      <td><a (click)="ViewDocument(EndorsementCopyDoc)" href="javascript:;">Click to View</a> </td>
+    </tr>
+
+  </tbody>
+
+</table>
+
+<table class="table table-bordered">
+  <tbody>
+
+    <tr class="ValueTD">
+      <td>Current Status</td>
+      <td>Remarks</td>
+    </tr>
+
+    <tr>
+      <td>
+        <span class="btn btn-primaryx" style="color: white;" *ngIf="(curStatus == 'Pending')">Pending</span>
+        <span class="btn btn-warningx" style="color: white;" *ngIf="(curStatus == 'In Process')">In Process</span>
+        <span class="btn btn-successx" style="color: white;" *ngIf="(curStatus == 'Complete')">Complete</span>
+        <span class="btn btn-dangerx" style="color: white;" *ngIf="(curStatus == 'Rejected')">Rejected</span></td>
+      <td>{{currentRemark}}</td>
+    </tr>
+
+ </tbody>
+ </table>
+
+<form class="form" [formGroup]="statusUpdateForm" (ngSubmit)="updateRequestStatus()">
+  <table class="table table-bordered" *ngIf="(status != 2 && rightType == 'Manage') && (assignedToEmp != '' && assignedToEmp != null)">
+    <thead>
+      <tr>
+        <th colspan="5" class="coustom-th-td"><b>More Action</b></th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr class="ValueTD" >
+        <td>Update Status</td>
+        <td>Add Remarks</td>
+        <td>Action</td>
+      </tr>
+
+      <tr>
+
+        <td>
+          <div class="col-md-10">
+            <label for="status">Update Status </label>
+            <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="statusData"
+              formControlName="status" (onSelect)="showHideDocUploadDiv($event)" [settings]="dropdownSettingsType1">
+            </ng-multiselect-dropdown>
+            <div *ngIf="isSubmitted && formControls.status.errors " class="ValidationError">
+              <div *ngIf="formControls.status.errors.required">Please Update Status! </div>
+            </div>
+          </div>
+        </td>
+
+        <td>
+          <div class="col-md-6 form-group">
+            <label class="form-control-label pull-left">Remarks</label>
+            <small class="text-muted"> &nbsp;(Max 250 characters)</small>
+            <textarea class="form-control" name="Remark" formControlName="statusRemarks" placeholder="Remarks" maxlength="250"></textarea>
+          </div>
+
+          <div class="col-md-5 Vineet old_1 doctype_OLD" *ngIf="showDocUploadDiv == 'show'">
+            <label class="form-control-label pull-left">Endorsement Copy</label>
+            <label class="form-control btn fileUpload btn-default" name="button" value="Endorsement_Copy">
+              <input type="file" (change)="checkFileType($event,'Endorsement_Copy')" id="file" formControlName="endorsementCopy" accept="image/png, image/gif, image/jpeg" style="display:none;" />
+               <span class="fas fa-user-alt"> <b>Upload</b> </span> </label>
+               <div *ngIf="isSubmitted && formControls.endorsementCopy.errors " class="ValidationError">
+                <div *ngIf="formControls.endorsementCopy.errors.required">Please Upload Endorsement Copy! </div>
+              </div>
+            </div>
+        </td>
+
+        <td>
+        <div class="col-md-2 actionButtons" style="margin-top: 45px;">
+          <button class="btn btn-primary save-click" type="submit">Submit</button>
+        </div>
+        </td>
+
+      </tr>
+
+     </tbody>
+  </table>
+</form>

@@ -1,0 +1,34 @@
+<form class="form" [formGroup]="EditTargetForm" (ngSubmit)="SubmitFollowupAction()">
+  <table class="table table-bordered">
+    <thead>
+     <tr>
+      <th style="text-align: center; background-color: #2cb2b3; color: white;">Edit Target
+        <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+      </th>
+     </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <span>Note : Enter complete target.<br>
+                Example : If target is 10 Lakh then enter 1000000 not just 10.
+              </span><br>
+              <label>Target : </label>
+                <input type="text" placeholder="Enter Target" formControlName="NewTargetValue" class="form-control">
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

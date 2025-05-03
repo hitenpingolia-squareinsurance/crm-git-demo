@@ -1,0 +1,75 @@
+.login-ui {
+    text-align: center;
+    padding: 15px 0px;
+}
+
+.login-ui h2 {
+    font-size: 30px !important;
+    font-weight: initial;
+    color: #2cb2b3;
+    font-weight: 600;
+}
+
+.login-ui p {
+    font-size: 15px !important;
+    margin-top: 15px
+}
+
+.login-ui p b {
+    color: #2cb2b3;
+}
+
+.login-ui .form-control {
+    border: 1px solid #ccc !important;
+    padding: 6px 0px !important;
+    background: #f3f3f3;
+    width: 100%;
+    padding: 10px !important;
+    height: 50px !important;
+    font-weight: 400 !important;
+}
+
+.login-ui .btn {
+    border: 1px solid transparent;
+    padding: 10px 20px;
+    font-size: 16px !important;
+
+}
+
+.login-ui .form-group {
+    margin: 20px 0px;
+}
+
+.login-ui .btn-group-align {}
+
+.login-ui .btn-group-align button.btn {
+    margin: 10px
+}
+
+
+@media screen and (max-width: 991px) {
+    .login-ui {
+        padding: 0;
+    }
+
+    .login-ui h2 {
+        font-size: 24px !important;
+    }
+
+    .login-ui .btn {
+        padding: 8px 20px;
+        font-size: 15px !important;
+    }
+
+    .login-ui .btn-group-align button.btn {
+        margin: 0px 5px;
+    }
+
+    .login-ui p {
+        margin-bottom: 0;
+    }
+
+    .login-ui .form-control {
+        height: 45px !important;
+    }
+}

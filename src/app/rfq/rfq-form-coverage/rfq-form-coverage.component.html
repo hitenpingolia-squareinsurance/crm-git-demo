@@ -1,0 +1,195 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header"> 
+                       <div class="header_title">Create Knowledge Form <a style="color:white;"
+                        class=" pull-right btn btn-primary btn-info" data-toggle="modal" data-target="#AddCatSubCat"
+                        data-backdrop="static" data-keyboard="false"> <i class="fa fa-plus"></i>Add Category</a> 
+                      </div>
+                     </div>
+                    <div class="box-body">
+                        <div class="mydiv">
+
+                            <table datatable [dtOptions]="dtOptions" id="Table1"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>SrNo.</th>
+                                        <th>Category</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Bharat Griha Raksha Policy</th>
+                                        <th>Bharat Sookshma Udyam Suraksha</th>
+                                        <th>Bharat Laghu Udyam Suraksha</th>
+                                        <th>Standard Fire and Special Perils</th>
+                                        <th>Create Date</th>
+                                        <!-- <th>Action</th> -->
+                                    </tr>
+                                </thead>
+                        
+                                <tbody *ngIf="dataAr?.length != 0">
+
+                                    <tr *ngFor="let row of dataAr; let i=index;">
+                                        <td>{{row.SrNo}}</td>
+                                        <td>{{row.Category}}</td>
+                                        <td>{{row.Name}}</td>
+                                        <td>{{row.Description}}</td>
+                                        <td>
+                                            <label *ngIf="row.BGRP == 1" class="label label-danger fa fa-close "
+                                                (click)="UpdateEmployeeResignation('rfq_form_coverage', 0, 'BGRP',row.Id)">
+                                                InActive</label>
+                                            <label *ngIf="row.BGRP == 0" class="label label-success fa fa-check"
+                                                (click)="UpdateEmployeeResignation('rfq_form_coverage', 1, 'BGRP',row.Id)">Active</label>
+
+                                        </td> 
+                                        <td>
+                                            <label *ngIf="row.BSUS == 1" class="label label-danger fa fa-close "
+                                                (click)="UpdateEmployeeResignation('rfq_form_coverage', 0, 'BSUS',row.Id)">
+                                                InActive</label>
+                                            <label *ngIf="row.BSUS == 0" class="label label-success fa fa-check"
+                                                (click)="UpdateEmployeeResignation('rfq_form_coverage', 1, 'BSUS',row.Id)">Active</label>
+
+                                        </td> 
+                                        <td>
+                                            <label *ngIf="row.BLUS == 1" class="label label-danger fa fa-close "
+                                                (click)="UpdateEmployeeResignation('rfq_form_coverage', 0, 'BLUS',row.Id)">
+                                                InActive</label>
+                                            <label *ngIf="row.BLUS == 0" class="label label-success fa fa-check"
+                                                (click)="UpdateEmployeeResignation('rfq_form_coverage', 1, 'BLUS',row.Id)">Active</label>
+
+                                        </td>
+                                        <td>
+                                            <label *ngIf="row.SFSP == 1" class="label label-danger fa fa-close "
+                                                (click)="UpdateEmployeeResignation('rfq_form_coverage', 0, 'SFSP',row.Id)">
+                                                InActive</label>
+                                            <label *ngIf="row.SFSP == 0" class="label label-success fa fa-check"
+                                                (click)="UpdateEmployeeResignation('rfq_form_coverage', 1, 'SFSP',row.Id)">Active</label>
+
+                                        </td>
+
+                                        <td>{{row.insert_date}}</td>
+
+                                        
+                                    </tr>
+
+                                </tbody>
+
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="8" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+
+<div id="AddCatSubCat" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="main_card_form">
+              <div class="main_header">
+                <div class="header_title">Add Form</div>
+              </div>
+              <form class="form" (ngSubmit)="SubmitCat()" [formGroup]="AddCatForm">
+                <div class="main_body main_card_height_scroll">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i> Basic Details</div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="input_group">
+                        <label for="CustomerName">Category
+                          <span *ngIf="isSubmitted && formControls2.Category.errors" class="ValidationError">
+                            <span *ngIf="formControls2.Category.errors.required">Category is required</span>
+                          </span>
+                        </label>
+                        <div class="position_relative">
+                          <ng-multiselect-dropdown class="form-control" name="Category" placeholder="Select Category"
+                             [data]="CategoryData" formControlName="Category" [settings]="dropdownSingleSettingsType">
+                          </ng-multiselect-dropdown>
+                        </div>
+                      </div>
+                    </div>
+  
+             
+                    <div class="col-md-12">
+                      <div class="input_group">
+                        <label for="CustomerName">Title
+                          <span *ngIf="isSubmitted && formControls2.Title.errors" class="ValidationError">
+                            <span *ngIf="formControls2.Title.errors.required">Title is required</span>
+                          </span>
+                        </label>
+                        <div class="position_relative">
+                          <input class="form_control icon_cs" type="text" formControlName="Title" name="Title" id="Title"
+                            placeholder="Enter Title">
+                          <div class="input_icon"><i class="fa fa-envelope-o"></i></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="input_group">
+                          <label for="CustomerName">Description
+                            <span *ngIf="isSubmitted && formControls2.Description.errors" class="ValidationError">
+                              <span *ngIf="formControls2.Description.errors.required">Description is required</span>
+                            </span>
+                          </label>
+                          <div class="position_relative">
+                            <textarea class="form_control icon_cs" type="text" formControlName="Description" name="Description" id="Description"
+                              placeholder="Enter Description"></textarea>
+                            <div class="input_icon"><i class="fa fa-envelope-o"></i></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-12">
+                        <div class="input_group">
+                          <label for="CustomerName">Value
+                            <span *ngIf="isSubmitted && formControls2.ColVal.errors" class="ValidationError">
+                              <span *ngIf="formControls2.ColVal.errors.required">ColVal is required</span>
+                            </span>
+                          </label>
+                          <div class="position_relative">
+                            <ng-multiselect-dropdown class="form-control" name="ColVal" placeholder="--- Select ---"
+                               [data]="ColValData" formControlName="ColVal" [settings]="dropdownSingleSettingsType">
+                            </ng-multiselect-dropdown>
+                          </div>
+                        </div>
+                      </div>
+ 
+  
+                  </div>
+  
+                </div>
+                <div class="main_footer">
+                  <button type="button" id="ClosePOUPUP" class="mr_5 btn-danger Save_click" data-dismiss="modal">Close</button>
+                  <button type="submit"  class="Save_click">Add</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

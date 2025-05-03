@@ -1,0 +1,56 @@
+<section class="custom-scrool" id="click-close">
+  <div class="">
+    <div class="main_card_form ">
+      <div class="main_header">
+        <h4 class="header_title">View Details</h4>
+        <button type="button" (click)="closeDialog()" class="close closeModelButton"><i
+            class="fa fa-close"></i></button>
+        <div class="call-precess" id="callProcess" style="display:none;">
+          <div class="call-align">
+            <img src="assets/image/calling.gif" alt="">
+          </div>
+          <div class="heading-call">Call in Progress....</div>
+        </div>
+      </div>
+      <hr>
+      <div class="modal_body">
+
+
+        <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>SNo.</th>
+              <th>Bulk Id</th>
+              <th>Job Type</th>
+              <th>To Email</th>
+              <th>Subject</th>
+              <th>Add Stamp</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of dataAr">
+              <td>{{ row.sno }}</td>
+              <td>{{ row.bulkid }}</td>
+              <td>{{ row.type }}</td>
+              <td>{{ row.toemail }}</td>
+              <td>{{ row.subject }}</td>
+              <td>{{ row.add_stamp }}</td>
+              <td>
+                <button class="btn btn-info1" (click)="recipients(row.id)">
+                  <span>Recipient</span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+

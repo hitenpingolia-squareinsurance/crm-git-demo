@@ -1,0 +1,216 @@
+.outer_input {
+  background-color: #fff;
+  color: #000;
+  text-align: center;
+
+  display: inline-block;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  width: 100%;
+  height: 34px;
+  padding: 3px 5px;
+}
+
+.outer_input input {
+  height: 20px;
+  width: 65px;
+  display: inline-block;
+  margin-right: 5px;
+  background-color: #fff;
+  text-align: center;
+  color: #000;
+  border: 0;
+  margin: 0;
+  font-size: small;
+}
+.w_1001{
+  width:70%;
+}
+
+.fileUpload input[type=file] {
+  display: none;
+}
+
+.btn {
+  background-color: #e3e3e3;
+  color: #333;
+  border: 1px solid #e6e6e6;
+  border-radius: 3px;
+  padding: 6px 12px;
+  font-size: 16px;
+}
+
+.Save-click {
+  border: 1px solid #e6e6e6;
+  border-radius: 3px;
+  padding: 6px 12px;
+  font-size: 16px;
+}
+
+.ImageUploaded {
+  background-color: green;
+  color: white;
+}
+
+
+.myinput1 {
+  width: calc(100% / 2 - 0px) !important;
+  text-align: center;
+  border: none !important;
+}
+
+.tooltip_cs {
+display: inline-block;
+position: relative;
+margin-left: 3px;
+}
+
+.tooltip_cs i {
+background: #3c8dbc;
+color: #fff;
+padding: 5px;
+width: 20px;
+height: 20px;
+border-radius: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 12px !important;
+}
+
+
+.tooltip_cs .tooltiptext_cs {
+position: absolute;
+background: #3c8dbcfc;
+color: #fff;
+font-size: 11px;
+padding: 6px;
+border-radius: 5px;
+z-index: 99999999999;
+top: 19px;
+left: 0;
+opacity: 0;
+display: none;
+font-weight: 500;
+text-align: left !important;
+width: 290px;
+margin: auto;
+}
+
+.custom_table .coverages_side_bar ul {
+margin: 0;
+padding: 0;
+}
+
+.custom_table .coverages_side_bar ul li{
+height: 60px;
+font-size: 13px;
+padding: 5px 10px;
+list-style: none;
+border: 1px solid #ddd;
+display: flex;
+width: 250px;
+background: #f4f4f4;
+align-items: center;
+justify-content: flex-start;
+}
+
+.custom_table .coverages_location ul {
+margin: 0;
+padding: 0;
+}
+
+.custom_table .coverages_location ul li {
+height: 60px;
+font-size: 13px;
+padding: 5px 10px;
+list-style: none;
+border: 1px solid #ddd;
+display: flex;
+width: 160px;
+background: #fff;
+align-items: center;
+justify-content: flex-start;
+}
+.custom_table .coverages_side_bar ul li:first-child,
+.custom_table .coverages_location ul li:first-child {
+background: #efefef;
+font-weight: 600;
+text-align: center;
+}
+
+.custom_table .right_bar_scroll_location{
+display: flex;
+max-width: calc(100% - 250px);
+overflow-x: auto;
+}
+.tooltip_cs:hover .tooltiptext_cs {
+opacity: 1;
+display: block;
+}
+
+.fire_form_page table tr th{
+  background-color: #efefef;
+}
+
+.fire_form_page table tr:nth-child(odd) td{
+  background-color: #f4f4f4;
+}
+
+.fire_form_page table tr th,
+.fire_form_page table tr td {
+  padding: 10px;
+  text-align: left !important;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  color: #555555;
+}
+
+.custom_table  input:focus{
+  outline: none;
+  box-shadow: none;
+}
+
+.custom_table  input{
+  background-color: transparent !important;
+}
+
+
+.fire_form_page .multi_locations {
+overflow-x: hidden;
+margin: 0;
+border: 1px solid #ddde;
+margin-bottom: 30px;
+border-radius: 5px;
+margin-top: 15px;
+}
+
+.fire_form_page .multi_locations .add_mores_btns {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin: 10px;
+border-bottom: 1px solid #ddd;
+padding-bottom: 10px;
+}
+
+.fire_form_page .multi_locations .add_mores_btns button {
+border: none;
+font-size: 14px;
+font-weight: 500;
+border-radius: 30px;
+padding: 4px 15px;
+}
+
+.fire_form_page .multi_locations .add_mores_btns .add_btn_cs {
+background: #3c8dbc;
+color: #fff;
+}
+
+.fire_form_page .multi_locations .add_mores_btns .remove_btn_cs {
+background: #ff7979;
+  color: #fff;
+  margin-right: 10px;
+}
+

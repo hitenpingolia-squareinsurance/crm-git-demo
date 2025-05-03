@@ -1,0 +1,80 @@
+
+.outer_input {
+  background-color: #fff;
+  color: #000;
+  text-align: center;
+
+  display: inline-block;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  width: 100%;
+  height: 34px;
+    padding: 6px 12px;
+}
+.rowclearfix {
+  display: flex;
+  flex-wrap: wrap;
+}
+.form-group {
+  margin-bottom: 15px;
+  position: relative;
+}
+.form-group .ValidationError{
+  font-size: 11px;
+}
+.outer_input input {
+  height: 20px;
+  width: 65px;
+  display: inline-block;
+  margin-right: 5px;
+  background-color: #fff;
+  text-align: center;
+  color: #000;
+  border: 0;
+  margin: 0;
+  font-size: small;
+}
+
+.fileUpload input[type=file]{
+  display:none;
+}
+.btn{
+  background-color:#e3e3e3;
+  color:#333;
+  border:1px solid #e6e6e6;
+  border-radius:3px;
+  padding:6px 12px;
+  font-size:16px;
+}
+
+.btn-warningx {
+  background-color: #f39c12;
+  border-color: #e08e0b;
+  padding: 2px;
+  font-size: 12px;
+}
+
+.btn-primaryx {
+  background-color: #128ef3;
+  border-color: #128ef3;
+  padding: 2px;
+  font-size: 12px;
+}
+
+.btn-successx {
+  background-color: #3ff312;
+  border-color: #3ff312;
+  padding: 2px;
+  font-size: 12px;
+}
+
+.btn-dangerx {
+  background-color: #f31212;
+  border-color: #f31212;
+  padding: 2px;
+  font-size: 12px;
+}
+.mt20 {
+  margin-top: 20px;
+}

@@ -1,0 +1,102 @@
+<div class="row">
+  <div class="modal-header" style="text-align: center;">
+    <h4 class="modal-title">Add Brochure </h4>
+  </div>
+</div>
+
+<div class="popup-content-body">
+  <div class="row popup-form">
+    <form [formGroup]="AddBourcherHealthForm" id="form-1">
+
+      <div class="col-md-6">
+        <label for="state">LOB</label>
+        <ng-multiselect-dropdown class="form-control" formControlName="LOB" [data]="lobs"
+          (onSelect)="FetchCompany($event)" [settings]="dropdownSingleSettingsType">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.LOB.errors" class="ValidationError">
+          <div *ngIf="formControls.LOB.errors.required">Please enter LOB</div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="state">Insurer</label>
+        <ng-multiselect-dropdown class="form-control" formControlName="Company" [data]="Companys"
+          (onSelect)="FetchPlans($event)" [settings]="dropdownSingleSettingsType">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.Company.errors" class="ValidationError">
+          <div *ngIf="formControls.Company.errors.required">Please enter Company</div>
+        </div>
+      </div>
+
+      <!-- <div class="col-md-6">
+        <label for="state">Company</label>
+
+        <select class="form-control" formControlName="Company" (change)="FetchHealthPlanSubPlan($event)">
+          <option value="" disabled>Select</option>
+          <option *ngFor="let row of Companys;" value="{{row.company}}">{{row.company | uppercase}}</option>
+
+
+        </select>
+        <div *ngIf="isSubmitted && formControls.Company.errors" class="ValidationError">
+          <div *ngIf="formControls.Company.errors.required">Please enter Company</div>
+        </div>
+      </div> -->
+      <!-- <div class="col-md-6">
+        <label for="state">Plan</label>
+        <select class="form-control" formControlName="product">
+          <option value="" disabled>Select</option>
+          <option *ngFor="let row of Plans;" value="{{row.Plan}}">{{row.Plan | uppercase}}</option>
+
+        </select>
+        <div *ngIf="isSubmitted && formControls.product.errors" class="ValidationError">
+          <div *ngIf="formControls.product.errors.required">Please Select Plan</div>
+        </div>
+      </div> -->
+      <div class="col-md-6">
+        <label for="state">Plan</label>
+        <ng-multiselect-dropdown class="form-control" formControlName="Plan" [data]="Plans"
+          [settings]="dropdownSingleSettingsType">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.Plan.errors" class="ValidationError">
+          <div *ngIf="formControls.Plan.errors.required">Please enter Plan</div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="state">Document Type</label>
+
+
+          <ng-multiselect-dropdown class="form-control" formControlName="docType" [data]="docType"
+            [settings]="dropdownSingleSettingsType">
+          </ng-multiselect-dropdown>
+          <div *ngIf="isSubmitted && formControls.docType.errors" class="ValidationError">
+            <div *ngIf="formControls.docType.errors.required">Please enter Document Type</div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-md-6">
+        <label for="state">File</label>
+
+        <input type="file" class="form-control" formControlName="Purposal"
+          (change)="UploadDocs($event,'PurposalImageForm')">
+
+        <div *ngIf="isSubmitted && formControls.Purposal.errors" class="ValidationError">
+          <div *ngIf="formControls.Purposal.errors.required">Please Select File</div>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="button-div-yes-no">
+  <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>
+  <button type="submit" class="btn btn-primary" (click)="submit()">Submit</button>
+</div>

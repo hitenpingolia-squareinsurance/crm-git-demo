@@ -1,0 +1,46 @@
+<form class="form-blog-top" [formGroup]="modalForm"  >
+
+  <table class="table table-bordered">
+    <thead>
+     <tr>
+      <th style="text-align: center; background-color: #2cb2b3; color: white;">Mandate Letter QC
+        <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+      </th>
+     </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-md-12">
+              <div style="display: flex; justify-content: space-between; align-items: center; border:1px solid #ddd; margin-top:12px; margin-bottom:10px;">
+                <div style="padding: 8px;width: 100%;border-right:1px solid #ddd;"><strong>Mandate Letter</strong></div>
+                <div style="padding: 8px;width: 100%; text-align: right !important;"><a style="cursor: pointer;" class="label label-primary label-inline mr-2" (click)="ViewDocument(MandateDetails)">Click To View</a></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <label for="name">Remarks</label>
+              <textarea class="form-control" formControlName="remarks" placeholder="Enter Remarks" maxlength="200"></textarea>
+              <div *ngIf="isSubmitted && formControls.remarks.errors " class="ValidationError">
+                <div *ngIf="formControls.remarks.errors.required">Please Upload Mandate Letter!</div>
+              </div>
+            </div>
+          </div>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <button class="btn btn-success" (click)="UpdateMandateQcStatus('Approve')" type="submit">Approve</button>&nbsp;&nbsp;
+          <button class="btn btn-danger" (click)="UpdateMandateQcStatus('Reject')" type="submit">Reject</button>&nbsp;&nbsp;
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

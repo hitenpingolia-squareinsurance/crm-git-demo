@@ -1,0 +1,154 @@
+<section class="custom-scrool" id="click-close">
+  <div class="">
+    <div class="main_card_form ">
+
+      <div class="header_title">Payout Request Mode</div>
+      <button type="button" (click)="CloseModel()" class="close closeModelButton"><i class="fa fa-close"></i></button>
+      <div class="call-precess" id="callProcess" style="display:none;">
+        <div class="call-align">
+          <img src="assets/image/calling.gif" alt="">
+        </div>
+        <div class="heading-call">Call in Progress....</div>
+      </div>
+
+      <hr>
+      <div class="modal_body ">
+        <form [formGroup]="AddFieldForm" (ngSubmit)="SubBtn()">
+
+          <div class="row">
+            <div class="col-sm-4" *ngIf="User_Code === 'SIB282' && type !== 'agent'">
+
+              <div class="form-group">
+                <div class="category_list">
+                  <label>RM Name</label>
+                  <ng-multiselect-dropdown class="form-control" placeholder="--Select RM Name--" [data]="RMAr"
+                    formControlName="RM" [settings]="dropdownSettingsmultiselect" (onSelect)="getPartner($event)">
+                  </ng-multiselect-dropdown>
+                  <div
+                    *ngIf="isSubmitted && AddFieldForm.get('RM').hasError('required') && (AddFieldForm.get('RM').touched || AddFieldForm.dirty)"
+                    class="text-danger validators">
+                    This field is Required
+                  </div>
+                </div>
+              </div>
+            
+            </div>
+
+            <div class="col-sm-4" *ngIf="type !== 'agent'">
+              <div class="form-group">
+                <div class="category_list">
+                  <label>Partner Name</label>
+                  <ng-multiselect-dropdown class="form-control" placeholder="--Select Partner Name--" [data]="PartnerAr"
+                    formControlName="partner" [settings]="dropdownSettingsmultiselect">
+                  </ng-multiselect-dropdown>
+                  <div
+                    *ngIf="isSubmitted && AddFieldForm.get('partner').hasError('required') && (AddFieldForm.get('partner').touched || AddFieldForm.dirty)"
+                    class="text-danger validators">
+                    This field is Required
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+
+            <div class="col-sm-4">
+              <div class="form-group">
+                <div class="category_list">
+                  <label>Payout Mode</label>
+                  <ng-multiselect-dropdown class="form-control" placeholder="--PayOut Mode--" [data]="payout"
+                    formControlName="payout" [settings]="dropdownSettings">
+                  </ng-multiselect-dropdown>
+                  <div
+                    *ngIf="isSubmitted && AddFieldForm.get('payout').hasError('required') && (AddFieldForm.get('payout').touched || AddFieldForm.dirty)"
+                    class="text-danger validators">
+                    This field is Required
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+
+            <div class="col-sm-4">
+              <div class="form-group">
+                <div class="category_list">
+                  <label>LOB</label>
+                  <ng-multiselect-dropdown class="form-control" placeholder="LOB" [data]="LOBdata" formControlName="LOB"
+                    [settings]="dropdownSettingsmultiselect" (click)="GetProducts()">
+                  </ng-multiselect-dropdown>
+                  <div
+                    *ngIf="isSubmitted && AddFieldForm.get('LOB').hasError('required') && (AddFieldForm.get('LOB').touched || AddFieldForm.dirty)"
+                    class="text-danger validators">
+                    This field is Required
+                  </div>
+                </div>
+              </div>
+             
+            </div>
+     
+            <div class="col-sm-4">
+              <div class="form-group">
+                <div class="category_list">
+                  <label>Product</label>
+                  <ng-multiselect-dropdown class="form-control" placeholder="Product" [data]="product"
+                    formControlName="product" [settings]="dropdownSettingsmultiselect" (click)="GetSubProduct()">
+                  </ng-multiselect-dropdown>
+                  <div
+                    *ngIf="isSubmitted && AddFieldForm.get('product').hasError('required') && (AddFieldForm.get('product').touched || AddFieldForm.dirty)"
+                    class="text-danger validators">
+                    This field is Required
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="form-group">
+                <div class="category_list">
+                  <label>Sub Product</label>
+                  <ng-multiselect-dropdown class="form-control" placeholder="Sub Product Type" [data]="SubProduct"
+                    formControlName="subProduct" [settings]="dropdownSettingsmultiselect">
+                  </ng-multiselect-dropdown>
+                  <div
+                    *ngIf="isSubmitted && AddFieldForm.get('subProduct').hasError('required') && (AddFieldForm.get('subProduct').touched || AddFieldForm.dirty)"
+                    class="text-danger validators">
+                    This field is Required
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="">Effective Date</label>
+              
+                <input 
+                  type="text" 
+                  placeholder="Select Date" 
+                  class="form-control" 
+                  formControlName="fromdate" 
+                  [readonly]="true" 
+                  [value]="defaultDate | date:'dd-MM-yyyy'"
+                />
+            
+                <div 
+                  *ngIf="isSubmitted && AddFieldForm.get('fromdate').hasError('required') && (AddFieldForm.get('fromdate').touched || AddFieldForm.dirty)"
+                  class="text-danger validators">
+                  This field is Required
+                </div>
+              </div>
+            </div>
+            
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="float-end pull-right">
+                <button type="submit" class="btn btn_primary btn-success">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

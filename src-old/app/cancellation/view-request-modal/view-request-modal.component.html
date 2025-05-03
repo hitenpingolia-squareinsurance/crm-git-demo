@@ -1,0 +1,430 @@
+<table>
+
+  <tr>
+    <td colspan="1" align="center">
+      <b>SR NO : {{row.SR_No}}</b>
+      <br>
+      <b *ngIf="(row.Source=='Web')">Quotation Id : {{row.Quotation_Id}}</b>
+    </td>
+
+    <td colspan="4" align="center">
+      <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+    </td>
+  </tr>
+
+  <!-- <div class="collapsible-header" (click)="showFirst=!showFirst"><i class="material-icons" *ngIf="showFirst">filter_drama</i><i class="material-icons" *ngIf="!showFirst">place</i>First Section</div> -->
+
+  <tr class="ValueTD">
+    <td  (click)="isShown=!isShown" colspan="5">Mapping/UW Details
+
+      <div class="box-tools pull-right btn-right-side">
+        <i  style="text-align: right;"><i class="material-icons DesignModuleButton"
+            *ngIf="isShown">-</i><i class="material-icons" *ngIf="!isShown">+</i></i>
+      </div>
+    </td>
+  </tr>
+  <tbody *ngIf="isShown" class="row container-fluid" id="divshow">
+    <tr>
+      <td colspan="2"><b>Broker </b>: {{row.Broker_Name}}</td>
+      <td colspan="2"><b>RM </b>: {{row.RM_Name}}</td>
+      <td colspan="1"><b>Agent </b>: {{row.Agent_Name}}</td>
+    </tr>
+    <tr>
+
+      <td colspan="2"><b>LOB </b>: {{row.LOB_Id}}</td>
+      <td colspan="2"><b>File Type </b>: {{row.File_Type}}</td>
+      <td colspan="1"><b>Insurer Renewal </b>: {{row.Insurer_Renewal}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><b>Product </b>: {{row.Product_Id}}</td>
+      <td colspan="2"><b>Sub-Product </b>: {{row.SubProduct_Id}}</td>
+      <td colspan="1"><b>Segment </b>: {{row.Segment_Id}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Class/Sub-Class </b>: {{row.Class_Id}} / ({{row.Sub_Class_Id}})</td>
+      <td colspan="2"><b>UW </b>: {{row.UW_Name}}</td>
+      <td colspan="1"><b>OPS </b>: {{row.Operation_Name}}</td>
+    </tr>
+
+    <!--
+      <td colspan="2"><b>Account </b>: {{row.Account_Name}}</td>
+       -->
+  </tbody>
+
+
+  <tr class="ValueTD">
+    <td  (click)="isShow=!isShow" colspan="5">Insurer/Policy Details
+
+      <div class="box-tools pull-right btn-right-side">
+
+        <i  style="text-align: right;"><i class="material-icons DesignModuleButton"
+            *ngIf="isShow">-</i><i class="material-icons" *ngIf="!isShow">+</i></i>
+      </div>
+    </td>
+  </tr>
+
+  <tbody *ngIf="row.LOB_Id=='Motor' && isShow" id="tbodyshow">
+
+    <tr>
+      <td colspan="2"><b>Insurance Company </b>: {{row.Insurance_Company_Name}}</td>
+      <td colspan="2"><b>Insurance Company Branch </b>: {{row.Insurance_Branch_Company_Name}}</td>
+      <td colspan="1"><b>Customer Name </b>: {{row.Customer_Name}}</td>
+    </tr>
+    <tr>
+
+      <td colspan="2"><b>Customer Mobile No </b>: {{row.Customer_Mobile}}</td>
+      <td colspan="2"> <span *ngIf="(row.Policy_Start_Date_OD!='' && row.Policy_End_Date_OD!='')">
+          <b>Policy (OD) Start/End Date</b>
+        </span> : {{row.Policy_Start_Date_OD}} / {{row.Policy_End_Date_OD}}</td>
+
+      <td colspan="1"><b> <span *ngIf="(row.Policy_Start_Date_OD=='' && row.Policy_End_Date_OD=='')">
+            Policy Start/End Date
+          </span>
+          <span *ngIf="(row.Policy_Start_Date_OD!='' && row.Policy_End_Date_OD!='')">
+            Policy (TP) Start/End Date
+          </span> </b>:
+        {{row.Policy_Start_Date_TP}} / {{row.Policy_End_Date_TP}}
+      </td>
+
+    </tr>
+    <tr>
+      <!-- <td colspan="2"><b>State </b>: {{row.State_Name}}</td>
+<td colspan="2"><b>RTO/Branch Name</b>: {{row.RTO_Region_Name}}</td> -->
+      <td colspan="2"><b>Policy No</b>: {{row.Policy_No}}</td>
+
+      <td colspan="1"><b>Policy Status</b>: {{row.Policy_Status}}</td>
+    </tr>
+  </tbody>
+
+
+  <tr class="ValueTD">
+    <td  (click)="isinsurer=!isinsurer"  colspan="5">Previous Year Policy Details
+
+      <div class="box-tools pull-right btn-right-side">
+
+        <i style="text-align: right;"><i class="material-icons DesignModuleButton"
+            *ngIf="isinsurer">-</i><i class="material-icons" *ngIf="!isinsurer">+</i></i>
+      </div>
+    </td>
+  </tr>
+  <tbody *ngIf="isinsurer">
+
+    <tr>
+      <td colspan="2"><b>Insurer Name </b>: {{row.Pre_Insurer_Name}}</td>
+      <td colspan="2"><b> Pre Policy No. </b>: {{row.Pre_Policy_No}}</td>
+      <td colspan="1"><b>Expiry Date. </b>: {{row.Pre_Expiry_Date}}</td>
+    </tr>
+  </tbody>
+
+
+  <tr class="ValueTD">
+    <td  (click)="ispayout=!ispayout" colspan="5">Premium/Payout Details
+
+      <div class="box-tools pull-right btn-right-side">
+
+        <i ><i class="material-icons DesignModuleButton"
+            style="padding-left: 500px;font-size: 25px;" *ngIf="ispayout">-</i><i class="material-icons"
+            *ngIf="!ispayout">+</i></i>
+      </div>
+    </td>
+  </tr>
+  <tbody *ngIf="ispayout">
+
+    <tr>
+      <!-- <td colspan="2"><b>Payment Favour </b>: {{row.Payment_Towards}}</td> -->
+      <td colspan="3"><b>Mode Of Payment </b>: {{row.Mode_Of_Payment}}</td>
+      <td colspan="2"><b>Payment/Cheque Ref No. </b>: {{row.Payment_Cheque_Ref_No}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><b>Net Premium</b>: {{row.Net_Premium}}</td>
+      <td colspan="2"><b>Gross Premium</b>: {{row.Estimated_Gross_Premium}}</td>
+      <td colspan="1"><b>Terrorism Premium</b>: {{row.Terrorism_Premium}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="1"><b>IDV </b>: {{row.IDV}}</td>
+      <td colspan="2"><b>NCB% </b>: {{row.NCB}}</td>
+      <td colspan="2"><b>Discount </b>: {{row.Discount}}</td>
+    </tr>
+    <tr>
+      <td colspan="1"><b>Sum Insured </b>: {{row.Sum_Insured}}</td>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="row.LOB_Id=='Non Motor' || row.LOB_Id=='Health' || row.LOB_Id=='LI'">
+
+    <tr class="ValueTD">
+      <td colspan="5">Mapping/UW Details</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><b>Broker </b>: {{row.Broker_Name}}</td>
+      <td colspan="2"><b>RM </b>: {{row.RM_Name}}</td>
+      <td colspan="1"><b>Agent </b>: {{row.Agent_Name}}</td>
+    </tr>
+    <tr>
+
+      <td colspan="2"><b>LOB </b>: {{row.LOB_Id}}</td>
+      <td colspan="2"><b>File Type </b>: {{row.File_Type}}</td>
+      <td colspan="1"><b>Insurer Renewal </b>: {{row.Insurer_Renewal}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><b>Product </b>: {{row.Product_Id}}</td>
+      <td colspan="2"><b>Sub-Product </b>: {{row.SubProduct_Id}}</td>
+      <td colspan="1"><b>Segment </b>: {{row.Segment_Id}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Class/Sub-Class </b>: {{row.Class_Id}} / ({{row.Sub_Class_Id}})</td>
+      <td colspan="2"><b>UW </b>: {{row.UW_Name}}</td>
+      <td colspan="1"><b>OPS </b>: {{row.Operation_Name}}</td>
+    </tr>
+
+    <!--
+      <td colspan="2"><b>Account </b>: {{row.Account_Name}}</td>
+       -->
+
+    <tr class="ValueTD">
+      <td colspan="5">Insurer/Policy Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Insurance Company </b>: {{row.Insurance_Company_Name}}</td>
+      <td colspan="2"><b>Insurance Company Branch </b>: {{row.Insurance_Branch_Company_Name}}</td>
+      <td colspan="1"><b>Customer Name </b>: {{row.Customer_Name}}</td>
+    </tr>
+    <tr>
+
+      <td colspan="2"><b>Customer Mobile No </b>: {{row.Customer_Mobile}}</td>
+      <td colspan="2"> <span *ngIf="(row.Policy_Start_Date_OD!='' && row.Policy_End_Date_OD!='')">
+          <b>Policy (OD) Start/End Date</b>
+        </span> : {{row.Policy_Start_Date_OD}} / {{row.Policy_End_Date_OD}}</td>
+
+      <td colspan="1"><b> <span *ngIf="(row.Policy_Start_Date_OD=='' && row.Policy_End_Date_OD=='')">
+            Policy Start/End Date
+          </span>
+          <span *ngIf="(row.Policy_Start_Date_OD!='' && row.Policy_End_Date_OD!='')">
+            Policy (TP) Start/End Date
+          </span> </b>:
+        {{row.Policy_Start_Date_TP}} / {{row.Policy_End_Date_TP}}
+      </td>
+
+    </tr>
+    <tr>
+
+      <td colspan="2"><b>Policy No</b>: {{row.Policy_No}}</td>
+
+      <td colspan="1"><b>Policy Status</b>: {{row.Policy_Status}}</td>
+    </tr>
+
+
+
+    <tr class="ValueTD">
+      <td colspan="5">Previous Year Policy Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Insurer Name </b>: {{row.Pre_Insurer_Name}}</td>
+      <td colspan="2"><b>Policy No. </b>: {{row.Pre_Policy_No}}</td>
+      <td colspan="1"><b>Expiry Date. </b>: {{row.Pre_Expiry_Date}}</td>
+    </tr>
+
+    <tr class="ValueTD">
+      <td colspan="5">Premium/Payout Details</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><b>Payment Favour </b>: {{row.Payment_Towards}}</td>
+      <td colspan="2"><b>Mode Of Payment </b>: {{row.Mode_Of_Payment}}</td>
+      <td colspan="1"><b>Payment/Cheque Ref No. </b>: {{row.Payment_Cheque_Ref_No}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><b>Net Premium</b>: {{row.Net_Premium}}</td>
+      <td colspan="2"><b>Gross Premium</b>: {{row.Estimated_Gross_Premium}}</td>
+      <td colspan="1"><b>Terrorism Premium</b>: {{row.Terrorism_Premium}}</td>
+    </tr>
+    <tr>
+      <td colspan="1"><b>Sum Insured </b>: {{row.Sum_Insured}}</td>
+    </tr>
+
+
+
+  </tbody>
+
+
+
+  <tr class="ValueTD">
+    <td  (click)="isdocument=!isdocument"  colspan="5">SR Document Details
+
+      <div class="box-tools pull-right btn-right-side">
+
+        <i ><i class="material-icons DesignModuleButton"
+            style="padding-left: 500px;font-size: 25px;" *ngIf="isdocument">-</i><i class="material-icons"
+            *ngIf="!isdocument">+</i></i>
+      </div>
+    </td>
+  </tr>
+
+  <tbody *ngIf="isdocument">
+    <tr>
+      <th colspan="3">Document Name</th>
+      <th colspan="2">Document View</th>
+    </tr>
+
+    <tr *ngFor="let r of Documents;">
+      <td colspan="3">{{r.Document_Type}}</td>
+      <td colspan="2"><a *ngIf="r.Document_File_Name!=''" (click)="ViewDocument(r.Document_File_Name)"
+          href="javascript:;">Click to
+          View</a> </td>
+    </tr>
+
+  </tbody>
+
+  <tr class="ValueTD">
+    <td (click)="isCancellation=!isCancellation" colspan="5">Cancellation Document Details
+
+      <div class="box-tools pull-right btn-right-side">
+
+        <i ><i class="material-icons DesignModuleButton"
+            style="padding-left: 500px;font-size: 25px;" *ngIf="isCancellation">-</i><i class="material-icons"
+            *ngIf="!isCancellation">+</i></i>
+      </div>
+    </td>
+  </tr>
+
+  <tbody *ngIf="isCancellation">
+    <tr>
+      <th colspan="3">Document Name</th>
+      <th colspan="2">Document View</th>
+    </tr>
+
+    <tr *ngIf="altPolicyUrl != ''">
+      <td colspan="3">Alternate Policy</td>
+      <td colspan="2"><a (click)="ViewDocument(altPolicyUrl)" href="javascript:;">Click to View</a> </td>
+    </tr>
+
+    <tr *ngIf="custLetterUrl != ''">
+      <td colspan="3">Customer Letter</td>
+      <td colspan="2"><a (click)="ViewDocument(custLetterUrl)" href="javascript:;">Click to View</a> </td>
+    </tr>
+
+    <tr *ngIf="cancelChequeUrl != ''">
+      <td colspan="3">Cancel Cheque</td>
+      <td colspan="2"><a (click)="ViewDocument(cancelChequeUrl)" href="javascript:;">Click to View</a> </td>
+    </tr>
+
+    <tr *ngIf="sucessDocUrl != ''">
+      <td colspan="3">Success Doc</td>
+      <td colspan="2"><a (click)="ViewDocument(sucessDocUrl)" href="javascript:;">Click to View</a> </td>
+    </tr>
+
+  </tbody>
+
+
+</table>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th colspan="5" class="coustom-th-td"><b>Mapping Details</b></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr class="ValueTD">
+      <td>Added By</td>
+      <td>Assigned To</td>
+      <td>Remarks</td>
+    </tr>
+
+    <tr>
+      <td>{{addedBy}}</td>
+      <td>{{mappedTo}}</td>
+      <td>{{ reqData.remarks }} </td>
+    </tr>
+
+  </tbody>
+</table>
+
+<table class="table table-bordered">
+  <tbody>
+
+    <tr class="ValueTD">
+      <td>Current Status</td>
+      <td>Remarks</td>
+    </tr>
+
+    <tr>
+      <td>
+        <span class="btn btn-primaryx" style="color: white;" *ngIf="(curStatus == 'Pending')">Pending</span>
+        <span class="btn btn-warningx" style="color: white;" *ngIf="(curStatus == 'In Process')">In Process</span>
+        <span class="btn btn-successx" style="color: white;" *ngIf="(curStatus == 'Complete')">Complete</span>
+        <span class="btn btn-dangerx" style="color: white;" *ngIf="(curStatus == 'Rejected')">Rejected</span></td>
+      <td>{{currentRemark}}</td>
+    </tr>
+
+ </tbody>
+ </table>
+
+<form class="form" [formGroup]="statusUpdateForm" (ngSubmit)="updateRequestStatus()">
+  <table class="table table-bordered" *ngIf="((reqData.status != 2 && reqData.status != 3) && rightType == 'Manage') && (reqData.assignedToEmp != '' && reqData.assignedToEmp != null)">
+    <thead>
+      <tr>
+        <th colspan="5" class="coustom-th-td"><b>More Action</b></th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr class="ValueTD"  >
+        <td>Update Status</td>
+        <td>Add Remarks</td>
+        <td>Action</td>
+      </tr>
+
+      <tr>
+
+        <td>
+          <div class="col-md-10">
+            <label for="status">Update Status</label>
+            <ng-multiselect-dropdown class="form-control" placeholder="--Select--"  (onSelect)="showHideDocUploadDiv($event)" [data]="statusData" formControlName="status" [settings]="dropdownSettingsType1">
+            </ng-multiselect-dropdown>
+            <div *ngIf="isSubmitted && formControls.status.errors " class="ValidationError">
+              <div *ngIf="formControls.status.errors.required">Please Update Status! </div>
+            </div>
+          </div>
+        </td>
+
+        <td>
+          <div class="col-md-6 form-group">
+            <label class="form-control-label pull-left">Remarks</label>
+            <small class="text-muted"> &nbsp;(Max 250 characters)</small>
+            <textarea class="form-control" name="Remark" formControlName="statusRemarks" placeholder="Remarks"
+              maxlength="250"></textarea>
+          </div>
+
+          <div class="col-md-5 Vineet old_1 doctype_OLD" *ngIf="showDocUploadDiv == 'show'">
+            <label class="form-control-label pull-left">Report Attachment</label>
+            <label class="form-control btn fileUpload btn-default" name="button" value="Endorsement_Copy">
+              <input type="file" (change)="checkFileType($event,'Endorsement_Copy')" id="file" formControlName="endorsementCopy" accept="image/png, image/gif, image/jpeg" style="display:none;" />
+               <span class="fas fa-user-alt"> <b>Upload</b> </span> </label>
+               <div *ngIf="isSubmitted && formControls.endorsementCopy.errors " class="ValidationError">
+                <div *ngIf="formControls.endorsementCopy.errors.required">Please Upload Endorsement Copy! </div>
+              </div>
+            </div></td>
+
+          <td>
+          <div class="col-md-2 actionButtons" style="margin-top: 45px;">
+            <button class="btn btn-primary save-click" type="submit">Submit</button>
+          </div>
+          </td>
+
+      </tr>
+
+   </tbody>
+  </table>
+</form>
+
+<div id="snackbar2">Copied to clipboard.</div>

@@ -1,0 +1,64 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th colspan="12" style="text-align: center;">
+        <span>Renewal Status</span>
+        <div style="text-align: right; margin-top: -22px;">
+          <!-- (change)="ChangeStatusRenewals($event,row.Id)" -->
+          <input *ngIf="this.Status=='Missed'" (click)="ChangeStatusRenewals()" type="button" class="btn btn-info"  value="Add">
+          <input (click)="CloseModel()" type="button" class="btn btn-danger" value="Close">
+        </div>
+
+      </th>
+    </tr>
+  </thead>
+
+
+  <thead>
+    <tr>
+      <th>S.No</th>
+      <th>Status</th>
+      <th>Follow Time</th>
+      <th>Add Timestamp</th>
+      <th>Remark</th>
+      <th *ngIf="this.UserRoleType=='Manager'">Action By</th>
+    </tr>
+  </thead>
+
+
+  <tbody *ngIf="Loginspection?.length != 0">
+    <tr *ngFor="let row of Loginspection;let indexOfelement=index;">
+      <td>{{ indexOfelement+1 }}</td>
+      <td>
+        <button *ngIf="row.Status=='Pending'" class="btn warnings customMargins">{{ row.Status }}</button>
+        <button *ngIf="row.Status=='Follow Up'" class="btn secondarys customMargins">{{ row.Status }}</button>
+        <button *ngIf="row.Status=='Missed'" class="btn darks customMargins">{{ row.Status }}</button>
+        <button *ngIf="row.Status=='Lost'" class="btn dangers customMargins">{{ row.Status }}</button>
+        <button *ngIf="row.Status=='Renewed'" class="btn successs customMargins">{{ row.Status }}</button>
+      </td>
+      <td>
+        <span *ngIf="row.Date!='1970-01-01'"> {{ row.Date | date: 'dd-MM-yyyy' }} {{ row.Time }}</span>
+      </td>
+
+      <td>
+        {{ row.Updated | date: 'dd-MM-yyyy HH:mm:s' }}
+      </td>
+      <td>
+        {{ row.Remark }}
+      </td>
+      <td *ngIf="this.UserRoleType=='Manager'">
+        {{ row.Name }}
+        <br>
+        {{ row.Login_Role_Id }}
+        <br>
+        {{ row.Login_Role_Type }}
+      </td>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="Loginspection?.length == 0">
+    <tr>
+      <td colspan="8" align="center">No data Available !</td>
+    </tr>
+  <tbody>
+</table>

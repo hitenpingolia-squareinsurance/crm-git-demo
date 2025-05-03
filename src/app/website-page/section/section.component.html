@@ -1,0 +1,674 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Website Page Section
+                                </div>
+                                <div class="col-md-5">&nbsp;</div>
+                                <div class="col-md-3">
+                                    <!-- <button class="btn btn-primay" (click)="AddPagesSection()"
+                                        style="cursor: pointer;">Add</button> -->
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+
+                        <div class=" mydiv table-responsive">
+
+                            <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <!-- <th>Lob</th> -->
+                                        <!-- <th>Company Name</th> -->
+                                        <th>Title</th>
+                                        <!-- <th>Category</th> -->
+                                        <th>Images</th>
+                                        <th>Add And View Section Details </th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr">
+                                        <td>{{row.SrNo}}.</td>
+                                        <!-- <td>{{row.lob}}</td> -->
+                                        <!-- <td>{{row.company_name}}</td> -->
+                                        <td>{{row.title}}</td>
+                                        <!-- <td>{{row.category}}</td> -->
+                                        <td>
+                                            <label class="label label-info"> <a style="color: white;"
+                                                    *ngIf="row.image_url != '' " href="{{row.image_url}}"
+                                                    target="_blank">
+                                                    View</a></label>
+                                        </td>
+                                        <td *ngIf="row.section_type != 1  && row.section_type != 5">
+                                            <!-- <label class="label label-info" (click)="AddPagesDetails(row.id)">Add
+                                                Section Details
+                                            </label> -->
+                                            <label class="label label-info" data-toggle="modal"
+                                                data-target="#AddSectionDetailsPopup" (click)="getIdValue(row.id)"
+                                                data-id="{{row.id}}" style="cursor: pointer;">Add
+                                                Section Details
+                                            </label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label class="label label-info"
+                                                routerLink="/CompanyPages/view-section/{{row.id}}">
+                                                View Section Details
+                                            </label>
+                                        </td>
+                                        <td *ngIf="row.section_type == 1 || row.section_type == 5 ">
+                                            <!-- Leave the column blank -->
+                                        </td>
+                                        <td>
+                                            <label class="label label-info" data-toggle="modal"
+                                                data-target="#EditSectionPopup" (click)="getValueEdit(row.id)"
+                                                data-id="{{row.id}}" style="cursor: pointer;">Edit
+                                            </label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label class="label label-info" (click)="DeletePageSection(row.id)">Delete
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="14" align="center">No data available!</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div id="AddSectionDetailsPopup" class="modal fade" role="dialog">
+    <div class="modal-dialog cs_table_data">
+        <div class="main_card_form">
+            <div class="main_header">
+                <div class="header_title">Add Section Details </div>
+                <button class="close closeModelButton" data-dismiss="modal" id="ClosePOUPUP1" (click)="CloseAddPopup3()"
+                    type="button">×</button>
+            </div>
+            <div class="cs_modal_body modal-body">
+                <div class="view_more_cases">
+                    <form (ngSubmit)="submit()" [formGroup]="Submitform">
+
+
+                        <div class="popup-content-body">
+                            <div class="row popup-form">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Section Type</label>
+                                        <select class="form-control" formControlName="sectionType">
+                                            <!-- <option value="">Select a company</option> -->
+                                            <option value="normal">Normal</option>
+
+                                            <option value="listing">Listing</option>
+
+                                        </select>
+                                        <div *ngIf="isSubmitted && formControls.sectionType.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.sectionType.errors.required">
+                                                <span style="color: red;">Please select a Section Type </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Title</label>
+                                        <input type="text" class="form-control" formControlName="title">
+                                        <div *ngIf="isSubmitted && formControls.title.errors" class="Validationerrors">
+                                            <div *ngIf="formControls.title.errors.required"><span
+                                                    style="color: red;">Please enter
+                                                    title!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Title color </label>
+                                        <input type="color" formControlName="titleColor" class="form-control">
+
+                                    </div>
+
+                                </div>
+
+                                <!-- <div class="col-md-6">
+                                    <label for="background">Background Color </label>
+                                    <input type="checkbox" class="form-control" formControlName="background">
+                                    <label for="background" class="form-check-label">Background Color </label>
+                    
+                                </div> -->
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="background">Background </label>
+                                                <div>
+                                                    <input type="checkbox" formControlName="background" id="background">
+                                                    <!-- <label for="background" class="form-check-label">Background color </label> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="background">Check List </label>
+                                                <div>
+                                                    <input type="checkbox" formControlName="checkList" id="checkList">
+                                                    <!-- <label for="checkList" class="form-check-label">Backgrod color </label> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+
+                                <!-- <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="image">Image</label>
+                                        <input type="file" formControlName="image"
+                                            (change)="UploadDocs1($event,'image')" class="form-control">
+                                        <div *ngIf="isSubmitted && formControls.image.errors" class="Validationerrors">
+                                            <div *ngIf="formControls.image.errors.required"><span style="color: red;">Please choose
+                                                    file!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+                                <!-- <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="url">URL </label>
+                                        <input type="text" class="form-control" formControlName="url">
+                                        <div *ngIf="isSubmitted && formControls.url.errors" class="Validationerrors">
+                                            <div *ngIf="formControls.url.errors.required"><span
+                                                    style="color: red;">Please enter
+                                                    title!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Background color </label>
+                                        <input type="color" formControlName="bgcolor" class="form-control">
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Text color </label>
+                                        <input type="color" formControlName="txtcolor" class="form-control">
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Order</label>
+                                        <input type="number" formControlName="order" class="form-control">
+                                        <div *ngIf="isSubmitted && formControls.order.errors" class="Validationerrors">
+                                            <div *ngIf="formControls.order.errors.required"><span
+                                                    style="color: red;">Please choose
+                                                    order </span></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+
+
+
+                                <!-- <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Description</label>
+                                        <input type="text" class="form-control" formControlName="description"
+                                            (input)="onDescriptionChange()">
+
+                                        <textarea class="form-control" formControlName="description"
+                                            style="min-height: 100px;"></textarea>
+                                        <div *ngIf="isSubmitted && formControls.description.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.description.errors.required"><span
+                                                    style="color: red;">Please enter
+                                                    Description!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+                                <!-- <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Select Blog</label>
+
+                                        <select class="form-control" formControlName="SelectBlog" name="SelectBlog"
+                                            id="SelectBlog">
+
+                                            <option disabled value="">Select Blog</option>
+                                            <option value="HTML">HTML</option>
+                                            <option value="Ckeditor">Ckeditor</option>
+
+                                        </select>
+
+                                        <ckeditor [editor]="CKEditorComponent" formControlName="ckeditor"></ckeditor>
+                                        <div *ngIf="isSubmitted && formControls.SelectBlog.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.SelectBlog.errors.required"><span
+                                                    style="color: red;">
+                                                    Select Blog!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+                                <!-- <div class="col-md-12" *ngIf="Submitform.value['SelectBlog'] =='HTML' ">
+                                    <div class="form-group">
+                                        <label for="state">Editor</label>
+                                        <textarea class="form-control" formControlName="ckeditorContent"></textarea>
+                                        <ckeditor [editor]="CKEditorComponent" formControlName="ckeditor"></ckeditor>
+                                        <div *ngIf="isSubmitted && formControls.ckeditorContent.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.ckeditorContent.errors.required"><span
+                                                    style="color: red;">
+                                                    ckeditor!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+                                <div class="col-md-12"
+                                    *ngIf="formControls.sectionType?.value === 'normal' ||formControls.sectionType?.value === 'listing'">
+                                    <div class="form-group">
+                                        <label for="state">Editor</label>
+
+                                        <ckeditor [config]="editorConfig" formControlName="ckeditorContent"></ckeditor>
+
+                                        <div *ngIf="isSubmitted && formControls.ckeditorContent.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.ckeditorContent.errors.required"><span
+                                                    style="color: red;">
+                                                    ckeditor!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="button-div-yes-no" align="right">
+                                        <!-- <button type="button" (click)="CloseModel()"
+                                            class="btn btn-danger">Close</button> -->
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+                    </form>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="EditSectionPopup" class="modal fade" role="dialog">
+    <div class="modal-dialog cs_table_data">
+        <div class="main_card_form">
+            <div class="main_header">
+                <div class="header_title">Edit</div>
+                <button class="close closeModelButton" data-dismiss="modal" id="ClosePOUPUP2" (click)="Helper()"
+                    type="button">×</button>
+            </div>
+            <div class="cs_modal_body modal-body">
+                <div class="view_more_cases">
+
+                    <form (ngSubmit)="submitsection()" [formGroup]="editSectionForm">
+
+
+                        <div class="popup-content-body">
+                            <div class="row popup-form">
+
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Section Type </label>
+                                        <!-- <input type="text" class="form-control" formControlName="section_type"> -->
+                                        <ng-multiselect-dropdown class="form-control" [data]="section_type"
+                                            formControlName="section_type" [settings]="dropdownSettingsType"
+                                            [(ngModel)]="section_name">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Title</label>
+                                        <input type="text" class="form-control" formControlName="title">
+                                        <!-- <div *ngIf="isSubmitted && formControls.title.errors" class="Validationerrors">
+                                                <div *ngIf="formControls.title.errors.required"><span style="color: red;">Please enter
+                                                        title!</span></div>
+                                            </div> -->
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">ordered</label>
+                                        <input type="number" class="form-control" formControlName="ordered">
+                                        <!-- <div *ngIf="isSubmitted && formControls.ordered.errors" class="Validationerrors">
+                                                <div *ngIf="formControls.ordered.errors.required"><span style="color: red;">Please enter
+                                                        ordered!</span></div>
+                                            </div> -->
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Title color </label>
+                                        <input type="color" class="form-control" formControlName="titleColor">
+                                        <button type="button" class="btn btn-secondary mt-2"
+                                            (click)="clearTitleColor()">Clear</button>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Text color </label>
+                                        <input type="color" class="form-control" formControlName="txtcolor">
+                                        <button type="button" class="btn btn-secondary mt-2"
+                                            (click)="clearTextColor()">Clear</button>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6"
+                                    *ngIf="formControls1.section_type.value == 'normal' || SectionValue == 'normal' || formControls1.section_type.value == 'faq' || SectionValue == 'faq' || formControls1.section_type.value == 'listing' || SectionValue == 'listing' ||formControls1.section_type.value == 'table' || SectionValue == 'table' || formControls1.section_type.value == 'html' || SectionValue == 'html' ">
+                                    <div class="form-group">
+                                        <label for="state">Background color </label>
+                                        <input type="color" class="form-control" formControlName="bgcolor">
+                                        <button type="button" class="btn btn-secondary mt-2"
+                                            (click)="clearBgColor()">Clear</button>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="col-md-6"
+                                    *ngIf="formControls1.section_type.value == 'normal' || SectionValue == 'normal' || formControls1.section_type.value == 'faq' || SectionValue == 'faq' || formControls1.section_type.value == 'listing' || SectionValue == 'listing' ||formControls1.section_type.value == 'html' || SectionValue == 'html' || formControls1.section_type.value == 'ul_li' || SectionValue == 'ul_li'">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="background_color">Background Color </label>
+                                                <div>
+                                                    <input type="checkbox" formControlName="background_color"
+                                                        id="background_color">
+                                                    <!-- <label for="background" class="form-check-label">Background color </label> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="is_text_center">Text Center </label>
+                                                <div>
+                                                    <input type="checkbox" formControlName="is_text_center"
+                                                        id="is_text_center">
+                                                    <!-- <label for="background" class="form-check-label">Background color </label> -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-6"
+                                    *ngIf="formControls1.section_type.value == 'image' || SectionValue == 'image'">
+                                    <div class="form-group">
+                                        <label for="state">Image</label>
+                                        <input type="file" formControlName="image" (change)="UploadDocs($event,'image')"
+                                            class="form-control">
+                                        <!-- <div *ngIf="isSubmitted && formControls.image.errors" class="Validationerrors">
+                                            <div *ngIf="formControls.image.errors.required"><span style="color: red;">Please choose
+                                                    file!</span></div>
+                                        </div> -->
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6"
+                                    *ngIf="formControls1.section_type.value == 'image' || SectionValue == 'image'">
+                                    <div class="form-group">
+                                        <label for="state">Url </label>
+                                        <input type="text" class="form-control" formControlName="url">
+                                        <!-- <div *ngIf="isSubmitted && formControls.title.errors" class="Validationerrors">
+                                                <div *ngIf="formControls.title.errors.required"><span style="color: red;">Please enter
+                                                        title!</span></div>
+                                            </div> -->
+                                    </div>
+
+                                </div>
+
+
+                                <!-- <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">Category Name </label>
+                                        <input type="text" class="form-control" formControlName="section_type">
+                                        <ng-multiselect-dropdown class="form-control" [data]="category"
+                                            formControlName="category" [settings]="dropdownSettingsType"
+                                            [(ngModel)]="category_name">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+
+
+                                </div> -->
+
+                                <!-- <div class="col-md-6"
+                                    *ngIf="SectionValue == 'normal' || formControls1.section_type.value == 'normal' || SectionValue == 'faq' || formControls1.section_type.value == 'faq' || SectionValue == 'listing' || formControls1.section_type.value == 'listing'">
+                                    <div class=" form-group">
+                                        <label for="state">Description</label>
+                                        <textarea class="form-control" formControlName="description"></textarea>
+                                        <div *ngIf="isSubmitted && formControls.discription.errors" class="Validationerrors">
+                                            <div *ngIf="formControls.description.errors.required"><span style="color: red;">Please enter
+                                                    description!</span></div>
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+
+                                <div class="col-md-12"
+                                    *ngIf="this.editSectionForm.value['section_type']=='table' || SectionValue == 'table' ">
+                                    <div class="">
+                                        <div class="form-group">
+                                            <label for="noOfColumns">No of Columns</label>
+
+                                            <input type="number" formControlName="no_of_column" class="form-control"
+                                                [(ngModel)]="numColumns" id="noOfColumns"
+                                                (input)="onNoOfColumnsChange()">
+                                            <!-- <div *ngIf="isSubmitted && formControls1.noOfColumns.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls1.noOfColumns.errors.required">
+                                                <span style="color: red;">Please choose Number</span>
+                                            </div>
+                                        </div> -->
+                                        </div>
+
+
+                                        <!-- <div *ngFor="let row of rows; let rowIndex = index"> -->
+                                        <div class="row" *ngIf="numColumns > 0">
+
+                                            <div formArrayName="allRowData">
+                                                <div *ngFor="let row of allRowData.controls; let rowIndex = index"
+                                                    [formGroupName]="rowIndex">
+                                                    <div formArrayName="columns">
+                                                        <div class="col-md-12"
+                                                            *ngFor="let column of row.get('columns').controls; let columnIndex = index"
+                                                            [formGroupName]="columnIndex">
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <!-- <input type="text" class="form-control" [formControlName]="columnIndex"
+                                                                placeholder="Column {{columnIndex + 1}}"> -->
+
+                                                                        <input type="text" class="form-control"
+                                                                            [formControlName]="'name'"
+                                                                            placeholder="Name">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <!-- URL Input Field -->
+                                                                        <input type="url" class="form-control mt-2"
+                                                                            [formControlName]="'url'" placeholder="URL">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <!-- Is Button Checkbox -->
+                                                                        <div class="form-check mt-2">
+                                                                            <input type="checkbox"
+                                                                                class="form-check-input"
+                                                                                [formControlName]="'is_button'">
+                                                                            <label class="form-check-label">Is
+                                                                                Button</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <!-- Is Clickable Checkbox -->
+                                                                        <div class="form-check mt-2">
+                                                                            <input type="checkbox"
+                                                                                class="form-check-input"
+                                                                                [formControlName]="'is_clickable'">
+                                                                            <label class="form-check-label">Is
+                                                                                Clickable</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="col-md-12" *ngIf="rowIndex > 0 ">
+                                                        <button type="button" class="btn btn-danger"
+                                                            (click)="removeRow(rowIndex)">Remove
+                                                            Row</button>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <!-- <button (click)="addRow()" type="button">Add More</button> -->
+
+
+                                        </div>
+
+
+                                        <button class="addmore" (click)="addRow()" type="button">Add More</button>
+                                    </div>
+                                </div>
+
+
+                                <!-- <div class="col-md-12">
+                                        <label for="state">Select Blog</label>
+                        
+                                        <select class="form-control" formControlName="SelectBlog" name="SelectBlog" id="SelectBlog">
+                        
+                                            <option disabled value="">Select Blog</option>
+                                            <option value="HTML">HTML</option>
+                                            <option value="Ckeditor">Ckeditor</option>
+                        
+                                        </select>
+                        
+                                        <ckeditor [editor]="CKEditorComponent" formControlName="ckeditor"></ckeditor>
+                                        <div *ngIf="isSubmitted && formControls.SelectBlog.errors" class="Validationerrors">
+                                            <div *ngIf="formControls.SelectBlog.errors.required"><span style="color: red;">
+                                                    Select Blog!</span></div>
+                                        </div>
+                                    </div>
+                        
+                                    <div class="col-md-12" *ngIf="editSectionForm.value['SelectBlog'] == 'HTML' ">
+                                        <label for="state">Editor</label>
+                                        <textarea class="form-control" formControlName="ckeditorContent"></textarea>
+                                        <ckeditor [editor]="CKEditorComponent" formControlName="ckeditor"></ckeditor>
+                                        <div *ngIf="isSubmitted && formControls.ckeditorContent.errors" class="Validationerrors">
+                                            <div *ngIf="formControls.ckeditorContent.errors.required"><span style="color: red;">
+                                                    ckeditor!</span></div>
+                                        </div> 
+                                    </div> -->
+
+                                <div class="col-md-12"
+                                    *ngIf="SectionValue == 'normal' || formControls1.section_type.value == 'normal' || SectionValue == 'faq' || formControls1.section_type.value == 'faq' || SectionValue == 'listing' || formControls1.section_type.value == 'listing' || SectionValue == 'html' || formControls1.section_type.value == 'html' || SectionValue == 'table' || formControls1.section_type.value == 'table'">
+                                    <label for="state">Editor</label>
+                                    <ckeditor [config]="editorConfig" formControlName="ckeditorContent"></ckeditor>
+
+                                    <!-- <div *ngIf="isSubmitted && formControls.ckeditorContent.errors"
+                                        class="Validationerrors">
+                                        <div *ngIf="formControls.ckeditorContent.errors.required"><span
+                                                style="color: red;">
+                                                ckeditor!</span></div>
+                                    </div> -->
+                                </div>
+
+
+
+                                <div class="col-md-12">
+                                    <div class="button-div-yes-no" align="right">
+                                        <!-- <button type="button" (click)="CloseModel()"
+                                                class="btn btn-danger">Close</button> -->
+
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

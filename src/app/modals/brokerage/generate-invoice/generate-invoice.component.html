@@ -1,0 +1,118 @@
+ 
+<form class="form" [formGroup]="modalForm" (ngSubmit)="submitForm()">
+
+  <input type="hidden" class="form-control" formControlName="Agent_Category">
+ 
+
+  <div class="row" style="margin-top: 10px;">
+
+    <div class="col-md-6">
+        <label for="name">Select Payor <a href="javascript:void(0)" (click)="AddNewPayor()">add new</a></label>
+        <select class="form-control" (change)="GetPayors()" formControlName="Payor_Type">
+              <option selected disabled>Select</option>
+              <option *ngFor="let row of Payors;" value="{{row.Id}}">{{row.Payor_Name}}</option>
+        </select>
+      </div>
+      <span><Strong>Total Amount : </Strong> {{data.Amount}}</span>
+    <div class="col-md-6" style="display: none;">
+      <label for="name">Customer Type</label>
+      <select class="form-control" (change)="GetDetails()" formControlName="Customer_Type">
+            <option selected disabled>Select</option>
+            <option>New</option>
+            <option>Existing</option>
+      </select>
+    </div>
+  </div> 
+   
+  <div *ngIf="modalForm.value['Customer_Type'] !=''" class="row" style="margin-top: 10px;">
+    <div class="col-md-4">
+      <label for="name">Parnter Name</label>
+      <input class="form-control" formControlName="Part_Name" readonly>
+    </div>
+    <div class="col-md-8">
+        <label for="name">Parnter Address</label>
+        <input class="form-control" formControlName="Part_Address" readonly>
+      </div>
+</div>
+
+<div *ngIf="modalForm.value['Customer_Type'] !=''" class="row" style="margin-top: 10px;">
+
+      <div class="col-md-4">
+        <label for="name">Pan No.</label>
+        <input class="form-control" formControlName="Pan_No" readonly>
+      </div>
+
+      <div class="col-md-4">
+        <label for="name">GST No.</label>
+        <input class="form-control" formControlName="GST_No" readonly>
+      </div>
+
+      <div class="col-md-4">
+        <label for="name">Aadhar Card No.</label>
+        <input class="form-control" formControlName="Aadhar_No" readonly>
+      </div>
+
+      <div class="col-md-4" style="display: none;">
+        <label for="name">GST %</label>
+        <input class="form-control" formControlName="GST_Per" readonly>
+      </div>
+
+      <div class="col-md-4">
+        <label for="name">Amount<!--with GST--></label>
+        <input class="form-control" formControlName="Amount_With_GST" [max]="data.Amount">
+        <div *ngIf="isSubmitted && formControls.Amount_With_GST.errors " class="ValidationError">
+          <div *ngIf="formControls.Amount_With_GST.errors.max">Amount cannot be greater than {{data.Amount}}</div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="Description">Description</label>
+        <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="DiscriptionVal" (onSelect)="searchHsnNo()"
+        formControlName="Description" [settings]="dropdownSettingsType">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.Description.errors " class="ValidationError">
+          <div *ngIf="formControls.Description.errors.max">Please select discription!</div>
+        </div>
+      </div>
+
+
+      <div class="col-md-4">
+        <label for="Description">HSN Number</label>
+        <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="hsnNodata"
+        formControlName="hsnnumber" [settings]="dropdownSettingsType">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.hsnnumber.errors " class="ValidationError">
+          <div *ngIf="formControls.hsnnumber.errors.max">Please select HSN No.!</div>
+        </div>
+      </div>
+
+
+      <div class="col-md-4">
+        <label for="name">Remark</label>
+        <input class="form-control" formControlName="remark">
+        <div *ngIf="isSubmitted && formControls.remark.errors " class="ValidationError">
+          <div *ngIf="formControls.remark.errors.max">Please enter remark!</div>
+        </div>
+      </div>
+
+      <div class="col-md-4" style="display: none;">
+        <label for="name">Amount without GST</label>
+        <input class="form-control" formControlName="Amount_Without_GST">
+      </div>
+
+
+  </div>
+
+ 
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-md-12">
+      <mat-dialog-actions>
+        <button *ngIf="modalForm.value['Customer_Type'] !=''" class="btn btn-primary" type="submit">Generate Invoice</button>&nbsp;&nbsp;
+        
+        <button class="btn btn-danger" (click)="close()" type="button">Close</button>
+      </mat-dialog-actions>
+    </div>
+  </div>
+
+
+</form>

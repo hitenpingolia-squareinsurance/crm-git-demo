@@ -1,0 +1,43 @@
+<section class="inner_page_css knowlage_details_page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">{{row.title}}</div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+                        <div class="row d_flex">
+                            <div class="col-lg-4 col-md-5 col-sm-12">
+                                <div class="main_card mb_25">
+                                    <iframe *ngIf="row.filetype == 'URL'" width="100%" style="min-height: 190px;"
+                                        [src]="videourl" title="YouTube video player" frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen></iframe>
+
+                                    <img *ngIf="row.filetype == 'Document'" class="w_100"
+                                        src="{{this.filevalue}}">
+                                </div>
+
+                                <div class="main_card car_descri_scroll_main_card">
+                                    <div class="mb_15 report_icons border_1px_solid py_5 px_10" *ngFor="let row of CategoryVal; let i=index;">
+                                        <a (click)="GetRow(row.Id,row.category)"><i class="fa fa-book mr_10"></i>
+                                            {{row.title}}</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-7 col-sm-12">
+                                <div class="main_card mb_25">
+                                    <div class="car_descri_scroll">
+                                        <p class="description_ar" [innerHTML]="row.description"> </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

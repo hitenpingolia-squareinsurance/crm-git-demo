@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="box-header">
+    <div class="row">
+      <div class="col-md-4">
+        <h3 class="box-title">Mail Logs</h3>
+      </div>
+    </div>
+  </div>
+  <table id="Table1" class="table table-bordered table-hover">
+
+    <tbody class="row container-fluid" id="divshow">
+
+      <tr>
+        <td><b>Sr No.</b></td>
+        <td><b>Send By</b></td>
+        <td><b>Rm Email</b></td>
+        <td><b>Agent Email</b></td>
+        <td><b>Action Date</b></td>
+      </tr>
+      <tr *ngFor="let row of Dataresult; let i=index;">
+        <td>{{row.SRNo}}</td>
+        <td>{{row.actionByName}}-{{row.actionByEmpId}}</td>
+        <td>{{row.rmEmail}}</td>
+        <td>{{row.agentEmail}}</td>
+        <td>{{row.Create_date}}</td>
+      </tr>
+
+    </tbody>
+
+  </table>
+  <footer>
+    <div class="box-footer">
+      <div class="custom-btn-align">
+        <span *ngIf="this.agreementStatus == '1'" (click)="UrlRedirection(this.id,this.agentCode)"
+          class="btn btn-success">Proceed</span>
+
+
+
+        <span *ngIf="this.agreementStatus == '1'" (click)="SendAgreementMail(this.id,this.agentCode)"
+          class="btn btn-info">Resend Agreement Mail</span>
+
+
+
+        <button type="button" (click)="CloseModel22()" class="btn btn-danger">Close</button>
+      </div>
+
+
+
+    </div>
+
+  </footer>
+
+
+</div>

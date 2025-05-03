@@ -1,0 +1,131 @@
+<div class="row">
+
+  <div class="modal-header" style="text-align: center;">
+    <h4 class="modal-title">Add My Contact</h4>
+
+  </div>
+</div>
+
+<form (ngSubmit)="submit()" [formGroup]="AddContact">
+
+  <div class="popup-content-body">
+    <div class="row popup-form">
+
+
+      <div class="col-md-6">
+        <label for="state">Action Type</label>
+        <select name="customertype" formControlName="customertype" (change)="FileType_Status()" class="form-control"
+          data-parsley-required="true">
+          <option value="input">Add</option>
+          <option value="file">Bulk Upload</option>
+        </select>
+        <div *ngIf="isSubmitted && formControls.customertype.errors" class="Validationerrors">
+          <div *ngIf="formControls.customertype.errors.required"><span style="color: red;">Please select
+              Customer Type!</span></div>
+        </div>
+      </div>
+
+
+
+      <div class="col-md-6" *ngIf="this.AddContact.value['customertype']=='input'">
+        <label for="state">Customer Type</label>
+        <select name="lob" formControlName="inputcustomertype" class="form-control" data-parsley-required="true">
+          <!-- <option value="">Select Customer Type</option> -->
+          <option value="Individual">Individual</option>
+          <option value="organization">Organization</option>
+        </select>
+        <div *ngIf="isSubmitted && formControls.inputcustomertype.errors" class="Validationerrors">
+          <div *ngIf="formControls.inputcustomertype.errors.required"><span style="color: red;">Please select
+              Customer Type!</span></div>
+        </div>
+      </div>
+
+
+
+      <div class="col-md-6 next"
+        *ngIf="this.AddContact.value['customertype']=='input'  && this.AddContact.value['inputcustomertype']=='organization'">
+        <label for="state">Organization Name</label>
+        <input type="text" class="form-control" formControlName="organizationname">
+        <div *ngIf="isSubmitted && formControls.organizationname.errors" class="Validationerrors">
+          <div *ngIf="formControls.organizationname.errors.required"><span style="color: red;">Please enter
+              organizationname!</span></div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6 next" *ngIf="this.AddContact.value['customertype']=='input'">
+        <label for="state">Name</label>
+        <input type="text" class="form-control" formControlName="name">
+        <div *ngIf="isSubmitted && formControls.name.errors" class="Validationerrors">
+          <div *ngIf="formControls.name.errors.required"><span style="color: red;">Please enter
+              name!</span></div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6 next" *ngIf="this.AddContact.value['customertype']=='input'">
+        <label for="state">Email</label>
+        <input type="text" class="form-control" formControlName="email">
+        <div *ngIf="isSubmitted && formControls.email.errors" class="Validationerrors">
+          <span *ngIf="formControls.email.errors.pattern">Please Enter Valid Mail Address</span>
+        </div>
+      </div>
+
+
+      <div class="col-md-6" *ngIf="this.AddContact.value['customertype']=='input'">
+        <label for="state">Contact Type</label>
+        <select name="lob" formControlName="publicprivate" class="form-control" data-parsley-required="true">
+          <option value="">Select Type</option>
+          <option value="Public">Public</option>
+          <option value="Private">Private</option>
+        </select>
+        <div *ngIf="isSubmitted && formControls.publicprivate.errors" class="Validationerrors">
+          <div *ngIf="formControls.publicprivate.errors.required"><span style="color: red;">Please select
+              Contact Type!</span></div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6 next" *ngIf="this.AddContact.value['customertype']=='input'">
+        <label for="state">Mobile</label>
+        <input type="text" class="form-control" formControlName="mobile" maxlength="10">
+        <div *ngIf="isSubmitted && formControls.mobile.errors" class="Validationerrors">
+
+          <span *ngIf="formControls.mobile.errors.pattern">Please Enter Valid Mobile</span>
+
+        </div>
+      </div>
+
+      <div class="col-md-6 next" *ngIf="this.AddContact.value['customertype']=='input'">
+        <label for="state">Remark</label>
+        <textarea class="form-control" formControlName="remarks"></textarea>
+        <div *ngIf="isSubmitted && formControls.remarks.errors" class="Validationerrors">
+          <div *ngIf="formControls.remarks.errors.required"><span style="color: red;">Please enter
+              remarks!</span></div>
+        </div>
+      </div>
+      <div class="col-md-2 next" style="margin-top:25px" *ngIf="this.AddContact.value['customertype']=='file'">
+        <a class=" form-control  btn btn-primary" style="cursor:pointer;"
+          href="https://crmapi.squareinsurance.in/uploads/contact_upload.csv" download="">Download</a>
+      </div>
+
+      <div class="col-md-4 next" *ngIf="this.AddContact.value['customertype']=='file'">
+        <label for="state">File</label>
+        <input type="file" class="form-control" (change)="UploadDocs($event,'file')" formControlName="file">
+        <div *ngIf="isSubmitted && formControls.file.errors" class="Validationerrors">
+          <div *ngIf="formControls.file.errors.required"><span style="color: red;">Please Choose
+              file!</span></div>
+        </div>
+      </div>
+
+
+      <div class="clearfix"></div>
+      <div class="button-div-yes-no next" align="right" style="margin-top: 10px;">
+        <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>&nbsp;
+        <button type="submit" class="btn btn-primary">Submit</button>&nbsp;
+      </div>
+
+    </div>
+
+  </div>
+</form>

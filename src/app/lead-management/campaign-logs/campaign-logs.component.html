@@ -1,0 +1,156 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">
+              <div>Campaign Report
+                <button class="btn btn-secondary" *ngIf="url_segment == 'campaign' " data-toggle="modal" data-target="#exampleModal" style="float:right; color:#000; padding:2px; margin-bottom:2px;">Campaign Request <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            
+
+            <div class="Campaignheaderin">
+              {{Campaignname}}&nbsp;
+              <small *ngIf="this.CampaignFor != '' ">- {{CampaignFor}}</small>&nbsp;&nbsp;
+              <small *ngIf="this.CampaignLob != '' ">- {{CampaignLob}}</small>&nbsp;&nbsp;
+              <small *ngIf="this.start_date != '' ">Start Date - {{start_date}}</small>&nbsp;&nbsp;&nbsp;&nbsp;
+              <small *ngIf="this.end_date != '' ">End Date - {{end_date}}</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <!-- <button (click)="CloseModel()" type="button">&times;</button> -->
+            </div>
+            
+            <div class="Campaigninnerdata">
+              <ul>
+                <li [ngClass]="(active_tab == 'Total'?'active ':'')" >
+                  <a  (click)="SetActiveTab('Total')" role="button">
+                  <span>Total Leads</span>
+                  <small>100% <abbr>({{count.Total}})</abbr></small></a>
+                </li>
+                <li [ngClass]="(active_tab == 'Pending'?'active ':'')" >
+                  <a (click)="SetActiveTab('Pending')" role="button">
+                  <span>Pending Leads</span>
+                  <small>{{ percentages.pending | number:'1.0-2' }}% <abbr>({{count.pending}})</abbr></small></a>
+                </li>
+                <li [ngClass]="(active_tab == 'followup'?'active ':'')" >
+                  <a (click)="SetActiveTab('followup')" role="button">
+                  <span>Follow Up Leads</span>
+                  <small>{{ percentages.follow | number:'1.0-2' }}% <abbr>({{count.follow}})</abbr></small></a>
+                </li>
+                <li [ngClass]="(active_tab == 'Converted'?'active ':'')" >
+                  <a (click)="SetActiveTab('Converted')" role="button">
+                  <span>Converted Leads</span>
+                  <small>{{ percentages.converted | number:'1.0-2' }}% <abbr>({{count.converted}})</abbr></small></a>
+                </li>
+                <li [ngClass]="(active_tab == 'Lost'?'active ':'')" >
+                  <a (click)="SetActiveTab('Lost')" role="button">
+                  <span>Lost Leads</span>
+                  <small>{{ percentages.lost | number:'1.0-2' }}% <abbr>({{count.lost}})</abbr></small></a>
+                </li>
+                <li [ngClass]="(active_tab == 'Close'?'active ':'')" >
+                  <a (click)="SetActiveTab('Close')" role="button">
+                  <span>Close Leads</span>
+                  <small>{{ percentages.close | number:'1.0-2' }}% <abbr>({{count.close}})</abbr></small></a>
+                </li>
+              </ul>
+            </div>
+
+
+            <!-- </div> -->
+            <hr>
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+                <!-- ======= Refer Table  =========-->
+                <ul class="responsive-table">
+                  <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+                    <div class="campingstatus">
+                      <span *ngIf="row.status == 1" class="labelPending">Pending</span>
+                      <span *ngIf="row.status == 2" class="labelFollow">Follow Up</span>
+                      <span *ngIf="row.status == 3" class="labelConverted">Converted</span>
+                      <span *ngIf="row.status == 4" class="labelLOST">Lost</span>
+                      <span *ngIf="row.status == 6" class="labelClose">Close</span>
+                    </div>
+                    
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{row.SrNo}}</div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Employee Name & Code </div>
+                            <strong class="fs_18">{{row.emp_name}}- {{row.emp_code}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Mobile</div>
+                            <strong class="fs_18">{{row.Mobile}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Insert Date</div><strong class="fs_18">{{row.Date}}</strong>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Converted Date</div><strong class="fs_18">{{row.ConvertedDate}}</strong>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+                        <div class="label_chips finance_lob">
+                          <span>Source : {{row.Source}}</span>
+                        </div>
+                        <div class="label_chips non_motor_lob">
+                          <span>Lead Id : {{row.lead_id}}</span>
+                        </div>
+                        <div class="label_chips non_motor_lob" *ngIf="row.agent_id != '' ">
+                          <span>Agent Code : {{row.agent_id}}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="last_row">
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom" *ngIf="row.status == 3 && row.Source == 'Become Posp' ">
+                        <button class="btnbg1"
+                        (click)="AgentBusiness(row.agent_id,row.agent_name)">View Business</button>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <!--======= Refer Table END ========= -->
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

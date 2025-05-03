@@ -1,0 +1,86 @@
+ 
+<form class="form" [formGroup]="modalForm" (ngSubmit)="submitForm()">
+ 
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-md-12">
+        <label for="name">Payor Name</label>
+        <input class="form-control" formControlName="Payor_Name">
+      </div>
+      </div>
+      <div class="row" style="margin-top: 10px;"> 
+        <div class="col-md-12">
+          <label for="name">Full Address</label>
+          <input class="form-control" formControlName="Line_1">
+        </div>
+        <div class="col-md-6" style="display: none;">
+            <label for="name">Line 2</label>
+            <input class="form-control" formControlName="Line_2">
+          </div>
+    </div>
+
+     
+      <div class="row" style="margin-top: 10px;"> 
+        <div class="col-md-6">
+            <label for="name">GSTIN/UIN</label>
+            <input class="form-control" formControlName="Line_3">
+          </div>
+          <div class="col-md-6">
+            <label for="name">CIN</label>
+            <input class="form-control" formControlName="Line_4">
+          </div>
+      </div>
+ 
+      <div class="row" style="margin-top: 10px; display: none"> 
+        <div class="col-md-6">
+            <label for="name">Line 5</label>
+            <input class="form-control" formControlName="Line_5">
+          </div>
+          <div class="col-md-6">
+            <label for="name">Line 6</label>
+            <input class="form-control" formControlName="Line_6">
+          </div>
+      </div>
+   
+      <div class="row" style="margin-top: 10px; display: none;"> 
+        <div class="col-md-6">
+            <label for="name">Line 7</label>
+            <input class="form-control" formControlName="Line_7">
+          </div>
+          <div class="col-md-6">
+            <label for="name">Line 8</label>
+            <input class="form-control" formControlName="Line_8">
+          </div>
+      </div>
+
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-md-12">
+        <mat-dialog-actions>
+          <button class="btn btn-primary" type="submit">Add</button>&nbsp;&nbsp;
+          <button class="btn btn-light" (click)="close()">Close</button>
+        </mat-dialog-actions>
+      </div>
+    </div>
+  
+  </form>
+  <br>
+<hr>
+  <table class="table table-bordered">
+    <tr>
+        <th>Name/Details</th>
+        <th>Action</th>
+    </tr> 
+    <tr *ngFor="let row of Payors; let i=index;">
+        <td>{{row.Payor_Name}}
+          
+          <p>Address : {{row.Line_1}}</p>
+          <p>GSTIN/UIN : {{row.Line_3}}</p>
+          <p>CIN : {{row.Line_4}}</p>
+
+        </td>
+        <td>
+            <a href="javascript:void(0)" (click)="DeletePayor(row.Id)">Delete</a>
+        </td>
+    </tr>
+    
+  </table>
+  

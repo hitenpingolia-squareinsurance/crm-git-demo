@@ -1,0 +1,159 @@
+<section class="custom-scrool" id="click-close">
+    <div class="">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <h4 class="header_title">Form</h4>
+                <button type="button" (click)="CloseModel()" class="close closeModelButton"><i
+                        class="fa fa-close"></i></button>
+                <div class="call-precess" id="callProcess" style="display:none;">
+                    <div class="call-align">
+                        <img src="assets/image/calling.gif" alt="">
+                    </div>
+                    <div class="heading-call">Call in Progress....</div>
+                </div>
+            </div>
+
+            <div class="modal_body py_15">
+
+                <div class="row">
+
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form [formGroup]="AddFieldForm" (ngSubmit)="SubBtn()">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="category_list">
+                                        <label for="state">Company</label>
+                                        <input type="text" class="form-control" value="{{dataAr2}}" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="category_list">
+                                        <label for="state">PVT</label>
+                                        <input type="number" class="form-control" formControlName="pvt"
+                                            placeholder="PVT" [min]="0" [max]="100" (ngModelChange)="dateClear()">
+                                        <div *ngIf="isSubmitted && AddFieldForm.get('pvt').hasError('required') && (AddFieldForm.get('pvt').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            This field is Required
+                                        </div>
+                                        <div *ngIf="isSubmitted && AddFieldForm.get('pvt').hasError('min') && (AddFieldForm.get('pvt').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            Value must be greater than or equal to 1
+                                        </div>
+                                        <div *ngIf="isSubmitted && AddFieldForm.get('pvt').hasError('max') && (AddFieldForm.get('pvt').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            Value must be less than or equal to 1000
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="category_list">
+                                        <label for="state">TW</label>
+                                        <input type="number" class="form-control" formControlName="tw" placeholder="TW"
+                                            (ngModelChange)="dateClear()">
+                                        <div *ngIf="isSubmitted && AddFieldForm.get('tw').hasError('required') && (AddFieldForm.get('tw').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            This field is Required
+                                        </div>
+                                        <div *ngIf="isSubmitted && AddFieldForm.get('tw').hasError('min') && (AddFieldForm.get('tw').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            Value must be greater than or equal to 1
+                                        </div>
+                                        <div *ngIf="isSubmitted && AddFieldForm.get('tw').hasError('max') && (AddFieldForm.get('tw').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            Value must be less than or equal to 1000
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="category_list">
+                                        <label for="state">GCV</label>
+                                        <input type="number" class="form-control" formControlName="gcv"
+                                            placeholder="GCV" (ngModelChange)="dateClear()">
+                                        <div *ngIf="isSubmitted && AddFieldForm.get('gcv').hasError('required') && (AddFieldForm.get('gcv').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            This field is Required
+                                        </div>
+                                        <div *ngIf="isSubmitted && AddFieldForm.get('gcv').hasError('min') && (AddFieldForm.get('gcv').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            Value must be greater than or equal to 1
+                                        </div>
+                                        <div *ngIf="isSubmitted && AddFieldForm.get('gcv').hasError('max') && (AddFieldForm.get('gcv').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            Value must be less than or equal to 1000
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="category_list">
+                                        <label for="state">MISD</label>
+                                        <input type="number" class="form-control" formControlName="misd"
+                                            placeholder="MISD" (ngModelChange)="dateClear()">
+                                        <div *ngIf="isSubmitted && AddFieldForm.get('misd').hasError('required') && (AddFieldForm.get('misd').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            This field is Required
+                                        </div>
+                                        <div *ngIf="isSubmitted && AddFieldForm.get('misd').hasError('min') && (AddFieldForm.get('misd').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            Value must be greater than or equal to 1
+                                        </div>
+                                        <div *ngIf="isSubmitted && AddFieldForm.get('misd').hasError('max') && (AddFieldForm.get('misd').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            Value must be less than or equal to 1000
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="category_list">
+                                        <label for="state">PCV</label>
+                                        <input type="number" class="form-control" formControlName="pcv"
+                                            placeholder="PCV" (ngModelChange)="dateClear()">
+                                        <div *ngIf="isSubmitted && AddFieldForm.get('pcv').hasError('required') && (AddFieldForm.get('pcv').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            This field is Required
+                                        </div>
+                                        <div *ngIf="isSubmitted && AddFieldForm.get('pcv').hasError('min') && (AddFieldForm.get('pcv').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            Value must be greater than or equal to 1
+                                        </div>
+                                        <div *ngIf="isSubmitted && AddFieldForm.get('pcv').hasError('max') && (AddFieldForm.get('pcv').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            Value must be less than or equal to 1000
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <label for="">Effective Date</label>
+                                    <input type="text" placeholder="Select Date" class="form-control"
+                                        formControlName="effective" bsDatepicker
+                                        [bsConfig]="{dateInputFormat: 'DD-MM-YYYY', isAnimated: true }"
+                                        [minDate]="minDate" [maxDate]="maxDate">
+                                    <div *ngIf="isSubmitted && AddFieldForm.get('effective').hasError('required') && (AddFieldForm.get('effective').touched || AddFieldForm.dirty)"
+                                        class="text-danger">
+                                        This field is Required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="float-end pull-right">
+                                        <button type="submit" class="btn btn_primary btn-success">Submit</button>
+                                        &nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

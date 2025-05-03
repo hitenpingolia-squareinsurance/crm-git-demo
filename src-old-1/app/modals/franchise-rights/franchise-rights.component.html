@@ -1,0 +1,53 @@
+
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th colspan="3" style="text-align: center;">
+			<span>{{PosAr.Name}} ({{PosAr.Emp_Id}})</span> 
+			<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+		</th>
+      </tr> 
+    </thead>
+    <tbody>
+	  
+	  <tr>
+		<td colspan="3">
+			
+			 
+			<label style="font-weight: bold;">Select Label</label>  
+			<select [(ngModel)]="FR_Label_Type" class="form-control">
+				  <option value="" disabled selected>--Select-Label--</option>
+				  <option value="1">Standard</option>
+                  <option value="2">Customized</option>
+			</select>
+			
+			
+		</td>
+      </tr>
+	   
+	  <tr> 
+		<td colspan="3">
+            <label style="font-weight: bold;">Select Right</label>  
+			<select [(ngModel)]="FR_Right" class="form-control">
+				  <option value="" disabled selected>--Select-Right--</option>
+				  <option value="1">BA - Business Associate</option>
+				  <option value="2">BP - Business Partner</option>
+			</select>
+		</td>
+      </tr>
+	  
+	   
+	  
+	   <tr>
+		  <td style="text-align: right;" colspan="3"> 
+			<input (click)="Update()" value="Submit" type="button" class="btn btn-info">	
+		 </td>
+      </tr>
+	   
+	
+	  
+    
+    
+    </tbody>
+  </table>
+  

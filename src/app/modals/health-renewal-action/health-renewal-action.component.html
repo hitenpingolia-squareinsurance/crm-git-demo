@@ -1,0 +1,81 @@
+<div class=" box-default">
+    <div class="box-header with-border">
+      <h3 class="box-title">Update Payment Details</h3>
+      <div class="box-tools pull-right">
+        <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+      </div>
+    </div>
+    <form [formGroup]="ActionForm" (ngSubmit)="SubmitActionForm()">
+  
+      <!--=== IF LOB IS LIFE START ===-->
+      <div class="box-body">
+  
+        <div class="form-group">
+  
+          <!--=== For Accept Option ===-->
+          <div class="row">
+            <div class="xyz col-md-6">
+              <label>Payment Reference No :</label>
+              <input type="text" class="form-control" formControlName="Payment_Reference_No">
+              <span *ngIf="isSubmitted && FC_6.Payment_Reference_No.errors" class="form-text text-muted">
+                <span *ngIf="FC_6.Payment_Reference_No.errors.required" style="color:red;">This Field is required..!</span>
+              </span>
+            </div>
+  
+            <div class="xyz col-md-6">
+              <label>Payment Date* :</label>
+              <input bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" formControlName="Payment_Date"
+                placeholder="DD-MM-YYYY" class="form-control" type="text">
+                <span *ngIf="isSubmitted && FC_6.Payment_Date.errors" class="form-text text-muted">
+                  <span *ngIf="FC_6.Payment_Date.errors.required" style="color:red;">This Field is required..!</span>
+                </span>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-sm-6">
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Payment Mode" [data]="Payment_Mode_Ar"
+                formControlName="Payment_Mode" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+                <span *ngIf="isSubmitted && FC_6.Payment_Mode.errors" class="form-text text-muted">
+                  <span *ngIf="FC_6.Payment_Mode.errors.required" style="color:red;">This Field is required..!</span>
+                </span>
+            </div>
+  
+            <div class="xyz col-md-6">
+              <label class="form-control btn fileUpload btn-default"
+                [ngClass]="(this.Other_image==1 ? 'ImageUploaded' : 'else' )" name="button" value="Others">
+                <input type="file" (change)="UploadDocs($event,'Payment_Reciept')" id="file"
+                  accept="image/png, image/gif, image/jpeg ,application/pdf" formControlName="Payment_Reciept"
+                  style="display:none;" />
+                <span class="fas fa-user-alt"><b>Upload Payment Reciept</b></span>
+              </label>
+              <span *ngIf="isSubmitted && FC_6.Payment_Reciept.errors" class="form-text text-muted">
+                <span *ngIf="FC_6.Payment_Reciept.errors.required" style="color:red;">This Field is required..!</span>
+              </span>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class='xyz col-md-12'>
+              <label>Remark:</label>
+              <textarea class="form-control" formControlName="Remark" name="Remark"></textarea>
+              <span *ngIf="isSubmitted && FC_6.Remark.errors" class="form-text text-muted">
+                <span *ngIf="FC_6.Remark.errors.required" style="color:red;">This Field is required..!</span>
+              </span>
+            </div>
+          </div>
+  
+        </div>
+  
+        <div class="box-footer">
+          <div class='col-md-12' *ngIf="(User_Rights.Is_Operation==1 || User_Rights.Underwriter_Health==1)">
+            <button class="btn btn-primary nextBtn pull-right" type="submit">
+              <span>Submit</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!--=== IF LOB IS LIFE END ===-->
+  
+    </form>
+  </div>

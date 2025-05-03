@@ -1,0 +1,122 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">{{ActivePage}}</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+              <div class="row">
+                <div class="col-sm-3 mb_15" *ngIf="this.ActivePage == 'Posp Report'">
+                  <select formControlName="ReportTypeStatus" name="ReportTypeStatus" class="form-control" required
+                    placeholder="">
+                    <option selected value="">--select--</option>
+                    <option>Life POSP Business Data </option>
+                    <!-- <option>Life Product Wise Data</option> -->
+                    <option>General POSP Business Data</option>
+                    <!-- <option>General Product Wise Data</option> -->
+                    <!-- <option>General POSP Number</option> -->
+                  </select>
+                  <span *ngIf="isSubmitted && FC.ReportTypeStatus.errors" class="form-text text-muted">
+                    <span *ngIf="FC.ReportTypeStatus.errors.required" style="color:red;">Please choose report
+                      type!</span>
+                  </span>
+                </div>
+                <div class="col-sm-3 mb_15" *ngIf="this.ActivePage === 'Business Report'">
+                  <ng-multiselect-dropdown name="AgentId" class="form-control" placeholder="Select Agent Id"
+                    [data]="AgentData" formControlName="AgentId" [settings]="AgentDropdownSettings">
+                  </ng-multiselect-dropdown>
+                  <span *ngIf="isSubmitted && FC.AgentId.errors" class="form-text text-muted">
+                    <span *ngIf="FC.AgentId.errors.required" style="color:red;">Please choose Agent type!</span>
+                  </span>
+                </div>
+                <div class="col-sm-3 mb_15" *ngIf="this.ActivePage !== 'Posp Report'">
+                  <select (change)="GetCompanies($event)" formControlName="Report_Type" name="Report_Type"
+                    class="form-control" placeholder="" required>
+                    <option selected value="">--select--</option>
+                    <option>General Insurance</option>
+                    <option>Life Insurance</option>
+                  </select>
+                  <span *ngIf="isSubmitted && FC.Report_Type.errors" class="form-text text-muted">
+                    <span *ngIf="FC.Report_Type.errors.required" style="color:red;">Please choose report type!</span>
+                  </span>
+                </div>
+                <div class="col-sm-3 mb_15">
+                  <ng-multiselect-dropdown name="SRStatus" class="form-control" placeholder="Select SR Status"
+                    [data]="SRStatus_Ar" formControlName="SRStatus" [settings]="SR_StatusDropdownSettings">
+                  </ng-multiselect-dropdown>
+                  <span *ngIf="isSubmitted && FC.SRStatus.errors" class="form-text text-muted">
+                    <span *ngIf="FC.SRStatus.errors.required" style="color:red;">Please choose business type!</span>
+                  </span>
+                </div>
+                <div class="col-sm-3 mb_15">
+                  <ng-multiselect-dropdown class="form-control" name="Company_Id" placeholder="Select Ins Company"
+                    [data]="Companies_Ar" formControlName="Company_Id" [settings]="dropdownSettings">
+                  </ng-multiselect-dropdown>
+                  <span *ngIf="isSubmitted && FC.SRStatus.errors" class="form-text text-muted">
+                    <span *ngIf="FC.SRStatus.errors.required" style="color:red;">Please choose Company!</span>
+                  </span>
+                </div>
+                <div class="col-sm-3 mb_15" style="text-align: right;">
+                  <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                    formControlName="DateOrDateRange" bsDaterangepicker
+                    [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                  <span *ngIf="isSubmitted && FC.DateOrDateRange.errors" class="form-text text-muted">
+                    <span *ngIf="FC.DateOrDateRange.errors.required" style="color:red;">Please choose Date or
+                      Date-Range!</span>
+                  </span>
+                </div>
+                <div class="col-sm-9 mb_15" style="text-align: right;">
+                  <input type="submit" class="btn btn-info" value="Export">
+                  &nbsp;&nbsp;
+                  <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                    value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                </div>
+              </div>
+            </form>
+            <!-- /.box-body -->
+            <!-- /.box -->
+            <hr>
+            <!--begin: Datatable-->
+            <div class="table-responsive mysrdiv" id="mydiv">
+              <table datatable [dtOptions]="dtOptions"
+                class="row-border hover table table-bordered table-hover table-checkable table-responsive"
+                id="kt_datatable" style="margin-top: 13px !important">
+                <thead>
+                  <tr>
+                    <th style="width: 5%;">Sr.No.</th>
+                    <th>User</th>
+                    <th>Report</th>
+                    <th style="width: 15%;">Download Link</th>
+                    <th style="width: 15%;">Download Date/Time</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{ row.SrNo }}.</td>
+                    <td>{{ row.user_Name }}</td>
+                    <td>{{ row.Report_Type }}</td>
+                    <td><a [href]="row.Download_Link" target="_blank">click to Download</a></td>
+                    <td>{{ row.add_stamp }}</td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="5" align="center">No data available !</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+            <!--end: Datatable-->
+            <!-- /.col -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</section>

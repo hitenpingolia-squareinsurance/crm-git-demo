@@ -1,0 +1,33 @@
+
+
+<div class="modalview">
+  <button (click)="closeModel()" type="button" class="close closeModelButton">&times;</button>
+
+<!-- <h3 class="qcform">QC Form</h3> -->
+<div class="">
+  <form [formGroup]="submitRejectRemark">
+    <div class="form-group remark-select">
+      <label>Select Remark for Rejection:</label>
+      <ng-multiselect-dropdown class="form-control" name="remark" placeholder="Select remark"
+        [data]="remarked" formControlName="remark" [settings]="dropdownSingleSettingsType"
+        >
+      </ng-multiselect-dropdown>
+      <div *ngIf="isCheck && VProduct.remark.errors" class="form-text text-muted">
+        <span *ngIf="isCheck && VProduct.remark.errors.required" class="error-text">Please select an option!</span>
+      </div>
+    </div>
+
+    <div class="form-group input-remark">
+      <label>Enter Remark:</label>
+      <input type="text" class="form-control" placeholder="Enter Remark" formControlName="inputRemark" name="inputRemark">
+      <div *ngIf="isCheck && VProduct.inputRemark.errors" class="form-text text-muted">
+        <span *ngIf="isCheck && VProduct.inputRemark.errors.required" class="error-text">Please enter a remark!</span>
+      </div>
+    </div>
+
+    <div class="btn-align">
+      <button type="button" (click)="SubmitRemark()" class="btn btn-primary submit-button">Submit</button>
+    </div>
+  </form>
+</div>
+</div>

@@ -1,0 +1,191 @@
+<div class="row">
+
+
+  <div class="modal-header" style="text-align: center;">
+    <h4 class="modal-title">Add Product Details</h4>
+  </div>
+</div>
+<form [formGroup]="loginform" (ngSubmit)="collectData()">
+
+  <div class="popup-content-body">
+    <div class="row popup-form">
+
+
+      <div class="col-md-4">
+        <label>Meta Title :</label>
+
+        <input type="text" class="form-control" formControlName="Title" name="Title" placeholder="Title" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Meta Keyword :</label>
+
+        <input type="text" class="form-control" formControlName="metakeyword" name="metakeyword"
+          placeholder="Meta Keyword" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Meta Description :</label>
+
+        <input type="text" class="form-control" formControlName="metadescription" name="metadescription"
+          placeholder="Meta Description" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Meta Robots :</label>
+
+        <input type="text" class="form-control" formControlName="meta_robots" name="meta_robots"
+          placeholder="Meta Robots" />
+
+      </div>
+
+      <!-- <div class="col-md-4">
+        <label>Meta Viewports :</label>
+        <input type="text" class="form-control" formControlName="meta_viewports" name="meta_viewports"
+          placeholder="Meta Viewports" />
+
+      </div> -->
+
+      <!-- <div class="col-md-4">
+        <label>Meta Format Detection :</label>
+        <input type="text" class="form-control" formControlName="meta_detection" name="meta_detection"
+          placeholder="Meta Format Detection" />
+      </div> -->
+
+      <div class="col-md-4">
+        <label>Og Type :</label>
+
+        <input type="text" class="form-control" formControlName="og_type" name="og_type" placeholder="Og Type" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Og Locale :</label>
+
+        <input type="text" class="form-control" formControlName="og_locale" name="og_locale" placeholder="Og Locale" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Og Sitename :</label>
+
+        <input type="text" class="form-control" formControlName="og_site_name" name="og_sitename"
+          placeholder="Og Sitename" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Og Url :</label>
+
+        <input type="text" class="form-control" formControlName="og_url" name="og_url" placeholder="Og Url" />
+        <span *ngIf="isSubmitted && FC.og_url.errors" class="ValidationError">
+          <span *ngIf="FC.og_url.errors.required">Field is required</span>
+        </span>
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Og Title :</label>
+
+        <input type="text" class="form-control" formControlName="og_title" name="og_title" placeholder="Og Title" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Og Description :</label>
+
+        <input type="text" class="form-control" formControlName="og_description" name="og_description"
+          placeholder="Og Description" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Twitter Url :</label>
+
+        <input type="text" class="form-control" formControlName="twitter_url" name="twitter_url"
+          placeholder="Twitter Url" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Twitter Description :</label>
+
+        <input type="text" class="form-control" formControlName="twitter_description" name="twitter_description"
+          placeholder="Twitter Description" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Twitter Title :</label>
+
+        <input type="text" class="form-control" formControlName="twitter_title" name="twitter_title"
+          placeholder="Twitter Title" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Twitter Card :</label>
+
+          <input type="text" class="form-control" formControlName="twitter_card" name="twitter_card"
+          placeholder="Twitter Card" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Twitter Creator :</label>
+        <input type="text" class="form-control" formControlName="twitter_creator" name="twitter_creator"
+        placeholder="Twitter Creator" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Og Image :</label>
+        <input type="file" (change)="checkFileType($event,'og_image')" class="form-control" formControlName="og_image"
+          name="Og_image" accept="image/png, image/gif, image/jpeg,image/webp, application/pdf" placeholder="Og_image" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Twitter Image :</label>
+
+        <input type="file" (change)="checkFileType($event,'twitter_image')" class="form-control"
+          formControlName="twitter_image" name="twitter_image"
+          accept="image/png, image/gif, image/jpeg,image/webp, application/pdf" placeholder="Twitter Image" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Canonical link :</label>
+
+        <input type="url" class="form-control" formControlName="canonical_link" name="canonical_link"
+          placeholder="Canonical Link" />
+
+      </div>
+
+      <div class="col-md-4">
+        <label>Slug :</label>
+
+        <input type="text" formControlName="slug" name="slug" placeholder="Slug" class="form-control" />
+
+      </div>
+
+      <!-- <div class="col-md-8">
+        <label>Description :</label>
+
+        <textarea type="text" class="form-control" formControlName="ckeditorContent" name="ckeditorContent"
+          placeholder="ck editor Content"> </textarea>
+
+       <ckeditor formControlName="ckeditorContent"></ckeditor> 
+     </div> -->
+
+      <div class="clearfix"></div>
+      <div class="button-div-yes-no">
+        <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</form>

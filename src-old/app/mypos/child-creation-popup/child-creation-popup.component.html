@@ -1,0 +1,297 @@
+<div class="heading" *ngIf="this.type == 'Add'">Add Child Creation</div>
+<div class="heading" *ngIf="this.type == 'Edit'">Edit Child Creation</div>
+<div class="heading" *ngIf="this.type == 'logs'">Logs</div>
+<div class="heading" *ngIf="this.type == 'logsValueAccept'">Logs</div>
+
+<button type="button" (click)="CloseModel()" class="close closeModelButton"><i class="fa fa-remove"></i></button>
+
+<form (ngSubmit)="submit()" [formGroup]="ChildCreation" id="form-1" *ngIf="type=='Add'">
+
+  <div class="row">
+    <!-- PospData -->
+
+    <div class="col-md-4" *ngIf="this.LoginType=='employee'">
+
+      <div class="form-group">
+        <label for="Type">Type </label>
+        <ng-multiselect-dropdown class="form-control" [data]="TypeDataArr" formControlName="Type"
+          [settings]="dropdownSettingsType" (onSelect)="TypeValues($event,'')"></ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.Type.errors" class="ValidationError">
+          <div *ngIf="formControls.Type.errors.required">Please select Type</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-4" *ngIf="this.LoginType=='employee'">
+      <div class="form-group">
+        <label for="pospData">POSP/SP</label>
+        <ng-multiselect-dropdown class="form-control" [data]="PospData" formControlName="PospData"
+          [settings]="dropdownSettingsType" (onSelect)="getSelectedValues($event,'')"></ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.PospData.errors" class="ValidationError">
+          <div *ngIf="formControls.PospData.errors.required">Please select PospData</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="pospData">Select Lob</label>
+        <ng-multiselect-dropdown class="form-control" [data]="lobData" formControlName="Lob"
+          [settings]="dropdownSettingsType"></ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.Lob.errors" class="ValidationError">
+          <div *ngIf="formControls.Lob.errors.required">Please select Lob</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Insurer Name -->
+    <!-- [settings]="dropdownSettingsType" -->
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="pospData"> Insurer Name</label>
+        <ng-multiselect-dropdown class="form-control" [data]="insCompaniesValue" formControlName="name"
+          [settings]="dropdownSettingsmultiselect" (onSelect)="onCompanySelect()" (onDeSelect)="onCompanySelect()"
+          (onSelectAll)="onCompanySelect()" (onDeSelectAll)="onCompanySelect()">></ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.name.errors" class="ValidationError">
+          <div *ngIf="formControls.name.errors.required">Please select name</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" formControlName="email">
+        <div *ngIf="isSubmitted && formControls.email.errors" class="ValidationError">
+          <div *ngIf="formControls.email.errors.required">Please enter email</div>
+          <div *ngIf="formControls.email.errors.email">Invalid email format</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Number -->
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="number">Mobile Number</label>
+        <input type="text" class="form-control" formControlName="number">
+        <div *ngIf="isSubmitted && formControls.number.errors" class="ValidationError">
+          <div *ngIf="formControls.number.errors.required">Please enter mobile number</div>
+          <div *ngIf="formControls.number.errors.pattern">Invalid mobile number format</div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="location">Remark</label>
+        <input type="text" class="form-control" formControlName="Remark">
+        <div *ngIf="isSubmitted && formControls.Remark.errors" class="ValidationError">
+          <div *ngIf="formControls.Remark.errors.required">Please enter remark</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- // new pin// -->
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="Servicelocation">Service location</label>
+        <ng-multiselect-dropdown class="form-control" name="Servicelocation" placeholder="--Select--"
+          [data]="ServicelocationData" formControlName="Servicelocation" [settings]="dropdownSettingsType"
+          [(ngModel)]="selectedServicelocation" (keyup)="searchServicelocations($event, 1)">
+        </ng-multiselect-dropdown>
+        <div *ngIf="isSubmitted && formControls.Servicelocation.errors " class="ValidationError">
+          <div *ngIf="formControls.Servicelocation.errors.required">Please
+            Enter Customer Servicelocation!</div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- //////// -->
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="yesNo">Online Available</label><br>
+
+        <label>
+          <input type="radio" formControlName="yesNo" value="Yes"> Yes
+        </label>
+        <label>
+          <input type="radio" formControlName="yesNo" value="No"> No
+        </label>
+        <div *ngIf="isSubmitted && formControls.yesNo.errors" class="ValidationError">
+          <div *ngIf="formControls.yesNo.errors.required">Please choose yes No</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</form>
+
+
+
+<form [formGroup]="companyForm" (ngSubmit)="onSubmitNew()">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let company of selectedCompanies">
+      <label>{{ company.name }}</label>
+      <input type="number" class="form-control" [formControlName]="company.Id.toString()"
+        placeholder="Enter value for {{ company.Name }}" min="1" max="10" />
+      <!-- <div *ngIf="isSubmitted && formcompanyForm[company.Id].errors" class="ValidationError">
+        <div *ngIf="formcompanyForm[company.Id].errors.required">Please Enter Value!</div>
+      </div> -->
+      <div *ngIf="isSubmitted && formcompanyForm[company.Id.toString()].errors" class="ValidationError">
+        <div *ngIf="formcompanyForm[company.Id.toString()].errors?.required">Please Enter Value!</div>
+        <div *ngIf="formcompanyForm[company.Id.toString()].errors?.min">Value must be at least 1!</div>
+        <div *ngIf="formcompanyForm[company.Id.toString()].errors?.max">Value cannot exceed 10!</div>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- <form [formGroup]="companyForm" (ngSubmit)="onSubmitNew()">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let company of selectedCompanies">
+      <label>{{ company.Name }}</label>
+      <input type="number" class="form-control" [formControlName]="company.Id.toString()"
+        placeholder="Enter value for {{ company.Name }}" min="1" max="10" />
+
+      <div *ngIf="isSubmitted && formcompanyForm[company.Id.toString()].errors" class="ValidationError">
+        <div *ngIf="formcompanyForm[company.Id.toString()].errors?.required">Please Enter Value!</div>
+        <div *ngIf="formcompanyForm[company.Id.toString()].errors?.min">Value must be at least 1!</div>
+        <div *ngIf="formcompanyForm[company.Id.toString()].errors?.max">Value cannot exceed 10!</div>
+      </div>
+    </div>
+  </div>
+</form> -->
+
+<div class="box-footer with-border">
+  <footer>
+    <button class="btn pull-right" *ngIf="this.type == 'Add' || this.type == 'Edit'" (click)="CloseModel()"
+      type="button">Close</button>
+    <button *ngIf="this.type == 'Add'" (click)="submit()" class="btn btn-primary nextBtn pull-right"
+      style="margin-right: 5px;" type="submit">Submit</button>
+    <button *ngIf="this.type == 'Edit'" (click)="submit()" class="btn btn-primary nextBtn pull-right"
+      type="submit">Update</button>
+  </footer>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="main_card_form"
+  *ngIf="(type=='logs' && rows.IdArray.includes(LoginId) && rows.ops_id==0 && rows.close_status==0 && HideForm!=1) || type=='logsEdit' || type=='logsValueAccept'">
+  <!-- *ngIf="rows.IdArray.includes(LoginId)" -->
+  <div class="main_body h_100">
+    <!-- //form // -->
+    <form [formGroup]="LogsForm">
+      <div class="row">
+
+        <div class="col-md-4" *ngIf="rows.status==3 || this.FormCheck==3">
+          <div class="form-group">
+            <label for="location">User Id</label>
+            <input type="text" class="form-control" formControlName="id">
+            <div *ngIf="isSubmitted && formControlsNew.id.errors" class="ValidationError">
+              <div *ngIf="formControlsNew.id.errors.required">Please enter id</div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="col-md-4" *ngIf="rows.status==3 || this.FormCheck==3">
+          <div class="form-group">
+            <label for="location">password</label>
+            <input type="text" class="form-control" formControlName="password">
+            <div *ngIf="isSubmitted && formControlsNew.password.errors" class="ValidationError">
+              <div *ngIf="formControlsNew.password.errors.required">Please enter password</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4" *ngIf="rows.status==3 || this.FormCheck==3">
+          <div class="form-group">
+            <label for="location">Link</label>
+            <input type="text" class="form-control" formControlName="link">
+            <div *ngIf="isSubmitted && formControlsNew.link.errors" class="ValidationError">
+              <div *ngIf="formControlsNew.link.errors.required">Please enter link</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="location">Remark</label>
+            <input type="text" class="form-control" formControlName="Remark">
+            <div *ngIf="isSubmitted && formControlsNew.Remark.errors" class="ValidationError">
+              <div *ngIf="formControlsNew.Remark.errors.required">Please enter remark</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="main_footer">
+    <button class="Save_click" (click)="LogSubmit(1)">
+      <span>Approved</span>
+    </button>
+    <button class="Save_click btn-danger" (click)="LogSubmit(0)">
+      <span>Close Request</span>
+    </button>
+  </div>
+</div>
+<br>
+<br>
+
+<table id="Table1" class="table table-bordered table-hover" *ngIf="type=='logs'">
+  <thead>
+    <tr>
+      <th>S.No</th>
+      <th>Type</th>
+      <th>Action User Name</th>
+      <th>Remark</th>
+      <th>Date</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="RequestViewLogData?.length != 0">
+    <tr *ngFor="let row of RequestViewLogData; let i=index;">
+      <td>{{i+1}}</td>
+      <td>
+        <span *ngIf="row.log_data.status == 1">RM</span>
+        <span *ngIf="row.log_data.status == 2">HOD</span>
+        <span *ngIf="row.log_data.status == 3">OPS</span>
+      </td>
+      <td>{{row.log_data.ActionName}}</td>
+      <td>{{row.log_data.Remark}}</td>
+      <td>{{row.log_data.Date}}</td>
+
+      <td>
+        <label *ngIf="row.log_data.RequestStatus == '1'" class="label label-info label-inline mr-2">Approve</label>
+        <label *ngIf="row.log_data.RequestStatus == '0'" class="label label-danger label-inline mr-2">Close
+          Request</label>
+      </td>
+
+    </tr>
+  </tbody>
+  <tbody *ngIf="RequestViewLogData?.length == 0">
+    <tr>
+      <td colspan="8" align="center">No data Available !</td>
+    </tr>
+  <tbody>
+</table>

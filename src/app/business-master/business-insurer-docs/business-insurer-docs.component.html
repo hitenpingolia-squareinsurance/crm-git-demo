@@ -1,0 +1,160 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">Business Dump</div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+                        <div class="filterquotesrow">
+                            <button class="btn btninfo1" (click)="hitCron()">Auto QC Matched Cron</button>
+                            <button class="btn btninfo1" (click)="uploadExcel()">Upload Excel</button>
+                            <button class="btn btninfo1" role="tab" id="headingOne" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                aria-controls="collapseOne"><a role="button"><i
+                                        class="fa fa-filter"></i><span>Filters</span><i
+                                        class="fa fa-angle-down"></i></a></button>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panelbody">
+                                <form [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div id="close">
+                                                <div class="category_list">
+                                                    <ng-multiselect-dropdown class="form-control"
+                                                        placeholder="Select Company" [data]="company"
+                                                        formControlName="company"
+                                                        [settings]="dropdownSettingsmultiselect">
+                                                    </ng-multiselect-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3" style="text-align: right;">
+                                            <input type="text" placeholder="Select Date OR Date-Range"
+                                                class="form-control" formControlName="DateOrDateRange" bsDaterangepicker
+                                                [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <input type="submit" class="btn btn-info" value="Search">
+                                            &nbsp;&nbsp;
+                                            <input (click)="ClearSearch()" type="button" class="btn btn-danger"
+                                                value="Reset">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="custom_table tables_layout_design">
+                            <table datatable [dtOptions]="dtOptions" class="table" id="kt_datatable">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <ul class="responsive-table">
+                                <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+                                    <span [ngClass]="{
+                                    'label-success': row.status == 'Completed',
+                                    'label-warning': row.status == 'Pending',
+                                    'label-danger': row.status == 'Error'}"
+                                        class="addon_tag_name">{{row.status}}</span>
+                                    <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                                        <div class="agents_data agents_data1">
+                                            <div class="icon_re_cl">{{row.sno}}</div>
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div>Insurer</div>
+                                                    <strong class="fs_18">{{row.company_name}}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="agents_data agents_data2">
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div>Uploaded By Name</div>
+                                                    <strong>{{row.user_name }}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="agents_data agents_data3">
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <div> Uploaded By Mobile</div>
+                                                    <strong>{{row.mobile }}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="last_row_div">
+                                        <div class="d_flex custon-234">
+                                            <div class="label_chips non_motor_lob">
+                                                <span>Total Rows : {{ row.total_rows
+                                                    }}/{{row.fetched_rows}}</span>
+                                                    <span style="color:red">/{{row.deleted_rows}}</span>
+                                                    &nbsp;&nbsp;
+                                            </div>
+                                            <div class="label_chips real_estate_lob">
+                                                <span>Pending :
+                                                    {{row?.status_counts?.total_pending}}</span>
+                                            </div>
+                                            <div class="label_chips growth_positive">
+                                                <span>Review : {{row?.status_counts?.total_review}}</span>
+                                            </div>
+                                            <div class="label_chips growth_negative">
+                                                <span>In-Completed :
+                                                    {{row?.status_counts?.total_incompleted}}</span>
+                                            </div>
+                                            <div class="label_chips growth_negative">
+                                                <span>Not-Matched :
+                                                    {{row?.status_counts?.total_not_matched}}</span>
+                                            </div>
+                                            <!-- <div class="label_chips mutual_fund_lob">
+                                                <span>Duplicate :
+                                                    {{row?.status_counts?.total_duplicate}}</span>
+                                            </div> -->
+                                            <div class="label_chips growth_already_reviewed">
+                                                <span>Already-Reviewed :
+                                                    {{row?.status_counts?.total_already_reviewed}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="last_row">
+                                        <div class="effective_date">
+                                            <div>Uploaded Date : </div>
+                                            <strong>{{row.add_stamp}}</strong>
+                                        </div>
+                                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                            <button type="button" class="btnbg btnbg3resign" style="
+                                            font-size: 15px !important;"
+                                                (click)="deleteExcelBulkRecord(row.id)"><i
+                                                class="fa fa-trash"></i> 
+                                            </button>
+                                            <button type="button" class="btnbg btn-info"
+                                                (click)="viewBusinessExtract(row?.id)">View
+                                            </button>
+                                            <a class="btnbg btnbg2inactive" href="{{ row.download_url }}" download> <i
+                                                    class="fa fa-download"></i> Download </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="row" *ngIf="dataAr?.length == 0">
+                                <div class="col-md-12">
+                                    <div class="no_data_found">
+                                        <span><img src="assets/image/no_data_banner.jpg"></span>
+                                        <small>No data available !</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

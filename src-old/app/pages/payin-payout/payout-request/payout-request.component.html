@@ -1,0 +1,319 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+
+
+	<!-- Main content -->
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">{{ActivePage}}</h3>
+					</div>
+					<!-- /.box-header -->
+
+
+					<div class="box-body">
+
+
+						<form *ngIf="checkedList?.length==0" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+							<div class="row">
+
+								<div class="col-sm-4">
+
+
+
+									<select (change)="GetEmployees($event)" formControlName="Vertical_Id"
+										class="form-control">
+										<option value="0">Select Vertical</option>
+
+										<option *ngFor="let r of Vertical_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+									</select>
+
+								</div>
+
+								<div class="col-sm-4">
+									<select (change)="GetSubBranches($event)" formControlName="Region_Id"
+										class="form-control">
+										<option value="0">Select Region</option>
+										<option value="0">None</option>
+										<option *ngFor="let r of Region_Ar;" value="{{r.id}}">{{r.text}}</option>
+									</select>
+								</div>
+
+								<div class="col-sm-4">
+									<select (change)="GetEmployees($event)" formControlName="Sub_Region_Id"
+										class="form-control">
+										<option value="0">Select Region-Branch</option>
+										<option value="0">None</option>
+										<option *ngFor="let r of Sub_Branch_Ar;" value="{{r.id}}">{{r.text}}</option>
+									</select>
+								</div>
+
+
+							</div>
+
+
+							<div class="row"  >
+
+								<div class="col-sm-6">
+
+									<ng-multiselect-dropdown class="form-control" name="Emp_Id"
+										[placeholder]="Employee_Placeholder" [data]="Emps_Ar" formControlName="Emp_Id"
+										[settings]="dropdownSettings" (onSelect)="onItemSelect($event,'Employee')"
+										(onDeSelect)="onItemDeSelect($event,'Employee')">
+									</ng-multiselect-dropdown>
+
+
+								</div>
+
+								<div class="col-sm-6">
+
+									<ng-multiselect-dropdown class="form-control" name="Agent_Id"
+										[placeholder]="Agents_Placeholder" [data]="Agents_Ar" formControlName="Agent_Id"
+										[settings]="AgentdropdownSettings">
+									</ng-multiselect-dropdown>
+								</div>
+
+							</div>
+
+
+							<div class="row"  >
+
+
+
+								<div class="col-sm-3">
+
+									<ng-multiselect-dropdown class="form-control" name="SR_Payout_Status"
+										placeholder="Select Payout Status" [data]="SR_Payout_Status_Ar"
+										formControlName="SR_Payout_Status" [settings]="LOB_dropdownSettings">
+									</ng-multiselect-dropdown>
+
+								</div>
+
+								<div class="col-sm-3">
+									<input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+										formControlName="DateOrDateRange" bsDaterangepicker
+										[bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+								</div>
+								<div class="col-sm-2"></div>
+
+								<div class="col-lg-4" style="text-align: right;">
+
+
+									<input *ngIf="Is_Export==1" (click)="ExportExcel()" type="button"
+										class="btn btn-success" value="Export">
+									&nbsp;&nbsp;
+
+									<input type="submit" class="btn btn-info" value="Search">
+									&nbsp;&nbsp;
+
+
+									<label *ngIf="(ActivePage=='Approved/PayoutTransferred')" for="file-input">
+										<a class="btn btn-warning">
+											<input (change)="ImportUTRExcel($event)" style="display: none;" type="file"
+												id="file-input" />
+											Import</a>
+									</label>
+
+									&nbsp;&nbsp;
+									<button (click)="ClearSearch()" type="button" style="font-size: small;"
+										class="btn btn-danger" value="Reset"> <i class="fa fa-close"> Reset</i>
+									</button>
+
+
+								</div>
+
+							</div>
+
+						</form>
+
+
+						<div *ngIf="checkedList?.length>0">
+							<div *ngIf="(ActivePage=='Pending For Accounts' || ActivePage=='Pending For Banking')"
+								class="row"  >
+
+								<div class="col-sm-2">
+									<select class="form-control" [(ngModel)]="Status">
+										<option value="">--Select--</option>
+										<option *ngIf="ActivePage=='Pending For Accounts'" value="PendingForBanking">
+											Approve</option>
+										<option *ngIf="ActivePage=='Pending For Accounts'" value="RejectByAccounts">
+											Reject</option>
+										<option *ngIf="ActivePage=='Pending For Banking'" value="Approved">Approve
+										</option>
+										<option *ngIf="ActivePage=='Pending For Banking'" value="RejectByBanking">Reject
+										</option>
+									</select>
+								</div>
+
+								<div class="col-sm-3">
+									<select *ngIf="Status=='PendingForBanking' || Status=='Approved' || Status==''"
+										class="form-control" [(ngModel)]="Assign_User">
+										<option value="">--Select Assign-user--</option>
+										<option *ngFor="let r of AccountsUser_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+									</select>
+									<select *ngIf="Status=='RejectByAccounts' || Status=='RejectByBanking'"
+										[disabled]="true" class="form-control" [(ngModel)]="Assign_User">
+										<option selected value="">--Select Assign-user--</option>
+									</select>
+								</div>
+
+								<div class="col-sm-4">
+									<input class="form-control" [(ngModel)]="Remark" placeholder="Remark">
+								</div>
+								<div class="col-sm-3">
+									<input type="button" (click)="BulkApprove()" class="btn btn-info" value="Proceed">
+									&nbsp;&nbsp;
+									<input (click)="CancelBulkApprove()" type="button" class="btn btn-danger"
+										value="Cancel">
+								</div>
+
+							</div>
+
+							<div *ngIf="(ActivePage=='Approved/PayoutTransferred')" class="row"  >
+								<div class="col-sm-3">
+									<input type="button" (click)="BulkApproveInModal()" class="btn btn-info"
+										value="Update Bulk UTR">
+									&nbsp;&nbsp;
+									<input (click)="CancelBulkApprove()" type="button" class="btn btn-danger"
+										value="Cancel">
+								</div>
+
+
+							</div>
+
+						</div>
+						<hr>
+						<div class="table-responsive">
+							<table datatable [dtOptions]="dtOptions" id="example2"
+								class="table table-bordered table-hover">
+								<thead>
+									<tr>
+
+										<th>
+											<input [(ngModel)]="masterSelected" name="list_name" value="m1"
+												(change)="checkUncheckAll()" type="checkbox">
+										</th>
+										<th>Action</th>
+										<th>Request Id</th>
+										<th>Request Date</th>
+										<th>Agent</th>
+										<th>RM</th>
+
+										<th>Remark</th>
+										<th>Status</th>
+
+										<th>TDS%</th>
+										<th>Total Gross Amount</th>
+										<th>TDS Amount</th>
+										<th>Total Net Amount</th>
+										<th></th>
+										<th>Approved</th>
+										<th>Pending</th>
+										<th>Rejected</th>
+
+									</tr>
+								</thead>
+								<tbody *ngIf="dataAr?.length != 0">
+									<tr *ngFor="let row of dataAr">
+
+										<td>
+											<!--{{ row.SrNo }}.-->
+
+											<input *ngIf="row.Status == '1' && row.Pending=='0'" type="checkbox"
+												[(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}"
+												(change)="isAllSelected()">
+											<input *ngIf="row.Status == '3' && row.Pending=='0'" type="checkbox"
+												[(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}"
+												(change)="isAllSelected()">
+											<input *ngIf="row.Status == '5' && row.Pending=='0'" type="checkbox"
+												[(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}"
+												(change)="isAllSelected()">
+
+										</td>
+										<td>
+
+											<a *ngIf="(row.Status == '1' || row.Status == '3') && row.Pending != '0'"
+												title="Posting-Actions" href="javascript:;"
+												(click)="PostingAction(row.Id,row.AgentName)">
+												<span class="label label-success label-inline mr-2">Post</span>
+											</a>
+
+											<a *ngIf="row.Status == '5'" title="Posting-Actions" href="javascript:;"
+												(click)="UpdateUTRSingle(row.Id,row.AgentName)">
+												<span class="label label-success label-inline mr-2">Update UTR</span>
+											</a>
+
+
+											<a href="javascript:;" (click)="ExportPostingReport(row.Id)">
+												<span style="margin-left:4px;"
+													class="label label-warning label-inline mr-2">Export</span>
+											</a>
+
+										</td>
+
+										<td>{{ row.Group_Id }}</td>
+										<td>{{ row.Add_Stamp }}</td>
+
+
+
+										<td>{{ row.AgentName }}</td>
+										<td>{{ row.RMName }}</td>
+										<td>{{ row.Remark }}</td>
+
+										<td>
+
+											<span *ngIf="row.Status == '1'"
+												class="label label-default label-inline mr-2">PendingForAccounts</span>
+											<span *ngIf="row.Status == '2'"
+												class="label label-danger label-inline mr-2">RejectByAccounts</span>
+											<span *ngIf="row.Status == '3'"
+												class="label label-primary label-inline mr-2">PendingForBanking</span>
+											<span *ngIf="row.Status == '4'"
+												class="label label-danger label-inline mr-2">RejectByBanking</span>
+											<span *ngIf="row.Status == '5'"
+												class="label label-info label-inline mr-2">Approved</span>
+											<span *ngIf="row.Status == '6'"
+												class="label label-success label-inline mr-2">Paid/PayoutTransfered</span>
+
+										</td>
+
+										<td>{{ row.TDS }}</td>
+										<td>{{ row.Total_Payout_Amount }}</td>
+										<td>{{ row.Total_TDS_Amount }}</td>
+										<td>{{ row.Total_Payout_Net_Amount }}</td>
+
+										<td>{{ row.TotalFiles }}</td>
+										<td>{{ row.Approved }}</td>
+										<td>{{ row.Pending }}</td>
+										<td>{{ row.Rejected }}</td>
+
+
+
+
+
+
+									</tr>
+								</tbody>
+								<tbody *ngIf="dataAr?.length == 0">
+									<tr>
+										<td colspan="15" align="center">No data available !</td>
+									</tr>
+								<tbody>
+							</table>
+						</div>
+					</div>
+					<!-- /.box-body -->
+				</div>
+				<!-- /.box -->
+			</div>
+			<!-- /.col -->
+		</div>
+		<!-- /.row -->
+	</section>
+	<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

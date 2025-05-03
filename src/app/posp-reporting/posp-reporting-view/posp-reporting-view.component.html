@@ -1,0 +1,588 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">
+              <div class="row">
+                <div class="col-md-12">
+                  View POSP LOB Request
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <!-- <app-square-filter (postCreated)="SearchData($event)"></app-square-filter> -->
+
+            <div class="panel-body" *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request'">
+              <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+                <div class="row">
+                  <!-- Status -->
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-4 form-group">
+                        <label>Status</label>
+                        <ng-multiselect-dropdown class="form-control" id="margin" placeholder="Please Select"
+                          [(ngModel)]="StatusDataArValue" [data]="StatusDataAr" formControlName="Status"
+                          (onSelect)="onItemSelect($event,'Status')" (onDeSelect)="onItemDeSelect($event,'Status')"
+                          [settings]="dropdownSettingsingleselect">
+                        </ng-multiselect-dropdown>
+                      </div>
+
+                      <!-- Vertical -->
+                      <div class="col-md-4 form-group">
+                        <label>Vertical</label>
+                        <ng-multiselect-dropdown class="form-control" name="Vertical" placeholder="Select Vertical"
+                          (onSelect)="onItemSelect($event,'Vertical')" (onDeSelect)="onItemDeSelect($event,'Vertical')"
+                          [data]="VerticalData" formControlName="Vertical" [settings]="dropdownSettingsingleselect">
+                        </ng-multiselect-dropdown>
+                      </div>
+
+                      <!-- LOB -->
+                      <div class="col-md-4 form-group">
+                        <label>LOB</label>
+                        <ng-multiselect-dropdown class="form-control" name="LOB" placeholder="Select LOB"
+                          (onSelect)="onItemSelect($event,'LOB')" (onDeSelect)="onItemDeSelect($event,'LOB')"
+                          [data]="LobData" formControlName="LOB" [settings]="dropdownSettingsingleselect">
+                        </ng-multiselect-dropdown>
+                      </div>
+
+                      <!-- State -->
+                      <div class="col-md-4 form-group">
+                        <label>State</label>
+                        <ng-multiselect-dropdown class="form-control" name="State" placeholder="Select State"
+                          (onSelect)="onItemSelect($event,'State')" (onDeSelect)="onItemDeSelect($event,'State')"
+                          [data]="StateData" formControlName="State" [settings]="dropdownSettingsingleselect">
+                        </ng-multiselect-dropdown>
+                      </div>
+
+                      <!-- City -->
+                      <div class="col-md-4 form-group">
+                        <label>City</label>
+                        <ng-multiselect-dropdown class="form-control" name="City" placeholder="Select City"
+                          [data]="CityData" formControlName="City" [settings]="dropdownSettingsmultiselect">
+                        </ng-multiselect-dropdown>
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>Search</label>
+                        <input type="text" formControlName="SearchValue" name="SearchValue" class="form-control"
+                          placeholder="Search">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="row" style="display:flex;">
+                      <!-- Search Input -->
+
+
+                      <!-- Buttons (Search & Reset) -->
+                      <div class="col-md-12 form-group">
+                        <label>&nbsp;</label>
+                        <div class="row">
+                          <div class="d-flex align-items-center" style="text-align: right;">
+                            <input type="submit" class="btn btn-info" value="Search" style="margin-right: 5px;">
+                            <button (click)="ClearSearch()" type="button" class="btn btn-danger"
+                              style="margin-right: 5px;">
+                              <i class="fa fa-close"></i> Reset
+                            </button>
+
+                            <ng-container *ngIf="this.StatusDataStatusValue == 0 && dataAr?.length != 0">
+                              <input type="button" class="btn btn-info" (click)="selectAllRows()" value="Select All"
+                                style="margin-right: 5px;">
+                              <input type="button" class="btn btn-info" (click)="MultipleTransferFillterWise()"
+                                value="Transfer Multiple POSP">
+                            </ng-container>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Transfer Multiple POSP -->
+
+                    </div>
+                  </div>
+
+
+
+                </div>
+              </form>
+            </div>
+
+
+            <div class="panel-body"
+              *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request-admin' || this.currentUrl == '/posp-reporting/posp-lob-request-user'">
+              <app-bms-filter (postCreated)="SearchData($event)"></app-bms-filter>
+            </div>
+
+            <hr>
+            <div>
+
+
+
+
+              <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" id="Table1" class="row-border table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+                <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                  <li class="table-row tablerow" *ngFor="let row of dataAr; let i=index;">
+                    <!-- <span class="addon_tag_name" style="background: rgba(44, 178, 179, 1);" *ngIf="row.source == 'web'">WEB</span>
+                    <span class="addon_tag_name" style="background-color: #00a65a;" *ngIf="row.source == 'crm'">CRM</span>
+                    <span class="addon_tag_name" style="background-color: #f39c12;" *ngIf="row.source == 'bms'">BMS</span> -->
+
+                    <!-- <span class="addon_tag_name">{{row.source}}</span> -->
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15" style="margin-top: 15px;">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{row.SrNo}}</div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Partner Name - (Code)</div>
+                            <strong class="fs_18"><span>
+                                {{row.Name}} - (<b>{{row.AgentCode}}</b>)
+                              </span></strong>
+
+                          </div>
+
+
+
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data" *ngIf="row.source != ''">
+                            <div>Partner Location</div>
+                            <strong class="fs_18"><span>State : {{row.State_Name}}</span></strong>
+                            <strong class="fs_18"><span>City : {{row.District_Name}}</span></strong>
+                            <strong class="fs_18"><span>Pincode : {{row.Pincode_Id}}</span></strong>
+                          </div>
+                        </div>
+
+
+                      </div>
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data" *ngIf="row.CreateDate != ''">
+                            <div>Request Date</div>
+                            <strong class="fs_18"><span>{{row.CreateDate}}</span></strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+
+                        <div class="label_chips real_estate_lob"
+                          *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request' &&   StatusDataStatusValue == 0">
+                          <input type="checkbox" class="form-contol" [(ngModel)]="row.selected"
+                            (change)="selectRow(row)" />
+                        </div>
+
+                        <div class="label_chips growth_positive"
+                          *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request'">
+                          <strong><span>Sender Details : </span></strong>
+                          <span>{{row.MainRmName}} | </span>
+                          <span>{{row.MainRMCode}} | </span>
+                          <span>{{row.AgentDepartment}}</span>
+                        </div>
+
+                        <div class="label_chips finance_lob"
+                          *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request-admin' || this.currentUrl == '/posp-reporting/posp-lob-request-user' || this.currentUrl == '/posp-reporting/posp-lob-request'">
+                          <strong><span>Secondary RM Details : </span></strong>
+                          <span>{{row.ParentName}} | </span>
+                          <span>{{row.ParentCode}} | </span>
+                          <span>{{row.AgentDepartment}}</span>
+                        </div>
+
+
+                        <div class="label_chips mutual_fund_lob" style="align-content: center;">
+                          <div>
+
+                            <!-- Email Section -->
+                            <span class="label label-secondary" *ngIf="Masking == 'Email'+i"
+                              (click)="ShowMaskingField('TempEmail')">
+                              Email : {{ row.Email }}
+                              <span (click)="CopyText(row.Email)" class="fa fa-copy"></span>
+                            </span>
+
+                            <ng-container *ngIf="Masking != 'Email'+i">
+                              <span class="label label-secondary" (click)="ShowMaskingField('Email'+i)">
+                                Email : ****
+                              </span>
+                            </ng-container>
+
+
+
+                          </div>
+
+
+
+                          <!-- Add space before WhatsApp -->
+                          <!-- <span style="display: inline-block; width: 20px;"></span> -->
+
+                          <!-- WhatsApp Links -->
+
+                        </div>
+
+                        <div class="label_chips mutual_fund_lob" style="align-content: center;">
+                          <div>
+                            <!-- Add space between Email and Mobile -->
+                            <span style="display: inline-block; width: 10px;"></span>
+
+                            <!-- Mobile Section -->
+                            <span class="label label-secondary" *ngIf="Masking =='Mobile'+i"
+                              (click)="ShowMaskingField('TempMobile')">
+                              Mobile : {{ row.Mobile }}
+                            </span>
+
+                            <ng-container *ngIf="Masking != 'Mobile'+i">
+                              <span class="label label-secondary" (click)="ShowMaskingField('Mobile'+i)">
+                                Mobile : ****
+                              </span>
+                            </ng-container>
+                          </div>
+                        </div>
+
+
+                        <div class="label_chips motor_lob"
+                          *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request'">
+                          <ng-container *ngIf="row.Status == 0">Vertical Assigned</ng-container>
+                          <ng-container *ngIf="row.Status == 1">RM Assigned</ng-container>
+                          <ng-container *ngIf="row.Status == 2">Withdraw Request</ng-container>
+                          <ng-container *ngIf="row.Status == 3">Withdrawn</ng-container>
+                        </div>
+
+
+
+                      </div>
+                    </div>
+
+                    <div class="last_row">
+
+                      <div class="effective_date">
+                        <div class="d_flex">
+
+
+                          <a *ngIf="WhatsAppCheck == false"
+                            href="https://web.whatsapp.com/send?phone={{row.Mobile}}&text=" title="Share on WhatsApp"
+                            target="_blank">
+                            <button class="btn btn-success">
+                              <i class="fa fa-whatsapp"></i>
+                            </button>
+                          </a>
+
+                          <a *ngIf="WhatsAppCheck == true" href="whatsapp://send?phone={{row.Mobile}}&text="
+                            title="Share on WhatsApp">
+                            <button class="btn btn-success">
+                              <i class="fa fa-whatsapp"></i>
+                            </button>
+                          </a>
+
+                          <div style="align-content: center;">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          </div>
+
+
+
+
+
+                          <div
+                            *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request-admin' || this.currentUrl == '/posp-reporting/posp-lob-request-user'"
+                            style="align-content: center;">
+                            <span>Business Lob : </span>
+                            <span *ngIf="row.AssignLob" data-toggle="modal" data-target="#AddCatSubCatmODULE"
+                              data-backdrop="static" data-keyboard="false"
+                              (click)="UpdatePospReportingViewRequest(row.AssignLob, row.AgentCode)">
+                              {{ row.AssignLob.split(',').join(', ') }}
+                            </span>
+                            &nbsp;
+                            &nbsp;&nbsp;
+
+                            <label
+                              *ngIf="RightsData == 'ManagerAllowed' && this.currentUrl == '/posp-reporting/posp-lob-request-admin' "
+                              (click)=" UpdatePospReporting(row.AgentCode,0)" class="label label-primary">Check LOB
+                              Request</label>
+                          </div>
+                          <div *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request'"
+                            style="align-content: center;">
+                            <span>Business Lob : </span>
+                            <b data-toggle="modal" data-target="#AddCatSubCatmODULE" data-backdrop="static"
+                              data-keyboard="false" (click)="UpdatePospReportingViewRequest(row.lob,row.AgentCode)">{{
+                              row.lob
+                              }}
+                            </b>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom"
+                        *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request'">
+                        <div class="row">
+
+
+                          <button class="btn btn-info" style="padding:3px 10px; margin-right:10px;"
+                            *ngIf="row.Status == 0 &&  loginUserCode == row.ParentCode"
+                            (click)="TransferPos(row.parent_id,row.AgentId,row.lob,row.department_id,row.Id,'Action')">
+                            Transfer</button>
+
+                          <button *ngIf="row.Status == 2  &&  loginUserCode == row.WithdrawRMCode"
+                            class="btn btn-primary" style="padding:3px 10px; margin-right:10px;"
+                            (click)="TransferPos(row.withdraw_request_rm,row.AgentId,row.lob,row.department_id,row.Id,'Action')">
+                            Change RM</button>
+
+                          <button *ngIf="row.Status == 1  &&  NewEmployeeType == 'HOD'" class="btn btn-primary"
+                            style="padding:3px 10px; margin-right:10px;"
+                            (click)="TransferPos(row.withdraw_request_rm,row.AgentId,row.lob,row.department_id,row.Id,'Action')">
+                            Change RM</button>
+
+                          <button *ngIf="row.Status == 2 &&  loginUserCode == row.WithdrawRMCode"
+                            class="btn btn-primary" style="padding:3px 10px; margin-right:10px;"
+                            (click)="ApproveRequest(row.withdraw_request_rm,row.AgentId,row.lob,row.department_id,row.Id)">
+                            Approved</button>
+
+                          <button class="btn btn-info" style="padding:3px 10px; margin-right:10px;"
+                            *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request'"
+                            (click)="TransferPos(row.parent_id,row.AgentId,row.lob,row.department_id,row.Id,'Details')">
+                            Details</button>
+                          &nbsp;
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <!-- <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request' &&   StatusDataStatusValue == 0">
+                      Select </th>
+                    <th>Partner Name</th>
+                    <th>Partner Contact</th>
+                    <th>Partner Location</th>
+                    <th *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request'">
+                      Sender Details</th>
+                    <th
+                      *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request-admin' || this.currentUrl == '/posp-reporting/posp-lob-request-user' || this.currentUrl == '/posp-reporting/posp-lob-request'">
+                      Secondary RM Details</th>
+                    <th>Request Date</th>
+                    <th>Business LOB</th>
+                    <th *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request'">
+                      Action</th>
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+
+                    <td>{{row.SrNo}}</td>
+
+                    <td *ngIf="(this.currentUrl == '/posp-reporting/posp-lob-request') &&   StatusDataStatusValue == 0">
+                      <input type="checkbox" class="form-contol" [(ngModel)]="row.selected" (change)="selectRow(row)" />
+                    </td>
+                    <td>{{row.Name}}
+                      <br>
+                      <b>{{row.AgentCode}}</b>
+                    </td>
+
+
+
+                    <td>
+                      <span class="label label-primary" *ngIf="Masking == 'Email'+i"
+                        (click)="ShowMaskingField('TempEmail')"> Email :
+                        {{row.Email}} <span (click)="CopyText(row.Email)" class="fa fa-copy"></span></span>
+                      <span class="label label-primary" *ngIf="Masking != 'Email'+i"
+                        (click)="ShowMaskingField('Email'+i)"> Email :
+                        ****</span>
+                      <br>
+                      <span class="label label-primary" *ngIf="Masking =='Mobile'+i"
+                        (click)="ShowMaskingField('TempMobile')"> Mobile
+                        : {{row.Mobile}}</span>
+                      <span class="label label-primary" *ngIf="Masking != 'Mobile'+i"
+                        (click)="ShowMaskingField('Mobile'+i)"> Mobile :
+                        ****</span><br />
+
+
+                      <a *ngIf="WhatsAppCheck==false" href="https://web.whatsapp.com/send?phone={{row.Mobile}}&text="
+                        title="Share on whatsapp" target="_blank"><label _ngcontent-sqe-c9=""
+                          class="label label-success"><i _ngcontent-sqe-c9="" class="fa fa-whatsapp"></i> WhatsApp
+                        </label></a>
+
+                      <a *ngIf="WhatsAppCheck==true" href="whatsapp://send?phone={{row.Mobile}}&text="
+                        title="Share on whatsapp"><label _ngcontent-sqe-c9="" class="label label-success"><i
+                            _ngcontent-sqe-c9="" class="fa fa-whatsapp"></i> WhatsApp </label></a>
+
+                    </td>
+
+                    <td>
+                      <span> State : {{row.State_Name}}</span> <br>
+                      <span> City : {{row.District_Name}}</span> <br>
+                      <span> Pincode : {{row.Pincode_Id}}</span> <br>
+                    </td>
+
+
+
+                    <td *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request'">
+                      {{row.MainRmName}} <br>
+                      {{row.MainRMCode}} <br>
+                      {{row.AgentDepartment}} <br>
+                    </td>
+
+                    <td
+                      *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request-admin' || this.currentUrl == '/posp-reporting/posp-lob-request-user' || this.currentUrl == '/posp-reporting/posp-lob-request' ">
+                      {{row.ParentName}} <br>
+                      {{row.ParentCode}} <br>
+                      {{row.AgentDepartment}} <br>
+                    </td>
+
+                    <td> {{row.CreateDate}}<br> </td>
+
+                    <td
+                      *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request-admin' || this.currentUrl == '/posp-reporting/posp-lob-request-user'">
+                      <li *ngFor="let lob of row.AssignLob.split(',')">
+                        <span data-toggle="modal" data-target="#AddCatSubCatmODULE" data-backdrop="static"
+                          data-keyboard="false" (click)="UpdatePospReportingViewRequest(lob,row.AgentCode)">{{ lob }}
+                        </span>
+                      </li>
+
+                      &nbsp;
+                      &nbsp;&nbsp;
+
+                      <label
+                        *ngIf="RightsData == 'ManagerAllowed' && this.currentUrl == '/posp-reporting/posp-lob-request-admin' "
+                        (click)=" UpdatePospReporting(row.AgentCode,0)" class="label label-primary">Check LOB
+                        Request</label>
+                      <br>
+                    </td>
+
+
+                    <td *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request'">
+                      <b data-toggle="modal" data-target="#AddCatSubCatmODULE" data-backdrop="static"
+                        data-keyboard="false" (click)="UpdatePospReportingViewRequest(row.lob,row.AgentCode)">{{ row.lob
+                        }}
+                      </b>
+                    </td>
+
+
+                    <td *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request'">
+                      <span *ngIf="row.Status == 0" class="label label-primary">Vertical Assigned</span>
+                      <span *ngIf="row.Status == 1" class="label label-primary">RM Assigned </span>
+                      <span *ngIf="row.Status == 2" class="label label-primary">Withdraw Request </span>
+                      <span *ngIf="row.Status == 3" class="label label-primary">Withdrawn </span>
+
+                      <br>
+                      <span class="label label-primary" *ngIf="row.Status == 0 &&  loginUserCode == row.ParentCode"
+                        (click)="TransferPos(row.parent_id,row.AgentId,row.lob,row.department_id,row.Id,'Action')">
+                        Transfer</span>
+
+                      <span *ngIf="row.Status == 2  &&  loginUserCode == row.WithdrawRMCode" class="label label-primary"
+                        (click)="TransferPos(row.withdraw_request_rm,row.AgentId,row.lob,row.department_id,row.Id,'Action')">
+                        Change RM</span> <br *ngIf="row.Status == 2">
+
+                      <span *ngIf="row.Status == 1  &&  NewEmployeeType == 'HOD'" class="label label-primary"
+                        (click)="TransferPos(row.withdraw_request_rm,row.AgentId,row.lob,row.department_id,row.Id,'Action')">
+                        Change RM</span> <br *ngIf="row.Status == 1  &&  NewEmployeeType == 'HOD'">
+
+                      <span *ngIf="row.Status == 2 &&  loginUserCode == row.WithdrawRMCode" class="label label-primary"
+                        (click)="ApproveRequest(row.withdraw_request_rm,row.AgentId,row.lob,row.department_id,row.Id)">
+                        Approved</span>
+
+                      <span class="label label-primary" *ngIf="this.currentUrl == '/posp-reporting/posp-lob-request'"
+                        (click)="TransferPos(row.parent_id,row.AgentId,row.lob,row.department_id,row.Id,'Details')">
+                        Details</span>
+
+                    </td>
+
+
+                  </tr>
+                </tbody>
+
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+
+              </table> -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="AddCatSubCatmODULE" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="main_card_form">
+              <div class="main_header">
+                <div class="header_title">Agent LOB Track</div> <button type="button" id="ClosePOUPUP"
+                  class="mr_5 Save_click close_btn close closeModelButton" data-dismiss="modal"><i _ngcontent-shj-c7=""
+                    class="fa fa-close"></i></button>
+              </div>
+              <table id="Table12" class="table table-bordered table-hover margin-dialog">
+                <thead>
+                  <tr>
+                    <th>Action User</th>
+                    <th>Assign User</th>
+                    <th>Status</th>
+                    <th>Create Date</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="AgentLobWiseLog?.length != 0">
+                  <tr *ngFor="let row of AgentLobWiseLog; let i=index;">
+                    <td> {{row.ActionUserName}} <br> {{row.ActionUserCode}} <br> </td>
+                    <td> {{row.AssignUserName}} <br> {{row.AssignUserCode}} <br> </td>
+                    <td> <span *ngIf="row.status == 0" class="label label-primary">Vertical
+                        Assigned</span> <span *ngIf="row.status == 1" class="label label-primary">RM
+                        Assigned </span> <span *ngIf="row.status == 2" class="label label-primary">Withdraw Request
+                      </span> <span *ngIf="row.status == 3" class="label label-primary">Withdrawn </span> </td>
+                    <td>{{row.created_date}}</td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="AgentLobWiseLog?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

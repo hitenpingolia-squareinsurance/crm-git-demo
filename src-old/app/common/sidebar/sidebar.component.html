@@ -1,0 +1,171 @@
+<aside class="main-sidebar" style="padding-top: 0px !important;z-index: 9999;">
+  <section class="sidebar">
+    <div class="cs_logo text_center">
+      <a routerLink="/dashboard" class="d_block logo-sidebar">
+        <img class="img-fluid half-logo" src="assets/image/square-half-logo.webp" alt="logo">
+        <img class="img-fluid full-logo" src="assets/image/square_full_logo.svg" alt="logo">
+      </a>
+    </div>
+    <div class="">
+      <ul class="sidebar-menu">
+        <li *ngIf="ValueSidebar != 1" class="header" (click)="StyleCss(1)" style="background: rgba(44, 178, 179, 9);">
+          MAIN NAVIGATION <i class="fa fa-plus menu_heading_fa_fa_one" aria-hidden="true"></i></li>
+        <li *ngIf="ValueSidebar != 2 && RightsNavigation != ''" class="header"
+          style="background: rgba(44, 178, 179, 9);" (click)="StyleCss(2)">RIGHTS NAVIGATION <i
+            class="fa fa-plus menu_heading_fa_fa_one" aria-hidden="true"></i></li>
+        <li *ngIf="ValueSidebar != 3 && ManegerNavigation != ''" class="header"
+          style="background: rgba(44, 178, 179, 9);" (click)="StyleCss(3)">MANAGER NAVIGATION <i
+            class="fa fa-plus menu_heading_fa_fa_one" aria-hidden="true"></i></li>
+
+
+        <li *ngIf="ValueSidebar != 4 && eHRNavigation != '' && LoginType == 'employee'" class="header"
+          style="background: rgba(44, 178, 179, 9);" (click)="StyleCss(4)">eHR NAVIGATION <i
+            class="fa fa-plus menu_heading_fa_fa_four" aria-hidden="true"></i>
+        </li>
+
+
+      </ul>
+
+
+      <ul class="sidebar-menu  {{treeValue}}" [attr.data-widget]="treeValue">
+        <li *ngIf="ValueSidebar == 1" class="header" style="background: rgba(44, 178, 179, 9) ;">MAIN NAVIGATION <i
+            class="fa fa-plus menu_heading_fa_fa_one" aria-hidden="true"></i></li>
+        <li *ngIf="ValueSidebar == 2" class="header" style="background: rgba(44, 178, 179, 9);">RIGHTS NAVIGATION <i
+            class="fa fa-plus menu_heading_fa_fa_one" aria-hidden="true"></i></li>
+        <li *ngIf="ValueSidebar == 3" class="header" style="background: rgba(44, 178, 179, 9);">MANAGER NAVIGATION <i
+            class="fa fa-plus menu_heading_fa_fa_one" aria-hidden="true"></i></li>
+        <li *ngIf="ValueSidebar == 4 && LoginType == 'employee'" class="header"
+          style="background: rgba(44, 178, 179, 9);">eHR NAVIGATION<i class="fa fa-plus menu_heading_fa_fa_one"
+            aria-hidden="true"></i></li>
+      </ul>
+      <ul class="active_menu_height ul-scroll-left  sidebar-menu {{SidebarCssClass}}  {{treeValue}}"
+        [ngClass]="(this.ValueSidebar  == 1 ? 'ActiveMenuHeight' : 'else' )" [attr.data-widget]="treeValue">
+        <li *ngFor="let m of MainNavigation; let i=index;" class="treeview menu_heading">
+          <a *ngIf="m.TotalSubMenu != '0'" href="javascript:void(0);" class="MainMenu">
+            <img src="{{m.Icon}}" class="icon_img" alt="User Image">
+            <span>{{m.Name}}</span>
+            <span *ngIf="m.TotalSubMenu != '0'" class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <a *ngIf="m.TotalSubMenu == '0'" (click)="ClickMenu(m.Route)" href="javascript:void(0);"
+            class="ClickAnchorMenu DirectMenus">
+            <img src="{{m.Icon}}" class="icon_img" alt="User Image">
+            <span>{{m.Name}}</span>
+          </a>
+          <ul *ngIf="m.TotalSubMenu != '0'" class="{{m.SubMenuClass}}">
+            <li *ngFor="let sub of m.SubMenu; let v=index; ">
+              <a *ngIf="sub.TotalChildMenu != '0'" href="javascript:void(0);" class="ChildMenu">
+                <img src="{{sub.Icon}}" class="icon_img" alt="User Image">
+                <span>{{sub.Name}}</span>
+                <span *ngIf="sub.TotalChildMenu != '0'" class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <a *ngIf="sub.TotalChildMenu == '0'" class="ClickAnchorMenu" (click)="ClickMenu(sub.Route)"
+                href="javascript:void(0);">
+                <img src="{{sub.Icon}}" class="icon_img" alt="User Image">
+                {{sub.Name}}
+              </a>
+              <ul *ngIf="sub.TotalChildMenu != '0'" class="{{sub.ChildMenuClass}}">
+                <li *ngFor="let child of sub.ChildMenu;" class="treeview menu_heading">
+                  <a class="ClickAnchorMenu" (click)="ClickMenu(child.Route)" href="javascript:void(0);">
+                    <img src="{{child.Icon}}" class="icon_img" alt="User Image">
+                    {{child.Name}}
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li *ngFor="let m of RightsNavigation; let i=index;" class="treeview menu_heading_two">
+          <a *ngIf="m.TotalSubMenu != '0'" href="javascript:void(0);" class="MainMenu">
+            <img src="{{m.Icon}}" class="icon_img" alt="User Image">
+            <span>{{m.Name}}</span>
+            <span *ngIf="m.TotalSubMenu != '0'" class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <a *ngIf="m.TotalSubMenu == '0'" (click)="ClickMenu(m.Route)" href="javascript:void(0);"
+            class="ClickAnchorMenu DirectMenus">
+            <img src="{{m.Icon}}" class="icon_img" alt="User Image">
+            <span>{{m.Name}}</span>
+          </a>
+          <ul *ngIf="m.TotalSubMenu != '0'" class="{{m.SubMenuClass}}">
+            <li *ngFor="let sub of m.SubMenu;">
+              <a class="ClickAnchorMenu" (click)="ClickMenu(sub.Route)" href="javascript:void(0);">
+                <img src="{{sub.Icon}}" class="icon_img" alt="User Image">
+                {{sub.Name}}
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li *ngFor="let menurights of ManegerNavigation; let i=index;" class="treeview menu_heading_three">
+          <a (click)="ClickMenu(menurights.Route)" class="ClickAnchorMenu DirectMenus" href="javascript:void(0);">
+            <img src="{{menurights.Icon}}" class="icon_img" alt="User Image">
+            <span>{{menurights.Name}}</span>
+          </a>
+        </li>
+
+        <li *ngFor="let m of eHRNavigation" class="treeview menu_heading_four">
+          <a href="javascript:void(0);" class="MainMenu" (click)="m.Route !== '#' ? ClickMenu(m.Route) : null">
+            <img [src]="m.Icon" class="icon_img" alt="Menu Icon">
+            <span>{{ m.Name }}</span>
+
+            <span *ngIf="m.TotalSubMenu != '0'" class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+
+          <ul *ngIf="m.TotalSubMenu != '0'" [ngClass]="m.SubMenuClass">
+            <li *ngFor="let sub of m.SubMenu">
+              <a href="javascript:void(0);" class="ChildMenu" (click)="sub.Route !== '#' ? ClickMenu(sub.Route) : null">
+                <img [src]="sub.Icon" class="icon_img" alt="Submenu Icon">
+                <span>{{ sub.Name }} </span>
+                <span *ngIf="sub.TotalChildMenu != '0'" class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+
+              <ul *ngIf="sub.TotalChildMenu != '0'" [ngClass]="sub.ChildMenuClass">
+                <li *ngFor="let child of sub.ChildMenu">
+                  <a href="javascript:void(0);" class="ClickAnchorMenu"
+                    (click)="child.Route !== '#' ? ClickMenu(child.Route) : null">
+                    <img [src]="child.Icon" class="icon_img" alt="Child Menu Icon">
+                    {{ child.Name }}
+                  </a>
+
+                  <ul *ngIf="child.TotalChildMenu != '0'" [ngClass]="child.ChildMenuClass">
+                    <li *ngFor="let subChild of child.ChildMenu">
+                      <a href="javascript:void(0);" class="ClickAnchorMenu"
+                        (click)="subChild.Route !== '#' ? ClickMenu(subChild.Route) : null">
+                        <img [src]="subChild.Icon" class="icon_img" alt="Sub-Child Menu Icon">
+                        {{ subChild.Name }}
+                      </a>
+
+                      <ul *ngIf="subChild.TotalChildMenu != '0'" [ngClass]="subChild.ChildMenuClass">
+                        <li *ngFor="let subSubChild of subChild.ChildMenu">
+                          <a href="javascript:void(0);" class="ClickAnchorMenu"
+                            (click)="subSubChild.Route !== '#' ? ClickMenu(subSubChild.Route) : null">
+                            <img [src]="subSubChild.Icon" class="icon_img" alt="Sub-Sub-Child Menu Icon">
+                            {{ subSubChild.Name }}
+                          </a>
+                        </li>
+                      </ul>
+
+                    </li>
+                  </ul>
+
+                </li>
+              </ul>
+
+            </li>
+          </ul>
+
+        </li>
+
+      </ul>
+
+    </div>
+  </section>
+</aside>

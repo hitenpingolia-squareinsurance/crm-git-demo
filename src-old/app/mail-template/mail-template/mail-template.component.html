@@ -1,0 +1,159 @@
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="box-title">Add Mail Templates</h3>
+                            </div>
+                            <div class="col-md-8">&nbsp;</div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <form (ngSubmit)="submit()" [formGroup]="AddMailTemplates" style="margin-top: -15px;">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="state">Template Name</label>
+                                        <input type="text" class="form-control" placeholder="Template Name" formControlName="templatename">
+                                        <div *ngIf="isSubmitted && formControls.templatename.errors"
+                                            class="ValidationError">
+                                            <div *ngIf="formControls.templatename.errors.required">Please enter template
+                                                name</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <label for="state">Source</label>
+                                        <select class="form-control" formControlName="source">
+                                            <option value="">--Select Source--</option>
+                                            <option value="crm">CRM</option>
+                                            <option value="web">WEB</option>
+                                            <option value="bms">BMS</option>
+                                        </select>
+                                        <div *ngIf="isSubmitted && formControls.source.errors" class="ValidationError">
+                                            <div *ngIf="formControls.source.errors.required">Please select source</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+
+                                    <div class="col-md-6">
+                                        <label for="state">From Mail</label>
+                                        <input type="text" class="form-control" placeholder="From Mail" formControlName="frommail">
+                                        <div *ngIf="isSubmitted && formControls.frommail.errors"
+                                            class="ValidationError">
+                                            <div *ngIf="formControls.frommail.errors.required">Please enter from mail
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <label for="state">To Mail</label>
+                                        <input type="text" class="form-control" placeholder="Remark of To Mail" formControlName="tomail">
+                                        <div *ngIf="isSubmitted && formControls.tomail.errors" class="ValidationError">
+                                            <div *ngIf="formControls.tomail.errors.required">Please enter to mail
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="state">CC Mail</label>
+                                        <input type="text" class="form-control"  placeholder="Remark of CC"formControlName="ccmail">
+                                        <div *ngIf="isSubmitted && formControls.ccmail.errors" class="ValidationError">
+                                            <div *ngIf="formControls.ccmail.errors.required">Please enter cc
+                                                mail</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <label for="state">Subject</label>
+                                        <input type="text" class="form-control" placeholder="Subject" formControlName="subject">
+                                        <div *ngIf="isSubmitted && formControls.subject.errors" class="ValidationError">
+                                            <div *ngIf="formControls.subject.errors.required">Please
+                                                enter subject</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <label for="state">Attachment</label>
+                                        <br>
+                                        &nbsp;<input id="yes" type="radio" value="yes" name="attachment" formControlName="attachment">
+                                        <label for="yes">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                        <input id="no" type="radio" value="no" name="attachment" formControlName="attachment">
+                                        <label for="no">No</label>
+
+                                        <!-- <input type="file" class="form-control" formControlName="attachment"
+                                            (change)="UploadDocs($event,'attachment')">
+                                      <div *ngIf="isSubmitted && formControls.attachment.errors"
+                                            class="ValidationError">
+                                            <div *ngIf="formControls.attachment.errors.required">
+                                                Please Select attachment</div>
+                                        </div> -->
+                                        
+                                    </div>
+                                
+
+                                    <div class="col-md-6">
+                                        <label for="state">Action Type</label>
+                                        <input type="text" class="form-control" formControlName="actiontype">
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Mail Body</label>
+                                        <ckeditor formControlName="mailbody" [config]="ckconfig"></ckeditor>
+                                        <!-- <ckeditor [editor]="CKEditorComponent" formControlName="ckeditor"></ckeditor> -->
+                                        <div *ngIf="isSubmitted && formControls.mailbody.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.mailbody.errors.required">
+                                                <span style="color: red;">
+                                                    Please Enter mail body!</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="box-footer with-border">
+                                    <footer>
+                                        <!-- <button class="btn pull-right" (click)="CloseModel()"
+                                                                type="button">Close</button> -->
+                                        <button *ngIf="this.urlSegment1 == 'add_templates'" class="btn btn-primary nextBtn pull-right" style="margin-right: 5px;"
+                                            type="submit">Submit</button>
+                                            <button *ngIf="this.urlSegment1 == 'edit_template'" class="btn btn-primary nextBtn pull-right" style="margin-right: 5px;"
+                                            type="submit">Update</button>
+                                    </footer>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</div>

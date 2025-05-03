@@ -1,0 +1,384 @@
+<div class="row">
+
+  <div class="modal-header" style="text-align: center;">
+    <h4 class="modal-title" *ngIf="this.type=='Add'">Add Doc's</h4>
+    <h4 class="modal-title" *ngIf="this.type=='Edit'">Edit Doc's</h4>
+  </div>
+</div>
+
+<form (ngSubmit)="submit()" [formGroup]="DocswalletForm" *ngIf="this.type=='Add' || this.type=='Edit'">
+
+  <div class="popup-content-body">
+    <div class="row popup-form">
+
+      <div class="col-md-6">
+        <label for="state">Doc's Type</label>
+        <select name="lob" formControlName="docstype" (change)="FileType_Status()" class="form-control"
+          data-parsley-required="true">
+          <option value="">--Select Docs--</option>
+          <option value="motor">Motor</option>
+          <option value="nonmotor">Non Motor</option>
+          <option value="health">Health</option>
+          <option value="life">Life</option>
+          <option value="other">Other</option>
+        </select>
+        <div *ngIf="isSubmitted && formControls.docstype.errors" class="Validationerrors">
+          <div *ngIf="formControls.docstype.errors.required"><span style="color: red;">Please select
+              docstype!</span></div>
+        </div>
+      </div>
+      
+
+      <!-- <div class="col-md-6"
+                *ngIf="this.addtoolForm.value['lob'] == 'motor' || this.addtoolForm.value['lob'] == 'health'">
+                <label for="state">Products</label>
+                <ng-multiselect-dropdown *ngIf="this.addtoolForm.value['lob'] == 'motor'" class="form-control"
+                    placeholder="--Select--" [data]="Product" formControlName="product" [(ngModel)]="product"
+                    [settings]="dropdownSettingsType" (click)="BusinessType_Status()">
+                </ng-multiselect-dropdown>
+                <input *ngIf="this.addtoolForm.value['lob'] == 'health'" type="text" class="form-control"
+                    formControlName="product">
+                <div *ngIf="isSubmitted && formControls.product.errors" class="Validationerrors">
+                    <div *ngIf="formControls.product.errors.required"><span style="color: red;">Please select
+                            product!</span></div>
+                </div>
+            </div> -->
+
+
+      <div class="col-md-6">
+        <label for="state">Policy Number</label>
+        <input type="text" class="form-control" formControlName="policyno" style="text-transform:uppercase">
+        <div *ngIf="isSubmitted && formControls.policyno.errors" class="Validationerrors">
+          <!-- <div *ngIf="formControls.policyno.errors.required"><span style="color: red;">Please enter
+                            policyno!</span> -->
+          <!-- <span *ngIf="formControls.policyno.errors.pattern"><span style="color: red;">Special charcacters not allowed</span></span> -->
+        </div>
+      </div>
+
+      <div class="col-md-6 next"
+        *ngIf="this.DocswalletForm.value['docstype']=='nonmotor' || this.DocswalletForm.value['docstype']=='motor' || this.DocswalletForm.value['docstype']=='health' || this.DocswalletForm.value['docstype']=='life' || this.DocswalletForm.value['docstype']=='other'">
+        <label for="state">Client Party Name</label>
+        <input type="text" class="form-control" formControlName="clientname" style="text-transform:uppercase">
+        <div *ngIf="isSubmitted && formControls.clientname.errors" class="Validationerrors">
+          <div *ngIf="formControls.clientname.errors.required"><span style="color: red;">Please enter
+                            clientname!</span></div>
+          <span *ngIf="formControls.clientname.errors.pattern"><span style="color: red;">Special charcacters not
+              allowed</span></span>
+        </div>
+      </div>
+
+      <div class="col-md-6 next"
+        *ngIf="this.DocswalletForm.value['docstype']=='nonmotor'  || this.DocswalletForm.value['docstype']=='motor' || this.DocswalletForm.value['docstype']=='health' || this.DocswalletForm.value['docstype']=='life' || this.DocswalletForm.value['docstype']=='other' ">
+        <label for="state">Client Party Contact</label>
+        <input type="text" class="form-control" formControlName="clientcontact" maxlength="10">
+        <div *ngIf="isSubmitted && formControls.clientcontact.errors" class="Validationerrors">
+          <div *ngIf="formControls.clientcontact.errors.required"><span style="color: red;">Please enter
+                            clientcontact!</span></div>
+          <span *ngIf="formControls.clientcontact.errors.pattern"><span style="color: red;">Please enter valid Mobile
+              no.</span></span>
+        </div>
+      </div>
+
+
+
+      <div class="col-md-6 next" *ngIf="this.DocswalletForm.value['docstype']=='motor'">
+        <label for="state">Vehicle Number</label>
+        <input type="text" class="form-control" formControlName="vehicleno" maxlength="11"
+          style="text-transform:uppercase">
+
+        <div *ngIf="isSubmitted && formControls.vehicleno.errors" class="Validationerrors">
+          <!-- <div *ngIf="formControls.vehicleno.errors.required"><span style="color: red;">Please enter
+                        vehicleno.!</span></div> -->
+          <span *ngIf="formControls.vehicleno.errors.pattern"><span style="color: red;">Special charcacters not
+              allowed</span></span>
+
+        </div>
+      </div>
+
+      <div class="col-md-6 next" *ngIf="this.DocswalletForm.value['docstype']=='motor'">
+        <label for="state">Engine/Chassis Number</label>
+        <input type="text" formControlName="enginechassisno" class="form-control" style="text-transform:uppercase">
+        <div *ngIf="isSubmitted && formControls.enginechassisno.errors" class="Validationerrors">
+          <!-- <div *ngIf="formControls.enginechassisno.errors.required"><span style="color: red;">Please enter
+                            enginechassisno!</span> -->
+          <span *ngIf="formControls.enginechassisno.errors.pattern"><span style="color: red;">Special charcacters not
+              allowed</span></span>
+
+
+        </div>
+      </div>
+
+
+      <div class="col-md-6 next" *ngIf="this.DocswalletForm.value['docstype']=='nonmotor'">
+        <label for="state">Mandate</label>
+        <input type="file" formControlName="mandate" (change)="UploadDocs($event,'mandate')" class="form-control">
+        <div *ngIf="isSubmitted && formControls.mandate.errors" class="Validationerrors">
+          <div *ngIf="formControls.mandate.errors.required"><span style="color: red;">Please choose
+              file!</span></div>
+        </div>
+      </div>
+
+      <div class="col-md-6 next"
+        *ngIf="this.DocswalletForm.value['docstype']=='nonmotor' || this.DocswalletForm.value['docstype']=='health' || this.DocswalletForm.value['docstype']=='life'">
+        <label for="state">Proposal Form/Policy Doc</label>
+        <input type="file" formControlName="proposalform" (change)="UploadDocs($event,'proposalform')"
+          class="form-control">
+        <div *ngIf="isSubmitted && formControls.proposalform.errors" class="Validationerrors">
+          <div *ngIf="formControls.proposalform.errors.required"><span style="color: red;">Please choose
+              file!</span></div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6 next"
+        *ngIf="this.DocswalletForm.value['docstype']=='nonmotor' || this.DocswalletForm.value['docstype']=='health' || this.DocswalletForm.value['docstype']=='life'">
+        <label for="state">KYC</label>
+        <input type="file" formControlName="kyc" (change)="UploadDocs($event,'kyc')" class="form-control">
+        <div *ngIf="isSubmitted && formControls.kyc.errors" class="Validationerrors">
+          <div *ngIf="formControls.kyc.errors.required"><span style="color: red;">Please choose
+              file!</span></div>
+        </div>
+      </div>
+
+      <div class="col-md-6 next" *ngIf="this.DocswalletForm.value['docstype']=='motor'">
+        <label for="state">RC Front Image</label>
+        <input type="file" formControlName="rcfront" (change)="UploadDocs($event,'rcfront')" class="form-control">
+        <div *ngIf="isSubmitted && formControls.rcfront.errors" class="Validationerrors">
+          <div *ngIf="formControls.rcfront.errors.required"><span style="color: red;">Please choose
+              file!</span></div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6 next" *ngIf="this.DocswalletForm.value['docstype']=='motor'">
+        <label for="state">RC Back Image</label>
+        <input type="file" formControlName="rcback" (change)="UploadDocs($event,'rcback')" class="form-control">
+        <div *ngIf="isSubmitted && formControls.rcback.errors" class="Validationerrors">
+          <div *ngIf="formControls.rcback.errors.required"><span style="color: red;">Please choose
+              file!</span></div>
+        </div>
+      </div>
+
+      <div class="col-md-6 next" *ngIf="this.DocswalletForm.value['docstype']=='motor'">
+        <label for="state">GST</label>
+        <input type="file" formControlName="gst" (change)="UploadDocs($event,'gst')" class="form-control">
+        <div *ngIf="isSubmitted && formControls.gst.errors" class="Validationerrors">
+          <div *ngIf="formControls.gst.errors.required"><span style="color: red;">Please choose
+              file!</span></div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6 next" *ngIf="this.DocswalletForm.value['docstype']=='other'">
+        <label for="state">Doc 1</label>
+        <input type="file" formControlName="doc1" (change)="UploadDocs($event,'doc1')" class="form-control">
+        <div *ngIf="isSubmitted && formControls.doc1.errors" class="Validationerrors">
+          <div *ngIf="formControls.doc1.errors.required"><span style="color: red;">Please choose
+              file!</span></div>
+        </div>
+      </div>
+
+      <div class="col-md-6 next" *ngIf="this.DocswalletForm.value['docstype']=='other'">
+        <label for="state">Doc 2</label>
+        <input type="file" formControlName="doc2" (change)="UploadDocs($event,'doc2')" class="form-control">
+        <div *ngIf="isSubmitted && formControls.doc2.errors" class="Validationerrors">
+          <div *ngIf="formControls.doc2.errors.required"><span style="color: red;">Please choose
+              file!</span></div>
+        </div>
+      </div>
+
+      <div class="col-md-6 next" *ngIf="this.DocswalletForm.value['docstype']=='other'">
+        <label for="state">Doc 3</label>
+        <input type="file" formControlName="doc3" (change)="UploadDocs($event,'doc3')" class="form-control">
+        <div *ngIf="isSubmitted && formControls.doc3.errors" class="Validationerrors">
+          <div *ngIf="formControls.doc3.errors.required"><span style="color: red;">Please choose
+              file!</span></div>
+        </div>
+      </div>
+
+      <div class="col-md-6 next" *ngIf="this.DocswalletForm.value['docstype']=='motor'">
+        <label for="state">Insurance</label>
+        <input type="file" class="form-control" (change)="UploadDocs($event,'insurance')" formControlName="insurance">
+        <div *ngIf="isSubmitted && formControls.insurance.errors" class="Validationerrors">
+          <div *ngIf="formControls.insurance.errors.required"><span style="color: red;">Please
+              choose
+              File!</span></div>
+        </div>
+
+      </div>
+
+
+      <div class="col-md-6 next"
+        *ngIf="this.DocswalletForm.value['docstype']=='motor' || this.DocswalletForm.value['docstype']=='nonmotor'">
+        <label for="state">Others</label>
+        <input type="file" class="form-control" (change)="UploadDocs($event,'others')" formControlName="others">
+        <div *ngIf="isSubmitted && formControls.others.errors" class="Validationerrors">
+          <div *ngIf="formControls.others.errors.required"><span style="color: red;">Please
+              choose
+              File!</span></div>
+        </div>
+
+      </div>
+
+      <div class="col-md-6 next" style="margin-top: 25px;">
+        <label for="state">Expiry Date</label>
+        <input type="date" class="form-control" formControlName="pexpirydate">
+        <div *ngIf="isSubmitted && formControls.pexpirydate.errors" class="Validationerrors">
+          <div *ngIf="formControls.pexpirydate.errors.required"><span style="color: red;">Please
+              Select
+              Date!</span></div>
+        </div>
+
+      </div>
+
+
+      <div class="clearfix"></div>
+      <div class="button-div-yes-no next" align="right">
+        <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>&nbsp;
+        <button type="submit" *ngIf="this.type=='Add'" class="btn btn-primary">Submit</button>&nbsp;
+        <button type="submit" *ngIf="this.type == 'Edit' " class="btn btn-primary">Update</button>
+      </div>
+
+    </div>
+  </div>
+</form>
+
+
+<div style="margin-top: 0px;" *ngIf="this.type=='Document'">
+
+  <div class="row">
+
+    <div class="modal-header" style="text-align: center;">
+      <h4 class="modal-title">Document Details</h4>
+    </div>
+  </div>
+
+
+  <div class="box" style="margin-top: 0px;">
+    <table id="table1" name="table1" class="table table-bordered table-responsive">
+
+
+      <tbody>
+
+        <tr>
+          <td colspan=6
+            *ngIf="document.docstype=='motor' || document.docstype=='nonmotor' || document.docstype=='health' || document.docstype=='life' || document.docstype=='other'">
+            <label>Type </label> : &nbsp; {{document.docstype | uppercase }}
+          </td>
+          <td colspan=6
+            *ngIf="document.docstype=='motor' || document.docstype=='nonmotor' || document.docstype=='health' || document.docstype=='life' || document.docstype=='other'">
+            <label>Policy No.</label> : &nbsp; {{document.policyno}}
+          </td>
+        </tr>
+
+
+        <tr>
+          <td colspan=6 *ngIf="document.docstype=='motor'"><label>Vehicle No.</label> : &nbsp; {{document.vehicleno}}
+          </td>
+          <td colspan=6 *ngIf="document.docstype=='motor'"><label>Engine/Chassis No.</label> : &nbsp;
+            {{document.engineno}}</td>
+        </tr>
+
+        <tr>
+          <td colspan=6 *ngIf="document.docstype=='nonmotor' || document.docstype=='health' || document.docstype=='life' || document.docstype=='other'"><label>Client Name</label>
+            : &nbsp; {{document.clientname}}</td>
+          <td colspan=6 *ngIf="document.docstype=='nonmotor' || document.docstype=='health' || document.docstype=='life' || document.docstype=='other'"><label>Client
+              Contact</label> : &nbsp; {{document.clientcontact}}</td>
+        </tr>
+
+        <tr>
+          <th colspan=6 *ngIf="document.docstype=='motor'">Rc Front Image
+            <a *ngIf="document.rcfront != '' " href="{{document.rcfront}}" target="_blank"
+              class="fa fa-Info pull-right">
+              &nbsp;&nbsp;<b>Download</b></a>
+          </th>
+
+          <th colspan=6 *ngIf="document.docstype=='motor'">Rc Back Image
+            <a *ngIf="document.rcback != '' " href="{{document.rcback}}" target="_blank" class="fa fa-Info pull-right">
+              &nbsp;&nbsp;<b>Download</b></a>
+          </th>
+        </tr>
+
+        <tr>
+          <th colspan=6 *ngIf="document.docstype=='motor'">GST Document
+            <a *ngIf="document.gst != '' " href="{{document.gst}}" target="_blank" class="fa fa-Info pull-right">
+              &nbsp;&nbsp;<b>Download</b></a>
+          </th>
+
+          <th colspan=6 *ngIf="document.docstype=='motor'">Insurance Document
+            <a *ngIf="document.insurance != '' " href="{{document.insurance}}" target="_blank"
+              class="fa fa-Info pull-right">
+              &nbsp;&nbsp;<b>Download</b></a>
+          </th>
+        </tr>
+
+
+        <tr>
+          <th colspan=6 *ngIf="document.docstype=='motor' || document.docstype=='nonmotor'">Other Document
+            <a *ngIf="document.others != '' " href="{{document.others}}" target="_blank" class="fa fa-Info pull-right">
+              &nbsp;&nbsp;<b>Download</b></a>
+          </th>
+
+
+
+          <th colspan=6 *ngIf="document.docstype=='nonmotor'">Mandate Document
+            <a *ngIf="document.mandate != '' " href="{{document.mandate}}" target="_blank"
+              class="fa fa-Info pull-right">
+              &nbsp;&nbsp;<b>Download</b></a>
+          </th>
+        </tr>
+
+        <tr>
+          <th colspan=6 *ngIf="document.docstype=='nonmotor' || document.docstype=='health' || document.docstype=='life'">KYC Document
+            <a *ngIf="document.kyc != '' " href="{{document.kyc}}" target="_blank" class="fa fa-Info pull-right">
+              &nbsp;&nbsp;<b>Download</b></a>
+          </th>
+
+
+
+          <th colspan=6 *ngIf="document.docstype=='nonmotor' || document.docstype=='health' || document.docstype=='life'">Proposal Document
+            <a *ngIf="document.proposalform != '' " href="{{document.proposalform}}" target="_blank"
+              class="fa fa-Info pull-right">
+              &nbsp;&nbsp;<b>Download</b></a>
+          </th>
+
+          <th colspan=6 *ngIf="document.docstype=='other'">Doc 1
+            <a *ngIf="document.doc1 != '' " href="{{document.doc1}}" target="_blank"
+              class="fa fa-Info pull-right">
+              &nbsp;&nbsp;<b>Download</b></a>
+          </th>
+
+          <th colspan=6  *ngIf="document.docstype=='other'">Doc 2
+            <a *ngIf="document.doc2 != '' " href="{{document.doc2}}" target="_blank"
+              class="fa fa-Info pull-right">
+              &nbsp;&nbsp;<b>Download</b></a>
+          </th>
+
+          <th colspan=6  *ngIf="document.docstype=='other'">Do 3
+            <a *ngIf="document.doc3 != '' " href="{{document.doc3}}" target="_blank"
+              class="fa fa-Info pull-right">
+              &nbsp;&nbsp;<b>Download</b></a>
+          </th>
+
+        </tr>
+
+        <!-- <tr>
+            <td colspan=5 *ngIf="(dataArr.other_document != '')">{{dataArr.other_document}}
+            </td>
+          </tr> -->
+
+      </tbody>
+
+
+
+
+    </table>
+
+    <div>
+      <footer>
+        <button class="btn pull-right" (click)="CloseModel()" type="button">Close</button>
+      </footer>
+    </div>
+  </div>
+
+</div>

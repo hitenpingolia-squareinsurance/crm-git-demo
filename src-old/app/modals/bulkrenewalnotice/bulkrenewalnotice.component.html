@@ -1,0 +1,43 @@
+<div class="box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Upload Renewal Notice (Only Zip File)</h3>
+    <div class="box-tools pull-right">
+      <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button> 
+    </div>
+  </div>
+  <form [formGroup]="UpdateFollowForm" (ngSubmit)="UpdateFollowFormS()" *ngIf="Status!='fixed'">
+    <div class="box-body">
+      <div class="row">
+        <div class="form-group row">
+          <!-- <div class="col-sm-6">
+            <label>Insurer:</label>
+            <ng-multiselect-dropdown class="form-control" name="Lob" placeholder="Select Insurer" [data]="InsurerData"
+              formControlName="Insurer" [settings]="dropdownSettingsingleselect">
+            </ng-multiselect-dropdown>
+            <span *ngIf="isSubmitted && FC.Insurer.errors" class="form-text text-muted">
+              <span *ngIf="FC.Insurer.errors.required" style="color:red;">Field is required..!</span>
+            </span>
+          </div> -->
+          <div class="col-lg-6">
+            <label>Remarks:</label>
+            <input type="file" (change)="UploadDocs($event,'Payment_Screen')" formControlName="Notice"
+              class="form-control" accept="application/zip">
+            <span *ngIf="isSubmitted && FC.Notice.errors" class="form-text text-muted">
+              <span *ngIf="FC.Notice.errors.required" style="color:red;">Field is required..!</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="box-footer">
+      <button type="button" (click)="CloseModel()" class="btn btn-default pull-right">Cancel</button>
+      <button style="margin-right: 1%;" type="submit" class="btn btn-info pull-right">Upload</button>
+    </div>
+  </form>
+
+  <p *ngIf="Status=='fixed'">
+
+    {{ Discription }}
+  </p>
+
+</div>

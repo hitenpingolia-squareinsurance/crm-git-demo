@@ -1,0 +1,164 @@
+<div class="inner_page_css main_dashboard_css">
+    <!-- Content Header (Page header) -->
+
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">Active-Inactive</div>
+                    </div>
+                    
+                    <div class="box-body">
+                        <div>
+                            <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                              <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                                href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <a role="button" class="fa fa-filter"><span>Filters</span><i
+                                    class="fa fa-angle-down pull-right"></i></a>
+                              </button>
+                            </div>
+                         
+
+
+                          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                              <!-- filter  -->
+                              <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+                            </div>
+                          </div>
+
+                        
+                          <div class="mydiv">
+                              <div class="custom_table tables_layout_design">
+                                  <table datatable [dtOptions]="dtOptions" id="Table1" class="row-border table">
+                                    <thead>
+                                      <tr>
+                                        <th></th>
+                                      </tr>
+                                    </thead>
+                                  </table>
+                                  <ul class="responsive-table" *ngIf="dataAr?.length != 0" >
+                                    <li class="table-row tablerow" *ngFor="let row of dataAr" >
+                                      <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                                        <div class="agents_data agents_data1">
+                                          <div class="icon_re_cl">{{row.SrNo}}.</div>
+                                          <div class="agent_name_mobile">
+                                            <div class="agent_data">
+                                              <div>Name</div>
+                                              <strong class="fs_18"><span>{{row.Name}}</span></strong>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="agents_data agents_data3">
+                                          <div class="agent_name_mobile">
+                                            <div class="agent_data">
+                                              <div>Created Date - <strong class="fs_18"><span>{{row.Create_date}}</span></strong></div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <hr>
+                                      <div class="last_row_div">
+                                        <div class="d_flex custon-234">
+                                          <div class="label_chips non_motor_lob">
+                                            <span>Assest Id - {{row.AssestId}}</span>&nbsp;&nbsp;
+                                          </div>
+                                          <div class="label_chips motor_lob">
+                                            <span>Requirement - {{row.Category}}</span>
+                                          </div>
+                                          
+                                        </div>
+                                      </div>
+                                      <div class="last_row">
+                                        <div class="effective_date">
+                                          <div class="d_flex">
+                                          
+                                          </div>
+                                        </div>
+                                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                          
+                                        </div>
+                                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                              <!-- <button class="btn btn-info" style="padding: 3px 10px;"  data-toggle="modal" data-target="#requestModal" (click)="ForApproval(row.id,row.status_check,row.CategoryId)">Details</button> -->
+                                          &nbsp;
+
+                                          <!-- <button *ngIf="row.status_check == '6'" class="btn btn-danger" data-toggle="modal"
+                                              data-target="#ActionUpdaterequest"
+                                              (click)="HandOverRequest(row.id,row.Item,1)" style="padding: 3px 10px;">Handover</button>
+                                          &nbsp;&nbsp; -->
+
+                                              <!-- 
+                                              <button *ngIf="row.status_check == '6'" class="btn btn-danger"
+                                                  data-toggle="modal"
+                                                  data-target="#ActionUpdaterequest"
+                                                  (click)="HandOverRequest(row.id,row.Item,2)" style="padding: 3px 10px;">Have An Issue</button>
+                                              &nbsp; -->
+
+                                              <!-- <button class="btn btn-warning"  type="button"
+                                                  *ngIf=" (row.status_check == '3' && currentUrl == '/assest-manegment/assest-maneger' && row.ManegerId == '')"
+                                                  (click)="AcceptAssignQuote(row.AssestId)"
+                                                  class="label label-warning" style="padding: 7px 10px; border: rgb(234, 207, 72);">Accept</button>&nbsp;&nbsp; -->
+
+                                              <!-- <button class="btn btn-info" type="button"
+                                                  *ngIf=" (row.status_check == '4' && currentUrl == '/assest-manegment/assest-distributor' && row.DistributorId == '')"
+                                                  (click)="AcceptAssignQuote(row.AssestId)" style="padding: 3px 10px;">Accept</button>&nbsp;&nbsp; -->
+
+                                                <!-- <button class="btn btn-info" type="button"
+                                                *ngIf=" (row.status_check == '2' && currentUrl == '/assest-manegment/assest-hod' && row.hod_id == '')"
+                                                (click)="AcceptAssignQuote(row.AssestId)" style="padding: 3px 10px;">Accept</button> -->
+
+                                              <label *ngIf="row.status_check == '0'"
+                                                  class="btn btn-danger label-inline mr-2" style="padding: 3px 10px;">Rejected
+                                              </label>
+                                              <label *ngIf="row.status_check == '1'"
+                                                  class="btn btn-warning label-inline mr-2" style="padding: 3px 10px;">Pending For
+                                                  RM</label>
+
+                                              <!-- <label *ngIf="row.status_check == '2'"
+                                                  class="btn btn-warning label-inline mr-2" style="padding: 3px 10px;">Pending For
+                                                  HOD</label> -->
+                                              <label *ngIf="row.status_check == '3'"
+                                                  class="btn btn-warning label-inline mr-2" style="padding: 3px 10px;">Pending For
+                                                  Manager</label>
+                                              <label *ngIf="row.status_check == '4'"
+                                                  class="btn btn-success label-inline mr-2" style="padding: 3px 10px;">Pending For
+                                                  Distributor</label>
+                                              <label *ngIf="row.status_check == '5'"
+                                                  class="btn btn-success label-inline mr-2" style="padding: 3px 10px;">Pending For
+                                                  Requester</label>
+                                              <!-- <button *ngIf="row.status_check == '6'"
+                                                  class="btn btn-success label-inline mr-2"  data-toggle="modal" data-target="#exampleModal"
+                                                  (click)="GetItemDetails(row.Item)" style="padding: 3px 10px;">Item Detail</button> -->
+
+                                              <label *ngIf="row.status_check == '7'"
+                                                  class="btn btn-danger label-inline mr-2" style="padding: 3px 10px;">Item Handover</label>
+
+                                        </div>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                  <div class="row" *ngIf="dataAr?.length == 0">
+                                    <div class="col-md-12">
+                                      <div class="no_data_found">
+                                        <span><img src="assets/image/no_data_banner.jpg"></span>
+                                        <small>No data available !</small>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </div> 
+                          </div>
+                        </div>
+
+                      </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+</div>
+
+

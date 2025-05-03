@@ -1,0 +1,252 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+
+                    <div class="main_header d_flex flex_Equal flex_Middel">
+                        <div class="header_title">Child Id</div>
+                        <div class="align-btn">
+                            <div><button type="button" (click)="AddChild(0,'Add','')"> Add New</button></div>
+                            <div *ngIf="selectedCheckboxValues !=''"><button type="button"
+                                    (click)="AddChild(0,'logsValueAccept','')"> Accpet</button></div>
+                        </div> 
+                    </div>
+
+                    <div class="main_body main_card_height_scroll_withoutfooter box-body"> 
+                        <div>
+                            <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                                <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                    data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                    aria-controls="collapseOne">
+                                    <a role="button" class="fa fa-filter"><span>Filters</span><i
+                                            class="fa fa-angle-down pull-right"></i></a>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <!-- <app-common-filter (postCreated)="SearchData($event)"></app-common-filter> -->
+                                <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane fade in active" id="All">
+                                        <div class="custom_table">
+                                            <div class="custom_table tables_layout_design">
+
+                                                <table datatable [dtOptions]="dtOptions" class="row-border table"
+                                                    id="Table1">
+
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+
+                                                <!--======= Refer Table  =========-->
+
+                                                <ul class="responsive-table">
+                                                    <li class="table-row" *ngFor="let row of dataAr; let i=index;">
+                                                        <div
+                                                            class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                                                            <div class="agents_data agents_data1">
+                                                                <div class="icon_re_cl">{{ row.SrNo }}</div>
+                                                                <div class="agent_name_mobile">
+                                                                    <div class="agent_data">
+                                                                        <div> Insurer Name </div>
+                                                                        <strong class="fs_18">
+                                                                            {{ row.insurer_name }}
+                                                                        </strong>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="agents_data agents_data2">
+                                                                <div class="agent_name_mobile"
+                                                                    *ngIf="row.mobile != null && row.mobile != ''">
+
+                                                                    <div class="agent_data"
+                                                                        *ngIf="row.mobile != null && row.mobile != ''">
+                                                                        <div>Mobile No.</div>
+                                                                        <strong class="fs_18">
+                                                                            {{row.mobile }}</strong>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="agents_data agents_data3">
+                                                                <div class="agent_name_mobile"
+                                                                    *ngIf="row.email != null && row.email != ''">
+                                                                    <div class="agent_data">
+                                                                        <span class="label label-primary"
+                                                                            *ngIf="Masking == 'email'+i"
+                                                                            (click)="ShowMaskingField('TempEmail')">
+                                                                            Email : {{row.email}}
+                                                                            <span (click)="CopyText(row.email)"
+                                                                                class="fa fa-copy"></span></span>
+                                                                        <span class="label label-primary"
+                                                                            *ngIf="Masking != 'email'+i"
+                                                                            (click)="ShowMaskingField('email'+i)"> Email
+                                                                            : ****</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="last_row_div align-view">
+
+                                                            <div class="d_flex">
+                                                                <div class="label_chips motor_lob dark">
+                                                                    <span>Location : {{ row.Servicelocation }}</span>
+                                                                </div>
+                                                                <div class="label_chips health_lob"
+                                                                    *ngIf="row.status != '' ">
+                                                                    <span *ngIf="row.status == 1">Status : Pending For
+                                                                        RM</span>
+                                                                    <span *ngIf="row.status == 2">Status : Pending For
+                                                                        HOD</span>
+                                                                    <span
+                                                                        *ngIf="row.status == 3 && row.ops_id==0">Status
+                                                                        : Pending For
+                                                                        OPS</span>
+                                                                    <span
+                                                                        *ngIf="row.status == 3 && row.ops_id!=0 && row.approve_status==0">status
+                                                                        : De-active</span>
+                                                                    <span
+                                                                        *ngIf="row.status == 3 && row.ops_id!=0 && row.approve_status==1">status
+                                                                        : Request Complete</span>
+                                                                </div>
+
+                                                                <!-- <div class="label_chips non_motor_lob"
+                                                                    *ngIf="row.IdArray.includes(LoginId)">
+                                                                    <span>Approve</span>
+                                                                </div>
+
+                                                                 <div class="label_chips motor_lob"
+                                                                    (click)="AddChild(row.Id,'logs',row)">
+                                                                    <span>LOG </span>
+                                                                </div> -->
+
+                                                                <div class="label_chips non_motor_lob">
+                                                                    <span class="cursor-default">Date :
+                                                                        {{row.Date}}</span>
+                                                                </div>
+                                                                <div class="label_chips non_motor_lob">
+                                                                    <span class="cursor-default">Created by :
+                                                                        {{row.CreatedBy}}</span>
+                                                                </div>
+
+                                                                <div class="label_chips motor_lob">
+                                                                    <span class="cursor-default">Created for :
+                                                                        {{row.CreatedFor}}</span>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="last_row align-pro">
+
+                                                            <!-- Button Section Start-->
+                                                            <!-- <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                                                            </div>
+                                                            <div class="details-btn">
+
+                                                            </div> -->
+
+
+
+                                                            <div class="align-375">
+                                                                <div class=" last_row_div d_flex"
+                                                                    *ngIf="row.log_data !=''">
+                                                                    <div class="label_chips motor_lob dark">
+                                                                        <span>User Id:{{row.log_data.id}}</span>
+                                                                    </div>
+                                                                    <div class="label_chips non_motor_lob">
+                                                                        <span>Password:{{row.log_data.password}}</span>
+                                                                    </div>
+                                                                    <div class="label_chips health_lob">
+                                                                        <span>Link:{{row.log_data.link}}</span>
+                                                                    </div>
+                                                                    <div class="label_chips motor_lob">
+                                                                        <span>Remark:{{row.log_data.Remark}}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="align-376">
+                                                                    <div class="d_flex effective_date"
+                                                                        *ngIf="row.status <= 2 && row.ops_id == 0 && row.IdArray.includes(LoginId)">
+                                                                        <span class="transfer-check"
+                                                                            *ngIf="CheckHide =='' || row.status== CheckHide">
+                                                                            <input type="checkbox"
+                                                                                (change)="LeadCheckChange(row.Id,row.status)"
+                                                                                value="{{row.id}}" /></span>
+                                                                    </div>
+                                                                    <div class="align-377">
+                                                                        <div class="details-btn  action_btn"
+                                                                            *ngIf="row.log_data !='' &&  row.ops_id==this.LoginId && row.close_status==0">
+                                                                            <a style="cursor: pointer; "
+                                                                                *ngIf="row.approve_status==0"
+                                                                                (click)="ActiveInactive(row.Id, 1)"
+                                                                                class="btn-Inactive">In-Active</a>
+                                                                            <a style="cursor: pointer;"
+                                                                                *ngIf="row.approve_status==1"
+                                                                                (click)="ActiveInactive(row.Id, 0)"
+                                                                                class="btn-active">Active</a>
+                                                                        </div>
+                                                                        <div class="action_btn">
+                                                                            <!-- <div class="action_btn box-bottom"> -->
+                                                                            <a style="cursor: pointer;" class="btn-bg1"
+                                                                                (click)="AddChild(row.Id,'logs',row)">View
+                                                                                Details</a>
+                                                                        </div>
+
+                                                                        <div class="action_btn box-bottom"
+                                                                            *ngIf="row.status == 3 && row.ops_id!=0 && row.IdArray.includes(LoginId)">
+                                                                            <a style="cursor: pointer;"
+                                                                                (click)="AddChild(row.loGID,'logsEdit',row)">Edit</a>
+                                                                        </div>
+                                                                    </div>
+
+
+
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                <!--======= Refer Table END =========-->
+
+                                                <div class="row" *ngIf="dataAr?.length == 0">
+                                                    <div class="col-md-12">
+                                                        <div class="no_data_found">
+                                                            <span><img src="assets/image/no_data_banner.jpg"></span>
+                                                            <small>No data available !</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

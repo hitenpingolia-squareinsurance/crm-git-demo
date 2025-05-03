@@ -1,0 +1,58 @@
+<div class="box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Action Form</h3>
+    <div class="box-tools pull-right">
+      <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+    </div>
+  </div>
+
+  <form [formGroup]="ActionForm" (ngSubmit)="SubmitStep_VI()">
+    <!-- /.box-header -->
+    <div class="box-body">
+
+      <div class="form-group">
+        <div class="row">
+        <div *ngIf="Id!=0" class="col-md-12">
+            <label>Status:</label>
+            <select formControlName="SR_Status" (change)="ShowSubOption($event)" class="form-control">
+              <option disabled selected value="">Select Status</option>
+              <!-- <option *ngIf="StepData['SR_Status']==9" value="9">Cancel Request</option> -->
+              <option *ngIf="StepData['SR_Status']!=10" value="9">Cancel Request</option>
+              <option value="10">Cancel Due To Underwriter</option>
+              <option *ngIf="StepData['SR_Status']!=10" value="11">Cancelled By Customer</option>
+            </select>
+        </div>
+      </div>
+
+      <!--=== Cancel Due To Underwriter ===-->
+      <div class="row">
+        <div class="col-md-12"  *ngIf="(ActionForm.value['SR_Status']==10 || StepData['SR_Status'] == 10)">
+          <label>Current Stage:</label>
+          <select formControlName="SR_Cancel_Status" class="form-control">
+            <option disabled selected value="">Select Status</option>
+            <option *ngIf="StepData['SR_Cancel_Status']!=1" value="1">Pending For Refund</option>
+            <option value="2">Refund Paid</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row remark">
+        <div class='col-md-12'>
+          <label>Remark:</label>
+          <textarea class="form-control" formControlName="Remark" name="Remark"></textarea>
+        </div>
+      </div>
+      </div>
+
+      <div class="box-footer">
+        <div class='col-md-12'>
+        <button class="btn btn-primary nextBtn pull-right" type="submit">
+          <span *ngIf="(User_Rights.Is_Operation==1 || User_Rights.Underwriter_Motor==1 || User_Rights.Underwriter_Non_Motor==1 || User_Rights.Underwriter_Health==1 || User_Rights.Is_Sales_Support==1)">Submit</span>
+        </button>
+        </div>
+      </div>
+      </div>
+    </form>
+
+  </div>
+

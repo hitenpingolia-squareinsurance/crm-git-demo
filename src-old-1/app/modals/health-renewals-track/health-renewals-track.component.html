@@ -1,0 +1,68 @@
+<table class="table table-bordered" style="font-size: 12px;">
+    <thead>
+        <tr class="">
+            <td colspan="11" align="center">
+                <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" (onSelect)="GetSR($event,'1')"
+                                placeholder="Select Month" [data]="Year_Array" [(ngModel)]="SelectedYear"
+                                formControlName="Year_Name" [settings]="dropdownSettingsSingle">
+                            </ng-multiselect-dropdown>
+                        </div>
+                    </div>
+                </form>
+
+                <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+            </td>
+        </tr>
+    </thead>
+
+    <thead>
+        <tr class="TDHeading">
+            <th>SR&nbsp;No</th>
+            <th>Month</th>
+            <th>Renewal&nbsp;Date</th>
+            <th>Net&nbsp;Premium</th>
+            <th>Gross&nbsp;Premium</th>
+            <th>Ref.&nbsp;No.</th>
+            <th>Payment&nbsp;Date</th>
+            <th>Payment&nbsp;Mode</th>
+            <th>Reciept</th>
+            <th>Status</th>
+            <th>Remarks</th>
+        </tr>
+    </thead>
+
+    <tbody *ngIf="StepData?.length != 0">
+        <tr *ngFor="let row of StepData; let i=index;">
+            <td>{{row.Full_SR_No}}
+            </td>
+            <td>{{row.Month_Name}}</td>
+            <td>{{row.Renewal_Date}}</td>
+            <td>{{row.Net_Premium}}</td>
+            <td>{{row.Estimated_Gross_Premium}}</td>
+            <td>{{row.Reference_No}}</td>
+            <td>{{row.Payment_Date}}</td>
+            <td>{{row.Payment_Mode}}</td>
+            <td>
+                <a *ngIf="row.Payment_Reciept != '' && row.Renewal_Status==1"
+                    (click)="ViewDocument(row.Payment_Reciept)" href="javascript:;" class="label label-primary">View
+                    Reciept</a>
+
+                <a *ngIf="row.Payment_Reciept == '' && row.Renewal_Status==1"
+                     href="javascript:;" class="label label-danger">Not
+                    Available</a>
+            </td>
+
+            <td>
+                <span style="margin-right: 5px;" *ngIf="row.Renewal_Status== 1"
+                    class="label label-success">Complete</span>
+                <span style="margin-right: 5px;" *ngIf="row.Renewal_Status== 0"
+                    class="label label-danger">Pending</span>
+            </td>
+            <td>{{row.Renewal_Remarks}}</td>
+        </tr>
+    </tbody>
+
+</table>

@@ -1,0 +1,410 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title">Files Payout Request {{Payout_Mode}}</div>
+               
+            </div>
+            <div class="main_body main_card_height_scroll_withoutfooter">
+   
+
+				<div>
+
+					<form [formGroup]="SearchForm" (ngSubmit)="SearchBtn('0')">
+
+						<div class="row">
+
+							<div class="col-sm-4">
+
+								<select (change)="GetEmployees()" formControlName="Vertical_Id" class="form-control">
+									<option value="0">Select Vertical</option>
+
+									<option *ngFor="let r of Vertical_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+								</select>
+
+							</div>
+
+							<div class="col-sm-4">
+								<select (change)="GetSubBranches($event)" formControlName="Region_Id" class="form-control">
+									<option value="0">Select Region</option>
+									<option value="0">None</option>
+									<option *ngFor="let r of Region_Ar;" value="{{r.id}}">{{r.text}}</option>
+								</select>
+							</div>
+
+							<div class="col-sm-4">
+								<select (change)="GetEmployees()" formControlName="Sub_Region_Id" class="form-control">
+									<option value="0">Select Region-Branch</option>
+									<option value="0">None</option>
+									<option *ngFor="let r of Sub_Branch_Ar;" value="{{r.id}}">{{r.text}}</option>
+								</select>
+							</div>
+
+
+						</div>
+
+						<div class="row"  >
+
+
+							<div class="col-sm-4">
+
+								<ng-multiselect-dropdown class="form-control" name="Emp_Id" [placeholder]="Employee_Placeholder" [data]="Emps_Ar"
+									formControlName="Emp_Id" [settings]="dropdownSettings" (onSelect)="onItemSelect($event,'Employee')"
+									(onDeSelect)="onItemDeSelect($event,'Employee')">
+								</ng-multiselect-dropdown>
+							</div>
+
+							<div class="col-sm-2">
+								<select formControlName="Report_Type" class="form-control">
+									<option disabled value="0">Report Type</option>
+									<option value="Self">Self</option>
+									<option value="Hierarchy">Hierarchy ({{CountHierarchy_Emp}})</option>
+								</select>
+							</div>
+
+							<div class="col-sm-2">
+
+								<ng-multiselect-dropdown class="form-control" name="SRAgent_Type" placeholder="Select Agent Type" [data]="SRAgentType_Ar"
+									formControlName="SRAgent_Type" [settings]="LOB_dropdownSettings"
+									(onSelect)="onItemSelect($event,'SRAgent_Type')"
+									(onDeSelect)="onItemDeSelect($event,'SRAgent_Type')">
+								</ng-multiselect-dropdown>
+
+							</div>
+
+							<div class="col-sm-4">
+
+								<ng-multiselect-dropdown class="form-control" name="Agent_Id" [placeholder]="Agents_Placeholder" [data]="Agents_Ar"
+									formControlName="Agent_Id" [settings]="AgentdropdownSettings">
+								</ng-multiselect-dropdown>
+							</div>
+
+						</div>
+
+
+						<div class="row"  >
+
+							<div class="col-sm-2">
+
+								<ng-multiselect-dropdown class="form-control" name="SRLOB" placeholder="Select LOB" [data]="SRLOB_Ar"
+									formControlName="SRLOB" [settings]="LOB_dropdownSettings" (onSelect)="onItemSelect($event,'LOB')"
+									(onDeSelect)="onItemDeSelect($event,'LOB')">
+								</ng-multiselect-dropdown>
+
+							</div>
+
+							<div class="col-sm-5">
+
+								<ng-multiselect-dropdown class="form-control" name="Product_Id" placeholder="Select Product" [data]="Products_Ar"
+									formControlName="Product_Id" [settings]="dropdownSettings">
+								</ng-multiselect-dropdown>
+
+
+							</div>
+
+							<div class="col-sm-5">
+
+								<ng-multiselect-dropdown class="form-control" name="Company_Id" placeholder="Select Ins Company" [data]="Companies_Ar"
+									formControlName="Company_Id" [settings]="dropdownSettings">
+								</ng-multiselect-dropdown>
+
+
+							</div>
+
+
+
+						</div>
+						<div class="row"  >
+
+
+							<div class="col-sm-2" style="display: none;">
+								<select formControlName="Payout_Mode" class="form-control">
+									<option selected disabled value="0">Payout Mode</option>
+									<option value="Monthly">Monthly</option>
+									<option value="Weekly">Weekly</option>
+									<option value="Advance">Daily</option>
+								</select>
+
+								<span *ngIf="isSubmitted && FC.Payout_Mode.errors" class="form-text text-muted">
+									<span *ngIf="FC.Payout_Mode.errors.required" style="color:red;">Please
+										choose payout mode!</span>
+								</span>
+
+							</div>
+
+							<div *ngIf="api.GetUserData('User_Role') =='Hod' && User_Rights.Is_Accounts==0" class="col-sm-2">
+								<select formControlName="Request_Type" class="form-control">
+									<option selected disabled value="0">Request Type</option>
+									<option value="1">My Requests</option>
+									<option value="2">Team Requests</option>
+								</select>
+
+								<span *ngIf="isSubmitted && FC.Request_Type.errors" class="form-text text-muted">
+									<span *ngIf="FC.Request_Type.errors.required" style="color:red;">Please
+										choose Request Type!</span>
+								</span>
+
+							</div>
+
+							<div class="col-sm-2">
+
+								<select class="form-control" formControlName="Request_Status">
+									<option selected disabled value="">Select Request Status</option>
+									<!--
+					<option value="1">Approved</option>
+					<option *ngIf="api.GetUserData('User_Role') !='SuperAdmin'" value="2">Requested</option>
+					<option *ngIf="api.GetUserData('User_Role') =='SuperAdmin' || User_Rights.Is_Files_PO_Request == 1" value="2">Requested(HOD Level)</option>
+					<option *ngIf="api.GetUserData('User_Role') =='SuperAdmin' || User_Rights.Is_Files_PO_Request == 1" value="AdminLevel">Requested(Admin Level)</option>
+					<option value="3">Rejected</option>
+					<option value="4">Blocked</option>
+					-->
+
+									<option value="1">Approved</option>
+									<option value="H">Requested - HOD Level</option>
+									<option value="M">Requested - Management Level</option>
+									<option value="A">Requested - Admin Level</option>
+									<option value="3">Rejected</option>
+									<option value="4">Blocked</option>
+
+
+								</select>
+
+
+								<span *ngIf="isSubmitted && FC.Request_Status.errors" class="form-text text-muted">
+									<span *ngIf="FC.Request_Status.errors.required" style="color:red;">Please
+										choose Request Status!</span>
+								</span>
+
+							</div>
+
+							<div class="col-sm-3">
+								<input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+									formControlName="DateOrDateRange" bsDaterangepicker
+									[bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+
+								<span *ngIf="isSubmitted && FC.DateOrDateRange.errors" class="form-text text-muted">
+									<span *ngIf="FC.DateOrDateRange.errors.required" style="color:red;">Please
+										choose Date or Date-Range!</span>
+								</span>
+
+							</div>
+
+						</div>
+						<div class="row"  >
+
+							<div class="col-sm-9"></div>
+							<div style="text-align: right;" class="col-sm-3">
+								<!-- <input *ngIf="(Is_Export==1)" (click)="ExportExcel()" type="button" class="btn btn-success" value="Export">
+								&nbsp;&nbsp;	 -->
+								<input type="submit" class="btn btn-info" value="Filter">
+								&nbsp;&nbsp;
+								<input (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset">
+							</div>
+
+						</div>
+
+					</form>
+
+				</div>
+
+				<div *ngIf="checkedList?.length>0" class="row"  >
+
+					<div class="col-sm-3">
+						<select class="form-control" [(ngModel)]="Assign_Status">
+							<option value="">--Select Status--</option>
+							<option value="Approve">Approve</option>
+							<option value="Reject">Reject</option>
+						</select>
+					</div>
+
+					<div class="col-sm-4">
+						<input class="form-control" [(ngModel)]="Assign_Remark">
+					</div>
+
+					<div class="col-sm-3">
+						<input type="button" (click)="UpdateRequest()" class="btn btn-info" value="Submit">
+						&nbsp;&nbsp;
+						<input (click)="Cancel()" type="button" class="btn btn-danger" value="Cancel">
+					</div>
+
+
+				</div>
+
+
+				<hr>
+
+				<!--begin: Datatable-->
+				<div id="my_div" class="position-relative">
+					<div class="cs_search_btn">
+						<form [formGroup]="SearchForm1">
+
+							<div class="input-group mb-3">
+								<input type="text" formControlName="GlobalSearch" placeholder="Search SR No/Policy/Vehicle No."
+									class="form-control"
+									[ngClass]="(isSubmitted1 && FC1.GlobalSearch.errors && FC1.GlobalSearch.errors.required?'form-control errorMsgg':'form-control')">
+								<div class="input-group-append">
+									<button class="btn btn-info" type="button" (click)="SearchBtn('1')"><span
+											class="fa fa-search"></span></button>
+								</div>
+							</div>
+
+						</form>
+					</div>
+
+					<div class="table table-responsive" id="mydiv">
+						<table datatable [dtOptions]="dtOptions"
+							class="row-border hover table table-bordered table-hover table-checkable" id="kt_datatable"
+							style="margin-top: 13px !important">
+							<thead>
+								<tr>
+									<th>No</th>
+
+									<th>
+
+										<input *ngIf="(api.GetUserData('User_Role') =='Hod')" type="checkbox" [(ngModel)]="masterSelected"
+											name="list_name" value="m1" (change)="checkUncheckAll()">
+										<input *ngIf="(User_Rights.Is_PO_Request_Approval == 1  )" type="checkbox"
+											[(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()">
+
+										<input *ngIf="(User_Rights.Is_PO_Request_Approval == 2)" type="checkbox"
+											[(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()">
+
+									</th>
+									<th>Request Status</th>
+									<th>BookingDate/Status</th>
+									<th>Request Date</th>
+									<th>RM Name/Code</th>
+									<th>HOD Name/Code</th>
+									<th>SR_No</th>
+									<th>Insurance Company</th>
+									<th>Remark</th>
+									<th>OD</th>
+									<th>TP</th>
+									<th>Net</th>
+									<th>Reward</th>
+									<th>Scheme</th>
+
+								</tr>
+							</thead>
+							<tbody *ngIf="dataAr?.length != 0">
+								<tr *ngFor="let row of dataAr">
+									<td>{{ row.SrNo }}</td>
+
+									<td>
+										<input *ngIf="(api.GetUserData('User_Role') =='Hod') && row.Status == 2 && (row.HodToAdmin == 1)"
+											type="checkbox" [(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}"
+											(change)="isAllSelected()">
+										<input *ngIf="(User_Rights.Is_PO_Request_Approval == 1 && row.Status == 2 && row.HodToAdmin == 2)"
+											type="checkbox" [(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}"
+											(change)="isAllSelected()">
+
+										<input *ngIf="(User_Rights.Is_PO_Request_Approval == 2 && row.Status == 2 && row.HodToAdmin == 3)"
+											type="checkbox" [(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}"
+											(change)="isAllSelected()">
+									</td>
+
+									<td>
+
+
+										<!--
+					<a title="" href="javascript:;"><span *ngIf="row.Status == 1" class="label label-info label-inline mr-2">Approved</span></a>
+					<a title="" href="javascript:;"><span *ngIf="row.Status == 2 && (row.HodToAdmin == 0 || row.HodToAdmin == 1)" class="label label-warning label-inline mr-2">Requested(HOD)</span></a>
+					<a title="" href="javascript:;"><span *ngIf="row.Status == 2 && row.HodToAdmin == 2" class="label label-warning label-inline mr-2">Requested(Admin)</span></a>
+					<a title="" href="javascript:;"><span *ngIf="row.Status == 3" class="label label-danger label-inline mr-2">Rejected</span></a>
+					<a title="" href="javascript:;"><span *ngIf="row.Status == 4" class="label label-danger label-inline mr-2">Blocked</span></a>
+					-->
+										<a title="" href="javascript:;"><span *ngIf="row['HodToAdmin']==1 && row['Status']==2"
+												class="label label-warning label-inline mr-2" style="width: 130px;">Requested In
+												HOD</span></a>
+										<a title="" href="javascript:;"><span *ngIf="row['HodToAdmin']==2 && row['Status']==2"
+												class="label label-danger label-inline mr-2" style="width: 170px;">Requested In
+												Management</span></a>
+										<a title="" href="javascript:;"><span *ngIf="row['HodToAdmin']==3 && row['Status']==2"
+												class="label label-danger label-inline mr-2" style="width: 135px;">Requested In
+												Admin</span></a>
+
+
+										<a title="" href="javascript:;"><span *ngIf="row['Status']==1"
+												class="label label-info label-inline mr-2">Approved</span></a>
+										<a title="" href="javascript:;"><span *ngIf="row['Status']==3"
+												class="label label-warning label-inline mr-2">Rejected</span></a>
+										<a title="" href="javascript:;"><span *ngIf="row['Status']==4"
+												class="label label-danger label-inline mr-2">Block</span></a>
+
+
+										<a href="javascript:;" (click)="Actions(row.SR_Id)">
+											<span style="margin-top: 8px;" class="label label-success label-inline mr-2">SR Details</span>
+										</a>
+
+									</td>
+
+									<td>
+										<p>{{row.Booking_Date}}</p>
+
+										<div style="margin-top:4px;">
+											<span *ngIf="row.SR_Status == 'Complete'" class="label label-success label-inline mr-2">Booked</span>
+											<span *ngIf="row.SR_Status == 'Pending'" class="label label-danger label-inline mr-2">UnBooked</span>
+											<span *ngIf="row.SR_Status == 'Cancelled'" class="label label-danger label-inline mr-2">Cancelled</span>
+											<span *ngIf="row.SR_Status == 'Recovery'" class="label label-danger label-inline mr-2">Recovery</span>
+										</div>
+
+										<div style="margin-top:4px;">
+											<span *ngIf="row.Policy_Type == '1'" class="label label-info label-inline mr-2">POS-Product</span>
+											<span *ngIf="row.Policy_Type != '1'" class="label label-danger label-inline mr-2" style="width: 125px;">Non-POS Product</span>
+										</div>
+										
+									</td>
+
+
+									<td>
+										<p>{{row.Add_Stamp}}</p>
+									</td>
+
+									<td>{{row.RM_Name}}</td>
+									<td>{{row.HOD_Name}}</td>
+
+									<td>{{row.SR_No}}</td>
+									<td>{{row.Ins_Name}}</td>
+									<td>{{row.Remark}}</td>
+
+									<td><span
+											*ngIf="(api.GetUserData('User_Role') =='Hod' || User_Rights.Is_PO_Request_Approval==1 || User_Rights.Is_PO_Request_Approval==2)">{{row.PayInODAfterTDS}}/</span>{{row.PayOutOD}}
+									</td>
+									<td><span
+											*ngIf="(api.GetUserData('User_Role') =='Hod' || User_Rights.Is_PO_Request_Approval==1 || User_Rights.Is_PO_Request_Approval==2)">{{row.PayInTPAfterTDS}}/</span>{{row.PayOutTP}}
+									</td>
+									<td><span
+											*ngIf="(api.GetUserData('User_Role') =='Hod' || User_Rights.Is_PO_Request_Approval==1 || User_Rights.Is_PO_Request_Approval==2)">{{row.PayInNetAfterTDS}}/</span>{{row.PayOutNet}}
+									</td>
+									<td><span
+											*ngIf="(api.GetUserData('User_Role') =='Hod' || User_Rights.Is_PO_Request_Approval==1 || User_Rights.Is_PO_Request_Approval==2)">{{row.PayInRewardAfterTDS}}/</span>{{row.PayOutReward}}
+									</td>
+									<td><span
+											*ngIf="(api.GetUserData('User_Role') =='Hod' || User_Rights.Is_PO_Request_Approval==1 || User_Rights.Is_PO_Request_Approval==2)">{{row.PayInSchemeAfterTDS}}/</span>{{row.PayOutScheme}}
+									</td>
+
+								</tr>
+							</tbody>
+							<tbody *ngIf="dataAr?.length == 0">
+								<tr>
+									<td colspan="13" align="center">No data available !</td>
+								</tr>
+							<tbody>
+						</table>
+					</div>
+				</div>
+
+				<!--end: Datatable-->
+
+				
+			</div>
+		</div>
+	</div>
+</div>
+      <!-- /.row -->
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</section>

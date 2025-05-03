@@ -1,0 +1,241 @@
+<table align="center" class="row-border hover table table-bordered table-hover table-checkable table-responsive" id="kt_datatable">
+    <thead>
+    
+    
+    <tr class="">
+    
+    
+    <td colspan="5" align="left">
+        <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+    </td>
+    <td colspan="6" align="center">
+        <b>Agent : {{AgentName}}</b>
+    </td> 
+ 
+   </tr> 
+   </thead>
+   
+      <tr *ngIf="checkedList?.length>0 && IsAssign=='0'">
+        <td colspan="11"> 
+            <div style="margin:1%;" class="row">
+             
+              <div class="col-sm-3">
+                <select class="form-control" [(ngModel)]="Status">
+                    <option value=""></option>
+                    <option value="Approve">Approve</option>
+                    <option value="Reject">Reject</option>
+                </select>
+              </div>
+              
+              <div class="col-sm-6">
+                <input class="form-control" [(ngModel)]="Remark" placeholder="Remark">
+              </div>
+               
+              <div class="col-sm-3">
+                        <input type="button" (click)="Transfer()" class="btn btn-info" value="Submit">
+                        &nbsp;&nbsp; 
+                        <input (click)="CancelTransfer()" type="button" class="btn btn-primary" value="Cancel">
+               </div>
+                     
+            </div> 
+             
+        </td>
+   </tr>
+  
+<tr *ngIf="IsAssign=='1'">
+    <td colspan="11">
+            
+         <div class="col-sm-8">
+            <select class="form-control" [(ngModel)]="Assign_User">
+                <option  value="">--Select Assign-user--</option>
+                <option *ngFor="let r of AccountsUser_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+            </select>
+             
+          </div> 
+              
+            <div class="col-sm-4">
+                <input type="button" (click)="AssginUser()" class="btn btn-info" value="Assign">
+           </div>
+    </td>
+    
+</tr>			  
+   
+</table>
+
+
+<table *ngIf="IsAssign=='0'" class="row-border hover table table-bordered table-hover table-checkable table-responsive">
+    <thead>
+    <tr>
+    <th><input [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()" type="checkbox"></th>
+    <th>S.No</th>
+    
+    <th>BookingDate</th>
+    <th style="text-align:center;">Status/Action</th>
+    
+    <th>LOB</th>
+     
+    <th style="text-align:center;">Product Details</th> 
+    <th style="text-align:center;">Premium Details</th> 
+
+    <th style="text-align:center;">Payout Details</th> 
+    <th>Customer Name</th>
+    <th>Agent</th>
+    <th>RM</th>
+
+     
+    </tr>
+    </thead>
+    <tbody *ngIf="dataAr?.length != 0">
+      <tr *ngFor="let row of dataAr">
+          <td> 
+          
+           <input *ngIf="(row.Posting_Status == '1' && ActiveTab == 'Accounts')" type="checkbox" [(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}" (change)="isAllSelected()">
+           <input *ngIf="(row.Posting_Status == '3' && ActiveTab == 'Banking')" type="checkbox" [(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}" (change)="isAllSelected()">
+          
+          </td>
+          <td>{{ row.SR_No }}</td>
+           
+           <td>{{ row.Add_Stamp }}</td>
+           
+           <td> 
+          <table style="font-size: 12px;" class="PayoutTable">
+                <tr>
+                
+                    <!--<td>Details</td>-->
+                    <td>Source</td>
+                    <td>SR</td>
+                    <td>Posting</td>
+                     
+                </tr>
+                <tr>
+                    
+                    <!--<td>
+                        <a href="javascript:;"  (click)="Actions(row.Id)">
+                            <span class="label label-success label-inline mr-2">Details</span>
+                        </a> 
+                    </td>-->
+                    <td>{{row.SR_Source}}</td>
+                    
+                    <td>
+                    <span *ngIf="row.SR_Status == 'Complete'" class="label label-success label-inline mr-2">Booked</span>
+                    <span *ngIf="row.SR_Status == 'Pending'" class="label label-danger label-inline mr-2">UnBooked</span>
+                    <span *ngIf="row.SR_Status == 'Cancelled'" class="label label-danger label-inline mr-2">Cancelled</span>
+                    <span *ngIf="row.SR_Status == 'Recovery'" class="label label-warning label-inline mr-2">Recovery</span>
+                  </td>
+          
+                     <td>
+                        <span *ngIf="row.Posting_Status == '0'" class="label label-warning label-inline mr-2">PendingForPosting</span>
+                        <span *ngIf="row.Posting_Status == '1'" class="label label-default label-inline mr-2">PendingForAccounts</span>
+                        <span *ngIf="row.Posting_Status == '2'" class="label label-danger label-inline mr-2">RejectByAccounts</span>
+                        <span *ngIf="row.Posting_Status == '3'" class="label label-primary label-inline mr-2">PendingForBanking</span>
+                        <span *ngIf="row.Posting_Status == '4'" class="label label-danger label-inline mr-2">RejectByBanking</span>
+                        <span *ngIf="row.Posting_Status == '5'" class="label label-info label-inline mr-2">Approved</span>
+                        <span *ngIf="row.Posting_Status == '6'" class="label label-success label-inline mr-2">Paid/PayoutTransfered</span>
+                      </td>
+                 
+                </tr>
+                
+            </table> 
+         </td>
+          
+        
+          <td>{{ row.LOB_Name }}</td>
+          
+           <td>
+            <table style="font-size: 12px;" class="PayoutTable">
+                <tr>
+                
+                    <td>File Type</td>
+                    <td>Product</td>
+                    <td>Sub-Product</td>
+                    <td>Segment</td>
+                    <td>Class</td>
+                    <td>Sub-Class</td>
+             
+                </tr>
+                <tr>
+                    
+                    <td>{{row.File_Type}}</td>
+                    <td>{{row.Product_Id}}</td>
+                    <td>{{row.SubProduct_Id}}</td>
+                    <td>{{row.Segment_Id}}</td>
+                    <td>{{row.Class_Id}}</td>
+                    <td>{{row.Sub_Class_Id}}</td>
+                     
+                </tr>
+                
+            </table>
+          
+          </td>
+          
+          <td>
+            <table style="font-size: 12px;" class="PayoutTable">
+                <tr>
+                
+                    <td>Basic OD</td>
+                    <td>Basic TP</td>
+                    <td>Net Premium</td>
+                    <td>Terrorism Premium</td>
+                    <td>Gross Premium</td>
+             
+                </tr>
+                <tr>
+                    
+                    <td>{{row.Basic_OD}}</td>
+                    <td>{{row.Basic_TP}}</td>
+                    <td>{{row.Net_Premium}}</td>
+                    <td>{{row.Terrorism_Premium}}</td>
+                    <td>{{row.Estimated_Gross_Premium}}</td>
+                     
+                </tr>
+                
+            </table>
+          
+          </td>
+          
+          
+
+
+         
+          <td>
+            <table>
+                <tr>
+                    <td>OD%</td>
+                    <td>OD AMT</td>
+                    <td>TP%</td>
+                    <td>TP AMT</td>
+                    <td>Net%</td>
+                    <td>Net AMT</td>
+                    <td>Reward</td>
+                    <td>Scheme</td>
+                    <td>Total</td>
+                </tr>
+                <tr>
+                    <td>{{row.Agent_Payout_OD}}</td>
+                    <td>{{row.Agent_Payout_OD_Amount}}</td>
+                    <td>{{row.Agent_Payout_TP}}</td>
+                    <td>{{row.Agent_Payout_TP_Amount}}</td>
+                    <td>{{row.Agent_Payout_Net}}</td>
+                    <td>{{row.Agent_Payout_Net_Amount}}</td>
+                    <td>{{row.Agent_Reward_Amount}}</td>
+                    <td>{{row.Agent_Scheme_Amount}}</td>
+                    <td>{{row.Agent_Total_Amount}}</td>
+                      
+                </tr>
+                
+            </table>
+          </td>
+          <td>{{ row.Customer_Name }}</td>
+           
+          <td>{{ row.Agent_Name }} ({{ row.Agent_Code }})</td>
+          <td>{{ row.RM_Name }} ({{ row.RM_Code }})</td>
+
+         
+      </tr>
+    </tbody>
+    <tbody *ngIf="dataAr?.length == 0">
+    <tr>
+      <td colspan="11" align="center">No data available !</td>
+    </tr>
+    <tbody>
+    </table>

@@ -1,0 +1,686 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="main_card_form">
+            <div class="main_header">
+                <div class="header_title">
+                    <div>
+                        {{
+                        UrlSegment == 'miscellaneousClaim' || UrlSegment == 'miscellaneousClaim-manager' || UrlSegment
+                        == 'miscellaneousClaim-hod' || UrlSegment == 'miscellaneousClaim-claim' || UrlSegment ==
+                        'miscellaneousClaim-account'
+                        ? 'Miscellaneous Claims'
+                        : UrlSegment == 'localClaim' || UrlSegment == 'localClaim-manager' || UrlSegment ==
+                        'localClaim-hod' || UrlSegment == 'localClaim-claim' || UrlSegment == 'localClaim-account'
+                        ? 'Local Claims'
+                        : UrlSegment == 'miscellaneousClaimAdd'
+                        ? 'Raise Miscellaneous Claim Request'
+                        : UrlSegment == 'localClaimAdd'
+                        ? 'Raise Local Claim Request'
+                        : UrlSegment == 'miscellaneousClaimUpdate'
+                        ? 'Update Miscellaneous Claim Request'
+                        : 'Update Local Claim Request'
+                        }}
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div *ngIf="!hasAccess" class="error-message">
+                <div class="container" style="text-align: center;">
+                    <img src="assets/Authorised.png" alt="">
+                </div>
+            </div>
+
+
+            <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+
+
+                <div>
+                    <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                        <button class="btn btn-info1"
+                            *ngIf="UrlSegment == 'miscellaneousClaim' || UrlSegment == 'localClaim' || UrlSegment == 'miscellaneousClaim-manager' || UrlSegment == 'localClaim-manager' || UrlSegment == 'miscellaneousClaim-hod' || UrlSegment == 'miscellaneousClaim-claim' || UrlSegment == 'miscellaneousClaim-account' || UrlSegment == 'localClaim-hod' || UrlSegment == 'localClaim-claim' || UrlSegment == 'localClaim-account'"
+                            role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                            href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <a role="button" class="fa fa-filter"><span>Filters</span><i
+                                    class="fa fa-angle-down pull-right"></i></a>
+                        </button>
+
+                        <div
+                            *ngIf="UrlSegment == 'miscellaneousClaimAdd' || UrlSegment == 'localClaimAdd' || UrlSegment == 'miscellaneousClaimUpdate' || UrlSegment == 'localClaimUpdate'">
+                            <button class="btn btn-info1" style="padding:6px;" (click)="Cancelrequest()"><a
+                                    role="button"> <i class="fa fa-chevron-circle-left"
+                                        aria-hidden="true"></i>&nbsp;<span>Back</span></a>
+
+                            </button>
+                        </div>
+                        <div *ngIf="!ModalShow && (UrlSegment == 'miscellaneousClaim' || UrlSegment == 'localClaim')">
+                            <button class="btn btn-info1" style="padding:6px;" (click)="RaiseClaim()"><a role="button">
+                                    Raise Claim&nbsp;<i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+
+                            </button>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panelbody">
+                        <form [formGroup]="RequestData" (ngSubmit)="SearchData()">
+                            <div class="row">
+                                <div class="col-sm-3"
+                                    *ngIf="UrlSegment == 'miscellaneousClaim-hod' || UrlSegment == 'miscellaneousClaim-claim' || UrlSegment == 'miscellaneousClaim-account' || UrlSegment == 'localClaim-hod' || UrlSegment == 'localClaim-claim' || UrlSegment == 'localClaim-account'">
+
+                                    <ng-multiselect-dropdown class="form-control" [data]="Request_Type"
+                                        formControlName="Request_type" [settings]="dropdownSettingsType"
+                                        [(ngModel)]="Default_Request">
+                                    </ng-multiselect-dropdown>
+                                </div>
+                                <div class="col-sm-3">
+
+                                    <input type="text" class="form-control" placeholder="Search"
+                                        formControlName="SearchVal">
+                                </div>
+                                <div class="col-sm-3">
+
+                                    <input type="submit" class="btn btn-info" value="Search"> &nbsp;&nbsp;
+                                    <button (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset">
+                                        <i class="fa fa-close"> </i> Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <form [formGroup]="ProfileForm"
+                    *ngIf="UrlSegment == 'miscellaneousClaimAdd' || UrlSegment == 'localClaimAdd' || UrlSegment == 'miscellaneousClaimUpdate' || UrlSegment == 'localClaimUpdate'">
+                    <div class="row">
+                        <input type="hidden" class="form-control" formControlName="ID" readonly />
+                        <div class="form-group col-md-4">
+                            <label for="title">Employee Name</label>
+                            <input type="text" class="form-control" formControlName="Employee_Name" readonly />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="title">Employee Id</label>
+                            <input type="text" class="form-control" formControlName="Employee_ID" readonly />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="title">Designation</label>
+                            <input type="text" class="form-control" formControlName="Employee_Designation" readonly />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="title">Profile</label>
+                            <input type="text" class="form-control" formControlName="Employee_Profile" readonly />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="title">Vertical</label>
+                            <input type="text" class="form-control" formControlName="Employee_Department" readonly />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="title">Reporting Manager</label>
+                            <input type="text" class="form-control" formControlName="Employee_ReportingManager"
+                                readonly />
+                        </div>
+                    </div>
+                </form>
+
+                <!-- --------------------------------------Miscellaneous Form------------------------------------------------- -->
+                <form *ngIf="UrlSegment == 'miscellaneousClaimAdd' || UrlSegment == 'miscellaneousClaimUpdate'"
+                    [formGroup]="sendRequest">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="fromDate">From Date</label>
+                            <input class="form-control" type="text" formControlName="fromDate" bsDatepicker
+                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" id="fromDate" placeholder="dd/mm/yyyy">
+                            <div *ngIf="is_Submit && FC.fromDate.errors" class="ValidationError">
+                                <div *ngIf="FC.fromDate.errors.required">
+                                    Please Select Date</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="toDate">To Date </label>
+                            <input class="form-control" type="text" formControlName="toDate" bsDatepicker
+                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" id="toDate" placeholder="dd/mm/yyyy">
+                            <div *ngIf="is_Submit && FC.toDate.errors" class="ValidationError">
+                                <div *ngIf="FC.toDate.errors.required">
+                                    Please Select Date</div>
+                            </div>
+                            <div *ngIf="dateInvalid_Misc" class="ValidationError">
+                                'To Date' Cannot be greater than 'From Date'</div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="amount">Amount (INR)</label>
+                            <input class="form-control" type="number" formControlName="amount" id="amount"
+                                (input)="TotalFare()">
+                            <div *ngIf="is_Submit && FC.amount.errors" class="ValidationError">
+                                <div *ngIf="FC.amount.errors.required">
+                                    Please Enter Amount</div>
+                                <div *ngIf="FC.amount.errors.limit">
+                                    Amount cannot greater than {{MaxAmount}}</div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="file">Upload Documents (Max 5)</label>
+                            <div class="custom-file-input-wrapper">
+                                <input type="file" multiple="true" id="file" (change)="onFileChange($event)"
+                                    formControlName="file_Misc" class="form-control">
+                            </div>
+                            <!-- <p>{{this.FileNames}}</p> -->
+                            <div *ngIf="is_Submit && FC.file_Misc.errors" class="ValidationError">
+                                <div *ngIf="FC.file_Misc.errors.required">
+                                    Please Choose File</div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="remark">Remark</label>
+                            <input class="form-control" type="text" formControlName="remark" id="remark">
+                            <div *ngIf="is_Submit && FC.remark.errors" class="ValidationError">
+                                <div *ngIf="FC.remark.errors.required">
+                                    Please Enter Remark</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div>
+                        <h5><b>Total Claim Amount (INR) : </b>{{this.TotalFareAmountMisc ? this.TotalFareAmountMisc :
+                            0}}</h5>
+                    </div>
+                    <br>
+                    <div style="float:right; margin-top:10px;">
+                        <button class="btn btn-primary1" (click)="claimRequest('saveForm')" style="margin-right:10px">
+                            Save
+                        </button>
+                        <button class="btn btn-success1" type="submit" (click)="claimRequest()"
+                            style="margin-right:10px">
+                            {{this.updateID ? 'Update' : 'Submit'}}
+                        </button>
+                        <button class="btn btn-danger" (click)="Cancelrequest()"
+                            style="margin-right:10px; padding:6px 12px;">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+
+                <!-- --------------------------------------Local Conveyance Form------------------------------------------------- -->
+
+
+                <form *ngIf="UrlSegment == 'localClaimAdd' || UrlSegment == 'localClaimUpdate'"
+                    [formGroup]="sendLocalRequest">
+
+
+                    <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+
+                        <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Year" [data]="Year_Ar"
+                                formControlName="Year" [settings]="dropdownSettingsType" [(ngModel)]="Year">
+                            </ng-multiselect-dropdown>
+
+                            <span *ngIf="LocalSubmit && this.sendLocalRequest.get('Year').errors"
+                                class="ValidationError">
+                                <span *ngIf="this.sendLocalRequest.get('Year').errors.required">Field is required</span>
+                            </span>
+
+                        </div>
+
+                        <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Month Type" [data]="Month_Ar"
+                                formControlName="Month" [settings]="dropdownSettingsType" [(ngModel)]="Month"
+                                (onSelect)="MonthSelect($event)">
+                            </ng-multiselect-dropdown>
+                            <span *ngIf="LocalSubmit && this.sendLocalRequest.get('Month').errors"
+                                class="ValidationError">
+                                <span *ngIf="this.sendLocalRequest.get('Month').errors.required">Field is
+                                    required</span>
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="form_sub_title mt20" *ngIf="UrlSegment == 'localClaimAdd'">
+                        <i class="fa fa-link mr_5"></i> Details Of Journey
+                    </div>
+
+                    <div formArrayName="JourneyDetails_formArrays">
+                        <div class="row"
+                            *ngFor="let JourneyDetails_formArray of JourneyDetails_formArrays.controls; let i = index"
+                            [formGroupName]="i" [ngClass]="{'formarray': i == 1 }">
+
+                            <div class="row">
+                                <button *ngIf="i != 0" class="close_btn" style="float:right; margin-right:50px;"
+                                    type="button"><i class="fa fa-close" (click)="removeArray(i)"></i></button>
+                            </div>
+                            <input type="hidden" formControlName="Id">
+                            <div class="form-group col-md-4">
+                                <label for="DepartureDate">Departure Date</label>
+                                <input class="form-control" type="text" formControlName="DepartureDate" bsDatepicker
+                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', minDate: minDate, maxDate: maxDate}"
+                                    id="DepartureDate" placeholder="dd/mm/yyyy">
+                                <div *ngIf="LocalSubmit && JourneyDetails_formArray.get('DepartureDate').errors"
+                                    class="ValidationError">
+                                    <div *ngIf="JourneyDetails_formArray.get('DepartureDate').errors.required">
+                                        Please Select Date</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="DepartureTime">Departure Time</label>
+                                <input class="form-control" type="time" formControlName="DepartureTime"
+                                    id="DepartureTime">
+                                <div *ngIf="LocalSubmit && JourneyDetails_formArray.get('DepartureTime').errors"
+                                    class="ValidationError">
+                                    <div *ngIf="JourneyDetails_formArray.get('DepartureTime').errors.required">
+                                        Please Enter Departure Time</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="DepartureStartPoint">Departure Point</label>
+                                <input class="form-control" type="text" formControlName="DepartureStartPoint"
+                                    id="DepartureStartPoint">
+                                <div *ngIf="LocalSubmit && JourneyDetails_formArray.get('DepartureStartPoint').errors"
+                                    class="ValidationError">
+                                    <div *ngIf="JourneyDetails_formArray.get('DepartureStartPoint').errors.required">
+                                        Please Enter Departure Start Point</div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-4">
+                                <label for="ArrivalDate">Arrival Date</label>
+                                <input class="form-control" type="text" formControlName="ArrivalDate" bsDatepicker
+                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', minDate: minDate, maxDate: maxDate}"
+                                    id="ArrivalDate" placeholder="dd/mm/yyyy">
+                                <div *ngIf="LocalSubmit && JourneyDetails_formArray.get('ArrivalDate').errors"
+                                    class="ValidationError">
+                                    <div *ngIf="JourneyDetails_formArray.get('ArrivalDate').errors.required">Please
+                                        Select Date</div>
+                                </div>
+                                <!-- <div *ngIf="dateInvalid" class="ValidationError">
+                                    'Departure Date' Cannot be greater than 'Arrival Date'</div> -->
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="ArrivalTime">Arrival Time</label>
+                                <input class="form-control" type="time" formControlName="ArrivalTime" id="ArrivalTime">
+                                <div *ngIf="LocalSubmit && JourneyDetails_formArray.get('ArrivalTime').errors"
+                                    class="ValidationError">
+                                    <div *ngIf="JourneyDetails_formArray.get('ArrivalTime').errors.required">Please
+                                        Enter Arrival Time</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="ArrivalStartPoint">Arrival Point</label>
+                                <input class="form-control" type="text" formControlName="ArrivalStartPoint"
+                                    id="ArrivalStartPoint">
+                                <div *ngIf="LocalSubmit && JourneyDetails_formArray.get('ArrivalStartPoint').errors"
+                                    class="ValidationError">
+                                    <div *ngIf="JourneyDetails_formArray.get('ArrivalStartPoint').errors.required">
+                                        Please Enter Arrival Start Point</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="Travelmode">Travel Mode</label>
+                                <ng-multiselect-dropdown id="Travelmode" class="form-control" [data]="travelmode_data"
+                                    formControlName="Travelmode" [settings]="dropdownSettingsType"
+                                    (onSelect)="GetFair($event ,i)" (onDeSelect)="GetFair('' , i)">
+                                </ng-multiselect-dropdown>
+                                <div *ngIf="LocalSubmit && JourneyDetails_formArray.get('Travelmode').errors"
+                                    class="ValidationError">
+                                    <div *ngIf="JourneyDetails_formArray.get('Travelmode').errors.required">Please
+                                        Select Travel Mode</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="Travelmode">Purpose Of Visit</label>
+                                <ng-multiselect-dropdown id="PurposeOfVisit" class="form-control" [data]="visit_data"
+                                    formControlName="PurposeOfVisit" [settings]="dropdownSettingsType">
+                                </ng-multiselect-dropdown>
+                                <div *ngIf="LocalSubmit && JourneyDetails_formArray.get('PurposeOfVisit').errors"
+                                    class="ValidationError">
+                                    <div *ngIf="JourneyDetails_formArray.get('PurposeOfVisit').errors.required">Please
+                                        Select Purpose Of Visit</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="Distance">Distance (KM)</label>
+                                <input class="form-control" type="number" formControlName="Distance" id="Distance"
+                                    (input)="AmountCalculate($event , i)">
+                                <div *ngIf="LocalSubmit && JourneyDetails_formArray.get('Distance').errors"
+                                    class="ValidationError">
+                                    <div *ngIf="JourneyDetails_formArray.get('Distance').errors.required">
+                                        Please Enter Distance</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="EmployeeAmount">Fare Paid (INR)</label>
+                                <input class="form-control" type="number" formControlName="EmployeeAmount"
+                                    (input)="TotalFare()" id="EmployeeAmount">
+                                <div *ngIf="LocalSubmit && JourneyDetails_formArray.get('EmployeeAmount').errors"
+                                    class="ValidationError">
+                                    <div *ngIf="JourneyDetails_formArray.get('EmployeeAmount').errors.required">
+                                        Please Enter Amount</div>
+                                </div>
+                            </div>
+
+                            <div class=" form-group col-md-4">
+                                <label for="JourneyFile">Upload Documents (Max 5)</label>
+                                <div class="custom-file-input-wrapper">
+                                    <input type="file" multiple="true" id="File" (change)="onFileChangeLocal($event,i)"
+                                        formControlName="JourneyFile" class="form-control ">
+                                </div>
+                                <p>{{this.FileNames}}</p>
+
+
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="Remark">Remark</label>
+                                <input class="form-control" type="text" formControlName="Remark" id="Remark">
+                                <div *ngIf="LocalSubmit && JourneyDetails_formArray.get('Remark').errors"
+                                    class="ValidationError">
+                                    <div *ngIf="JourneyDetails_formArray.get('Remark').errors.required">
+                                        Please Enter Remark</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <h5><b>Fare Total (INR) : </b>{{this.TotalFareAmount ? this.TotalFareAmount : 0}}</h5>
+                        </div>
+                        <div class="row">
+                            <a style="float:right;" class="btn btn-primary mr_15" (click)="AddMore()">Add More</a>
+                        </div>
+                    </div>
+                    <div style="float:right; margin-top:10px; margin-bottom: 10px;">
+                        <button class="btn btn-primary1" (click)="claimRequestLocal('saveForm')"
+                            style="margin-right:10px;">
+                            Save
+                        </button>
+                        <button class="btn btn-success1" type="submit" (click)="claimRequestLocal()"
+                            style="margin-right:10px">
+                            {{this.updateID ? 'Update' : 'Submit'}}
+                        </button>
+                        <button class="btn btn-danger" (click)="Cancelrequest()"
+                            style="margin-right:10px; padding:6px 12px;">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+
+                <!-- -----------------------------VIEW CLAIMS ---------------------------------------------------------------------------->
+
+                <div *ngIf="UrlSegment == 'miscellaneousClaim' || UrlSegment == 'miscellaneousClaim-manager' || UrlSegment == 'miscellaneousClaim-hod' || UrlSegment == 'miscellaneousClaim-claim' || UrlSegment == 'miscellaneousClaim-account' || UrlSegment == 'localClaim' || UrlSegment == 'localClaim-manager' || UrlSegment == 'localClaim-hod' || UrlSegment == 'localClaim-claim' || UrlSegment == 'localClaim-account'"
+                    class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                    <div class="custom_table tables_layout_design">
+                        <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <!-- ======= Refer Table  =========-->
+                        <ul class="responsive-table">
+                            <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+
+                                <p class="life_status_label">
+                                    <span>
+
+                                        <a>
+                                            <span class="label label-warning" *ngIf="row.status == 0">Pending for
+                                                RM</span>
+                                            <span class="label label-warning" *ngIf="row.status == 1">Pending for
+                                                HOD</span>
+                                            <span class="label label-warning" *ngIf="row.status == 2">Pending for Claim
+                                                Manager</span>
+                                            <span class="label label-warning" *ngIf="row.status == 3">Pending for
+                                                Account Manager</span>
+                                            <span class="label label-success" *ngIf="row.status == 4">Approved</span>
+                                            <span class="label label-warning"
+                                                *ngIf="row.status == 9 || row.status == 10 || row.status == 11 || row.status == 12">Sent-Back</span>
+                                            <span class="label label-danger"
+                                                *ngIf="row.status == 5 ||row.status == 6 || row.status == 7 || row.status == 8 ">Rejected</span>
+
+                                        </a>
+
+
+                                    </span>
+                                </p>
+
+                                <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                                    <div class="agents_data agents_data1">
+                                        <div class="icon_re_cl">{{row.srNo}}</div>
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data">
+                                                <strong class="fs_18 text-bold">{{row.journeyDetails.employeeName}} -
+                                                    {{row.journeyDetails.employeeId}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="agent_name_mobile" *ngIf="row.claimFromDate && row.claimToDate">
+                                        <div class="agent_data">
+                                            <strong>Claim Start Date - {{row.claimFromDate |
+                                                date:'dd-MM-yyyy'}}</strong>
+                                        </div>
+                                        <div class="agent_data">
+                                            <strong>Claim End Date - {{row.claimToDate | date:'dd-MM-yyyy'}}</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="agent_name_mobile" *ngIf="row.claimMonth && row.claimYear">
+                                        <div class="agent_data">
+                                            <strong>Claim Year - {{row.claimYear}}</strong>
+                                        </div>
+                                        <div class="agent_data">
+                                            <strong>Claim Month - {{row.claimMonth}}</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="agents_data agents_data3">
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data">
+                                                <button type="button" class="btn btn-primary"
+                                                    (click)="GetRequest_Details(row.id)">
+                                                    View
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="last_row_div">
+                                    <div class="d_flex custon-234 mt15">
+
+                                        <div class="label_chips motor_lob" style="width: auto;">
+                                            <span>Request Id - {{row.requestId}}</span>&nbsp;&nbsp;
+                                        </div>
+
+                                        <div class="label_chips non_motor_lob" style="width: auto;">
+                                            <span>Reporting Manager -
+                                                {{row.journeyDetails.employeeRM}}</span>&nbsp;&nbsp;
+                                        </div>
+
+                                        <div class="label_chips finance_lob" style="width: auto;">
+                                            <span>Department - {{row.journeyDetails.employeeDepartment}}</span>
+                                        </div>
+
+                                        <div class="label_chips motor_lob" style="width: auto;">
+                                            <span>Profile - {{row.journeyDetails.employeeProfile}}</span>&nbsp;&nbsp;
+                                        </div>
+
+                                        <!-- <div class="ActionDiv" *ngIf="(
+                                            (UrlSegment == 'miscellaneousClaim-manager' || UrlSegment == 'localClaim-manager') && row.status == 0) || 
+                                            ((UrlSegment == 'miscellaneousClaim-hod' || UrlSegment == 'localClaim-hod') && row.status == 1 && row.journeyDetails.hodTempManager == '' && Default_Request[0].Id == 'My Request') || 
+                                            ((UrlSegment == 'miscellaneousClaim-claim' || UrlSegment == 'localClaim-claim') && row.status == 2 && row.journeyDetails.claimTempManager == '' && Default_Request[0].Id == 'My Request') || 
+                                            ((UrlSegment == 'miscellaneousClaim-account' || UrlSegment == 'localClaim-account') && row.status == 3 && row.journeyDetails.accountTempManager == '' && Default_Request[0].Id == 'My Request')
+                                            ">
+                                            <button 
+                                                type="button" class="btn btn-success" (click)="GetAction(row.id , 'Approve')" data-toggle="modal" data-target="#ActionModal">
+                                                Approve
+                                            </button>&nbsp;&nbsp;
+
+                                            <button type="button" class="btn btn-warning" (click)="GetAction(row.id , 'Send-Back')" data-toggle="modal" data-target="#ActionModal">
+                                                Send Back
+                                            </button>&nbsp;&nbsp;
+                                            <button type="button" class="btn btn-danger" (click)="GetAction(row.id , 'Deny')" data-toggle="modal" data-target="#ActionModal" style="padding:2px; width:50px;">
+                                                Deny
+                                            </button>
+                                        </div> -->
+
+                                        <div class="ActionDiv"
+                                            *ngIf="((UrlSegment == 'miscellaneousClaim-hod' || UrlSegment == 'localClaim-hod') && row.status == 1 && Default_Request[0].Id == 'Raise Request') || ((UrlSegment == 'miscellaneousClaim-claim' || UrlSegment == 'localClaim-claim') && row.status == 2 && Default_Request[0].Id == 'Raise Request') || ((UrlSegment == 'miscellaneousClaim-account' || UrlSegment == 'localClaim-account') && row.status == 3 && Default_Request[0].Id == 'Raise Request')">
+                                            <button type="button" class="btn btn-info"
+                                                (click)="Accept(row.id , 'Accepted')" style="padding: 3px;">
+                                                Accept
+                                            </button>&nbsp;&nbsp;
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="last_row">
+                                    <div class="d_flex effective_date">
+                                        <div class="date_text" *ngIf="row.remark">
+                                            <div>
+                                                <span class="fs_12">Remark : </span>
+                                                <span class="fs_12">{{row.remark}}</span>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                                        <div *ngIf="(
+                                            (UrlSegment == 'miscellaneousClaim-manager' || UrlSegment == 'localClaim-manager') && row.status == 0) || 
+                                            ((UrlSegment == 'miscellaneousClaim-hod' || UrlSegment == 'localClaim-hod') && row.status == 1 && row.journeyDetails.hodTempManager == '' && Default_Request[0].Id == 'My Request') || 
+                                            ((UrlSegment == 'miscellaneousClaim-claim' || UrlSegment == 'localClaim-claim') && row.status == 2 && row.journeyDetails.claimTempManager == '' && Default_Request[0].Id == 'My Request') || 
+                                            ((UrlSegment == 'miscellaneousClaim-account' || UrlSegment == 'localClaim-account') && row.status == 3 && row.journeyDetails.accountTempManager == '' && Default_Request[0].Id == 'My Request')
+                                            ">
+                                            <button type="button" class="btn btn-success"
+                                                (click)="GetAction(row.id , 'Approve')" data-toggle="modal"
+                                                data-target="#ActionModal">
+                                                Approve
+                                            </button>&nbsp;&nbsp;
+
+                                            <!-- <button 
+                                            *ngIf="(UrlSegment == 'localClaim-manager' && row.status == 0) || 
+                                            (UrlSegment == 'localClaim-hod' && row.status == 1 && row.journeyDetails.hodTempManager == '' && Default_Request[0].Id == 'My Request') || 
+                                            (UrlSegment == 'localClaim-claim' && row.status == 2 && row.journeyDetails.claimTempManager == '' && Default_Request[0].Id == 'My Request') || 
+                                            (UrlSegment == 'localClaim-account' && row.status == 3 && row.journeyDetails.accountTempManager == '' && Default_Request[0].Id == 'My Request')"
+                                            type="button" class="btn btn-success" (click)="GetRequest_Details(row.id , 'Approve')">
+                                                Approve
+                                            </button>&nbsp;&nbsp; -->
+
+
+                                            <button type="button" class="btn btn-warning"
+                                                (click)="GetAction(row.id , 'Send-Back')" data-toggle="modal"
+                                                data-target="#ActionModal">
+                                                Send Back
+                                            </button>&nbsp;&nbsp;
+                                            <button type="button" class="btn btn-danger"
+                                                (click)="GetAction(row.id , 'Deny')" data-toggle="modal"
+                                                data-target="#ActionModal" style="padding:2px; width:50px;">
+                                                Deny
+                                            </button>
+                                        </div>
+
+                                        <button
+                                            *ngIf="((row.status == 9 || row.status == 10 || row.status == 11 || row.status == 12) && (UrlSegment == 'miscellaneousClaim' ||  UrlSegment == 'localClaim'))"
+                                            type="button" class="btn btn-secondary edit_button" [routerLink]="[
+                                                 UrlSegment == 'localClaim' ? '/ehrms/localClaimUpdate' : 
+                                                 (UrlSegment == 'miscellaneousClaim' ? '/ehrms/miscellaneousClaimUpdate' : ''),
+                                                 row.id
+                                             ]" (click)="Edit_request(row.id)">Edit&nbsp;<i
+                                                class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+
+                                    </div>
+
+
+
+                                </div>
+                            </li>
+                        </ul>
+                        <!--======= Refer Table END ========= -->
+
+                        <div class="row" *ngIf="dataAr?.length == 0">
+                            <div class="col-md-12">
+                                <div class="no_data_found">
+                                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                                    <small>No data available !</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="ActionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ModalAction}}</h5>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="Action">
+                    <div class="row">
+
+                        <div class="form-group col-md-4" *ngIf="ModalAction == 'Approve'">
+                            <label for="Amount">Amount (INR)</label>
+                            <input class="form-control" type="number" formControlName="AmountVal">
+                            <div *ngIf="ActionSubmit && this.Action.get('AmountVal').errors" class="ValidationError">
+                                <div *ngIf="this.Action.get('AmountVal').errors.required">
+                                    Please Enter Amount</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="Remark">Remark</label>
+                            <textarea class="form-control" type="text" formControlName="RemarkVal"
+                                id="RemarkVal"></textarea>
+                            <div *ngIf="ActionSubmit && this.Action.get('RemarkVal').errors" class="ValidationError">
+                                <div *ngIf="this.Action.get('RemarkVal').errors.required">
+                                    Please Enter Remark</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="CloseModel()"
+                    id="CloseModel">Close</button>
+                <button type="button" class="btn btn-success" (click)="ActionData()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>

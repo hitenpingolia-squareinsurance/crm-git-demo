@@ -1,0 +1,77 @@
+@font-face {
+    font-family: 'Merriweather Sans';
+    src: url('../fonts/MerriweatherSans-Regular.eot');
+    src: url('../fonts/MerriweatherSans-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/MerriweatherSans-Regular.woff2') format('woff2'),
+        url('../fonts/MerriweatherSans-Regular.woff') format('woff'),
+        url('../fonts/MerriweatherSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather Sans';
+    src: url('../fonts/MerriweatherSans-Medium.eot');
+    src: url('../fonts/MerriweatherSans-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/MerriweatherSans-Medium.woff2') format('woff2'),
+        url('../fonts/MerriweatherSans-Medium.woff') format('woff'),
+        url('../fonts/MerriweatherSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather Sans';
+    src: url('../fonts/MerriweatherSans-SemiBold.eot');
+    src: url('../fonts/MerriweatherSans-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/MerriweatherSans-SemiBold.woff2') format('woff2'),
+        url('../fonts/MerriweatherSans-SemiBold.woff') format('woff'),
+        url('../fonts/MerriweatherSans-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather Sans';
+    src: url('../fonts/MerriweatherSans-ExtraBold.eot');
+    src: url('../fonts/MerriweatherSans-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/MerriweatherSans-ExtraBold.woff2') format('woff2'),
+        url('../fonts/MerriweatherSans-ExtraBold.woff') format('woff'),
+        url('../fonts/MerriweatherSans-ExtraBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather Sans';
+    src: url('../fonts/MerriweatherSans-Bold.eot');
+    src: url('../fonts/MerriweatherSans-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/MerriweatherSans-Bold.woff2') format('woff2'),
+        url('../fonts/MerriweatherSans-Bold.woff') format('woff'),
+        url('../fonts/MerriweatherSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather Sans';
+    src: url('../fonts/MerriweatherSans-Light.eot');
+    src: url('../fonts/MerriweatherSans-Light.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/MerriweatherSans-Light.woff2') format('woff2'),
+        url('../fonts/MerriweatherSans-Light.woff') format('woff'),
+        url('../fonts/MerriweatherSans-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+body {
+    font-family: 'Merriweather Sans' !important;
+    font-size: 13px;
+}

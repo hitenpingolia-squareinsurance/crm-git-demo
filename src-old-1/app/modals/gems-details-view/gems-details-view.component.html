@@ -1,0 +1,45 @@
+<table class="table table-bordered">
+    
+	<thead>
+	 <tr>
+        <th colspan="6" style="text-align: center;">
+			 
+			<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+			 
+		</th>
+ 
+      </tr>
+	   
+    </thead>
+    <tbody>
+       
+                    <tr>
+                        <th>Quarter</th>
+                        <th>Club Category</th>
+                        <th>Eligibility</th>
+                        <th>Reward Point</th>
+                    </tr>
+					
+				<tr *ngFor="let row of DataAr;">
+					<td>
+						<span *ngIf="row.Quarter=='First'"> April-June</span>
+						<span *ngIf="row.Quarter=='Second'"> July-September</span>
+						<span *ngIf="row.Quarter=='Third'"> October-December</span>
+						<span *ngIf="row.Quarter=='Fourth'"> January-March</span>
+					</td>
+
+					  
+					<td>{{row.ClubCategory}}</td>
+					<td>{{row.Reason}}</td>
+					<td>{{row.Reward_Points}}</td>
+
+				</tr>
+
+					 
+                    
+             
+       
+   </tbody>
+   
+   
+</table>

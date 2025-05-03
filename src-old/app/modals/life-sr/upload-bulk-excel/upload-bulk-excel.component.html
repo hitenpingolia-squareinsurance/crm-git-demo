@@ -1,0 +1,103 @@
+<form class="form-blog-top" [formGroup]="ActionForm" (ngSubmit)="BulkUploadExcel()">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="text-align: center;">Bulk Upload Employee Data
+          <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-4">
+              <label>Action Type *: </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select" [data]="ActionTypeArray"
+                formControlName="Action_Type" (onSelect)="EnableDisableValidation()"
+                (onDeSelect)="EnableDisableValidation()" [settings]="dropdownSettingsingleselect">
+              </ng-multiselect-dropdown>
+              <span *ngIf="isSubmitted && FC_1.Action_Type.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.Action_Type.errors.required" style="color:red;">Please select Action Type !</span>
+              </span>
+            </div>
+
+            <div class="col-sm-4">
+              <label>Upload Excel *: </label>
+              <label class="form-control btn fileUpload btn-default"
+                [ngClass]="(this.excel_file==1 ? 'ImageUploaded' : 'else' )" name="button" value="Others">
+                <input type="file" (change)="UploadDocs($event,'ExcelFile')" id="file" accept=".xlsx"
+                  formControlName="ExcelFile" style="display:none;" />
+                <span class="fas fa-user-alt"><b>Choose File</b></span>
+              </label>
+            </div>
+
+            <div class="col-sm-4">
+              <label>Payment Date *:</label>
+              <input type="text" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}"
+                formControlName="BookingDate">
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div
+              [ngClass]="((this.ActionForm.value['Action_Type'].length == 0) || (this.ActionForm.value['Action_Type'].length > 0 && this.ActionForm.value['Action_Type'][0]['Id'] == 'Bulk_Add')?'col-md-4':'col-md-6')">
+              <label for="">Net Premium:</label>
+              <input type="number" (keyup)="LifeCalculation('NetPremium')" class="form-control" placeholder="0.00"
+                formControlName="NetPremium">
+              <span *ngIf="isSubmitted && FC_1.NetPremium.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.NetPremium.errors.required" style="color:red;">Net Premium required !</span>
+                <span *ngIf="FC_1.NetPremium.errors.pattern" style="color:red;">Please enter vaild Net Premium !</span>
+              </span>
+            </div>
+
+            <div
+              [ngClass]="((this.ActionForm.value['Action_Type'].length == 0) || (this.ActionForm.value['Action_Type'].length > 0 && this.ActionForm.value['Action_Type'][0]['Id'] == 'Bulk_Add')?'col-md-4':'col-md-6')">
+              <label for="">Gross Premium:</label>
+              <input type="number" (keyup)="LifeCalculation('GrossPremium')" class="form-control" placeholder="0.00"
+                formControlName="GrossPremium">
+              <span *ngIf="isSubmitted && FC_1.GrossPremium.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.GrossPremium.errors.required" style="color:red;">Gross Premium required !</span>
+                <span *ngIf="FC_1.GrossPremium.errors.pattern" style="color:red;">Please enter vaild Gross Premium
+                  !</span>
+              </span>
+            </div>
+
+            <div class="col-md-4"
+              *ngIf="(this.ActionForm.value['Action_Type'].length == 0) || (this.ActionForm.value['Action_Type'].length > 0 && this.ActionForm.value['Action_Type'][0]['Id'] == 'Bulk_Add')">
+              <label for="">Sum Assured:</label>
+              <input type="number" maxlength="10" class="form-control" formControlName="SumAssured">
+              <span *ngIf="isSubmitted && FC_1.SumAssured.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.SumAssured.errors.required" style="color:red;">Sum Assured required !</span>
+                <span *ngIf="FC_1.SumAssured.errors.pattern" style="color:red;">Please enter vaild sum assured !</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+
+            <div
+              [ngClass]="((this.ActionForm.value['Action_Type'].length == 0) || (this.ActionForm.value['Action_Type'].length > 0 && this.ActionForm.value['Action_Type'][0]['Id'] == 'Bulk_Add')?'col-md-4':'col-md-6')">
+              <label>Other Document*: </label>
+              <label class="form-control btn fileUpload btn-default"
+                [ngClass]="(this.other_doc==1 ? 'ImageUploaded' : 'else' )" name="button" value="Others">
+                <input type="file" (change)="UploadDocs($event,'OtherDoc')" id="file" accept=""
+                  formControlName="OtherDoc" style="display:none;" />
+                <span class="fas fa-user-alt"><b>Choose File</b></span>
+              </label>
+            </div>
+
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

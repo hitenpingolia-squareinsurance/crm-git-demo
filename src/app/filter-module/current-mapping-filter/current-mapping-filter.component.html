@@ -1,0 +1,211 @@
+<div style="position:relative;" data-loader="CustomForm">
+  <form class="form-blog-top " [formGroup]="SearchForm" (ngSubmit)="SearchFormData()">
+
+    <div class="row">
+      <div class="col-sm-3">
+        <ng-multiselect-dropdown class="form-control" placeholder="Financial Year" [data]="session_year_ar"
+          formControlName="financial_year" [settings]="dropdownSettingsingleselect"
+          (onSelect)="OnSessionYearChange($event)" (onDeSelect)="OnSessionYearChange($event)"
+          [(ngModel)]="sel_session_year_ar">
+        </ng-multiselect-dropdown>
+        <span *ngIf="isSubmitted && formControls.financial_year.errors" class="ValidationError">
+          <span *ngIf="formControls.financial_year.errors.required">Financial Year is required</span></span>
+      </div>
+
+      <div class="col-sm-3" *ngIf="urlSegment == 'activation-reports'">
+        <ng-multiselect-dropdown class="form-control" name="PosBusniessstatus" placeholder="POS Type"
+          [(ngModel)]="SelectStatusValue" [data]="SelectStatus" formControlName="PosBusniessstatus"
+          [settings]="dropdownSettingsingleselect">
+        </ng-multiselect-dropdown>
+      </div>
+
+
+
+      <div class="col-sm-3">
+        <input type="text" placeholder="Select Date OR Date-Range" class="form-control" formControlName="date_range"
+          bsDaterangepicker [minDate]="minDate" [maxDate]="maxDate">
+      </div>
+
+      <!--===== COMMON HIERARCHY FILTER SECTION START =====-->
+      <div *ngIf="loginType == 'employee'">
+
+        <div class="col-sm-3">
+          <ng-multiselect-dropdown class="form-control" placeholder="Vertical" [data]="vertical_ar"
+            formControlName="vertical" [settings]="dropdownSettingsmultiselect1" (onSelect)="GetEmployeeData()"
+            (onDeSelect)="GetEmployeeData()" [disabled]="ButtonDisableTrue">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3">
+          <ng-multiselect-dropdown class="form-control" placeholder="Zone" [data]="zone_ar" formControlName="zone"
+            [settings]="dropdownSettingsmultiselect1" (onSelect)="GetRegionalOfficeData()"
+            (onDeSelect)="GetRegionalOfficeData()" [disabled]="ButtonDisableTrue">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3">
+          <ng-multiselect-dropdown class="form-control" placeholder="Regional Office" [data]="regional_office_ar"
+            formControlName="regional_office" [settings]="dropdownSettingsmultiselect1" (onSelect)="GetBranchData()"
+            (onDeSelect)="GetBranchData()" [disabled]="ButtonDisableTrue">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3">
+          <ng-multiselect-dropdown class="form-control" placeholder="IRDA Branch" [data]="branch_ar"
+            formControlName="branch" [settings]="dropdownSettingsmultiselect1" (onSelect)="GetServiceLocationData()"
+            (onDeSelect)="GetServiceLocationData()" [disabled]="ButtonDisableTrue">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3">
+          <ng-multiselect-dropdown class="form-control" placeholder="Service Location" [data]="service_location_ar"
+            formControlName="service_location" [settings]="dropdownSettingsmultiselect" (onSelect)="GetEmployeeData()"
+            (onDeSelect)="GetEmployeeData()" [disabled]="ButtonDisableTrue">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <!-- <div class="col-sm-3">
+          <ng-multiselect-dropdown class="form-control" name="status" placeholder="Employee Status"
+            [data]="employee_status_ar" formControlName="employee_status" (onSelect)="searchEmployee('', 0)"
+            (onDeSelect)="onItemDeSelect($event,'EmployeeStatus')" [settings]="dropdownSettingsingleselect1"
+            [disabled]="ButtonDisableTrue">
+          </ng-multiselect-dropdown>
+        </div> -->
+
+        <div class="col-sm-3">
+          <ng-multiselect-dropdown class="form-control" placeholder="Employee Name & Code" [data]="employee_ar"
+            formControlName="emp_id" [settings]="dropdownSettingsingleselect" (onSelect)="GetAgentData()"
+            (onDeSelect)="GetAgentData()" [disabled]="ButtonDisableTrue"> </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3">
+          <ng-multiselect-dropdown class="form-control" placeholder="Report Type" [data]="report_type_ar"
+            formControlName="report_type" [settings]="dropdownSettingsingleselect" (onSelect)="GetAgentData()"
+            (onDeSelect)="GetAgentData()" [disabled]="reportTypeDisable">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <div *ngIf="tab_name != 'Prospect Call' && tab_name != 'Employee Call'">
+          <div class="col-sm-3">
+            <ng-multiselect-dropdown class="form-control" placeholder="Agent Type" [data]="agent_type_ar"
+              formControlName="agent_type" [settings]="dropdownSettingsingleselect1" (onSelect)="GetAgentData()"
+              (onDeSelect)="GetAgentData()" [disabled]="ButtonDisableTrue">
+            </ng-multiselect-dropdown>
+          </div>
+
+          <div class="col-sm-3"
+            *ngIf="SearchForm.value['agent_type'].length == 1 && SearchForm.value['agent_type'][0]['Id'] == 'POS'">
+            <ng-multiselect-dropdown class="form-control" placeholder="Select Agent Status" [data]="agent_status_ar"
+              formControlName="agent_status" [settings]="dropdownSettingsingleselect1" (onSelect)="GetAgentData()"
+              (onDeSelect)="GetAgentData()" (onSelectAll)="GetAgentData()" (onDeSelectAll)="GetAgentData()">
+            </ng-multiselect-dropdown>
+          </div>
+
+          <div class="col-sm-3">
+            <ng-multiselect-dropdown class="form-control" placeholder="Agent Name/Code" [data]="agent_ar"
+              formControlName="agent_id" [settings]="dropdownSettingsmultiselect" [disabled]="ButtonDisableTrue">
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+      </div>
+      <!--===== COMMON HIERARCHY FILTER SECTION END =====-->
+
+
+      <!--===== DSR RELATED FILTER SECTION START =====-->
+      <div *ngIf="urlSegmentRoot == 'dsr' && tab_name != 'Employee Call'">
+
+        <div class="col-sm-3" *ngIf="tab_name == 'Club'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Club LOB" [data]="club_lob_ar"
+            formControlName="lob_type" [settings]="dropdownSettingsingleselect1">
+          </ng-multiselect-dropdown>
+          <!-- <span *ngIf="isSubmitted && formControls.lob_type.errors" class="ValidationError">
+            <span *ngIf="formControls.lob_type.errors.required">Lob is required.</span></span> -->
+        </div>
+
+        <div class="col-sm-3" *ngIf="tab_name == 'Club' || menu_name == 'dsr-club-manager'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Club Status" [data]="club_status_ar"
+            formControlName="club_status" (onSelect)="EnableDisableFields($event,'Club')"
+            (onDeSelect)="EnableDisableFields($event,'Club')" [settings]="dropdownSettingsingleselect1">
+          </ng-multiselect-dropdown>
+          <span *ngIf="isSubmitted && formControls.agent_status.errors" class="ValidationError">
+            <span *ngIf="formControls.agent_status.errors.required">Club is required.</span></span>
+        </div>
+
+        <div class="col-sm-3" *ngIf="menu_name == 'dsr-manager-reports'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Club Manager" [data]="club_manager_ar"
+            formControlName="manager_id" [settings]="dropdownSettingsmultiselect1"> </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3" *ngIf="(menu_name == 'dsr-manager-reports' || tab_name == 'Club')">
+          <ng-multiselect-dropdown class="form-control" placeholder="Club Manager Report" [data]="lead_status_ar"
+            (onSelect)="UpdateDsrFilterField('Lead_Status')" (onDeSelect)="UpdateDsrFilterField('Lead_Status')"
+            formControlName="lead_status" [settings]="dropdownSettingsingleselect1"> </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3">
+          <ng-multiselect-dropdown class="form-control" placeholder="Interaction Type" [data]="interaction_type_ar"
+            (onSelect)="UpdateDsrFilterField('Interaction_Type')"
+            (onDeSelect)="UpdateDsrFilterField('Interaction_Type')" formControlName="interaction_type"
+            [settings]="dropdownSettingsingleselect1"> </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3">
+          <ng-multiselect-dropdown class="form-control" placeholder="Follow Ups" [data]="followup_time_ar"
+            formControlName="followup_time" (onSelect)="EnableDisableFields1('FollowUp_Lead')"
+            (onDeSelect)="EnableDisableFields1('FollowUp_Lead')" [settings]="dropdownSettingsingleselect1">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3" *ngIf="menu_name == 'dsr-club-manager'">
+          <ng-multiselect-dropdown class="form-control" placeholder="Select Request Type" [data]="request_type_ar"
+            [(ngModel)]="sel_request_type" formControlName="request_type" [settings]="dropdownSettingsingleselect1"
+            (onSelect)="ChangeClub($event)" (onDeSelect)="ChangeClub($event)"> </ng-multiselect-dropdown>
+          <span *ngIf="isSubmitted && formControls.request_type.errors" class="form-text text-muted">
+            <span *ngIf="formControls.request_type.errors.required" style="color:red;">Please Select Request
+              Type!</span>
+          </span>
+        </div>
+
+        <div class="col-sm-3"
+          *ngIf="(menu_name == 'dsr-rm-report' && (tab_name == 'Business Call' || tab_name == 'Club' || tab_name == 'Cross Sell') )">
+          <ng-multiselect-dropdown class="form-control" placeholder="Search State" [data]="state_ar"
+            (onSelect)="GetCityData()" (onDeSelect)="GetCityData()" formControlName="state_id"
+            [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3"
+          *ngIf="(menu_name == 'dsr-rm-report' && (tab_name == 'Business Call' || tab_name == 'Club' || tab_name == 'Cross Sell') )">
+          <ng-multiselect-dropdown class="form-control" placeholder="Search City" [data]="city_ar"
+            (onSelect)="GetPincodeData()" (onDeSelect)="GetPincodeData()" formControlName="city_id"
+            [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3"
+          *ngIf="(menu_name == 'dsr-rm-report' && (tab_name == 'Business Call' || tab_name == 'Club' || tab_name == 'Cross Sell') )">
+          <ng-multiselect-dropdown class="form-control" placeholder="Search Pincode" [data]="pincode_ar"
+            formControlName="pincode_id" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+        </div>
+
+      </div>
+      <!--===== DSR RELATED FILTER SECTION END =====-->
+
+
+      <!--===== LMS RELATED FILTER SECTION START =====-->
+
+
+      <!--===== LMS RELATED FILTER SECTION END =====-->
+
+      <div class="col-sm-3"><input type="text" formControlName="search_value" class="form-control" placeholder="Search">
+      </div>
+
+      <div class="col-sm-3">
+        <button type="submit" class="btn btn-info" style="font-size: small;" value="Search"> <i class="fa fa-search">
+            Search</i></button> &nbsp;&nbsp;
+        <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger" value="Reset"> <i
+            class="fa fa-close"> Reset</i></button>
+      </div>
+
+    </div>
+
+  </form>
+</div>

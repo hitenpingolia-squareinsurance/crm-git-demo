@@ -1,0 +1,108 @@
+
+ <div style="text-align: right; margin-top: -22px;">
+  <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+</div>
+
+<thead>
+  <tr>
+    <th colspan="12" style="text-align: center;">
+ 
+
+     
+
+    </th>
+  </tr>
+</thead>
+
+
+
+
+
+<table id="Table1" style="font-size: 12px;" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Vehicle No</th>
+      <th>Vechile Details</th>
+      <th>Inspection Details</th>
+      <th>Proposer Details</th>
+      <th>TimeStamp</th>
+    </tr>
+
+  </thead>
+  <tbody *ngIf="InspectionData?.length != 0">
+
+    <tr *ngFor="let row of InspectionData; let i=index;">
+
+      <td>{{row.Vehicle_No}}</td>
+      <td>
+        {{row.QuoteDetails}}
+      </td>
+
+      <td> <b>Quote - </b> {{row.Quotation_Id}}<br> <b>Case Id - </b> {{row.case_id}}<br> <b>Company -
+        </b> {{row.company}}<br> <label *ngIf="row.InspectionNumber != '0'"><b>Inspection Number -</b>
+          {{row.InspectionNumber}}</label></td>
+
+      <td> <b>Name - </b> {{row.CustomerName}}<br> <b>Mobile - </b> {{row.CustomerMobile}}</td>
+
+      <td><span> <b>Create - </b> {{row.CreateDate}}</span><br>
+        <span *ngIf="row.last_update_date != '1'"> <b>Update - </b> {{row.last_update_date}}</span>
+      </td>
+
+    </tr>
+  </tbody>
+  <tbody *ngIf="InspectionData?.length == 0">
+    <tr>
+      <td colspan="8" align="center">No data Available !</td>
+    </tr>
+  <tbody>
+</table>
+
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>S.No</th>
+      <th>Quotation</th>
+      <th>Company</th>
+      <th>TimeStamp</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <!-- Quotation_Id,Company,Add_Stamp,Status -->
+  <tbody *ngIf="Loginspection?.length != 0">
+    <tr *ngFor="let row of Loginspection;let indexOfelement=index;">
+      <td>{{ indexOfelement+1 }}</td>
+      <td>
+        {{ row.Quotation_Id }}
+
+
+      </td>
+      <td>
+        {{ row.Company }}
+
+
+      </td>
+      <td>
+        {{ row.create_date }}
+
+      </td>
+
+      <td>
+        {{ row.Status }}
+
+
+      </td>
+
+    </tr>
+
+
+
+  </tbody>
+
+  <tbody *ngIf="Loginspection?.length == 0">
+    <tr>
+      <td colspan="8" align="center">No data Available !</td>
+    </tr>
+  <tbody>
+</table>

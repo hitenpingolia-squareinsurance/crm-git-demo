@@ -1,0 +1,620 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header d_flex flex_Equal flex_Middel">
+            <div class="header_title">Salary Report</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div class="btn_list_group">
+              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                <div class="panel panel-default">
+                  <div class="row">
+
+                    <div class="col-md-12">
+                      <div class="dsr-fillter">
+
+                        <button class=" btn btn-info2" (click)="SalaryUpdateDate()">
+                          <a role="button" class="fa fa-file" style="margin-right: 2px;">&nbsp;&nbsp;<span>Salary
+                              Date</span></a>
+                        </button>
+
+                        <button class=" btn btn-info2" (click)="ExportSalaryReport()">
+                          <a role="button" class="fa fa-file" style="margin-right: 2px;">&nbsp;&nbsp;<span>Export
+                              Report</span></a>
+                        </button>
+
+                        <button class=" btn btn-info2" (click)="DownloadSampleExcel()">
+                          <a role="button" class="fa fa-file" style="margin-right: 2px;">&nbsp;&nbsp;<span>Final CTC
+                              Excel
+                              Sample</span></a>
+                        </button>
+
+                        <button class=" btn btn-info2" (click)="UploadFinalSalary()">
+                          <a role="button" class="fa fa-file" style="margin-right: 2px;">&nbsp;&nbsp;<span>Upload Final
+                              CTC</span></a>
+                        </button>
+
+                        <button class=" btn btn-info2" (click)="UpdateSalaryDetails()">
+                          <a role="button" class="fa fa-file" style="margin-right: 2px;">&nbsp;&nbsp;<span>Update Salary
+                              Details</span></a>
+                        </button>
+
+                        <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                          data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          <a role="button" class="fa fa-filter"><span>Filters</span><i
+                              class="fa fa-angle-down pull-right"></i></a>
+                        </button>
+
+                        <button class=" btn btn-info2" role="tab" id="headingTwo" data-toggle="collapse"
+                          (click)="GetHeaderData()" data-parent="#accordion" href="#collapseTwo" aria-expanded="true"
+                          aria-controls="collapseTwo">
+                          <a role="button" class="fa fa-file"
+                            style="margin-right: 2px;">&nbsp;&nbsp;<span>Dashboard</span><i
+                              class="fa fa-angle-down pull-right"></i></a>
+                        </button>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body loader_inner_data">
+                      <div [ngClass]="(ShowDashboardLoader == 'Yes'?'inner_cs_loader show_loader_on':'show_loader_on')">
+                        <div class="loader_box">
+                          <!-- <img src="https://www.squareinsurance.in/images/loadernew.gif"> -->
+                          <i title="Please Wait..." class="fa fa-refresh fa-spin" style="font-size:30px;"></i>
+                        </div>
+                      </div>
+
+                      <form [formGroup]="SearchForm" style="padding: 0 15px;">
+
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Financial Year"
+                              [data]="Year_Ar" [(ngModel)]="SelectedYear" formControlName="Financial_Year"
+                              [settings]="dropdownSettingsingleselect">
+                            </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select President"
+                              [data]="President_Ar" formControlName="President_Id"
+                              [settings]="dropdownSettingsingleselect1" (onSelect)="GetVerticalData()"
+                              (onDeSelect)="SearchComponentsData()"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Vertical"
+                              [data]="Vertical_Ar" formControlName="Vertical_Id"
+                              [settings]="dropdownSettingsingleselect1" (onSelect)="GetEmployees()"
+                              (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Service Location"
+                              [data]="Region_Ar" formControlName="Region_Id" [settings]="dropdownSettingsmultiselect"
+                              (onSelect)="GetEmployees()" (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" name="Emp_Id" placeholder="Select Employee"
+                              [data]="Emps_Ar" formControlName="Emp_Id" [settings]="dropdownSettingsingleselect1"
+                              (onSelect)="GetEmployeeExtraData('0')" (onDeSelect)="GetEmployeeExtraData('0')">
+                            </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Report Type"
+                              [data]="ReportTypeData" [(ngModel)]="SelectedReportType" formControlName="Report_Type"
+                              [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3" *ngIf="Select_Multi_Month == 'Yes'">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Month" [data]="MonthArray"
+                              [(ngModel)]="SelectedCurrentMonth" formControlName="Month_Name"
+                              [settings]="dropdownSettingsmultiselect1"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3" *ngIf="Select_Multi_Month == 'No'">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Month" [data]="MonthArray"
+                              [(ngModel)]="SelectedCurrentMonth" formControlName="Month_Name"
+                              [settings]="dropdownSettingsingleselect1"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Salary Remark Status"
+                              [data]="SalaryRemarkStatusAr" formControlName="Salary_Remark_Status"
+                              [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Salary Remark"
+                              [data]="SalaryRemarkTypeAr" formControlName="Salary_Remark_Type"
+                              [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Salary Paid/Unpaid Status"
+                              [data]="SalaryPaidStatusAr" formControlName="Salary_Paid_Status"
+                              [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+                          </div>
+
+
+                          <div class="col-sm-3">
+                            <input type="text" formControlName="SearchValue" placeholder="Search Name/Emp. Id/Mobile"
+                              class="form-control">
+                          </div>
+
+                          <div class="col-sm-3">
+                            <input (click)="SearchBtn()" type="button" class="btn btn-info" value="Search">&nbsp;&nbsp;
+
+                            <input (click)="ClearSearch()" type="button" class="btn btn-danger"
+                              value="Reset">&nbsp;&nbsp;
+                          </div>
+                        </div>
+
+
+                      </form>
+                    </div>
+                  </div>
+
+                  <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body loader_inner_data">
+                      <div [ngClass]="(ShowDashboardLoader == 'Yes'?'inner_cs_loader show_loader_on':'show_loader_on')">
+                        <div class="loader_box">
+                          <!-- <img src="https://www.squareinsurance.in/images/loadernew.gif"> 
+                          -->
+                          <i title="Please Wait..." class="fa fa-refresh fa-spin" style="font-size:30px;"></i>
+                        </div>
+                      </div>
+
+                      <!-- BEGIN::NEW DASHBOARD DESIGN -->
+                      <div class="row">
+                        <div class="col-md-12">
+                          <ul class="mainprofilelistboxoutside">
+
+                            <!-- BEGIN::GIVEN TARGET -->
+                            <li class="mainprofilelistboxoutsidebox1" *ngIf="ProfileName == 'HOD' || ProfileName == 'MD' || ProfileName == 'CEO' || ProfileName == 'President' || PTypeD == 'HOD'">
+                              <div class="profiletitle">
+                                <span class="view_btn1" (click)="ViewGivenTargetModal('Given')"><i class="fa fa-eye"></i></span>
+                                <small>Given Target</small>
+                                <span>
+                                  {{GivenTarget}} 
+                                  {{NewGivenTarget != '' ? '(' + NewGivenTarget + ')' : ''}}
+                                </span>
+                              </div>
+                            </li>
+                            <!-- END::GIVEN TARGET -->
+
+                            <!-- BEGIN::PROFILE TARGET FIX ACCORDING TO PROFILE TEAM -->
+                            <li class="mainprofilelistboxoutsidebox2"  *ngIf="IsSales == 1">
+                              <div class="profiletitle">
+                                <span class="view_btn" (click)="ViewGivenTargetModal('Profile')"><i class="fa fa-eye"></i></span>
+                                <small>Profile Target</small>
+                                <span>
+                                  {{TotalMappedFixProfileTarget}}
+                                  {{NewTotalMappedFixProfileTarget != '' ? '(' + NewTotalMappedFixProfileTarget + ')' : ''}}
+                                </span>
+                              </div>
+                            </li>  
+                            <!-- END::PROFILE TARGET FIX ACCORDING TO PROFILE TEAM -->                     
+                           
+                            <!-- BEGIN::POOL TARGETS (GIVEN-ActualTotalTarget) -->
+                            <li class="mainprofilelistboxoutsidebox3"*ngIf="IsSales && ProfileName == 'HOD' || ProfileName == 'MD' || ProfileName == 'CEO' || ProfileName == 'President' || PTypeD == 'HOD'" >
+                              <div class="profiletitle">
+                                <small>Pool Target</small>
+                                <span>
+                                  {{PoolTarget}}
+                                  {{NewPoolTarget != '' ? '(' + NewPoolTarget + ')' : ''}}
+                                </span>
+                              </div>
+                            </li>  
+                            <!-- END::POOL TARGETS (GIVEN-ActualTotalTarget) -->
+
+                          </ul>
+
+                          <ul class="mainprofilelistboxoutside ulborderbottom">
+
+                            <!-- BEGIN::MULTIPLE MONTHS SHOW TARGET & ACHIEVEMENT -->
+                            <li class="mainprofilelistboxoutsidebox4">
+                              <div class="profiletitle">For {{this.formatMonths(SelectedCurrentMonth)}}</div>
+                              <div class="profilemainlistbox">
+                                <div class="profiledatalist">
+                                  <small>Actual Target</small>
+                                  <span>{{MonthlyAllocatedTarget}}
+                                    <span *ngIf="MonthlyAllocatedTargetStr != '' "> 
+                                      ({{MonthlyAllocatedTargetStr}})
+                                    </span>
+                                  </span>
+                                </div>
+                                <div class="profiledatalist">
+                                  <small>Ach</small>
+                                  <span>{{MonthlyAchivementData}}
+                                    <span *ngIf="MonthlyNewAchivementData != '' "> 
+                                      ({{MonthlyNewAchivementData}})
+                                    </span>
+                                  </span>
+                                </div>
+                                <div class="profiledatalist">
+                                  <span>
+                                    {{
+                                      MonthlyAllocatedTarget > 0 
+                                        ? ((MonthlyAchivementData / MonthlyAllocatedTarget) * 100).toFixed(2) 
+                                        : "0"
+                                    }}%
+                                  </span>
+                                  
+                                </div>
+                              </div>
+                            </li>
+                            <!-- END::MULTIPLE MONTHS SHOW TARGET & ACHIEVEMENT -->
+
+                            <!-- BEGIN::YTD MONTHS SHOW TARGET & ACHIEVEMENT -->
+                            <li class="mainprofilelistboxoutsidebox5">
+                              <div class="profiletitle">YTD</div>
+                              <div class="profilemainlistbox">
+                                <div class="profiledatalist">
+                                  <small>Actual Target</small>
+                                  <span>{{AllocatedTarget}}
+                                    <span *ngIf="AllocatedTargetStr != '' "> 
+                                      ({{AllocatedTargetStr}})
+                                    </span>
+                                  </span>
+                                </div>
+                                <div class="profiledatalist">
+                                  <small>Ach</small>
+                                  <span>{{AchivementData}}
+                                    <span *ngIf="NewAchivementData != '' "> 
+                                      ({{NewAchivementData}})
+                                    </span>
+                                  </span>
+                                </div>
+                                <div class="profiledatalist">
+                                  <span>
+                                    {{
+                                      AllocatedTarget > 0 
+                                        ? ((AchivementData / AllocatedTarget) * 100).toFixed(2) 
+                                        : "0"
+                                    }}%</span>
+                                </div>
+                              </div>
+                            </li>
+                            <!-- END::YTD MONTHS SHOW TARGET & ACHIEVEMENT -->
+
+                            <!-- BEGIN::MTD(CURRENT) MONTHS SHOW TARGET & ACHIEVEMENT -->
+                            <li class="mainprofilelistboxoutsidebox6">
+                              <div class="profiletitle">MTD</div>
+                              <div class="profilemainlistbox">
+                                <div class="profiledatalist">
+                                  <small>Actual Target</small>
+                                  <span>{{CurrentMonthAllocatedTarget}}
+                                    <span *ngIf="CurrentMonthAllocatedTargetStr != '' "> 
+                                      ({{CurrentMonthAllocatedTargetStr}})
+                                    </span>
+                                  </span>
+                                </div>
+                                <div class="profiledatalist">
+                                  <small>Ach</small>
+                                  <span>{{CurrentMonthAchivementData}}
+                                    <span *ngIf="CurrentMonthNewAchivementData != '' "> 
+                                      ({{CurrentMonthNewAchivementData}})
+                                    </span>
+                                  </span>
+                                </div>
+                                <div class="profiledatalist">
+                                  <span>
+                                    {{
+                                      CurrentMonthAllocatedTarget > 0 
+                                        ? ((CurrentMonthAchivementData / CurrentMonthAllocatedTarget) * 100).toFixed(2) 
+                                        : "0"
+                                    }}%</span>
+                                </div>
+                              </div>
+                            </li>   
+                            <!-- END::MTD(CURRENT) MONTHS SHOW TARGET & ACHIEVEMENT -->                         
+                          </ul>
+                        </div>
+                      </div>
+                      <!-- END::NEW DASHBOARD DESIGN -->
+
+                    </div>
+                  </div>
+
+                  <!-- BEGIN:FIXED COST,VARIABLE PAY,CTC,REVENUE,TARGET COUNT -->
+                  <div class="main_pms_dashboard" > 
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="custon_label">
+
+                          <div class="label_chips non_motor_lob">
+                            <span>
+                              Fixed Cost : {{ loadTotalRevenueCost ? 'Calculating…' : TotalFixedCost + (TotalFixedCostString ? ' (' + TotalFixedCostString + ')' : '') }}
+                            </span>
+                          </div>
+
+                          <div class="label_chips non_motor_lob">
+                            <span>
+                              Variable Pay Cost : {{ loadTotalRevenueCost ? 'Calculating…' : TotalVariablePay + (TotalVariablePayString ? ' (' + TotalVariablePayString + ')' : '') }}
+                            </span>
+                          </div>
+                         
+                          <div class="label_chips non_motor_lob">
+                            <span>
+                              CTC : {{ loadTotalRevenueCost ? 'Calculating…' : TotalCost + (TotalCostString ? ' (' + TotalCostString + ')' : '') }}
+                            </span>
+                          </div>
+
+                          <div class="label_chips health_lob">
+                            <span>
+                              Actual Cost : {{ loadTotalRevenueCost ? 'Calculating…' : ActualCost + (ActualCostString ? ' (' + ActualCostString + ')' : '') }}
+                            </span>
+                          </div>
+
+                          <div class="label_chips life_lob"
+                            *ngIf="ShowHideAllocatedTargetTab == 'Yes' && (LoginProfileName == 'MD' || LoginProfileName == 'CEO' || LoginProfileName == 'President')">
+                            <span>Target : {{TotalAllocatedTarget}}
+                              <b *ngIf="TotalAllocatedTarget != 0">({{TotalAllocatedTargetString}})</b></span>
+                          </div>
+
+                          <div class="label_chips motor_lob"
+                            *ngIf="LoginProfileName == 'HOD' || LoginProfileName == 'MD' || LoginProfileName == 'CEO' || LoginProfileName == 'President' || LoginProfileName == 'NH'">
+                            <span>
+                              Revenue : {{ loadTotalRevenueCost ? 'Calculating…' : TotalRevenue + (TotalRevenueString ? ' (' + TotalRevenueString + ')' : '') }}
+                            </span>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>  
+                  </div>
+                  <!-- END:FIXED COST,VARIABLE PAY,CTC,REVENUE,TARGET COUNT -->
+
+
+                </div>
+              </div>
+            </div>
+
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+
+                <!--======= SINGLE MONTH RELATED SECTION START =========-->
+                <ul class="responsive-table" *ngIf="dataAr?.length != 0 && Is_Multi_Month == 'No'">
+                  <li class="table-row" *ngFor="let row of dataAr; let i=index;" [id]="'row-' + i">
+
+                    <span class="addon_tag_name" *ngIf="row.ResignStatus == 0 && row.Status == 1">Active</span>
+                    <span class="addon_tag_name1" *ngIf="row.ResignStatus == 0 && row.Status == 0">Blocked</span>
+                    <span class="addon_tag_name2" *ngIf="row.ResignStatus == 1">Resigned</span>
+
+                    <p class="life_status_label">
+                      <span *ngIf="row.Is_Sales == 0" class="btn btn-warning">Non Sales</span>
+                      <span *ngIf="row.Is_Sales == 1" class="btn btn-success">Sales</span>
+                    </p>
+
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{ row.SrNo }}</div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Employee Name & Code </div>
+                            <strong class="fs_18">{{ row.Name }}</strong>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Employee Mobile No.</div>
+                            <strong class="fs_18">{{row.Mobile}}</strong>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Reporting Manager & Code</div><strong class="fs_18">{{ row.RM_Name }}</strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+
+                        <div class="label_chips finance_lob">
+                          <span>Joining Date - {{ row.DOJ }}</span>
+                        </div>
+
+                        <div class="label_chips non_motor_lob" *ngIf="row.Resign_Status == '0'">
+                          <span>Resign Date - {{ row.Resign_Date }}</span>&nbsp;&nbsp;
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="last_row">
+                      <div class="d_flex effective_date">
+                        <div class="date_text">
+                          <span class="fs_12">Profile : </span>
+                          <span class="fs_12">{{row.NewProfile}}</span>
+                        </div>
+                      </div>
+
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                        <a style="cursor: pointer;"
+                          (click)="TargetDetails(row.Id, row.Profile_Type, row.Is_Sales, row.DOJ, row.Coreline)" class=" mr_5
+                          btn-bg">
+                          Target Details >></a>
+
+                        <a style="cursor: pointer;" (click)="TargetAchievementDetails(i)" class="mr_5 btn-bg1">
+                          Reports >></a>
+                      </div>
+
+                    </div>
+                  </li>
+                </ul>
+                <!--======= SINGLE MONTH RELATED SECTION END =========-->
+
+
+                <!--======= MULTI MONTH RELATED SECTION START =========-->
+                <ul class="responsive-table" *ngIf="dataAr?.length != 0 && Is_Multi_Month == 'Yes'">
+                  <li class="table-row" *ngFor="let row of dataAr; let i=index;">
+                    <span class="addon_tag_name">{{ row.MonthNamCon }}</span>
+                    <div class="first_top_row">
+                      <div class="cs_chips">
+
+                        <div class="cs_chips_inner cs_chips_1">
+                          <small>Profile Target</small>
+                          <span>Target - {{ row.ProfileTotalTarget }} ({{ row.ProfileTotalTargetStr }})</span>
+                          <span>Business - {{ row.ProfileTotalBusiness }} ({{ row.ProfileTotalBusinessStr
+                            }})</span>
+                          <span>Achievement % - {{ row.ProfileAchievement }}</span>
+                        </div>
+
+                        <div class="cs_chips_inner cs_chips_1">
+                          <small>Allocated Self Target</small>
+                          <span>Target - {{ row.AllocatedSelfTarget }} ({{ row.AllocatedSelfTargetStr }})</span>
+                          <span>Business - {{ row.AllocatedSelfBusiness }} ({{ row.AllocatedSelfBusinessStr
+                            }})</span>
+                          <span>Achievement % - {{ row.AllocatedSelfAchievement }}</span>
+                        </div>
+
+                      </div>
+
+
+                      <div class="cs_chips cs_chips_last">
+
+                        <div class="cs_chips_inner cs_chips_2"
+                          *ngIf="row.Profile_Type != 'Relationship Manager' && row.ShowTeamData == 'Yes'">
+                          <small>Allocated Team Target</small>
+                          <span>Target - {{ row.AllocatedTeamTarget }} ({{ row.AllocatedTeamTargetStr }})</span>
+                          <span>Business - {{ row.AllocatedTeamBusiness }} ({{ row.AllocatedTeamBusinessStr
+                            }})</span>
+                          <span>Achievement % - {{ row.AllocatedTeamAchievement }}</span>
+                        </div>
+
+                        <div class="cs_chips_inner cs_chips_2"
+                          *ngIf="LoginProfileName == 'HOD' || LoginProfileName == 'MD' || LoginProfileName == 'CEO' || LoginProfileName == 'President' || LoginProfileName == 'NH'">
+                          <small>Revenue</small>
+                          <span>Total - {{ row.TotalRevenue }} ({{ row.TotalRevenueStr }})</span>
+                          <span *ngIf="row.ShowTeamData == 'Yes'">Team - {{ row.TeamRevenue }} ({{ row.TeamRevenueStr
+                            }})</span>
+                          <span>Self - {{ row.SelfRevenue }} ({{ row.SelfRevenueStr }})</span>
+                        </div>
+                      </div>
+
+                    </div>
+
+
+                    <div class="last_row_div">
+
+                      <div class="cs_chips">
+                        <div class="cs_chips_inner cs_chips_1" style="flex-wrap: wrap;"
+                          *ngIf="(LoginProfileName == 'HOD' || LoginProfileName == 'MD' || LoginProfileName == 'CEO'  || LoginProfileName == 'President' || LoginProfileName == 'NH')">
+                          <small>Cost</small>
+
+                          <div style="width: 100%;">
+                            <span *ngIf="row.ShowTotalTotalCost == 'Yes'"
+                              (click)="ShowHideCost(i, 'TotalTotal', 'No')">Total Cost - {{ row.TotalTotalCost }}
+                              ({{row.TotalTotalCostStr }})</span>
+
+                            <span *ngIf="row.ShowTotalTotalCost == 'No'"
+                              (click)="ShowHideCost(i, 'TotalTotal', 'Yes')">Total Cost - ******</span>
+
+                            <span *ngIf="row.ShowTeamData == 'Yes' && row.ShowTeamTotalCost == 'Yes'"
+                              (click)="ShowHideCost(i, 'TeamTotal', 'No')">Total Team Cost - {{ row.TeamTotalCost }}
+                              ({{row.TeamTotalCostStr }})</span>
+
+                            <span *ngIf="row.ShowTeamData == 'Yes' && row.ShowTeamTotalCost == 'No'"
+                              (click)="ShowHideCost(i, 'TeamTotal', 'Yes')">Total Team Cost - ******</span>
+
+
+                            <span *ngIf="row.ShowSelfTotalCost == 'Yes'"
+                              (click)="ShowHideCost(i, 'SelfTotal', 'No')">Total Self
+                              Cost - {{ row.SelfTotalCost }}
+                              ({{row.SelfTotalCostStr }})</span>
+
+                            <span *ngIf="row.ShowSelfTotalCost == 'No'"
+                              (click)="ShowHideCost(i, 'SelfTotal', 'Yes')">Total Self
+                              Cost - ******</span>
+                          </div>
+
+                          <div style="width: 100%;">
+                            <span *ngIf="row.ShowTotalActualCost == 'Yes'"
+                              (click)="ShowHideCost(i, 'TotalActual', 'No')">Actual Cost - {{ row.ActualTotalCost }} ({{
+                              row.ActualTotalCostStr }})</span>
+
+                            <span *ngIf="row.ShowTotalActualCost == 'No'"
+                              (click)="ShowHideCost(i, 'TotalActual', 'Yes')">Actual Cost - ******</span>
+
+                            <span *ngIf="row.ShowTeamData == 'Yes' && row.ShowTeamActualCost == 'Yes'"
+                              (click)="ShowHideCost(i, 'TeamActual', 'No')">Actual Team Cost - {{ row.TeamActualCost }}
+                              ({{ row.TeamActualCostStr }})</span>
+
+                            <span *ngIf="row.ShowTeamData == 'Yes' && row.ShowTeamActualCost == 'No'"
+                              (click)="ShowHideCost(i, 'TeamActual', 'Yes')">Actual Team Cost - ******</span>
+
+                            <span *ngIf="row.ShowSelfActualCost == 'Yes'"
+                              (click)="ShowHideCost(i, 'SelfActual', 'No')">Actual Self Cost - {{ row.SelfActualCost }}
+                              ({{ row.SelfActualCostStr }})</span>
+
+                            <span *ngIf="row.ShowSelfActualCost == 'No'"
+                              (click)="ShowHideCost(i, 'SelfActual', 'Yes')">Actual Self Cost - ******</span>
+                          </div>
+
+                        </div>
+
+                        <div class="cs_chips_inner cs_chips_1"
+                          *ngIf="row.ShowSelfData == 'No' && (LoginProfileName != 'HOD' && LoginProfileName != 'MD' && LoginProfileName != 'CEO'  && LoginProfileName != 'President' && LoginProfileName != 'NH')">
+                          <small>Cost</small>
+                          <span>Total Cost - {{ row.TotalTotalCost }} ({{row.TotalTotalCostStr }})</span>
+                          <span>Actual Cost - {{ row.ActualTotalCost }} ({{ row.ActualTotalCostStr }})</span>
+
+                        </div>
+
+                        <div class="cs_chips_inner cs_chips_2">
+                          <small>Call Logs</small>
+                          <span>Active Days - {{ row.TotalActiveDays }}</span>
+                          <span>DSR Call - {{ row.TotalBusinessVirtual }}</span>
+                          <span>DSR Visit - {{ row.TotalBusinessVisit }}</span>
+                          <span>LMS Call - {{ row.LmsCallCount }}</span>
+                          <span>Tele RM Call - {{ row.TeleRmCallCount }}</span>
+                          <span>Renewal Call - {{ row.RenewalCallCount }}</span>
+                        </div>
+
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <!--======= MULTI MONTH RELATED SECTION END =========-->
+
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

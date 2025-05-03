@@ -1,0 +1,157 @@
+
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header d_flex flex_Equal flex_Middel">
+            <div class="header_title">Partner Directory</div>
+          </div>
+
+          <div *ngIf="!hasAccess" class="error-message">
+            <div class="container" style="text-align: center;">
+              <img src="assets/Authorised.png" alt="">
+              <h4>{{ errorMessage }}</h4>
+            </div>
+            
+          </div>
+
+          <div class="main_body main_card_height_scroll" *ngIf="hasAccess">
+
+            <div class="filterquotesrow">
+              <button class="btn btninfo1" style="margin-right:10px;" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><a role="button"><i class="fa fa-filter"></i><span>Filters</span><i class="fa fa-angle-down"></i></a></button>
+            </div>
+
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panelbody">
+                <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+              </div>
+            </div>
+
+
+          
+            
+
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+
+              <div class="custom_table tables_layout_design">
+
+                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+
+                <!--======= Refer Table  =========-->
+                <ul class="responsive-table">
+                  <li class="table-row" *ngFor="let row of dataAr; let i=index;">
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{ row.SrNo }}</div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Name</div>
+
+                            <strong class="fs_18" *ngIf="row.Type == 'POS' && (row.POS_Is_Franchise == 1 || row.POS_Is_Franchise == 2)"><a (click)="EmpDetails(row.Agent_Id, 1)" >
+                              {{row.Name}} - {{row.Agent_Id}}</a></strong>
+                              <strong class="fs_18" *ngIf="(row.Type == 'POS' && row.POS_Is_Franchise == 0) || row.Type=='SP' || row.Type=='SPC' || row.Type=='Dealer'">
+                                {{row.Name}} - {{row.Agent_Id}}</strong>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="agents_data agents_data1">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Reporting Manager </div>
+                            <strong class="fs_18">{{row.RM_Name}} - {{row.RM_Emp_Id}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data1">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div> Department </div>
+                            <strong class="fs_18">{{row.DepartmentName}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+                        <div class="label_chips motor_lob" *ngIf="Masking =='Mobile'+i" (click)="ShowMaskingField('TempMobile')">
+                          <span> Mobile:  {{row.Mobile}}</span>&nbsp;&nbsp;
+                        </div>
+                        <div class="label_chips motor_lob" *ngIf="Masking != 'Mobile'+i" (click)="ShowMaskingField('Mobile'+i)">
+                          <span> Mobile:  ****</span>&nbsp;&nbsp;
+                        </div>                        
+                        <div class="label_chips finance_lob" *ngIf="Masking == 'Email'+i" (click)="ShowMaskingField('TempEmail')">
+                          <span>Email : {{row.Email}} <small (click)="CopyText(row.Email)" class="fa fa-copy"></small></span>&nbsp;&nbsp;
+                        </div>
+                        <div class="label_chips finance_lob" *ngIf="Masking != 'Email'+i" (click)="ShowMaskingField('Email'+i)">
+                          <span>Email : ****</span>&nbsp;&nbsp;
+                        </div>                     
+                        <div class="label_chips finance_lob" *ngIf="row.Type == 'POS'">
+                          <span>POS Type :{{ row.postype == 'Yes' ? 'Life and Non-Life' : 'Non-Life' }}</span>
+                        </div>
+                        <div class="label_chips non_motor_lob" style="width: auto;">
+                          <span>Status : {{ row.ActiveStatus == 1 ? 'Active' : 'Inactive' }}</span>
+                        </div>
+
+                        <div class="label_chips non_motor_lob" *ngIf="row.POS_Is_Franchise==1" style="width: auto;">
+                          <span>BA</span>
+                        </div>
+
+                        <div class="label_chips non_motor_lob" *ngIf="row.POS_Is_Franchise==2" style="width: auto;">
+                          <span>BP</span>
+                        </div>
+
+                        <div class="label_chips non_motor_lob" *ngIf="row.NOCStatus==1" style="width: auto;">
+                          <span>Noc Released</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="last_row">
+                      <div class="d_flex effective_date">
+                        <div class="date_text">
+                          <span>Address : </span>
+                          <span class="fs_12"> {{row.StateName}}, {{row.CityName}} ({{row.PinCode}})</span>
+                        </div>
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                        <a *ngIf="row.Status == 0" class="btnbg2inactive">PendingForQC</a>
+                        <a *ngIf="row.Status == 1" class="btnbg2inactive">PendingForKYC</a>
+                        <a *ngIf="row.Status == 2" class="btnbg2inactive"> PendingForBanking</a>
+                        <a *ngIf="row.Status == 3" class="btnbg3resign">RejectByQC</a>
+                        <a *ngIf="row.Status == 4" class="btnbg3resign">RejectByAccounts</a>
+                        <a *ngIf="row.Status == 5" class="btnbg1active"> Approved</a>                    
+                        <a *ngIf="row.Status == 6" class="btnbg3resign"> Blocked</a>                    
+                        <a *ngIf="row.Status == 7" class="btnbg"> FollowUp</a>                    
+                        <a *ngIf="row.Status == 8" class="btnbg2inactive"> PendingForReQC</a>                    
+                        <a *ngIf="row.Status == 9" class="btnbg3resign"> Blocked-Permanently</a>                    
+                      </div>                      
+                    </div>  
+                  </li>
+                </ul>
+                <!--======= Refer Table END =========-->
+
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+

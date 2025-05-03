@@ -1,0 +1,108 @@
+<section class="custom-scrool">
+    <div class="">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <h4 class="header_title">Form</h4>
+                <button type="button" (click)="CloseModel()" class="close closeModelButton"><i
+                        class="fa fa-close"></i></button>
+                <div class="call-precess" id="callProcess" style="display:none;">
+                    <div class="call-align">
+                        <img src="assets/image/calling.gif" alt="">
+                    </div>
+                    <div class="heading-call">Call in Progress....</div>
+                </div>
+            </div>
+
+            <div class="modal_body py_15">
+                <div *ngFor="let row of dataAr">
+
+                    <div *ngIf="row.LOB">
+                        <div *ngFor="let lob of row.LOB">
+                            <h2>LOB : {{lob.Name}}</h2>
+                        </div>
+                        <hr>
+                    </div>
+                    
+                    <div *ngIf="row.Company">
+                        <div *ngFor="let row of row.Company">
+                            <h2>Company : {{row.Name}}</h2>
+                        </div>
+                    </div>
+                 
+                    <div *ngIf="row.Plan">
+                        <div *ngFor="let row of row.Plan">
+                            <h2>Plan : {{row.Name}}</h2>
+                        </div>
+                        <hr>
+                    </div>
+                  
+                    <div *ngIf="row.AboutPlan">
+                        <h2>About : {{row.AboutPlan}}</h2>
+                        <hr>
+                    </div>
+                    
+                    <div *ngIf="row.WhatsCovered">
+                        <h1>Whats Covered</h1>
+                        <div *ngFor="let row of row.WhatsCovered">
+                            <h2>Title : {{row.title}}</h2>
+                            <h2>Description : {{row.description}}</h2>
+                        </div>
+                        <hr>
+                    </div>
+                  
+                    <div *ngIf="row.WhatsNotCovered">
+                        <h1>Whats Not Covered</h1>
+                        <div *ngFor="let row of row.WhatsNotCovered">
+                            <h2>Title : {{row.title}}</h2>
+                            <h2>Description : {{row.description}}</h2>
+                        </div>
+                        <hr>
+                    </div>
+                 
+                    <div *ngIf="row.ClaimRatio">
+                        <h2>Ratio : {{row.ClaimRatio}}</h2>
+                    </div>
+                    
+                    <div *ngIf="row.Hoursclaimsettlementprocessing">
+                        <h2>Claim24 : {{row.Hoursclaimsettlementprocessing}}</h2>
+                        <hr>
+                    </div>
+
+                    <div *ngIf="row.Addonbenefits">
+                        <h1>Addon Benefits</h1>
+                        <div *ngFor="let row of row.Addonbenefits">
+                            <h2>Title : {{row.title}}</h2>
+                            <h2>Description : {{row.description}}</h2>
+                        </div>
+                        <hr>
+                    </div>
+                    
+                    <div *ngIf="row.FreeLookperiod">
+                        <h2>FreeLookperiod : {{row.FreeLookperiod}}</h2>
+                        <h2>Y/N : {{row.FreelookYN}}</h2>
+                        <hr>
+                    </div>
+                    
+                    <div *ngIf="row.TaxSaving">
+                        <h2>TaxSaving : {{row.TaxSaving}}</h2>
+                        <hr>
+                    </div>
+                    
+                    <div *ngIf="row.FAQs">
+                        <h1>FAQForm</h1>
+                        <div *ngFor="let row of row.FAQs">
+                            <h2>Title : {{row.FAQName}}</h2>
+                        </div>
+                        <hr>
+                    </div>
+                    
+                    <div *ngIf="row.Plantype">
+                        <h2>PlanType : {{row.Plantype}}</h2>
+                        <hr>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

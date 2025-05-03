@@ -1,0 +1,415 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+  <div class="container-fluid">
+    <div class="main_card_form ">
+      <div class="main_header">
+        <div class="header_title">Product</div>
+      </div>
+
+      <div *ngIf="!hasAccess" class="error-message">
+        <div class="container" style="text-align: center;">
+            <img src="assets/Authorised.png" alt="">
+        </div>
+    </div>
+
+      <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+        <div class="btn_list_group">
+          <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="dsr-fillter">
+                    <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                      data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                      aria-controls="collapseOne">Filters
+                    </button>
+                    <button class=" btn btn-info1" (click)="dailog()">
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body sub-form">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <form [formGroup]="AddFieldForm" (ngSubmit)="SearchData()">
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <div class="category_list">
+                              <ng-multiselect-dropdown class="form-control" placeholder="Select LOB" [data]="LOBdata"
+                                formControlName="LOB" [settings]="dropdownLOB" (ngModelChange)="onLOBChange($event)">
+                              </ng-multiselect-dropdown>
+                              <div
+                                *ngIf="isSubmitted && AddFieldForm.get('LOB').hasError('required') && (AddFieldForm.get('LOB').touched || AddFieldForm.dirty)"
+                                class="text-danger">
+                                This Field is required
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- <div class="col-md-4" *ngIf="AddFieldForm.get('LOB').value && AddFieldForm.get('LOB').value == 'Motor'"> -->
+                          <div class="col-sm-3">
+                            <div class="category_list">
+                              <ng-multiselect-dropdown class="form-control" placeholder="Select Product"
+                                [data]="product" formControlName="product" [settings]="dropdownSettingsmultiselect"
+                                (ngModelChange)="onProduct($event)">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-3" *ngIf=" pro !== 'Motor'">
+                            <div class="category_list">
+                              <ng-multiselect-dropdown class="form-control" placeholder="Select Company"
+                                [data]="company" formControlName="company" [settings]="dropdownSettingsmultiselect"
+                                (ngModelChange)="oncomp($event)">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <div class="category_list">
+                              <ng-multiselect-dropdown class="form-control" placeholder="Select PolicyType"
+                                [data]="policyType" formControlName="policyType"
+                                [settings]="dropdownSettingsmultiselect" (ngModelChange)="onPolicy($event)">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <div class="category_list">
+                              <ng-multiselect-dropdown class="form-control" placeholder="Select PlanType"
+                                [data]="planType" formControlName="planType" [settings]="dropdownSettingsmultiselect"
+                                (ngModelChange)="onPlan($event)">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-3" *ngIf=" plan == 'GCV' || plan == 'PCV' || plan == 'Misc D'">
+                            <div class="category_list">
+                              <ng-multiselect-dropdown class="form-control" placeholder="Select SubProduct"
+                                [data]="subPro" formControlName="subProduct" [settings]="dropdownSettingsmultiselect"
+                                (ngModelChange)="onSubPro($event)">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-3" *ngIf=" plan == 'GCV' || plan == 'Misc D'">
+                            <div class="category_list">
+                              <ng-multiselect-dropdown class="form-control" placeholder="Select ClassName"
+                                [data]="ClassN" formControlName="class" [settings]="dropdownSettingsmultiselect"
+                                (ngModelChange)="onClass($event)">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-3" *ngIf=" pro == 'Motor'">
+                            <div class="category_list">
+                              <ng-multiselect-dropdown class="form-control" placeholder="Select SubClass" [data]="SubC"
+                                formControlName="subclass" [settings]="dropdownSettingsmultiselect">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <div class="category_list">
+                              <ng-multiselect-dropdown class="form-control" placeholder="Select File Type"
+                                [data]="checkBox" formControlName="checkbox" [settings]="dropdownSettingsmultiselect">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <div class="category_list">
+                              <ng-multiselect-dropdown class="form-control" placeholder="IRDIA Product Status"
+                                [data]="irdia" formControlName="irdia" [settings]="dropdownSettingsmultiselect">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-lg-12" style="text-align: right">
+                            <input type="submit" class="btn btn-info" value="Search">
+                            &nbsp;&nbsp;
+                            <input (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset">
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="row">
+          <div class="col-md-12">
+
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="All">
+
+                <div class="box-body">
+                  <div class="mydiv">
+                    <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th>SNo.</th>
+                          <th>LOB</th>
+                          <th>Product</th>
+                          <th>Policy Type</th>
+                          <th>Plan Type</th>
+                          <th>SubProduct</th>
+                          <th>Class Name</th>
+                          <th>Sub Class</th>
+                          <th>TP Premium</th>
+                          <th>Per Passenger Cost</th>
+                          <th>Company Name</th>
+                          <th>New</th>
+                          <th>Rollover</th>
+                          <th>Renewal</th>
+                          <th>Used</th>
+                          <th>IRDIA Product Status</th>
+                          <th>Limit Sum Insured</th>
+                          <th>GST</th>
+                          <th>Add Stamp</th>
+                          <th>Update Stamp</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let row of dataAr">
+                          <td>{{row.sno}}</td>
+                          <td>{{row.LOB}}</td>
+                          <td>{{row.Product ? row.Product : 'NA'}}</td>
+                          <td>{{row.Policy_Type ? row.Policy_Type: 'NA'}}</td>
+                          <td>{{row.Plan_Type? row.Plan_Type :'NA'}}</td>
+                          <td>{{row.SubProduct ? row.SubProduct : 'NA'}}</td>
+                          <td>{{row.Class_Name? row.Class_Name : 'NA'}}</td>
+                          <td>{{row.Sub_Class ? row.Sub_Class : 'NA'}}</td>
+                          <td>{{row.TP_Premium ? row.TP_Premium : 'NA'}}</td>
+                          <td>{{row.Per_Passenger_Cost ? row.Per_Passenger_Cost : 'NA'}}</td>
+                          <td>{{row.Company_Name ? row.Company_Name: 'NA'}}</td>
+
+                          <td>
+                            <span *ngIf="row.New==1 && row.LOB == 'Motor'">Yes</span>
+                            <span *ngIf="row.New==0 && row.LOB == 'Motor'">NA</span>
+                            <span *ngIf="row.LOB !== 'Motor'">NA</span>
+                          </td>
+
+                          <td>
+                            <span *ngIf="row.Rollover == 1 && row.LOB == 'Motor'">Yes</span>
+                            <span *ngIf="row.Rollover == 0 && row.LOB == 'Motor'">NA</span>
+                            <span *ngIf="row.LOB !== 'Motor'">NA</span>
+                          </td>
+
+                          <td>
+                            <span *ngIf="row.Renewal == 1 && row.LOB == 'Motor'">Yes</span>
+                            <span *ngIf="row.Renewal == 0 && row.LOB == 'Motor'">NA</span>
+                            <span *ngIf="row.LOB !== 'Motor'">NA</span>
+                          </td>
+
+                          <td>
+                            <span *ngIf="row.Used == 1 && row.LOB == 'Motor'">Yes</span>
+                            <span *ngIf="row.Used == 0 && row.LOB == 'Motor'">NA</span>
+                            <span *ngIf="row.LOB !== 'Motor'">NA</span>
+                          </td>
+
+                          <td>{{row.IRDIA_Product_Status}}</td>
+                          <td>{{row.Limit_Sum_Insured}}</td>
+
+                          <td>
+                            <span *ngIf="row.LOB === 'Life'; else noGst" style="margin-right: 5px;"
+                              class="label label-warning">{{ row.GstRate1 }}</span>
+                            <br>
+                            <span *ngIf="row.LOB === 'Life'; else noGst" style="margin-right: 5px;"
+                              class="label label-primary">{{ row.GstRate2 }}</span>
+                            <ng-template #noGst>
+                              <span>N/A</span>
+                            </ng-template>
+                          </td>
+
+                          <td>{{row.Add_Stamp}}</td>
+                          <td>{{row.Update_Stamp}}</td>
+
+                          <td>
+                            <button class=" btn btn-info1" (click)="update(row.Id)"><span>Update</span>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tbody *ngIf="dataAr?.length == 0">
+                        <tr>
+                          <td colspan="11" align="center">No data available !</td>
+                        </tr>
+                      <tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <hr>
+
+        <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+          <div class="custom_table tables_layout_design">
+            <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+              <thead>
+                <tr>
+                  <th></th>
+                </tr>
+              </thead>
+            </table>
+
+            <!-- ======= Refer Table  =========-->
+            <ul class="responsive-table">
+              <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+                <span class="addon_tag_name">{{row.LOB}}</span>
+                <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                  <div class="agents_data agents_data1">
+                    <div class="icon_re_cl">{{row.sno}}</div>
+                    <div class="agent_name_mobile">
+                      <div class="agent_data">
+                        <div>Product</div>
+                        <strong class="fs_18 text-bold">{{row.Product ? row.Product : 'NA'}}</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="agents_data agents_data2">
+                    <div class="agent_name_mobile">
+                      <div class="agent_data" *ngIf="row.Policy_Type != ''">
+                        <div>Policy Type</div>
+                        <strong>
+                          {{row.Policy_Type ? row.Policy_Type: 'NA'}}
+                        </strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="agents_data agents_data2">
+                    <div class="agent_name_mobile">
+                      <div class="agent_data" *ngIf="row.Plan_Type != ''">
+                        <div>Plan Type</div>
+                        <strong>
+                          {{row.Plan_Type? row.Plan_Type :'NA'}}
+                        </strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="last_row_div mt10" style="margin-top:10px; margin-right: 120px;">
+                  <div class="label_chips motor_lob" *ngIf="row.SubProduct != ''">
+                    <span>SubProduct - {{row.SubProduct ? row.SubProduct : 'NA'}}</span>
+                  </div>
+
+                  <div class="label_chips non_motor_lob" *ngIf="row.Class_Name != ''">
+                    <span>Class - {{row.Class_Name? row.Class_Name : 'NA'}}</span>
+                  </div>
+
+
+                  <div class="label_chips health_lob" *ngIf="row.Sub_Class != ''">
+                    <span>Sub Class - {{row.Sub_Class ? row.Sub_Class : 'NA'}}</span>
+                  </div>
+
+                  <div class="label_chips life_lob" *ngIf="row.TP_Premium != ''">
+                    <span>TP Premium - {{row.TP_Premium ? row.TP_Premium : 'NA'}}</span>
+                  </div>
+
+                  <div class="label_chips finance_lob" *ngIf="row.Per_Passenger_Cost != ''">
+                    <span>Per Passenger Cost - {{row.Per_Passenger_Cost ? row.Per_Passenger_Cost : 'NA'}}</span>
+                  </div>
+
+                  <div class="label_chips mutual_fund_lob" *ngIf="row.Company_Name != ''">
+                    <span>Company Name - {{row.Company_Name ? row.Company_Name: 'NA'}}</span>
+                  </div>
+
+                </div>
+           
+                <div class="last_row_div mt10" style="margin-top:10px;">
+                  <div class="label_chips real_estate_lob">
+                    <span>New - {{row.New == 1 && row.LOB == 'Motor' ? 'Yes' : row.New == 0 && row.LOB == 'Motor' ? 'NA'
+                      : row.LOB !== 'Motor' ? 'NA' : '' }}</span>
+                  </div>
+
+                  <div class="label_chips growth_negative">
+                    <span>Rollover - {{row.Rollover == 1 && row.LOB == 'Motor' ? 'Yes' : row.Rollover == 0 && row.LOB ==
+                      'Motor' ? 'NA' : row.LOB !== 'Motor' ? 'NA' : '' }}</span>
+                  </div>
+
+
+                  <div class="label_chips growth_positive">
+                    <span>Renewal - {{row.Renewal == 1 && row.LOB == 'Motor' ? 'Yes' : row.Renewal == 0 && row.LOB ==
+                      'Motor' ? 'NA' : row.LOB !== 'Motor' ? 'NA' : '' }}</span>
+                  </div>
+
+                  <div class="label_chips motor_lob">
+                    <span>Used - {{row.Used == 1 && row.LOB == 'Motor' ? 'Yes' : row.Used == 0 && row.LOB == 'Motor' ?
+                      'NA' : row.LOB !== 'Motor' ? 'NA' : '' }}</span>
+                  </div>
+
+                  <div class="label_chips non_motor_lob" *ngIf="row.Limit_Sum_Insured != ''">
+                    <span>Limit Sum Insured - {{row.Limit_Sum_Insured}}</span>
+                  </div>
+
+                  <div class="label_chips mutual_fund_lob" *ngIf="row.IRDIA_Product_Status != ''">
+                    <span>IRDIA Product Status - {{row.IRDIA_Product_Status}}</span>
+
+                  </div>
+
+                </div>
+
+                <div class="last_row">
+                  <div class="effective_date">
+                    <div class="d_flex custon-234">
+                      <span>
+                        <strong>GST - </strong>
+                        <span *ngIf="row.LOB === 'Life'; else noGst" style="margin-right: 5px;"
+                          class="label label-warning">{{ row.GstRate1 }}</span>
+                        &nbsp;&nbsp;
+                        <span *ngIf="row.LOB === 'Life'; else noGst" style="margin-right: 5px;"
+                          class="label label-primary">{{ row.GstRate2 }}</span>
+                        <ng-template #noGst>
+                          <span>N/A</span>
+                        </ng-template>
+                      </span>&nbsp;&nbsp;
+                      <div *ngIf="row.Add_Stamp != ''"><strong>Add Stamp - </strong>{{row.Add_Stamp | date : 'dd-MM-yyyy HH:mm:ss'}}</div>
+                      &nbsp;&nbsp;&nbsp;
+                      <div *ngIf="row.Update_Stamp != ''"><strong>Update Stamp - </strong>{{row.Update_Stamp | date : 'dd-MM-yyyy HH:mm:ss'}}</div>
+
+                    </div>
+
+
+
+                  </div>
+
+                  <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                    <button type="button" class="btn btn-primary" (click)="update(row.Id)" style="padding:3px;">
+                      <strong style="color: #fff;">Update &nbsp;<i class="fa fa-pencil-square-o"
+                          aria-hidden="true"></i></strong>
+                    </button>
+                  </div>
+                </div>
+
+              </li>
+            </ul>
+            <!--======= Refer Table END ========= -->
+
+            <div class="row" *ngIf="dataAr?.length == 0">
+              <div class="col-md-12">
+                <div class="no_data_found">
+                  <span><img src="assets/image/no_data_banner.jpg"></span>
+                  <small>No data available !</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

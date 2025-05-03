@@ -1,0 +1,413 @@
+<button (click)="CloseModel()" type="button" class="close closeModelButton"
+  style="opacity: 1 !important;color: white !important;background: #f00 !important;">&times;</button>
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#home">Business Achievement</a></li>
+  <li><a data-toggle="tab" href="#menu1">Salary Track</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="home" class="tab-pane fade in active">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="tables_layout_design">
+          <div class="custom_table">
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="table_row">
+                  <div class="icon_re_cl">Profile Target</div>
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title"><span>Target</span>
+                      <small class="name_info1">
+                        {{ ProfileTotalTarget }} ({{ ProfileTotalTargetStr }})
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Achievement</span>
+                      <small class="name_info5">
+                        {{ ProfileTotalBusiness }} ({{ ProfileTotalBusinessStr }})
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Achievement %</span>
+                      <small class="name_info1">{{ ProfileAchievement }}</small>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                *ngIf="Profile_Type != 'Relationship Manager' && ShowTeamData == 'Yes'">
+                <div class="table_row">
+                  <div class="icon_re_cl">Allocated Team Target</div>
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title"><span>Target</span>
+                      <small class="name_info1">
+                        {{ AllocatedTeamTarget }} ({{ AllocatedTeamTargetStr }})
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Achievement</span>
+                      <small class="name_info5">
+                        {{ AllocatedTeamBusiness }} ({{ AllocatedTeamBusinessStr }})
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Achievement %</span>
+                      <small class="name_info1">
+                        {{ AllocatedTeamAchievement }}
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="table_row">
+                  <div class="icon_re_cl">Allocated Self Target</div>
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title"><span>Target</span>
+                      <small class="name_info1">
+                        {{ AllocatedSelfTarget }} ({{ AllocatedSelfTargetStr }})
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Achievement</span>
+                      <small class="name_info5">
+                        {{ AllocatedSelfBusiness }} ({{ AllocatedSelfBusinessStr }})
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Achievement %</span>
+                      <small class="name_info1">
+                        {{ AllocatedSelfAchievement }}
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                *ngIf="(LoginProfileName == 'HOD' || LoginProfileName == 'MD' || LoginProfileName == 'CEO'  || LoginProfileName == 'President' || LoginProfileName == 'NH')">
+                <div class="table_row">
+                  <div class="icon_re_cl">Revenue</div>
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title"><span>Total</span>
+                      <small class="name_info1">
+                        {{ TotalRevenue}} ({{ TotalRevenueStr }})
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Team</span>
+                      <small class="name_info5">
+                        {{TeamRevenue }} ({{ TeamRevenueStr }})
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Self</span>
+                      <small class="name_info1">
+                        {{ SelfRevenue }} ({{ SelfRevenueStr }})
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                *ngIf="Profile_Type != 'Relationship Manager' && (ShowSelfData == 'Yes' || (LoginProfileName == 'HOD' || LoginProfileName == 'MD' || LoginProfileName == 'CEO'  || LoginProfileName == 'President' || LoginProfileName == 'NH'))">
+                <div class="table_row">
+                  <div class="icon_re_cl">Total Cost</div>
+
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title"><span>Total</span>
+                      <small class="name_info1" *ngIf="ShowTotalTotalCost == 'Yes'"
+                        (click)="ShowHideCost('TotalTotal', 'No')">
+                        {{ TotalTotalCost }} ({{ TotalTotalCostStr }})
+                      </small>
+
+                      <small class="name_info1" *ngIf="ShowTotalTotalCost == 'No'"
+                        (click)="ShowHideCost('TotalTotal', 'Yes')">
+                        ******
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title" *ngIf="ShowTeamData == 'Yes'"><span>Team</span>
+                      <small class="name_info5" *ngIf="ShowTeamTotalCost == 'Yes'"
+                        (click)="ShowHideCost('TeamTotal', 'No')">
+                        {{ TeamTotalCost }} ({{ TeamTotalCostStr }})
+                      </small>
+
+                      <small class="name_info5" *ngIf="ShowTeamTotalCost == 'No'"
+                        (click)="ShowHideCost('TeamTotal', 'Yes')">
+                        ******
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Self</span>
+                      <small class="name_info1" *ngIf="ShowSelfTotalCost == 'Yes'"
+                        (click)="ShowHideCost('SelfTotal', 'No')">
+                        {{ SelfTotalCost }} ({{ SelfTotalCostStr }})
+                      </small>
+
+                      <small class="name_info1" *ngIf="ShowSelfTotalCost == 'No'"
+                        (click)="ShowHideCost('SelfTotal', 'Yes')">
+                        ******
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                *ngIf="Profile_Type != 'Relationship Manager' && (ShowSelfData == 'Yes' || (LoginProfileName == 'HOD' || LoginProfileName == 'MD' || LoginProfileName == 'CEO'  || LoginProfileName == 'President' || LoginProfileName == 'NH'))">
+                <div class="table_row">
+                  <div class="icon_re_cl">Actual Cost</div>
+
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title"><span>Total</span>
+                      <small class="name_info1" *ngIf="ShowTotalActualCost == 'Yes'"
+                        (click)="ShowHideCost('TotalActual', 'No')">
+                        {{ ActualTotalCost }} ({{ ActualTotalCostStr }})
+                      </small>
+
+                      <small class="name_info1" *ngIf="ShowTotalActualCost == 'No'"
+                        (click)="ShowHideCost('TotalActual', 'Yes')">
+                        ******
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title" *ngIf="ShowTeamData == 'Yes'"><span>Team</span>
+                      <small class="name_info5" *ngIf="ShowTeamActualCost == 'Yes'"
+                        (click)="ShowHideCost('TeamActual', 'No')">
+                        {{ TeamActualCost }} ({{ TeamActualCostStr }})
+                      </small>
+
+                      <small class="name_info5" *ngIf="ShowTeamActualCost == 'No'"
+                        (click)="ShowHideCost('TeamActual', 'Yes')">
+                        ******
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Self</span>
+                      <small class="name_info1" *ngIf="ShowSelfActualCost == 'Yes'"
+                        (click)="ShowHideCost('SelfActual', 'No')">
+                        {{ SelfActualCost }} ({{ SelfActualCostStr }})
+                      </small>
+
+                      <small class="name_info1" *ngIf="ShowSelfActualCost == 'No'"
+                        (click)="ShowHideCost('SelfActual', 'Yes')">
+                        ******
+                      </small>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                *ngIf="Profile_Type == 'Relationship Manager' || (ShowSelfData == 'No' && (LoginProfileName != 'HOD' && LoginProfileName != 'MD' && LoginProfileName != 'CEO'  && LoginProfileName != 'President' && LoginProfileName != 'NH'))">
+                <div class="table_row">
+                  <div class="icon_re_cl">Cost</div>
+
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title"><span>Total Cost</span>
+                      <small class="name_info1">
+                        {{ AllTotalCost }} ({{ TotalTotalCostStr }})
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Actual Cost</span>
+                      <small class="name_info5">
+                        {{ AllActualCost }} ({{ ActualTotalCostStr }})
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="table_row">
+                  <div class="icon_re_cl">Call Logs</div>
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title"><span>Active Days</span>
+                      <small class="name_info1">
+                        {{ TotalActiveDays }}
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>DSR Call</span>
+                      <small class="name_info5">
+                        {{ TotalBusinessVirtual }}
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>DSR Visit</span>
+                      <small class="name_info1">
+                        {{ TotalBusinessVisit }}
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>LMS Call</span>
+                      <small class="name_info1">
+                        {{ LmsCallCount }}
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Tele RM Call</span>
+                      <small class="name_info5">
+                        {{ TeleRmCallCount }}
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Renewal Call</span>
+                      <small class="name_info1">
+                        {{ RenewalCallCount }}
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="menu1" class="tab-pane fade">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="tables_layout_design">
+          <div class="custom_table">
+
+            <div class="row">
+
+              <!-- <form class="form" [formGroup]="SalaryRemarkForm" (ngSubmit)="SubmitSalaryRemarks()">
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                  <div class="input_group">
+                    <label>Salary *</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Remark"
+                      [data]="SalaryRemarksArray" formControlName="SalaryType" [settings]="dropdownSettingsingleselect1"
+                      (onSelect)="onItemSelect($event)"> </ng-multiselect-dropdown>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" *ngIf="ShowDaysField == 'Yes'">
+                  <div class="input_group">
+                    <label>Type *</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Type" [data]="PartialTypeArray"
+                      formControlName="PartialType" [settings]="dropdownSettingsingleselect1"
+                      (onSelect)="onItemSelect1($event)" (onDeSelect)="onItemSelect1($event)">
+                    </ng-multiselect-dropdown>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" *ngIf="ShowDayField == 'Yes'">
+                  <div class="input_group">
+                    <label>Working Days</label>
+                    <input type="text" placeholder="Total Days" formControlName="TotalDays" class="form-control">
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" *ngIf="ShowSalaryField == 'Yes'">
+                  <div class="input_group">
+                    <label>Salary Amount</label>
+                    <input type="text" placeholder="Total Salary" formControlName="TotalSalary" class="form-control">
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                  <div class="input_group">
+                    <label>Remarks</label>
+                    <input type="text" class="form_control" formControlName="Remarks" placeholder="salary">
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                  <div class="d_flex flex_End" style="margin-top: 28px;">
+                    <button type="button" class="btn btn-success">Submit</button>
+                  </div>
+                </div>
+
+              </form> -->
+
+              <div *ngIf="dataAr?.length != 0">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngFor="let row of dataAr; let i=index;">
+                  <div class="table_row" style="margin-top: 35px;">
+                    <div class="icon_re_cl1" *ngIf="i == 0">Last Salary Remarks</div>
+                    <div class="icon_re_cl" *ngIf="i != 0">Salary Remarks Track</div>
+                    <div class="user_details_full">
+
+                      <div class="mo_email_title"><span>Salary Remarks</span>
+
+                        <small class="name_info1"
+                          *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'Credited'">Credited</small>
+                        <small class="name_info1"
+                          *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'Full'">Full</small>
+                        <small class="name_info1"
+                          *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'Partial'">Partial</small>
+                        <small class="name_info1"
+                          *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'None'">Null</small>
+                        <small class="name_info1"
+                          *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'Hold'">Hold</small>
+
+                        <span *ngIf="row.SalaryRemarks == 'Partial' && row.DaysCount != '0'"> {{ row.DaysCount }}
+                          Days</span>
+                        <span *ngIf="row.SalaryRemarks != '' && row.TotalSalary != '0'">Rs. {{ row.TotalSalary }}
+                        </span>
+
+                      </div>
+
+                      <div class="mo_email_title"><span>Updated By</span>
+                        <small class="name_info5">{{ row.SalaryUpdatedBy }}</small>
+                      </div>
+
+                      <div class="mo_email_title"><span>Date</span>
+                        <small class="name_info1">{{ row.UpdateDate }}</small>
+                      </div>
+                      <div class="mo_email_title" style="width: 100%;">
+                        <!-- <span>Target</span> -->
+                        <small class="name_info1"><b>Remarks :-</b>{{ row.Remarks }}</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="dataAr?.length == 0">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="no_data_found">
+                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                    <small>No data available !</small>
+                  </div>
+
+                  <!-- <div class="table_row" style="margin-top: 35px;">
+                    <div class="icon_re_cl1">Salary Remarks</div>
+                    <div class="user_details_full">
+                      No Data available!
+                    </div>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,261 @@
+.submenuactive {
+    border-left: 3px solid #367fa9;
+}
+
+.ul-scroll-left {
+    overflow: hidden;
+    height: auto;
+    overflow-x: hidden;
+    padding-bottom: 25px;
+}
+
+.skin-black-light .sidebar-menu>li.header {
+    color: #ffffff;
+    background: #1a6a99 !important;
+}
+
+.ul-scroll-left::-webkit-scrollbar {
+    width: 8px;
+    background-color: #000;
+}
+
+.ul-scroll-left::-webkit-scrollbar-thumb {
+    background-color: #000;
+}
+
+.ul-scroll-left::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
+    background-color: #ffff;
+}
+
+.sidebar {
+    padding-bottom: 10px;
+    position: fixed;
+    width: inherit;
+    top: 0;
+}
+
+.sidebar img.icon_img {
+    width: 30px !important;
+}
+
+.icon_img {
+    margin-right: 8px;
+}
+
+.myaccordion {
+    max-width: 500px;
+    margin: 50px auto;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.myaccordion .card,
+.myaccordion .card:last-child .card-header {
+    border: none;
+}
+
+.myaccordion .card-header {
+    border-bottom-color: #EDEFF0;
+    background: transparent;
+}
+
+.myaccordion .fa-stack {
+    font-size: 18px;
+}
+
+.myaccordion .btn {
+    width: 100%;
+    font-weight: bold;
+    color: #004987;
+    padding: 0;
+}
+
+.myaccordion .btn-link:hover,
+.myaccordion .btn-link:focus {
+    text-decoration: none;
+}
+
+.myaccordion li+li {
+    margin-top: 10px;
+}
+
+.menu_heading {
+    display: block;
+}
+
+.menu_heading_two {
+    display: none;
+}
+
+.menu_heading_three {
+    display: none;
+}
+
+.menu_heading_four {
+    display: none;
+}
+
+.menu_heading_fa_fa_one {
+    display: none;
+}
+
+
+.menu_heading_fa_fa_two {
+    display: block;
+}
+
+.menu_heading_fa_fa_three {
+    display: block;
+}
+
+.menu_heading_fa_fa_four {
+    display: none;
+}
+
+i.fa.fa-plus {
+    float: right;
+}
+
+.sidebar-menu>li.header {
+    border-bottom: 1px solid #fff !important;
+}
+
+.active_menu_height {
+    border-right: 1px solid #ddd;
+    overflow: hidden;
+}
+
+.active_menu_height:hover {
+    overflow-y: scroll;
+    border-right: none;
+}
+
+.active_menu_height::-webkit-scrollbar {
+    width: 8px;
+    background-color: #2cb2b3bf;
+}
+
+.active_menu_height::-webkit-scrollbar-thumb {
+    background-color: #2cb2b3bf;
+}
+
+.active_menu_height::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
+    background-color: #ffff;
+}
+
+.logo-sidebar {
+    background-color: #fff;
+}
+
+.sidebar-menu li>a>.pull-left-container {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -7px;
+}
+
+.skin-black-light .sidebar a {
+    color: #333 !important;
+}
+
+.skin-black-light .sidebar-menu>li>a {
+    border-bottom: 1px solid #ddd !important;
+}
+
+.sidebar-menu li>a>.fa-angle-right,
+.sidebar-menu li>a>.pull-right-container>.fa-angle-right {
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin-right: 10px;
+    transition: transform .5s ease;
+}
+
+.sidebar-menu .menu-open>a>.fa-angle-right,
+.sidebar-menu .menu-open>a>.pull-right-container>.fa-angle-right {
+    transform: rotate(90deg);
+}
+
+aside.main-sidebar {
+    border-right: none !important;
+}
+
+.sidebar-menu>li>a {
+    font-weight: 700 !important;
+    color: #222 !important;
+}
+
+.main-sidebar .sidebar-menu ul.treeview-menu {
+    padding-left: 50px !important;
+}
+
+.main-sidebar .sidebar-menu .treeview-menu>li>a>img {
+    display: none !important;
+}
+
+.main-sidebar .sidebar-menu .treeview-menu>li>a {
+    padding: 10px 5px 10px 5px !important;
+    color: #333;
+    font-weight: 700;
+}
+
+.main-sidebar .sidebar-menu .treeview-menu>li {
+    list-style: disc;
+}
+
+.main-sidebar .sidebar-menu ul.treeview-menu ul {
+    margin-left: -40px !important;
+}
+
+.main-sidebar .sidebar-menu .treeview-menu>li ul li {
+    list-style: disc;
+}
+
+.sidebar-menu.tree li.header {
+    background-color: #10498a !important;
+}
+
+@media (max-width: 767px) {
+    .sidebar {
+        width: 100%;
+    }
+
+    .main-sidebar .cs_logo a img {
+        width: 92px;
+    }
+
+    .sidebar::before {
+        content: '';
+        background-color: #000;
+        position: absolute;
+    }
+
+    .sidebar-menu>li>a {
+        padding: 8px 5px 8px 15px;
+    }
+
+    .sidebar img.icon_img {
+        width: 22px !important;
+    }
+
+    .active_menu_height {
+        background: #fff;
+    }
+
+    .sidebar {
+        padding-bottom: 0;
+    }
+
+    .cs_logo {
+        padding: 0px 0px 0px 15px;
+        text-align: left;
+    }
+}
+
+@media (max-width: 1024px) {
+    .active_menu_height {
+        overflow: auto;
+        overflow-x: hidden;
+    }
+}

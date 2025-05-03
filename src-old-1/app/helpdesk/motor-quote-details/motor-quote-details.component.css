@@ -1,0 +1,10 @@
+.PaymentSuccess{
+  background-color:green;
+  color:white;
+}
+
+.PaymentSuccess:hover {
+  background-color: green;
+  color:white;
+
+}

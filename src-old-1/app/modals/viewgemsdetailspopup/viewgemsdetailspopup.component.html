@@ -1,0 +1,89 @@
+<table class="table table-bordered">
+
+	<caption><button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button></caption>
+
+	<thead>
+		<tr>
+			<th colspan="5" *ngIf="ShowType=='Wallet'" style="padding-left: 0px !important;">
+
+				<form [formGroup]="ActionForm" (ngSubmit)="SubmitActionForm()">
+
+					<div class="col-sm-8">
+
+						<ng-multiselect-dropdown class="form-control" placeholder="Financial Year"
+							[data]="SR_Session_Year" formControlName="FinancialYears" [(ngModel)]="financialYearVal"
+							[settings]="dropdownSettingsingleselect" (onSelect)="onItemSelect($event,'FinancialYear')" ></ng-multiselect-dropdown>
+
+						<span *ngIf="isSubmitted && FC_6.FinancialYears.errors" class="ValidationError">
+							<span *ngIf="FC_6.FinancialYears.errors.required">Field is required</span>
+						</span>
+
+					</div>
+
+					<div class="col-sm-4">
+
+						<button class="btn btn-primary nextBtn" type="submit">
+							Submit
+						</button>
+					</div>
+
+
+				</form>
+
+
+			</th>
+
+
+
+		</tr>
+
+	</thead>
+	<tbody>
+
+		<tr>
+			<th *ngIf="this.showGemsSelect =='No'"  >Quarter</th>
+			<th>Total Business</th>
+			<th>Club Category</th>
+			<th>Eligibility</th>
+			<th>Reward Point</th>
+		</tr>
+
+		<tr *ngFor="let row of DataAr;">
+			<td *ngIf="this.showGemsSelect =='No'">
+				<span *ngIf="row.Quarter=='First'"> April-June</span>
+				<span *ngIf="row.Quarter=='Second'"> July-September</span>
+				<span *ngIf="row.Quarter=='Third'"> October-December</span>
+				<span *ngIf="row.Quarter=='Fourth'"> January-March</span>
+			</td>
+			<td>{{ row.Total_Business_Quarter }}</td>
+
+			<!-- <td *ngIf="row.Reason!=''"><a href="javascript:void;" (click)="ViewGemsRemark(row.Reason)">{{row.ClubCategory}}</a></td> -->
+
+			<td>{{row.ClubCategory}}</td>
+
+			<td *ngIf="this.showGemsSelect =='Yes'"> 
+
+				<span *ngIf="row.Eligibility =='Yes'">
+{{row.Eligibility}}
+				</span>
+				
+				<span *ngIf="row.Eligibility != 'Yes'">
+					{{row.Reason}}
+				</span>  </td>
+
+
+			<td *ngIf="this.showGemsSelect =='No' "> {{row.Reason}}</td>
+
+			 
+			<td>{{row.Reward_Points}}</td>
+
+		</tr>
+
+
+
+
+
+	</tbody>
+
+
+</table>

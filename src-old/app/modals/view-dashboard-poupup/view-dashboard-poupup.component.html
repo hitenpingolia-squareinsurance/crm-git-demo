@@ -1,0 +1,40 @@
+ 
+
+<div *ngIf="DashboardStatus=='1'" class="popup_img life_training_bg">
+
+  <div class="row">
+
+    <div class="col-md-7">
+      <div class="left_blog_details">
+        <p>Now you can become Life insurance POSP with us, you can start training from here to click on continue button.
+        </p>
+        <div *ngIf="DashboardStatus=='1'" style="text-align: center;">
+          <input type="button" (click)="CloseModel()" class="btn btn-danger" value="Skip"> &nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="button" (click)="Clicks2('Life')" class="btn btn-success" value="{{ ContinueBtnAgent }}">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <!-- <img class="img-fluid" src="assets/dist/img/life-insurance-training-2.png" alt="one"> -->
+    </div>
+
+  </div>
+
+
+</div>
+<br>
+
+
+<div style="text-align:center" *ngIf="DashboardStatus=='0'">
+  <span class="dot1"></span>
+  <span class="dot2"></span>
+  <span class="dot3"></span>
+  <span class="dot4"></span>
+  <span class="dot5"></span>
+</div>
+ 
+
+<div class="col-sm-12" *ngIf="DashboardStatus=='0'" style="text-align: center;">
+  <input type="button" (click)="CloseModel()" class="btn btn-danger" value="Continue">
+</div>
+ 

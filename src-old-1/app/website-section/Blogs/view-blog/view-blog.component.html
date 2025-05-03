@@ -1,0 +1,148 @@
+<section class="inner_page_css main_dashboard_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Blog Details</div>
+          </div>
+          <div *ngIf="!hasAccess" class="error-message">
+            <div class="container" style="text-align: center;">
+              <img src="assets/Authorised.png" alt="">
+              <h4>{{ errorMessage }}</h4>
+            </div>
+            
+          </div>
+
+          <div class="main_body main_card_height_scroll" *ngIf="hasAccess">
+            <div class="filterquotesrow">
+              <div class="row">
+                <div class="col-md-12" style="text-align: end;">
+                  <button class="btn btn-info nextBtn pull-right" (click)="MainBlog('Main',0,'Add')"
+                    style="float:right; margin-bottom:2px; margin-right: 10px;"> Main Blog <i class="fa fa-plus-circle"></i></button>
+                    <button class="btn btn-info nextBtn pull-right" (click)="MainBlog('Sub',0,'Add')"
+                    style="float:right; margin-bottom:2px;  margin-right: 10px;"> Sub Blog <i class="fa fa-plus-circle"></i></button>
+                </div>
+              </div>
+            </div>
+
+            
+            
+
+
+            <div class="mydiv">
+
+
+
+
+              <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" id="Table1" class="row-border table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+                <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                  <li class="table-row tablerow" *ngFor="let row of dataAr">
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{row.SrNo}}.</div>
+                        <div class="agent_name_mobile">
+                            <strong class="fs_18"><span><label *ngIf="row.type == 1" class="label label-warning">Main Blog</label>
+                              <label *ngIf="row.type == 2" class="label label-warning">Sub Blog</label></span></strong>
+                            
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Category Name - <strong class="fs_18"><span>{{row.category_name}}</span></strong></div>
+                              
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Created Date - <strong class="fs_18"><span>{{row.insert_date}}</span></strong></div>
+                              
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      
+                      
+                    <hr>
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+                        <div class="label_chips non_motor_lob">
+                          <span>Author - {{row.author}}</span>&nbsp;&nbsp;
+                        </div>
+                        <!-- <div class="label_chips motor_lob">
+                          <span>Category Name - {{row.category_name}}</span>
+                        </div> -->
+                        <div class="label_chips finance_lob">
+                          <span>Title - {{row.title}}</span>
+                        </div>
+                        <div class="label_chips finance_lob">
+                          <span>Url - {{row.Quotes_Url}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="last_row">
+                      <div class="effective_date">
+                        <div class="d_flex">
+                         
+                        </div>
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                        
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                        <button class="btn btn-info" style="padding: 3px 10px; margin-right: 10px;" *ngIf="row.image != ''" (click)="openImage(row.image)">
+                          View
+                      </button>
+                      <button class="btn btn-info" style="padding: 3px 10px; margin-right: 10px;" (click)="MainBlog(row.type,row.Id,'Edit')">Edit</button>
+                      
+                                                      
+
+                        
+  
+                          
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

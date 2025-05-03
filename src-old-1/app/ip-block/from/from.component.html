@@ -1,0 +1,229 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Ipblock
+                                </div>
+                                <div class="col-md-7">&nbsp;</div>
+                                <div class="col-md-1">
+                                    <button *ngIf="urlRouter=='/ipblock/form'" type="button" class="btn btn-primary"
+                                        data-toggle="modal" data-target="#exampleModal">
+                                        Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+
+                        <div *ngIf="urlRouter=='/ipblock/form'">
+                            <div class=" mydiv table-responsive">
+                                <div class="row mt-4">
+                                    <!-- datatable [dtOptions]="dtOptions"  -->
+                                    <table id="Table1" style="width: 100%;" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <!-- <th>LoginUserId</th> -->
+                                                <th>lob</th>
+                                                <th>Product</th>
+                                                <th>Frequancy</th>
+                                                <th>Timelimit</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngIf="dataAr?.length != 0">
+                                            <tr *ngFor="let row of dataAr; let i = index">
+                                                <td>{{ i + 1 }}</td>
+                                                <!-- <td>{{row.LoginUserId}}</td> -->
+                                                <td>{{row.lob}}</td>
+                                                <td>{{row.Product}}</td>
+                                                <td>{{row.Frequancy}}</td>
+                                                <td>{{row.Timelimit}}</td>
+                                                <td><button class="btn btn-danger" (click)="deleteItem(row)">Delete</button></td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody *ngIf="dataAr?.length == 0">
+                                            <tr>
+                                                <td colspan="14" align="center">No data available!</td>
+                                            </tr>
+                                        <tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div *ngIf="urlRouter=='/ipblock/ip'">
+                            <div class="row tablemg">
+                                <form (ngSubmit)="Getlob()" [formGroup]="IpBlock" style="margin-top: -15px;"
+                                    id="form-1">
+                                    <div class="col-md-4">
+                                        <!-- <label for="state">IP</label> -->
+                                        <input type="text" class="form-control" formControlName="IP"
+                                            placeholder="Enter IP ...">
+                                    </div>
+                                </form>
+                                <div class="col-md-1">
+                                    <button class="btn btn-primary nextBtn pull-right form-control"
+                                        style="margin-right: 5px;" type="submit" (click)="Getlob()">Search</button>
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-primary nextBtn pull-right form-control"
+                                        style="margin-right: 5px;" type="submit" (click)="submitIpBlock()">Add</button>
+                                </div>
+                            </div>
+                            <div class=" mydiv table-responsive tablemg">
+                                <div class="row">
+                                    <table id="Table1" style="width: 100%;" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>IP</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngIf="GetDatalob?.length != 0">
+                                            <tr *ngFor="let row of GetDatalob; let i = index">
+                                                <td>{{ i+1 }}</td>
+                                                <td>{{row.IP}}</td>
+                                                <!-- <td>{{row.Status}}</td> -->
+                                                <td><span *ngIf="row.Status == 1"
+                                                        (click)="ActiveInactive(row.IP, 0)">Active</span>
+                                                    <span *ngIf="row.Status == 0"
+                                                        (click)="ActiveInactive(row.IP, 1)">In-Active</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody *ngIf="GetDatalob?.length == 0">
+                                            <tr>
+                                                <td colspan="14" align="center">No data available!</td>
+                                            </tr>
+                                        <tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+                <button type="button" class="close" data-dismiss="modal" id="closemodal" #closeButton
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form (ngSubmit)="submit()" [formGroup]="Block" style="margin-top: -15px;" id="form-1">
+                <div class="modal-body">
+
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <label for="state">Lob</label>
+                            <!-- <select class="form-control" formControlName="lob" (change)="GetProduct()">
+                                <option *ngFor="let lob of lobData" [value]="lob.LOB">
+                                    {{ lob.LOB }}
+                                </option>
+                            </select> -->
+
+                            <ng-multiselect-dropdown class="form-control" [data]="lobData" formControlName="lob"
+                                [settings]="dropdownSettingsType" (ngModelChange)="GetProduct('1')">
+                            </ng-multiselect-dropdown>
+
+                            <div *ngIf="isSubmitted && formControls.lob.errors" class="Validationerrors">
+                                <div *ngIf="formControls.lob.errors.required"><span style="color: red;">Please select
+                                        Lob!</span></div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4">
+                            <label for="state">Product</label>
+                            <!-- <select class="form-control" formControlName="Product">
+                                <option *ngFor="let products of products" [value]="products.Product">
+                                    {{ products.Product }}
+                                </option>
+                            </select> -->
+                            <ng-multiselect-dropdown class="form-control" [data]="products" formControlName="Product"
+                                [settings]="dropdownSettingsType">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && formControls.Product.errors" class="Validationerrors">
+                                <div *ngIf="formControls.Product.errors.required"><span style="color: red;">Please
+                                        select
+                                        Product!</span></div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="state">Frequancy</label>
+                            <!-- <select class="form-control" formControlName="Frequancy">
+                                <option *ngFor="let option of frequencyOptions" [value]="option">{{ option
+                                    }}
+                                </option>
+                            </select> -->
+                            <ng-multiselect-dropdown class="form-control" [data]="frequencyOptions"
+                                formControlName="Frequancy" [settings]="dropdownSettingsType">
+                            </ng-multiselect-dropdown>
+
+                            <div *ngIf="isSubmitted && formControls.Frequancy.errors" class="Validationerrors">
+                                <div *ngIf="formControls.Frequancy.errors.required"><span style="color: red;">Please
+                                        select
+                                        Frequancy!</span></div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="state">Timelimit</label>
+                            <ng-multiselect-dropdown class="form-control" [data]="Timelimit" formControlName="Timelimit"
+                                [settings]="dropdownSettingsType">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && formControls.Timelimit.errors" class="Validationerrors">
+                                <div *ngIf="formControls.Timelimit.errors.required"><span style="color: red;">Please
+                                        select
+                                        Timelimit!</span></div>
+                            </div>
+                        </div>
+
+                        <!-- <button class="btn btn-primary nextBtn pull-right" style="margin-right: 5px;"
+                            type="submit">Submit</button> -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

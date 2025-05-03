@@ -1,0 +1,92 @@
+<div class="content-wrapper">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="box-title">Sr-Hierarchy</h3>
+                            </div>
+                            <div class="col-md-5">&nbsp;</div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="mydiv">
+
+                            <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+
+                                <div class="row" style="margin-top: 1%;margin-bottom: 2%;">
+
+                                    <div class="col-sm-2"><input type="text" formControlName="search" name="search"
+                                            class="form-control" placeholder="Search"></div>
+
+                                    <div class="col-sm-2" style="text-align: right;">
+                                        <!-- <input type="submit" class="btn btn-info" (click)="SearchData()" value="Search"> -->
+                                        <button type="submit" class="btn btn-info" style="font-size: small;"
+                                            value="Search">
+                                            <i class="fa fa-search">
+                                                Search</i></button>
+                                        &nbsp;&nbsp;
+                                        <input (click)="ClearSearch()" type="button" class="btn btn-danger"
+                                            value="Reset">
+                                    </div>
+
+                                </div>
+
+                            </form>
+
+
+                            <!-- <input #searchInput type="text" placeholder="Search...." (input)="onSearchInputChange()"> -->
+                            <!-- <input [(ngModel)]="searchInputValue" type="text" placeholder="Search...." (keyup)="onSearchInputChange()"> -->
+
+                            <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                                class="table table-bordered table-hover">
+                                <thead>
+
+
+
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>LOB</th>
+                                        <th>Create Date</th>
+                                        <th>Agent Details</th>
+                                        <th>Rm Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr">
+                                        <td>{{row.srid}}</td>
+                                        <td>
+                                            <label class="label label-success">{{row.lob}}</label> &nbsp;
+
+
+                                            <br>
+                                            <label (click)="SrPopup(1,row.srid)"
+                                                class="label label-info">Details</label>
+
+
+                                        </td>
+                                        <td>{{row.SrCreateDate}}</td>
+                                        <td><b>{{row.AgentName}}</b> <br> <b>{{row.AgentId}}</b> <br>
+                                            <b>{{row.AgentCreateDate}}</b>
+                                        </td>
+                                        <td><b>{{row.RmName}}</b> <br> <b>{{row.RmId}}</b> </td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="14" align="center">No data available!</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>

@@ -1,0 +1,164 @@
+<div class="row">
+
+
+    <div class="modal-header" style="text-align: center;">
+        <h4 class="modal-title">Request Item
+            <button type="button" (click)="CloseModel()" class="btn btn-box-tool" style="float: right;"><i class="fa fa-close"
+          style="font-size:17px"></i></button>
+        </h4>
+    </div>
+</div>
+
+<div *ngIf=" (dataArr.status == 1 && dataArr.Status_check == 1 && dataArr.ManagerId == userid)  || (dataArr.status == 1 && dataArr.Status_check == 2 && dataArr.AccountsId == userid) ">
+
+    <form class="form" (ngSubmit)="submit()" [formGroup]="inventoryform">
+        <table class="table table-bordered table-hover">
+            <tr class="ValueTD">
+                <td colspan="5" align="center">
+
+                </td>
+            </tr>
+
+
+            <tbody class=" container-fluid " id="divshow">
+
+                <tr>
+                    <td><b>Item Request</b></td>
+                    <td><b>Amount/Item</b></td>
+                    <td><b>Quantity</b></td>
+                    <td><b>Total</b></td>
+                    <td><b>Remark</b></td>
+                    <td *ngIf="(dataArr.status == 1 && dataArr.Status_check == 1 && dataArr.AccountsId == userid) "><b>Remark</b>
+                    </td>
+                    <td *ngIf="(dataArr.status == 1 && dataArr.Status_check == 1 && dataArr.ManagerId == userid) "><b>Remark</b>
+                    </td>
+                    <td *ngIf=" (dataArr.status == 1 && dataArr.Status_check == 2  )"><b>Payment</b></td>
+                    <td *ngIf="this.inventoryform.value['Payment'] == 'online' "><b>UTR No.</b></td>
+                    <td *ngIf="this.inventoryform.value['Payment'] == 'cash' "><b>Remark</b></td>
+                </tr>
+
+                <tr>
+                    <td><input type="text" class="form-control" readonly formControlName="itemname"></td>
+
+                    <td *ngIf="(dataArr.status == 1 && dataArr.Status_check == 2 && dataArr.AccountsId == userid) ">
+                        <input type="text" class="form-control" formControlName="Amount" (keyup)="onSearchChange()" readonly></td>
+
+                    <td *ngIf="(dataArr.status == 1 && dataArr.Status_check == 2 && dataArr.AccountsId == userid) ">
+                        <input type="text" formControlName="quantity" class="form-control" (keyup)="onSearchChange()" readonly></td>
+
+
+                    <td *ngIf=" (dataArr.status == 1 && dataArr.Status_check == 1 && dataArr.ManagerId == userid)">
+                        <input type="text" class="form-control" formControlName="Amount" (keyup)="onSearchChange()"></td>
+
+                    <td *ngIf=" (dataArr.status == 1 && dataArr.Status_check == 1 && dataArr.ManagerId == userid)">
+                        <input type="text" formControlName="quantity" class="form-control" (keyup)="onSearchChange()"></td>
+
+                    <td><input type="text" readonly formControlName="TotalAmount" class="form-control"></td>
+
+                    <td><input type="text" readonly class="form-control" formControlName="remark"></td>
+
+                    <td *ngIf=" (dataArr.status == 1 && dataArr.Status_check == 1 && dataArr.ManagerId == userid)">
+                        <input type="text" class="form-control" formControlName="managerremark">
+                        <div *ngIf="isSubmitted && formControls.managerremark.errors" class="ValidationError">
+                            <div *ngIf="formControls.managerremark.errors.required">Please enter remark</div>
+                        </div>
+                    </td>
+
+
+                    <td *ngIf=" (dataArr.status == 1 && dataArr.Status_check == 2) ">
+                        <select class="form-control" (change)="FileType_Status()" formControlName="Payment">
+                            <option value='' Select>--SELECT--</option>
+                            <option value="cash">Cash</option>
+                            <option value="online">Online</option>
+                        </select>
+                        <div *ngIf="isSubmitted && formControls.Payment.errors" class="ValidationError">
+                            <div *ngIf="formControls.Payment.errors.required">Please select Paymenttype!</div>
+                        </div>
+                    </td>
+
+
+                    <td *ngIf=" this.inventoryform.value['Payment'] == 'online' ">
+                        <input type="text" class="form-Control" formControlName="utrno">
+                        <div *ngIf="isSubmitted && formControls.utrno.errors" class="ValidationError">
+                            <div *ngIf="formControls.utrno.errors.required">Please enter utrno!</div>
+                        </div>
+                    </td>
+
+
+                    <td *ngIf="this.inventoryform.value['Payment'] == 'cash' ">
+                        <input type="text" class="form-Control" formControlName="accremark">
+                        <div *ngIf="isSubmitted && formControls.accremark.errors" class="ValidationError">
+                            <div *ngIf="formControls.accremark.errors.required">Please enter remark!</div>
+                        </div>
+                    </td>
+
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+
+
+        <div class="row">
+            <div class="col-md-10">&nbsp;</div>
+            <div class="col-md-2 actionButtons pull-right" style="margin-top: 10px; margin-bottom: 5px;">
+                <!-- <button class="btn btn-danger save-click pull-right" *ngIf=" dataArr.Status_check == 1 || dataArr.Status_check == 2 ">Rejected</button> -->
+                <button class="btn btn-primary save-click pull-right" *ngIf=" dataArr.Status_check == 1 || dataArr.Status_check == 2 " type="submit">Submit</button>
+                <button class="btn btn-primary save-click" *ngIf="dataArr.Status_check == 3" type="submit">Approved</button>
+            </div>
+
+        </div>
+
+
+    </form>
+
+</div>
+
+
+
+
+
+<div class="mydiv">
+    <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+
+        <thead>
+
+            <tr>
+                <th>S.No</th>
+                <th>Type</th>
+                <th>Category</th>
+                 <th>Quantity</th>
+                <th>Amount</th>
+                <th>Total Amount</th>
+                <th>Remarks</th>
+                <th>Add Stamp</th>
+            </tr>
+        </thead>
+
+
+        <tbody *ngIf="dataArray?.length != 0">
+            <tr *ngFor="let row of dataArray; let i=index;">
+                <td>{{row.srno}}</td>
+                <td>{{row.type}}</td>
+                <td>{{row.CategoryName}}</td>
+                 <td>{{row.Quantity}}</td>
+                <td>{{row.Amount}}</td>
+                <td>{{row.totalamount}}</td>
+                <td>{{row.Remark}}</td>
+                <td>{{row.Add_stamp}}</td>
+            </tr>
+
+        </tbody>
+        <tbody *ngIf="dataArray?.length == 0">
+            <tr>
+                <td colspan="8" align="center">No data Available !</td>
+            </tr>
+            <tbody>
+
+
+    </table>
+
+
+</div>

@@ -1,0 +1,49 @@
+<h2 mat-dialog-title>Edit {{ masterType }}</h2>
+<form class="form" [formGroup]="editForm" (ngSubmit)="submitMastersData()">
+
+  <!-- <div class="col-sm-12" *ngIf="masterType == 'Profile'">
+    <label > Choose Vertical</label>
+    <ng-multiselect-dropdown class="form-control" placeholder="--Select Vertical--" [data]="verticalData" formControlName="vertical" [settings]="dropdownSettingsType" [(ngModel)]="selectedVertical"> </ng-multiselect-dropdown>
+
+    <div *ngIf="isSubmitted && formControls.vertical.errors " class="ValidationError">
+    <div *ngIf="formControls.vertical.errors.required">Please Select Vertical!</div>
+    </div>
+  </div> -->
+
+  <div class="col-sm-12" *ngIf="masterType == 'Branch'">
+    <label> Choose Zone</label>
+    <ng-multiselect-dropdown class="form-control" placeholder="--Select Zone--" [data]="zoneData" formControlName="zone"
+      [settings]="dropdownSettingsType" [(ngModel)]="selectedZone"> </ng-multiselect-dropdown>
+
+    <div *ngIf="isSubmitted && formControls.zone.errors " class="ValidationError">
+      <div *ngIf="formControls.zone.errors.required">Please Select Zone!</div>
+    </div>
+  </div>
+
+  <div class="col-sm-12">
+    <label> Enter Name</label>
+    <input class="form-control" type="text" formControlName="name" placeholder="Enter {{masterType}} Name">
+
+    <div *ngIf="isSubmitted && formControls.name.errors " class="ValidationError">
+      <div *ngIf="formControls.name.errors.required">Please Enter Name!</div>
+    </div>
+  </div>
+
+  <div class="col-sm-12" *ngIf="masterType == 'Branch'">
+    <label> Enter Address</label>
+    <textarea class="form-control" type="text" formControlName="branchAddress"
+      placeholder="Enter Branch Name">{{ branchAddress }}</textarea>
+    <div *ngIf="isSubmitted && formControls.branchAddress.errors " class="ValidationError">
+      <div *ngIf="formControls.branchAddress.errors.required">Please Enter Branch Address!</div>
+    </div>
+  </div>
+
+
+  <div class="col-md-12">
+    <mat-dialog-actions>
+      <button class="btn btn-primary" type="submit">Submit</button>&nbsp;&nbsp;
+      <button class="btn btn-light" (click)="close()">Close</button>
+    </mat-dialog-actions>
+  </div>
+
+</form>

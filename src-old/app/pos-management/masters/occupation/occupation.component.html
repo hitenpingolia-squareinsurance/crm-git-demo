@@ -1,0 +1,148 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title">Occupation</div>
+            </div>
+  
+            <div class="main_body main_card_height_scroll_withoutfooter">
+  
+              <div class="filterquotesrow">
+                <button class="btn btninfo1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><a role="button"><i class="fa fa-filter"></i><span>Filters</span><i class="fa fa-angle-down"></i></a></button>
+
+                <button class="btn btn-info" data-toggle="modal" data-target="#occupationModal" data-backdrop="static"
+                  data-keyboard="false" (click)="openAddModal()" 
+                  style="float:right; margin-bottom:2px; margin-left:10px;">
+                  Occupation&nbsp;<i class="fa fa-plus-circle" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panelbody">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <input type="text" id="search-input" class="form-control" placeholder="Search" [(ngModel)]="searchQuery">
+                          </div>
+                          <div class="col-md-8">
+                            <button class="btn btn-info" (click)="SearchData()">Search</button>
+                            <button (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset" style="margin-left: 10px;"> <i
+                                class="fa fa-close"> </i> Reset</button>
+                          </div>
+                        </div>
+                    
+                </div>
+              </div>
+              <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" class="row-border table" id="Table1">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+                <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                  <li class="table-row tablerow{{(i % 10) + 1}}" *ngFor="let row of dataAr; let i=index;">
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{row.SrNo}}</div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Name</div>
+                            <strong class="fs_18">{{row.Name}} </strong>
+                          </div>
+                        </div>
+                      </div>
+                      </div>
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+                        <div class="label_chips non_motor_lob">
+                          <span>Risk Class : {{row.riskClass}}</span>&nbsp;&nbsp;
+                        </div>
+                      </div>
+                    </div>             
+                    <div class="last_row">
+                      <div class="d_flex effective_date">                      
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom" >
+                        <!-- <button class="btnbg" type="button" *ngIf="(row.status == '0')" (click)="UpdateStatusPosp(row.AgentId, 1, 'status',row.Id)">InActive</button>
+                        <button class="btnbg1" type="button" *ngIf="(row.status == '1')" (click)="UpdateStatusPosp(row.AgentId, 0, 'status',row.Id)">Active</button> -->
+
+
+
+                        <button class="btn"
+                        [ngClass]="{'btn-success': row.status == 1, 'btn-danger': row.status == 0}"
+                        (click)="toggleStatus(row.Id)" style="padding:3px 10px; margin-right: 10px;">
+                        {{ row.status == 1 ? 'Active' : 'In-Active' }}
+                      </button>
+                      <button class="btn btn-info" style="padding:3px 10px; margin-right: 10px;" data-toggle="modal"
+                        data-target="#occupationModal" data-backdrop="static" data-keyboard="false"
+                        (click)="openEditModal(row.Id)">Edit</button>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="occupationModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="main_card_form">
+              <div class="main_header">
+                <div class="header_title">
+                    {{ modalAction === 'add' ? 'Create' : 'Edit' }} Occupation
+                </div>
+              </div>
+              <form class="form" (ngSubmit)="submitForm()" [formGroup]="OccupationForm">
+                <div class="main_body main_card_height_scroll">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i> Basic Details</div>
+                    </div>
+  
+                    <div class="col-md-12">
+                      <div class="input_group">
+                        <label for="Occupation">
+                          Occupation Name
+                          <span *ngIf="SubmitOccupation && formcontrolsOccupationForm.Name.errors"
+                            class="ValidationError">
+                            <span *ngIf="formcontrolsOccupationForm.Name.errors.required">Occupation Name is required</span>
+                          </span>
+                        </label>
+                        <div class="position_relative">
+                          <input type="text" class="form_control icon_cs" id="Name" formControlName="Name"
+                            name="Name" placeholder="Enter occupation">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="main_footer">
+                  <button type="button" id="close1" class="mr_5 btn-danger Save_click" data-dismiss="modal">Close</button>
+                  <button type="submit" class="Save_click">
+                    {{ modalAction === 'add' ? 'Submit' : 'Update' }}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

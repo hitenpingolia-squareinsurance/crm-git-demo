@@ -1,0 +1,329 @@
+<!-- model  -->
+
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      
+      <!-- <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <div class="">
+        <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+        <button type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+     </div>
+
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label for="to_email">To Email:</label>
+          <input type="email" id="to_email" [(ngModel)]="toEmail" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="cc_email">CC Email:</label>
+          <input type="email" id="cc_email" class="form-control" [(ngModel)]="ccEmail" />
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="Close_model_button" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="sendEmail()">send Email</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+  <!-- Content Header (Page header) -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-6">
+        <!-- USERS LIST -->
+        <div class="box box-info" style="margin-bottom: 20px;">
+          <div class="box-header with-border">
+            <h3 class="box-title">{{row.endosmentId}}
+              <!-- <button>Send Email</button> -->
+              
+              <button type="button" class="btn label-primary" data-toggle="modal" data-target="#exampleModal">
+                Send Email
+              </button>
+              <!-- <button type="button" class="btn label-primary" (click)="yuvraj_test_code()">
+                yuvraj_test_code Email
+              </button> -->
+            </h3>
+            <div class="box-tools pull-right btn-right-side">
+              <a routerLink="/survey/edit-requests/{{row.endosmentId}}"
+                *ngIf="((status == 0 || status == 1 )&& rightType == 'Manage') && (assignedToEmp != '' && assignedToEmp != null)"><span
+                  class="label label-Details">Raise Inspection</span></a>
+              <!-- <a (click)="GetPolicyDetails(row.Quotation_Id)"><span class="label label-Policy_Details"> Policy
+                  Details</span></a> -->
+            </div>
+          </div>
+
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+
+
+
+              <tbody>
+                <tr class="ValueTD">
+                  <td><strong>Creator Name</strong></td>
+                  <td><strong>Creator Mobile</strong></td>
+                  <td><strong>Creator Email</strong></td>
+
+                </tr>
+
+                <tr>
+                  <td>{{this.addedByDetails}}</td>
+                  <td>{{this.addedByMobile | uppercase}}</td>
+                  <td>{{this.addedByEmail }}</td>
+                </tr><br>
+
+
+
+
+              </tbody>
+            </table>
+
+          </div>
+
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+
+
+
+              <tbody>
+                <tr class="ValueTD">
+                  <td><strong>Detail Type</strong></td>
+                  <td><strong>Previous Value</strong></td>
+                  <td><strong>New Value</strong></td>
+                </tr>
+
+                <tr *ngFor="let data of requestData">
+                  <td>{{data.Col_Name}}</td>
+                  <td>{{data.Old_Value | uppercase}}</td>
+                  <td>{{data.Col_Value | uppercase}}</td>
+                </tr><br>
+
+                <tr *ngIf="NameUpdateReason != '' && NameUpdateReason != null">
+                  <td><strong>Name Update Reason</strong></td>
+                  <td>{{NameUpdateReason}}</td>
+                </tr>
+
+                <tr *ngIf="NcbUpdateReason != '' && NcbUpdateReason != null">
+                  <td><strong>NCB Update Reason</strong></td>
+                  <td>{{NcbUpdateReason}}</td>
+                </tr>
+
+                <tr *ngIf="RcFrontDoc != ''">
+                  <td><strong>Rc Front</strong></td>
+                  <td><a (click)="ViewDocument(RcFrontDoc)" href="javascript:;">Click to View</a> </td>
+                </tr>
+
+                <tr *ngIf="RcBackDoc != ''">
+                  <td><strong>Rc Back</strong></td>
+                  <td><a (click)="ViewDocument(RcBackDoc)" href="javascript:;">Click to View</a> </td>
+                </tr>
+
+                <tr *ngIf="RequestLetterDoc != ''">
+                  <td><strong>Request Letter</strong></td>
+                  <td><a (click)="ViewDocument(RequestLetterDoc)" href="javascript:;">Click to View</a> </td>
+                </tr>
+
+                <tr *ngIf="SupportingDoc != ''">
+                  <td><strong>Supporting Document</strong></td>
+                  <td><a (click)="ViewDocument(SupportingDoc)" href="javascript:;">Click to View</a> </td>
+                </tr>
+
+                <tr *ngIf="EndorsementCopyDoc != ''">
+                  <td><strong>Endorsement Copy</strong></td>
+                  <td><a (click)="ViewDocument(EndorsementCopyDoc)" href="javascript:;">Click to View</a> </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Current Status </strong></td>
+                  <td>
+                    <span class="btn btn-primaryx" style="color: white;" *ngIf="(curStatus == 'Pending')">Pending</span>
+                    <span class="btn btn-warningx" style="color: white;" *ngIf="(curStatus == 'In Process')">In
+                      Process</span>
+                    <span class="btn btn-successx" style="color: white;"
+                      *ngIf="(curStatus == 'Complete')">Complete</span>
+                    <span class="btn btn-dangerx" style="color: white;"
+                      *ngIf="(curStatus == 'Rejected')">Rejected</span>
+                  </td>
+
+                  <td>{{currentRemark}}</td>
+                </tr>
+
+                <tr>
+                  <td><strong>Current Remarks </strong></td>
+                  <td>
+                    <span *ngIf="(curStatus == 'Pending')">{{row.PendingRemark}}</span>
+                    <span *ngIf="(curStatus != 'Pending')">{{currentRemark}}</span>
+
+
+
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Creation Date/Time</strong></td>
+                  <td>{{row.lastActionDate}}</td>
+                </tr>
+
+
+              </tbody>
+            </table>
+
+          </div>
+
+        </div>
+        <!--/.box -->
+      </div>
+      <!-- /.col -->
+
+
+
+      <div class="col-md-6">
+        <!-- DIRECT CHAT -->
+        <div class="box box-info direct-chat direct-chat-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">Endorsement Discussion</h3>
+
+            <div class="box-tools pull-right">
+
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <!-- Conversations are loaded here -->
+            <div #scrollframe id="directmessages" class="direct-chat-messages frame" (scroll)="scrolled($event)"
+              style="height: 76vh;">
+
+              <div *ngFor="let m of Messages;" class="direct-chat-msg {{m.MainClassName}} item" #item>
+                <div class="direct-chat-info clearfix">
+                  <span class="direct-chat-name pull-{{m.ClassName}}">{{m.Name}}</span>
+                  <span class="direct-chat-timestamp pull-{{m.DateTimeClassName}}">{{m.DateTime}}</span>
+                </div>
+                <!-- /.direct-chat-info -->
+                <img class="direct-chat-img" src="assets/dist/img/user2-160x160.png">
+                <!-- /.direct-chat-img -->
+                <div *ngIf="m.Message != ''" class="direct-chat-text">
+                  {{m.Message}}
+                </div>
+
+                <div *ngIf="m.Is_Attachement == '1'" class="attachment">
+                  <h6>Attachments:</h6>
+
+                  <a href="javascript:void" (click)="ViewDocument(m.Attachment_Url)">
+                    <p class="filename">
+                      {{m.Attachment_Name}}
+                    </p>
+                  </a>
+                </div>
+                <!-- /.direct-chat-text -->
+              </div>
+            </div>
+
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <form *ngIf="(row.Status != '8') &&  (row.CurrentUser_Id != '0') &&  (row.Status != '5')"
+              [formGroup]="ChatForm" (ngSubmit)="Send()" method="post">
+              <div class="input-group">
+                <input type="text" formControlName="Message" placeholder="type message..." class="form-control">
+                <span class="input-group-btn">
+                  <label for="file-input">
+                    <a type="button" class="btn">
+                      <input id="file-input" (change)="UploadAttachment($event)" style="display: none;" type="file">
+                      <i class="fa fa-paperclip"></i></a></label>
+
+
+                  <button type="submit" class="btn btn-info btn-flat">Send</button>
+                </span>
+              </div>
+            </form>
+          </div>
+          <!-- /.box-footer-->
+        </div>
+        <!--/.direct-chat -->
+      </div>
+      <!-- /.col -->
+
+      <div class="col-sm-6"
+        *ngIf="((status == 0 || status == 1 )&& rightType == 'Manage') && (assignedToEmp != '' && assignedToEmp != null)">
+
+        <!-- <div class="col-sm-6" > -->
+        <div class="box box-info" style="margin-top: 0;">
+          <form class="form" [formGroup]="statusUpdateForm" (ngSubmit)="updateRequestStatus()">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="status">Update Status </label>
+                <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="statusData"
+                  formControlName="status" (onSelect)="showHideDocUploadDiv($event)" [settings]="dropdownSettingsType1">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.status.errors " class="ValidationError">
+                  <div *ngIf="formControls.status.errors.required">Please Update Status! </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <label class="form-control-label pull-left">Remarks</label>
+                <small class="text-muted"> &nbsp;(Max 250 characters)</small>
+                <textarea class="form-control" name="Remark" formControlName="statusRemarks" placeholder="Remarks"
+                  maxlength="250"></textarea>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="showDocUploadDiv == 'show'">
+              <div class="col-sm-6 Vineet old_1 doctype_OLD">
+                <label class="form-control-label pull-left">Inspection Report</label>
+                <label class="form-control btn fileUpload btn-default"
+                  [ngClass]="(this.endosement_copy_define==1 ? 'ImageUploaded' : 'else' )" name="button"
+                  value="Endorsement_Copy">
+                  <input type="file" (change)="checkFileType($event,'Endorsement_Copy')" id="file"
+                    formControlName="endorsementCopy" accept="image/png, image/gif, image/jpeg" style="display:none;" />
+                  <span class="fas fa-user-alt"> <b>Upload</b> </span> </label>
+                <div *ngIf="isSubmitted && formControls.endorsementCopy.errors " class="ValidationError">
+                  <div *ngIf="formControls.endorsementCopy.errors.required">Please Upload Inspection Report! </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-2 actionButtons" style="margin-top: 45px;">
+                <button class="btn btn-primary save-click" type="submit">Submit</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+
+  </section>
+  <!-- /.content -->
+
+  <div>

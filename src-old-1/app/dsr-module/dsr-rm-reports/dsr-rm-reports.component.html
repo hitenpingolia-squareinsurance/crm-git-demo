@@ -1,0 +1,403 @@
+<section class="inner_page_css knowlage_details_page">
+  <div class="container-fluid">
+    <div class="main_card_form">
+      <div class="main_header">
+        <div class="header_title">DSR</div>
+      </div>
+
+      <div class="main_body main_card_height_scroll_withoutfooter">
+
+        <div class="btn_list_group">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="row">
+                <div class="col-md-7">
+                  <div id="exTab1">
+                    <ul class="nav nav-pills" *ngIf="click_tab == 'Yes'">
+
+                      <li [ngClass]="(active_tab == 'Business Call'?'active':'')"><a data-toggle="tab" class=""
+                          href="#1a" (click)="SetActiveTab('Business Call')">Business Call</a></li>
+
+                      <li [ngClass]="(active_tab == 'Prospect Call'?'active':'')"><a data-toggle="tab" href="#2a"
+                          (click)="SetActiveTab('Prospect Call')">Prospect
+                          Call</a></li>
+
+                      <li [ngClass]="(active_tab == 'Club'?'active':'')"><a data-toggle="tab" href="#3a"
+                          (click)="SetActiveTab('Club')">Club</a></li>
+
+                      <li [ngClass]="(active_tab == 'Cross Sell'?'active':'')"><a data-toggle="tab" href="#3a"
+                          (click)="SetActiveTab('Cross Sell')">Cross Sell</a></li>
+
+                      <li [ngClass]="(active_tab == 'Employee Call'?'active':'')"><a data-toggle="tab" href="#3a"
+                          (click)="SetActiveTab('Employee Call')">Employee Call</a></li>
+
+                    </ul>
+
+                    <ul class="nav nav-pills" *ngIf="click_tab == 'No'">
+
+                      <li [ngClass]="(active_tab == 'Business Call'?'active':'')">
+                        <a class="not_click">Business Call</a>
+                      </li>
+
+                      <li [ngClass]="(active_tab == 'Prospect Call'?'active':'')">
+                        <a class="not_click">Prospect Call</a>
+                      </li>
+
+                      <li [ngClass]="(active_tab == 'Club'?'active':'')">
+                        <a class="not_click">Club</a>
+                      </li>
+
+                      <li [ngClass]="(active_tab == 'Cross Sell'?'active':'')">
+                        <a class="not_click">Cross Sell</a>
+                      </li>
+
+                      <li [ngClass]="(active_tab == 'Employee Call'?'active':'')">
+                        <a class="not_click">Employee Call</a>
+                      </li>
+
+                    </ul>
+
+                  </div>
+                </div>
+
+                <div class="col-md-5">
+
+                  <div class="dsr-fillter">
+                    <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                      data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <a role="button" class="fa fa-filter"><span>Filters</span><i
+                          class="fa fa-angle-down pull-right"></i></a>
+                    </button>
+
+                    <button
+                      *ngIf="active_tab == 'Business Call' || active_tab == 'Prospect Call' || active_tab == 'Cross Sell'"
+                      class="btn btn-info2" type="button" (click)="AddFollowUpData('Follow Up', active_tab)">
+                      <i class="fa fa-phone" aria-hidden="true"></i> Virtual Call 
+                    </button>
+
+                    <button *ngIf="active_tab == 'Prospect Call'" class="btn btn-info3" type="button"
+                      (click)="AddFollowUpData('Prospect', 'Prospect Call')">
+                      <i class="fa fa-user-o" aria-hidden="true"></i> Prospect Call </button>
+
+                    <button class="btn btn-info3" type="button" (click)="ShowClubCriteria()"
+                      *ngIf="active_tab == 'Business Call' || active_tab == 'Club'">
+                      <i class="fa fa-user-o" aria-hidden="true"></i> Club Criteria </button>
+
+                    <button class="btn btn-warning" style="height: 30px;" type="button" (click)="ExportClubReward()"
+                      *ngIf="active_tab == 'Club'">
+                      <i title="Please Wait..." *ngIf="isLoadingExportReward" class="fa fa-refresh fa-spin"></i>
+                      <i class="fa fa-download" *ngIf="!isLoadingExportReward" aria-hidden="true"></i> Export Club Reward 
+                    </button>
+
+                    <button class="btn btn-info3" type="button" (click)="AddEmployeeCall('Call')"
+                      *ngIf="active_tab == 'Employee Call'">
+                      <i class="fa fa-phone" aria-hidden="true"></i> Call </button>
+
+                    <button class="btn btn-info3" type="button" (click)="AddEmployeeCall('Meeting')"
+                      *ngIf="active_tab == 'Employee Call'">
+                      <i class="fa fa-user-o" aria-hidden="true"></i> Meeting </button>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <app-current-mapping-filter (postCreated)="SearchData($event)"></app-current-mapping-filter>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="loader_inner_data">
+              <div class="show_loader_on" [ngClass]="(ShowDashboardLoader == 'Yes'?'inner_cs_loader':'')">
+                <div class="loader_box">
+                  <img
+                    src="https://squarebweb-documents.s3.ap-south-1.amazonaws.com/Webiste/web-react/SquareWebImages/loadernew.gif">
+                </div>
+              </div>
+              <div class="d_flex flex_Equal flex_wrap flex_Middel  position-relative"
+                *ngIf="active_tab != 'Employee Call'" style="cursor: not-allowed !important; position:relative;">
+                <div class="c-dashboardInfo width_dev_eight">
+                  <div class="wrap">
+                    <ul>
+                      <li>
+                        <Strong>Total POSP</Strong>
+                        <label style="cursor: not-allowed !important;">{{ TotalPosCount }}</label>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="c-dashboardInfo width_dev_eight">
+                  <div class="wrap">
+                    <ul>
+                      <li><Strong>Activity Done</Strong> <label style="cursor: not-allowed !important;">{{
+                          ActivityDoneCount }}</label></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="c-dashboardInfo width_dev_eight">
+                  <div class="wrap">
+                    <ul>
+                      <li><Strong>Under Followup</Strong> <label style="cursor: not-allowed !important;">{{
+                          UnderFollowupCount }}</label></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="c-dashboardInfo width_dev_eight">
+                  <div class="wrap">
+                    <ul>
+                      <li><Strong>Today Activity</Strong> <label style="cursor: not-allowed !important;">{{
+                          TodayActivityCount }}</label></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="c-dashboardInfo width_dev_eight">
+                  <div class="wrap">
+                    <ul>
+                      <li><Strong>Yesterday Activity</Strong> <label style="cursor: not-allowed !important;">{{
+                          YesterdayActivityCount }}</label></li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+              <div class="d_flex flex_Equal flex_wrap flex_Middel  position-relative"
+                *ngIf="active_tab != 'Employee Call'" style="cursor: not-allowed !important;">
+                <div class="c-dashboardInfo width_dev_eight1">
+                  <div class="wrap">
+                    <ul>
+                      <li><Strong>Today Followup</Strong> <label style="cursor: not-allowed !important;">{{ TodayData
+                          }}</label></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="c-dashboardInfo width_dev_eight1">
+                  <div class="wrap">
+                    <ul>
+                      <li><Strong>Tomorrow Followup</Strong> <label style="cursor: not-allowed !important;">{{
+                          TomorrowData }}</label></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="c-dashboardInfo width_dev_eight1">
+                  <div class="wrap">
+                    <ul>
+                      <li><Strong>Overmorrow Followup</Strong> <label style="cursor: not-allowed !important;">{{
+                          OvermorrowData }}</label></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="c-dashboardInfo width_dev_eight1">
+                  <div class="wrap">
+                    <ul>
+                      <li><Strong>Missed Followup</Strong> <label style="cursor: not-allowed !important;">{{ MissedData
+                          }}</label></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="All">
+
+                <div class="custom_table tables_layout_design">
+
+
+                  <!-- {{dataAr?.length}} -->
+                  <table datatable [dtOptions]="dtOptions" class="row-border table" id="Table1">
+                    <thead>
+                      <tr>
+                        <th></th>
+                      </tr>
+                    </thead>
+                  </table>
+
+                  <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                    <li class="table-row tablerow{{(i % 10) + 1}}" *ngFor="let row of dataAr; let i=index;">
+                      <span class="addon_tag_name"
+                        *ngIf="row.Type == 'POS' && row.AgentType != ''">{{row.AgentType}}</span>
+                      <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">{{ row.SrNo }}</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+
+                              <div *ngIf="active_tab == 'Business Call' || active_tab == 'Club'">Partner Name &
+                                Code </div>
+                              <div *ngIf="active_tab == 'Prospect Call'">Prospect Name & Code </div>
+                              <div *ngIf="active_tab == 'Cross Sell'">Customer Name & Code </div>
+                              <div *ngIf="active_tab == 'Employee Call'">Employee Name & Code </div>
+
+                              <strong class="fs_18">{{ row.Name }}</strong>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div *ngIf="active_tab == 'Business Call' || active_tab == 'Club'">Partner Mobile
+                                No.</div>
+
+                              <div *ngIf="active_tab == 'Prospect Call'">Prospect Mobile No.</div>
+                              <div *ngIf="active_tab == 'Cross Sell'">Prospect Mobile No.</div>
+                              <div *ngIf="active_tab == 'Employee Call'">Employee Mobile No.</div>
+                              <strong class="fs_18">{{row.Mobile}}</strong>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Reporting Manager & Code</div><strong class="fs_18">{{ row.RM_Name
+                                }}</strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="last_row_div">
+
+                        <!-- Business Call && Club Related Section Start-->
+                        <div class="d_flex custon-234"
+                          *ngIf="active_tab == 'Business Call' || active_tab == 'Club' || active_tab == 'Cross Sell'">
+
+                          <div class="label_chips health_lob">
+                            <span>LFY Total - {{ row.FTY }}</span><span *ngIf="row.FTY_STR != '' && row.FTY_STR != 0">
+                              ({{row.FTY_STR}})</span>&nbsp;&nbsp;
+                          </div>
+
+                          <div class="label_chips motor_lob">
+                            <span>YTD LFY - {{ row.FTYLFY }} </span><span
+                              *ngIf="row.FTYLFY_STR != '' && row.FTYLFY_STR != 0">
+                              ({{row.FTYLFY_STR}})</span>&nbsp;&nbsp;
+                          </div>
+
+                          <div class="label_chips non_motor_lob">
+                            <span>YTD CFY - {{ row.FTYCFY }}</span><span
+                              *ngIf="row.FTYCFY_STR != '' && row.FTYCFY_STR != 0">
+                              ({{row.FTYCFY_STR}})</span>&nbsp;&nbsp;
+                          </div>
+
+                          <div class="label_chips growth_positive" *ngIf="row.CheckNumber=='PositiveNumber'">
+                            <span><i class="fa fa-arrow-up" aria-hidden="true"></i> {{ row.GrowthRate }}%</span>
+                          </div>
+
+                          <div class="label_chips growth_negative" *ngIf="row.CheckNumber=='NegativeNumber'">
+                            <span><i class="fa fa-arrow-down" aria-hidden="true"></i> {{ row.GrowthRate
+                              }}%</span>
+                          </div>
+
+                          <div class="label_chips city_chip" *ngIf="row.CityName != ''">
+                            <span> City : {{ row.CityName }}</span>
+                          </div>
+
+                        </div>
+                        <!-- Business Call && Club Related Section End-->
+
+                        <!-- Prospect Call Related Section Start-->
+                        <div class="d_flex" *ngIf="active_tab == 'Prospect Call'">
+
+                          <div class="label_chips health_lob">
+                            <span>Prospect Type : {{ row.Prospect_Type }}</span>&nbsp;&nbsp;
+                          </div>
+
+                          <div class="label_chips motor_lob">
+                            <span>Call Type : {{ row.Call_Type }} </span>&nbsp;&nbsp;
+                          </div>
+
+                          <div class="label_chips non_motor_lob">
+                            <span>Add Stamp : {{ row.Insert_Date }}</span>&nbsp;&nbsp;
+                          </div>
+                        </div>
+                        <!-- Prospect Call Related Section End-->
+
+                      </div>
+
+                      <div class="last_row">
+                        <div class="d_flex effective_date">
+                          <div class="date_text" *ngIf="row.Type == 'POS' && row.AgentLob != ''">
+                            <span class="fs_12">LOB</span>
+                            <span class="fs_12">{{ row.AgentLob }}</span>
+                          </div>
+                        </div>
+
+                        <!-- Business Call && Club Related Section Start-->
+                        <div class="col_2 action_btn d_flex flex_Middel box-bottom"
+                          *ngIf="active_tab == 'Business Call' || active_tab == 'Club' || active_tab == 'Cross Sell'">
+
+                          <a *ngIf="active_tab == 'Business Call'" style="cursor: pointer;"
+                            (click)="ShareAspirant(row.Id)">
+                            Add Aspirant +</a>
+
+                          <a style="cursor: pointer;" (click)="GetBusinessDetails(row.Id, row.Name)" class=" btn-bg">
+                            Business Details >></a>
+
+                          <a style="cursor: pointer;" (click)="FollowUpTrack(row.Id, row.Name, 'Business Call')"
+                            class=" btn-bg1">
+                            Activity Track >></a>
+
+                        </div>
+                        <!-- Business Call && Club Related Section End-->
+
+                        <!-- Prospect Call Related Section Start-->
+                        <div class="col_2 action_btn d_flex flex_Middel box-bottom"
+                          *ngIf="active_tab == 'Prospect Call'">
+                          <a style="cursor: pointer;" (click)="FollowUpTrack(row.Id, row.Name, 'Prospect Call')"
+                            class="mr_5 btn-bg">
+                            Activity Track >></a>
+                        </div>
+                        <!-- Prospect Call Related Section End-->
+
+                        <!-- Employee Call Related Section Start-->
+                        <div class="col_2 action_btn d_flex flex_Middel box-bottom"
+                          *ngIf="active_tab == 'Employee Call'">
+                          <a style="cursor: pointer;" (click)="FollowUpTrack(row.Id, row.Name, 'Employee Call')"
+                            class="mr_5 btn-bg">
+                            Activity Track >></a>
+                        </div>
+                        <!-- Employee Call Related Section End-->
+
+                      </div>
+                    </li>
+
+
+
+
+
+
+
+                  </ul>
+                  <ul class="responsive-table" *ngIf="dataAr?.length === 0">
+                    <li class="table-row">
+                      <div class="no_data_found">No data available !</div>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

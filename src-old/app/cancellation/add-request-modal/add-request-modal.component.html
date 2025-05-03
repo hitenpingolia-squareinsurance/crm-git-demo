@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>Cancellation Request</h2>
+
+<form class="form" [formGroup]="modalForm" (ngSubmit)="submitCancellationRequest()">
+
+  <div class="col-md-4">
+    <label class="form-control btn fileUpload btn-default" name="button" value="Alternate_policy">
+      <input type="file" (change)="checkFileType($event,'Alternate_policy')" formControlName="alternatePolicy" accept="image/png, image/gif, image/jpeg, application/pdf" style="display:none;" />
+      <span class="fas fa-user-alt"><b>Alternate Policy *</b></span>
+
+    </label>
+    <div *ngIf="isSubmitted && formControls.alternatePolicy.errors " class="ValidationError">
+      <div *ngIf="formControls.alternatePolicy.errors.required">Please Upload Alternate Policy!</div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <label class="form-control btn fileUpload btn-default" name="button" value="Customer_letter">
+      <input type="file" (change)="checkFileType($event,'Customer_letter')" formControlName="customerLetter" accept="image/png, image/gif, image/jpeg, application/pdf" style="display:none;" />
+      <span class="fas fa-user-alt"><b>Customer Letter *</b></span>
+    </label>
+    <div *ngIf="isSubmitted && formControls.customerLetter.errors " class="ValidationError">
+      <div *ngIf="formControls.customerLetter.errors.required">Please Upload Customer Letter!</div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <label class="form-control btn fileUpload btn-default" name="button" value="Cancel_Cheque">
+      <input type="file" (change)="checkFileType($event,'Cancel_Cheque')" formControlName="cancelCheque" accept="image/png, image/gif, image/jpeg, application/pdf" style="display:none;" />
+      <span class="fas fa-user-alt"><b>Cancel Cheque </b></span>
+    </label>
+  </div>
+
+  <div class="col-md-12" style="margin-top: 10px;">
+    <label for="name">Remarks</label>
+     <textarea class="form-control" formControlName="remarks" placeholder="Enter Remarks" maxlength="200"></textarea>
+      <!-- <div *ngIf="isSubmitted && formControls.customerName.errors " class="ValidationError">
+                <div *ngIf="formControls.customerName.errors.required">Please
+                  Enter Customer Name!</div>
+              </div> -->
+  </div>
+
+  <div class="col-md-12">
+    <mat-dialog-actions>
+      <button class="btn btn-primary" [disabled]="buttonDisable" type="submit">Save</button>&nbsp;&nbsp;
+
+      <button class="btn btn-light" (click)="close()">Close</button>
+    </mat-dialog-actions>
+  </div>
+
+</form>

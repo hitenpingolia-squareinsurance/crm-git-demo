@@ -1,0 +1,88 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+
+          <div class="box-body">
+						<app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+            <hr>
+            <!-- <div class="row">
+              <div class="col-sm-2">
+                <b>Total Files :</b>
+              </div>
+              <div class="col-sm-2">
+                {{TotalFiles}}
+              </div>
+            </div> -->
+
+            <div class="mydiv">
+              <table datatable [dtOptions]="dtOptions" id="Table1"  class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+
+                    <th>S.No</th>
+                    <th>Inspection Id</th>
+                    <th>Action</th>
+                    <th>Customer Details</th>
+                    <th>Customer Location</th>
+                    <th>Created By</th>
+                    <th>Product/Make/Model</th>
+
+                  </tr>
+
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{row.sno}}</td>
+                    <td>{{row.surveyId}}</td>
+
+                    <td><div  *ngIf="(row.assignedToEmp == '' || row.assignedToEmp == null )">
+                      <label class="btn btn-success" style="cursor: pointer;" (click)="acceptSurveyRequest(row.surveyId)">Accept</label><br>
+                      <a  *ngIf="(row.status == 0)" routerLink="/survey/view-details/{{row.surveyId}}"><span class="btn btn-warning"> Pending</span></a><br>
+                     </div>
+
+                     <div  *ngIf="(row.assignedToEmp != '' && row.assignedToEmp != null )">
+                      <a  *ngIf="(row.status == 0)" routerLink="/survey/view-details/{{row.surveyId}}/Manage"><span class="btn btn-primary"> Pending</span></a>
+                      <a  *ngIf="(row.status == 1)" routerLink="/survey/view-details/{{row.surveyId}}/Manage"><span class="btn btn-warning"> In Process</span></a>
+                      <a  *ngIf="(row.status == 2)" routerLink="/survey/view-details/{{row.surveyId}}/Manage"><span class="btn btn-success"> Recommended</span></a>
+                      <a  *ngIf="(row.status == 4)" routerLink="/survey/view-details/{{row.surveyId}}/Manage"><span class="btn btn-danger1"> Not-Recommended</span></a>
+                      <a  *ngIf="(row.status == 3)" routerLink="/survey/view-details/{{row.surveyId}}/Manage"><span class="btn btn-danger1"> Rejected</span></a></div></td>
+
+                    <td> <b>Name - </b> {{row.customerName}}<br>  <b>Mobile - </b>  {{row.customerMobile}}<br>  <b>Email - </b> {{row.customerEmail}}</td>
+
+
+
+                    <td> <b>State - </b>  {{row.state}}<br>  <b>City - </b> {{row.city}} <br>  <b>Pincode - </b> {{row.pincode}} </td>
+
+                    <td> <b>Type - </b>  {{row.CreatorType}}<br> <b>Name - </b> {{row.CreaterName}} - {{row.CreaterCode}} <br>    <b>Mobile - </b> {{row.CreaterMobile}}</td>
+
+
+                    <td> <b>Product - </b> {{row.product}}<br>  <b>Make - </b> {{row.make}}<br>  <b>Model - </b>  {{row.model}}</td>
+
+                  </tr>
+
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+</div>

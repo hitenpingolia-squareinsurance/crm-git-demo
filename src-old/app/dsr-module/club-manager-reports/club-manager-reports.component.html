@@ -1,0 +1,229 @@
+<section class="inner_page_css knowlage_details_page">
+  <div class="container-fluid">
+    <div class="main_card_form">
+      <div class="main_header">
+        <div class="header_title">DSR</div>
+      </div>
+
+      <div class="main_body main_card_height_scroll_withoutfooter">
+
+        <div class="btn_list_group">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="row">
+                <div class="col-md-6">
+                  <div id="exTab1">
+
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+
+                  <div class="dsr-fillter">
+                    <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                      data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <a role="button" class="fa fa-filter"><span>Filters</span><i
+                          class="fa fa-angle-down pull-right"></i></a>
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <app-current-mapping-filter (postCreated)="SearchData($event)"></app-current-mapping-filter>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="d_flex flex_Equal flex_wrap flex_Middel  position-relative"
+              style="cursor: not-allowed !important;">
+              <div class="c-dashboardInfo width_dev_eight1">
+                <div class="wrap">
+                  <ul>
+                    <li><Strong>Today Followup</Strong> <label style="cursor: not-allowed !important;">{{ TodayData
+                        }}</label></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="c-dashboardInfo width_dev_eight1">
+                <div class="wrap">
+                  <ul>
+                    <li><Strong>Tomorrow Followup</Strong> <label style="cursor: not-allowed !important;">{{
+                        TomorrowData }}</label></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="c-dashboardInfo width_dev_eight1">
+                <div class="wrap">
+                  <ul>
+                    <li><Strong>Overmorrow Followup</Strong> <label style="cursor: not-allowed !important;">{{
+                        OvermorrowData }}</label></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="c-dashboardInfo width_dev_eight1">
+                <div class="wrap">
+                  <ul>
+                    <li><Strong>Missed Followup</Strong> <label style="cursor: not-allowed !important;">{{ MissedData
+                        }}</label></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="All">
+
+                <div class="custom_table">
+                  <ul class="responsive-table">
+
+                    <cdk-virtual-scroll-viewport #scroller itemSize="72" class="content mt_0">
+                      <mat-list>
+                        <ng-container *cdkVirtualFor="let row of post">
+
+                          <mat-list-item>
+                            <li class="table-row">
+
+                              <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                                <div class="agents_data agents_data1">
+                                  <div class="icon_re_cl">{{ row.SrNo }}</div>
+                                  <div class="agent_name_mobile">
+                                    <div class="agent_data">
+                                      <div>Partner Name & Code </div>
+                                      <strong class="fs_18">{{ row.Agent_Name }}</strong>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="agents_data agents_data2">
+                                  <div class="agent_name_mobile">
+                                    <div class="agent_data">
+                                      <div>Partner Mobile No.</div>
+                                      <strong class="fs_18">{{row.Mobile}}</strong>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="agents_data agents_data3">
+                                  <div class="agent_name_mobile">
+                                    <div class="agent_data">
+                                      <div>Relationship Manager & Code</div><strong class="fs_18">{{ row.RM_Name
+                                        }}</strong>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="last_row_div">
+
+                                <!-- Business Call && Club Related Section Start-->
+                                <div class="d_flex custon-234">
+
+                                  <div class="label_chips health_lob">
+                                    <span>LFY Total - {{ row.FTY }}</span><span
+                                      *ngIf="row.FTY_STR != '' && row.FTY_STR != 0">
+                                      ({{row.FTY_STR}})</span>&nbsp;&nbsp;
+                                  </div>
+
+                                  <div class="label_chips motor_lob">
+                                    <span>YTD LFY - {{ row.FTYLFY }} </span><span
+                                      *ngIf="row.FTYLFY_STR != '' && row.FTYLFY_STR != 0">
+                                      ({{row.FTYLFY_STR}})</span>&nbsp;&nbsp;
+                                  </div>
+
+                                  <div class="label_chips non_motor_lob">
+                                    <span>YTD CFY - {{ row.FTYCFY }}</span><span
+                                      *ngIf="row.FTYCFY_STR != '' && row.FTYCFY_STR != 0">
+                                      ({{row.FTYCFY_STR}})</span>&nbsp;&nbsp;
+                                  </div>
+
+                                  <div class="label_chips growth_positive" *ngIf="row.CheckNumber=='PositiveNumber'">
+                                    <span><i class="fa fa-arrow-up" aria-hidden="true"></i> {{ row.GrowthRate }}%</span>
+                                  </div>
+
+                                  <div class="label_chips growth_negative" *ngIf="row.CheckNumber=='NegativeNumber'">
+                                    <span><i class="fa fa-arrow-down" aria-hidden="true"></i> {{ row.GrowthRate
+                                      }}%</span>
+                                  </div>
+
+                                  <div class="label_chips city_chip" *ngIf="row.CityName != ''">
+                                    <span> City : {{ row.CityName }}</span>
+                                  </div>
+
+                                </div>
+                                <!-- Business Call && Club Related Section End-->
+
+                              </div>
+
+                              <div class="last_row">
+                                <div class="d_flex effective_date">
+                                  <div class="date_text" *ngIf="row.Type == 'POS' && row.AgentLob != ''">
+                                    <span class="fs_12">LOB</span>
+                                    <span class="fs_12">{{ row.AgentLob }}</span>
+                                  </div>
+                                </div>
+
+                                <!-- Business Call && Club Related Section Start-->
+                                <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                                  <a *ngIf="active_tab == 'Business Call'" style="cursor: pointer;"
+                                    (click)="ShareAspirant(row.Id)">
+                                    Virtual Call +</a>
+
+                                  <a style="cursor: pointer;" (click)="GetBusinessDetails(row.Id, row.Name)"
+                                    class=" btn-bg">
+                                    Business Details >></a>
+
+                                  <a style="cursor: pointer;" (click)="FollowUpTrack(row.Id, row.Name, 'circleType')"
+                                    class=" btn-bg1">
+                                    Activity Track >></a>
+
+                                </div>
+                                <!-- Business Call && Club Related Section End-->
+
+                              </div>
+                            </li>
+
+                            <mat-divider></mat-divider>
+                          </mat-list-item>
+                        </ng-container>
+
+                        <div class="spinner-item" *ngIf="post?.length > 0 && show_spinner == 'yes'"
+                          style="display: block;margin: auto; width: 50px;">
+                          <mat-progress-spinner [mode]="'indeterminate'" [diameter]="50"></mat-progress-spinner>
+                        </div>
+
+                        <ul class="responsive-table" *ngIf="post?.length == 0">
+                          <li class="table-row">
+                            <div class="no_data_found">No data available !</div>
+                          </li>
+                        </ul>
+                      </mat-list>
+                    </cdk-virtual-scroll-viewport>
+
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

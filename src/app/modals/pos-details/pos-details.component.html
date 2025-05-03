@@ -1,0 +1,212 @@
+<table>
+
+  <tr>
+    <td colspan="1" align="center">
+      <b>Id : {{row.AgentId}}</b>
+    </td>
+
+    <td colspan="3" align="center" *ngIf="row.RmName != 'N/A'">
+      <b>Rm name & Code: {{row.RmName}} - {{row.RmCode}}</b>
+
+    </td>
+    <td colspan="1" align="center" *ngIf="row.title != '' && row.title != null">
+      <b>Title: {{row.title}}</b>
+
+      <!-- <button type="button" (click)="DownloadCertified()">Download</button> -->
+    </td>
+
+    <td colspan="1" align="center">
+      <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+    </td>
+
+  </tr>
+
+
+  <tbody>
+    <tr class="ValueTD">
+      <td colspan="5">Personal Details </td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Name</b>: {{row.Name}}</td>
+      <td colspan="2"><b>Mobile </b>: {{row.Mobile}}</td>
+      <td colspan="1"><b>Email </b>: {{row.Email}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Alternate No </b>: {{row.AlternateContactNo}}</td>
+      <td colspan="2"><b>Gender </b>: {{row.Gender}}</td>
+      <td colspan="2"><b>Date Of Birth </b>: {{row.dob}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Qualification </b>: {{row.qualification}}</td>
+      <td colspan="2"><b>Pancard No </b>: {{row.pancard_no}}</td>
+      <td colspan="2"><b>AadhaarCard No </b>: {{row.aadharcard_no}}</td>
+    </tr>
+
+
+
+    <tr>
+      <td colspan="2"><b>State </b>: {{row.State}}</td>
+      <td colspan="2"><b>City </b>: {{row.City}}</td>
+      <td colspan="2"><b>Pincode </b>: {{row.Pincode}}</td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2"><b>Create Date </b>: {{row.CreateDate}}</td>
+      <td colspan="2"><b>Last Modified Date </b>: {{row.LastModifiedDate}}</td>
+      <td colspan="2"><b>Last Login Date </b>: {{row.LastLoginDate}}</td>
+    </tr>
+
+    <tr *ngIf="row.Gst_Status == 'Yes'">
+      <td colspan="2"><b>Gst No. </b>: {{row.Gst_no}}</td>
+      <td colspan="2"><b>Gst Address </b>: {{row.Gst_address}}</td>
+    </tr>
+
+  </tbody>
+  <tbody>
+    <tr class="ValueTD">
+      <td colspan="5">Bank Details </td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Bank Name</b>: {{row.BankName}}</td>
+      <td colspan="2"><b>Branch Name </b>: {{row.BranchName}}</td>
+      <td colspan="1"><b>Account Type </b>: {{row.AccountType}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Account Number </b>: {{row.AccountNumber}}</td>
+      <td colspan="2"><b>Ifsc </b>: {{row.Ifsc}}</td>
+      <td colspan="2" *ngIf="row.occupation_name != '' && row.occupation_name != null"><b>Occupation </b>:
+        {{row.occupation_name}}</td>
+    </tr>
+  </tbody>
+
+  <tbody>
+    <tr class="ValueTD">
+      <td colspan="5">Address</td>
+    </tr>
+
+    <tr>
+      <td colspan="5"><b>Address</b>: {{row.address}} {{row.address1}} {{row.address2}} {{row.address3}}</td>
+    </tr>
+
+  </tbody>
+
+
+  <tbody *ngIf="row.Remark != '' && row.Remark != null">
+    <tr class="ValueTD">
+      <td colspan="5">Remark</td>
+    </tr>
+    <tr>
+      <td colspan="5"><b>Remark</b>: {{row.Remark}}</td>
+    </tr>
+
+  </tbody>
+
+
+  <tr class="ValueTD" *ngIf="loginType == 'employee'">
+    <td colspan="5">Document Details
+    </td>
+  </tr>
+  <tbody *ngIf="loginType == 'employee'">
+    <tr>
+      <th colspan="2">Document Name</th>
+      <th colspan="2">Document View</th>
+      <th colspan="1">Document Date</th>
+    </tr>
+    <tr>
+      <th colspan="2">Pancard</th>
+      <th colspan="2"> <label *ngIf="(row.PencardImage =='')" class="form-control"> Not available </label>
+
+        <label *ngIf="(row.PencardImage !='')" (click)="ViewDocument(row.PencardImage)" class="form-control"> View
+        </label>
+      </th>
+      <th colspan="1">{{row.UpdateDatePencardImage}}</th>
+    </tr>
+    <tr>
+      <th colspan="2">Aadarcard Image</th>
+      <th colspan="2"> <label *ngIf="(row.AadarcardImage =='')" class="form-control"> Not available </label>
+
+        <label *ngIf="(row.AadarcardImage !='')" (click)="ViewDocument(row.AadarcardImage)" class="form-control"> View
+        </label>
+      </th>
+      <th colspan="1">{{row.UpdateDateAadarcardImage}}</th>
+    </tr>
+    <tr>
+      <th colspan="2">Aadharcard Image Back</th>
+      <th colspan="2"> <label *ngIf="(row.AadharcardImageBack =='')" class="form-control"> Not available </label>
+
+        <label *ngIf="(row.AadharcardImageBack !='')" (click)="ViewDocument(row.AadharcardImageBack)"
+          class="form-control"> View </label>
+      </th>
+      <th colspan="1">{{row.UpdateDateAadharcardImageBack}}</th>
+    </tr>
+    <tr>
+      <th colspan="2">Qualification Image</th>
+      <th colspan="2"> <label *ngIf="(row.QualificationImage =='')" class="form-control"> Not available </label>
+
+        <label *ngIf="(row.QualificationImage !='')" (click)="ViewDocument(row.QualificationImage)"
+          class="form-control"> View </label>
+      </th>
+      <th colspan="1">{{row.UpdateDateQualificationImage}}</th>
+    </tr>
+    <tr>
+      <th colspan="2">Cheque Image</th>
+      <th colspan="2"> <label *ngIf="(row.ChequeImage =='')" class="form-control"> Not available </label>
+
+        <label *ngIf="(row.ChequeImage !='')" (click)="ViewDocument(row.ChequeImage)" class="form-control"> View
+        </label>
+      </th>
+      <th colspan="1">{{row.UpdateDateChequeImage}}</th>
+    </tr>
+    <tr>
+      <th colspan="2">Profile Image</th>
+      <th colspan="2"> <label *ngIf="(row.Image =='')" class="form-control"> Not available </label>
+
+        <label *ngIf="(row.Image !='')" (click)="ViewDocument(row.Image)" class="form-control"> View </label>
+      </th>
+      <th colspan="1">{{row.UpdateDateImage}}</th>
+    </tr>
+
+    <tr>
+      <th colspan="2">Signature Image</th>
+      <th colspan="2"> <label *ngIf="(row.SignatureImage =='')" class="form-control"> Not available </label>
+
+        <label *ngIf="(row.SignatureImage !='')" (click)="ViewDocument(row.SignatureImage)" class="form-control"> View
+        </label>
+      </th>
+      <th colspan="1">{{row.UpdateDateSignatureImage}}</th>
+    </tr>
+    <tr>
+      <th colspan="2">Other Image</th>
+      <th colspan="2"> <label *ngIf="(row.OtherImage =='')" class="form-control"> Not available </label>
+
+        <label *ngIf="(row.OtherImage !='')" (click)="ViewDocument(row.OtherImage)" class="form-control"> View </label>
+      </th>
+      <th colspan="1">{{row.UpdateDateOtherImage}}</th>
+    </tr>
+
+
+    <tr *ngIf="row.Gst_Status == 'Yes'">
+      <th colspan="2">GST Certificate</th>
+      <th colspan="2"> <label *ngIf="(row.GSTCertificate =='' && row.GSTCertificate == null)" class="form-control"> Not available </label>
+
+        <label *ngIf="(row.GSTCertificate !='' && row.GSTCertificate != null)" (click)="ViewDocument(row.GSTCertificate)" class="form-control"> View
+        </label>
+      </th>
+      <th colspan="1">{{row.GSTCertificateDate}}</th>
+    </tr>
+    
+    <tr *ngIf="row.Gst_Status == 'Yes'">
+      <th colspan="2">GST Agreement</th>
+      <th colspan="2"> <label *ngIf="(row.GSTAgreement =='' && row.GSTAgreement == null)" class="form-control"> Not available </label>
+
+        <label *ngIf="(row.GSTAgreement !='' && row.GSTAgreement != null)" (click)="ViewDocument(row.GSTAgreement)" class="form-control"> View
+        </label>
+      </th>
+      <!-- <th colspan="1">{{row.GSTCertificateDate}}</th> -->
+    </tr>
+
+
+  </tbody>
+
+</table>

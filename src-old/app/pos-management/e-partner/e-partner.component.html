@@ -1,0 +1,443 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+                            <div *ngIf="this.urlSegmentSub === 'ePartner'">ePartner</div>
+                        </div>
+                    </div>
+                    <div *ngIf="!hasAccess" class="error-message">
+                        <div class="container" style="text-align: center;">
+                          <img src="assets/Authorised.png" alt="">
+                          <h4>{{ errorMessage }}</h4>
+                        </div>
+                        
+                      </div>
+            
+                      <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+
+                        <div class="filterquotesrow">
+                            <button class="btn btninfo1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                              href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><a role="button"><i
+                                  class="fa fa-filter"></i><span>Filters</span><i class="fa fa-angle-down"></i></a></button>
+                          </div>
+                          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panelbody">
+                                <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+                            </div>
+                          </div>
+                        <hr>
+                        <div class="">
+
+
+
+
+
+                            <div class="custom_table tables_layout_design">
+                                <table datatable [dtOptions]="dtOptions" id="Table1" class="row-border table">
+                                  <thead>
+                                    <tr>
+                                      <th></th>
+                                    </tr>
+                                  </thead>
+                                </table>
+                                <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                                  <li class="table-row tablerow" *ngFor="let row of dataAr; let i=index;">
+                                    
+                                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15" style="margin-top: 15px;">
+                                      <div class="agents_data agents_data1">
+                                        <div class="icon_re_cl">{{row.SrNo}}</div>
+                                          <div class="agent_name_mobile">
+                                            <div class="agent_data" *ngIf="urlSegmentSub =='ePartner'">
+                                                <div *ngIf="row.coll_data=='no_coll'">DND</div>
+                                                <div>POSP Id</div>
+                                                <strong class="fs_18"><span>
+                                                    {{row.row.agent_id}}
+                                                </span></strong>
+                                                
+                                            </div>
+                
+                                            
+                
+                                          </div>
+                                      </div>
+                                      <div class="agents_data agents_data2">
+                                        <div class="agent_name_mobile">
+                                          <div class="agent_data">
+                                            <div>Name</div>
+                                            <strong class="fs_18"><span>
+                                                {{row.row.name}}
+                                              </span></strong>
+                                               <button class="btn btn-success" style="padding:3px 10px;" *ngIf="row.row.Partner !=''">{{row.row.Partner}}</button>
+
+                                            <button class="btn btn-warning" style="padding:3px 10px;" *ngIf="row.row.partnerCode !='' && row.row.partnerCode !=null">{{row.row.partnerCode}}</button>
+                                          </div>
+                                        </div>
+                                        
+                                        
+                                      </div>
+                                      <div class="agents_data agents_data3">
+                                        <div class="agent_name_mobile">
+                                          <div class="agent_data" *ngIf="urlSegmentSub =='ePartner'">
+                                            <div>Title</div>
+                                            <strong class="fs_18"><span>{{row.title}}</span></strong>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="last_row_div">
+                                      <div class="d_flex custon-234">
+                
+                                        <div class="label_chips real_estate_lob" style="align-content: center;">
+                                            <div>
+                
+                                                <!-- Email Section -->
+                                                <span class="label label-secondary" *ngIf="Masking == 'Email'+i"
+                                                (click)="ShowMaskingField('TempEmail')"> 
+                                                Email : {{row.row.email}}  
+                                                <span (click)="CopyText(row.Email)" class="fa fa-copy"></span>
+                                                </span>
+                                            
+                                                <ng-container *ngIf="Masking != 'Email'+i"
+                                                (click)="ShowMaskingField('Email'+i)">
+                                                    <span class="label label-secondary" (click)="ShowMaskingField('Email'+i)">
+                                                        Email : ****
+                                                    </span>
+                                                </ng-container>
+                    
+                                              </div>
+                                        </div>
+                
+                                        <div class="label_chips growth_positive" style="align-content: center;">
+                                            <div>
+                                              <span style="display: inline-block; width: 10px;"></span>
+                                          
+                                              <span class="label label-secondary" *ngIf="Masking =='Mobile'+i"
+                                              (click)="ShowMaskingField('TempMobile')"> 
+                                              Mobile :
+                                              {{row.row.mobile}}
+                                              </span>
+                                          
+                                              <ng-container *ngIf="Masking != 'Mobile'+i">
+                                                  <span class="label label-secondary" (click)="ShowMaskingField('Mobile'+i)">
+                                                      Mobile : ****
+                                                  </span>
+                                              </ng-container>
+                                            </div>
+                                        </div>
+                                      
+                
+                                        
+                                      </div>
+                                    </div>
+                                    
+                                    <div class="last_row">
+                                      
+                                      <div class="effective_date">
+                                        <div class="d_flex">
+
+                                                
+
+                                            
+
+                                        </div>
+                                      </div>
+                                      <div class="col_2 action_btn d_flex flex_Middel box-bottom" >
+                                        <div class="row">
+                                          
+                
+                                            <button *ngIf="(row.row.pos_status == '2')" class="btn btn-info"
+                                            style="cursor: pointer; padding:3px 10px; margin-right: 10px;"
+                                            (click)="SendMail(row.row.id,'Certified Mail')">Send Mail</button>
+                                            <button
+                                            *ngIf="row.agreementStatus == '0' && row.row.pos_status == '2' && (this.urlSegmentSub == 'ePartner' ) "
+                                            (click)="SendAgreementMail(row.row.id,row.row.agent_id)"
+                                            class="btn btn-warning" style="cursor: pointer; padding:3px 10px; margin-right: 10px;">Become ePartner</button>
+                                            <button
+                                                *ngIf="row.agreementStatus == '1' && (this.urlSegmentSub == 'ePartner') && row.title == '' "
+                                                (click)="UrlRedirection(row.row.id,row.row.agent_id,row.agreementStatus)"
+                                                class="btn btn-warning" style="cursor: pointer; padding:3px 10px; margin-right: 10px;">ePartner</button>
+                                            <button
+                                                *ngIf="row.agreementStatus == '1' && (this.urlSegmentSub == 'ePartner') && row.title != ''"
+                                                (click)="UrlRedirection(row.row.id,row.row.agent_id,row.agreementStatus)"
+                                                class="btn btn-success" style="cursor: pointer; padding:3px 10px; margin-right: 10px;">ePartner</button>
+                                            <button
+                                                *ngIf="row.agreementStatus == '1' && row.row.pos_status == '2' && this.urlSegmentSub == 'ePartner' && row.title != '' && row.rewardType == 'Lead Generation' "
+                                                style="cursor:pointer;" routerLink="/Posp-managment/Posp/invoices/{{row.row.id}}"
+                                                class="btn btn-warning" style="cursor: pointer; padding:3px 10px; margin-right: 10px;">Invoices</button>
+
+                                                <button (click)="PospDetails(row.Id,'agent')"
+                                                class="btn btn-info" style="cursor: pointer; padding:3px 10px; margin-right: 10px;">Details</button>
+
+                                                <button (click)="view_partner(row.row.id)"
+                                                class="btn btn-success" style="cursor: pointer; padding:3px 10px; margin-right: 10px;">view</button>
+                                          
+                                        </div>
+                                        
+                                    </div>
+                                    </div>
+
+                                    
+                                  </li>
+                                </ul>
+                                <div class="row" *ngIf="dataAr?.length == 0">
+                                  <div class="col-md-12">
+                                    <div class="no_data_found">
+                                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                                      <small>No data available !</small>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <!-- <table datatable [dtOptions]="dtOptions" id="Table1" style="font-size: 12px;"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>SrNo</th>
+                                        <th *ngIf="urlSegmentSub !='Posp-leads'">POSP Id</th>
+                                        <th>Name</th>
+                                        <th *ngIf="urlSegmentSub =='ePartner'">Title</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th *ngIf="urlSegmentSub =='Posp-leads'">Stage Completed</th>
+                                        <th>Docs / Details / More Action</th>
+                                        <th *ngIf="urlSegmentSub !='Posp-leads'">Status</th>
+                                        <th
+                                            *ngIf="urlSegmentSub =='Under-Training-Posp' || urlSegmentSub =='life-Training-Posp' ">
+                                            Exam Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr; let i=index;">
+                                        <td>{{row.SrNo}}</td>
+                                        <td *ngIf="urlSegmentSub != 'Posp-leads'">{{row.row.agent_id}}
+                                            <label *ngIf="row.coll_data=='no_coll'" class="text-danger">DND</label>
+                                        </td>
+                                        <td>{{row.row.name}}
+                                            <br>
+
+
+                                            <label class="btn btn-success"
+                                                *ngIf="row.row.Partner !=''">{{row.row.Partner}}</label>
+
+                                            <br>
+
+                                            <label class="btn btn-warning"
+                                                *ngIf="row.row.partnerCode !='' && row.row.partnerCode !=null">{{row.row.partnerCode}}</label>
+
+                                        </td>
+                                        <td *ngIf="urlSegmentSub =='ePartner'">{{row.title}}</td>
+                                        <td>
+                                            <span class="label label-primary" *ngIf="Masking == 'Email'+i"
+                                                (click)="ShowMaskingField('TempEmail')"> Email : {{row.row.email}} <span
+                                                    (click)="CopyText(row.row.email)" class="fa fa-copy"></span></span>
+                                            <span class="label label-primary" *ngIf="Masking != 'Email'+i"
+                                                (click)="ShowMaskingField('Email'+i)"> Email : ****</span>
+                                        </td>
+                                        <td>
+                                            <span class="label label-primary" *ngIf="Masking =='Mobile'+i"
+                                                (click)="ShowMaskingField('TempMobile')"> Mobile :
+                                                {{row.row.mobile}}</span>
+                                            <span class="label label-primary" *ngIf="Masking != 'Mobile'+i"
+                                                (click)="ShowMaskingField('Mobile'+i)"> Mobile : ****</span>
+                                        </td>
+                                        <td *ngIf="urlSegmentSub =='Posp-leads'"> <span
+                                                *ngIf="(row.row.reg_level =='1' || row.row.reg_level =='2')"
+                                                class="btn btn-black">Stage
+                                                {{row.row.reg_level}}</span> </td>
+
+                                        <td>
+                                            <a (click)="UpdateDocs(row.Id,'agent')"> <label class="btn btn-info">Update
+                                                    Docs</label></a> &nbsp; &nbsp;
+                                            <a (click)="PospDetails(row.Id,'agent')"> <label
+                                                    class="btn btn-info">Details</label></a> &nbsp; &nbsp;
+
+
+                                            <a (click)="AppPOSPRights(row.row.agent_id)"> <label
+                                                    class="btn btn-info">POSP Right</label></a> &nbsp; &nbsp;
+
+
+
+
+                                            <a *ngIf="row.row.pos_status === '2' && (this.urlSegmentSub === 'Verified-Posp' || this.urlSegmentSub === 'ePartner') "
+                                                (click)="Conversational_Settings(row.row.agent_id)"> <label
+                                                    class="btn btn-info">Conversational Settings - DND</label></a>
+                                            &nbsp;
+                                            <span  class="btn btn-warning" (click)="view_partner(row.row.id)">View</span>
+
+                                            &nbsp;
+
+                                        </td>
+
+                                        <td *ngIf="urlSegmentSub != 'Posp-leads'">
+                                           
+                                            <label *ngIf="(row.row.pos_status == '2')" class="btn btn-info1"
+                                                style="cursor: pointer;"
+                                                (click)="SendMail(row.row.id,'Certified Mail')">Send Mail</label>
+                                                <span
+                                                *ngIf="row.agreementStatus == '0' && row.row.pos_status == '2' && (this.urlSegmentSub == 'Verified-Posp' || this.urlSegmentSub == 'ePartner' ) "
+                                                (click)="SendAgreementMail(row.row.id,row.row.agent_id)"
+                                                class="btn btn-warning">Become ePartner</span>
+                                            <span
+                                                *ngIf="row.agreementStatus == '1' && (this.urlSegmentSub == 'Verified-Posp' || this.urlSegmentSub == 'ePartner') && row.title == '' "
+                                                (click)="UrlRedirection(row.row.id,row.row.agent_id,row.agreementStatus)"
+                                                class="btn btn-warning">ePartner</span>
+                                            <span
+                                                *ngIf="row.agreementStatus == '1' && (this.urlSegmentSub == 'Verified-Posp' || this.urlSegmentSub == 'ePartner') && row.title != ''"
+                                                (click)="UrlRedirection(row.row.id,row.row.agent_id,row.agreementStatus)"
+                                                class="btn btn-success">ePartner</span>&nbsp;
+                                            <span
+                                                *ngIf="row.agreementStatus == '1' && row.row.pos_status == '2' && this.urlSegmentSub == 'ePartner' && row.title != '' && row.rewardType == 'Lead Generation' "
+                                                style="cursor:pointer;" routerLink="/Posp-managment/Posp/invoices/{{row.row.id}}"
+                                                class="btn btn-warning">Invoices</span>                                                
+                                        </td>
+                                        <td *ngIf="urlSegmentSub == 'Under-Training-Posp'">
+                                            <label class="btn btn-success" style="cursor: pointer;"
+                                                (click)="Transfer(row.row.id,row.row.pos_status,'Action')">{{row.ButtonValue}}</label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                           
+
+                                            <a style="color:white;" class=" pull-right btn btn-primary btn-info"
+                                                (click)="showRejectedPospDetails(row.row.id,row.row.agent_id,row.row.name)"
+                                                data-toggle="modal" data-target="#RejectPosp" data-backdrop="static"
+                                                data-keyboard="false"> <i class="fa fa-plus"></i>Reject POSP</a>
+                                        </td>
+
+                                        <td *ngIf="urlSegmentSub == 'life-Training-Posp'">
+                                            <label class="btn btn-success" style="cursor: pointer;"
+                                                (click)="Transfer(row.row.id,row.row.pos_status,'Life')">{{row.ButtonValue}}</label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+
+                                            <label *ngIf="(row.PassBtn != '')" class="btn btn-danger1"
+                                                style="cursor: pointer;"
+                                                (click)="passManual(row.row.id,'Life')">{{row.PassBtn}}</label>
+
+                                          
+                                        </td>
+                                        
+                                        <td>
+                                            <label class="btn btn-warning" *ngIf="(row.row.status == '0')"
+                                                style="cursor: pointer;"
+                                                (click)="UpdateStatusPosp(row.row.agent_id, 1, 'status',row.Id)">InActive</label>
+
+
+                                            <label class="btn btn-success" *ngIf="(row.row.status == '1')"
+                                                style="cursor: pointer;"
+                                                (click)="UpdateStatusPosp(row.row.agent_id, 0, 'status',row.Id)">Active</label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label class="btn btn-danger1" *ngIf="(row.row.delete_status == '0')"
+                                                style="cursor: pointer;"
+                                                (click)="UpdateStatusPosp(row.row.agent_id, 1, 'delete_status',row.Id)">Delete</label>
+                                            &nbsp; &nbsp;&nbsp; &nbsp;
+                                            <a *ngIf="urlSegmentSub =='Posp-leads'" style="cursor:pointer; "
+                                                (click)="Transfer(row.row.id,row.row.pos_status,'Action')" id="new">
+                                                <span class="btn btn-primary">Transfer</span>
+                                            </a>
+                                            <a *ngIf="(urlSegmentSub == 'Incomplete-Posp')" style="cursor:pointer; "
+                                                routerLink="/Mypos/Edit-pos/{{row.row.id}}" id="new">
+                                                <span class="btn btn-primary"> Edit-Pos</span>
+                                            </a>
+                                            <a *ngIf="(urlSegmentSub == 'Under-Training-Posp')" style="cursor:pointer; "
+                                                routerLink="/Mypos/Edit-pos/{{row.row.id}}" id="new">
+                                                <span class="btn btn-primary"> Edit-Pos</span>
+                                            </a>
+                                            <a *ngIf="(urlSegmentSub == 'Verified-Docs')" style="cursor:pointer; "
+                                                routerLink="/Mypos/Edit-pos/{{row.row.id}}" id="new">
+                                                <span class="btn btn-primary"> Edit-Pos</span>
+                                            </a>
+                                            <a *ngIf="(urlSegmentSub == 'New-Posp')" style="cursor:pointer; "
+                                                routerLink="/Mypos/Edit-pos/{{row.row.id}}" id="new">
+                                                <span class="btn btn-primary"> Edit-Pos</span>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="8" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+
+                            </table> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--POS VERFICATION MODAL END-->
+
+<div id="RejectPosp" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_header">
+                            <div class="header_title">REJECT POSP ->
+                                {{RejectedPospName}} - {{RejectedPospAgentId}}
+                            </div>
+                        </div>
+                        <form class="form" [formGroup]="RejectAgentForm">
+                            <div class="main_body main_card_height_scroll">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i>
+                                            Basic Details
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="input_group">
+                                            <label for="CustomerName">Remarks
+                                                <span *ngIf="isSubmitted2 && formControls2.Remark.errors"
+                                                    class="ValidationError">
+                                                    <span *ngIf="formControls2.Remark.errors.required">Remarks
+                                                        is
+                                                        required</span>
+                                                </span>
+                                            </label>
+                                            <textarea class="form_control icon_cs" type="text" formControlName="Remark"
+                                                required name="Remarks" id="Remarks"
+                                                placeholder="Enter Remarks"> </textarea>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="main_footer">
+                                <button type="button" id="ClosePOUPUP" class="mr_5 btn-danger Save_click"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="Save_click"
+                                    (click)="RejectUnderTrainingPosp(RejectedPospId)">Reject</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,518 @@
+
+<section class="inner_page_css main_dashboard_css">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="main_card_form">
+                  <div class="main_header">
+                      <div class="header_title">
+                          <!-- title  -->
+                          <div *ngIf="ActivePage == 'Default'">Create Ticket Requests</div>
+                      </div>
+                  </div>
+                  <div class="main_body main_card_height_scroll_withoutfooter">
+                    <form [formGroup]="AddForm" (ngSubmit)="CreateTicket()">
+                      <!-- /.box-header -->
+                      <div class="box-body">
+          
+                        <div class="row">
+          
+          
+                          <div class="form-group col-md-8">
+                            <label>Select Type</label>
+                            <select class="form-control" style="width: 100%;" formControlName="PolicyType"
+                              (change)="onChangeFormWise($event)">
+                              <option value='' selected> Select </option>
+                              <option *ngIf="this.api.GetUserType() != 'user'" value='Claim'>Claim</option>
+                              <option *ngIf="this.api.GetUserType() != 'user'" value='Survey'>Survey</option>
+                              <option *ngIf="this.api.GetUserType() != 'user'" value='Offline-Quote'>Offline-Quote</option>
+                              <option *ngIf="this.api.GetUserType() != 'user'" value='Cancellation'>Cancellation</option>
+                              <option *ngIf="this.api.GetUserType() != 'user' " value='Endorsement'>Endorsement</option>
+                              <option *ngIf="this.api.GetUserType() == 'employee' || this.api.GetUserType() == 'agent'"
+                                value='POS-Related-Query'>POS-Related-Query</option>
+                              <option *ngIf="this.api.GetUserType() == 'employee' || this.api.GetUserType() == 'agent'"
+                                value='Payout/Commision Related-Query'>Payout/Commision Related-Query</option>
+          
+          
+                              <option value='1'>Payment done policy not received</option>
+                              <option *ngIf="this.api.GetUserType() != 'user'" value='2'>Make model update</option>
+                              <option *ngIf="this.api.GetUserType() != 'user'" value='3'>Hypothecation Update</option>
+                              <option value='4'>Quote not reflecting</option>
+                              <option value='5'>Error during policy issuance </option>
+                              <option value='6'>Other</option>
+          
+                            </select>
+                            <span *ngIf="isSubmitted && FC.PolicyType.errors" class="ValidationError">
+                              <span *ngIf="FC.PolicyType.errors.required">Policy Type is required</span>
+                            </span>
+          
+                          </div>
+                        </div>
+          
+          
+                        <div class="row"
+                          *ngIf="(AddForm.value['PolicyType']==1 || AddForm.value['PolicyType']==2 || AddForm.value['PolicyType']==3 || AddForm.value['PolicyType']== 4|| AddForm.value['PolicyType']==5 || AddForm.value['PolicyType']==6 )">
+          
+                          <div class="form-group col-md-12" *ngIf="formWise1==true || formWise4==true || formWise5==true">
+                            <label>Quote Id</label>
+          
+                            <ng-multiselect-dropdown class="form-control" name="QuoteId" placeholder="--Select--"
+                              [data]="Quote_Ar" formControlName="QuoteId" [settings]="dropdownSettings"
+                              (keyup)="SearchQuoteIds($event,1)">
+                            </ng-multiselect-dropdown>
+                            <span *ngIf="isSubmitted && FC.QuoteId.errors" class="ValidationError">
+                              <span *ngIf="FC.QuoteId.errors.required">QuoteId is required</span>
+                            </span>
+                          </div>
+          
+          
+                          <div class="form-group col-md-3" *ngIf="formWise1">
+                            <label>Payment Screenshot</label>
+          
+                            <input type='file' accept="image/*,application/pdf" (change)="UploadDocs($event,'Payment_Screen')"
+                              formControlName="Payment_Screen" class="form-control">
+          
+                          </div>
+          
+                          <div class="form-group col-md-2" *ngIf="formWise3">
+                            <label>Do you have RC?</label>
+                            <select class="form-control" style="width: 100%;" formControlName="RcYesNo"
+                              (change)="onChangeRCWise($event)">
+                              <option value='' selected> Select </option>
+                              <option value='Yes'>Rc</option>
+                              <option value='Invoice'>Invoice</option>
+          
+                            </select>
+                            <span *ngIf="isSubmitted && FC.RcYesNo.errors" class="ValidationError">
+                              <span *ngIf="FC.RcYesNo.errors.required">Field is required</span>
+                            </span>
+          
+                          </div>
+          
+          
+                          <div class="form-group col-md-3" *ngIf="formWise3 === true &&  AddForm.value['RcYesNo']=='Invoice'">
+                            <label>Invoice</label>
+          
+                            <input type='file' accept="image/*,application/pdf" (change)="UploadDocs($event,'Invoice')"
+                              formControlName="Invoice" class="form-control">
+                            <span *ngIf="isSubmitted && FC.Invoice.errors" class="ValidationError">
+                              <span *ngIf="FC.Invoice.errors.required">Invoice is required</span>
+                            </span>
+                          </div>
+          
+          
+          
+                          <div class="form-group col-md-2" *ngIf="formWise2 ">
+                            <label>Do you have RC?</label>
+                            <select class="form-control" style="width: 100%;" formControlName="RcYesNo"
+                              (change)="onChangeRCWise($event)">
+                              <option value='' selected> Select </option>
+                              <option value='Yes'>Yes</option>
+                              <option value='No'>No</option>
+          
+                            </select>
+                            <span *ngIf="isSubmitted && FC.RcYesNo.errors" class="ValidationError">
+                              <span *ngIf="FC.RcYesNo.errors.required">Field is required</span>
+                            </span>
+          
+                          </div>
+          
+          
+          
+                          <div class="form-group col-md-3" *ngIf="(formWise2 === true || formWise3 === true  ) && RcCase == true">
+                            <label>Upload RC Front</label>
+          
+                            <input type='file' accept="image/*,application/pdf" (change)="UploadDocs($event,'Rc_front')"
+                              formControlName="Rc_front" class="form-control">
+                            <span *ngIf="isSubmitted && FC.Rc_front.errors" class="ValidationError">
+                              <span *ngIf="FC.Rc_front.errors.required">RC front is required</span>
+                            </span>
+                          </div>
+          
+                          <div class="form-group col-md-3" *ngIf="(formWise2 === true || formWise3 === true ) && RcCase == true">
+                            <label>Upload RC back</label>
+          
+                            <input type='file' accept="image/*,application/pdf" (change)="UploadDocs($event,'Rc_back')"
+                              formControlName="Rc_back" class="form-control">
+                            <span *ngIf="isSubmitted && FC.Rc_back.errors" class="ValidationError">
+                              <span *ngIf="FC.Rc_back.errors.required">RC back is required</span>
+                            </span>
+                          </div>
+          
+          
+                          <div class="form-group col-md-2" *ngIf="formWise2 == true && RcCase == false">
+                            <label>Vehicle Type</label>
+                            <select class="form-control" style="width: 100%;" formControlName="VehicleType"
+                              (change)="onChangeVehicleType($event)">
+                              <option value='' selected> Select </option>
+                              <option value='Tw'>Two-wheeler</option>
+                              <option value='Pc'>Private Car</option>
+                              <option value='Pcv'>PCV</option>
+                              <option value='Gcv'>GCV</option>
+          
+                            </select>
+                            <span *ngIf="isSubmitted && FC.VehicleType.errors" class="ValidationError">
+                              <span *ngIf="FC.VehicleType.errors.required">Vehicle Type Type is required</span>
+                            </span>
+          
+                          </div>
+          
+                          <div class="form-group col-md-3" *ngIf="formWise2 == true && RcCase == false">
+                            <label>Make</label>
+          
+                            <input type='text' formControlName="Make" placeholder="Enter Make Name" maxlength="50"
+                              class="form-control">
+                            <span *ngIf="isSubmitted && FC.Make.errors" class="ValidationError">
+                              <span *ngIf="FC.Make.errors.required">Make is required</span>
+                              <span *ngIf="FC.Make.errors.pattern">Only ALpha Numeric is Allowed</span>
+                            </span>
+                          </div>
+          
+          
+                          <div class="form-group col-md-3" *ngIf="formWise2 == true && RcCase == false">
+                            <label>Model</label>
+          
+                            <input type='text' formControlName="Model" placeholder="Enter Model Name" maxlength="50"
+                              class="form-control">
+                            <span *ngIf="isSubmitted && FC.Model.errors" class="ValidationError">
+                              <span *ngIf="FC.Model.errors.required">Model is required</span>
+                              <span *ngIf="FC.Model.errors.pattern">Only ALpha Numeric is Allowed</span>
+                            </span>
+                          </div>
+          
+                          <div class="form-group col-md-3" *ngIf="formWise2 == true && RcCase == false">
+                            <label>Variant</label>
+          
+                            <input type='text' formControlName="Variant" placeholder="Enter Variant Name" maxlength="50"
+                              class="form-control">
+                            <span *ngIf="isSubmitted && FC.Variant.errors" class="ValidationError">
+                              <span *ngIf="FC.Variant.errors.required">Variant is required</span>
+                              <span *ngIf="FC.Variant.errors.pattern">Only ALpha Numeric is Allowed</span>
+                            </span>
+                          </div>
+          
+                          <div class="form-group col-md-3" *ngIf="formWise2 == true && RcCase == false">
+                            <label>Fuel Type</label>
+                            <select class="form-control" style="width: 100%;" formControlName="FuelType"
+                              (change)="onChangeVehicleType($event)">
+                              <option value='' selected> Select </option>
+                              <option value='Diesel'>Diesel</option>
+                              <option value='Petrol'>Petrol</option>
+                              <option value='Cng'>CNG</option>
+                              <option value='Lpg'>LPG</option>
+          
+                            </select>
+                            <span *ngIf="isSubmitted && FC.FuelType.errors" class="ValidationError">
+                              <span *ngIf="FC.FuelType.errors.required">Fuel Type is required</span>
+                            </span>
+          
+                          </div>
+          
+                          <div class="form-group col-md-3" *ngIf="formWise2 == true && RcCase == false">
+                            <label>Cubic Capacity</label>
+          
+                            <input type='text' formControlName="Cc" placeholder="Enter CC " maxlength="5" class="form-control">
+                            <span *ngIf="isSubmitted && FC.Cc.errors" class="ValidationError">
+                              <span *ngIf="FC.Cc.errors.required">Cubic Cap. is required</span>
+                              <span *ngIf="FC.Cc.errors.pattern">Only ALpha Numeric is Allowed</span>
+                            </span>
+                          </div>
+          
+          
+                          <div class="form-group col-md-3" *ngIf="formWise2 == true && RcCase == false">
+                            <label>Seating Capacity</label>
+          
+                            <input type='text' formControlName="Sc" placeholder="Enter Seating Capacity " maxlength="5"
+                              class="form-control">
+                            <span *ngIf="isSubmitted && FC.Sc.errors" class="ValidationError">
+                              <span *ngIf="FC.Sc.errors.required">Seating Cap. is required</span>
+                              <span *ngIf="FC.Sc.errors.pattern">Only ALpha Numeric is Allowed</span>
+                            </span>
+                          </div>
+          
+          
+                          <div class="form-group col-md-3" *ngIf="formWise2 == true && RcCase == false && GvwCase == true">
+                            <label>GVW</label>
+          
+                            <input type='text' formControlName="Gvw" placeholder="Enter GVW " maxlength="15" class="form-control">
+                            <span *ngIf="isSubmitted && FC.Gvw.errors" class="ValidationError">
+                              <span *ngIf="FC.Gvw.errors.required">GVW is required</span>
+                              <span *ngIf="FC.Gvw.errors.pattern">Only ALpha Numeric is Allowed</span>
+                            </span>
+                          </div>
+          
+                          <div class="form-group col-md-4" *ngIf="formWise3">
+                            <label>Financer Name</label>
+          
+                            <input type='text' formControlName="InsurerName" placeholder="Enter Financer Name" maxlength="120"
+                              class="form-control">
+                            <span *ngIf="isSubmitted && FC.InsurerName.errors" class="ValidationError">
+                              <span *ngIf="FC.InsurerName.errors.required">Name is required</span>
+                              <span *ngIf="FC.InsurerName.errors.pattern">Only ALpha Numeric is Allowed</span>
+                            </span>
+                          </div>
+          
+                          <div class="form-group col-md-4" *ngIf="formWise3">
+                            <label>City Name</label>
+          
+                            <input type='text' formControlName="CityName" placeholder="Enter City Name" maxlength="120"
+                              class="form-control">
+                            <span *ngIf="isSubmitted && FC.CityName.errors" class="ValidationError">
+                              <span *ngIf="FC.CityName.errors.required">Name is required</span>
+                              <span *ngIf="FC.CityName.errors.pattern">Only ALpha is Allowed</span>
+                            </span>
+                          </div>
+          
+          
+                          <div class="form-group col-md-3" *ngIf="formWise5 == true">
+                            <label>Which Page ?</label>
+                            <select class="form-control" style="width: 100%;" formControlName="PageType">
+                              <option value='' selected> Select </option>
+                              <option>Quote Page</option>
+                              <option>Propasal Page</option>
+                              <option>Review Page</option>
+          
+          
+                            </select>
+                            <span *ngIf="isSubmitted && FC.PageType.errors" class="ValidationError">
+                              <span *ngIf="FC.PageType.errors.required">Page is required</span>
+                            </span>
+          
+                          </div>
+          
+                          <div class="form-group col-md-4" *ngIf="formWise5 == true">
+                            <label>Page URL</label>
+          
+                            <input type='text' formControlName="PageUrl" placeholder="Enter Page URL" class="form-control">
+                            <span *ngIf="isSubmitted && FC.PageUrl.errors" class="ValidationError">
+                              <span *ngIf="FC.PageUrl.errors.required">URL is required</span>
+                              <span *ngIf="FC.PageUrl.errors.pattern">Only ALpha is Allowed</span>
+                            </span>
+                          </div>
+          
+                          <div class="form-group col-md-3" *ngIf="formWise5 == true">
+                            <label>Error Screenshot</label>
+          
+                            <input type='file' accept="image/*,application/pdf" (change)="UploadDocs($event,'Page_Error_Screen')"
+                              formControlName="Page_Error_Screen" class="form-control">
+          
+                            <span *ngIf="isSubmitted && FC.Page_Error_Screen.errors" class="ValidationError">
+                              <span *ngIf="FC.Page_Error_Screen.errors.required">Screen is required</span>
+                              <span *ngIf="FC.Page_Error_Screen.errors.pattern">Only ALpha is Allowed</span>
+                            </span>
+          
+                          </div>
+          
+                          <div class="form-group col-md-3" *ngIf="formWise6 == true">
+                            <label>Error Screenshot</label>
+          
+                            <input type='file' accept="image/*,application/pdf" (change)="UploadDocs($event,'Attachement')"
+                              formControlName="Attachement" class="form-control">
+          
+                            <span *ngIf="isSubmitted && FC.Attachement.errors" class="ValidationError">
+                              <span *ngIf="FC.Attachement.errors.required">Screen is required</span>
+                              <span *ngIf="FC.Attachement.errors.pattern">Only ALpha is Allowed</span>
+                            </span>
+          
+                          </div>
+          
+                          <div class="form-group col-md-4">
+                            <label>Remarks</label>
+          
+                            <input type='text' formControlName="Remark" placeholder="Enter Remark" maxlength="120"
+                              class="form-control">
+                            <span *ngIf="isSubmitted && FC.Remark.errors" class="ValidationError">
+                              <span *ngIf="FC.Remark.errors.required">Remark is required</span>
+                              <span *ngIf="FC.Remark.errors.pattern">Only ALpha Numeric is Allowed</span>
+                            </span>
+                          </div>
+          
+                        </div>
+          
+          
+                        <div *ngIf="(AddForm.value['PolicyType']=='Claim'
+                 || AddForm.value['PolicyType']=='Survey'
+                 || AddForm.value['PolicyType']=='Offline-Quote'
+                 || AddForm.value['PolicyType']== 'Cancellation'
+                 || AddForm.value['PolicyType']=='Endorsement'
+                 || AddForm.value['PolicyType']=='POS-Related-Query'
+                 || AddForm.value['PolicyType']=='Payout/Commision Related-Query' )">
+          
+          
+                          <div class="form-group">
+          
+                            <div class="row">
+          
+          
+          
+                              <!-- <div *ngIf="( AddForm.value['PolicyType']=='Payout/Commision Related-Query')" class="col-md-4">
+          
+                                <label>Policy No</label>
+          
+                                <input type='text' formControlName="Policy_No" class="form-control">
+                                <span *ngIf="isSubmitted && FC.Policy_No.errors" class="ValidationError">
+                                  <span *ngIf="FC.Policy_No.errors.required">Policy No is required</span>
+          
+                                </span>
+          
+                              </div> -->
+                              <div *ngIf="( AddForm.value['PolicyType']=='Payout/Commision Related-Query')" class="col-md-4">
+                                <label>Select</label>
+                                <ng-multiselect-dropdown class="form-control" name="Select_Payout" placeholder="--Select--"
+                                [data]="Select_PayoutAr" formControlName="Select_Payout" [settings]="dropdownSettingsMultiselect" (onSelect)="PayoutAr($event)" (onDeSelect)="PayoutAr_de_select($event)">
+                                </ng-multiselect-dropdown>
+        
+                                <span *ngIf="isSubmitted && FC.Select_Payout.errors" class="ValidationError">
+                                  <span *ngIf="FC.Select_Payout.errors.required">Field is required</span>
+                                </span>
+          
+                              </div>
+
+                              <div *ngIf="( AddForm.value['PolicyType']=='Payout/Commision Related-Query')">
+
+                                <div class="form-group col-md-4" *ngIf="file_missing">
+                                  <label>File Missing Remark</label>
+                
+                                  <input type='text' formControlName="Remark_1" placeholder="Enter Remark" maxlength="120"
+                                    class="form-control">
+                                  <span *ngIf="isSubmitted && FC.Remark_1.errors" class="ValidationError">
+                                    <span *ngIf="FC.Remark_1.errors.required">Remark is required</span>
+                                    <span *ngIf="FC.Remark_1.errors.pattern">Only ALpha Numeric is Allowed</span>
+                                  </span>
+                                </div>
+
+                                <div class="form-group col-md-4" *ngIf="payout_diff">
+                                  <label>Payout Difference Remark</label>
+                
+                                  <input type='text' formControlName="Remark_2" placeholder="Enter Remark" maxlength="120"
+                                    class="form-control">
+                                  <span *ngIf="isSubmitted && FC.Remark_2.errors" class="ValidationError">
+                                    <span *ngIf="FC.Remark_2.errors.required">Remark is required</span>
+                                    <span *ngIf="FC.Remark_2.errors.pattern">Only ALpha Numeric is Allowed</span>
+                                  </span>
+                                </div>
+
+                                <div class="form-group col-md-4" *ngIf="payout_not_received">
+                                  <label>Payout Not Received Remark</label>
+                
+                                  <input type='text' formControlName="Remark_3" placeholder="Enter Remark" maxlength="120"
+                                    class="form-control">
+                                  <span *ngIf="isSubmitted && FC.Remark_3.errors" class="ValidationError">
+                                    <span *ngIf="FC.Remark_3.errors.required">Remark is required</span>
+                                    <span *ngIf="FC.Remark_3.errors.pattern">Only ALpha Numeric is Allowed</span>
+                                  </span>
+                                </div>
+
+                              </div>
+
+          
+                              <div
+                                *ngIf="(AddForm.value['PolicyType']=='Claim' || AddForm.value['PolicyType']== 'Cancellation' || AddForm.value['PolicyType']=='Endorsement' || AddForm.value['PolicyType']=='Survey' || AddForm.value['PolicyType']=='Offline-Quote')"
+                                class="col-md-4">
+          
+                                <label>{{AddForm.value['PolicyType']}} Id</label>
+          
+                                <!-- <input type='text' formControlName="OfflineQuote" class="form-control"> -->
+          
+          
+          
+                                <ng-multiselect-dropdown class="form-control" name="OfflineQuote" placeholder="--Select--"
+                                  [data]="OfflineQuoteAr" formControlName="OfflineQuote" [settings]="dropdownSettings"
+                                  (keyup)="SearchOfflineQuoteIds($event,1,AddForm.value['PolicyType'])">
+                                </ng-multiselect-dropdown>
+          
+                                <span *ngIf="isSubmitted && FC.OfflineQuote.errors" class="ValidationError">
+          
+                                  <span *ngIf="FC.OfflineQuote.errors.required">Offline Quote is required</span>
+          
+                                </span>
+          
+                              </div>
+          
+          
+                              <!-- <div *ngIf="(AddForm.value['PolicyType']=='Payout/Commision Related-Query')" class="col-md-4">
+          
+                                <label>Request Id</label>
+          
+                                <input type='text' formControlName="Request_Id" class="form-control">
+                                <span *ngIf="isSubmitted && FC.Request_Id.errors" class="ValidationError">
+                                  <span *ngIf="FC.Request_Id.errors.required">Remark is required</span>
+          
+                                </span>
+          
+                              </div> -->
+          
+                              <div *ngIf="(AddForm.value['PolicyType']=='Surveys')" class="form-group col-md-4">
+                                <label>Doc</label>
+          
+                                <input type='file' accept="image/*,application/pdf" (change)="UploadDocs($event,'Attachement')"
+                                  formControlName="Attachement" class="form-control">
+                                <span *ngIf="isSubmitted && FC.Attachement.errors" class="ValidationError">
+                                  <span *ngIf="FC.Attachement.errors.required">Docs is required</span>
+                                </span>
+                              </div>
+          
+                              <div *ngIf="(AddForm.value['PolicyType']!='POS-Related-Query') && (AddForm.value['PolicyType'] != 'Payout/Commision Related-Query')" class="col-md-4">
+          
+                                <label>Remarks</label>
+          
+                                <input type='text' formControlName="Remark" placeholder="Enter Remark" maxlength="120"
+                                  class="form-control">
+                                <span *ngIf="isSubmitted && FC.Remark.errors" class="ValidationError">
+                                  <span *ngIf="FC.Remark.errors.required">Remark is required</span>
+                                  <span *ngIf="FC.Remark.errors.pattern">Only ALpha Numeric is Allowed</span>
+                                </span>
+          
+                              </div>
+          
+                              <div *ngIf="(AddForm.value['PolicyType']=='POS-Related-Query')" class="col-md-12">
+          
+                                <label>Remarks</label>
+          
+                                <input type='text' formControlName="Remark" placeholder="Enter Remark" maxlength="120"
+                                  class="form-control">
+                                <span *ngIf="isSubmitted && FC.Remark.errors" class="ValidationError">
+                                  <span *ngIf="FC.Remark.errors.required">Remark is required</span>
+                                  <span *ngIf="FC.Remark.errors.pattern">Only ALpha Numeric is Allowed</span>
+                                </span>
+          
+                              </div>
+          
+                            </div>
+          
+                          </div>
+          
+          
+                        </div>
+          
+          
+                        <!-- /.row -->
+                      </div>
+                      <!-- /.box-body -->
+                      <div class="box-footer">
+                        <!--<button type="submit" class="btn btn-default">Cancel</button>-->
+                        <button type="submit" class="btn btn-info pull-right">Submit Request</button>
+                      </div>
+                    </form>
+
+                      <!-- <hr>
+                      <div class=" mydiv table-responsive">
+
+                      </div> -->
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+

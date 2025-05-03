@@ -1,0 +1,83 @@
+
+
+.popup-details-all{
+	text-align: center;
+}
+
+
+.popup-details-all h3{
+	margin: 0;
+}
+
+
+.yesno-btn button{
+	margin: 10px;
+    width: 48%;
+    margin-left: 0;
+    padding: 8px;
+    font-size: 18px;
+    margin-right: 5px;
+    background: white;
+    color: #2cb2b3;
+    border: 1px solid #2cb2b3;
+    border-radius: 0;
+    box-shadow: 1px 1px 10px #2cb2b34f;
+}
+
+.yesno-btn button i{
+	margin-right: 5px;
+}
+
+.yesno-btn  .btn-danger {
+    color: #d73925 !important;
+    margin-left: 3px;
+    margin-right: 0;
+}
+
+.yesno-btn  .btn-success {
+    color: #00a65a !important;
+    margin-left: 0px;
+    margin-right: 3px;
+}
+
+
+
+.popup-details-all ul {
+	padding:0;
+	margin: 0;
+}
+
+
+.popup-details-all ul li {
+	list-style: none;
+	padding: 10px 10px;
+    text-align: left;
+    box-shadow: 1px 1px 10px #00000021;
+    margin: 5px 0px;
+    border: 1px solid #2cb2b3;
+
+}
+
+.popup-details-all ul li label{
+	float: right;
+}
+
+
+.mat-dialog-container {
+    padding: 0px !important;
+}
+
+
+
+.bottom-li li{
+	width: 48%;
+	margin-right: 5px !important;
+	float: left;
+	padding: 10px 10px;
+}
+
+
+.bottom-li li:last-child{
+	margin-right: 0 !important;
+	margin-left: 7px !important;
+}

@@ -1,0 +1,130 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header d_flex flex_Equal flex_Middel">
+            <div class="header_title">KRA Ratings</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div class="box box-default"
+              style="margin-bottom: 0px !important; margin-top: 0px !important; position: relative;">
+
+              <div>
+                <div>
+                  <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                    <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                      data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <a role="button" class="fa fa-filter"><span>Filters</span><i
+                          class="fa fa-angle-down pull-right"></i></a>
+                    </button>
+                  </div>
+                </div>
+
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panel-body">
+                    <!-- filter  -->
+                    <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()" style="padding: 0 15px;">
+
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <ng-multiselect-dropdown class="form-control" placeholder="Select Insurer" [data]="insurer_ar"
+                            formControlName="insurer_id" [settings]="dropdownSettingsingleselect">
+                          </ng-multiselect-dropdown>
+                        </div>
+
+                        <div class="col-sm-3">
+                          <ng-multiselect-dropdown class="form-control" placeholder="Select Policy Type"
+                            [data]="policy_type_ar" formControlName="policy_type"
+                            [settings]="dropdownSettingsingleselect1">
+                          </ng-multiselect-dropdown>
+                        </div>
+
+                        <div class="col-sm-3">
+                          <ng-multiselect-dropdown class="form-control" placeholder="Select Plan Type"
+                            [data]="plan_type_ar" formControlName="plan_type" [settings]="dropdownSettingsingleselect1">
+                          </ng-multiselect-dropdown>
+                        </div>
+
+                        <div class="col-sm-3">
+                          <input type="text" class="form-control" placeholder="Search" formControlName="search_value">
+                        </div>
+                      </div>
+
+                      <div class="row" style="margin-top:10px;">
+                        <div class="col-sm-9"> </div>
+
+                        <div class="col-sm-3">
+                          <!-- <input type="submit" class="btn btn-info" value="Search"> -->
+                          <button type="submit" class="btn btn-info" style="font-size: small;" value="Search">
+                            <i class="fa fa-search">
+                              Search</i></button>
+                          &nbsp;&nbsp;
+                          <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                            value="Reset"> <i class="fa fa-close"> Reset</i> </button>&nbsp;&nbsp;
+                          <input (click)="AddEditProduct('0')" type="button" class="btn btn-warning" value="+ Add New">
+                        </div>
+                      </div>
+
+                    </form>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="box-body">
+
+                <div class="table-responsive mydiv">
+                  <table datatable [dtOptions]="dtOptions"
+                    class="row-border hover table table-bordered table-hover table-checkable" id="kt_datatable"
+                    style="margin-top: 13px !important; width:100%">
+                    <thead>
+                      <tr>
+
+                        <th>S.No</th>
+                        <th>Policy&nbsp;Type</th>
+                        <th>Plan&nbsp;Type</th>
+                        <th>Plan&nbsp;Name</th>
+                        <th>Company Name</th>
+                        <th>Gst Details</th>
+
+                      </tr>
+                    </thead>
+
+                    <tbody *ngIf="dataAr?.length != 0">
+                      <tr *ngFor="let row of dataAr; let i=index;">
+
+                        <td>{{row.SrNo}}.</td>
+
+                        <td>{{row.PolicyType}}</td>
+                        <td>{{row.PlanType}}</td>
+                        <td>{{row.PlanName}}</td>
+                        <td>{{row.CompanyName}}</td>
+                        <td>
+                          <span style="margin-right: 5px;" class="label label-warning">{{ row.GstRate1 }}</span>
+                          <br>
+                          <span style="margin-right: 5px;" class="label label-primary">{{ row.GstRate2 }}</span>
+                        </td>
+
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="dataAr?.length == 0">
+                      <tr>
+                        <td colspan="6" align="center">No data Available !</td>
+                      </tr>
+                    <tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

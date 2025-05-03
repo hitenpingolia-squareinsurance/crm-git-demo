@@ -1,0 +1,206 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+
+
+	<!-- Main content -->
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">POSP Report</h3>
+					</div>
+					<!-- /.box-header -->
+
+
+					<div class="box-body">
+
+
+						<form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+							<div class="row">
+
+								<!-- <div class="col-sm-4">
+
+
+
+<select (change)="GetEmployees($event)"  formControlName="Vertical_Id" class="form-control">
+		<option value="0">Select Vertical</option>
+
+		<option *ngFor="let r of Vertical_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+	</select>
+
+</div>
+
+ <div class="col-sm-4">
+	<select (change)="GetSubBranches($event)"  formControlName="Region_Id" class="form-control">
+		<option value="0">Select Region</option>
+		<option value="0">None</option>
+		<option *ngFor="let r of Region_Ar;" value="{{r.id}}">{{r.text}}</option>
+	</select>
+</div>
+
+<div class="col-sm-4">
+	<select (change)="GetEmployees($event)" formControlName="Sub_Region_Id" class="form-control">
+		<option value="0">Select Region-Branch</option>
+		<option value="0">None</option>
+		<option *ngFor="let r of Sub_Branch_Ar;" value="{{r.id}}">{{r.text}}</option>
+	</select>
+</div>
+
+				 -->
+							</div>
+
+							<div class="row"  >
+
+								<div class="col-sm-4">
+
+									<ng-multiselect-dropdown class="form-control" name="Emp_Id"
+										placeholder="Select Employee" [data]="Emps_Ar" formControlName="Emp_Id"
+										[settings]="dropdownSettings" (onSelect)="onItemSelect($event,'Employee')"
+										(onDeSelect)="onItemDeSelect($event,'Employee')">
+									</ng-multiselect-dropdown>
+
+
+								</div>
+
+
+								<div class="col-sm-4">
+
+									<ng-multiselect-dropdown class="form-control" name="Agent_Id"
+										placeholder="Select POS" [data]="Agents_Ar" formControlName="Agent_Id"
+										[settings]="AgentdropdownSettings">
+									</ng-multiselect-dropdown>
+								</div>
+
+								<div class="col-sm-4">
+									<select formControlName="SRLOB" class="form-control">
+										<option value="NA">Select Status</option>
+										<option value="0">Pending</option>
+										<option value="1">Verified Docs</option>
+										<option value="4">Under Training</option>
+										<option value="2">Certified POS</option>
+										<option value="5">POSP/Advisors</option>
+										<option value="7">Master Advisors</option>
+										<option value="3">Incomplete</option>
+										<option value="6">Rejected</option>
+									</select>
+
+								</div>
+
+
+
+							</div>
+
+
+							<div class="row"  >
+
+								<div class="col-sm-9">
+									<!-- <input
+				  type="text"
+				  placeholder="Select Date OR Date-Range"
+				  class="form-control"
+				  formControlName="DateOrDateRange"
+				  bsDaterangepicker
+				  [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">-->
+								</div>
+
+
+								<div class="col-lg-3" style="text-align: right;">
+
+									<!-- <input (click)="ExportExcel()" type="button" class="btn btn-success" value="Export">
+				&nbsp;&nbsp; -->
+									<input type="submit" class="btn btn-info" value="Search">
+									&nbsp;&nbsp;
+									<button (click)="ClearSearch()" type="button" style="font-size: small;"
+										class="btn btn-danger" value="Reset"> <i class="fa fa-close"> Reset</i>
+									</button>
+								</div>
+
+							</div>
+
+						</form>
+
+
+						<hr>
+
+						<table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+							<thead>
+								<tr>
+
+									<th>S.No</th>
+									<th>Docs/Details</th>
+									<th>Status</th>
+									<th>POS ID</th>
+									<th>Name</th>
+									<th>Mobile</th>
+									<th>Email</th>
+									<th>RM Name</th>
+									<th>Last Action Date</th>
+
+								</tr>
+							</thead>
+
+							<tbody *ngIf="dataAr?.length != 0">
+
+								<tr *ngFor="let row of dataAr; let i=index;">
+									<td>{{row.SrNo}}.</td>
+									<td>
+										<a><span style="margin-right: 5px;" class="label label-primary">Docs</span></a>
+
+										<a><span class="label label-success">Details</span></a>
+									</td>
+									<td>
+										<a *ngIf="row.Status == '0'"><span
+												class="label label-default">Pending</span></a>
+										<a *ngIf="row.Status == '1'"><span class="label label-success">Verified
+												Docs</span></a>
+										<a *ngIf="row.Status == '2'"><span class="label label-primary">Certified
+											POS</span></a>
+										<a *ngIf="row.Status == '3'"><span
+												class="label label-info">Incomplete</span></a>
+										<a *ngIf="row.Status == '4'"><span class="label label-danger">Under
+												Training</span></a>
+										<a *ngIf="row.Status == '5'"><span
+												class="label label-warning">POSP/Advisors</span></a>
+										<a *ngIf="row.Status == '6'"><span
+												class="label label-warning">Rejected</span></a>
+										<a *ngIf="row.Status == '7'"><span class="label label-warning">Master
+												Advisors</span></a>
+									</td>
+
+
+
+									<td>{{row.Agent_Id}}</td>
+									<td>{{row.Name}}</td>
+									<td>{{row.Mobile_No}}</td>
+									<td>{{row.Email}}</td>
+
+									<td>{{row.Employee}}</td>
+
+
+									<td>{{row.Last_action_date}}</td>
+								</tr>
+
+							</tbody>
+
+							<tbody *ngIf="dataAr?.length == 0">
+								<tr>
+									<td colspan="8" align="center">No data Available !</td>
+								</tr>
+							<tbody>
+
+						</table>
+					</div>
+					<!-- /.box-body -->
+				</div>
+				<!-- /.box -->
+			</div>
+			<!-- /.col -->
+		</div>
+		<!-- /.row -->
+	</section>
+	<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

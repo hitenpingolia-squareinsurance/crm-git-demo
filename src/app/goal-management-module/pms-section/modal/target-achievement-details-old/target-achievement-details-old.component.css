@@ -1,0 +1,212 @@
+.tables_layout_design {
+  margin-bottom: 10px;
+}
+
+.nav {
+  border: none;
+  margin-bottom: 25px;
+}
+
+.nav>li>a {
+  padding: 7px 15px;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  color: #444;
+  font-size: 14px;
+  background-color: transparent;
+  border-left: none;
+  border-right: none;
+}
+
+.nav>li>a {
+  border-top: none;
+  border-bottom: 2px solid transparent;
+}
+
+.nav>li.active>a,
+.nav>li.active>a:focus,
+.nav>li.active>a:hover {
+  color: #1aac80;
+  background-color: transparent;
+  border-color: #1aac80;
+  font-weight: 700;
+  border-left: none;
+  border-right: none;
+}
+
+.tab-content .custom_table .table_row {
+  border-radius: 5px;
+  padding-top: 28px;
+  margin-bottom: 15px;
+  width: 100%;
+  position: relative;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  background: #fff;
+  border-left: 3px solid #00bcd4;
+  border-bottom: 1px solid #00bcd4;
+}
+
+.custom_table .table_row .icon_re_cl {
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  background: #00bcd4;
+  width: auto;
+  height: 20px;
+  border-radius: 5px 0px 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 0px 15px;
+  color: #fff;
+  -webkit-border-radius: 5px 0px 10px 0px;
+  -moz-border-radius: 5px 0px 10px 0px;
+  -ms-border-radius: 5px 0px 10px 0px;
+  -o-border-radius: 5px 0px 10px 0px;
+}
+
+.custom_table .table_row .icon_re_cl1 {
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  background: #29bc29;
+  width: auto;
+  height: 20px;
+  border-radius: 5px 0px 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 0px 15px;
+  color: #fff;
+  -webkit-border-radius: 5px 0px 10px 0px;
+  -moz-border-radius: 5px 0px 10px 0px;
+  -ms-border-radius: 5px 0px 10px 0px;
+  -o-border-radius: 5px 0px 10px 0px;
+}
+
+.custom_table .table_row .user_details_full {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.custom_table .table_row.table_four_col .user_details_full .mo_email_title {
+  width: calc(100% / 4 - 20px);
+}
+
+.custom_table .table_row .user_details_full .mo_email_title {
+  width: calc(100% / 3 - 20px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0px;
+  border-bottom: 1px solid #e12f2f1f;
+  margin: 0 10px;
+  border-left: 3px solid #e12f2f52;
+  margin-bottom: 5px;
+  padding-left: 10px;
+  border-radius: 5px 0px 0px 5px;
+}
+
+.custom_table .table_row .user_details_full .mo_email_title span {
+  font-size: 13px;
+  color: #2d2929;
+  font-weight: 500;
+}
+
+.custom_table .table_row .user_details_full .mo_email_title small {
+  font-size: 12px;
+  color: #06312d;
+  font-weight: 600;
+}
+
+.custom_table .table_row .user_details_full .mo_email_title small.label_success {
+  color: #00a65a;
+}
+
+.custom_table .table_row .user_details_full .mo_email_title small.label_info {
+  color: #03A9F4;
+}
+
+.custom_table .table_row .user_details_full .mo_email_title small.label_danger {
+  color: #dc3545;
+}
+
+.custom_table .table_row .user_details_full .mo_email_title small.label_warning {
+  color: #ffc107;
+}
+
+.custom_table .table_row .user_details_full .mo_email_title small.label_primary {
+  color: #2c0484;
+}
+
+.custom_table .table_row .user_details_full .mo_email_title small.name_info1 {
+  color: #a1007c;
+}
+
+.custom_table .table_row .user_details_full .mo_email_title small.name_info2 {
+  color: #e12f2f73;
+}
+
+.custom_table .table_row .user_details_full .mo_email_title small.name_info3 {
+  color: #00a65a;
+}
+
+.custom_table .table_row .user_details_full .mo_email_title small.name_info4 {
+  color: #03A9F4;
+}
+
+.custom_table .table_row .user_details_full .mo_email_title small.name_info5 {
+  color: #009688;
+}
+
+@media (max-width:1199px) {
+  .custom_table .table_row .user_details_full .mo_email_title {
+    width: calc(100% / 3 - 20px);
+  }
+}
+
+@media (max-width:767px) {
+  .custom_table .table_row .user_details_full .mo_email_title {
+    width: calc(100% / 2 - 20px);
+  }
+}
+
+@media (max-width:576px) {
+  .custom_table .table_row .user_details_full .mo_email_title {
+    width: calc(100% / 1 - 0px);
+  }
+}
+
+.no_data_found {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 25px;
+}
+
+.no_data_found span {
+  display: block;
+}
+
+.no_data_found span img {
+  max-width: 280px;
+  width: 100%;
+}
+
+.no_data_found small {
+  font-size: 24px;
+  font-weight: 600;
+  color: #00BCD4;
+  margin-bottom: 25px;
+}

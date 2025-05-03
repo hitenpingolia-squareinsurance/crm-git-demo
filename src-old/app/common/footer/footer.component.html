@@ -1,0 +1,473 @@
+<div class="col-wish" *ngIf="LoginType =='employee'">
+  <div class="collapse" id="collapseExample">
+    <div class="card card-body">
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <!-- <li class="nav-item active">
+          <a class="nav-link " [class.active]="isBirthdayTabActive" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+            aria-controls="pills-home" aria-selected="true">Birthday</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" id="pills-home-tab" data-toggle="pill" (click)="wishesdata_employee()" href="#pills-home"
+            role="tab" aria-controls="pills-home" aria-selected="true">Birthday</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+            aria-controls="pills-profile" aria-selected="false" (click)="Dashboard_data('Team')">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
+            aria-controls="pills-contact" aria-selected="false" (click)="WhatsNewDataGet()">PO Notification</a>
+        </li>
+      </ul>
+      <!-- <li class="nav-item">
+                <a class="nav-link" id="pills-book-tab" data-toggle="pill" href="#pills-book" role="tab"
+                  aria-controls="pills-book" aria-selected="false">Why</a>
+              </li> -->
+      <div class="tab-content tab_asd_scroll" id="pills-tabContent">
+        <div class="tab-pane  active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+          <div class="wish-content wish-celeb">
+            <div class="wish-section">
+              <!-- <div class="list" *ngFor="let item of wish" [ngClass]="{ 'hidden': isHidden(item) }">
+                <div class="list-photo">
+                  &nbsp; &nbsp;&nbsp; <img src="../../../assets/image/Birthday.png">
+                </div>
+                <div class="list-content">
+                  <h5>{{ item.name }}</h5>
+                  <p>It is a long established fact that a reader will be distracted by the readable content of a page
+                    when looking at its layout.</p>
+                  <ul>
+                    <li><a>Agent</a></li>
+                    <li><a>{{ item.birthdayStatus }}</a></li>
+                    <li>
+                      <ng-container *ngIf="item.birthdayStatus=='Today'">
+                        <a (click)="toggleVisibility(item); sendEmail(item.id, 'agent')">Send Wishes</a>
+                      </ng-container>
+                    </li>
+                  </ul>
+                </div>
+              </div> -->
+              <div class="list" *ngFor="let item of mergedArray" [ngClass]="{ 'hidden': isHidden(item) }">
+                <div class="list-photo">
+                  &nbsp; &nbsp;&nbsp; <img src="../../../assets/image/Birthday.png">
+                </div>
+                <div class="list-content">
+                  <h5>{{ item.name }}</h5>
+                  <p>Wishing you a fantastic birthday filled with joy and success! Thank you for being a valued part of our company to another year of excellence and achievements!</p>
+                  <ul>
+                    <li><a>{{ item.Type }}</a></li>
+                    <li><a>{{ item.birthdayStatus }}</a></li>
+                    <!-- <li><a (click)="toggleVisibility(item); sendEmail(item.id, 'employee')">Send Wishes</a></li> -->
+                    <li>
+                      <ng-container *ngIf="item.birthdayStatus=='Today'">
+                        <a (click)="toggleVisibility(item); sendEmail(item.id, 'employee')">Send Wishes</a>
+                      </ng-container>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+          <div class="wish-content wish-dash">
+            <div class="dash-list">
+              <div class="dashboard-inline">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Team"
+                    [(ngModel)]="selectedOption" (click)="Dashboard_data('Team')">
+                  <label class="form-check-label" for="inlineRadio1">Team Report</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Self"
+                    [(ngModel)]="selectedOption" (click)=" Dashboard_data('Self')">
+                  <label class="form-check-label" for="inlineRadio2">Self Report</label>
+                </div>
+              </div>
+              <div class="dash-data" *ngIf="this.isVisible == 1 ">
+                <table class="table table-bordered">
+                  <tbody *ngIf="PageType == 'Team'">
+                    <tr>
+                      <th>Date</th>
+                      <td>{{ currentDate }}</td>
+                    </tr>
+                    <tr>
+                      <th>Today Projection</th>
+                      <td>{{dataNew.TeamTarget}}</td>
+                    </tr>
+                    <tr>
+                      <th>Achievements</th>
+                      <td colspan="2">{{dataNew.TeamBusiness}}</td>
+                    </tr>
+                    <tr>
+                      <th>Achievements Percentage</th>
+                      <td class="text-dark">{{dataNew.TeamAchivementPercent}}</td>
+
+                    </tr>
+                  </tbody>
+
+
+
+                  <tbody *ngIf="PageType == 'Self'">
+                    <tr>
+                      <th>Date</th>
+                      <td>{{ currentDate }}</td>
+                    </tr>
+                    <tr>
+                      <th>Today Projection</th>
+                      <td>{{dataNew.SelfTarget}}</td>
+                    </tr>
+                    <tr>
+                      <th>Achievements</th>
+                      <td colspan="2">{{dataNew.SelfBusiness}}</td>
+                    </tr>
+                    <tr>
+                      <th>Achievements Percentage</th>
+                      <td class="text-dark">{{dataNew.SelfAchivementPercent}}</td>
+
+                    </tr>
+                  </tbody>
+                </table>
+
+                <table class="table table-bordered">
+
+                  <tbody>
+                    <tr>
+                      <th style="width: 50%;">Session</th>
+                      <th style="width: 25%;">Business</th>
+                      <th style="width: 25%;">Revenue</th>
+                    </tr>
+
+                    <tr>
+                      <td>FTD</td>
+                      <td>{{MonthlyBusiness.FTDBusiness}}</td>
+                      <td>{{MonthlyRevenue.FTDRevenue}}</td>
+                    </tr>
+                    <tr>
+                      <td>MTD</td>
+                      <td>{{MonthlyBusiness.MTDBusiness}}</td>
+                      <td>{{MonthlyRevenue.MTDRevenue}}</td>
+                    </tr>
+                    <tr>
+                      <td>Previous MTD</td>
+                      <td>{{MonthlyBusiness.PMTDBusiness}}</td>
+                      <td>{{MonthlyRevenue.PMTDRevenue}}</td>
+                    </tr>
+                    <tr>
+                      <td>Previous MTD Growth %</td>
+                      <!-- <td class="text-value" *ngIf="MonthlyRevenue.LYMTDGCheckNumberBusiness == 'PositiveNumber'">
+                                      {{ MonthlyBusiness.PMTDGBusiness }}
+                                      &nbsp; &nbsp;&nbsp;  <img src="/assets/image/trend.svg" style="width: 30%;">
+                                    </td> -->
+                      <td class="text-value-col" *ngIf="MonthlyRevenue.PMTDGRevenue>0">
+                        {{MonthlyBusiness.PMTDGBusiness}}
+
+                        &nbsp; &nbsp;&nbsp; <img src="/assets/image/trend.svg" style="width: 25%;"></td>
+                      <td class="text-value" *ngIf="MonthlyRevenue.PMTDGRevenue< 0">
+                        {{MonthlyBusiness.PMTDGBusiness}}&nbsp; &nbsp;&nbsp; <img src="/assets/image/chart-down.svg"
+                          style="width: 25%;">
+                      </td>
+                      <td class="text-value" *ngIf="MonthlyRevenue.PMTDGRevenue == 0">{{MonthlyBusiness.PMTDGBusiness}}
+                      </td>
+
+                      <td>{{MonthlyRevenue.PMTDGRevenue}}</td>
+                    </tr>
+                    <tr>
+                      <td>Last Year MTD</td>
+                      <td>{{MonthlyBusiness.LYMTDBusiness}}</td>
+                      <td>{{MonthlyRevenue.LYMTDRevenue}}</td>
+                    </tr>
+                    <tr>
+                      <td>Last Year MTD Growth %</td>
+                      <td class="text-value-col" *ngIf="MonthlyRevenue.LYMTDGRevenue >0">
+                        {{MonthlyBusiness.LYMTDGBusiness}}&nbsp; &nbsp;&nbsp; <img src="/assets/image/trend.svg"
+                          style="width: 25%;"></td>
+                      <td class="text-value" *ngIf="MonthlyRevenue.LYMTDGRevenue < 0">
+                        {{MonthlyBusiness.LYMTDGBusiness}}&nbsp; &nbsp;&nbsp; <img src="/assets/image/chart-down.svg"
+                          style="width: 25%;">
+                      </td>
+                      <td class="text-value" *ngIf="MonthlyRevenue.LYMTDGRevenue == 0">
+                        {{MonthlyBusiness.LYMTDGBusiness}}</td>
+                      <td>{{MonthlyRevenue.LYMTDGRevenue}}</td>
+                    </tr>
+                    <tr>
+                      <td>YTD</td>
+                      <td>{{YearlyBusiness.YTDBusiness}}</td>
+                      <td>{{YearlyRevenue.YTDRevenue}}</td>
+
+                    </tr>
+                    <tr>
+                      <td>Previous YTD</td>
+                      <td>{{YearlyBusiness.LYTDBusiness}}</td>
+                      <td>{{YearlyRevenue.LYTDRevenue}}</td>
+                    </tr>
+                    <tr>
+                      <td>Previous YTD Growth %</td>
+
+                      <td class="text-value-col" *ngIf="YearlyRevenue.GrowthRateRevenue>0">
+                        {{YearlyBusiness.GrowthRateBusiness}}&nbsp; &nbsp;&nbsp; <img src="/assets/image/trend.svg"
+                          style="width: 25%;"></td>
+                      <td class="text-value" *ngIf="YearlyRevenue.GrowthRateRevenue< 0">
+                        {{YearlyBusiness.GrowthRateBusiness}}&nbsp; &nbsp;&nbsp; <img src="/assets/image/chart-down.svg"
+                          style="width: 25%;">
+                      </td>
+                      <td class="text-value" *ngIf="YearlyRevenue.GrowthRateRevenue == 0">
+                        {{YearlyBusiness.GrowthRateBusiness}}
+                      </td>
+                      <td>{{YearlyRevenue.GrowthRateRevenue}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="note-p">Note-Above Mentioned figures are as per logged Business.</p>
+
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td class="test-head">YTD</td>
+                      <td class="test-head">Target</td>
+                      <td class="test-head">Achievements</td>
+                      <td class="test-head">Achievements %</td>
+                    </tr>
+                    <tr>
+                      <td class="test-head">Profile</td>
+                      <td>{{target_data.NewProfileTarget}}</td>
+                      <td>{{target_data.NewAchievementData}}</td>
+                      <!-- <td class="text-value">{{target_data.ProfileAchievement}}</td> -->
+                      <td class="text-value-col">{{target_data.ProfileAchievement}}&nbsp; &nbsp;&nbsp; <img
+                          src="/assets/image/trend.svg" style="width: 9%; "></td>
+
+                    </tr>
+                    <tr>
+                      <td class="test-head">Allocated</td>
+                      <td>{{target_data.NewAllocatedTarget}}</td>
+                      <td>{{target_data.NewAchievementData}}</td>
+                      <!-- <td class="text-value">{{target_data.AllocatedAchievement}}</td> -->
+                      <td class="text-value-col">{{target_data.AllocatedAchievement}}&nbsp; &nbsp;&nbsp; <img
+                          src="/assets/image/trend.svg" style="width: 9%; "></td>
+
+                    </tr>
+
+                  </tbody>
+                </table>
+                <p class="note-p">Note-Above mentioned figures are as per the issued date, except {{PageType}}-business
+                </p>
+
+
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td class="test-head">Total POSP</td>
+                      <td class="test-head">Activation</td>
+                      <td class="test-head">Activation %</td>
+                    </tr>
+                    <tr>
+                      <td>{{Totalss_POSP.TotalPos}}</td>
+                      <td>{{Totalss_POSP.ActiveRecord}}</td>
+                      <!-- <td class="text-value">{{Totalss_POSP.percetage}}</td> -->
+
+                      <td class="text-value-col" *ngIf="Totalss_POSP.ActiveRecord>0">{{Totalss_POSP.percetage}}&nbsp;
+                        &nbsp;&nbsp; <img src="/assets/image/trend.svg" style="width: 9%; "></td>
+                      <td class="text-value" *ngIf="Totalss_POSP.ActiveRecord< 0">{{Totalss_POSP.percetage}}&nbsp;
+                        &nbsp;&nbsp; <img src="/assets/image/chart-down.svg" style="width: 9%; "></td>
+                      <td class="text-value" *ngIf="Totalss_POSP.ActiveRecord == 0">{{Totalss_POSP.percetage}}</td>
+                    </tr>
+
+
+                  </tbody>
+                </table>
+
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td class="test-head">POSP Target</td>
+                      <td class="test-head">Achieved POSP Target</td>
+                      <td class="test-head">Achieved POSP %</td>
+                    </tr>
+                    <tr>
+                      <td>{{POSP_targets.TotalPosTarget}}</td>
+                      <td>{{POSP_targets.AchievedPosTarget}}</td>
+                      <!-- <td class="text-dark">{{POSP_targets.AchievementPercent}}</td> -->
+                      <td class="text-value-col" *ngIf="POSP_targets.AchievedPosTarget>0">
+                        {{POSP_targets.AchievementPercent}}&nbsp; &nbsp;&nbsp; <img src="/assets/image/trend.svg"
+                          style="width: 9%; "></td>
+                      <td class="text-value" *ngIf="POSP_targets.AchievedPosTarget< 0">
+                        {{POSP_targets.AchievementPercent}}&nbsp; &nbsp;&nbsp; <img src="/assets/image/chart-down.svg"
+                          style="width: 9%; ">
+                      </td>
+                      <td class="text-value" *ngIf="POSP_targets.AchievedPosTarget == 0">
+                        {{POSP_targets.AchievementPercent}}
+                      </td>
+
+
+                    </tr>
+
+                  </tbody>
+                </table>
+
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td class="test-head">Renewal NOP</td>
+                      <td class="test-head">Base Business</td>
+                      <td class="test-head">Rewewed NOP</td>
+                    </tr>
+                    <tr>
+                      <td>{{reneweds_nosp.TotalRecord}}</td>
+                      <td>{{reneweds_nosp.TotalNetPremium}}</td>
+                      <td>{{reneweds_nosp.RenewedRecord}}</td>
+
+
+
+                  </tbody>
+                </table>
+
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td class="test-head">Rewewed Business</td>
+                      <td class="test-head">Rewewed NOP%</td>
+                      <td class="test-head">Rewewed Business%</td>
+                    </tr>
+                    <tr>
+                      <td>{{reneweds_nosp.RenewedNetPremium}}</td>
+                      <!-- <td class="text-value">{{reneweds_nosp.RatioNops}}</td> -->
+
+                      <td class="text-value-col" *ngIf="reneweds_nosp.RatioBusiness>0">{{reneweds_nosp.RatioNops}}&nbsp;
+                        &nbsp;&nbsp; <img src="/assets/image/trend.svg" style="width: 9%; "></td>
+                      <td class="text-value" *ngIf="reneweds_nosp.RatioBusiness< 0">{{reneweds_nosp.RatioNops}}&nbsp;
+                        &nbsp;&nbsp; <img src="/assets/image/chart-down.svg" style="width: 9%; "></td>
+                      <td class="text-value" *ngIf="reneweds_nosp.RatioBusiness == 0">{{reneweds_nosp.RatioNops}}</td>
+
+
+                      <td>{{reneweds_nosp.RatioBusiness}}</td>
+
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+
+        <div class="tab-pane " id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+          <div class="wish-content wish-celeb">
+            <div class="wish-section">
+
+
+              <div *ngFor="let item of WhatsNewData" [ngClass]="{ 'hidden': isHidden(item) }">
+                <div class="list list-align">
+                  <div class="list-top">
+                    <div class="list-content">
+                      <h5>{{ item.lob }} - {{ item.insurer }} - {{ item.product }} - {{ item.sub_product }} </h5>
+                      <p>{{ item.rto }}</p>
+                    </div>
+                    <div class="list-content">
+                      <ul>
+                        <img *ngIf="item.status =='Decreased'" src="/assets/image/chart-down.svg" style="width: 9%; ">
+                        <img *ngIf="item.status =='Increased'" src="/assets/image/trend.svg" style="width: 9%; ">
+                        <li>
+
+                          <a *ngIf="item.status =='Increased'"
+                            style="background-color: #a7e940; color: #ffffff;">{{item.status}}</a>
+                        </li>
+                        <li><a *ngIf="item.status =='Decreased'"
+                            style="background-color: #dd4b39; color: #ffffff;">{{item.status}}</a></li>
+                      </ul>
+
+
+
+                    </div>
+                  </div>
+
+                  <div class="list list-bottom">
+
+                    <div class="list-content">
+                      <p>{{ item.effective_date }}</p>
+                    </div>
+
+                    <div class="list-content">
+                      <p>{{ item.po_update_date }}</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="tab-pane" id="pills-book" role="tabpanel" aria-labelledby="pills-book-tab">
+                <div class="wish-content why">
+                  <div class="list">
+                    <div class="list-photo">
+                      &nbsp; &nbsp;&nbsp;  <img
+                        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D">
+                    </div>
+                    <div class="list-content">
+                      <h5>Name Birthday</h5>
+                      <p>It is a long established fact that a reader will be distracted by the readable content of a page when
+                        looking at its layout.</p>
+                      <a class="read-more">Read More</a>
+                    </div>
+                  </div>
+                  <div class="list">
+                    <div class="list-photo">
+                      &nbsp; &nbsp;&nbsp;  <img
+                        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D">
+                    </div>
+                    <div class="list-content">
+                      <h5>Name Birthday</h5>
+                      <p>It is a long established fact that a reader will be distracted by the readable content of a page when
+                        looking at its layout.</p>
+                      <a class="read-more">Read More</a>
+                    </div>
+                  </div>
+                  <div class="list">
+                    <div class="list-photo">
+                      &nbsp; &nbsp;&nbsp;  <img
+                        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D">
+                    </div>
+                    <div class="list-content">
+                      <h5>Name Birthday</h5>
+                      <p>It is a long established fact that a reader will be distracted by the readable content of a page when
+                        looking at its layout.</p>
+                      <a class="read-more">Read More</a>
+                    </div>
+                  </div>
+      
+                </div>
+              </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- <button class="btn btn-wish-bottom" type="button" data-toggle="collapse" data-target="#collapseExample"
+    aria-expanded="false" aria-controls="collapseExample" (click)="wishesdata_employee()">
+    <i class="fa fa-info" aria-hidden="true">button</i>
+    <i class="fa fa-times" aria-hidden="true"></i>
+  </button> -->
+
+  <button class="btn btn-wish-bottom" type="button" data-toggle="collapse" data-target="#collapseExample"
+    aria-expanded="false" aria-controls="collapseExample" (click)="openBirthdayPage(openDashboard)">
+    <i class="fa fa-info" aria-hidden="true"></i>
+    <i class="fa fa-times" aria-hidden="true"></i>
+  </button>
+
+
+</div>
+
+<footer class="main-footer">
+  <div class="d_flex flex_Equal flex_Middel footer_box">
+    <div class="fw_600 fs_12">Copyright &copy; 2021-{{currentYear}} Customer Relationship Management</div>
+    <div class="fs_12">Powered by <strong>Square Insurance Brokers Pvt. Ltd.</strong></div>
+  </div>
+</footer>
+
+
+<aside class="control-sidebar control-sidebar-dark" style="display: none;"></aside>
+<div class="control-sidebar-bg"></div>

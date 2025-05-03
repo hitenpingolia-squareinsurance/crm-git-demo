@@ -1,0 +1,326 @@
+<div class="col-md-12" *ngIf="menu_type === 'main_menu'">
+  <h2 mat-dialog-title class="modal-title">Add Menu</h2>
+
+  <form [formGroup]="ImageForm" (ngSubmit)="submitFormImage()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" formControlName="name" class="form-control">
+
+    <label for="url">URL:</label>
+    <input type="text" id="url" name="url" formControlName="url" class="form-control">
+
+    <label for="url">Icon:</label>
+    <input type="text" id="Icon" name="Icon" formControlName="Icon" class="form-control">
+
+    <label for="selectBox">Select Box:</label>
+    <select id="selectBox" name="selectBox" formControlName="selectBox" class="form-control">
+      <option value="">Select Box</option>
+      <option value="0">Report</option>
+      <option value="1">Request</option>
+    </select>
+
+
+    <div class="col-md-12">
+      <mat-dialog-actions>
+        <button class="btn btn-info" type="submit">Submit</button>
+        &nbsp;&nbsp;
+        <button class="btn btn-light" (click)="CloseModel()">Close</button>
+      </mat-dialog-actions>
+    </div>
+
+
+  </form>
+</div>
+
+
+
+<div class="col-md-12" *ngIf="menu_type === 'sub_menu' || menu_type === 'many_sub_menu'">
+  <h2 mat-dialog-title class="modal-title">Add Sub Menu</h2>
+  <form [formGroup]="ImageForm" (ngSubmit)="submitFormImage()">
+
+    <label for="selectedRegional">Select Menu</label>
+    <select class="form-control" name="selectedRegional" id="selectedRegional" formControlName="selectedRegional">
+      <option *ngFor="let option of regional" [value]="option.id">{{ option.name }}</option>
+    </select>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" formControlName="name" class="form-control">
+
+    <label for="url">URL:</label>
+    <input type="text" id="url" name="url" formControlName="url" class="form-control">
+
+    <label for="selectBox">Select Box:</label>
+    <select id="selectBox" name="selectBox" formControlName="selectBox" class="form-control">
+      <option value="">Select Box</option>
+      <option value="0">Report</option>
+      <option value="1">Request</option>
+    </select>
+
+    <div class="col-md-12">
+      <mat-dialog-actions>
+        <button class="btn btn-info" type="submit">Submit</button>
+        &nbsp;&nbsp;
+        <button class="btn btn-light" (click)="CloseModel()">Close</button>
+      </mat-dialog-actions>
+    </div>
+  </form>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12" *ngIf="menu_type === 'User_Right'">
+    <div class="modal-view">
+      <h2 class="modal-title">Update User Rights</h2>
+      <form [formGroup]="UserRightForm" (ngSubmit)="rights_menu_submit()">
+
+        <!-- <label class="heading-label">Choose Menu</label> -->
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="main-menu">
+              <ng-container *ngFor="let level1Item of Right_Menu_data">
+                <li class="main-menu-li">
+
+                  <!--mAIN mENU-->
+                  <div class="form-check heading">
+                    <input type="checkbox" [checked]="level1Item.Id ===  level1Item.menu_checked"
+                      [formControlName]="level1Item.Id" [value]="level1Item.Name"
+                      (change)="level1Item.Id = !level1Item.Id" />
+                    <span>{{ level1Item.Name }}</span>
+                  </div>
+
+                  <div class="row">
+                    <!--View-->
+                    <div class="col-sm-6">
+                      <div *ngIf="level1Item.TotalSubMenu ===  0 && level1Item.report === '1'  ">
+                        <div class="form-check">
+                          <input type="radio" value="Self" [formControlName]="level1Item.Id + '_Right'"
+                            [checked]="'Self' ===  level1Item.Rigth_Checked" />Self
+                        </div>
+                        <div class="form-check">
+                          <input type="radio" value="Hierarchy" [formControlName]="level1Item.Id + '_Right'"
+                            [checked]="'Hierarchy' ===  level1Item.Rigth_Checked" />Hierarchy
+                        </div>
+                        <div class="form-check">
+                          <input type="radio" value="All" [formControlName]="level1Item.Id + '_Right'"
+                            [checked]="'All' ===  level1Item.Rigth_Checked" />All
+                        </div>
+
+
+                        <!-- <div *ngIf="level1Item.report === 1">
+                          <input type="checkbox" value="1" [formControlName]="level1Item.Id + '_Manager'" />Manager
+                        </div> -->
+                      </div>
+
+
+                      <ng-container *ngIf="level1Item.TotalSubMenu > 0">
+                        <ul class="inner-ul-menu">
+                          <ng-container *ngFor="let level2Item of level1Item.SubMenu">
+                            <li>
+                              <div class="form-check inner-space">
+                                <input type="checkbox" [checked]="level2Item.Id ===  level2Item.menu_checked"
+                                  [formControlName]="level2Item.Id" [value]="level2Item.Name" />
+                                <span>{{ level2Item.Name }}</span>
+                              </div>
+                              <div class="inner-btn-menu" *ngIf="level2Item.report === '1'">
+                                <div class="form-check">
+                                  <input type="radio" value="Self" [formControlName]="level2Item.Id + '_Right'"
+                                    [checked]=" 'Self' === level2Item.Rigth_Checked" />Self
+                                </div>
+                                <div class="form-check">
+                                  <input type="radio" value="Hierarchy" [formControlName]="level2Item.Id + '_Right'"
+                                    [checked]="'Hierarchy' ===  level2Item.Rigth_Checked" />Hierarchy
+                                </div>
+                                <div class="form-check">
+                                  <input type="radio" value="All" [formControlName]="level2Item.Id + '_Right'"
+                                    [checked]=" 'All' === level2Item.Rigth_Checked" />All
+                                </div>
+
+                              </div>
+
+
+                              <ng-container *ngIf="level2Item.TotalSubMenu > 0">
+                                <ul class="inner-ul-menu2">
+                                  <ng-container *ngFor="let level3Item of level2Item.SubMenu">
+                                    <li>
+                                      <div class="">
+                                        <input type="checkbox" [checked]="level3Item.Id ===  level3Item.menu_checked"
+                                          [formControlName]="level3Item.Id" [value]="level3Item.Name" />
+                                        <span>{{ level3Item.Name }}</span>
+                                      </div>
+                                      <div class="inner-btn-menu" *ngIf="level2Item.report === '1'">
+
+                                        <div class="form-check">
+                                          <input type="radio" value="Self" [formControlName]="level3Item.Id + '_Right'"
+                                            [checked]="'Self' ===  level3Item.Rigth_Checked" />Self
+                                        </div>
+                                        <div class="form-check">
+                                          <input type="radio" value="Hierarchy"
+                                            [formControlName]="level3Item.Id + '_Right'"
+                                            [checked]="'Hierarchy' ===  level3Item.Rigth_Checked" />Hierarchy
+                                        </div>
+                                        <div class="form-check">
+                                          <input type="radio" value="All" [formControlName]="level3Item.Id + '_Right'"
+                                            [checked]="'All' ===  level3Item.Rigth_Checked" />All
+                                        </div>
+                                      </div>
+                                      <div class="form-check">
+                                        <div *ngIf="level3Item.report === 1">
+                                          <input type="checkbox" value="1"
+                                            [formControlName]="level3Item.Id + '_Manager'" />Manager
+                                        </div>
+                                      </div>
+
+                                      <ng-container *ngIf="level3Item.TotalSubMenu > 0">
+                                        <ul>
+                                          <ng-container *ngFor="let level4Item of level3Item.SubMenu">
+                                            <li>
+                                              <div class="form-check">
+                                                <input type="checkbox"
+                                                  [checked]="level4Item.Id ===  level4Item.menu_checked"
+                                                  [formControlName]="level4Item.Id" [value]="level4Item.Name" />
+                                                <span>{{ level4Item.Name }}</span>
+                                              </div>
+                                              <div class="form-check">
+                                                <input type="radio" value="Self"
+                                                  [formControlName]="level4Item.Id + '_Right'"
+                                                  [checked]="'Self' ===  level4Item.Rigth_Checked" />Self
+                                              </div>
+                                              <div class="form-check">
+                                                <input type="radio" value="Hierarchy"
+                                                  [formControlName]="level4Item.Id + '_Right'"
+                                                  [checked]="'Hierarchy' ===  level4Item.Rigth_Checked" />Hierarchy
+                                              </div>
+                                              <div class="form-check">
+                                                <input type="radio" value="All"
+                                                  [formControlName]="level4Item.Id + '_Right'"
+                                                  [checked]="'All' ===  level4Item.Rigth_Checked" />All
+                                              </div>
+                                              <div class="form-check">
+                                                <div *ngIf="level4Item.report === 1">
+                                                  <input type="checkbox" value="1"
+                                                    [formControlName]="level4Item.Id + '_Manager'" />Manager
+                                                </div>
+                                              </div>
+
+                                              <ng-container *ngIf="level4Item.TotalSubMenu > 0">
+                                                <ul>
+                                                  <ng-container *ngFor="let level5Item of level4Item.SubMenu">
+                                                    <li>
+                                                      <div class="form-check">
+                                                        <input type="checkbox"
+                                                          [checked]="level5Item.Id ===  level5Item.menu_checked"
+                                                          [formControlName]="level5Item.Id" [value]="level5Item.Name" />
+                                                        <span>{{ level5Item.Name }}</span>
+                                                      </div>
+                                                      <div class="form-check">
+                                                        <input type="radio" value="Self"
+                                                          [formControlName]="level5Item.Id + '_Right'"
+                                                          [checked]="'Self' ===  level5Item.Rigth_Checked" />Self
+                                                      </div>
+                                                      <div class="form-check">
+                                                        <input type="radio" value="Hierarchy"
+                                                          [formControlName]="level5Item.Id + '_Right'"
+                                                          [checked]="'Hierarchy' ===  level5Item.Rigth_Checked" />Hierarchy
+                                                      </div>
+                                                      <div class="form-check">
+                                                        <input type="radio" value="All"
+                                                          [formControlName]="level5Item.Id + '_Right'"
+                                                          [checked]="'All' ===  level5Item.Rigth_Checked" />All
+                                                      </div>
+                                                      <div class="form-check">
+                                                        <div *ngIf="level5Item.report === 1">
+                                                          <input type="checkbox" value="1"
+                                                            [formControlName]="level5Item.Id + '_Manager'" />Manager
+                                                        </div>
+                                                      </div>
+
+                                                    </li>
+                                                  </ng-container>
+                                                </ul>
+                                              </ng-container>
+                                            </li>
+                                          </ng-container>
+                                        </ul>
+                                      </ng-container>
+                                    </li>
+                                  </ng-container>
+                                </ul>
+                              </ng-container>
+                            </li>
+                          </ng-container>
+                        </ul>
+                      </ng-container>
+
+                    </div>
+                    <!--managr-->
+                    <div class="col-sm-6">
+                      <div class="form-check inline1">
+                        <div *ngFor="let right of level1Item.RightsValue">
+                          <!-- <p>ID: {{ right.id }}, Name: {{ right.name }}</p> -->
+                          <div class="row">
+                            <div class="col-md-6">
+                              <input type="checkbox" [checked]="right.Checked ===  'Checked'"
+                                [formControlName]="right.id + '_UserRights'" [value]="right.name">
+                              <span>{{ right.name }}</span>
+                            </div>
+
+
+                            <div class="col-md-6" *ngIf="right.report ==1 ">
+                              <ng-multiselect-dropdown class="form-control" placeholder="--Select Zone-- "
+                                [settings]="dropdownSettingsType"
+                                [formControlName]="right.id + '_ManagerZoneDataRights'" [data]="ZoneData"
+                                [(ngModel)]="right.zoneData">
+                              </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-md-6" *ngIf="right.report == 2 ">
+                              <ng-multiselect-dropdown class="form-control" placeholder="--Select Regional--"
+                                [data]="RegionalData" [settings]="dropdownSettingsType"
+                                [formControlName]="right.id + '_ManagerRegionalDataRights'" [(ngModel)]="right.roData">
+                              </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-md-6" *ngIf="right.report == 3 ">
+                              <ng-multiselect-dropdown class="form-control" placeholder="--Select Branch--"
+                                [data]="BranchData" [settings]="dropdownSettingsType"
+                                [formControlName]="right.id + '_ManagerBranchDataRights'"
+                                [(ngModel)]="right.branchData">
+                              </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-md-6" *ngIf="right.report == 4 ">
+                              <ng-multiselect-dropdown class="form-control" placeholder="--Select Service Location--"
+                                [data]="ServiceLocationData" [settings]="dropdownSettingsType"
+                                [formControlName]="right.id + '_ManagerServiceLocationDataRights'"
+                                [(ngModel)]="right.servicelocationData">
+                              </ng-multiselect-dropdown>
+                            </div>
+
+                            <div class="col-md-6" *ngIf="right.report == 5 ">
+                              <ng-multiselect-dropdown class="form-control" placeholder="--Select Vertical--"
+                                [data]="VerticalData" [settings]="dropdownSettingsType"
+                                [formControlName]="right.id + '_ManagerVerticalDataRights' "
+                                [(ngModel)]="right.verticalData">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+        <div class="fixed_footer">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-dialog-actions class="pull-right">
+                <button class="btn btn-info" type="submit">Submit</button>
+                &nbsp;&nbsp;
+                <button class="btn btn-light" type="button" (click)="CloseModel()">Close</button>
+              </mat-dialog-actions>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

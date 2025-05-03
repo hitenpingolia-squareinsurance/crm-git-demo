@@ -1,0 +1,186 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="header_title" *ngIf="this.CurrentPage=='tds-view'">TDS Uploader</div>
+                                <div class="header_title" *ngIf="this.CurrentPage=='agent-view'">TDS Certificate</div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+                        <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+                            <div class="row">
+                                <div class="col-sm-3" *ngIf="this.CurrentPage!='agent-view'">
+                                    <div class="">
+                                        <ng-multiselect-dropdown class="form-control" name="Quarter"
+                                            placeholder="Select Quarter" [data]="QuarterSelect"
+                                            formControlName="Quarter"
+                                            [settings]="dropdownSettingsType"></ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="">
+                                        <ng-multiselect-dropdown class="form-control" name="Fiscal_Year"
+                                            placeholder="Select Fiscal Year" [data]="FiscalYear"
+                                            formControlName="Fiscal_Year"
+                                            [settings]="dropdownSettingsType"></ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="">
+                                        <ng-multiselect-dropdown class="form-control" name="Fiscal_Year"
+                                            placeholder="Status" [data]="TdsStatus"
+                                            formControlName="TdsStatus"
+                                            [settings]="dropdownSettingsType"></ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3" *ngIf="this.CurrentPage=='tds-view'">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" formControlName="SearchValue" placeholder="Search">
+                                        
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-info" style="font-size: small;" value="Search"><i
+                                        class="fa fa-search">
+                                    </i> Search</button>&nbsp;&nbsp;
+                                <button (click)="ClearSearch()" type="button" style="font-size: small;"
+                                    class="btn btn-danger" value="Reset"><i class="fa fa-close"> </i> Reset</button>
+                            </div>
+                        </form>
+                        <div *ngIf="this.CurrentPage=='tds-view'">
+                            <div class="box box-default"
+                                style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                                <div class="custom_table tables_layout_design">
+                                    <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                                        <thead>
+                                          <tr>
+                                            <th></th>
+                                          </tr>
+                                        </thead>
+                                      </table>
+
+                                    <!--======= Refer Table  =========-->
+                                    <ul class="responsive-table">
+                                        <li class="table-row" *ngFor="let row of dataAr; let i=index;">
+
+                                            <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                                                <div class="agents_data agents_data1">
+                                                    <div class="icon_re_cl">{{ row.SrNo }}</div>
+                                                    <div class="agent_name_mobile">
+                                                        <div class="agent_data">
+                                                            <div> Name </div>
+                                                            <strong class="fs_18">{{ row.agent }}</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="agents_data agents_data2">
+                                                    <div class="agent_name_mobile">
+                                                        <div class="agent_data">
+                                                            <div> Mobile No.</div>
+                                                            <strong class="fs_18">{{row.mobile}}</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="agents_data agents_data3">
+                                                    <div class="agent_name_mobile">
+                                                        <div class="agent_data">
+                                                            <!-- <div>View.</div><strong class="fs_18">{{ row.registration_no }}</strong> -->
+                                                            <div>Document</div>
+                                                            <strong class="fs_18"><span class="link"></span><label
+                                                                    class="label label-info">
+                                                                    <a style="color: white" *ngIf="row.url != ''"
+                                                                        href="{{ row.url }}" target="_blank">
+                                                                        View</a></label></strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="last_row_div">
+                                                <div class="d_flex custon-234">
+
+                                                    <div class="label_chips finance_lob">
+                                                        <span>Quarter : {{ row.quarter }}</span>
+                                                    </div>
+
+                                                    <div class="label_chips non_motor_lob">
+                                                        <span>Fiscal Year : {{ row.fiscal_year }}</span>&nbsp;&nbsp;
+                                                    </div>
+
+                                                    <div class="label_chips motor_lob">
+                                                        <span >Addstamp
+                                                            :
+                                                            {{ row.addstamp }} </span>&nbsp;&nbsp;
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </li>
+                                    </ul>
+                                    <!--======= Refer Table END =========-->
+
+                                    <div class="row" *ngIf="dataAr?.length == 0">
+                                        <div class="col-md-12">
+                                            <div class="no_data_found">
+                                                <span><img src="assets/image/no_data_banner.jpg"></span>
+                                                <small>No data available !</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="this.CurrentPage=='agent-view'" class="mydiv">
+
+
+                            <table datatable [dtOptions]="dtOptions2" id="Table1" style="width: 100%;"
+                            class="table table-bordered table-hover">
+                            <thead>
+            
+                              <tr>
+                                <th>Year</th>
+                                <th>Quarter</th>
+                                <th>View</th>
+                              </tr>
+            
+                            </thead>
+                            <tbody *ngIf="agentTdsData?.length != 0">
+                              <tr *ngFor="let row of agentTdsData">
+                                <td>{{row.fiscal_year}}.</td>
+                                <td>{{row.quarter}}</td>
+                                <td><span class="link"></span><label class="label label-info">
+                                    <a style="color: white" *ngIf="row.url != ''" href="{{ row.url }}" target="_blank">
+                                        View</a></label></td>
+                              </tr>
+                            </tbody>
+                            <tbody *ngIf="agentTdsData?.length == 0">
+                              <tr>
+                                <td colspan="14" align="center">No data available!</td>
+                              </tr>
+                            <tbody>
+                          </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+

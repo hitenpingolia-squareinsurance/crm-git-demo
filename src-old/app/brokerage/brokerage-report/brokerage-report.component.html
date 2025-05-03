@@ -1,0 +1,628 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+    <!-- Main content -->
+    <section class="content">
+
+        <!-- SELECT2 EXAMPLE -->
+        <div class="box box-default">
+            <div class="box-body">
+
+                <div class="box-header">
+                    <h3 class="box-title">Brokerage Report</h3>
+                </div>
+
+
+                <div class="">
+
+                    <!--begin: Datatable-->
+                    <ul class="nav nav-tabs nav-fill" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" (click)="tab('Revenue')" data-toggle="tab" href="#Revenue"
+                                role="tab" aria-controls="Revenue" aria-selected="true">Brokerage Report</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="tab('Actual_Revenue')" data-toggle="tab" href="#Actual_Revenue"
+                                role="tab" aria-controls="Actual_Revenue" aria-selected="true">Actual Brokerage
+                                Report</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " (click)="tab('Brokerage')" data-toggle="tab" href="#Brokerage"
+                                role="tab" aria-controls="Brokerage" aria-selected="false">Posting Report</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="Revenue" role="tabpanel" aria-labelledby="Revenue-tab">
+
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Booked</th>
+                                        <th>Unbooked</th>
+                                        <th>Total</th>
+                                        <th>INFRA</th>
+                                        <th>LPA</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngIf="brokreage_Ar?.length>0">
+
+                                    <tr *ngFor="let row of brokreage_Ar;">
+                                        <td>{{row.Type}}</td>
+                                        <td>{{row.Booked}}</td>
+                                        <td>{{row.UnBooked}}</td>
+                                        <td>{{row.Total_1}}</td>
+                                        <td>{{row.INFRA}}</td>
+                                        <td>{{row.LPA}}</td>
+                                        <td>{{row.Total_2}}</td>
+                                    </tr>
+
+                                </tbody>
+
+                                <tbody *ngIf="brokreage_Ar?.length == 0">
+
+                                    <tr>
+                                        <td>Premium</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>NOP</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pay-In</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>PO</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Revenue</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="tab-pane" id="Actual_Revenue" role="tabpanel" aria-labelledby="Actual_Revenue-tab">
+
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Booked</th>
+                                        <th>Unbooked</th>
+                                        <th>Total</th>
+                                        <th>INFRA</th>
+                                        <th>LPA</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngIf="Actual_brokreage_Ar?.length>0">
+
+                                    <tr *ngFor="let row of Actual_brokreage_Ar;">
+                                        <td>{{row.Type}}</td>
+                                        <td>{{row.Booked}}</td>
+                                        <td>{{row.UnBooked}}</td>
+                                        <td>{{row.Total_1}}</td>
+                                        <td>{{row.INFRA}}</td>
+                                        <td>{{row.LPA}}</td>
+                                        <td>{{row.Total_2}}</td>
+                                    </tr>
+
+                                </tbody>
+
+                                <tbody *ngIf="Actual_brokreage_Ar?.length == 0">
+
+                                    <tr>
+                                        <td>Premium</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>NOP</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pay-In</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>PO</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Revenue</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="tab-pane " id="Brokerage" role="tabpanel" aria-labelledby="Brokerage-tab">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Booked</th>
+                                        <th>Unbooked</th>
+                                        <th>Total</th>
+                                        <th>INFRA</th>
+                                        <th>LPA</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngIf="posting_Ar?.length>0">
+
+                                    <tr *ngFor="let row of posting_Ar;">
+                                        <td>{{row.Type}}</td>
+                                        <td>{{row.Booked}}</td>
+                                        <td>{{row.Unbooked}}</td>
+                                        <td>{{row.Total_1}}</td>
+                                        <td>{{row.INFRA}}</td>
+                                        <td>{{row.LPA}}</td>
+                                        <td>
+                                            <a title="Click to View Parnter wise report" href="javascript:void(0)"
+                                                (click)="ViewAgentGroupWise(row.Type)">{{row.Total_2}}</a>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                                <tbody *ngIf="posting_Ar?.length == 0">
+
+                                    <tr>
+                                        <td>Posted</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Paid</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Un-Paid</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Pending For Posting</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Direct-Customer</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Non-PO Product</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Unbooked/Qc Reject</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Code Blocked</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>64 VB pending</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mandate Pending</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <hr>
+
+                        <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+                            <div class="row">
+
+                                <div class="col-sm-4">
+
+
+
+                                    <select (change)="GetEmployees()" formControlName="Vertical_Id"
+                                        class="form-control">
+                                        <option value="0">Select Vertical</option>
+
+                                        <option *ngFor="let r of Vertical_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <select (change)="GetSubBranches($event)" formControlName="Region_Id"
+                                        class="form-control">
+                                        <option value="0">Select Region</option>
+                                        <option value="0">None</option>
+                                        <option *ngFor="let r of Region_Ar;" value="{{r.id}}">{{r.text}}</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <select (change)="GetEmployees()" formControlName="Sub_Region_Id"
+                                        class="form-control">
+                                        <option value="0">Select Region-Branch</option>
+                                        <option value="0">None</option>
+                                        <option *ngFor="let r of Sub_Branch_Ar;" value="{{r.id}}">{{r.text}}</option>
+                                    </select>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row"  >
+
+
+                                <div class="col-sm-4">
+                                    <ng-multiselect-dropdown class="form-control" name="Emp_Id"
+                                        [placeholder]="Employee_Placeholder" [data]="Emps_Ar" formControlName="Emp_Id"
+                                        [settings]="dropdownSettings" (onSelect)="onItemSelect($event,'Employee')"
+                                        (onDeSelect)="onItemDeSelect($event,'Employee')">
+                                    </ng-multiselect-dropdown>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <select formControlName="Report_Type" class="form-control">
+                                        <option disabled value="0">Report Type</option>
+                                        <option value="Self">Self</option>
+                                        <option value="Hierarchy">Hierarchy ({{CountHierarchy_Emp}})</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-2">
+
+                                    <ng-multiselect-dropdown class="form-control" name="SRAgent_Type"
+                                        placeholder="Select Agent Type" [data]="SRAgentType_Ar"
+                                        formControlName="SRAgent_Type" [settings]="LOB_dropdownSettings"
+                                        (onSelect)="onItemSelect($event,'SRAgent_Type')"
+                                        (onDeSelect)="onItemDeSelect($event,'SRAgent_Type')">
+                                    </ng-multiselect-dropdown>
+
+                                </div>
+
+                                <div class="col-sm-4">
+
+                                    <ng-multiselect-dropdown class="form-control" name="Agent_Id"
+                                        [placeholder]="Agents_Placeholder" [data]="Agents_Ar" formControlName="Agent_Id"
+                                        [settings]="AgentdropdownSettings">
+                                    </ng-multiselect-dropdown>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row"  >
+
+                                <div class="col-sm-3">
+
+                                    <ng-multiselect-dropdown class="form-control" name="SR_Broker"
+                                        placeholder="Select Broker" [data]="SR_Broker_Ar" formControlName="SR_Broker"
+                                        [settings]="dropdownSettings" (onSelect)="onItemSelect($event,'SR_Broker')"
+                                        (onDeSelect)="onItemDeSelect($event,'SR_Broker')">
+                                    </ng-multiselect-dropdown>
+
+                                </div>
+
+                                <div class="col-sm-2">
+
+                                    <ng-multiselect-dropdown class="form-control" name="SRLOB" placeholder="Select LOB"
+                                        [data]="SRLOB_Ar" formControlName="SRLOB" [settings]="LOB_dropdownSettings"
+                                        (onSelect)="onItemSelect($event,'LOB')"
+                                        (onDeSelect)="onItemDeSelect($event,'LOB')">
+                                    </ng-multiselect-dropdown>
+
+                                </div>
+
+                                <div class="col-sm-4">
+
+                                    <ng-multiselect-dropdown class="form-control" name="Product_Id"
+                                        placeholder="Select Product" [data]="Products_Ar" formControlName="Product_Id"
+                                        [settings]="dropdownSettings">
+                                    </ng-multiselect-dropdown>
+
+
+                                </div>
+
+                                <div class="col-sm-3">
+
+                                    <ng-multiselect-dropdown class="form-control" name="Company_Id"
+                                        placeholder="Select Ins Company" [data]="Companies_Ar"
+                                        formControlName="Company_Id" [settings]="dropdownSettings">
+                                    </ng-multiselect-dropdown>
+
+
+                                </div>
+
+
+
+                            </div>
+                            <div class="row"  >
+
+                                <div class="col-sm-2">
+
+                                    <ng-multiselect-dropdown class="form-control" name="SRStatus"
+                                        placeholder="Select SR Status" [data]="SRStatus_Ar" formControlName="SRStatus"
+                                        [settings]="SR_StatusDropdownSettings">
+                                    </ng-multiselect-dropdown>
+
+                                    <span *ngIf="isSubmitted && FC.SRStatus.errors" class="form-text text-muted">
+                                        <span *ngIf="FC.SRStatus.errors.required" style="color:red;">Please choose
+                                            business type!</span>
+                                    </span>
+
+                                </div>
+
+
+
+                                <div class="col-sm-2">
+
+                                    <ng-multiselect-dropdown class="form-control" name="SRType"
+                                        placeholder="Select SR Type" [data]="SRType_Ar" formControlName="SRType"
+                                        [settings]="LOB_dropdownSettings" (onSelect)="onItemSelect($event,'SR_Type')">
+                                    </ng-multiselect-dropdown>
+
+                                </div>
+
+                                <div class="col-sm-3">
+
+                                    <ng-multiselect-dropdown class="form-control" name="SR_Posting_Status"
+                                        placeholder="Select Posting-Status" [data]="SR_Posting_Status_Ar"
+                                        formControlName="SR_Posting_Status" [settings]="LOB_dropdownSettings"
+                                        (onSelect)="onItemSelect($event,'SR_Posting_Status')">
+                                    </ng-multiselect-dropdown>
+
+                                </div>
+
+                                <div class="col-sm-2">
+
+                                    <ng-multiselect-dropdown class="form-control" name="SR_Source_Type"
+                                        placeholder="Select Source" [data]="SRSource_Ar"
+                                        formControlName="SR_Source_Type" [settings]="LOB_dropdownSettings"
+                                        (onSelect)="onItemSelect($event,'Source')">
+                                    </ng-multiselect-dropdown>
+
+                                </div>
+
+                                <div class="col-sm-2">
+
+                                    <ng-multiselect-dropdown class="form-control" name="SR_Payout_Mode"
+                                        placeholder="Payout-Mode" [data]="SR_Payout_Mode_Ar"
+                                        formControlName="SR_Payout_Mode" [settings]="LOB_dropdownSettings"
+                                        (onSelect)="onItemSelect($event,'SR_Payout_Mode')">
+                                    </ng-multiselect-dropdown>
+
+                                </div>
+
+                            </div>
+                            <div class="row"  >
+                                <div class="col-sm-2">
+                                    <select (change)="onItemSelectFY($event,0)" formControlName="FY"
+                                        class="form-control">
+                                        <option value="0" selected disabled>Select Financial-Year</option>
+                                        <option *ngFor="let r of FY_Ar;" value="{{r.Id}}">{{r.Name}}
+                                        </option>
+                                    </select>
+                                    <span *ngIf="isSubmitted && FC.FY.errors" class="form-text text-muted">
+                                        <span *ngIf="FC.FY.errors.required" style="color:red;">Please
+                                            choose Financial-Year!</span>
+                                    </span>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                                        [minDate]="minDate" [maxDate]="maxDate" formControlName="DateOrDateRange"
+                                        bsDaterangepicker
+                                        [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+
+                                    <span *ngIf="isSubmitted && FC.DateOrDateRange.errors" class="form-text text-muted">
+                                        <span *ngIf="FC.DateOrDateRange.errors.required" style="color:red;">Please
+                                            choose Date or Date-Range!</span>
+                                    </span>
+
+                                </div>
+
+                                <div class="col-sm-4"></div>
+                                <div style="text-align: right;" class="col-sm-3">
+
+                                    <!--<input *ngIf="(Is_Export==1)" (click)="ExportExcel()" type="button"
+                        class="btn btn-success" value="Export">-->
+                                    &nbsp;&nbsp;
+                                    <input type="submit" class="btn btn-info" value="Search">
+                                    &nbsp;&nbsp;
+                                    <button (click)="ClearSearch()" type="button" style="font-size: small;"
+                                        class="btn btn-danger" value="Reset"> <i class="fa fa-close"> Reset</i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <hr>
+
+
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions"
+                                class="row-border hover table table-bordered table-hover table-checkable table-striped "
+                                style="margin-top: 13px !important">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Parnter Name</th>
+                                        <th>Parnter Code</th>
+                                        <th>RM Name</th>
+                                        <th>RM Code</th>
+                                        <th>Total Net Premium</th>
+                                        <th>Total Pay-In</th>
+                                        <th>Total Revenue</th>
+                                        <th>Total PO</th>
+                                        <th>Total Posted</th>
+                                        <th>Total Paid</th>
+                                        <th>Total Un-Paid</th>
+                                        <th>Total Un-Posted</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr">
+                                        <td>{{ row.SrNo }}.</td>
+                                        <td>{{ row.AgentName }}</td>
+                                        <td>{{ row.AgentCode }}</td>
+                                        <td>{{ row.RMName }}</td>
+                                        <td>{{ row.RMCode }}</td>
+                                        <td>{{ row.Total_Net_Premium }}</td>
+                                        <td>{{ row.Payin_Total_Amount }}</td>
+                                        <td>{{ row.Total_Revenue }}</td>
+                                        <td>{{ row.Agent_Total_Amount }}</td>
+
+                                        <td>{{ row.Total_Posted }}</td>
+                                        <td>{{ row.Total_Paid }}</td>
+                                        <td>{{ row.Total_UnPaid }}</td>
+                                        <td>{{ row.Total_UnPosted }}</td>
+
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="13" align="center">No data available !</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </section>
+    <!-- /.content -->
+
+</div>

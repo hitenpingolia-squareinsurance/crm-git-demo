@@ -1,0 +1,432 @@
+<table class="table table-bordered">
+    
+	<thead>
+	 <tr>
+        <th colspan="5" style="text-align: center;">
+			<span>{{row.Name}} ({{row.Emp_Id}})</span>
+	
+			<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+			 
+		</th>
+ 
+      </tr>
+	   
+    </thead>
+    <tbody>
+	 <tr>
+        <td colspan="5" style="text-align: left;"><b>QC Remark :</b> {{row.Remarks}}</td>
+      </tr>
+	  <tr>
+        <td colspan="5" style="text-align: left;"><b>QC By :</b> {{row.QC_By_Details}}</td>
+      </tr>
+	  
+	  <tr>
+        <th colspan="5" style="text-align: left;">Personal Information</th>
+      </tr>
+	  
+	   <tr>
+        <td><b>Name :</b> {{Salutation_Type}} {{row.Name}}</td>
+        <td><b>Code :</b> {{row.Emp_Id}}</td>
+        <td><b>Category :</b> {{row.Agent_Category}}</td>
+        <td><b>DOB :</b> {{row.DOB}}</td>
+        <td><b>Gender :</b> {{row.Gender}}</td> 
+      </tr>
+	  <tr>
+        <td><b>Mobile :</b> {{row.Mobile}}
+			&nbsp; <a *ngIf="User_Rights.Is_Agent_Fields_Update==1" title="Edit Mobile No" (click)="OpenUpdateFields('Mobile')" href="javascript:void;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+		</td>
+        <td><b>Email :</b> {{row.Email}}
+			&nbsp; <a *ngIf="User_Rights.Is_Agent_Fields_Update==1" title="Edit Email Address" (click)="OpenUpdateFields('Email')" href="javascript:void;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+		</td>
+		<td><b>Qualification :</b> {{row.Qualification}}</td> 
+        <td></td>
+        <td></td>
+        
+      </tr>
+	  
+	  <tr *ngIf="IsFieldsUpdate == 1">
+        <th colspan="5" style="text-align: left;">
+			<input class="form-control" [(ngModel)]="FiledValue" style="width: 25%;float: left;margin-right: 1%;">
+			<button (click)="UpdateFields()" type="button" class="btn btn-primary mr-2">Update</button>
+			<button (click)="CancleUpdateFields()" type="button" class="btn btn-default mr-2">Cancel</button>
+		</th>
+ 
+      </tr>
+	  
+	  
+	  <tr>
+        <th colspan="5" style="text-align: left;">RM Deatils</th>
+      </tr>
+	  <tr>
+        <td colspan="1"><b>Name :</b> {{row.RM_Details['Name']}} ({{row.RM_Details['Emp_Id']}}) </td>
+        <td colspan="1"><b>Mobile No :</b> {{row.RM_Details['Mobile']}}  
+			
+		</td>
+		<td colspan="3"></td>
+      </tr>
+	  
+	  <tr *ngIf="row.Agent_Category=='Institution' && row.Type=='SP'">
+        <td colspan="5" style="text-align: left;">
+			<b>Contact Person Details : </b>&nbsp;
+			<b>Name:</b>{{row.ContactPerson_Name}},
+			<b>Email:</b>{{row.ContactPerson_Email}},
+			<b>Mobile:</b>{{row.ContactPerson_Mobile}} 
+		</td>
+      </tr>
+	  
+	  <tr>
+        <th colspan="5" style="text-align: left;">Address Information</th>
+      </tr>
+	  <tr>
+        <td colspan="5"><b>Address :</b> {{row.Addres_Line_1}}, {{row.Addres_Line_2}}</td>
+      </tr>
+	  
+	  <tr>
+        <td><b>State :</b> {{row.State_Id}}</td>
+        <td><b>District :</b> {{row.District_Id}}</td>
+		<td><b>City :</b> {{row.City_Id}}</td> 
+		<td><b>Pincode :</b> {{row.Pincode_Id}}</td> 
+        <td></td>
+      </tr>
+	  
+	   <tr *ngIf="row.Type=='POS' || row.Type=='SP' || row.Type == 'Dealer' || row.Type == 'ORC' || row.Type == 'Franchisee'">
+        <th colspan="5" style="text-align: left;">KYC Details</th>
+      </tr>
+	   
+	  <tr *ngIf="row.Type=='POS' || row.Type=='SP' || row.Type == 'Dealer' || row.Type == 'ORC' || row.Type == 'Franchisee'">
+        <td><b>GST No :</b> {{row.GST_No}}</td>
+        <td><b>Aadhar Card No :</b> {{row.AadharCard_No}}</td>
+		<td><b>Pan Card No :</b> {{row.PanCard_No}}</td> 
+		<td></td> 
+        <td></td>
+      </tr>
+	  
+	   <tr *ngIf="row.Type=='POS' || row.Type=='SP' || row.Type == 'Dealer' || row.Type == 'Franchisee'">
+        <th colspan="5" style="text-align: left;">Bank Account Details</th>
+      </tr>
+	   
+	  <tr *ngIf="row.Type=='POS' || row.Type=='SP' || row.Type == 'Dealer' || row.Type == 'Franchisee'">
+        <td><b>Account No :</b> {{row.Account_No}}</td>
+        <td><b>IFSC Code :</b> {{row.IFSC_Code}}</td>
+		<td><b>Bank Name :</b> {{row.Bank_Name}}</td> 
+		<td><b>Branch Address :</b> {{row.Branch_Address}}</td> 
+		<td></td> 
+      </tr>
+	  <tr *ngIf="row.Type=='POS' || row.Type=='SP' || row.Type == 'Dealer' || row.Type == 'Franchisee'">
+        <td><b>State :</b> {{row.Branch_State_Id}}</td>
+        <td><b>District :</b> {{row.Branch_District_Id}}</td>
+		<td><b>City :</b> {{row.Branch_City_Id}}</td> 
+		<td><b>Pincode :</b> {{row.Branch_Pincode_Id}}</td> 
+        <td></td>
+      </tr>
+	  
+	  
+	  <tr *ngIf="( ( api.GetUserData('User_Id_Dec')==1 ) || api.GetUserData('User_Id_Dec')==8107 || row.Is_Hod_Update_RM == 1)">
+        <th colspan="5" style="text-align: left;">Actions(Change Relationship-Manager)</th>
+      </tr>
+	   
+	   <tr *ngIf="( ( api.GetUserData('User_Id_Dec')==1 ) || api.GetUserData('User_Id_Dec')==8107 || row.Is_Hod_Update_RM == 1)">
+         
+		<td colspan="3"> 
+			<!--<b>Current RM :</b>-->
+			<select [(ngModel)]="RM_Id" class="form-control">
+				<option *ngFor="let u of RM_Users;" value="{{u.Id}}">{{u.Name}}</option>
+			</select> 
+		</td>
+        
+        <td> <button (click)="ChangeRM();" type="button" class="btn btn-primary mr-2">Assign</button> </td>
+		
+		<td></td>
+		
+        
+      </tr>
+	    
+    </tbody>
+  </table>
+  
+  
+  <table *ngIf="row.RM_MappingAr.length>0" class="table table-bordered">
+  
+	<thead>
+		<tr>
+			<th colspan="7" style="text-align: center;">RM Mapping Details</th>
+		</tr>
+	    <tr>
+			<th>Sr.No</th>
+			<th>Request RM</th>
+			<th>Requested By</th>
+			<th>QC Status</th>
+			<th>Banking Status</th>
+			<th>Final Status</th>
+			<th>Last Action</th>
+      </tr>
+    </thead>
+  <tbody>
+	
+	<tr *ngFor="let rm of row.RM_MappingAr; let i=index;">
+        <td>{{i+1}}.</td>
+        <td>{{rm.RequestNewRM}}</td>
+        <td>{{rm.RequestBy}}</td>
+        <td> 
+			<span *ngIf="rm.QC_Status=='0'" class="label label-warning label-inline mr-2">Pending</span>
+			<span *ngIf="rm.QC_Status=='1'" class="label label-success label-inline mr-2">Approved</span>
+			<span *ngIf="rm.QC_Status=='2'" class="label label-danger label-inline mr-2">Rejected</span>
+			
+			<table *ngIf="rm.QC_Status=='2'" style="margin-top: 4%;">
+				<tr>
+					<td>Remark</td>
+					<td>Action By </td>
+					<td>Action On</td>
+				</tr>
+				<tr>
+					<td>{{rm.QC_Remark}}</td>
+					<td>{{rm.QCActionBy}}</td> 
+					<td>{{rm.QC_Update}}</td> 
+				</tr>
+			</table>
+			
+			
+			
+		</td>
+		
+        <td>
+			<span *ngIf="rm.Banking_Status=='0'" class="label label-warning label-inline mr-2">Pending</span>
+			<span *ngIf="rm.Banking_Status=='1'" class="label label-success label-inline mr-2">Approved</span>
+			<span *ngIf="rm.Banking_Status=='2'" class="label label-danger label-inline mr-2">Rejected</span>
+			
+			<table *ngIf="rm.Banking_Status=='2'" style="margin-top: 4%;">
+				<tr>
+					<td>Remark</td>
+					<td>Action By </td>
+					<td>Action On</td>
+				</tr>
+				<tr>
+					<td>{{rm.Banking_Remark}}</td>
+					<td>{{rm.BankingQCActionBy}}</td> 
+					<td>{{rm.Banking_Update}}</td> 
+				</tr>
+			</table>
+			
+		</td>
+        <td>
+			<span *ngIf="rm.QC_Status=='0' || rm.QC_Status=='2' || rm.Banking_Status=='0' || rm.Banking_Status=='2'" class="label label-warning label-inline mr-2">Pending</span>
+			<span *ngIf="rm.QC_Status=='1' && rm.Banking_Status=='1'" class="label label-success label-inline mr-2">Approved</span>
+		</td>
+        <td>{{rm.Last_Action}}</td>
+	</tr>
+   </tbody>
+  </table>
+  
+  
+  <table class="table table-bordered">
+    
+	<thead>
+	    <tr>
+        <th>Document Name</th>
+        <th>Document View</th>
+        <th *ngIf="(api.GetUserData('User_Id_Dec')==1 )">Upload</th>
+       
+        <th>Upload Date</th>
+      </tr>
+    </thead>
+    <tbody>
+	
+	<tr *ngFor="let r of Documents;">
+        <td>{{r.Document_Type}}</td>
+        <td><a *ngIf="r.Document_File_Name!=''" (click)="ViewDocument(r.Document_File_Name)" href="javascript:;">Click to View</a> </td>
+        <td *ngIf="(api.GetUserData('User_Id_Dec')==1 )"><input type="file" class="form-control" (change)="UploadDocs($event,r.Document_Type)" accept=".png,.jpg,.pdf"></td>
+        <td><span *ngIf="r.Document_File_Name!=''">{{r.Upload_Date_Format}}</span></td>
+      </tr>
+	  
+       
+    </tbody>
+  </table>
+
+  <table class="table table-bordered">
+    
+	<thead>
+	    <tr>
+        <th>Log Name</th>
+        <th>User</th>
+		<th>Remark</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+	
+	<tr *ngFor="let r of Logs;">
+        <td>{{r.Log_Type}}</td>
+        <td>{{r.Name}}/{{r.Emp_Id}}</td>
+		<td>{{r.Remark}}</td>
+		<td>{{r.Add_Stamp}}</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  
+  
+   
+ <form *ngIf="(row.Type=='SP' || row.Type=='Dealer') && ( (row.QC_Status==0 || row.QC_Status==8) && (User_Rights.Agent_QC==1)) ||  (row.QC_Status==2) && (api.GetUserData('User_Id_Dec')==72)" class="form" [formGroup]="QCForm" (ngSubmit)="SubmitQC()"> 
+  <table class="table table-bordered"> 
+    
+	<thead>
+	<tr>
+        <th colspan="3"  style="text-align: center;">
+			<span *ngIf="(row.QC_Status==0 || row.QC_Status==8) && (User_Rights.Agent_QC==1) && (row.Type=='SP' || row.Type=='Dealer')">SP/Dealer QC</span> 
+			<span *ngIf="(row.QC_Status==2) && (api.GetUserData('User_Id_Dec')==72)">SP/Dealer Banking QC For Accounts</span>
+		</th>
+	</tr>
+	    <tr>
+        <th>QC Status</th>
+        <th>Remark</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+	
+	<tr>
+        <td>
+			<select *ngIf="(row.QC_Status==0 || row.QC_Status==1 || row.QC_Status==8) && (User_Rights.Agent_QC==1)" class="form-control" formControlName="QC_Status" (change)="QC_Status($event)">
+				<option value="">--Select--</option>
+				<option value="2">Approve</option>
+				<option value="3">Reject</option>
+				<option value="6">Block</option>
+			</select>
+			
+			<select *ngIf="(row.QC_Status==2) && (api.GetUserData('User_Id_Dec')==72)" class="form-control" formControlName="QC_Status" (change)="QC_Status($event)">
+				<option value="">--Select--</option>
+				<option value="5">Approve</option>
+				<option value="4">Reject</option>
+				<option value="6">Block</option>
+			</select>
+			
+			
+			
+			<span *ngIf="isSubmitted && FC.QC_Status.errors" class="form-text text-muted">
+				<span *ngIf="FC.QC_Status.errors.required" style="color:red;">Please select an option !</span>
+			</span>
+			
+		</td>
+        <td>
+			<input class="form-control" formControlName="QC_Remark">
+			<span *ngIf="isSubmitted && FC.QC_Remark.errors" class="form-text text-muted">
+				<span *ngIf="FC.QC_Remark.errors.required" style="color:red;">Please enter remark !</span>
+			</span>
+		</td>
+        <td>
+		
+			<button type="submit" class="btn btn-primary mr-2">Submit</button>
+			
+			<button (click)="EditSPNonSales(1)" *ngIf="(EditSPNonSalesStatus==0) && (row.QC_Status==0 || row.QC_Status==8) && (User_Rights.Agent_QC==1) && (row.Type=='SP')" type="button" class="btn btn-danger mr-2">Edit</button>
+		
+		</td>
+		
+	 
+		
+      </tr>
+	  
+    </tbody>
+  </table>
+  </form>
+  
+ <form *ngIf="EditSPNonSalesStatus==1" class="form" [formGroup]="UpdateSPGeneralDetailForm" (ngSubmit)="UpdateSPGeneralDetails()"> 
+  
+  <table  class="table table-bordered"> 
+    
+	<thead>
+	<tr>
+        <th colspan="5"  style="text-align: center;">
+			  Edit SP
+		</th>
+	</tr>
+	    <tr>
+        <th>Name : <input class="form-control" formControlName="Name">
+			<span *ngIf="isSubmitted_2 && FC_2.Name.errors" class="form-text text-muted">
+				<span *ngIf="FC_2.Name.errors.pattern" style="color:red;">Please enter vaild name (Numbers/Special Characters Not Allowed)</span>
+			</span>
+			
+		</th>
+        <th>Mobile  : <input class="form-control"  formControlName="Mobile">
+			<span *ngIf="isSubmitted_2 && FC_2.Mobile.errors" class="form-text text-muted">
+				<span *ngIf="FC_2.Mobile.errors.pattern" style="color:red;">Please enter vaild mobile</span>
+			</span>
+		</th>
+        <th>Email  : <input class="form-control" formControlName="Email">
+			<span *ngIf="isSubmitted_2 && FC_2.Email.errors" class="form-text text-muted">
+				<span *ngIf="FC_2.Email.errors.pattern" style="color:red;">Please enter vaild email</span>
+			</span>
+		</th>
+        <th>Gender   : <select class="form-control" formControlName="Gender">
+							<option value="Male">Male</option>
+							<option value="Female">FeMale</option>
+							<option value="Transgender">Transgender</option>
+						</select>
+			<span *ngIf="isSubmitted_2 && FC_2.Gender.errors" class="form-text text-muted">
+				<span *ngIf="FC_2.Gender.errors.required" style="color:red;">Please enter remark !</span>
+			</span>
+		</th> 
+        <th>
+			<button type="submit" class="btn btn-primary mr-2">Update</button>
+			<button (click)="EditSPNonSales(0)" type="button" class="btn btn-default mr-2">Cancel</button>
+		</th>
+      </tr>
+    </thead>
+    <tbody>
+	
+	</tbody>
+  </table>
+	
+ </form> 
+  
+  <form class="form" [formGroup]="QCForm" (ngSubmit)="SubmitQC()"> 
+  <!-- <form *ngIf="(row.Type=='SPC') && ( (row.QC_Status==0 || row.QC_Status==7) && (User_Rights.SPC_QC==1))" class="form" [formGroup]="QCForm" (ngSubmit)="SubmitQC()">  -->
+  <table class="table table-bordered"> 
+    
+	<thead>
+	<tr> 
+        <th colspan="3"  style="text-align: center;">
+			 
+			<span>SPC QC</span>  
+		</th>
+	</tr>
+	    <tr>
+        <th>QC Status</th>
+        <th>Remark</th>
+        <th>Action</th>
+  
+      </tr>
+    </thead>
+    <tbody>
+	
+	<tr>
+        <td>
+			<select class="form-control" formControlName="QC_Status" (change)="QC_Status($event)">
+				<option value="">--Select--</option>
+				<option value="2">Approve</option>
+				<option value="3">Reject</option> 
+				<option value="6">Block</option> 
+				<option value="7">FollowUp</option> 
+			</select>
+			
+		  
+			<span *ngIf="isSubmitted && FC.QC_Status.errors" class="form-text text-muted">
+				<span *ngIf="FC.QC_Status.errors.required" style="color:red;">Please select an option !</span>
+			</span>
+			
+		</td>
+        <td>
+			<input class="form-control" formControlName="QC_Remark">
+			<span *ngIf="isSubmitted && FC.QC_Remark.errors" class="form-text text-muted">
+				<span *ngIf="FC.QC_Remark.errors.required" style="color:red;">Please enter remark !</span>
+			</span>
+		</td>
+        <td><button type="submit" class="btn btn-primary mr-2">Submit</button></td>
+      </tr>
+	  
+       
+    </tbody>
+  </table>
+  </form>
+  
+  

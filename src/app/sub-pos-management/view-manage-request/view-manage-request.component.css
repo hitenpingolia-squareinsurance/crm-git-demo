@@ -1,0 +1,39 @@
+.ul-last-btn{
+    
+      margin-right: 5px;
+      margin-top: 4px;
+  }
+  .displays{
+
+    display:block !important;
+  }
+  .hides{
+
+    display:none !important;
+  }
+
+  .btnCustomess {
+    background-color:#00a65a;
+    border-color : #00a65a;
+    padding: 3px;
+    font-size: 12px;
+  }
+  .main_card_form .main_body {
+    position: relative;
+}
+  .btn-align-right {
+      margin-right: 5px;
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      margin-top: 15px;
+  }
+  table.table thead tr th input[type='checkbox'] {
+    margin-left: 7px;
+    margin-top: 0px;
+  }
+  table.table thead tr th:nth-of-type(1) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

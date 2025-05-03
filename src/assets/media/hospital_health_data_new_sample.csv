@@ -1,0 +1,4 @@
+id,company,plan,hospital_name,hospital_address,city,state,pincode,contact_number,is_blocked,status,lob,contact_email,type
+44437,RELIANCE,ALL,Vytilla,VYTILLA,Vytilla,Kerala,,,0,1,health,,Diagnostic List
+44436,RELIANCE,ALL,METROPOLIS HEALTHCARE LTD - CHEMBUR COLONY,VIJAY STORES ADJECENT TO CHEMBUR COLONY BUS DEPOT DR C G ROAD CHEMBUR MUMBAI 400074,Mumbai,Maharashtra,,,0,1,health,,Diagnostic List
+44435,RELIANCE,ALL,Vashi,VASHI.,-,Maharashtra,,,0,1,health,,Diagnostic List

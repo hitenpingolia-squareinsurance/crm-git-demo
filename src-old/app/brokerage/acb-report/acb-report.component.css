@@ -1,0 +1,30 @@
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.errorMsgg {
+  border-color: red;
+}
+
+
+.btn-danger1 {
+  background-color: #941c58;
+  border-color: #941c58;
+  padding: 3px;
+  font-size: 12px;
+}
+
+.btn-primary {
+  background-color: #3c8dbc;
+  border-color: #367fa9;
+  padding: 3px;
+  font-size: 12px;
+}

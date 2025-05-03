@@ -1,0 +1,218 @@
+<table style="font-size: 11px;">
+  <tr> <!-- *ngIf="this.row.CustomerName != null || this.row.CustomerMobile != null"-->
+    <td colspan="4" align="center">Action</td>
+    <td> <!--(this.currentUrl == '/rfq/offline-manage-requests' || this.Url2 == 'view-offline-quote') && -->
+      <button *ngIf="this.Status < '5'" (click)="closeModelAndNavigate(row.Quotation)" class="label label-default">Edit</button>&nbsp;&nbsp;
+      <button type="submit" class="label label-default" (click)="downloadLeadExcel(row.Quotation)" title="Export Data">PDF Export</button>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"> <b>Quotation Id : {{this.row.Quotation}}</b>
+    </td>
+    <td *ngIf="this.row.RejectedStatus != 1" colspan="2" align="center">
+      <b>Status: <label class="label label-warning" *ngIf="this.row.QuoteStatus == 1">
+          Quote Requested
+        </label>
+        <label class="label label-warning" *ngIf="this.row.QuoteStatus == 2">
+          Quote Released
+        </label>
+        <label class="label label-warning" *ngIf="this.row.QuoteStatus == 3">
+          Quote Accepted
+        </label>
+        <label class="label label-warning" *ngIf="this.row.QuoteStatus == 4">
+
+
+          <span *ngIf="this.row.PaymentMode == 'Cash'">Payment For Cash</span>
+          <span *ngIf="this.row.PaymentMode == 'Online'">Payment Url Shared</span>
+          <span *ngIf="this.row.PaymentMode == 'Cheque'">Payment For Cheque</span>
+
+        </label>
+        <label class="label label-warning" *ngIf="this.row.QuoteStatus == 5">
+          Pending For Approval
+        </label>
+        <label class="label label-warning" *ngIf="this.row.QuoteStatus == 6">
+          Complete
+        </label>
+        <label class="label label-warning" *ngIf="this.row.QuoteStatus == 8">
+          Pending for Accounts
+        </label>
+      </b>
+    </td>
+
+    <td *ngIf="this.row.RejectedStatus == 1" colspan="2" align="center"> <b>Status: <label
+          class="label label-danger">Rejected</label> </b>
+    </td>
+
+    <td colspan="2" align="center"> <b>Company: <label>{{this.row.Occupancy_Type}}</label> </b>
+    </td>
+
+
+    <td colspan="2" align="center"> <button (click)="CloseModel()" type="button"
+        class="close closeModelButton">&times;</button></td>
+  </tr>
+  <tbody *ngIf="this.row.CreateUser_Id != ''">
+    <tr class="ValueTD">
+      <td colspan="6">Creater Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Name - (Code)</b>: {{this.row.CreaterName}} - ({{this.row.CreaterCode}})</td>
+      <td colspan="2"><b>Mobile</b>: {{this.row.CreaterMobile}}</td>
+      <td colspan="2"><b>Mail</b>: {{this.row.Createremail}}</td>
+      
+    </tr>
+  </tbody>
+
+  <tbody>
+    <tr class="ValueTD" *ngIf="this.row.AssignerCode != ''">
+      <td colspan="6">Assignee Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Name - (Code)</b>: {{this.row.AssignerName}} - ({{this.row.AssignerCode}})</td>
+      <td colspan="2"><b>Mobile</b>: {{this.row.AssignerMobile}}</td>
+      <td colspan="2"><b>Mail</b>: {{this.row.Assigneremail}}</td>
+    </tr>
+  </tbody>
+
+  <tbody>
+    <tr class="ValueTD">
+      <td colspan="6">Customer Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Name</b>: {{this.row.CustomerName}}</td>
+      <td colspan="2"><b>Mobile</b>: {{this.row.CstomerMobile}}</td>
+      <td colspan="2"><b>EMail</b>: {{this.row.CustomerEmail}}</td>
+    </tr>
+  </tbody>
+
+
+  <tbody>
+    <tr class="ValueTD">
+      <td colspan="6">Requeste Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Occupancy</b>: {{this.calculatorData['occupancy']}}</td>
+      <td colspan="2"><b>Pincode</b>: {{this.calculatorData['pincode']}}</td>
+      <td colspan="2"><b>Zone</b>: {{ this.calculatorData['zone'] }}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Period Months</b>: {{ this.calculatorData['period'] }} Months</td>
+      <td colspan="2"><b>Suminsured</b>: {{ this.calculatorData['suminsured'] }} </td>
+      <td colspan="2"><b>District</b>: {{this.calculatorData['district']}} </td>
+    </tr>
+    <tr>
+      <td colspan="3"><b>Discount</b>: {{this.calculatorData['discount']}} </td>
+      <td colspan="3"><b>State</b>: {{this.calculatorData['state']}} </td>
+    </tr>
+  </tbody>
+
+  <tbody>
+    <tr class="ValueTD">
+      <td colspan="12"><b>Form Type</b>: {{this.row.FormType}}</td>
+    </tr>
+  </tbody>
+
+  <tbody>
+    <tr class="ValueTD">
+      <td colspan="6">Request For Quote Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Fire Policy</b>: {{this.row.FirePolicy}}</td>
+      <td colspan="2" *ngIf="this.row.FireProduct == 1"><b>Fire Product</b>: Dwelling and Housing Society</td>
+      <td colspan="2" *ngIf="this.row.FireProduct == 2"><b>Fire Product</b>: Business upto 5 Cr</td>
+      <td colspan="2" *ngIf="this.row.FireProduct == 3"><b>Fire Product</b>: Business Above 5 Cr upto 50 Cr</td>
+      <td colspan="2" *ngIf="this.row.FireProduct == 4"><b>Fire Product</b>: Above 50 CR</td>
+      <td colspan="2"><b>Policy Duration</b>: {{this.row.PolicyDuration}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="3"><b>Policy Risk Start Date</b>: {{this.row.PolicyRiskStartDate}}</td>
+      <td colspan="3"><b>Policy Risk End Date</b>: {{this.row.PolicyRiskEndDate}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="3"><b>Previous Insurers</b>: {{this.row.PreviousPolicy[0]['Id']}}</td>
+      <td colspan="3"><b>Fire Previous Policy No</b>: {{this.row.FirePreviousPolicyNo}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><b>Fire Expiry Date </b>: {{this.row.FireExpiryDate}}</td>
+      <td colspan="2"><b>Past Loss Experiences </b>: {{this.row.PastLossExperiences}}</td>
+      <td colspan="2"><b>Home Contents </b>: {{this.row.HomeContents}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Cover Valuable Contents </b>: {{this.row.CoverValuableContents}}</td>
+      <td colspan="2"><b>Max Sum Insured per item</b>: {{this.row.MaxSumInsuredperitem}}</td>
+      <td colspan="2"><b>Total Max Suminsured </b>: {{this.row.TotalMaxSumInsured}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>total</b>: {{this.row.total}}</td>
+      <td colspan="2"><b>STFI</b>: {{this.row.STFI}}</td>
+      <td colspan="2"><b>Earthquake</b>: {{this.row.Earthquake}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Terrorism</b>: {{this.row.Terrorism}}</td>
+      <td colspan="2"><b>Terrorism Suminsured</b>: {{this.row.terrorismsumtotal}}</td>
+      <td colspan="2"><b>Basement Exposed Details</b>: {{this.row.Basement_Exposed_Details}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Type of Construction</b>: {{this.row.Type_of_Construction}}</td>
+      <td colspan="2"><b>Basement Exposed</b>: {{this.row.Basement_Exposed}}</td>
+      <td colspan="2"><b>Fire Fighting Arrangements</b>: {{this.row.Fire_Fighting_Arrangements}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Floor Number</b>: {{this.row.Floor_Number}}</td>
+      <td colspan="2"><b>Number of floors</b>: {{this.row.Number_of_floors}}</td>
+      <td colspan="2"><b>Build Up Year</b>: {{this.row.Build_Up_Year}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Address</b>: {{this.row.Address}}</td>
+      <td colspan="2"><b>Pincode</b>: {{this.row.Pincode}}</td>
+      <td colspan="2"><b>Suminsured Valuation</b>: {{this.row.SumInsured_valuation}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Description property</b>: {{this.row.Description_property}}</td>
+      <td colspan="2"><b>Carpet Area Sq</b>: {{this.row.Carpet_Area_sq}}</td>
+      <td colspan="2"><b>Rate Per Sq</b>: {{this.row.Rate_per_Sq}}</td>
+    </tr>
+    <tr class="ValueTD">
+      <td colspan="2"><b>Hypothecated</b>: {{this.row.Hypothecated}}</td>
+      <td colspan="4"><b>Remark </b>: {{this.row.Remark}} </td>
+    </tr>
+    <tr class="ValueTD" *ngIf="this.RejectedStatus != 0 && this.RejectedStatus != null">
+      <td colspan="2"><b>Reject Status </b>: Successfully Rejected</td>
+      <td colspan="2"><b>Rejected Date </b>: {{this.row.rejected_date}} </td>
+      <td colspan="2"><b>Rejected Remark </b>: {{this.row.rejected_remarks}} </td>
+    </tr>
+  </tbody>
+
+</table>
+
+<br>
+
+<table style="font-size: 11px;" >
+ 
+  <tbody *ngIf="dataArrEdtit?.length != 0">
+    <tr class="ValueTD" >
+      <th colspan="12">Update Log Details</th>
+    </tr> 
+    <tr class="ValueTD">
+      <th>User</th>
+      <th>Log Name</th>
+      <th>View Log</th>
+      <th>Log Date/Time</th>
+    </tr> 
+    <tr *ngFor="let row of dataArrEdtit; let i = index;">
+      
+      <td> {{row.Name}}-{{row.Code}}</td>
+      <td> {{row.Type}}</td>
+      <td><a href="javascript:void" (click)="ViewLogs(row.id)"><p class="filename">View Log</p> </a></td>
+      <td> {{row.Date}}</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+<div class="modal-body card-box" id="show_ac_details" [innerHTML]="dataArr">
+
+</div>

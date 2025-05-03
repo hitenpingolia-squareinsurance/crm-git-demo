@@ -1,0 +1,351 @@
+<section class="inner_page_css main_dashboard_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div *ngIf="ActivePage == 'Default'" class="header_title">Custom Business Report</div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+                        <app-business-filter (postCreated)="SearchData($event)"></app-business-filter>
+                        <div class="box-body">
+                            <hr>
+                            <div class="mydiv" style="display:none">
+                                <table datatable [dtOptions]="dtOptions" id="Table1"
+                                    class="table table-bordered table-hover" style="display:none;">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="dataArToDate?.length != 0">
+                                        <tr *ngFor="let row of dataArToDate; let i=index;">
+                                            <td>{{row.SrNo}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody *ngIf="dataArToDate?.length == 0">
+                                        <tr>
+                                            <td colspan="8" align="center">No data Available !</td>
+                                        </tr>
+                                    <tbody>
+                                </table>
+                            </div>
+                            <div *ngIf="ShowDIv == 1" class="d_flex flex_End">
+                                <button type="button" class="btn btn-info" (click)="downloadAsPDF()">
+                                    {{DownloadPdf}}</button>
+                            </div>
+                            <div *ngIf="ShowDIv == 1" id="contentToConvert">
+                                <div class="row" id="TableGraph">
+                                    <div class="col-lg-12 col-md-12">
+                                        <h3 class="box-title text_center fw_600">Report Table View</h3>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="main_card">
+                                            <table class="table table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="1"> Date Range </th>
+                                                        <th colspan="4" style="background: #007ffc24;">{{ToDateValue}}
+                                                        </th>
+                                                        <th colspan="4" style="background: #00f7964a;">{{FromDateValue}}
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th style="background: #007ffc24;">Business</th>
+                                                        <th style="background: #007ffc24;">Policies</th>
+                                                        <th style="background: #007ffc24;">Revenue</th>
+                                                        <th style="background: #007ffc24;"> Activation </th>
+                                                        <th style="background: #00f7964a;">Business</th>
+                                                        <th style="background: #00f7964a;">Policies</th>
+                                                        <th style="background: #00f7964a;">Revenue</th>
+                                                        <th style="background: #00f7964a;"> Activation </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody *ngIf="dataArValuee?.length != 0">
+                                                    <tr *ngFor="let row of dataArValuee; let i=index;">
+                                                        <td>{{row.Name}}</td>
+                                                        <td style="background: #007ffc24;">{{row.ToNet}}</td>
+                                                        <td style="background: #007ffc24;">{{row.ToNop}}</td>
+                                                        <td style="background: #007ffc24;">{{row.ToRevenue}}</td>
+                                                        <td style="background: #007ffc24;"
+                                                            *ngIf="GraphType == 'Rm Wise'" class="report_view_cs_new">
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="background: #007ffc24;">POSP</th>
+                                                                        <th style="background: #007ffc24;">SP</th>
+                                                                        <th style="background: #007ffc24;">Direct</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="background: #007ffc24;">
+                                                                            {{row.ToPospLoginActivation}}</td>
+                                                                        <td style="background: #007ffc24;">
+                                                                            {{row.ToSPLoginActivation}}</td>
+                                                                        <td style="background: #007ffc24;">
+                                                                            {{row.ToDirectLoginActivation}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                        <td style="background: #007ffc24;"
+                                                            *ngIf="GraphType != 'Rm Wise'">
+                                                            {{row.ToPospActivation}}
+                                                        </td>
+                                                        <td style="background: #00f7964a;">{{row.FromNet}} <span
+                                                                style="background-color: #00bb1c;"
+                                                                *ngIf="row.GrowthCheckNet=='PositiveNumber'"
+                                                                class="label label-info label-inline mr-1"><i
+                                                                    class="fa fa-arrow-up" aria-hidden="true"></i>
+                                                                {{row.GrowthNet }}%</span>
+                                                            <span style="background-color: red;"
+                                                                *ngIf="row.GrowthCheckNet=='NegativeNumber'"
+                                                                class="label label-danger label-inline mr-1"><i
+                                                                    class="fa fa-arrow-down" aria-hidden="true"></i>
+                                                                {{row.GrowthNet }}%</span>
+                                                        </td>
+                                                        <td style="background: #00f7964a;">{{row.FromNop}} <span
+                                                                style="background-color: #00bb1c;"
+                                                                *ngIf="row.GrowthCheckNop=='PositiveNumber'"
+                                                                class="label label-info label-inline mr-1"><i
+                                                                    class="fa fa-arrow-up" aria-hidden="true"></i>
+                                                                {{row.GrowthNop }}%</span>
+                                                            <span style="background-color: red;"
+                                                                *ngIf="row.GrowthCheckNop=='NegativeNumber'"
+                                                                class="label label-danger label-inline mr-1"><i
+                                                                    class="fa fa-arrow-down" aria-hidden="true"></i>
+                                                                {{row.GrowthNop }}%</span>
+                                                        </td>
+                                                        <td style="background: #00f7964a;">{{row.FromRevenue}} <span
+                                                                style="background-color: #00bb1c;"
+                                                                *ngIf="row.GrowthCheckRevenue=='PositiveNumber'"
+                                                                class="label label-info label-inline mr-1"><i
+                                                                    class="fa fa-arrow-up" aria-hidden="true"></i>
+                                                                {{row.GrowthRevenue }}%</span>
+                                                            <span style="background-color: red;"
+                                                                *ngIf="row.GrowthCheckRevenue=='NegativeNumber'"
+                                                                class="label label-danger label-inline mr-1"><i
+                                                                    class="fa fa-arrow-down" aria-hidden="true"></i>
+                                                                {{row.GrowthRevenue }}%</span>
+                                                        </td>
+                                                        <td style="background: #00f7964a;"
+                                                            *ngIf="GraphType == 'Rm Wise'" class="report_view_cs_new">
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="background: #00f7964a;">POSP</th>
+                                                                        <th style="background: #00f7964a;">SP</th>
+                                                                        <th style="background: #00f7964a;">Direct</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="background: #00f7964a;">
+                                                                            {{row.FromPospLoginActivation}}</td>
+                                                                        <td style="background: #00f7964a;">
+                                                                            {{row.FromSPLoginActivation}}</td>
+                                                                        <td style="background: #00f7964a;">
+                                                                            {{row.FromDirectLoginActivation}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                        <td style="background: #00f7964a;"
+                                                            *ngIf="GraphType != 'Rm Wise'">
+                                                            {{row.FromPospActivation}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Total </td>
+                                                        <td style="background: #007ffc24;">{{TotalToPremium}}</td>
+                                                        <td style="background: #007ffc24;">{{TotalToNop}}</td>
+                                                        <td style="background: #007ffc24;">{{TotalToRevenue}}</td>
+                                                        <td style="background: #007ffc24;">{{TotalToPospActivation}}
+                                                        </td>
+                                                        <td style="background: #00f7964a;">{{TotalFromPremium}}
+                                                            <span style="background-color: #00bb1c;"
+                                                                *ngIf="GrowthCheckTotalNet=='PositiveNumber'"
+                                                                class="label label-info label-inline mr-1"><i
+                                                                    class="fa fa-arrow-up" aria-hidden="true"></i>
+                                                                {{GrowthTotalNet }}%</span>
+                                                            <span style="background-color: red;"
+                                                                *ngIf="GrowthCheckTotalNet=='NegativeNumber'"
+                                                                class="label label-danger label-inline mr-1"><i
+                                                                    class="fa fa-arrow-down" aria-hidden="true"></i>
+                                                                {{GrowthTotalNet }}%</span>
+                                                        </td>
+                                                        <td style="background: #00f7964a;">{{TotalFromNop}}<span
+                                                                style="background-color: #00bb1c;"
+                                                                *ngIf="GrowthCheckTotalNop=='PositiveNumber'"
+                                                                class="label label-info label-inline mr-1"><i
+                                                                    class="fa fa-arrow-up" aria-hidden="true"></i>
+                                                                {{GrowthTotalNop }}%</span>
+                                                            <span style="background-color: red;"
+                                                                *ngIf="GrowthCheckTotalNop=='NegativeNumber'"
+                                                                class="label label-danger label-inline mr-1"><i
+                                                                    class="fa fa-arrow-down" aria-hidden="true"></i>
+                                                                {{GrowthTotalNop}}%</span>
+                                                        </td>
+                                                        <td style="background: #00f7964a;">{{TotalFromRevenue}}<span
+                                                                style="background-color: #00bb1c;"
+                                                                *ngIf="GrowthCheckTotalRevenue=='PositiveNumber'"
+                                                                class="label label-info label-inline mr-1"><i
+                                                                    class="fa fa-arrow-up" aria-hidden="true"></i>
+                                                                {{GrowthTotalRevenue }}%</span>
+                                                            <span style="background-color: red;"
+                                                                *ngIf="GrowthCheckTotalRevenue=='NegativeNumber'"
+                                                                class="label label-danger label-inline mr-1"><i
+                                                                    class="fa fa-arrow-down" aria-hidden="true"></i>
+                                                                {{GrowthTotalRevenue}}%</span>
+                                                        </td>
+                                                        <td style="background: #00f7964a;">
+                                                            {{TotalFromPospActivation}}<span
+                                                                style="background-color: #00bb1c;"
+                                                                *ngIf="GrowthCheckTotalPospActivation=='PositiveNumber'"
+                                                                class="label label-info label-inline mr-1"><i
+                                                                    class="fa fa-arrow-up" aria-hidden="true"></i>
+                                                                {{GrowthTotalPospActivation}}%</span>
+                                                            <span style="background-color: red;"
+                                                                *ngIf="GrowthCheckTotalPospActivation=='NegativeNumber'"
+                                                                class="label label-danger label-inline mr-1"><i
+                                                                    class="fa fa-arrow-down" aria-hidden="true"></i>
+                                                                {{GrowthTotalPospActivation}}%</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tbody *ngIf="dataArValuee?.length == 0">
+                                                    <tr>
+                                                        <td colspan="8" align="center">No data Available !</td>
+                                                    </tr>
+                                                <tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row" id="NetGraph" *ngIf="GraphType != 'Rm Wise'">
+                                    <div class="col-lg-12 col-md-12">
+                                        <h3 class="box-title text_center fw_600">Business Reports</h3>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="main_card">
+                                            <div class="col-lg-6 col-md-6">
+                                                <h3 style="background: #007ffc24;"
+                                                    class="box-title text_center fw_600 py_5 border_red5px">
+                                                    {{TotalToPremium}}
+                                                </h3>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <h3 style="background: #00f7964a;"
+                                                    class="box-title text_center fw_600 py_5 border_red5px">
+                                                    {{TotalFromPremium}}
+                                                </h3>
+                                            </div>
+                                            <div id="chart" class="col-lg-12 col-md-12">
+                                                <apx-chart [series]="chartOptionsNetPremium.series"
+                                                    [chart]="chartOptionsNetPremium.chart"
+                                                    [dataLabels]="chartOptionsNetPremium.dataLabels"
+                                                    [plotOptions]="chartOptionsNetPremium.plotOptions"
+                                                    [yaxis]="chartOptionsNetPremium.yaxis"
+                                                    [fill]="chartOptionsNetPremium.fill"
+                                                    [xaxis]="chartOptionsNetPremium.xaxis">
+                                                </apx-chart>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row" id="NopGraph" *ngIf="GraphType != 'Rm Wise'">
+                                    <div class="col-lg-12 col-md-12">
+                                        <h3 class="box-title text_center fw_600">NOP Reports</h3>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="main_card">
+                                            <div class="col-lg-6 col-md-6">
+                                                <h3 style="background: #007ffc24;"
+                                                    class="box-title text_center fw_600 py_5 border_red5px">
+                                                    {{TotalToNop}}
+                                                </h3>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <h3 style="background: #00f7964a;"
+                                                    class="box-title text_center fw_600 py_5 border_red5px">
+                                                    {{TotalFromNop}}
+                                                </h3>
+                                            </div>
+                                            <div id="chart" class="col-lg-12 col-md-12">
+                                                <apx-chart [series]="chartOptionsNop.series"
+                                                    [chart]="chartOptionsNop.chart"
+                                                    [dataLabels]="chartOptionsNop.dataLabels"
+                                                    [plotOptions]="chartOptionsNop.plotOptions"
+                                                    [yaxis]="chartOptionsNop.yaxis" [fill]="chartOptionsNop.fill"
+                                                    [xaxis]="chartOptionsNop.xaxis">
+                                                </apx-chart>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row" id="RevenueGraph" *ngIf="GraphType != 'Rm Wise'">
+                                    <div class="col-lg-12 col-md-12">
+                                        <h3 class="box-title text_center fw_600">Revenue Reports</h3>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="main_card">
+                                            <div class="col-lg-6 col-md-6">
+                                                <h3 style="background: #007ffc24;"
+                                                    class="box-title text_center fw_600 py_5 border_red5px">
+                                                    {{TotalToRevenue}}
+                                                </h3>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <h3 style="background: #00f7964a;"
+                                                    class="box-title text_center fw_600 py_5 border_red5px">
+                                                    {{TotalFromRevenue}}
+                                                </h3>
+                                            </div>
+                                            <div id="chart" class="col-lg-12 col-md-12">
+                                                <apx-chart [series]="chartOptionsRevenue.series"
+                                                    [chart]="chartOptionsRevenue.chart"
+                                                    [dataLabels]="chartOptionsRevenue.dataLabels"
+                                                    [plotOptions]="chartOptionsRevenue.plotOptions"
+                                                    [yaxis]="chartOptionsRevenue.yaxis"
+                                                    [fill]="chartOptionsRevenue.fill"
+                                                    [xaxis]="chartOptionsRevenue.xaxis">
+                                                </apx-chart>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div id="chart">
+                                                <apx-chart
+                                                  [series]="chartOptions.series"
+                                                  [chart]="chartOptions.chart"
+                                                  [dataLabels]="chartOptions.dataLabels"
+                                                  [plotOptions]="chartOptions.plotOptions"
+                                                  [yaxis]="chartOptions.yaxis"
+                                                  [legend]="chartOptions.legend"
+                                                  [fill]="chartOptions.fill"
+                                                  [stroke]="chartOptions.stroke"
+                                                  [tooltip]="chartOptions.tooltip"
+                                                  [xaxis]="chartOptions.xaxis"
+                                                ></apx-chart>
+                                              </div> -->
+                        </div>
+                    </div>
+                    <!-- /.box
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</section>

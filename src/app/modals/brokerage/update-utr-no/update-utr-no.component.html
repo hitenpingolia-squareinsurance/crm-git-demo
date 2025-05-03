@@ -1,0 +1,107 @@
+<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+				
+				
+<table   class="coustom-table row-border hover table table-bordered table-hover table-checkable table-responsive" id="kt_datatable">
+				
+			 
+				
+				<thead>
+			  
+		  
+				<tr>
+				 
+				<th>SrNo.</th>
+				 
+				<th>Agent Name</th>
+				<th>Agent Code</th>
+				<th>Request Id</th>
+				<th>Net Payable Amount</th>
+				
+				<th>Transfer Date</th>
+				<th>UTR Type</th> 
+				<th>UTR No</th>
+				<th>Payment Mode</th> 
+				<th>Payment From</th> 
+				 <th>Remark</th>
+  
+				</tr>
+				</thead>
+				
+				
+				<tbody *ngIf="dataAr?.length != 0">
+				  <tr *ngFor="let row of dataAr; let i=index;">
+					  
+					  <td>{{ i+1 }}.</td>
+					  
+					  <td>{{ row.Agent_Name }}</td>
+					  <td>{{ row.Agent_Code }}</td>
+					  <td>{{ row.Group_Id }}</td>
+					  <td>{{ row.Net_Payable_Amt }}</td>
+					  
+					  <td><input style="width: 115px;" (change)="UpdateSingleUTR($event,row.Id,i,'UTR_Update_Date')" type="date" [value]="row.UTR_Update_Date" class="form-control"></td>
+					  <td>
+						<select (change)="UpdateSingleUTR($event,row.Id,i,'UTR_Type')">
+							<option value="" disabled>--select--</option>	
+							<option selected value="Full Payment">Full Payment</option>
+							<option value="Partially Payment">Partially Payment</option>
+							<!--<option value="MF Fund">MF Fund</option>-->	
+						</select>  
+						<input *ngIf="row.UTR_Type!=='Full Payment'" style="width: 100px;margin-top: 8px" type="number" [value]="row.Partially_Amount" (keyup)="UpdateSingleUTR($event,row.Id,i,'Partially_Amount')"  class="form-control">
+					  </td>
+					  <td><input *ngIf="row.UTR_Type!=='MF Fund'" style="width: 140px;" (keyup)="UpdateSingleUTR($event,row.Id,i,'UTR_No')" type="text" [value]="row.UTR_No" class="form-control"></td>
+					  <td>
+						<select *ngIf="row.UTR_Type!=='MF Fund'" (change)="UpdateSingleUTR($event,row.Id,i,'Payment_Mode')">
+							<option value="" selected disabled>--select--</option>	
+							<option value="Cash">Cash</option>
+							<option value="Cheque">Cheque</option>
+							<option value="RTGS">RTGS</option>
+							<option value="NEFT">NEFT</option>
+							<option value="IMPS">IMPS</option>
+							<option value="UPI">UPI</option>
+							<option value="Card">Card</option>
+							<option value="Online">Online</option>
+						</select>
+					  </td>
+					  <td>
+						<select *ngIf="row.UTR_Type!=='MF Fund'" style="width:150px;" (change)="UpdateSingleUTR($event,row.Id,i,'Payment_From')">
+							<option value="" selected disabled>--select--</option>	
+							<option *ngFor="let row of paymentFromAr;" [value]="row.Name">{{row.Name}}</option>
+						</select>
+					  </td>
+
+					  <td><input (keyup)="UpdateSingleUTR($event,row.Id,i,'Remark')" type="text" [value]="row.Remark" class="form-control"></td>
+					  
+				  </tr>
+				</tbody>
+				
+				<thead>
+			   
+				  
+		  
+				<tr>
+				 
+				<th>SrNo.</th>
+				 
+				<th>Agent Name</th>
+				<th>Agent Code</th>
+				<th>Request Id</th>
+				<th>Net Payable Amount</th>
+				<th>Transfer Date</th>
+				<th>UTR Type</th>
+				<th>UTR No</th>
+				<th>Payment Mode</th> 
+				<th>Payment From</th> 
+				<th>
+					<input type="button" (click)="UpdateBulkUTRNo()" class="btn btn-info" value="Submit">
+						
+				</th>
+				
+				 
+  
+				</tr>
+				</thead>
+			 
+				 
+				</table>
+				
+	<div id="snackbar_UTR">{{snackbar_msg}}</div>	

@@ -1,0 +1,61 @@
+<div class="table-responsive mydiv">
+
+  <div class="row">
+    <div class="col-sm-4">
+      <h1 class="heading_popup">Endorsement Log</h1>
+    </div>
+    <div class="col-sm-8">
+      <div style="text-align: right;margin-bottom: 10px;">
+        <a style="margin-right:5px;" class="btn btn-info" (click)="DownloadSampleExcel()">Excel Sample</a>
+        <a style="margin-right:5px;" class="btn btn-primary" (click)="UploadBulkExcelComponent()">Upload Excel</a>
+      </div>
+      <div style="text-align: right;margin-bottom: 10px;">
+        <span class="badge badge-light" style="margin-right:5px;" *ngIf="NetPremium !=0 && NetPremium != ''">Net Premium
+          : {{ NetPremium }}</span>
+        <span class="badge badge-light" style="margin-right:5px;" *ngIf="GrossPremium !=0 && GrossPremium != ''">Gross
+          Premium : {{ GrossPremium
+          }}</span>
+      </div>
+
+    </div>
+
+    <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+
+  </div>
+
+  <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+
+    <thead>
+      <tr>
+
+        <th style="text-align:center;">S.No</th>
+        <th style="text-align:center;">SR&nbsp;No.</th>
+        <th style="text-align:center;">Net&nbsp;Premium</th>
+        <th style="text-align:center;">Gross&nbsp;Premium</th>
+        <th style="text-align:center;">Booking&nbsp;Date</th>
+
+      </tr>
+    </thead>
+
+    <tbody *ngIf="dataAr?.length != 0">
+      <tr *ngFor="let row of dataAr; let i=index;">
+
+        <td>{{ row.SNo }}</td>
+
+        <td>{{ row.FullSrNo }}<br>
+          <a (click)="ViewGroupSrMembers(row.SR_Id)"><span class="label label-primary">Employee List</span></a>
+        </td>
+        <td>{{ row.NetPremium }}</td>
+        <td>{{ row.GrossPremium }}</td>
+        <td>{{ row.BookingDate }}</td>
+
+      </tr>
+    </tbody>
+
+    <tbody *ngIf="dataAr?.length == 0">
+      <tr>
+        <td colspan="5" align="center">No data Available !</td>
+      </tr>
+    <tbody>
+  </table>
+</div>

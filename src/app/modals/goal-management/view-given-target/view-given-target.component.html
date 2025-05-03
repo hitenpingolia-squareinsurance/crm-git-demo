@@ -1,0 +1,169 @@
+<div class="table-responsive mydiv">
+
+  <div class="row">
+    <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+  </div>
+
+  <table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+
+    <thead>
+      <tr>
+        <th>Vertical&nbsp;Name</th>
+        <th>Motor</th>
+        <th>Non&nbsp;Motor</th>
+        <th>Health(Retail)</th>
+        <th>Health(Group)</th>
+        <th>Life(Retail)</th>
+        <th>Life(Group)</th>
+        <th>Others</th>
+        <th>Total&nbsp;Target</th>
+        <th>Revenue</th>
+      </tr>
+    </thead>
+
+    <tbody *ngIf="dataAr?.length != 0">
+      <tr *ngFor="let row of dataAr; let i=index;">
+        <td><strong>{{row.VerticalName}}</strong></td>
+
+        <td>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">T&nbsp;:&nbsp;{{row.Motor}}</small>&nbsp;
+            <small *ngIf="row.Motor != 0" class="label label-warning">{{row.Motor_String}}</small>
+          </span>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">A&nbsp;:&nbsp;{{row.Motor_Premium}}</small>&nbsp;
+            <small *ngIf="row.Motor_Premium != 0" class="label label-warning">{{row.Motor_Premium_String}}</small>
+          </span>
+
+          <span *ngIf="row.Motor_Percent != 0"
+            class="label label-success"><small>{{row.Motor_Percent}}</small></span>&nbsp;
+          <a *ngIf="is_edit == 'Yes'" (click)="UpdateGivenTargetModal(row.Id, 'Motor')"> <span
+              class="fa fa-pencil"></span></a>
+        </td>
+
+        <td>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">T&nbsp;:&nbsp;{{row.Non_Motor}}</small>&nbsp;
+            <small *ngIf="row.Non_Motor != 0" class="label label-warning">{{row.Non_Motor_String}}</small>
+          </span>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">A&nbsp;:&nbsp;{{row.Non_Motor_Premium}}</small>&nbsp;
+            <small *ngIf="row.Non_Motor_Premium != 0"
+              class="label label-warning">{{row.Non_Motor_Premium_String}}</small>
+          </span>
+
+          <span *ngIf="row.Non_Motor_Percent != 0"
+            class="label label-success"><strong>{{row.Non_Motor_Percent}}</strong></span>&nbsp;
+          <a *ngIf="is_edit == 'Yes'" (click)="UpdateGivenTargetModal(row.Id, 'Non_Motor')"> <span
+              class="fa fa-pencil"></span></a>
+        </td>
+
+        <td>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">T&nbsp;:&nbsp;{{row.Health_Retail}}</small>&nbsp;
+            <small *ngIf="row.Health_Retail != 0" class="label label-warning">{{row.Health_Retail_String}}</small>
+          </span>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">A&nbsp;:&nbsp;{{row.Health_Retail_Premium}}</small>&nbsp;
+            <small *ngIf="row.Health_Retail_Premium != 0"
+              class="label label-warning">{{row.Health_Retail_Premium_String}}</small>
+          </span>
+
+          <span *ngIf="row.Health_Retail_Percent != 0"
+            class="label label-success"><strong>{{row.Health_Retail_Percent}}</strong></span>&nbsp;
+          <a *ngIf="is_edit == 'Yes'" (click)="UpdateGivenTargetModal(row.Id, 'Health_Retail')"> <span
+              class="fa fa-pencil"></span></a>
+        </td>
+
+        <td>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">T&nbsp;:&nbsp;{{row.Health_Group}}</small>&nbsp;
+            <small *ngIf="row.Health_Group != 0" class="label label-warning">{{row.Health_Group_String}}</small>
+          </span>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">A&nbsp;:&nbsp;{{row.Health_Group_Premium}}</small>&nbsp;
+            <small *ngIf="row.Health_Group_Premium != 0"
+              class="label label-warning">{{row.Health_Group_Premium_String}}</small>
+          </span>
+
+          <span *ngIf="row.Health_Group_Percent != 0"
+            class="label label-success"><strong>{{row.Health_Group_Percent}}</strong></span>&nbsp;
+          <a *ngIf="is_edit == 'Yes'" (click)="UpdateGivenTargetModal(row.Id, 'Health_Group')"> <span
+              class="fa fa-pencil"></span></a>
+        </td>
+
+        <td>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">T&nbsp;:&nbsp;{{row.Life_Retail}}</small>&nbsp;
+            <small *ngIf="row.Life_Retail != 0" class="label label-warning">{{row.Life_Retail_String}}</small>
+          </span>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">A&nbsp;:&nbsp;{{row.Life_Retail_Premium}}</small>&nbsp;
+            <small *ngIf="row.Life_Retail_Premium != 0"
+              class="label label-warning">{{row.Life_Retail_Premium_String}}</small>
+          </span>
+
+          <span *ngIf="row.Life_Retail_Percent != 0"
+            class="label label-success"><strong>{{row.Life_Retail_Percent}}</strong></span>&nbsp;
+          <a *ngIf="is_edit == 'Yes'" (click)="UpdateGivenTargetModal(row.Id, 'Life_Retail')"> <span
+              class="fa fa-pencil"></span></a>
+        </td>
+
+        <td>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">T&nbsp;:&nbsp;{{row.Life_Group}}</small>&nbsp;
+            <small *ngIf="row.Life_Group != 0" class="label label-warning">{{row.Life_Group_String}}</small>
+          </span>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">A&nbsp;:&nbsp;{{row.Life_Group_Premium}}</small>&nbsp;
+            <small *ngIf="row.Life_Group_Premium != 0"
+              class="label label-warning">{{row.Life_Group_Premium_String}}</small>
+          </span>
+
+          <span *ngIf="row.Life_Group_Percent != 0"
+            class="label label-success"><strong>{{row.Life_Group_Percent}}</strong></span>&nbsp;
+          <a *ngIf="is_edit == 'Yes'" (click)="UpdateGivenTargetModal(row.Id, 'Life_Group')"> <span
+              class="fa fa-pencil"></span></a>
+        </td>
+
+        <td>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">T&nbsp;:&nbsp;{{row.Others}}</small>&nbsp;
+            <small *ngIf="row.Others != 0" class="label label-warning">{{row.Others_String}}</small>
+          </span>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">A&nbsp;:&nbsp;{{row.Others_Premium}}</small>&nbsp;
+            <small *ngIf="row.Others_Premium != 0" class="label label-warning">{{row.Others_Premium_String}}</small>
+          </span>
+
+          <span *ngIf="row.Others_Percent != 0"
+            class="label label-success"><strong>{{row.Others_Percent}}</strong></span>&nbsp;
+          <a *ngIf="is_edit == 'Yes'" (click)="UpdateGivenTargetModal(row.Id, 'Others')"> <span
+              class="fa fa-pencil"></span></a>
+        </td>
+
+        <td>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">T&nbsp;:&nbsp;{{row.Total_Target}}</small>&nbsp;
+            <small *ngIf="row.Total_Target != 0" class="label label-warning">{{row.Total_Target_String}}</small>
+          </span>
+          <span class="d_flex flex_Middel">
+            <small class="label label-primary">A&nbsp;:&nbsp;{{row.Total_Premium}}</small>&nbsp;
+            <small *ngIf="row.Total_Premium != 0" class="label label-warning">{{row.Total_Premium_String}}</small>
+          </span>
+
+          <span *ngIf="row.Total_Percent != 0"
+            class="label label-success"><strong>{{row.Total_Percent}}</strong></span>&nbsp;
+        </td>
+
+        <td><strong>{{row.Revenue}}<br>{{row.Revenue_String}}</strong></td>
+      </tr>
+    </tbody>
+
+    <tbody *ngIf="dataAr?.length == 0">
+      <tr>
+        <td colspan="9" align="center">No data Available !</td>
+      </tr>
+    <tbody>
+  </table>
+</div>

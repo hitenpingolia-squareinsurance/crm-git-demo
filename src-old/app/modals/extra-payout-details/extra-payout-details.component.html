@@ -1,0 +1,98 @@
+  <!--begin::Entry-->
+  <div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class=" container ">
+      <!--begin::Notice-->
+
+      <!--begin::Card-->
+      <div class="card card-custom">
+        <div class="card-header">
+          <div class="card-title">
+            <h3 class="card-label"></h3>
+          </div>
+          <div class="card-toolbar">
+            <button (click)="CloseModel()" type="button" class="close closeModelButton"> &times;</button>
+          </div>
+      </div>
+
+			<div class="card-body">
+
+			<table datatable [dtOptions]="dtOptions" class="row-border hover table table-bordered table-hover table-checkable" id="kt_datatable" style="margin-top: 13px !important">
+			  <thead>
+				<tr>
+				  <th>No.</th>
+          <th>SrNo</th>
+          <th>Sr Alias</th>
+          <th>Agent Payout OD</th>
+          <th>Agent Payout OD Amount</th>
+          <th>Agent Payout TP</th>
+          <th>Agent Payout TP Amount</th>
+          <th>Agent Payout Net</th>
+          <th>Agent Payout Net Amount</th>
+          <th>Agent Terrorism Payout</th>
+          <th>Agent Terrorism Payout Amount</th>
+          <th>Agent Reward Amount</th>
+          <th>Agent Scheme Amount</th>
+				  <th>Agent Total Amount</th>
+          <th>Payin OD</th>
+          <th>Payin OD Amount</th>
+          <th>Payin TP</th>
+          <th>Payin TP Amount</th>
+          <th>Payin Net</th>
+          <th>Payin Net Amount</th>
+          <th>PayIn Terrorism</th>
+          <th>PayIn Terrorism Amount</th>
+          <th>Reward Amount</th>
+          <th>Scheme Amount</th>
+				  <th>Payin Total Amount</th>
+				  <th>Revenue</th>
+          <th>Booking Date</th>
+				</tr>
+			  </thead>
+
+			  <tbody *ngIf="dataAr?.length != 0">
+				  <tr *ngFor="let row of dataAr; let i=index;">
+            <td>{{ row.SrNo }}.</td>
+					  <td>{{ row.SR_No }}</td>
+            <td>{{ row.SR_Alias }}</td>
+					  <td>{{ row.Agent_Payout_OD }}</td>
+					  <td>{{ row.Agent_Payout_OD_Amount }}</td>
+            <td>{{ row.Agent_Payout_TP }}</td>
+            <td>{{ row.Agent_Payout_TP_Amount }}</td>
+            <td>{{ row.Agent_Payout_Net }}</td>
+            <td>{{ row.Agent_Payout_Net_Amount }}</td>
+            <td>{{ row.Agent_Terrorism_Payout }}</td>
+            <td>{{ row.Agent_Terrorism_Payout_Amount }}</td>
+            <td>{{ row.Agent_Reward_Amount }}</td>
+            <td>{{ row.Agent_Scheme_Amount }}</td>
+            <td>{{ row.Agent_Total_Amount }}</td>
+            <td>{{ row.Payin_OD }}</td>
+            <td>{{ row.Payin_OD_Amount }}</td>
+            <td>{{ row.Payin_TP }}</td>
+            <td>{{ row.Payin_TP_Amount }}</td>
+            <td>{{ row.Payin_Net }}</td>
+            <td>{{ row.Payin_Net_Amount }}</td>
+            <td>{{ row.PayIn_Terrorism }}</td>
+            <td>{{ row.PayIn_Terrorism_Amount }}</td>
+            <td>{{ row.Reward_Amount }}</td>
+            <td>{{ row.Scheme_Amount }}</td>
+            <td>{{ row.Payin_Total_Amount }}</td>
+					  <td>{{ row.Revenue }}</td>
+            <td>{{ row.Booking_Date }}</td>
+				  </tr>
+			  </tbody>
+
+			  <tbody *ngIf="dataAr?.length == 0">
+				<tr>
+				  <td>No data Available !</td>
+				</tr>
+			  <tbody>
+			</table>
+      <!--end: Datatable-->
+      </div>
+
+     </div>
+      <!--end::Card-->
+    </div>
+
+  </div>

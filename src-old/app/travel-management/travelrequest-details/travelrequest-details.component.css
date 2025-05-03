@@ -1,0 +1,139 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+.ValueTD {
+    background-color: #f7f7f7;
+    color: #685757;
+    font-weight: 600;
+}
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.title-h5 {
+    margin-top: 0px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #111;
+  }
+  table.table-claim thead th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    vertical-align: text-top;
+    font-weight: 500;
+    background: rgba(44, 178, 179, 9);
+    color: #fff;
+  }
+  .remark {
+    margin: 15px;
+    position: relative;
+  }
+  .remark h5.remark-text {
+    border-radius: 5px;
+    padding: 8px 15px;
+    border: 1px solid #d4d4d4;
+    font-weight: 500;
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .remark h5.remark-text abbr {
+    position: relative;
+    top: -16px;
+    background: #fff;
+    padding: 2px 5px;
+  }
+  .remark h5.remark-text span {
+    font-size: 14px;
+    display: block;
+    margin-top: 0px;
+    color: #444;
+    cursor: inherit;
+    margin-bottom: 10px;
+  }
+  .doc_one {
+    border: 1px solid #bbecec85;
+    border-radius: 5px;
+    padding: 10px 15px;
+    background: #bbecec38;
+    display: flex;
+    width: 100%;
+    margin: 10px auto;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .doc_one h5 {
+    margin: 0px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .doc_one button {
+    margin: 0px !important
+  }
+  
+  
+  .features-box {
+    margin: 0px 15px;
+  }
+  .box1 {
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 5px 0px #00000045;
+    margin-bottom: 15px;
+    border-radius: 5px;
+  }
+  .box2 {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 15px;
+  }
+  .box_1 {
+    width: calc(100% / 3 - 0px);
+    margin: 0px 0px;
+    padding: 15px 15px 0px 15px;
+  }
+  .box_1 span {
+    display: block;
+    cursor: inherit;
+    color: #2cb2b3;
+    font-size: 12px;
+    font-weight: 700;
+    padding-top: 0px;
+  }
+  .box_1 abbr {
+    color: #333;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .box3 {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .box3_1 {
+    width: calc(100% / 3 - 0px);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 15px;
+    border-radius: 0;
+  }
+  .box3_1.bg1 {
+    background-color: #ebabff73;
+  }
+  .box3_1.bg2 {
+    background-color: rgba(44, 178, 179, 0.10);
+  }
+  .box3_1.bg3 {
+    background-color: #ffbfbf73;
+  }
+  .box3_1 span {
+    cursor: inherit;
+      margin-left: 5px;
+  }
+  .cs_modal_body {
+    height: calc(100vh - 0px);
+    overflow-y: scroll;
+  }

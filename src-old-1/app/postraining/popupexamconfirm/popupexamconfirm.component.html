@@ -1,0 +1,42 @@
+<section class="content">
+    <div class="section-bg">
+       <div class="row">
+           <div class="col-lg-12">
+               <div class="popup-details-all">
+                      <h3>Are you Sure ?</h3>
+
+
+                      <div class="yesno-btn">
+                          <button type="button" class="btn btn-success" (click)="ExamToRedirect()"><i class="fa fa-check" aria-hidden="true"></i> Yes </button>
+                        <button type="button" class="btn btn-danger" (click)="CloseModel()"><i class="fa fa-times" aria-hidden="true"></i> No</button>
+                      </div>
+
+
+
+                      <ul>
+                          <li>Total Question <label>{{ TotalQuestion }}</label> </li>
+                         
+
+                      </ul>
+                      <ul class="bottom-li">
+                         <li>Unattempted  <label>{{ TotalUnAttemptQuestion }}</label> </li>
+                          <li>Attempted <label>{{ TotalAttemptQuestion }} </label> </li>
+                      </ul>
+
+               </div>
+            </div>
+                
+              
+                 
+           
+             
+            
+           </div>
+
+                   
+
+
+       </div>
+
+
+</section>

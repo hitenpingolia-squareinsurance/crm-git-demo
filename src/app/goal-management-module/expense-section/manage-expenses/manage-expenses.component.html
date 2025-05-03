@@ -1,0 +1,238 @@
+<section class="inner_page_css knowlage_details_page">
+  <div class="container-fluid">
+    <div class="main_card_form">
+      <div class="main_header">
+        <div class="header_title">Expense Management</div>
+      </div>
+
+      <div class="main_body main_card_height_scroll_withoutfooter">
+
+        <div class="btn_list_group">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="row">
+                <div class="col-md-4">
+                  <div id="exTab1">
+                    <ul class="nav nav-pills">
+
+                      <!-- <li [ngClass]="(active_tab == 'Business Call'?'active':'')"><a data-toggle="tab" class=""
+                          href="#1a" (click)="SetActiveTab('Business Call')">Business Call</a></li>
+
+                      <li [ngClass]="(active_tab == 'Prospect Call'?'active':'')"><a data-toggle="tab" href="#2a"
+                          (click)="SetActiveTab('Prospect Call')">Prospect
+                          Call</a></li>
+
+                      <li [ngClass]="(active_tab == 'Club'?'active':'')"><a data-toggle="tab" href="#3a"
+                          (click)="SetActiveTab('Club')">Club</a></li>
+
+                      <li [ngClass]="(active_tab == 'Cross Sell'?'active':'')"><a data-toggle="tab" href="#3a"
+                          (click)="SetActiveTab('Cross Sell')">Cross Sell</a></li>
+
+                      <li [ngClass]="(active_tab == 'Employee Call'?'active':'')"><a data-toggle="tab" href="#3a"
+                          (click)="SetActiveTab('Employee Call')">Employee Call</a></li> -->
+
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="col-md-8">
+
+                  <div class="dsr-fillter">
+                    <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                      data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <a role="button" class="fa fa-filter"><span>Filters</span><i
+                          class="fa fa-angle-down pull-right"></i></a>
+                    </button>
+
+                    <button class="btn btn-info3" type="button" (click)="AddExpenseType()">
+                      <i class="fa fa-list" aria-hidden="true"></i> Expense Type </button>
+
+                    <button class="btn btn-info2" type="button" (click)="UploadExpenseExcel()">
+                      <i class="fa fa-file-excel-o" aria-hidden="true"></i> Upload Excel</button>
+
+                    <button class="btn btn-info4" type="button" (click)="AddExtraExpenses()">
+                      + Extra Expenses</button>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <form [formGroup]="SearchForm" style="padding: 0 15px;">
+
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Financial Year"
+                          [data]="Year_Ar" [(ngModel)]="SelectedYear" formControlName="Financial_Year"
+                          [settings]="dropdownSettingsingleselect">
+                        </ng-multiselect-dropdown>
+                      </div>
+
+                      <!-- <div class="col-sm-3" *ngIf="(LoginProfileName == 'MD' || LoginProfileName == 'CEO')">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select President"
+                          [data]="President_Ar" formControlName="President_Id" [settings]="dropdownSettingsingleselect"
+                          (onSelect)="GetVerticalData()" (onDeSelect)="SearchComponentsData()">
+                        </ng-multiselect-dropdown>
+                      </div> -->
+
+                      <div class="col-sm-3">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Vertical" [data]="Vertical_Ar"
+                          formControlName="Vertical_Id" [settings]="dropdownSettingsingleselect1"
+                          (onSelect)="GetEmployees()" (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-sm-3">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Service Location"
+                          [data]="Region_Ar" formControlName="Region_Id" [settings]="dropdownSettingsmultiselect"
+                          (onSelect)="GetEmployees()" (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-sm-3">
+                        <ng-multiselect-dropdown class="form-control" name="Emp_Id" placeholder="Select Employee"
+                          [data]="Emps_Ar" formControlName="Emp_Id" [settings]="dropdownSettingsingleselect1">
+                        </ng-multiselect-dropdown>
+                      </div>
+                    </div>
+
+                    <div class="row"  >
+
+                      <div class="col-sm-3">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Select Report Type"
+                          [data]="ReportTypeData" [(ngModel)]="SelectedReportType" formControlName="Report_Type"
+                          [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+                      </div>
+
+
+                      <div class="col-sm-3">
+                        <input type="text" formControlName="SearchValue" placeholder="Search Name/Emp. Id/Mobile"
+                          class="form-control">
+                      </div>
+
+                      <div class="col-sm-3">
+                        <input (click)="SearchData()" type="button" class="btn btn-info" value="Search">&nbsp;&nbsp;
+                        <input type="button" class="btn btn-danger" value="Reset">&nbsp;&nbsp;
+                      </div>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="All">
+
+                <div class="custom_table">
+                  <ul class="responsive-table">
+
+                    <cdk-virtual-scroll-viewport #scroller itemSize="72" class="content mt_0">
+                      <mat-list>
+                        <ng-container *cdkVirtualFor="let row of post">
+
+                          <mat-list-item>
+                            <li class="table-row">
+
+                              <span class="addon_tag_name"
+                                *ngIf="row.ResignStatus == 0 && row.Status == 1">Active</span>
+                              <span class="addon_tag_name1"
+                                *ngIf="row.ResignStatus == 0 && row.Status == 0">Blocked</span>
+                              <span class="addon_tag_name2" *ngIf="row.ResignStatus == 1">Resigned</span>
+
+                              <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                                <div class="agents_data agents_data1">
+                                  <div class="icon_re_cl">{{ row.SrNo }}</div>
+                                  <div class="agent_name_mobile">
+                                    <div class="agent_data">
+                                      <div>Employee Name & Code </div>
+                                      <strong class="fs_18">{{ row.Name }}</strong>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="agents_data agents_data2">
+                                  <div class="agent_name_mobile">
+                                    <div class="agent_data">
+                                      <div>Employee Mobile No.</div>
+                                      <strong class="fs_18">{{row.Mobile}}</strong>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="agents_data agents_data3">
+                                  <div class="agent_name_mobile">
+                                    <div class="agent_data">
+                                      <div>Reporting Manager & Code</div><strong class="fs_18">{{ row.Rm_Name
+                                        }}</strong>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="last_row_div">
+                                <div class="d_flex custon-234">
+
+                                  <div class="label_chips finance_lob">
+                                    <span>Joining Date - {{ row.DOJ }}</span>
+                                  </div>
+
+                                  <div class="label_chips non_motor_lob" *ngIf="row.Resign_Date != ''">
+                                    <span>Resign Date - {{ row.Resign_Date }}</span>&nbsp;&nbsp;
+                                  </div>
+
+                                </div>
+                              </div>
+
+                              <div class="last_row">
+                                <div class="d_flex effective_date">
+
+                                </div>
+
+                                <!-- Prospect Call Related Section Start-->
+                                <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                  <a style="cursor: pointer;" (click)="GetExpenseDetails(row.Id, row.Name)"
+                                    class="mr_5 btn-bg">
+                                    Expense Details >></a>
+                                </div>
+                                <!-- Prospect Call Related Section End-->
+
+                              </div>
+                            </li>
+
+                            <mat-divider></mat-divider>
+                          </mat-list-item>
+                        </ng-container>
+
+                        <div class="spinner-item" *ngIf="post?.length > 0 && show_spinner == 'yes'"
+                          style="display: block;margin: auto; width: 50px;">
+                          <mat-progress-spinner [mode]="'indeterminate'" [diameter]="50"></mat-progress-spinner>
+                        </div>
+
+                        <ul class="responsive-table" *ngIf="post?.length == 0">
+                          <li class="table-row">
+                            <div class="no_data_found">No data available !</div>
+                          </li>
+                        </ul>
+                      </mat-list>
+                    </cdk-virtual-scroll-viewport>
+
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

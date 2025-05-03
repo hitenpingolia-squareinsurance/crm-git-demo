@@ -1,0 +1,138 @@
+<table *ngIf="Is_Screen_Status == 'BanksList'" class="table table-bordered">
+  
+	<thead>
+	 <tr>
+        <th colspan="14" style="text-align: center;">
+			 
+		<div style="text-align: right;">
+			 
+			<input *ngIf="Is_Add_ORC=='1'" (click)="AddNewBankAccount()" type="submit" class="btn btn-info" value="Add New Bank Account">
+			&nbsp;&nbsp;
+			<input (click)="CloseModel()" type="button" class="btn btn-danger" value="Close">
+		</div> 
+		
+		</th>
+      </tr>
+    </thead>
+	
+	<tr *ngFor="let bank of BanksAccountsAr;">
+		<td>
+			<div class="row"> 
+				<div class="col-md-4 pb-2"><b>Name :</b> </div> 
+				<div class="col-md-8 pb-2"> {{bank.Bank_Name}}</div>
+					
+				<div class="col-md-4 pb-2"><b>Account No :</b> </div>
+				<div class="col-md-8 pb-2"> {{bank.Account_No}}</div> 
+				
+				<div class="col-md-4 pb-2"><b>Account Holder :</b> </div>
+				<div class="col-md-8 pb-2"> {{bank.Account_Holder_Name}}</div> 
+				
+				<div class="col-md-4 pb-2"><b>IFSC Code : </b></div>
+				<div class="col-md-8 pb-2"> {{bank.IFSC_Code}}  
+					
+				</div> 
+				
+				<div class="col-md-4 pb-2"><b>Status : </b></div>
+				<div class="col-md-8 pb-2">
+				
+				<!--0=Added,1=Inactive,2=PendingForQC,3=ApprovedByQC,4=RejectByQC,5=ApprovedByAccounts,6=RejectByAccounts-->
+		  
+	<a (click)="SendForQC(bank.Id)" *ngIf="bank.Bank_Status == '0'" href="javascript:;"><span class="label label-warning label-inline mr-2">Added</span></a>
+	<a (click)="SendForQC(bank.Id)" *ngIf="bank.Bank_Status == '1'" href="javascript:;"><span class="label label-danger label-inline mr-2">Inactive</span></a>
+	<a *ngIf="bank.Bank_Status == '2'" href="javascript:;"><span class="label label-default label-inline mr-2">PendingForQC</span></a>
+	<a *ngIf="bank.Bank_Status == '3'" href="javascript:;"><span class="label label-info label-inline mr-2">ApprovedByQC</span></a>
+	<a *ngIf="bank.Bank_Status == '4'" href="javascript:;"><span class="label label-danger label-inline mr-2">RejectByQC</span></a>
+	<a *ngIf="bank.Bank_Status == '5'" href="javascript:;"><span class="label label-success label-inline mr-2">Active</span></a>
+	<a *ngIf="bank.Bank_Status == '6'" href="javascript:;"><span class="label label-danger label-inline mr-2">RejectByAccounts</span></a>
+	&nbsp;
+	<span *ngIf="bank.Is_Default==0" class="label label-info label-inline mr-2">Auto</span>
+	&nbsp; 
+	<a (click)="ViewDocument(bank.Id,bank.Cheque_File)" href="javascript:;">
+		<span style="background-color: #907d7d;" class="label label-info label-inline mr-2">View Cheque</span>
+	</a>
+					
+				</div>  
+			</div>
+		</td>
+	</tr>
+ 
+	
+</table>
+
+<form  *ngIf="Is_Screen_Status == 'AddNewBank'" class="form" [formGroup]="BankForm" (ngSubmit)="AddNewBank()">
+	
+<table class="table table-bordered">
+		
+	<tr>
+		<td>Select Bank :</td>
+		<td>
+			<ng-multiselect-dropdown
+				name="Bank_Name"
+				class=""
+				placeholder="--Select--"
+				[data]="BanksAr"
+				formControlName="Bank_Name"
+				[settings]="dropdownSettings"
+				>
+			</ng-multiselect-dropdown>
+			
+			<span *ngIf="isSubmitted && FC.Bank_Name.errors" class="form-text text-muted">
+				<span *ngIf="FC.Bank_Name.errors.required" style="color:red;">Please choose bank name !</span>
+			</span>
+						
+		</td>
+	</tr>
+	
+	<tr>
+		<td>Account Holder Name :</td>
+		<td><input formControlName="Account_Holder_Name" class="form-control">
+			<span *ngIf="isSubmitted && FC.Account_Holder_Name.errors" class="form-text text-muted">
+				<span *ngIf="FC.Account_Holder_Name.errors.required" style="color:red;">Please enter account holder name!</span>
+				<span *ngIf="FC.Account_Holder_Name.errors.pattern" style="color:red;">Please enter vaild account holder name (Numbers/Special Characters Not Allowed)</span>
+
+			</span>
+		</td>
+	</tr>
+	
+	<tr> 
+		<td>Account No :</td>
+		<td><input formControlName="Account_No" class="form-control">
+			<span *ngIf="isSubmitted && FC.Account_No.errors" class="form-text text-muted">
+				<span *ngIf="FC.Account_No.errors.required" style="color:red;">Please enter account no!</span>
+				<span *ngIf="FC.Account_No.errors.pattern" style="color:red;">Please enter vaild account no !</span>
+			</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>IFSC Code :</td>
+		<td><input formControlName="IFSC_Code" class="form-control">
+			<span *ngIf="isSubmitted && FC.IFSC_Code.errors" class="form-text text-muted">
+				<span *ngIf="FC.IFSC_Code.errors.required" style="color:red;">Please enter ifsc code!</span>
+			</span>
+		</td>
+	</tr>
+	
+	<tr> 
+		<td>Cheque :</td>
+		<td><input formControlName="Cheque" type="file" (change)="UploadDocs($event,'Cheque')" accept=".png,.jpg,.pdf" class="form-control">
+			<span *ngIf="isSubmitted && FC.Cheque.errors" class="form-text text-muted">
+				<span *ngIf="FC.Cheque.errors.required" style="color:red;">Please upload cheque copy!</span>
+			</span>
+		</td>
+	</tr>
+	
+	<tr> 
+		 
+		
+		<td style="text-align: left;">
+			<input (click)="BackToList()" type="button" class="btn btn-danger" value="Back to list">
+		</td>
+		<td style="text-align: right;">
+			<input type="submit" class="btn btn-success" value="Add">
+		</td>
+		
+	</tr>
+  
+</table>
+</form>

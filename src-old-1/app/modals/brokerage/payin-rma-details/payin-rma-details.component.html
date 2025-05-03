@@ -1,0 +1,30 @@
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th colspan="5" style="text-align: center;">
+                <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+            </th>
+
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr>
+            <th>No</th>
+            <th>RMA %:</th>
+            <th>Slab (From)</th>
+            <th>Slab (Upto)</th>
+        </tr>
+ 
+        <tr *ngFor="let row of result_ar; let i=index;">
+            <td>{{i+1}}.</td> 
+            <td>{{row.RMA}}</td>
+            <td>{{row.Slab_From}}</td>
+            <td>{{row.Slab_UpTo}}</td>
+        </tr>
+
+    </tbody>
+
+
+</table>

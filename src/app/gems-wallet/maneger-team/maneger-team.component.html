@@ -1,0 +1,223 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header d_flex flex_Equal flex_Middel">
+            <div class="header_title">Gems Wallet Request</div>
+          </div>
+          <div class="main_body main_card_height_scroll">
+
+            <div class="filterquotesrow">
+              <button class="btn btninfo1" style="margin-right:10px;" role="tab" id="headingOne" data-toggle="collapse"
+                data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><a
+                  role="button"><i class="fa fa-filter"></i><span>Filters</span><i
+                    class="fa fa-angle-down"></i></a></button>
+
+            </div>
+
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panelbody">
+                <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+              </div>
+            </div>
+
+
+
+            <div class="">
+
+
+
+
+              <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" id="Table1" class="row-border table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+                <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                  <li class="table-row tablerow" *ngFor="let row of dataAr">
+                    <!-- <span class="addon_tag_name">{{row.category}}</span> -->
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{row.SrNo}}.</div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Agent Name</div>
+                            <strong class="fs_18"><span>
+                                {{row.AgentName}}
+                              </span></strong>
+
+                          </div>
+
+
+
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Payment Id</div>
+                            <strong class="fs_18"><span>
+                                {{row.PaymentId}}
+                              </span></strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Agent Mobile</div>
+                            <strong class="fs_18"><span>
+                                {{row.AgentMobile}}
+                              </span></strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+
+                        <div class="label_chips health_lob">
+                          <span>RM Name - {{row.RMName}}</span>&nbsp;&nbsp;
+                        </div>
+
+                        <div class="label_chips motor_lob">
+                          <span>Amount - {{row.DebitAmount}}</span>&nbsp;&nbsp;
+                        </div>
+
+                        <div class="label_chips label-warning" *ngIf="row.PaymentStatus=='1'  && row.AssignerId !='' ">
+                          <span style="color:white;">Pending</span>&nbsp;&nbsp;
+                        </div>
+                        <div class="label_chips label-info" *ngIf="row.PaymentStatus=='2'">
+                          <span style="color:white;">Hold</span>&nbsp;&nbsp;
+                        </div>
+                        <div class="label_chips label-success" *ngIf="row.PaymentStatus=='3'">
+                          <span style="color:white;">Redeemed</span>&nbsp;&nbsp;
+                        </div>
+                        <div class="label_chips label-danger" *ngIf="row.PaymentStatus=='0'">
+                          <span style="color:white;">Reject</span>&nbsp;&nbsp;
+                        </div>
+                        <div class="label_chips label-warning" *ngIf="row.PaymentStatus=='1' && row.AssignerId ==''">
+                          <span style="color:white;">Requested</span>&nbsp;&nbsp;
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="last_row">
+                      <div class="effective_date">
+                        <div class="d_flex">
+
+                          <span>Request Date - {{row.RequestDate}}</span>&nbsp;&nbsp;
+
+
+                        </div>
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                        <div class="row">
+                          &nbsp;&nbsp;
+                          <select
+                            *ngIf="row.AssignerId == this.loginid &&  this.currentUrl == '/Wallet/Maneger-wallet' && (row.PaymentStatus == '1' || row.PaymentStatus == '2')"
+                            (change)="GemsRemark($event,row.Id,row.PaymentId,'Accounts')">
+
+                            <option [value]="1"
+                              [disabled]="row.PaymentStatus=='0' || row.PaymentStatus=='1' || row.PaymentStatus=='2' || row.PaymentStatus=='3'">
+                              Pending</option>
+
+                            <option [value]="0" [disabled]="row.PaymentStatus=='3'"> Reject
+                            </option>
+                            <option [value]="2"
+                              [disabled]="row.PaymentStatus=='2' || row.PaymentStatus=='3'  || row.PaymentStatus=='0'">
+                              Hold
+                            </option>
+                            <option [value]="3" [disabled]="row.PaymentStatus=='0' || row.PaymentStatus=='3'"> Paid
+                            </option>
+                          </select>
+
+                          <select
+                            *ngIf="row.BankingId == this.loginid && row.AssignerAccounts == '' && this.currentUrl == '/Wallet/Gems-Banking-wallet' && (row.PaymentStatus == '1')"
+                            (change)="GemsRemark($event,row.Id,row.PaymentId,'Banking')">
+                            <option [disabled]="row.PaymentStatus=='1'" [value]="">Select Action</option>
+                            <option [value]="1">Approve</option>
+                            <option [value]="0"> Reject </option>
+
+                          </select>
+
+
+                          <button
+                            *ngIf="row.PaymentStatus == '1' && ((row.AssignerId == '' && this.currentUrl =='/Wallet/Maneger-wallet' ) || (row.BankingId == ''  && this.currentUrl =='/Wallet/Gems-Banking-wallet') )"
+                            class="btn btn-info" style="padding:3px 10px; margin-right:10px;"
+                            (click)="AcceptAssignQuote(row.Id)">Accept</button> &nbsp;&nbsp;
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+</section>
+
+
+<div id="remarkModal" class="modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form" style="margin-top: 8%;">
+            <div class="main_header">
+              <div class="header_title">
+                Gems Remark
+              </div>
+            </div>
+            <form class="form" (ngSubmit)="submit()" [formGroup]="gemsRemarkForm">
+              <div class="main_body main_card_height_scroll" style="height:300px !important;">
+                <div class="row">
+                  <!-- <div class="col-md-12">
+                    <div class="form_sub_title">
+                      <i class="fa fa-smile-o mr_5"></i> Basic Details
+                    </div>
+                  </div> -->
+                  <div class="col-md-12">
+                    <label for="state">Remark</label>
+                    <textarea type="text" class="form-control" formControlName="remark"></textarea>
+                    <div *ngIf="isSubmitted && gemsRemarkFormControls.remark.errors " class="ValidationError">
+                      <div *ngIf="gemsRemarkFormControls.remark.errors.required">Remarks Required..!</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" id="close1" (click)="CloseModel()" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

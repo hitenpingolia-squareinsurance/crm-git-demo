@@ -1,0 +1,201 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">
+              <div *ngIf="ActivePage == 'Default'" class="box-title">Today Dashboard</div>
+              <!-- <h3 *ngIf="ActivePage == 'SrPolicyReportsComponent'" class="box-title">Sr Policy Reports Component</h3> -->
+            </div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+
+            <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+              <div class="row">
+                <div class="col-md-8">
+
+                </div>
+                <div class="col-md-2">
+                  <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                    <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                      data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <a role="button" class="fa fa-filter"><span>Filters</span><i
+                          class="fa fa-angle-down pull-right"></i></a>
+                    </button>
+                  </div>
+                </div>
+                <!-- <div class="col-md-2">
+                  <button type="button" class="btn btn-info" (click)="downloadAsPDF()">
+                    {{DownloadPdf}} </button>
+                </div> -->
+
+                <div class="col-md-8">
+                  <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                      <!-- filter  -->
+                      <div class="col-sm-3">
+                        <input type='text' class="form-control" formControlName="Date" bsDatepicker [minDate]="MinDate"
+                          [maxDate]="MaxDate" [(ngModel)]="SelectedDate">
+
+                      </div>
+
+                      <div class="col-sm-3">
+                        <ng-multiselect-dropdown class="form-control" name="OpsEmpId" placeholder="Select Employee"
+                          [data]="OpsRmData" formControlName="OpsEmpId" [settings]="dropdownSettingsingleselect">
+                        </ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-sm-3">
+                        <input type="submit" class="btn btn-info" value="Search">
+                        <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                          value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+
+              </div>
+            </form>
+            <div class="dashboard_new_design" id="opsTable">
+
+              <div class="d_flex flex_End">
+
+              </div>
+
+
+              <div class="">
+
+
+
+
+                <div class="custom_table tables_layout_design">
+                  <table id="Table1" class="row-border table">
+                    <thead>
+                      <tr>
+                        <th></th>
+                      </tr>
+                    </thead>
+                  </table>
+                  <ul class="responsive-table" *ngIf="Ops_Data_Dashboard?.length != 0">
+                    <li class="table-row tablerow" *ngFor="let row of Ops_Data_Dashboard; let i=index;"
+                      [ngClass]="{'activestatus': row.Total >= 30 , 'inactivestatus': row.Total < 30 }">
+
+                      <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15" style="margin-top: 15px;">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">{{i+1}}</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Employee Name</div>
+                              <strong class="fs_18"><span>
+                                  {{row.EmployeeName}}
+                                </span></strong>
+
+                            </div>
+
+
+
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data" *ngIf="row.EmployeeCode != ''">
+                              <div>Employee Code</div>
+                              <strong class="fs_18"><span>{{row.EmployeeCode}}</span></strong>
+
+                            </div>
+                          </div>
+
+
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data" *ngIf="row.CreateDate != ''">
+                              <div>Date</div>
+                              <strong class="fs_18"><span>{{row.CreateDate}}</span></strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="last_row_div">
+                        <div class="d_flex custon-234">
+
+                          <div class="label_chips real_estate_lob">
+                            <strong><span>Issuance Online : </span></strong>
+                            <span>{{row.Issuance_Online}}</span>
+                          </div>
+
+                          <div class="label_chips growth_positive">
+                            <strong><span>Issuance Offline : </span></strong>
+                            <span>{{row.Issuance_Offline}}</span>
+                          </div>
+
+                          <div class="label_chips finance_lob">
+                            <strong><span>Payment Url Shared : </span></strong>
+                            <span>{{row.PaymentUrlShared}}</span>
+                          </div>
+
+
+                          <div class="label_chips mutual_fund_lob" style="align-content: center;">
+                            <strong><span>Web Policy QC NOC : </span></strong>
+                            <span>{{row.WebPoliesQCNOP}}</span>
+                          </div>
+
+                          <div class="label_chips finance_lob">
+                            <strong><span>Quote Release : </span></strong>
+                            <span>{{row.Quote_Release}}</span>
+                          </div>
+
+
+                          <div class="label_chips mutual_fund_lob" style="align-content: center;">
+                            <strong><span>Inspection Manager : </span></strong>
+                            <span>{{row.InspectionManeger}}</span>
+                          </div>
+
+                          <div class="label_chips real_estate_lob">
+                            <strong><span>Endorsement Manager : </span></strong>
+                            <span>{{row.EndrosmentManeger}}</span>
+                          </div>
+
+                          <div class="label_chips health_lob">
+                            <strong><span>Online Motor Quotes : </span></strong>
+                            <span>{{row.OnlineMotorQuotes}}</span>
+                          </div>
+
+                          <div class="label_chips mutual_fund_lob" *ngIf="row.Total < 30">
+                            <strong><span>Total : </span></strong>
+                            <span>{{row.Total}}</span>
+                          </div>
+
+
+                          <div class="label_chips mutual_fund_lob" *ngIf="row.Total >= 30">
+                            <strong><span>Total : </span></strong>
+                            <span>{{row.Total}}</span>
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </li>
+                  </ul>
+                  <div class="row" *ngIf="dataAr?.length == 0">
+                    <div class="col-md-12">
+                      <div class="no_data_found">
+                        <span><img src="assets/image/no_data_banner.jpg"></span>
+                        <small>No data available !</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

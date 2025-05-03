@@ -1,0 +1,132 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header d_flex flex_Middel flex_Equal">
+            <div class="header_title">Inventory Category</div>
+            <a class="Save_click d_flex flex_Middel flex_Center" (click)="CategoryAdd('','Add')"> <i
+                class="fa fa-plus"></i>
+              &nbsp;&nbsp;Add </a>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <!-- <app-square-filter (postCreated)="SearchData($event)"></app-square-filter> -->
+            <div class="mydiv">
+
+
+
+              <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" id="Table1" class="row-border table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+                <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                  <li class="table-row tablerow" *ngFor="let row of dataAr">
+                    <!-- <span class="addon_tag_name">{{row.Name}}</span> -->
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{row.SrNo}}.</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Name</div>
+                              <strong class="fs_18"><span>
+                                {{row.Name}}
+                              </span></strong>
+                              
+                            </div>
+
+                            
+
+                          </div>
+                      </div>
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Category Id</div>
+                            <strong class="fs_18"><span>{{row.UniqueId}}</span></strong>
+                          </div>
+                        </div>
+                        
+                        
+                      </div>
+                      <div class="agents_data agents_data3">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Created At</div>
+                            <strong class="fs_18"><span>{{row.AddStamp}}</span></strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+
+                        <div class="label_chips health_lob">
+                          <span>Total Item - {{row.In_queue}}</span>&nbsp;&nbsp;
+                        </div>
+
+                        <div class="label_chips motor_lob">
+                          <span>In Stock - {{row.In_Stock}}</span>&nbsp;&nbsp;
+                        </div>
+                       
+                        <div class="label_chips non_motor_lob">
+                          <span>Distributed Item - {{row.Distribute_Item}}</span>&nbsp;&nbsp;
+                        </div>
+
+                        <div class="label_chips finance_lob">
+                          <span>Damaged Item - {{row.DamagedItem}}</span>&nbsp;&nbsp;
+                        </div>
+                        
+                      </div>
+                    </div>
+                    
+                    <div class="last_row">
+                      <div class="effective_date">
+                        <div class="d_flex">
+                         
+                        </div>
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                        <div class="row">
+                          <button class="btn btn-info" style="padding:3px 10px; margin-right:10px;" (click)="GetQuantityUpdate(row.UniqueId,row.In_queue)">Add
+                            Quantity</button>
+                        <button *ngIf="row.Status == '0'" (click)="UpdateDeleteStatus(row.id,1,row.type)"
+                        class="btn btn-danger" style="padding:3px 10px; margin-right:10px;">InActive</button>
+                        <button *ngIf="row.Status == '1'" (click)="UpdateDeleteStatus(row.id,0,row.type)"
+                        class="btn btn-success" style="padding:3px 10px; margin-right:10px;">Active</button>
+  
+  
+                        <button (click)="CategoryAdd(row.UniqueId,'Edit')" class="btn btn-warning" style="padding:3px 10px; margin-right:10px;">Add
+                          More
+                          Form
+                          Field</button>
+  
+  
+  
+                        <button *ngIf="row.AddQuantity > 0" routerLink="/Inventory/Create-Item/{{row.UniqueId}}"
+                          class="btn btn-success" style="padding:3px 10px; margin-right:10px;"> Add Item {{row.AddQuantity}}</button>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

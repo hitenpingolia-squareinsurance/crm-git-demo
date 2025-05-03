@@ -1,0 +1,101 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.ShowActive {
+  background-color: beige;
+}
+
+.btn.btn-primary i {
+    color: #fff;
+    font-size: 15px !important;
+    font-weight: bold;
+    text-align: center;
+    margin-left: 4px;
+}
+.btn.btn-danger i {
+    color: #fff;
+    font-size: 11px !important;
+    font-weight: bold;
+    text-align: center;
+    margin-left: 4px;
+}
+
+
+.AttachmentFile {
+  position: relative;
+  overflow: hidden;
+}
+.AttachmentFileCls {
+  position: absolute;
+  font-size: 50px;
+  opacity: 0;
+  right: 0;
+  top: 0;
+}
+
+.show{
+	display:block;
+}
+.hide{
+	display:none;
+}
+
+
+.logstable table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.logstable td {
+  border: 1px solid #2b2a2a;
+  text-align: left;
+  padding: 8px;
+}
+table tr td {
+  position: relative;
+}
+
+.extra_label{
+  position: absolute;
+  right: 5px;
+}
+
+.morethenHOdCls {
+  display: flex !important;
+  align-items: center;
+  border: 1px solid #999;
+  justify-content: space-between;
+  border-radius: 7px;
+  width: 100%;
+  max-width: 270px;
+  margin: auto;
+  min-height: 40px;
+}
+
+.morethenHOdCls input.form-control{
+  height: 100%;
+  width: 80px;
+  min-height: 40px;
+  border: none !important;
+  border-right: 1px solid #999 !important;
+  text-align: center;
+}
+
+.morethenHOdCls input.form-control.form-control2 {
+  border-left: 1px solid #999 !important;
+  border-right: none !important;
+}
+
+.morethenHOdCls .input-group-append {
+  width: calc(100% - 160px);
+}

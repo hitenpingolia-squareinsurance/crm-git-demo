@@ -1,0 +1,121 @@
+<section class="custom-scrool" id="click-close">
+    <div class="">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <button type="button" (click)="CloseModel()" class="close closeModelButton"><i
+                        class="fa fa-close"></i></button>
+            </div>
+            
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>RM Name</th>
+                        <th>Partner Name</th>
+                        <th>LOB</th>
+                        <th>Product</th>
+                        <th>Sub-Product</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span *ngFor="let r of dataAr['RM']; let i = index;">
+                              <span *ngIf="i == 0">{{ r.Name }}</span>
+                              <span *ngIf="i == 0 && dataAr['RM'].length > 1">
+                                <a class="extra_label" href="javascript:void(0)" (click)="LoadMore('RM', dataAr['RM'])">
+                                  +{{ (dataAr['RM']?.length) - 1 }}
+                                </a>
+                              </span>
+                            </span>
+                        </td>
+                          
+                        <!-- <td>
+                            <span *ngFor="let r of dataAr['Agent'];let i=index;">{{r.Name}}
+                                <span *ngIf="(i+1)!=dataAr['Agent']?.length">,</span>
+                            </span>
+                        </td> -->
+
+                        <td>
+                            <span *ngFor="let r of dataAr['Agent']; let i = index;">
+                              <span *ngIf="i == 0">{{ r.Name }}</span>
+                              <span *ngIf="i == 0 && dataAr['Agent'].length > 1">
+                                <a class="extra_label" href="javascript:void(0)" (click)="LoadMore('Agent', dataAr['Agent'])">
+                                  +{{ (dataAr['Agent']?.length) - 1 }}
+                                </a>
+                              </span>
+                            </span>
+                        </td>
+
+                        <td>
+                            <span *ngFor="let r of dataAr['LOB'];let i=index;">
+                                <span *ngIf="i==0">
+                                    {{r.Name}}
+                                </span>
+                            </span>
+                            <a class="extra_label" href="javascript:void(0)" (click)="LoadMore('LOB',dataAr['LOB'])"
+                                *ngIf="dataAr['LOB']?.length>1">+{{(dataAr['LOB']?.length)-1}}</a>
+                        </td>
+                        <td>
+                            <span *ngFor="let r of dataAr['product'];let i=index;">
+                                <span *ngIf="i==0">
+                                    {{r.Name}}
+                                </span>
+                            </span>
+                            <a class="extra_label" href="javascript:void(0)" (click)="LoadMore('Product',dataAr['product'])"
+                                *ngIf="dataAr['product']?.length>1">+{{(dataAr['product']?.length)-1}}</a>
+                        </td>
+                        <td>
+                            <span *ngFor="let r of dataAr['sub_product'];let i=index;">
+                                <span *ngIf="i==0">
+                                    {{r.Name}}
+                                </span>
+                            </span>
+                            <a class="extra_label" href="javascript:void(0)" (click)="LoadMore('Sub Product',dataAr['sub_product'])"
+                                *ngIf="dataAr['sub_product']?.length>1">+{{(dataAr['sub_product']?.length)-1}}</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Effective Date</th>
+                        <th>Payout Mode</th>
+                        <th>Add Stamp</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        
+                       
+                        <td>
+                            <span *ngFor="let r of dataAr['from_date'];let i=index;">{{r.Name}}
+                                <span *ngIf="(i+1)!=dataAr['from_date']?.length">,</span>
+                            </span>
+                        </td>
+                       
+                        <td>
+                            <span *ngFor="let r of dataAr['payout_mode'];let i=index;">{{r.Name}}
+                                <span *ngIf="(i+1)!=dataAr['payout_mode']?.length">,</span>
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngFor="let r of dataAr['add_stamp'];let i=index;">{{r.Name}}
+                                <span *ngIf="(i+1)!=dataAr['add_stamp']?.length">,</span>
+                            </span>
+                        </td>
+                       
+                        <td>
+                            <span *ngFor="let r of dataAr['status'];let i=index;">
+                                <span>
+                                    <span *ngIf="r.Name==0" class="label label-warning">Pending</span>
+                                    <span *ngIf="r.Name==1" class="label label-success">Active</span>
+                                    <span *ngIf="r.Name==2" class="label label-danger">Rejected</span>
+                                </span>
+                            </span>
+                        </td>
+
+                        <td></td>
+                    </tr>
+
+                   
+
+                </tbody>
+            </table>
+        </div>
+    </div>

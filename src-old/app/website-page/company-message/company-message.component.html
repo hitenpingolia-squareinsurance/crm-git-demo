@@ -1,0 +1,183 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Company Messages
+                                </div>
+                                <div class="col-md-5">&nbsp;</div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-primay" data-toggle="modal"
+                                        data-target="#EmployeeResignPoupup" style="cursor: pointer;">Add
+                                        Page</button>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+
+                        <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+
+                            <div class="row" style="margin-top: 1%;margin-bottom: 2%;">
+
+                                <div class="col-sm-2"><input type="text" formControlName="Search" name="Search"
+                                        class="form-control" placeholder="Search">
+                                </div>
+                                <div class="col-sm-1" style="text-align: right;">
+                                    <input (click)="SearchData()" type="button" class="btn btn-success" value="Filter">
+                                </div>
+                                <div class="col-sm-1" style="text-align: right;">
+
+                                    <input (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset">
+                                </div>
+
+                            </div>
+
+                        </form>
+
+
+
+
+                        <div class=" mydiv table-responsive">
+
+                            <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+
+                                        <th>Company Name</th>
+                                        <th>Message</th>
+                                        <th>Active Inactive Status </th>
+
+
+
+
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr">
+                                        <td>{{row.SrNo}}.</td>
+
+
+
+
+                                        <td>{{row.company_name |uppercase}}</td>
+                                        <td>{{row.message}}</td>
+                                        <td>
+                                            <div>
+
+                                                <label *ngIf="row.status == 0" class="fa fa-close "
+                                                    (click)="ActiveInactive(row.id, 1)"></label>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label *ngIf="row.status == 1" class="fa fa-check"
+                                                    (click)="ActiveInactive(row.id, 0)"></label>
+
+                                            </div>
+                                        </td>
+
+
+
+
+
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="14" align="center">No data available!</td>
+                                    </tr>
+                                <tbody>
+
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div id="EmployeeResignPoupup" class="modal fade" role="dialog" style="z-index: 1042 !important;">
+    <div class="modal-dialog cs_table_data" style="width: 50%">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main_card_form">
+                        <div class="main_header">
+                            <div class="header_title"> </div>
+                        </div>
+                        <div class="cs_modal_body" style="height: calc(100vh - 166px);overflow-y: scroll;">
+                            <div class="view_more_cases">
+
+                                <form (ngSubmit)="submit()" [formGroup]="SubmitForm">
+
+
+                                    <div class="popup-content-body">
+                                        <div class="row popup-form">
+                                
+                                
+                                            <div class="col-md-6">
+                                                <label for="lob">Company Name</label>
+                                                <ng-multiselect-dropdown class="form-control" [settings]="dropdownSingleSettingsType"
+                                                    placeholder="select Company Name " formControlName="company_name" [data]="company_name">
+                                                </ng-multiselect-dropdown>
+                                                <div *ngIf="isSubmitted && formControls.company_name.errors" class="Validationerrors">
+                                                    <div *ngIf="formControls.company_name.errors.required">
+                                                        <span style="color: red;">Please select a Company Name </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="state">Message</label>
+                                                <input type="text" class="form-control" formControlName="message">
+                                                <div *ngIf="isSubmitted && formControls.message.errors" class="Validationerrors">
+                                                    <div *ngIf="formControls.message.errors.required"><span style="color: red;">Please enter
+                                                            Message !</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="button-div-yes-no" align="right" style="margin-top: 10px; margin-right: 13px;">
+                                                <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                
+                                            </div>
+                                
+                                        </div>
+                                    </div>
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                </form>
+                                
+
+
+                            </div>
+                        </div>
+                        <div class="main_footer">
+                            <button type="button" id="ClosePOUPUP" class="mr_5 btn-danger Save_click"
+                                data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

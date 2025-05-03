@@ -1,0 +1,302 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title" *ngIf="ActivePage == 'Default' && loginType == 'employee' ">My POSP</div>
+            <div class="header_title" *ngIf="ActivePage == 'Default' && loginType == 'agent' ">My Client</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div class="filterquotesrow">
+              <div class="totalquotes">Total Record {{ this.Total }}</div>
+              <button class="btn btninfo1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><a role="button"><i
+                    class="fa fa-filter"></i><span>Filters</span><i class="fa fa-angle-down"></i></a></button>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panelbody">
+                <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+                  <div class="row" style="margin-top: 1%;">
+                    <div class="col-sm-3">
+                      <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                        formControlName="DateOrDateRange" bsDaterangepicker
+                        [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+
+                      <span *ngIf="isSubmitted && formControls.DateOrDateRange.errors" class="ValidationError">
+                        <span *ngIf="formControls.DateOrDateRange.errors.required">Date is required</span></span>
+                    </div>
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" name="State" placeholder="Select State"
+                        [data]="StateData" formControlName="State" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'State')" (onDeSelect)="onItemDeSelect($event,'State')">
+                      </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" name="City" placeholder="Select City"
+                        [data]="CityData" formControlName="City" [settings]="dropdownSettingsmultiselect">
+                      </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-sm-3">
+                      <input class="form-control" type="text" name="pincode" id="pincode" maxlength="6"
+                        placeholder="Pincode" formControlName="pincode">
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 1%;">
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" name="status" placeholder="Select Status"
+                        [(ngModel)]="SelectStatusValue" [data]="statusData" formControlName="status"
+                        [settings]="dropdownSettingsmultiselect">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <input type="text" formControlName="SearchValue" name="SearchValue" class="form-control"
+                        placeholder="Search">
+                    </div>
+
+                    <div class="col-sm-3" *ngIf="LoginDepartmentId == '41'  ">
+                      <ng-multiselect-dropdown class="form-control" name="lsp" placeholder="Select LSP"
+                        [data]="LSPData" formControlName="lsp" [settings]="dropdownSettingsmultiselect"
+                        >
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3" *ngIf="loginId =='775' || loginId =='805' || loginId =='957'  ">
+                      <ng-multiselect-dropdown class=" form-control" name="Type" placeholder="Select Type"
+                        [data]="TypeData" formControlName="Type" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'Type')" (onDeSelect)="onItemDeSelect($event,'Type')">
+                      </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-sm-3">
+                      <button type="submit" class="btn btn-info" style="font-size: small;" value="Search">
+                        <i class="fa fa-search">
+                          Search</i></button>
+                      &nbsp;&nbsp;
+                      <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                        value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                    </div>
+
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="custom_table tables_layout_design">
+              <table datatable [dtOptions]="dtOptions" class="row-border table" id="Table1">
+                <thead>
+                  <tr>
+                    <th></th>
+                  </tr>
+                </thead>
+              </table>
+              <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                <li class="table-row tablerow{{(i % 10) + 1}}" *ngFor="let row of dataAr; let i=index;">
+                  <div class="statuslabelrow" *ngIf="row.Type == '2'">
+                    <label *ngIf="row.PosStatus == 0" class="label label-primary">Pending</label>
+                    <label *ngIf="row.PosStatus == 1" class="label label-warning">Verified</label>
+                    <label *ngIf="row.PosStatus == 2" class="label label-success">Certified</label>
+                    <label *ngIf="row.PosStatus == 3" class="label label-danger">Incomplete</label>
+                    <label *ngIf="row.PosStatus == 4" class="label label-info">Under Training</label>
+                    <label *ngIf="row.PosStatus == 6" class="label label-danger">Rejected</label>
+                    <label *ngIf="row.PosStatus == 7  && row.PosNocStatus == 2 && this.loginType == 'employee'"
+                      class="label label-success">NOC Released</label>
+                  </div>
+                  <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                    <div class="agents_data agents_data1">
+                      <div class="icon_re_cl">{{row.SrNo}}</div>
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Name</div>
+                          <strong class="fs_18">{{row.Name}} <span *ngIf="this.url != '/MyClient/View-client' ">-{{row.AgentId}}</span> &nbsp;&nbsp;&nbsp;<span *ngIf="row.coll_data=='no_coll'"
+                              class="text-danger">DND</span></strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data2">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Email</div>
+                          <strong class="fs_18">{{row.Email}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data3">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Mobile</div>
+                          <strong class="fs_18">{{row.Mobile}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="last_row_div">
+                    <div class="d_flex custon-234">
+                      <div class="label_chips non_motor_lob">
+                        <span>Create Date : {{ row.CreateDate }}</span>&nbsp;&nbsp;
+                      </div>
+                      <div class="label_chips finance_lob">
+                        <span>Last Modified Date : {{row.LastModifiedDate}}</span>
+                      </div>
+                      <div class="label_chips " *ngIf="row.Type == '2'"
+                        [ngClass]="{'activestatuspos': row.Status == '1', 'inactivestatuspos': row.Status == '0' }">
+                        <span *ngIf="row.Status == 0 && row.PosStatus == 2">Status : Inactive</span>
+                        <span *ngIf="row.Status == 1 && row.PosStatus == 2">Status : Active</span>
+                      </div>
+                      <div *ngIf="row.Type == '2'">
+                        <div class="label_chips motor_lob"
+                          *ngIf="row.PosStatus == 2 && this.loginType == 'employee' && row.create_pos_permission == 1">
+                          <span>BP</span>
+                        </div>
+                        <div class="label_chips motor_lob"
+                          *ngIf="row.PosStatus == 2 && this.loginType == 'employee' && row.create_pos_permission == 2">
+                          <span>BA</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="last_row">
+                    <div class="d_flex effective_date">
+                      <div class="date_text">
+                        <span class="fs_12">Last Login Date :-</span>
+                        <span class="fs_12">{{row.LastLoginDate}}</span>
+                      </div>
+                    </div>
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom" *ngIf="row.Type == '1'">
+                      <a class="btnbg1" href="javascript:;" *ngIf="row.PartnerCode != ''">Users -
+                        {{row.PartnerCode}}</a>
+                    </div>
+
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom" *ngIf="row.Type == '2'">
+                      <a class="btnbg" href="javascript:;"
+                        *ngIf="row.PosStatus == 7  && row.PosNocStatus == 2 && this.loginType == 'employee'"
+                        (click)="PospNocRequest(row.NocId,'Details',row.StatusCheck,1)">NOC Released</a>
+                      <a class="btnbg1" *ngIf="row.PosStatus == 2 && loginType == 'employee' "
+                        (click)="UpdatePos(row.AgentId,1)">Update
+                        LOB Request</a>
+
+
+                      <a class="btnbg2"
+                        *ngIf="row.PosStatus == 2 && row.PosNocStatus == 0 && this.loginType == 'employee'"
+                        (click)="PospNocRequest(row.Id,'Noc',0,1)">Request NOC</a>
+
+                      <a class="btnbg2"
+                        *ngIf="row.PosStatus == 2 && row.PosNocStatus == 1 && this.loginType == 'employee'"
+                        (click)="PospNocRequest(row.NocId,'Details',row.StatusCheck,1)">Requested NOC</a>
+
+                      <a class="btnbg2"
+                        *ngIf="row.PosStatus == 7 && row.PosNocStatus == 2 && this.loginType == 'employee'"
+                        (click)="ViewDocument(row.PosNocPdf)">&nbsp;<i class="fa fa-download"> NOC Letter</i></a>
+
+                      <a class="btnbg3" href="javascript:;" (click)="PospDetails(row.Id,'agent')">Details</a>
+
+                      <a class="btnbg4" href="javascript:;" *ngIf="row.PosStatus == 3 "
+                        (click)="UpdateDocs(row.Id,'agent')">Update Docs</a>
+
+                      <div class="btn-group dropup" *ngIf="this.loginType === 'employee'">
+                        <button type=" button" class="btn btnsecondary dropdown-toggle" data-toggle="dropdown"
+                          aria-expanded="false">More..&nbsp;&nbsp;<i class="fa fa-angle-up"></i></button>
+                        <div class="dropdown-menu">
+                          <a class="dropdownitem" *ngIf="row.PosStatus == 2  "
+                            (click)="UpdatePospReporting(row.Id,row.AgentId,'ChangeRM')" data-toggle="modal"
+                            data-target="#ChangePospReportingId" data-backdrop="static" data-keyboard="false">Change
+                            POSP Reporting</a>
+
+                          <a class="dropdownitem" *ngIf="row.PosStatus == 2 &&   row.create_pos_permission !=1"
+                            data-toggle="modal" data-target="#exampleModalbAbp"
+                            (click)="UpdatePosData(row.Id, 1 , row.Id)">Update Business Partner</a>
+                          <a class="dropdownitem" *ngIf="row.PosStatus == 2 &&  row.create_pos_permission !=2  "
+                            data-toggle="modal" data-target="#exampleModalbAbp"
+                            (click)="UpdatePosData(row.Id, 2 , row.Id)">Update Business Advisor</a>
+                          <a class="dropdownitem"
+                            *ngIf="row.PosStatus == 2 &&   row.create_pos_permission !=1 && row.create_pos_permission !=2"
+                            data-toggle="modal" data-target="#exampleModalbAbp"
+                            (click)="UpdatePosData(row.Id, 3 , row.Id)">Update Mapping BA/BP</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="row" *ngIf="dataAr?.length == 0">
+                <div class="col-md-12">
+                  <div class="no_data_found">
+                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                    <small>No data available !</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="ChangePospReportingId" tabindex="-1" role="dialog" aria-labelledby="ChangePospReporting">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change POSP RM</h5>
+        <button type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+      <form class="form" [formGroup]="UpdatePospReportingForm">
+        <div class="modal-body">
+          <ng-multiselect-dropdown class="form-control" name="reference" [data]="AlLEmployeeData"
+            placeholder="Please Select Reporting Maneger" [(ngModel)]="ChangePospRm" formControlName="reference"
+            [settings]="dropdownSettingsingleselect">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closemodal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="ChangePospReporting()">Submit</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModalbAbp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><b>{{ create_pos_permission == 2 ? 'Update Business Advisor' :
+            (create_pos_permission == 1 ? 'Update Business Partner' : 'Update Mapping BA/BP') }}</b></h5>
+        <button type="button" id="close_pop" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="false">&times;</span>
+        </button>
+
+      </div>
+      <div class="modal-body">
+        <form class="form" (ngSubmit)="Update_Pos_Form()" [formGroup]="UpdatePosForm">
+          <div class="row">
+            <div class="col-sm-4" *ngIf="create_pos_permission == 3  ">
+              <label for="BA_BP_List">BA/BP List</label>
+              <ng-multiselect-dropdown class="form-control" name="BA_BP_List" placeholder="Select BA/BP List"
+                [data]="BA_BP_List" required formControlName="BA_BP_List" [settings]="dropdownSettingsmultiselect">
+              </ng-multiselect-dropdown>
+              <span *ngIf="isSubmitted && FC.BA_BP_List.errors" class="ValidationError">
+                <span *ngIf="FC.BA_BP_List.errors.required">Field is required!</span>
+              </span>
+            </div>
+            <div class="col-md-4">
+              <label for="Remark">Remark</label>
+              <input class="form-control" type="text" formControlName="Remark" name="Remark" id="Remark" required
+                placeholder="Enter Remark">
+              <span *ngIf="isSubmitted && FC.Remark.errors" class="ValidationError">
+                <span *ngIf="FC.Remark.errors.required">Remark required!</span>
+              </span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

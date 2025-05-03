@@ -1,0 +1,116 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+  <div class="container-fluid">
+    <div class="main_card_form">
+      <div class="main_header">
+        <div class="header_title">CheckGrid Insurer Employee List</div>
+      </div>
+
+      <div class="main_body main_card_height_scroll_withoutfooter">
+        <div class="btn_list_group">
+          <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="dsr-fillter">
+                    <!-- <button
+                      class="btn btn-info1"
+                      role="tab"
+                      id="headingOne"
+                      data-toggle="collapse"
+                      data-parent="#accordion"
+                      href="#collapseOne"
+                      aria-expanded="true"
+                      aria-controls="collapseOne"
+                    >
+                      Filters
+                    </button> -->
+                    <button class="btn btn-info1" (click)="dailog()">
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body sub-form"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="All">
+                <div class="box-body">
+                  <div class="mydiv">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="tab-content">
+                          <div role="tabpanel" class="tab-pane fade in active" id="All">
+                            <div class="box-body">
+                              <div class="mydiv"></div>
+                              <div class="mydiv">
+                                <table datatable [dtOptions]="dtOptions" id="Table1"
+                                  class="table table-bordered table-hover">
+                                  <thead>
+                                    <tr>
+                                      <th>SNo.</th>
+                                      <th>Insurer Employee Name</th>
+                                      <th>Mobile</th>
+                                      <th>Email</th>
+                                      <th>Company</th>
+                                      <th>Login Expiry Date</th>
+                                      <th>Status</th>
+                                      <th>Add Stamp</th>
+                                      <th>Update Stamp</th>
+                                      <th>Action</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let row of dataAr">
+                                      <td>{{row.sno}}</td>
+                                      <td>{{row.insurer_name}}</td>
+                                      <td>{{row.mobile}}</td>
+                                      <td>{{row.email}}</td>
+                                      <td>{{row.company}}</td>
+                                      <td>{{row.end}}</td>
+                                      <td>
+                                        <span *ngIf="row.status==1" class="label label-success">Active</span>
+                                        <span *ngIf="row.status==0" class="label label-danger">Inactive</span>
+                                      </td>
+                                      <td>{{row.add}}</td>
+                                      <td>{{row.update}}</td>
+                                      <td>
+                                        <button class=" btn btn-info1" (click)="update(row.id)"><span>Update</span>
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+
+                                  <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                      <td colspan="11" align="center">
+                                        No data available !
+                                      </td>
+                                    </tr>
+                                  </tbody>
+
+                                  <tbody></tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,1134 @@
+<button (click)="CloseModel()" type="button" class="close closeModelButton"
+  style="opacity: 1 !important;color: white !important;background: #f00 !important;z-index: 9;right: -10px;top: -10px;">&times;</button>
+
+<div class="targetreportscss">
+  <div class="profiledataname">
+    <label>
+      <small>Employee Name & Code</small>
+      <p><span>{{this.EmployeeName}}</span>
+        <small>{{this.EmployeeProfile}}
+          <b class="{{ this.IsSales == 1 ? 'btnbtnsuccess' : 'btnbtnwarning' }}">
+            {{ this.IsSales == 1 ? 'Sales' : 'Non Sales' }}
+          </b>
+        </small>
+      </p>
+    </label>
+    <label>
+      <small>Service Location</small>
+      <p><span>{{this.ServiceLocation}}</span><small>System Age : {{this.SystemAge}}</small> </p>
+    </label>
+    <label>
+      <small>Reporting Manager & Code</small>
+      <p><span>{{this.ReportingManager}}</span>
+        <small *ngIf="this.ResignStatus == 1">Resign Date : {{this.ResignDate}}</small>
+      </p>
+    </label>
+  </div>
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Business</a></li>
+    <li><a data-toggle="tab" href="#menu1" *ngIf="Profile_Type != 'CEO' && Profile_Type != 'MD' ">Incentive</a></li>
+    <li><a data-toggle="tab" href="#menu2" *ngIf="Modal_Type == 'Salary'">Salary Track</a></li>
+    <li><a data-toggle="tab" *ngIf="IsSales == 1 && Profile_Type != 'CEO' &&  Profile_Type != 'MD' " href="#menu3">Incentive T&C</a></li>
+    <li><a data-toggle="tab"
+        *ngIf="Modal_Type == 'Salary' && IsSales == 1 && (Profile_Type == 'President' || Profile_Type == 'HOD' || Profile_Type == 'NH' || Profile_Type == 'ZH' || Profile_Type == 'RH' || Profile_Type == 'CH' || Profile_Type == 'BCH')"
+        href="#menu4">My Team</a>
+    </li>
+  </ul>
+  <div class="currentmonth">{{this.MonthNamCon}}</div>
+</div>
+<div class="tab-content" style="padding-top: 110px;">
+
+  <!--======== BUSINESS ACHIEVENT TAB START =======-->
+  <div id="home" class="tab-pane fade in active">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="tables_layout_design">
+          <div class="custom_table">
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="table_row">
+                  <div class="icon_re_cl">Targets</div>
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title"><span>Total</span>
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? 'Calculating…' : TotalTarget + (TotalTargetStr ? ' (' + TotalTargetStr + ')' : '') }}
+                        <!-- {{ TotalTarget }} ({{ TotalTargetStr }}) -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Self</span>
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? 'Calculating…' : SelfTarget + (SelfTargetStr ? ' (' + SelfTargetStr + ')' : '') }}
+                        <!-- {{ SelfTarget }} ({{ SelfTargetStr }}) -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Team</span>
+                      <small class="name_info5">
+                        {{ getBasicDetailsLoader ? 'Calculating…' : TeamTarget + (TeamTargetStr ? ' (' + TeamTargetStr + ')' : '') }}
+                        <!-- {{ TeamTarget }} ({{ TeamTargetStr }}) -->
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="table_row">
+                  <div class="icon_re_cl">Actual Achievement</div>
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title">
+                      <span>Total
+                        <small class="fileexportbtn" *ngIf="!getBasicDetailsLoader && TotalActualBusiness > 0">
+                          <img title="Export" *ngIf="!isLoadingExportPms || loadingButtonPmsExportText !== 'actual-achievement-all'" src="./assets/image/pmsexport.svg" alt="Export" (click)="exportPmsRecord('actual-achievement', 'all')">
+                          <!-- Show the spinner when loading -->
+                          <i title="Please Wait..." *ngIf="isLoadingExportPms && loadingButtonPmsExportText === 'actual-achievement-all'" class="fa fa-refresh fa-spin"></i>
+                        </small>
+                      </span>
+
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? 'Calculating…' : TotalActualBusiness + (TotalActualBusinessStr ? ' (' + TotalActualBusinessStr + ')' : '') }}
+
+                        <!-- {{ TotalActualBusiness }} ({{ TotalActualBusinessStr }}) -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title">
+                      <span>Self
+                        <small class="fileexportbtn" *ngIf="!getBasicDetailsLoader && SelfActualBusiness > 0">
+                          <img title="Export" *ngIf="!isLoadingExportPms || loadingButtonPmsExportText !== 'actual-achievement-self'" src="./assets/image/pmsexport.svg" alt="Export" (click)="exportPmsRecord('actual-achievement', 'self')">
+                          <!-- Show the spinner when loading -->
+                          <i title="Please Wait..." *ngIf="isLoadingExportPms && loadingButtonPmsExportText === 'actual-achievement-self'" class="fa fa-refresh fa-spin"></i>
+                        </small>
+                      </span>
+
+                      <small class="name_info5">
+                        {{ getBasicDetailsLoader ? 'Calculating…' : SelfActualBusiness + (SelfActualBusinessStr ? ' (' + SelfActualBusinessStr + ')' : '') }}
+
+                        <!-- {{ SelfActualBusiness }} ({{ SelfActualBusinessStr }}) -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title">
+                      <span>Team
+                        <small class="fileexportbtn" *ngIf="!getBasicDetailsLoader && TeamActualBusiness > 0">
+                          <img title="Export" *ngIf="!isLoadingExportPms || loadingButtonPmsExportText !== 'actual-achievement-only_team'" src="./assets/image/pmsexport.svg" alt="Export" (click)="exportPmsRecord('actual-achievement', 'only_team')">
+                          <!-- Show the spinner when loading -->
+                          <i title="Please Wait..." *ngIf="isLoadingExportPms && loadingButtonPmsExportText === 'actual-achievement-only_team'" class="fa fa-refresh fa-spin"></i>
+                        </small>
+                      </span>
+
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? 'Calculating…' : TeamActualBusiness + (TeamActualBusinessStr ? ' (' + TeamActualBusinessStr + ')' : '') }}
+                        <!-- {{ TeamActualBusiness }} ({{ TeamActualBusinessStr }}) -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Total</span>
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? ' Calculating…' : TotalActualAchPercent + ' %'}}
+                        <!-- {{ TotalActualAchPercent }} % -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Self</span>
+                      <small class="name_info5">
+                        {{ getBasicDetailsLoader ? ' Calculating…' : SelfActualAchPercent + ' %'}}
+                        <!-- {{ SelfActualAchPercent }} % -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Team</span>
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? ' Calculating…' : TeamActualAchPercent + ' %'}}
+                        <!-- {{ TeamActualAchPercent }} % -->
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="table_row">
+                  <div class="icon_re_cl">
+                    Weightage Achievement
+                  </div>
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title">
+                      <span>Total
+                        <small class="fileexportbtn" *ngIf="!getBasicDetailsLoader && TotalWeightageBusiness > 0">
+                          <img title="Export" *ngIf="!isLoadingExportPms || loadingButtonPmsExportText !== 'weightage-all'" src="./assets/image/pmsexport.svg" alt="Export" (click)="exportPmsRecord('weightage', 'all')">
+                          <!-- Show the spinner when loading -->
+                          <i title="Please Wait..." *ngIf="isLoadingExportPms && loadingButtonPmsExportText === 'weightage-all'" class="fa fa-refresh fa-spin"></i>
+                        </small>
+                      </span>
+                      
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? 'Calculating…' : TotalWeightageBusiness + (TotalWeightageBusinessStr ? ' (' + TotalWeightageBusinessStr + ')' : '') }}
+                        <!-- {{ TotalWeightageBusiness }} ({{ TotalWeightageBusinessStr }}) -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title">
+                      <span>Self
+                        <small class="fileexportbtn" title="Export" *ngIf="!getBasicDetailsLoader && SelfWeightageBusiness > 0">
+                          <img title="Export" *ngIf="!isLoadingExportPms || loadingButtonPmsExportText !== 'weightage-self'" src="./assets/image/pmsexport.svg" alt="Export" (click)="exportPmsRecord('weightage', 'self')">
+                          <!-- Show the spinner when loading -->
+                          <i title="Please Wait..." *ngIf="isLoadingExportPms && loadingButtonPmsExportText === 'weightage-self'" class="fa fa-refresh fa-spin"></i>
+                        </small>
+                      </span>
+
+                      <small class="name_info5">
+                        {{ getBasicDetailsLoader ? 'Calculating…' : SelfWeightageBusiness + (SelfWeightageBusinessStr ? ' (' + SelfWeightageBusinessStr + ')' : '') }}
+                        <!-- {{ SelfWeightageBusiness }} ({{ SelfWeightageBusinessStr }}) -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title">
+                      <span>Team
+                        <small class="fileexportbtn" *ngIf="!getBasicDetailsLoader && TeamWeightageBusiness > 0">
+                          <img title="Export" *ngIf="!isLoadingExportPms || loadingButtonPmsExportText !== 'weightage-only_team'" src="./assets/image/pmsexport.svg" alt="Export" (click)="exportPmsRecord('weightage', 'only_team')">
+                          <!-- Show the spinner when loading -->
+                          <i title="Please Wait..." *ngIf="isLoadingExportPms && loadingButtonPmsExportText === 'weightage-only_team'" class="fa fa-refresh fa-spin"></i>
+                        </small>
+                      </span>
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? 'Calculating…' : TeamWeightageBusiness + (TeamWeightageBusinessStr ? ' (' + TeamWeightageBusinessStr + ')' : '') }}
+                        <!-- {{ TeamWeightageBusiness }} ({{ TeamWeightageBusinessStr }}) -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Total</span>
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? ' Calculating…' : TotalWeightageAchPercent + ' %'}}
+                        <!-- {{ TotalWeightageAchPercent }} % -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Self</span>
+                      <small class="name_info5">
+                        {{ getBasicDetailsLoader ? ' Calculating…' : SelfWeightageAchPercent + ' %'}}
+                        <!-- {{ SelfWeightageAchPercent }} % -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Team</span>
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? ' Calculating…' : TeamWeightageAchPercent + ' %'}}
+                        <!-- {{ TeamWeightageAchPercent }} % -->
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                *ngIf="(LoginProfileName == 'HOD' || LoginProfileName == 'MD' || LoginProfileName == 'CEO'  || LoginProfileName == 'President' || LoginProfileName == 'NH')">
+                <div class="table_row">
+                  <div class="icon_re_cl">Revenue</div>
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title">
+                      <span>Total
+                        <small class="fileexportbtn" *ngIf="!getBasicDetailsLoader && TotalRevenue > 0">
+                          <img title="Export" *ngIf="!isLoadingExportPms || loadingButtonPmsExportText !== 'revenue-all'" src="./assets/image/pmsexport.svg" alt="Export" (click)="exportPmsRecord('revenue', 'all')">
+                          <!-- Show the spinner when loading -->
+                          <i title="Please Wait..." *ngIf="isLoadingExportPms && loadingButtonPmsExportText === 'revenue-all'" class="fa fa-refresh fa-spin"></i>
+                        </small>
+                      </span>
+
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? 'Calculating…' : TotalRevenue + (TotalRevenueStr ? ' (' + TotalRevenueStr + ')' : '') }}
+                        <!-- {{ TotalRevenue}} ({{ TotalRevenueStr }}) -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title">
+                      <span>Self
+                        <small class="fileexportbtn" *ngIf="!getBasicDetailsLoader && SelfRevenue > 0">
+                          <img title="Export" *ngIf="!isLoadingExportPms || loadingButtonPmsExportText !== 'revenue-self'" src="./assets/image/pmsexport.svg" alt="Export" (click)="exportPmsRecord('revenue', 'self')">
+                          <!-- Show the spinner when loading -->
+                          <i title="Please Wait..." *ngIf="isLoadingExportPms && loadingButtonPmsExportText === 'revenue-self'" class="fa fa-refresh fa-spin"></i>
+                        </small>
+                      </span>
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? 'Calculating…' : SelfRevenue + (SelfRevenueStr ? ' (' + SelfRevenueStr + ')' : '') }}
+                        <!-- {{ SelfRevenue }} ({{ SelfRevenueStr }}) -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title">
+                      <span>Team
+                        <small class="fileexportbtn" *ngIf="!getBasicDetailsLoader && TeamRevenue > 0">
+                          <img title="Export" *ngIf="!isLoadingExportPms || loadingButtonPmsExportText !== 'revenue-only_team'" src="./assets/image/pmsexport.svg" alt="Export" (click)="exportPmsRecord('revenue', 'only_team')">
+                          <!-- Show the spinner when loading -->
+                          <i title="Please Wait..." *ngIf="isLoadingExportPms && loadingButtonPmsExportText === 'revenue-only_team'" class="fa fa-refresh fa-spin"></i>
+                        </small>
+                      </span>
+                      <small class="name_info5">
+                        {{ getBasicDetailsLoader ? 'Calculating…' : TeamRevenue + (TeamRevenueStr ? ' (' + TeamRevenueStr + ')' : '') }}
+                        <!-- {{TeamRevenue }} ({{ TeamRevenueStr }}) -->
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                *ngIf="(ShowSelfData == 'Yes' || (LoginProfileName == 'HOD' || LoginProfileName == 'MD' || LoginProfileName == 'CEO'  || LoginProfileName == 'President' || LoginProfileName == 'NH' || loginId == 54 ))">
+                <div class="table_row">
+                  <div class="icon_re_cl">Total Cost</div>
+
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title"><span>Total</span>
+                      <small class="name_info1" *ngIf="ShowTotalTotalCost == 'Yes'" style="cursor: pointer;"
+                        (click)="ShowHideCost('TotalTotal', 'No')">
+                        {{ TotalTotalCost }} ({{ TotalTotalCostStr }})
+                      </small>
+
+                      <small class="name_info1" *ngIf="ShowTotalTotalCost == 'No'" style="cursor: pointer;"
+                        (click)="ShowHideCost('TotalTotal', 'Yes')">
+                        ******
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Self</span>
+                      <small class="name_info1" *ngIf="ShowSelfTotalCost == 'Yes'"
+                        (click)="ShowHideCost('SelfTotal', 'No')" style="cursor: pointer;">
+                        {{ SelfTotalCost }} ({{ SelfTotalCostStr }})
+                      </small>
+
+                      <small class="name_info1" *ngIf="ShowSelfTotalCost == 'No'"
+                        (click)="ShowHideCost('SelfTotal', 'Yes')" style="cursor: pointer;">
+                        ******
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title" *ngIf="ShowTeamData == 'Yes'"><span>Team</span>
+                      <small class="name_info5" *ngIf="ShowTeamTotalCost == 'Yes'"
+                        (click)="ShowHideCost('TeamTotal', 'No')" style="cursor: pointer;">
+                        {{ TeamTotalCost }} ({{ TeamTotalCostStr }})
+                      </small>
+
+                      <small class="name_info5" *ngIf="ShowTeamTotalCost == 'No'"
+                        (click)="ShowHideCost('TeamTotal', 'Yes')" style="cursor: pointer;">
+                        ******
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                *ngIf="(ShowSelfData == 'Yes' || (LoginProfileName == 'HOD' || LoginProfileName == 'MD' || LoginProfileName == 'CEO'  || LoginProfileName == 'President' || LoginProfileName == 'NH' || loginId == 54 ))">
+                <div class="table_row">
+                  <div class="icon_re_cl">Actual Cost</div>
+
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title"><span>Total</span>
+                      <small class="name_info1" *ngIf="ShowTotalActualCost == 'Yes'"
+                        (click)="ShowHideCost('TotalActual', 'No')" style="cursor: pointer;">
+                        {{ ActualTotalCost }} ({{ ActualTotalCostStr }})
+                      </small>
+
+                      <small class="name_info1" *ngIf="ShowTotalActualCost == 'No'"
+                        (click)="ShowHideCost('TotalActual', 'Yes')" style="cursor: pointer;">
+                        ******
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Self</span>
+                      <small class="name_info1" *ngIf="ShowSelfActualCost == 'Yes'"
+                        (click)="ShowHideCost('SelfActual', 'No')" style="cursor: pointer;">
+                        {{ SelfActualCost }} ({{ SelfActualCostStr }})
+                      </small>
+
+                      <small class="name_info1" *ngIf="ShowSelfActualCost == 'No'"
+                        (click)="ShowHideCost('SelfActual', 'Yes')" style="cursor: pointer;">
+                        ******
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title" *ngIf="ShowTeamData == 'Yes'"><span>Team</span>
+                      <small class="name_info5" *ngIf="ShowTeamActualCost == 'Yes'"
+                        (click)="ShowHideCost('TeamActual', 'No')" style="cursor: pointer;">
+                        {{ TeamActualCost }} ({{ TeamActualCostStr }})
+                      </small>
+
+                      <small class="name_info5" *ngIf="ShowTeamActualCost == 'No'"
+                        (click)="ShowHideCost('TeamActual', 'Yes')" style="cursor: pointer;">
+                        ******
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+
+                *ngIf="Profile_Type == 'Relationship Manager' || (ShowSelfData == 'No' && (LoginProfileName != 'HOD' && LoginProfileName != 'MD' && LoginProfileName != 'CEO'  && LoginProfileName != 'President' && LoginProfileName != 'NH'))">
+                <div class="table_row">
+                  <div class="icon_re_cl">Cost</div>
+
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title"><span>Total Cost</span>
+                      <small class="name_info1" *ngIf="ShowTotalTotalCost == 'Yes'" style="cursor: pointer;"
+                        (click)="ShowHideCost('TotalTotal', 'No')">
+                        {{ AllTotalCost }} ({{ TotalTotalCostStr }})
+                      </small>
+
+                      <small class="name_info1" *ngIf="ShowTotalTotalCost == 'No'" style="cursor: pointer;"
+                        (click)="ShowHideCost('TotalTotal', 'Yes')">
+                        ******
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Actual Cost</span>
+                      <small class="name_info5" *ngIf="ShowTotalActualCost == 'Yes'"
+                        (click)="ShowHideCost('TotalActual', 'No')" style="cursor: pointer;">
+                        {{ AllActualCost }} ({{ ActualTotalCostStr }})
+                      </small>
+
+                      <small class="name_info5" *ngIf="ShowTotalActualCost == 'No'"
+                        (click)="ShowHideCost('TotalActual', 'Yes')" style="cursor: pointer;">
+                        ******
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+              </div> -->
+
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="table_row">
+                  <div class="icon_re_cl">Call Logs</div>
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title"><span>Active Days</span>
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? ' Calculating…' : TotalActiveDays}}
+                        <!-- {{ TotalActiveDays }} -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>DSR Call</span>
+                      <small class="name_info5">
+                        {{ getBasicDetailsLoader ? ' Calculating…' : TotalBusinessVirtual}}
+                        <!-- {{ TotalBusinessVirtual }} -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>DSR Visit</span>
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? ' Calculating…' : TotalBusinessVisit}}
+                        <!-- {{ TotalBusinessVisit }} -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>LMS Call</span>
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? ' Calculating…' : LmsCallCount}}
+                        <!-- {{ LmsCallCount }} -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Tele RM Call</span>
+                      <small class="name_info5">
+                        {{ getBasicDetailsLoader ? ' Calculating…' : TeleRmCallCount}}
+                        <!-- {{ TeleRmCallCount }} -->
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Renewal Call</span>
+                      <small class="name_info1">
+                        {{ getBasicDetailsLoader ? ' Calculating…' : RenewalCallCount}}
+                        <!-- {{ RenewalCallCount }} -->
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--======== BUSINESS ACHIEVENT TAB END =======-->
+
+  <!--======== INCENTIVE ACHIEVENT TAB START =======-->
+  <div id="menu1" class="tab-pane fade">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="tables_layout_design">
+          <div class="custom_table">
+            <div class="row">
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="PaymentStatus == 'Released'">
+
+                <div class="table_row">
+                  <div class="icon_re_cl">Incentive Payment Details</div>
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title"><span>Total Amount</span>
+                      <small class="name_info1">
+                        {{ IncentiveAmount }} ({{ IncentiveAmountStr }})
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Amount Released</span>
+                      <small class="name_info1">
+                        {{ AmountReleased }}
+                        <span *ngIf="AmountReleasedStr != ''">({{ AmountReleasedStr }})</span>
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Payment Status</span>
+                      <small class="name_info5"> {{ PaymentStatus }} </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Remarks</span>
+                      <small class="name_info5"> {{ IncentiveRemarks }} </small>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="table_row" *ngIf="PaymentStatus == 'Pending' && Modal_Type == 'Incentive'">
+                  <div class="icon_re_cl">Incentive Payment Details</div>
+                  <div class="user_details_full">
+
+                    <form class="form w_100" [formGroup]="IncentiveForm" (ngSubmit)="SubmitIncentiveDetails()">
+
+                      <div class="d_flex flex_wrap w_100">
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                          <div class="input_group">
+                            <label>Total Amount</label>
+                            <input type="text" placeholder="{{ IncentiveAmount }}" class="form-control" readonly>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                          <div class="input_group">
+                            <label>Amount Released *</label>
+                            <input type="text" placeholder="Enter Amount Released" formControlName="Incentive_Amt"
+                              class="form-control">
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                          <div class="input_group">
+                            <label>Remarks</label>
+                            <input type="text" class="form_control" formControlName="Remarks" placeholder="Remarks">
+                          </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                          <div class="d_flex flex_End" style="margin-top: 28px;">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                          </div>
+                        </div>
+                      </div>
+
+                    </form>
+
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="table_row">
+                  <div class="icon_re_cl">Targets & Business Details</div>
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title"><span>Total Target</span>
+                      <small class="name_info1">
+                        {{ IncentiveTotalTarget }} ({{ IncentiveTotalTargetStr }})
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title">
+                      <span>Weightage Business
+                        <small class="fileexportbtn" *ngIf="!getBasicDetailsLoader && TotalWeightageBusiness > 0">
+                          <img title="Export" *ngIf="!isLoadingExportPms || loadingButtonPmsExportText !== 'weightage-all'" src="./assets/image/pmsexport.svg" alt="Export" (click)="exportPmsRecord('weightage', 'all')">
+                          <i title="Please Wait..." *ngIf="isLoadingExportPms && loadingButtonPmsExportText === 'weightage-all'" class="fa fa-refresh fa-spin"></i>
+                        </small>
+                      </span>
+                  
+                      <small class="name_info1">
+                        {{ TotalWeightageBusiness }} ({{ TotalWeightageBusinessStr }})
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title">
+                      <span>Incentive Business
+                        <small class="fileexportbtn" *ngIf="!getBasicDetailsLoader && IncentiveWeightageBusiness > 0">
+                          <img  title="Export" *ngIf="!isLoadingExportPms || loadingButtonPmsExportText !== 'incentive-all'" src="./assets/image/pmsexport.svg" alt="Export" (click)="exportPmsRecord('incentive', 'all')">
+                          <!-- Show the spinner when loading -->
+                          <i title="Please Wait..." *ngIf="isLoadingExportPms && loadingButtonPmsExportText === 'incentive-all'" class="fa fa-refresh fa-spin"></i>
+                        </small>
+                      </span>
+    
+                      <small class="name_info5">
+                        {{ IncentiveWeightageBusiness }} ({{ IncentiveWeightageBusinessStr }})
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Reward Percent</span>
+                      <small class="name_info5">
+                        {{ IncentiveRewardPercent }} %
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Incentive Amount</span>
+                      <small class="name_info5">
+                        {{ IncentiveAmount }} ({{ IncentiveAmountStr }})
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Incentive Status</span>
+                      <small class="name_info5">
+                        {{ Eligibility }}
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                *ngIf="(IsSales == 1 && Profile_Type != 'President')">
+                <div class="table_row">
+                  <div class="icon_re_cl">Number of Policy (Motor, Health, Travel, IPA)</div>
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title">
+                      <span>Total Policy
+                        <small class="fileexportbtn" *ngIf="!getBasicDetailsLoader && TotalSr > 0">
+                          <img title="Export" *ngIf="!isLoadingExportPms || loadingButtonPmsExportText !== 'policy-all'" src="./assets/image/pmsexport.svg" alt="Export" (click)="exportPmsRecord('policy', 'all')">
+                          <!-- Show the spinner when loading -->
+                          <i title="Please Wait..." *ngIf="isLoadingExportPms && loadingButtonPmsExportText === 'policy-all'" class="fa fa-refresh fa-spin"></i>
+                        </small>
+                      </span>
+                      <small class="name_info5">
+                        {{ TotalSr }}
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title">
+                      <span>Online Policy
+                        <small class="fileexportbtn" *ngIf="!getBasicDetailsLoader && TotalOnlineSr > 0">
+                          <img title="Export" *ngIf="!isLoadingExportPms || loadingButtonPmsExportText !== 'policy-web-all'" src="./assets/image/pmsexport.svg" alt="Export" (click)="exportPmsRecord('policy-web', 'all')">
+                          <!-- Show the spinner when loading -->
+                          <i title="Please Wait..." *ngIf="isLoadingExportPms && loadingButtonPmsExportText === 'policy-web-all'" class="fa fa-refresh fa-spin"></i>
+                        </small>
+                      </span>
+                      <small class="name_info5">
+                        {{ TotalOnlineSr }}
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title"><span>Online
+                        Policy
+                        Percent</span>
+                      <small class="name_info5">
+                        {{ OnlineSrPercent }} %
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                *ngIf="(IsSales == 1 && Profile_Type != 'President')">
+                <div class="table_row">
+                  <div class="icon_re_cl">POS Activation</div>
+                  <div class="user_details_full">
+
+                    <div class="mo_email_title" *ngIf="(IsSales == 1 && Profile_Type != 'President')"><span>Total
+                        POS</span>
+                      <small class="name_info5">
+                        {{ TotalAgents }}
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title" *ngIf="(IsSales == 1 && Profile_Type != 'President')"><span>Total
+                        SPC</span>
+                      <small class="name_info5">
+                        {{ NewSPC }}
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title" *ngIf="(IsSales == 1 && Profile_Type != 'President')"><span>Active
+                        POS</span>
+                      <small class="name_info5">
+                        {{ ActiveAgents }}
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title" *ngIf="(IsSales == 1 && Profile_Type != 'President')"><span>Active
+                        SPC</span>
+                      <small class="name_info5">
+                        {{ NewSPC }}
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title" *ngIf="(IsSales == 1 && Profile_Type != 'President')">
+                      <span>Active Percent</span>
+                      <small class="name_info5">
+                        {{ ActiveAgentsPercent }} %
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                *ngIf="Incom_Pos_Acq?.length != 0  &&(IsSales == 1 && Profile_Type != 'President')">
+
+                <div class="table_row pos_acq">
+                  <div class="icon_re_cl">POS Acquisition</div>
+                  <div class="user_details_full" *ngFor="let row of Incom_Pos_Acq; let i=index;">
+
+                    <div class="mo_email_title">
+                      <span>Month</span>
+                      <small class="name_info5"> {{ row.MonthName }} </small>
+                    </div>
+
+                    <div class="mo_email_title">
+                      <span>Target</span>
+                      <small class="name_info5"> {{ row.TotalTarget }} </small>
+                    </div>
+
+                    <div class="mo_email_title">
+                      <span>New Pos</span>
+                      <small class="name_info5"> {{ row.NewPos }}
+                        <span style="color: #f00 !important;">({{ row.RemainingPos }})</span>
+                      </small>
+                    </div>
+
+                    <div class="mo_email_title">
+                      <span>Status</span>
+                      <small class="name_info5" *ngIf="row.Status == 'Pending'" style="color: #f00 !important;"> {{
+                        row.Status }} </small>
+                      <small class="name_info5" *ngIf="row.Status == 'Complete'"> {{ row.Status }} </small>
+                    </div>
+
+                    <div class="mo_email_title" *ngIf="row.MonthName != 'April'">
+                      <span>Carry Forward</span>
+                      <small class="name_info5" style="color: #f00 !important;"> {{ row.CarryForwardPos }} </small>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--======== INCENTIVE ACHIEVENT TAB END =======-->
+
+  <!--======== SALARY TRACK TAB START =======-->
+  <div id="menu2" class="tab-pane fade" *ngIf="Modal_Type == 'Salary'">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="tables_layout_design">
+          <div class="custom_table">
+
+            <!-- *ngIf="IsEdit == 'Yes' && Sequence > LastSalarySequence" -->
+
+            <div class="row" *ngIf="IsEdit == 'Yes' && Sequence > LastSalarySequence">
+              <form class="form" [formGroup]="SalaryRemarkForm" (ngSubmit)="SubmitSalaryRemarks()">
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                  <div class="input_group">
+                    <label>Salary *</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Remark"
+                      [data]="SalaryRemarksArray" formControlName="SalaryType" [(ngModel)]="current_salary_remark_arr"
+                      [settings]="dropdownSettingsingleselect1" (onSelect)="onItemSelect()"
+                      (onDeSelect)="onItemSelect()"> </ng-multiselect-dropdown>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" *ngIf="ShowDaysField == 'Yes'">
+                  <div class="input_group">
+                    <label>Type *</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="Select Type" [data]="PartialTypeArray"
+                      formControlName="PartialType" [(ngModel)]="PartialTypeSelArray"
+                      [settings]="dropdownSettingsingleselect1" (onSelect)="onItemSelect1($event)"
+                      (onDeSelect)="onItemSelect1($event)">
+                    </ng-multiselect-dropdown>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" *ngIf="ShowDayField == 'Yes'">
+                  <div class="input_group">
+                    <label>Working Days</label>
+                    <input type="text" placeholder="Total Days" formControlName="TotalDays" class="form-control"
+                      [(ngModel)]="salary_days">
+                      <div *ngIf="isSubmitted1 && SalaryRemarkForm.get('TotalDays').errors" class="ValidationError">
+                        <div *ngIf="SalaryRemarkForm.get('TotalDays')?.errors.required">Working Days is required!</div>
+                        <div class="text-danger" *ngIf="SalaryRemarkForm.get('TotalDays')?.errors?.pattern">
+                          Only whole numbers (without decimal) are allowed.
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" *ngIf="ShowSalaryField == 'Yes'">
+                  <div class="input_group">
+                    <label>Salary Amount</label>
+                    <input type="text" placeholder="Total Salary" formControlName="TotalSalary" class="form-control"
+                      [(ngModel)]="salary_amount">
+                      <div *ngIf="isSubmitted1 && SalaryRemarkForm.get('TotalSalary').errors" class="ValidationError">
+                        <div *ngIf="SalaryRemarkForm.get('TotalSalary')?.errors.required">Salary Amount is required!</div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                  <div class="input_group">
+                    <label>Remarks</label>
+                    <input type="text" class="form_control" formControlName="Remarks" [(ngModel)]="salary_comment"
+                      placeholder="Remarks">
+                    <div *ngIf="isSubmitted1 && SalaryRemarkForm.get('Remarks').errors" class="ValidationError">
+                      <div *ngIf="SalaryRemarkForm.get('Remarks')?.errors.required">  Remarks is required!</div>
+                    </div>
+                  </div>
+                 
+                </div>
+
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" *ngIf="ShowDaysField == 'Yes'"></div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                  <div class="d_flex flex_End" style="margin-top: 28px;">
+                    <button type="submit" class="btn btn-success" [disabled]="SubmitButtonDisabled">Submit</button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+            <div class="row">
+
+              <div *ngIf="dataAr?.length > 0">
+
+                <div class="salaryStatus">
+                  <div [ngClass]="salary_Paid_Status == '1' ? 'paidSalaryStatus' : 'UnpaidSalaryStatus'">
+                    Salary Credited Status : <span>{{ salary_Paid_Status == '1' ? 'Paid' : 'Unpaid' }}</span>
+                  </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngFor="let row of dataAr; let i=index;">
+                  <div class="table_row" style="margin-top: 35px;">
+                    <div class="icon_re_cl1" *ngIf="i == 0">Last Salary Remarks</div>
+                    <div class="icon_re_cl" *ngIf="i != 0">Salary Remarks Track</div>
+                    <div class="user_details_full">
+
+                      <div class="mo_email_title"><span>Salary Remarks</span>
+
+                        <small class="name_info1"
+                          *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'Credited'">Credited</small>
+                        <small class="name_info1"
+                          *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'Full'">Full</small>
+                        <small class="name_info1"
+                          *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'Partial'">Partial</small>
+                        <small class="name_info1"
+                          *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'None'">Null</small>
+                        <small class="name_info1"
+                          *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'Hold'">Hold</small>
+
+                        <span *ngIf="row.SalaryRemarks == 'Partial' && row.DaysCount != '0'"> {{ row.DaysCount }}
+                          Days</span>
+                        <span *ngIf="row.SalaryRemarks != '' && row.TotalSalary != '0'">Rs. {{ row.TotalSalary }}
+                        </span>
+
+                      </div>
+
+                      <div class="mo_email_title"><span>Updated By</span>
+                        <small class="name_info5">{{ row.SalaryUpdatedBy }}</small>
+                      </div>
+
+                      <div class="mo_email_title"><span>Date</span>
+                        <small class="name_info1">{{ row.UpdateDate }}</small>
+                      </div>
+                      <div class="mo_email_title" style="width: 100%;">
+                        <!-- <span>Target</span> -->
+                        <small class="name_info1"><b>Remarks :-</b>{{ row.Remarks }}</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="dataAr?.length == 0">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="no_data_found">
+                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                    <small>Salary not updated !</small>
+                  </div>
+
+                  <!-- <div class="table_row" style="margin-top: 35px;">
+                    <div class="icon_re_cl1">Salary Remarks</div>
+                    <div class="user_details_full">
+                      No Data available!
+                    </div>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--======== SALARY TRACK TAB END =======-->
+
+  <!--======== INCENTIVE TERMS AND CONDITIONS TAB START ========-->
+  <div id="menu3" class="tab-pane fade" *ngIf="IsSales == 1">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="tables_layout_design">
+          <div class="custom_table">
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="table_row">
+                  <div class="icon_re_cl">Target Achievement</div>
+                  <div class="user_details_full">
+                    <table class="table" style="display: table !important;" *ngIf="Profile_Type != 'President'">
+
+                      <tr>
+                        <th style="background: #bacd922e;padding: 10px 0;color: #789143;font-size: 13px;">Achievement
+                        </th>
+                        <th style="background: #bacd922e;padding: 10px 0;color: #789143;font-size: 13px;">POSP Target
+                        </th>
+                        <th style="background: #bacd922e;padding: 10px 0;color: #789143;font-size: 13px;">Reward</th>
+                      </tr>
+                      <ng-container *ngIf="RewardCriteriaAr?.length > 0">
+                        <tr *ngFor="let row of RewardCriteriaAr; let i=index;">
+                          <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">
+                            {{ row.achievement_percent }}</td>
+                          <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">
+                            {{ row.posp_target }}
+                          </td>
+                          <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">
+                            {{ row.reward_percent }}</td>
+                        </tr>
+                      </ng-container>
+
+                    </table>
+
+                    <table class="table" style="display: table !important;" *ngIf="Profile_Type == 'President'">
+
+                      <tr>
+                        <th style="background: #bacd922e;padding: 10px 0;color: #789143;font-size: 13px;">Achievement
+                          (System Revenue)
+                        </th>
+                        <th style="background: #bacd922e;padding: 10px 0;color: #789143;font-size: 13px;">Reward (Of
+                          Total Revenue) </th>
+                      </tr>
+
+                      <tr>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">1.5X</td>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">5 %</td>
+                      </tr>
+
+                      <tr>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">1.75X</td>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">7.5 %</td>
+                      </tr>
+
+                      <tr>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">2X</td>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">10 %</td>
+                      </tr>
+
+                      <tr>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">2.5X</td>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">12.5 %</td>
+                      </tr>
+
+                      <tr>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">3X</td>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">15 %</td>
+                      </tr>
+
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="Profile_Type == 'President'">
+                <div class="table_row">
+                  <div class="icon_re_cl">Terms & Conditions</div>
+                  <div class="user_details_full">
+                    <ul>
+                      <li>Any negative entries will be treated as zero.</li>
+                      <li>The scheme operates on a monthly basis.</li>
+                      <li>Revenue calculation will encompass all verticals. For instance, if a president
+                        oversees two verticals, the total cost of those two verticals will be considered during
+                        calculation.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="Profile_Type != 'President'">
+                <div class="table_row">
+                  <div class="icon_re_cl">Terms & Conditions</div>
+                  <div class="user_details_full">
+                    <ul>
+                      <li>Instances of policy cancellation and dishonored cheques will be excluded, and
+                        premiums will be adjusted accordingly for calculation.</li>
+                      <li>Total business volume will be factored into incentive calculations as per
+                        weightage premium mentioned in the profile target calculation. </li>
+                      <li>Only premium from booked cases will be included in the targeted premium
+                        calculation.</li>
+                      <li>Targets will be assessed on a monthly basis.</li>
+                      <li>Gratuity, Single Premium, and ULIP business premium will be included in
+                        base target calculation but it will contribute 10% weightage for incentive calculations.</li>
+                      <li>GTL, GPA and GMC policies will be included in base target calculation but it will
+                        contribute 50% weightage for incentive calculations.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="Profile_Type != 'President'">
+                <div class="table_row">
+                  <div class="icon_re_cl">POS Acquisition</div>
+                  <div class="user_details_full">
+                    <ul>
+                      <li>The minimum POSP's acquisition required to be achieved as per the above mentioned slab.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="Profile_Type != 'President'">
+                <div class="table_row">
+                  <div class="icon_re_cl">POS Activation</div>
+                  <div class="user_details_full">
+                    <ul>
+                      <li>A minimum of 25% of all mapped POSP's must be activated with a premium of at least Rs. 5000/-.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--======== INCENTIVE TERMS AND CONDITIONS TAB END ========-->
+
+  <!--======== INCENTIVE TERMS AND CONDITIONS TAB START ========-->
+  <div id="menu4" class="tab-pane fade"
+    *ngIf="IsSales == 1 && (Profile_Type == 'President' || Profile_Type == 'HOD' || Profile_Type == 'NH' || Profile_Type == 'ZH' || Profile_Type == 'RH' || Profile_Type == 'CH' || Profile_Type == 'BCH')">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="tables_layout_design">
+          <div class="custom_table">
+            <div class="row">
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="table_row">
+                  <div class="icon_re_cl">{{Profile_Type}} - As per profile it should be</div>
+                  <div class="user_details_full">
+                    <table class="table" style="display: table !important;">
+
+                      <tr>
+                        <th style="background: #bacd922e;padding: 10px 0;color: #789143;font-size: 13px;">Team
+                        </th>
+                        <th style="background: #bacd922e;padding: 10px 0;color: #789143;font-size: 13px;">Team Member
+                        </th>
+                        <th style="background: #bacd922e;padding: 10px 0;color: #789143;font-size: 13px;">Target
+                        </th>
+                      </tr>
+
+                      <tr>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">
+                          {{ ProfileTarget.team }}</td>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">
+                          {{ ProfileTarget.team_member }}
+                        </td>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">
+                          {{ ProfileTarget.complete_team_target }}</td>
+                      </tr>
+
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="table_row">
+                  <div class="icon_re_cl">Actually what i have </div>
+                  <div class="user_details_full">
+                    <table class="table" style="display: table !important;">
+
+                      <tr>
+                        <th style="background: #bacd922e;padding: 10px 0;color: #789143;font-size: 13px;">Team
+                        </th>
+                        <th style="background: #bacd922e;padding: 10px 0;color: #789143;font-size: 13px;">Team Member
+                        </th>
+                        <th style="background: #bacd922e;padding: 10px 0;color: #789143;font-size: 13px;">Target
+                        </th>
+                      </tr>
+
+                      <tr>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">
+                          {{ ActualTarget.team }}</td>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">
+                          {{ ActualTarget.team_member }}
+                        </td>
+                        <td style="font-size: 13px;color: #111;font-weight: 600;padding: 5px 0;">
+                          {{ ActualTarget.complete_team_target }}</td>
+                      </tr>
+
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--======== INCENTIVE TERMS AND CONDITIONS TAB END ========-->
+
+
+  <div class="popupheader" *ngIf="PreviewButtonShow || NextButtonShow">
+    <button class="leftbtnchange" (click)="onPrevious()" [disabled]="!PreviewButtonShow"><i
+        class="fa fa-chevron-left"></i></button>
+    <button class="rightbtnchange" (click)="onNext()" [disabled]="!NextButtonShow"><i
+        class="fa fa-chevron-right"></i></button>
+  </div>
+</div>

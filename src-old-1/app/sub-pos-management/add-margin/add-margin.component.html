@@ -1,0 +1,41 @@
+
+    <div class="modal-content">
+            <div class="modal-header">
+              <div *ngIf="this.marginType == 'Add'" class="modal-title">Add Margin</div>
+              <div *ngIf="this.marginType == 'Edit'" class="modal-title">Update Margin</div>
+              <button  class="close closeModelButton" (click)="CloseModel()" type="button">×</button>
+            </div>
+        
+            
+        
+  <div class="modal-body">
+    <form (ngSubmit)="submit()" [formGroup]="AddUrl" >
+      
+ 
+          <div class="form-group">
+            <label for="state">Margin</label>
+            <input type="number" class="form-control" formControlName="margin">
+            <div *ngIf="isSubmitted && formControls.margin.errors" class="ValidationError">
+              <div *ngIf="formControls.margin.errors.required">Please enter margin!</div>
+            </div>
+          </div>
+
+
+        <div class="modal-ftr">
+            <button type="submit" *ngIf="this.marginType == 'Add' " 
+              class="btn pull-right btn-primary">Submit</button>
+              <button type="submit" *ngIf="this.marginType == 'Edit' " 
+              class="btn pull-right btn-primary">Update</button>
+              <button type="submit" *ngIf="this.marginType == 'Edit' " 
+              class="btn pull-right btn-danger">Remove Margin</button>
+
+            <!-- <button type="submit" *ngIf="this.type == 'Edit' " style="margin-left: 5px; margin-right: -10px;"
+              class="btn pull-right btn-primary">Update</button> -->
+            <!-- <button class="btn pull-right btn-danger" (click)="CloseModel()" type="button">Close</button> -->
+   
+        </div>
+  </form>
+  </div>
+          
+    </div>
+    

@@ -1,0 +1,49 @@
+<table class="table table-bordered">
+  <!-- <thead>
+  <tr>
+      <th colspan="5" class="coustom-th-td"><b></b></th>
+  </tr>
+  </thead> -->
+
+  <thead>
+    <tr class="">
+      <td colspan="5" align="center">
+        <b>Endorsement Details</b>
+
+        <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+      </td>
+    </tr>
+
+
+
+  </thead>
+
+  <tbody *ngFor="let data of requestData">
+
+        <!-- <td  align="center">
+          <b>{{data.Endorsement}}</b>
+        </td> -->
+        <tr class="">
+          <td colspan="5" align="center">
+            <b>{{data.Endorsement}}</b>
+
+            <button  type="button" style="float: right;" (click)="ViewDocument(data.EndorsementCopy)" href="javascript:void(0)" class="fa fa-download">&times;</button>
+          </td>
+        </tr>
+
+
+    <tr class="ValueTD">
+      <td>Detail Type</td>
+      <td>Previous Value</td>
+      <td>New Value</td>
+    </tr>
+
+
+    <tr *ngFor="let data1 of data.RequestData">
+      <td>{{data1.Col_Name}}</td>
+      <td>{{data1.Old_Value | uppercase}}</td>
+      <td>{{data1.Col_Value | uppercase}}</td>
+    </tr>
+
+  </tbody>
+</table>

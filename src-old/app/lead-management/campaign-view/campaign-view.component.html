@@ -1,0 +1,492 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+                            <div>My Campaign
+                                <button class="btn btn-secondary"  *ngIf="url_segment == 'campaign' " data-toggle="modal" data-target="#exampleModal" style="float:right; color:#000; padding:2px; margin-bottom:2px;">
+                                    Campaign Request<i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+
+                        <!-- <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne"> -->
+                            <div class="panelbody">
+                              <form [formGroup]="RequestData" (ngSubmit)="SearchData()">
+                                <div class="row">
+                                  <div class="col-sm-3" *ngIf="this.url_segment == 'campaign-manager'">
+                                        <label for="Request_type">Request Type</label>
+                                        <ng-multiselect-dropdown   class="form-control" [data]="Request_Type" formControlName="Request_type"
+                                        [settings]="dropdownSettingsType" [(ngModel)]="Default_Request">
+                                        </ng-multiselect-dropdown>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <label for="Request_type">Search</label>
+                                    <input type="text" class="form-control" formControlName="SearchVal">    
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <input type="submit" class="btn btninfo1" value="Search"> &nbsp;&nbsp;
+                                    <button (click)="ClearSearch()" type="button" class="btn btndanger" value="Reset"> <i
+                                        class="fa fa-close"> </i> Reset</button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                        <!-- </div> -->
+                        <hr>
+
+                        <div class="box box-default"
+                            style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                            <div class="custom_table tables_layout_design">
+                                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+
+                                <!-- ======= Refer Table  =========-->
+                                <ul class="responsive-table">
+                                    <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+                                        <p class="life_status_label">
+                                            <span>
+                                                <a *ngIf="row.status == 0">
+                                                    <span class="label label-warning">Pending for Campaign Manager</span>
+                                                </a>
+                                                <a *ngIf="row.status == '1'">
+                                                    <span class="label label-success">Live</span>
+                                                </a>
+                                                <a *ngIf="row.status == '2'">
+                                                    <span class="label label-primary">Completed</span>
+                                                </a>
+                                                <a *ngIf="row.status == '3'">
+                                                    <span class="label label-danger">Reject</span>
+                                                </a>
+                                            </span>
+                                        </p>
+                                        <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                                          <div class="agents_data agents_data1">
+                                            <div class="icon_re_cl">{{row.SrNo}}</div>
+                                            <div class="agent_name_mobile">
+                                              <div class="agent_data">
+                                                <div>Campaign Name </div>
+                                                <strong class="fs_18">{{row.campaign_name}}</strong>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="agents_data agents_data2">
+                                            <div class="agent_name_mobile">
+                                              <div class="agent_data">
+                                                <div>Requester Name</div>
+                                                <strong class="fs_18">{{row.requesterName}} - {{row.requesterCode}}</strong>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="agents_data agents_data3">
+                                            <div class="agent_name_mobile">
+                                              <div class="agent_data">
+                                                <div>Campaign For</div><strong class="fs_18">{{row.campaign_for}}</strong>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="last_row_div">
+                                          <div class="d_flex custon-234">
+                                            <div class="label_chips finance_lob" *ngIf="row.state != '' && row.state != null">
+                                              <span>State : {{row.state}}</span>
+                                            </div>
+                                            <div class="label_chips non_motor_lob" *ngIf="row.city != '' && row.city != null">
+                                              <span>City : {{ row.city}}</span>
+                                            </div>
+                                          </div>
+                                        </div> 
+                                        <div class="last_row">
+                                          <div class="d_flex effective_date">
+                                            <div class="date_text" *ngIf="row.requester_remark != '' && row.requester_remark != null">
+                                              <span class="fs_12">Requester Remark </span>
+                                              <span class="fs_12">{{ row.requester_remark }}</span>
+                                            </div>
+                                          </div>
+                                          <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                            <button class="btnbg1" data-toggle="modal" data-target="#DetailsModal" (click)="Details(row.Id)" >Details</button> 
+                                            <button class="btnbg1active" data-toggle="modal" data-target="#exampleModal" (click)="GetId(row.Id, 'approve')" *ngIf="row.manager_id != '' && this.url_segment == 'campaign-manager' && row.status == '0'  ">
+                                                Approve</button>                                        
+                                            <button class="btnbg3resign" data-toggle="modal" data-target="#rejectModal" (click)="GetId(row.Id,'reject')" *ngIf="row.manager_id != '' && this.url_segment == 'campaign-manager'  && row.status == '0' ">
+                                                Reject</button>                                           
+                                            <button class="btnbg1active" data-toggle="modal" data-target="#completeModal" (click)="GetId(row.Id,'complete')" *ngIf="row.manager_id != '' && this.url_segment == 'campaign-manager'  && row.status == '1'  ">
+                                                Complete</button>                                        
+                                            <button type="button" class="btnbg1active" (click)="Accept(row.Id)" *ngIf="Default_Request[0].Id == 'Raise Request' && this.url_segment == 'campaign-manager' ">Accept</button>                                           
+                                          </div>
+                                        </div>
+                                      </li>                                  
+                                </ul>
+
+                                <!--======= Refer Table END ========= -->
+
+                                <div class="row" *ngIf="dataAr?.length == 0">
+                                    <div class="col-md-12">
+                                        <div class="no_data_found">
+                                            <span><img src="assets/image/no_data_banner.jpg"></span>
+                                            <small>No data available !</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ------------------Campaign Request model-------------------->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" *ngIf="this.url_segment == 'campaign'"><b>Campaign Request</b></h5>
+          <h5 class="modal-title" id="exampleModalLabel" *ngIf="this.url_segment == 'campaign-manager' && this.type == 'approve'"><b>Approve Campaign Request</b></h5>
+          <h5 class="modal-title" id="exampleModalLabel" *ngIf="this.url_segment == 'campaign-manager' && this.type == 'edit'"><b>Edit Campaign Request</b></h5>
+          <button id="CloseModel1" type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="false">&times;</span>
+          </button> 
+        </div>
+        <div class="modal-body">
+          <form class="form" (ngSubmit)="CampaignSubmit()" [formGroup]="CampaignForm">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <label for="city">Campaign Name</label>
+                        <input type="text" class="form-control" formControlName="campaignname">
+                      <span *ngIf="isSubmitted && FormC.remark.errors" class="ValidationError">
+                      <span *ngIf="FormC.remark.errors.required">remark required!</span>
+                    </span>
+                </div>
+
+              <div class="col-md-6">
+                <label for="campaign">Campaign For</label>
+                <ng-multiselect-dropdown class="form-control"
+                    placeholder="--Select--" [data]="CampaignFor" formControlName="campaign"
+                    [settings]="dropdownSettingsType" [(ngModel)]="CampaignVal" (onSelect)="OnCampaignSelect($event)">
+                </ng-multiselect-dropdown>
+                  <span *ngIf="isSubmitted && FormC.campaign.errors" class="ValidationError">
+                  <span *ngIf="FormC.campaign.errors.required">Please select campaign!</span>
+                </span>
+              </div>
+              
+              <div *ngIf="ShowProductInput == 1" class="col-md-6">
+                <label for="campaign">Select Product</label>
+                <ng-multiselect-dropdown class="form-control"
+                    placeholder="--Select--" [data]="ProductList" formControlName="product"
+                    [settings]="dropdownSettingsType"  [(ngModel)]="Lob" >
+                </ng-multiselect-dropdown>
+                  <span *ngIf="isSubmitted && FormC.product.errors" class="ValidationError">
+                  <span *ngIf="FormC.product.errors.required">Please select product!</span>
+                </span>
+              </div>
+
+              <div *ngIf="ShowProductInput == 1" class="col-md-6">
+                <label for="campaign">Sub Product</label>
+                <input type="text" class="form-control" formControlName="subproduct">
+                  <span *ngIf="isSubmitted && FormC.product.errors" class="ValidationError">
+                  <span *ngIf="FormC.product.errors.required">Please select product!</span>
+                </span>
+              </div>
+
+
+              <div class="col-md-6">
+                <label for="state">State</label>
+                <ng-multiselect-dropdown name="state" class="form-control" placeholder="--Select--"
+                    [data]="State_Ar" formControlName="state" [settings]="dropdownSettingsMultiselect" 
+                    [(ngModel)]="stateVal" (onSelect)="onItemSelect($event,'State')"
+                    (onSelectAll)="onSelectAll($event)"
+                    (onDeSelect)="onItemDeSelect($event,'State')" >
+                </ng-multiselect-dropdown>
+                  <span *ngIf="isSubmitted && FormC.state.errors" class="ValidationError">
+                  <span *ngIf="FormC.state.errors.required">state required!</span>
+                </span>
+              </div>
+
+
+              <div class="col-md-6">
+                <label for="city">City</label>
+                <ng-multiselect-dropdown class="form-control"
+                    placeholder="--Select--" [data]="City_Ar" formControlName="city"
+                    [settings]="dropdownSettingsMultiselect"  [(ngModel)]="cityVal" >
+                </ng-multiselect-dropdown>
+                  <span *ngIf="isSubmitted && FormC.city.errors" class="ValidationError">
+                  <span *ngIf="FormC.city.errors.required">city required!</span>
+                </span>
+              </div>
+
+
+              <div class="col-md-6" *ngIf="this.url_segment == 'campaign-manager' ">
+                <label for="city">Amount Per Day</label>
+                    <input type="text" class="form-control" formControlName="amountperday">
+                  <span *ngIf="isSubmitted && FormC.amountperday.errors" class="ValidationError">
+                  <span *ngIf="FormC.amountperday.errors.required">remark required!</span>
+                </span>
+              </div>
+
+
+              <div class="col-md-6" *ngIf="this.url_segment == 'campaign-manager' ">
+                <label for="city">Start Date</label>
+                    <input type="date" class="form-control" formControlName="startdate">
+                  <span *ngIf="isSubmitted && FormC.startdate.errors" class="ValidationError">
+                  <span *ngIf="FormC.startdate.errors.required">remark required!</span>
+                </span>
+              </div>
+
+
+              <div class="col-md-6" *ngIf="this.url_segment == 'campaign-manager' ">
+                <label for="city">Start Time</label>
+                    <input type="time" class="form-control" formControlName="starttime">
+                  <span *ngIf="isSubmitted && FormC.starttime.errors" class="ValidationError">
+                  <span *ngIf="FormC.starttime.errors.required">remark required!</span>
+                </span>
+              </div>
+
+
+
+              <div class="col-md-6" *ngIf="this.url_segment == 'campaign-manager' ">
+                <label for="city">Utm Source</label>
+                <input type="text" class="form-control" formControlName="utm_source">
+
+                  <span *ngIf="isSubmitted && FormC.utm_source.errors" class="ValidationError">
+                  <span *ngIf="FormC.utm_source.errors.required">remark required!</span>
+                </span>
+              </div>
+
+              <div class="col-md-6">
+                <label for="city">Remark</label>
+                    <textarea class="form-control" formControlName="remark"></textarea>
+                  <span *ngIf="isSubmitted && FormC.remark.errors" class="ValidationError">
+                  <span *ngIf="FormC.remark.errors.required">remark required!</span>
+                </span>
+              </div>
+
+
+              <!-- <div class="col-md-6"  *ngIf="this.url_segment == 'campaign-manager' ">
+                <label for="campaign">Status</label>
+                <ng-multiselect-dropdown class="form-control"
+                    placeholder="--Select--" [data]="StatusVal" formControlName="status"
+                    [settings]="dropdownSettingsType" >
+                </ng-multiselect-dropdown>
+                  <span *ngIf="isSubmitted && FormC.status.errors" class="ValidationError">
+                  <span *ngIf="FormC.status.errors.required">Please select campaign!</span>
+                </span>
+              </div> -->
+
+
+           </div>
+           <div class="modal-footer">
+            <button type="button" class="btn btn-danger" style="padding:3px;" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+
+          </form>
+        
+        </div>
+  
+      </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="rejectModalLabel"><b>Reject Campaign Request</b></h5>
+          <button id="RejectModelClose" type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="false">&times;</span>
+          </button> 
+        </div>
+        <div class="modal-body">
+            
+          <form class="form" (ngSubmit)="RejectSubmit()" [formGroup]="RejectForm">
+            <div class="row">
+
+              <div class="col-md-6">
+                <label for="city">Remark</label>
+                    <textarea class="form-control" formControlName="rejectremark"></textarea>
+                  <span *ngIf="isSubmitted && FormC1.rejectremark.errors" class="ValidationError">
+                  <span *ngIf="FormC1.rejectremark.errors.required">remark required!</span>
+                </span>
+              </div>
+           </div>
+
+           
+           <div class="modal-footer">
+            <button type="button" class="btn btn-danger" style="padding:3px;" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+          </form>
+        
+        </div>
+  
+      </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="completeModal" tabindex="-1" role="dialog" aria-labelledby="completeModalLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="completeModalLabel"><b>Complete Campaign Request</b></h5>
+          <button id="CompleteCloseModel" type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="false">&times;</span>
+          </button> 
+        </div>
+        <div class="modal-body">
+          <form class="form" (ngSubmit)="CompleteSubmit()" [formGroup]="CompleteForm">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="city">Total Amount Spent</label>
+                    <input type="text" class="form-control" formControlName="totalamountspent">
+                  <span *ngIf="isSubmitted && FormC2.totalamountspent.errors" class="ValidationError">
+                  <span *ngIf="FormC2.totalamountspent.errors.required">remark required!</span>
+                </span>
+              </div>
+              <div class="col-md-6">
+                <label for="city">Campaign End Date</label>
+                    <input type="date" class="form-control" formControlName="campaignendate">
+                  <span *ngIf="isSubmitted && FormC2.campaignendate.errors" class="ValidationError">
+                  <span *ngIf="FormC2.campaignendate.errors.required">remark required!</span>
+                </span>
+              </div>
+           </div>
+
+
+           <div class="row">
+            <div class="col-md-6">
+              <label for="city">Total leads</label>
+                  <input type="text" class="form-control" formControlName="totalleads">
+                <span *ngIf="isSubmitted && FormC2.totalleads.errors" class="ValidationError">
+                <span *ngIf="FormC2.totalleads.errors.required">remark required!</span>
+              </span>
+            </div>
+            <div class="col-md-6">
+              <label for="city">Total Converted Leads</label>
+                  <input type="text" class="form-control" formControlName="totalconvertedleads">
+                <span *ngIf="isSubmitted && FormC2.totalconvertedleads.errors" class="ValidationError">
+                <span *ngIf="FormC2.totalconvertedleads.errors.required">remark required!</span>
+              </span>
+            </div>
+           </div>
+
+           <div class="row">
+            <div class="col-md-6">
+              <label for="city">Remark</label>
+                  <textarea class="form-control" formControlName="completeremark"></textarea>
+                <span *ngIf="isSubmitted && FormC2.completeremark.errors" class="ValidationError">
+                <span *ngIf="FormC2.completeremark.errors.required">remark required!</span>
+              </span>
+            </div>
+         </div>
+
+           <div class="modal-footer">
+            <button type="button" class="btn btn-danger" style="padding:3px;" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="DetailsModal" tabindex="-1" role="dialog" aria-labelledby="DetailsModalLabel" aria-hidden="false">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="DetailsModalLabel"><b>Campaign Details</b></h5>
+          <button id="CloseModel" type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="false">&times;</span>
+          </button> 
+        </div>
+
+
+        <div class="modal-body">
+            
+            <table>
+                <tbody>
+                    <tr class="ValueTD">
+                        <td colspan="5">Details</td>
+                    </tr>
+                  <tr>
+                    <td *ngIf="allDetails.campaign_name != '' " colspan="2"><b>Campaign Name</b>: {{allDetails.campaign_name}}</td>
+                    <td *ngIf="allDetails.campaignfor != '' " colspan="2"><b>Campaign For </b>: {{allDetails.campaignfor}}</td>
+                    <td *ngIf="allDetails.lob != '' " colspan="1"><b>Product </b>: {{allDetails.lob}}</td>
+                  </tr>
+                  <tr>
+                    <td *ngIf="allDetails.sub_product != '' " colspan="1"><b>Sub Product </b>: {{allDetails.sub_product}}</td>
+                    <td *ngIf="allDetails.stateName != '' " colspan="2"><b>State</b>: {{allDetails.stateName}}</td>
+                    <td *ngIf="allDetails.cityName != '' " colspan="2"><b>City </b>: {{allDetails.cityName}}</td>
+                  </tr>
+                  <tr>
+                    <td *ngIf="allDetails.start_date != '' " colspan="2"><b>Start Date</b>: {{allDetails.start_date}}</td>
+                    <td *ngIf="allDetails.start_time != '' " colspan="2"><b>Start Time </b>: {{allDetails.start_time}}</td>
+                    <td *ngIf="allDetails.amount_per_day != '' " colspan="2"><b>Amount Per Day</b>: {{allDetails.amount_per_day}}</td>
+                  </tr>
+              
+                  <tr>
+                    <td *ngIf="allDetails.total_amount != '' " colspan="2"><b>Total Amount </b>: {{allDetails.total_amount}}</td>
+                    <td *ngIf="allDetails.end_date != '' " colspan="2"><b>End Date </b>: {{allDetails.end_date}}</td>
+                    <td *ngIf="allDetails.total_leads != '' " colspan="2"><b>Total Leads </b>: {{allDetails.total_leads}}</td>
+                  </tr>
+
+                  <tr  *ngIf="allDetails.total_converted_leads != '' ">
+                    <td colspan="2"><b>Total Converted Leads </b>: {{allDetails.total_converted_leads}}</td>
+                    <td *ngIf="allDetails.add_stamp != '' " colspan="2"><b>Add Stamp</b>: {{allDetails.add_stamp}}</td>
+
+                  </tr>
+                </tbody>
+                
+                <tbody>
+                  <tr class="ValueTD">
+                    <td colspan="5">Remarks</td>
+                  </tr>
+                  <tr *ngIf="allDetails.requester_remark != '' ">
+                    <td colspan="5"><b>Requester Remark</b>: {{allDetails.requester_remark}}</td>
+                  </tr>
+                  <tr *ngIf="allDetails.reject_remark != '' ">
+                    <td colspan="5"><b>Reject Remark</b>: {{allDetails.reject_remark}}</td>
+                  </tr>
+                  <tr *ngIf="allDetails.complete_remark != '' ">
+                    <td colspan="5"><b>Complete Remark</b>: {{allDetails.complete_remark}}</td>
+                  </tr>
+                  <tr *ngIf="allDetails.approve_remark != '' ">
+                    <td colspan="5"><b>Approve Remark</b>: {{allDetails.approve_remark}}</td>
+                  </tr>
+                </tbody>
+
+
+
+                <tbody>
+                  <!-- <tr class="ValueTD">
+                    <td colspan="5">Remarks</td>
+                  </tr> -->
+                  <tr *ngIf="allDetails.utm_source != '' ">
+                    <td colspan="5"><b>UTM Source</b>: {{allDetails.utm_source}}</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+      </div>
+    </div>
+</div>

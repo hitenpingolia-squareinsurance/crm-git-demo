@@ -1,0 +1,59 @@
+<form class="form" [formGroup]="SalaryRemarkForm" (ngSubmit)="SubmitSalaryRemarks()">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="text-align: center;">Update Salary Remark
+          <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <label>Salary* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Remark" [data]="SalaryRemarksArray"
+                formControlName="SalaryType" [settings]="dropdownSettingsingleselect1"
+                (onSelect)="onItemSelect($event)"> </ng-multiselect-dropdown>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;" *ngIf="ShowDaysField == 'Yes'">
+            <div class="col-sm-6">
+              <label>Type* : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Type" [data]="PartialTypeArray"
+                formControlName="PartialType" [settings]="dropdownSettingsingleselect1"
+                (onSelect)="onItemSelect1($event)" (onDeSelect)="onItemSelect1($event)"> </ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-sm-6" *ngIf="ShowDayField == 'Yes'">
+              <label>Working Days : </label>
+              <input type="text" placeholder="Total Days" formControlName="TotalDays" class="form-control">
+            </div>
+
+            <div class="col-sm-6" *ngIf="ShowSalaryField == 'Yes'">
+              <label>Salary Amount : </label>
+              <input type="text" placeholder="Total Salary" formControlName="TotalSalary" class="form-control">
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <label>Remarks : </label>
+              <textarea placeholder="Enter Remarks" formControlName="Remarks" class="form-control"></textarea>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

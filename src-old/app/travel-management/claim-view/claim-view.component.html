@@ -1,0 +1,356 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+                            <div>Travel Claim</div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!hasAccess" class="error-message">
+                        <div class="container" style="text-align: center;">
+                            <img src="assets/Authorised.png" alt="">
+                        </div>
+                    </div>
+
+                    <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+
+                        <div
+                            *ngIf="this.url_segment == 'travel-desk' || this.url_segment == 'account-desk' || this.url_segment == 'claimTravel' || this.url_segment == 'claimHOD'|| this.url_segment == 'claimAccount'">
+                            <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                                <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                    data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                    aria-controls="collapseOne">
+                                    <a role="button" class="fa fa-filter"><span>Filters</span><i
+                                            class="fa fa-angle-down pull-right"></i></a>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="headingOne">
+                            <div class="panelbody">
+                                <form [formGroup]="RequestData" (ngSubmit)="SearchData()">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+
+                                            <ng-multiselect-dropdown class="form-control" [data]="Request_Type"
+                                                formControlName="Request_type" [settings]="dropdownSettingsType"
+                                                [(ngModel)]="Default_Request">
+                                            </ng-multiselect-dropdown>
+                                        </div>
+                                        <div class="col-sm-3">
+
+                                            <input type="text" class="form-control" placeholder="Search"
+                                                formControlName="SearchVal">
+                                        </div>
+                                        <div class="col-sm-3">
+
+                                            <input type="submit" class="btn btn-info" value="Search"> &nbsp;&nbsp;
+                                            <button (click)="ClearSearch()" type="button" class="btn btn-danger"
+                                                value="Reset"> <i class="fa fa-close"> </i> Reset</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+
+                        <hr>
+
+                        <div class="box box-default"
+                            style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                            <div class="custom_table tables_layout_design">
+                                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+
+                                <!-- ======= Refer Table  =========-->
+                                <ul class="responsive-table">
+                                    <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+
+                                        <p class="life_status_label">
+                                            <span>
+
+                                                <a>
+                                                    <span class="label label-warning"
+                                                        *ngIf="row.ClaimStatus == '0'">Pending for RM</span>
+                                                </a>
+                                                <a>
+                                                    <span class="label label-warning"
+                                                        *ngIf="row.ClaimStatus == '1'">Pending for HOD</span>
+                                                </a>
+                                                <a>
+                                                    <span class="label label-warning"
+                                                        *ngIf="row.ClaimStatus == '2'">Pending for Travel Desk</span>
+                                                </a>
+                                                <a>
+                                                    <span class="label label-warning"
+                                                        *ngIf="row.ClaimStatus == '3'">Pending for Account Desk</span>
+                                                </a>
+
+                                                <a>
+                                                    <span class="label label-danger"
+                                                        *ngIf="row.ClaimStatus == '5'">Rejected</span>
+                                                </a>
+                                                <a>
+                                                    <span class="label label-danger"
+                                                        *ngIf="row.ClaimStatus == '6'">Rejected</span>
+                                                </a>
+                                                <a>
+                                                    <span class="label label-danger"
+                                                        *ngIf="row.ClaimStatus == '7'">Rejected</span>
+                                                </a>
+                                                <a>
+                                                    <span class="label label-danger"
+                                                        *ngIf="row.ClaimStatus == '8'">Rejected</span>
+                                                </a>
+
+                                                <a>
+                                                    <span class="label label-warning"
+                                                        *ngIf="row.ClaimStatus == '9'">Sent-Back</span>
+                                                </a>
+                                                <a>
+                                                    <span class="label label-warning"
+                                                        *ngIf="row.ClaimStatus == '10'">Sent-Back</span>
+                                                </a>
+                                                <a>
+                                                    <span class="label label-warning"
+                                                        *ngIf="row.ClaimStatus == '11'">Sent-Back</span>
+                                                </a>
+                                                <a>
+                                                    <span class="label label-warning"
+                                                        *ngIf="row.ClaimStatus == '12'">Sent-Back</span>
+                                                </a>
+                                                <a>
+                                                    <span class="label label-success" *ngIf="row.ClaimStatus == '4'">
+                                                        Approved
+                                                    </span>
+                                                </a>
+
+                                            </span>
+                                        </p>
+
+                                        <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                                            <div class="agents_data agents_data1">
+                                                <div class="icon_re_cl">{{ row.sr_no }}</div>
+                                                <div class="agent_name_mobile">
+                                                    <div class="agent_data">
+                                                        <strong class="fs_18 text-bold">{{row.employee_name}} -
+                                                            {{row.employee_id}}</strong>
+                                                    </div>
+                                                    <strong>{{row.City_start}} - {{row.City_end}}</strong>
+                                                </div>
+
+                                                <div class="agent_name_mobile" style="margin-left: 100px;">
+                                                    <div class="agent_data">
+                                                        <strong>Purpose of visit - {{row.purpose_of_visit}}</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="agent_name_mobile">
+                                                <div class="agent_data">
+                                                    <strong>Travel Start Date - {{row.travel_start_date}}</strong>
+                                                </div>
+                                                <div class="agent_data">
+                                                    <strong>Travel End Date - {{row.travel_end_date }}</strong>
+                                                </div>
+                                            </div>
+
+                                            <div class="agents_data agents_data3">
+                                                <div class="agent_name_mobile">
+
+                                                    <div class="agent_data"
+                                                        *ngIf="Default_Request[0].Id == 'Raise Request' && (this.url_segment == 'travel-desk' || this.url_segment == 'account-desk' ||  url_segment == 'claimTravel' || url_segment == 'claimAccount' || url_segment == 'claimHOD')">
+                                                        <button type="button" class="btn btn-primary"
+                                                            (click)="Accept(row.id , 'Accepted')">
+                                                            Accept
+                                                        </button>
+                                                    </div>
+                                                    <!-- *ngIf="(row.ClaimStatus != 0 && url_segment == 'claimManager') ||(row.ClaimStatus != 1 && url_segment == 'claimHOD') || (row.ClaimStatus != 2 && url_segment == 'claimTravel') || ( row.ClaimStatus != 3 && url_segment == 'claimAccount')"> -->
+
+                                                    <div class="agent_data"
+                                                        *ngIf="row.ClaimStatus != null && (Default_Request[0].Id == 'Raise Request' && url_segment != 'claimManager') || (Default_Request[0].Id == 'My Request' && row.ClaimStatus != 1 && url_segment == 'claimHOD') || (Default_Request[0].Id == 'My Request' && row.ClaimStatus != 2 && url_segment == 'claimTravel')  || (Default_Request[0].Id == 'My Request' && row.ClaimStatus != 3 && url_segment == 'claimAccount')  || (row.ClaimStatus != '0' && url_segment == 'claimManager')">
+                                                        <button type="button" class="btn btn-info"
+                                                            (click)="GetRequest_Details(row.id , 'Claim' , 'View')">
+                                                            View Claim
+                                                        </button>
+                                                    </div>
+
+                                                    <!-- <div class="agent_data"
+                                                        *ngIf="(row.ClaimStatus == 0 && url_segment == 'claimManager') || (( row.ClaimStatus == 1 && Default_Request[0].Id != 'Raise Request') && url_segment == 'claimHOD' && row.HOD_ClaimManager_Id != null) || (row.ClaimStatus == 2 && url_segment == 'claimTravel' && row.Travel_ClaimManager_Id != null) || (row.ClaimStatus == 3 && url_segment == 'claimAccount' && row.Travel_AccountManager_Id != null)">
+                                                        <button type="button" class="btn btn-success"
+                                                            (click)="GetRequest_Details(row.id , 'Claim' , 'Approve')">
+                                                            Approve
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="agent_data"
+                                                    *ngIf="(row.ClaimStatus == 0 && url_segment == 'claimManager') || (( row.ClaimStatus == 1 && Default_Request[0].Id != 'Raise Request') && url_segment == 'claimHOD' && row.HOD_ClaimManager_Id != null) || (row.ClaimStatus == 2 && url_segment == 'claimTravel' && row.Travel_ClaimManager_Id != null) || (row.ClaimStatus == 3 && url_segment == 'claimAccount' && row.Travel_AccountManager_Id != null)">
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                            data-target="#claimModal"
+                                                            (click)="GetClaimStatus(row.id , 'Deny')">
+                                                            Deny
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="agent_data"
+                                                    *ngIf="(row.ClaimStatus == 0 && url_segment == 'claimManager') || (( row.ClaimStatus == 1 && Default_Request[0].Id != 'Raise Request') && url_segment == 'claimHOD' && row.HOD_ClaimManager_Id != null) || (row.ClaimStatus == 2 && url_segment == 'claimTravel' && row.Travel_ClaimManager_Id != null) || (row.ClaimStatus == 3 && url_segment == 'claimAccount' && row.Travel_AccountManager_Id != null)">
+                                                    <button type="button" class="btn btn-warning"
+                                                            data-toggle="modal" data-target="#claimModal"
+                                                            (click)="GetClaimStatus(row.id , 'Send Back')">
+                                                            Send Back
+                                                        </button>
+                                                    </div> -->
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="last_row_div">
+                                            <div class="d_flex custon-234">
+                                                <div class="label_chips finance_lob" style="width: auto;">
+                                                    <span>Request Id - {{row.travel_request_id}}</span>
+                                                </div>
+
+                                                <div class="label_chips non_motor_lob" style="width: auto;">
+                                                    <span>Reporting Manager -
+                                                        {{row.reporting_manager}}</span>&nbsp;&nbsp;
+                                                </div>
+
+                                                <div class="label_chips motor_lob" style="width: auto;">
+                                                    <span>Profile - {{row.profile}}</span>&nbsp;&nbsp;
+                                                </div>
+
+                                                <div class="label_chips" [ngClass]="{
+                                                    'label-warning': row.ClaimStatus == '0' || row.ClaimStatus == '1' || row.ClaimStatus == '2' || row.ClaimStatus == '3' || row.ClaimStatus == '9' || row.ClaimStatus == '10' || row.ClaimStatus == '11' || row.ClaimStatus == '12',
+                                                    'label-success': row.ClaimStatus == '4',
+                                                    'label-danger': row.ClaimStatus == '5' || row.ClaimStatus == '6' || row.ClaimStatus == '7' || row.ClaimStatus == '8'
+                                                }">
+                                                    <span style="color: #fff;">
+                                                        {{
+                                                        row.ClaimStatus == '0' ? 'Claim Status : Pending For Manager' :
+                                                        row.ClaimStatus == '1' ? 'Claim Status : Pending For HOD' :
+                                                        row.ClaimStatus == '2' ? 'Claim Status : Pending For Travel
+                                                        Desk' :
+                                                        row.ClaimStatus == '3' ? 'Claim Status : Pending For Account
+                                                        Desk' :
+                                                        row.ClaimStatus == '4' ? 'Claim Status : Approved' :
+                                                        (row.ClaimStatus == '9' || row.ClaimStatus == '10' ||
+                                                        row.ClaimStatus == '11' || row.ClaimStatus == '12') ? 'Claim
+                                                        Status : Sent-Back' :
+                                                        (row.ClaimStatus == '5' || row.ClaimStatus == '6' ||
+                                                        row.ClaimStatus == '7' || row.ClaimStatus == '8') ? 'Claim
+                                                        Status : Rejected' :
+                                                        ''
+                                                        }}
+                                                    </span>&nbsp;&nbsp;
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="last_row">
+                                            <div class="d_flex effective_date">
+                                                <div class="date_text">
+                                                    <div>
+                                                        <span class="fs_12">Remark : </span>
+                                                        <span class="fs_12">{{ row.remark }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                                <div style="padding:3px; margin-right:3px;"
+                                                    *ngIf="(row.ClaimStatus == 0 && url_segment == 'claimManager') || (( row.ClaimStatus == 1 && Default_Request[0].Id != 'Raise Request') && url_segment == 'claimHOD' && row.HOD_ClaimManager_Id != null) || (row.ClaimStatus == 2 && url_segment == 'claimTravel' && row.Travel_ClaimManager_Id != null) || (row.ClaimStatus == 3 && url_segment == 'claimAccount' && row.Travel_AccountManager_Id != null)">
+                                                    <button type="button" class="btn btn-success"
+                                                        (click)="GetRequest_Details(row.id , 'Claim' , 'Approve')">
+                                                        Approve
+                                                    </button>
+                                                </div>
+
+                                                <div style="padding:3px; margin-right:3px;"
+                                                    *ngIf="(row.ClaimStatus == 0 && url_segment == 'claimManager') || (( row.ClaimStatus == 1 && Default_Request[0].Id != 'Raise Request') && url_segment == 'claimHOD' && row.HOD_ClaimManager_Id != null) || (row.ClaimStatus == 2 && url_segment == 'claimTravel' && row.Travel_ClaimManager_Id != null) || (row.ClaimStatus == 3 && url_segment == 'claimAccount' && row.Travel_AccountManager_Id != null)">
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                        style="padding: 3px;" data-target="#claimModal"
+                                                        (click)="GetClaimStatus(row.id , 'Deny')">
+                                                        Deny
+                                                    </button>
+                                                </div>
+
+                                                <div style="padding:3px; margin-right:3px;"
+                                                    *ngIf="(row.ClaimStatus == 0 && url_segment == 'claimManager') || (( row.ClaimStatus == 1 && Default_Request[0].Id != 'Raise Request') && url_segment == 'claimHOD' && row.HOD_ClaimManager_Id != null) || (row.ClaimStatus == 2 && url_segment == 'claimTravel' && row.Travel_ClaimManager_Id != null) || (row.ClaimStatus == 3 && url_segment == 'claimAccount' && row.Travel_AccountManager_Id != null)">
+                                                    <button type="button" class="btn btn-warning" data-toggle="modal"
+                                                        data-target="#claimModal"
+                                                        (click)="GetClaimStatus(row.id , 'Send Back')">
+                                                        Send Back
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                </ul>
+                                <!--======= Refer Table END ========= -->
+
+                                <div class="row" *ngIf="dataAr?.length == 0">
+                                    <div class="col-md-12">
+                                        <div class="no_data_found">
+                                            <span><img src="assets/image/no_data_banner.jpg"></span>
+                                            <small>No data available !</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- -----------------Deny/Send Back Modal------------------ -->
+
+<div class="modal fade" id="claimModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>{{this.claimType}}</b></h5>
+                <button id="CloseModelRemark" type="button" class="close closeModelButton" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" (ngSubmit)="claim_Form()" [formGroup]="ClaimForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="Remark">Remark</label>
+                            <textarea class="form-control" type="text" formControlName="Remark" name="Remark"
+                                id="Remark" placeholder="Enter Remark"></textarea>
+                            <span *ngIf="claimSubmit && FormClaim.Remark.errors" class="ValidationError">
+                                <span *ngIf="FormClaim.Remark.errors.required">Remark required!</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" style="padding:3px;"
+                            data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,217 @@
+<table style="font-size: 11px;">
+    <tr>
+
+        <td colspan="2" align="center"> <button (click)="CloseModel()" type="button"
+                class="close closeModelButton">&times;</button></td>
+    </tr>
+
+
+</table>
+
+<div class="">
+    <form (ngSubmit)="submit()" [formGroup]="ClaimForm" id="form-1">
+        <div class="">
+            <div class="">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label id="LOB_lable">LOB</label>
+                            <ng-multiselect-dropdown class="form-control" [data]="LOB" formControlName="LOB"
+                                [settings]="dropdownSettingsType" [(ngModel)]="LOBName"
+                                (onSelect)="onSelectionChange($event,'0')">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && formControls.LOB.errors" class="ValidationError">
+                                <div *ngIf="formControls.LOB.errors.required">Please select LOB
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label id="Company_Name_lable">Select Company Name</label>
+                            <ng-multiselect-dropdown class="form-control" [data]="Lob_company"
+                                formControlName="Company_Name" [settings]="dropdownSettingsType"
+                                [(ngModel)]="Company_Name_value">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && formControls.Company_Name.errors" class="ValidationError">
+                                <div *ngIf="formControls.Company_Name.errors.required">Please select
+                                    Company Name</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>{{Policy_no_lable}}:</label>
+                            <input type="text" class="form-control" formControlName="Policy_no">
+                            <div *ngIf="isSubmitted && formControls.Policy_no.errors" class="ValidationError">
+                                <div *ngIf="formControls.Policy_no.errors.required">Please Enter
+                                    {{Policy_no_lable}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label id="Mobile_no_lable">Mobile No</label>
+                            <input type="text" class="form-control" formControlName="Mobile_no">
+                            <div *ngIf="isSubmitted && formControls.Mobile_no.errors" class="ValidationError">
+                                <div *ngIf="formControls.Mobile_no.errors.required">Please Enter
+                                    Mobile No</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4" *ngIf="Mamber_name_insure_in_Div=='1'">
+                        <div class="form-group">
+                            <label>Enter Insurer Name:</label>
+                            <input type="text" class="form-control" formControlName="Mamber_name_insure_in">
+                            <div *ngIf="isSubmitted && formControls.Mamber_name_insure_in.errors"
+                                class="ValidationError">
+                                <div *ngIf="formControls.Mamber_name_insure_in.errors.required">
+                                    Please Enter
+                                    Mamber Name</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4" *ngIf="customeremail_Div=='1'">
+                        <div class="form-group">
+                            <label>{{customeremail_lable}}</label>
+                            <input type="text" class="form-control" formControlName="customeremail">
+                            <div *ngIf="isSubmitted && formControls.customeremail.errors" class="ValidationError">
+                                <div *ngIf="formControls.customeremail.errors.required">Please Enter
+                                    Customer Email</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4" *ngIf="Policy_Holder_Div=='1'">
+                        <div class="form-group">
+                            <label>{{Policy_Holder_lable}}</label>
+                            <input type="text" class="form-control" formControlName="Policy_Holder">
+                            <div *ngIf="isSubmitted && formControls.Policy_Holder.errors" class="ValidationError">
+                                <div *ngIf="formControls.Policy_Holder.errors.required">Please Enter
+                                    {{Policy_Holder_lable}}</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4" *ngIf="Claim_Type_Div=='1'">
+                        <div class="form-group">
+                            <label>Claim Type:</label>
+                            <ng-multiselect-dropdown class="form-control" [data]="Claim_Type"
+                                formControlName="Claim_Type" [settings]="dropdownSettingsType">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && formControls.Claim_Type.errors" class="ValidationError">
+                                <div *ngIf="formControls.Claim_Type.errors.required">Please select
+                                    Claim Type</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" *ngIf="loactionValue_Div=='1'">
+                        <div class="form-group">
+                            <label>{{loactionValue_lable}}</label>
+                            <input type="text" class="form-control" formControlName="loactionValue">
+                            <div *ngIf="isSubmitted && formControls.loactionValue.errors" class="ValidationError">
+                                <div *ngIf="formControls.loactionValue.errors.required">Please Enter
+                                    {{loactionValue_lable}}</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4" *ngIf="customerName_Div=='1'">
+                        <div class="form-group">
+                            <label>{{customerName_lable}}</label>
+                            <input type="text" class="form-control" formControlName="customerName">
+                            <div *ngIf="isSubmitted && formControls.customerName.errors" class="ValidationError">
+                                <div *ngIf="formControls.customerName.errors.required">Please Enter
+                                    {{customerName_lable}}</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4" *ngIf="NumberValue_Div=='1'">
+                        <div class="form-group">
+                            <label>{{NumberValue_lable}}</label>
+                            <input type="text" class="form-control" formControlName="NumberValue">
+                            <div *ngIf="isSubmitted && formControls.NumberValue.errors" class="ValidationError">
+                                <div *ngIf="formControls.NumberValue.errors.required">Please Enter {{NumberValue_lable}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" *ngIf="TypeValue_Div=='1'">
+                        <div class="form-group">
+                            <label>{{TypeValue_lable}}</label>
+                            <input type="text" class="form-control" formControlName="TypeValue">
+                            <div *ngIf="isSubmitted && formControls.TypeValue.errors" class="ValidationError">
+                                <div *ngIf="formControls.TypeValue.errors.required">Please Enter
+                                    {{TypeValue_lable}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" *ngIf="Type_of_loss_Div=='1'">
+                        <div class="form-group">
+                            <label>{{Type_of_loss_lable}}</label>
+                            <ng-multiselect-dropdown class="form-control" [data]="Type_of_loss"
+                                formControlName="Type_of_loss" [settings]="dropdownSettingsType">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && formControls.Type_of_loss.errors" class="ValidationError">
+                                <div *ngIf="formControls.Type_of_loss.errors.required">Please Select
+                                    Type loss</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4" *ngIf="DateValue_Div=='1'">
+                        <div class="form-group">
+                            <label>{{DateValue_lable}}</label>
+                            <input type="date" class="form-control" formControlName="DateValue">
+                            <div *ngIf="isSubmitted && formControls.DateValue.errors" class="ValidationError">
+                                <div *ngIf="formControls.DateValue.errors.required">Please Choose Date</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4" *ngIf="effectiveDatePolicy_Div=='1'">
+                        <div class="form-group">
+                            <label>{{effectiveDatePolicy_lable}}</label>
+                            <input type="date" class="form-control" formControlName="effectiveDatePolicy">
+                            <div *ngIf="isSubmitted && formControls.effectiveDatePolicy.errors" class="ValidationError">
+                                <div *ngIf="formControls.effectiveDatePolicy.errors.required">Please Choose Date</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4" *ngIf="effectiveDateMember_Div=='1'">
+                        <div class="form-group">
+                            <label>{{effectiveDateMember_lable}}</label>
+                            <input type="date" class="form-control" formControlName="effectiveDateMember">
+                            <div *ngIf="isSubmitted && formControls.effectiveDateMember.errors" class="ValidationError">
+                                <div *ngIf="formControls.effectiveDateMember.errors.required">Please Choose Date</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4" *ngIf="DescriptionValue_Div=='1'">
+                        <div class="form-group">
+                            <label>{{DescriptionValue_lable}}</label>
+                            <input type="text" class="form-control" formControlName="DescriptionValue">
+                            <div *ngIf="isSubmitted && formControls.DescriptionValue.errors" class="ValidationError">
+                                <div *ngIf="formControls.DescriptionValue.errors.required">Please Provide Details </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary nextBtn pull-right" type="submit">Submit</button>
+            </div>
+        </div>
+
+    </form>
+</div>

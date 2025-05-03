@@ -1,0 +1,209 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box">
+          <div class="box-header">
+            <div class="row">
+              <div class="col-md-4">
+                <h3 class="box-title">Add Meeting URL's</h3>
+              </div>
+              <div class="col-md-4">&nbsp;</div>
+              <div class="col-md-4">
+                <!-- <button class="btn btn-primary nextBtn pull-right" (click)="MeetingURlAdd()" style="margin-right: 5px;">
+                  <i class="fa fa-plus">Add Meeting URL </i> </button> -->
+              </div>
+            </div>
+          </div>
+          <div class="box-body">
+            <!-- <app-square-filter (postCreated)="SearchData($event)"></app-square-filter> -->
+            <form (ngSubmit)="submit()" [formGroup]="addMeetUrl">
+              <div class="popup-content-body">
+
+                <div class="row popup-form">
+                  <div class="col-md-4" *ngIf="this.Id != undefined ">
+                    <label for="state">Request By</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="Requester"
+                    formControlName="requestby" [settings]="dropdownSettingsMultiselect">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.requestby.errors" class="Validationerrors">
+                      <div *ngIf="formControls.requestby.errors.required"><span style="color: red;">Please select
+                          meeting For!</span></div>
+                    </div>
+                  </div>
+
+                  <div [ngClass]="{'col-md-4': Id !== undefined, 'col-md-6': Id === undefined}">
+                    <label for="state">Meeting For</label>
+
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="empType"
+                    formControlName="meetingFor" [settings]="dropdownSettingsMultiselect">
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="isSubmitted && formControls.meetingFor.errors" class="Validationerrors">
+                      <div *ngIf="formControls.meetingFor.errors.required"><span style="color: red;">Please select
+                          meeting For!</span></div>
+                    </div>
+                  </div>
+
+                  <div [ngClass]="{'col-md-4': Id !== undefined, 'col-md-6': Id === undefined}">
+                    <label for="state">Meeting Topic</label>
+                    <input type="text" class="form-control" formControlName="meetingTopic">
+                    <div *ngIf="isSubmitted && formControls.meetingTopic.errors" class="Validationerrors">
+                      <div *ngIf="formControls.meetingTopic.errors.required"><span style="color: red;">Please enter
+                          meeting Topic!</span></div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 next">
+                    <label for="state">Meeting Date</label>
+                    <input type="text" class="form-control" formControlName="meetingDate" 
+                      [minDate]="minDate" bsDatepicker>
+                    <div *ngIf="isSubmitted && formControls.meetingDate.errors" class="Validationerrors">
+                      <span *ngIf="formControls.meetingDate.errors.required" style="color: red;">Please select meeting date</span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 next">
+                    <label for="state">Meeting Time</label>
+                    <input type="time" class="form-control" formControlName="meetingTime" class="form-control">
+                    <div *ngIf="isSubmitted && formControls.meetingTime.errors" class="Validationerrors">
+                      <span *ngIf="formControls.meetingTime.errors.required" style="color: red;">Please select meeting Time</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6 next">
+                    <label for="state">Meeting Url</label>
+                    <input type="text" class="form-control" formControlName="meetingUrl">
+                    <div *ngIf="isSubmitted && formControls.meetingUrl.errors" class="Validationerrors">
+                      <div *ngIf="formControls.meetingUrl.errors.required"><span style="color: red;">Please enter
+                          meeting Url!</span></div>
+                    </div>
+                  </div>
+                  
+                  <div class="clearfix" style="margin-top: 10px;"></div>
+                  <div class="button-div-yes-no next" align="right" style="margin-top: 10px;">
+                    <button type="submit" class="btn btn-primary">Submit</button>&nbsp;
+                  </div>
+
+
+                </div>
+              </div>
+            </form>
+          </div>
+
+
+        </div>
+      </div>
+
+     
+    </div>
+
+  </section>
+
+ <div class="col-md-12" style="margin-top: -100px;">
+        <div class="row">
+        <!-- Content Header (Page header) -->
+      
+        <section class="content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box">
+                <div class="box-header">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <h3 class="box-title">Meetings</h3>
+                    </div>
+                    <div class="col-md-4">&nbsp;</div>
+                    <div class="col-md-4">
+                    </div>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <!-- <app-square-filter (postCreated)="SearchData($event)"></app-square-filter> -->
+      
+                  <div class="mydiv">
+                    <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                      class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th>S.No</th>
+                          <th>Meeting For</th>
+                          <th>Meeting Id</th>
+                          <th>Meeting Topic</th>
+                          <th>Meeting URL</th>
+                          <th>Meeting Date</th>
+                          <th>Meeting Time</th>
+                          <th>Date</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+      
+                      <tbody *ngIf="dataAr?.length != 0">
+                        <tr *ngFor="let row of dataAr">
+                          <td>{{row.SrNo}}.</td>
+                          <td>{{row.meetingFor}}</td>
+                          <td>{{row.meetingId}}</td>
+                          <td>{{row.meetingTopic}}</td>
+                          <td>{{row.meetingUrl}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="copybtn" (click)="CopyText(row.meetingUrl)"
+                              value="click to copy"> <span class="fa fa-copy"></span></button></td>
+                          <td>{{row.meetingDate}}</td>
+                          <td>{{row.meetingTime}}</td>
+                          <td>{{row.date}}</td>
+
+                          <td>
+                              <label class="label label-info"
+                              (click)="SendNotification(row.Id,row.meetingId)">Details</label>&nbsp;
+
+                              <label *ngIf="row.status == '1'" class="label label-info"
+                              (click)="MeetingStatusUpdate(row.Id,row.status)">Meeting Is Over</label>
+
+                              <label   *ngIf="row.status == '0'" class="label label-danger"
+                              (click)="MeetingStatusUpdate(row.Id,row.status)">Meeting Closed</label>
+                         
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tbody *ngIf="dataAr?.length == 0">
+                        <tr>
+                          <td colspan="14" align="center">No data available!</td>
+                        </tr>
+                      <tbody>
+                    </table>
+                  </div>
+                </div>
+                      
+              </div>
+            </div>
+          </div>
+      
+        </section>
+      </div>
+  
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,182 @@
+<button (click)="closeModel()" type="button" class="close closeModelButton">&times;</button>
+<div class="form">
+    <table *ngIf="this.urlSegment.includes('sr-wise')">
+        <tr class="">
+    
+            <td colspan="2" align="center">
+                <b>SR Wise Report</b>
+            </td>
+            
+        </tr>
+        <div>
+            <form [formGroup]="SR_No">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" formControlName="Sr_name" placeholder="Please Enter SR NO">
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" (click)="Search()" class="btn btn-primary mr-2">Search</button>
+                    </div>
+                </div>
+                
+                
+    
+            </form>
+    
+        </div>
+    
+    </table>
+</div>
+
+
+<div class="table-responsive mydiv">
+    <table style="margin-top: 13px !important" *ngIf="this.urlSegment.includes('sr-wise')">
+        <thead>
+            <tr>
+                <th>Source</th>
+                <th>SR No</th>
+    
+                <th>LOB</th>
+                <th>Registration No</th>
+                <th>Gross Premium</th>
+                <th>Customer Name</th>
+                <th>RM Name</th>
+                <th>Agent Name</th>
+                <th>Policy No</th>
+    
+                <th>File Type</th>
+                <th>Create Date</th>
+                <th>Booking Date</th>
+                <th>Remark</th>
+                <th>Action</th>
+    
+    
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of dataAr;">
+                <td>{{ row.Source == 'Web' ? 'Online': row.Source }}</td>
+                <td>{{ row.SR_No }}</td>
+    
+                <td>{{ row.LOB_Id }}</td>
+                <td>{{ row.Registration_No }}</td>
+                <td>{{ row.Estimated_Gross_Premium }}</td>
+                <td>{{ row.Customer_Name }}</td>
+                <td>{{ row.RMName }}</td>
+                <td>{{ row.AgentName }}</td>
+                <td>{{ row.Policy_No }}</td>
+                <td>{{ row.File_Type }}</td>
+                <td>{{ row.Add_Stamp }}</td>
+                <td>{{ row.Booking_Date }}</td>
+                <td>
+                    <form [formGroup]="remarkForm">
+                        <div>
+                        <input type="text"  class="form-control"  formControlName="remark" placeholder="Enter Remark" style="width: 130px;"/>
+                        </div>
+                        </form>
+                </td>
+                <td> <button (click)="updateInfo(row.Id,null,row.sr_id)" *ngIf="!buttonHidden[row.Id]" class="btn btn-primary"
+                        style="margin-left: 0%;">Hold Now</button></td>
+    
+    
+    
+    
+    
+    
+            </tr>
+        </tbody>
+        <tbody *ngIf="dataAr?.length == 0">
+            <tr>
+                <td colspan="13" align="center">No data available!</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<div class="form">
+    <table *ngIf="this.urlSegment.includes('partner-wise')">
+        <tr class="">
+    
+            <td colspan="2" align="center">
+                <b>Partner Wise Report</b>
+            </td>
+     
+        </tr>
+        <div>
+            <form [formGroup]="SR_No">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" formControlName="Sr_name" placeholder="Please Enter value">
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" (click)="Search()" class="btn btn-primary mr-2">Search</button>
+                    </div>
+                </div>
+               
+                
+    
+            </form>
+    
+        </div>
+    
+    </table>
+</div>
+
+
+<div class="table-responsive mydiv">
+    <table style="margin-top: 13px !important" *ngIf="this.urlSegment.includes('partner-wise')">
+        <thead>
+            <tr>
+                <th>Partner Name/Code</th>
+                <th>RM Name</th>
+                <th>Mobile</th>
+                <th>Email</th>
+                <th>Create Date</th>
+                <th>Remark</th>
+                <th>Action</th>
+    
+    
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of dataAr; let i = index">
+                <td>{{ row.Name }} 
+                    ({{ row.Emp_Id }})</td>
+                <td>{{ row.RmName }} 
+                    ({{row.RMCode}})  </td>
+                <td>{{ row.Mobile }}</td>
+                <td>{{ row.Email }}</td>
+                <td>{{ row.Add_Stamp }}</td>
+                <td>
+                    <form [formGroup]="remarkForm">
+                    <div>
+                    <input type="text"  class="form-control"  formControlName="remark" placeholder="Enter Remark"/>
+                    </div>
+                    </form>
+                </td>
+
+
+
+
+    
+                <td> <button (click)="updateInfo(row.Id,row.agent_id,null)" *ngIf="!buttonHidden[row.Id]" class="btn btn-primary"
+                        style="margin-left: 0%;">Hold Now</button></td>
+    
+    
+            </tr>
+        </tbody>
+        <tbody *ngIf="dataAr?.length == 0">
+            <tr>
+                <td colspan="6" align="center">No data available!</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div id="snackbar2">{{ErrorMsg}}</div>
+
+
+<div style="height:50%"></div>

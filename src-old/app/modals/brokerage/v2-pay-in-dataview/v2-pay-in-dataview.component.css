@@ -1,0 +1,46 @@
+#myInput {
+background-position: 12px 12px;
+background-repeat: no-repeat;
+width: 100%;
+font-size: 12px;
+padding: 10px !important;
+border: 1px solid #999 !important;
+margin-bottom: 12px;
+}
+
+.myUL {
+list-style-type: none;
+padding: 0;
+padding-top: 10px;
+}
+
+.contenCls {
+height: calc(100vh - 200px);
+overflow: auto;
+}
+
+.myUL a {
+background-color: rgb(44 178 179 / 9%);
+padding: 10px;
+text-decoration: none;
+font-size: 14px;
+color: #111111;
+display: block;
+border: 1px solid rgb(44 178 179 / 18%);
+margin: 5px 0px;
+border-radius: 5px;
+overflow: hidden;
+}
+.myUL a:hover:not(.header) {
+background-color: #2cb2b32e;
+}
+.header_title {
+margin: 0;
+color: #2cb2b3;
+font-weight: 600;
+font-size: 16px;
+}
+hr {
+margin-top: 5px;
+margin-bottom: 15px;
+}

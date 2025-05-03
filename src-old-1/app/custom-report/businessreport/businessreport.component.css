@@ -1,0 +1,18 @@
+.dataTables_wrapper {
+    position: relative;
+    clear: both;
+    display: none !important;
+}
+
+.report_view_cs_new {
+    padding: 0 !important;
+    border: 0px !important;
+}
+
+.report_view_cs_new .table {
+    margin-bottom: 0px;
+}
+
+.report_view_cs_new .table tr th {
+    border-top: none !important;
+}

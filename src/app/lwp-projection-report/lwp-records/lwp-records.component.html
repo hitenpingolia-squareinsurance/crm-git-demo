@@ -1,0 +1,36 @@
+
+<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+
+<div class="table-responsive mydiv">
+  <div>
+    <h5><strong>{{modalTitle}}</strong></h5>
+    <button class="btn btn-success" *ngIf="this.Id == '54' || this.Id == '14' || this.Id == '1' || this.Id == '173'" (click)="lwp_MonthReport_Export()" style="color:#fff; float:right;">
+      <a role="button" style="color:#fff;"><span>Export </span></a>
+  </button>
+  </div>
+  <table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover" style="width: 100% !important;">
+    <thead>
+      <tr>
+        <th style="width: 20%;">Sr No</th>
+        <th style="width: 20%;">Employee Name/Code</th>
+        <th style="width: 20%;">Reporting Manager</th>
+        <th style="width: 20%;">Vertical</th>
+        <th style="width: 20%;">Date</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="dataAr?.length != 0">
+      <tr *ngFor="let row of dataAr; let i = index;">
+        <td>{{ row.SrNo }}</td>
+        <td><strong>{{row.Employee_Name}} - {{row.Employee_Code}}</strong></td>
+        <td><strong>{{row.ReportingManager}} - {{row.ReportingManagerCode}}</strong></td>
+        <td><strong>{{row.Department}}</strong></td>
+        <td><strong>{{ row.Leave_Date | date:'dd-MM-yyyy'}}</strong></td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="dataAr?.length == 0">
+      <tr>
+        <td colspan="5" class="text-center">No data Available!</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

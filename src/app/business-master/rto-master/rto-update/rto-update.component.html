@@ -1,0 +1,73 @@
+<section class="custom-scrool" id="click-close">
+    <div class="">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <h4 class="header_title">Update RTO</h4>
+                <button type="button" (click)="CloseModel()" class="close closeModelButton"><i
+                        class="fa fa-close"></i></button>
+            </div>
+            <hr>
+            <div class="modal_body">
+
+                <div class="row">
+
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <form [formGroup]="AddFieldForm" (ngSubmit)="SubBtn()" id="click">
+
+                            <div class="col-md-5" id="close">
+                                <div class="category_list">
+                                    <label>State</label>
+                                    <ng-multiselect-dropdown class="form-control" placeholder="Select State"
+                                        [data]="state" formControlName="state" [settings]="dropdownSettingsmultiselect"
+                                        (ngModelChange)="onClose()">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="AddFieldForm.get('state').hasError('required') && (AddFieldForm.get('state').touched || AddFieldForm.dirty)"
+                                        class="text-danger">
+                                        This field is Required
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>RTO Name</label>
+                                <input type="text" class="form-control" formControlName="rto" placeholder="RTO Name">
+                                <div *ngIf="AddFieldForm.get('rto').hasError('required') && (AddFieldForm.get('rto').touched ||AddFieldForm.dirty)"
+                                    class="text-danger"> This Field is required
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>RTO Code</label>
+                                <input type="text" class="form-control" formControlName="code" placeholder="RTO Code"
+                                    (input)="onRTOcode($event)">
+                                <div *ngIf="AddFieldForm.get('code').hasError('required') && (AddFieldForm.get('code').touched ||AddFieldForm.dirty)"
+                                    class="text-danger"> This Field is required
+                                </div>
+                                <div *ngIf="AddFieldForm.get('code').hasError('maxLength') && (AddFieldForm.get('code').touched ||AddFieldForm.dirty)"
+                                    class="text-danger"> This Field is required
+                                </div>
+                                <div *ngIf="AddFieldForm.get('code').hasError('minLength') && (AddFieldForm.get('code').touched ||AddFieldForm.dirty)"
+                                    class="text-danger"> This Field is required
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="float-end pull-right">
+                                        <button type="submit" class="btn btn_primary btn-success">Submit</button>
+                                        &nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

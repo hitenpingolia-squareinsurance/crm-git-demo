@@ -1,0 +1,65 @@
+<div class="modal_header d_flex flex_Equal flex_Middel">
+  <div class="modal_title">Add New Category</div>
+  <button type="button" (click)="CloseModel()" class="close_btn"><i class="fa fa-close"></i></button>
+</div>
+<!-- <form  id="form-1"> -->
+<div class="modal_body py_15">
+  <div class="row">
+    <div class="col-md-12">
+      <form [formGroup]="AddFieldForm">
+        <div class="input_group" *ngIf="this.Type =='Add'">
+          <label for="state">Add Category</label>
+          <input type="text" class="form_control" formControlName="CatName">
+          <div *ngIf="isSubmitted && formControls.CatName.errors" class="ValidationError">
+            <div *ngIf="formControls.CatName.errors.required">required..</div>
+          </div>
+        </div>
+        <div class="row horizontal_scroll_popup" formArrayName="FieldForm">
+          <div class="col-md-6" *ngFor="let quantity of AddField().controls; let i=index" [formGroupName]="i">
+            <div class="category_list">
+              <span class="d_flex flex_Equal flex_Middel">
+                <small class="fs_16">Add Fields - {{i}} </small>
+                <div class="d_flex flex_Middel">
+                  <button *ngIf="i != 0 " class="close_btn mr_5" type="button" (click)="RemoveAddedField(i)"><i
+                      class="fa fa-trash"></i></button>
+                  <button class="close_btn" type="button" (click)="AddFormField()"><i class="fa fa-plus"></i></button>
+                </div>
+              </span>
+              <div class="panel">
+                <div class="panel-body">
+                  <div class="form-group">
+                    <!-- <label for="field-name"></label> -->
+                    <input id="field-name" formControlName="FieldName" autofocus="autofocus" type="text" required
+                      placeholder="Field Name" class="form-control">
+                    <div *ngIf="isSubmitted && formControls.FieldForm.errors" class="ValidationError">
+                      <div *ngIf="formControls.FieldForm.errors.required">required..</div>
+                    </div>
+                  </div>
+                  <div class="custom_radio_button_check">
+                    <input id="required_check" formControlName="Required" autofocus="autofocus" type="checkbox">
+                    <label for="required_check">Required</label>
+                  </div>
+                  <div class="form-group">
+                    <!-- <label for="field-type">:</label> -->
+                    <select id="field-type" formControlName="FieldType" required placeholder="Field Type"
+                      class="form-control">
+                      <option value="text">Text</option>
+                      <option value="list">List</option>
+                      <option value="date">Date</option>
+                      <option value="number">Currency</option>
+                    </select>
+                  </div>
+                  <textarea rows="3" formControlName="FieldVal" placeholder="ex: first,second,third"
+                    class="form-control"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal_footer ">
+  <button class="btn btn-primary nextBtn pull-right" (click)="Submit()" type="submit">Submit</button>
+</div>

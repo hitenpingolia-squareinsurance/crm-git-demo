@@ -1,0 +1,33 @@
+.d_flex {
+    display: flex;
+  }
+  
+  .errorMsgg {
+    border-color: red;
+  }
+
+  .cs_search_btn .input-group {
+    margin-left: auto;
+  }
+  .cs_search_btn .input-group-append {
+    margin-left: -1px;
+    display: flex;
+    position: absolute;
+    right: 2px;
+    width: 0px;
+    top: 0;
+    z-index: 99;
+}
+
+
+.cs_search_btn .input-group-append button{
+  border-radius: 0px 5px 5px 0px;
+    margin: 0;
+    height: 34px;
+}
+
+.cs_search_btn {
+  position: relative;
+  padding-right: 35px;
+  margin-top: 10px;
+}

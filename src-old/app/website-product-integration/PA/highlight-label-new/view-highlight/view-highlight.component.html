@@ -1,0 +1,292 @@
+<section class="inner_page_css knowlage_details_page">
+    <div class="container-fluid">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <div class="header_title">Highlight Labels</div>
+            </div>
+
+            <div class="main_body main_card_height_scroll_withoutfooter">
+                <div class="btn_list_group">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div id="exTab1">
+                                        <ul class="nav nav-pills">
+                                            <li><a href="/integration/plan-benefit">Plan Benefit</a></li>
+                                            <li><a href="/integration/hospital">Hospital List</a></li>
+                                            <li><a href="/integration/bourcher">Bourcher List</a></li>
+
+
+                                            <li class="active"> <a href="/integration/highlight-label"> Highlight
+                                                    label</a></li>
+                                            <li> <a href="/integration/youtube-url"> Youtube Video</a></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="dsr-fillter">
+
+
+
+
+
+                                        <button class="img_btn" role="tab" id="headingOne" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne" title="Filter"><img
+                                                src="../../../assets/image/filter.svg" alt="Filter"> </button>
+
+                                        <button class="img_btn" type="button" style="margin-left: 5px;"
+                                            (click)="AddLabelList()" title="Add Lead"><img
+                                                src="../../../assets/image/add_file.svg" alt="Add Lead">Add Labels
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse mt_15" role="tabpanel"
+                                aria-labelledby="headingOne">
+                                <form [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+
+                                    <div class="row custom-spacing">
+
+                                        <div class="col-sm-3">
+
+                                            <ng-multiselect-dropdown class="form-control" formControlName="LOB"
+                                                [data]="lobs" [settings]="dropdownSingleSettingsType"
+                                                placeholder="Select Lob" (onSelect)="FetchHealthInsurer($event)">
+                                            </ng-multiselect-dropdown>
+                                        </div>
+
+
+                                        <div class="col-sm-3 ">
+                                            <ng-multiselect-dropdown class="form-control"
+                                                formControlName="Search_Insurer" placeholder="Select Insurer"
+                                                [data]="search_insurer" (onSelect)="FetchHealthPlan($event)"
+                                                [settings]="dropdownSingleSettingsType">
+                                            </ng-multiselect-dropdown>
+                                        </div>
+
+                                        <div class="col-sm-3 ">
+                                            <ng-multiselect-dropdown class="form-control" formControlName="Search_Plan"
+                                                [data]="search_plan" placeholder="Select Plan"
+                                                [settings]="dropdownSingleSettingsType"
+                                                (onSelect)="FetchHealthSubplan($event)">
+                                            </ng-multiselect-dropdown>
+                                        </div>
+
+                                        <div class="col-sm-3 ">
+                                            <ng-multiselect-dropdown class="form-control"
+                                                [settings]="dropdownSingleSettingsType" placeholder="Select Subplan"
+                                                formControlName="Search_Subplan" [data]="search_subplan">
+                                            </ng-multiselect-dropdown>
+
+                                        </div>
+
+                                        <div class="col-sm-3 ">
+                                            <ng-multiselect-dropdown class="form-control"
+                                                [settings]="dropdownSingleSettingsType" placeholder="Select Label Type "
+                                                formControlName="labelType" [data]="labelType">
+                                            </ng-multiselect-dropdown>
+
+                                        </div>
+
+
+
+
+
+                                        <div class="col-sm-3">
+                                            <input type="text" formControlName="SearchValue" name="SearchValue"
+                                                class="form-control" placeholder="Search">
+                                        </div>
+
+                                        <!-- <div class="col-sm-6">
+                                            <div>
+                                                <input type="Submit" class="btn btn-info" value="Filter">
+                                                &nbsp;&nbsp;
+                                                <input (click)="ClearSearch()" type="button" class="btn btn-danger"
+                                                    value="Reset">
+                                            </div>
+                                        </div> -->
+                                        <div class="col-sm-3">
+
+                                            <button class="btn btn-info" style="font-size: small;" type="submit">
+
+                                                <i class="fa fa-search"></i> Search
+                                            </button>
+                                            &nbsp;&nbsp;
+                                            <button (click)="ClearSearch()" type="button" style="font-size: small;"
+                                                class="btn btn-danger" value="Reset"> <i class="fa fa-close"> Reset</i>
+                                            </button>&nbsp;&nbsp; &nbsp;&nbsp;
+                                        </div>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="custom_table">
+                            <ul class="responsive-table">
+
+                                <div class="custom_table tables_layout_design">
+                                    <table datatable [dtOptions]="dtOptions" class="row-border table" id="example2"
+                                        style="width: 0px;">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    <ul class="responsive-table" *ngIf="dataAr?.length > 0">
+                                        <li class="table-row" *ngFor="let row of dataAr; let i=index;">
+                                            <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                                                <div class="agents_data agents_data1">
+                                                    <div class="icon_re_cl">{{ row.SrNo }}</div>
+                                                    <div class="agent_name_mobile">
+                                                        <div class="agent_data">
+                                                            <div>Insurer</div>
+                                                            <strong class="fs_18"
+                                                                style="text-transform: capitalize;">{{row.company}}</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="agents_data agents_data2">
+                                                    <div class="agent_name_mobile">
+                                                        <div class="agent_data">
+                                                            <div>LOB</div>
+                                                            <strong class="fs_18"
+                                                                style="text-transform: capitalize;">{{row.lob
+                                                                }}</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="agents_data agents_data3">
+                                                    <div class="agent_name_mobile">
+                                                        <div class="agent_data">
+                                                            <div>Product/Plan Type</div><strong class="fs_18">
+                                                                {{row.Plan}}
+                                                            </strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="last_row_div">
+                                                <div class="d_flex">
+
+                                                    <div class="label_chips motor_lob dark"
+                                                        *ngIf="row.helperColumn == 1">
+                                                        <span *ngIf="row.otherColumn == '0'">Label Type : Normal</span>
+                                                        <span *ngIf="row.otherColumn == '1'">Label Type :
+                                                            Highlight</span>
+                                                    </div> &nbsp;&nbsp;
+
+                                                    <div class="label_chips motor_lob dark"
+                                                        [ngStyle]="{'background-color': row.font_color}"
+                                                        *ngIf="row.helperColumn == 0">
+                                                        <span>Type: {{
+                                                            row.PlanBenifitCategory}}</span>&nbsp;&nbsp;
+                                                    </div>
+
+                                                    <div class="label_chips health_lob">
+                                                        <span> Subplan :{{row.SubPlan}}</span>
+
+                                                    </div> &nbsp;&nbsp;
+                                                    <div class="label_chips health_lob"
+                                                        [ngStyle]="{'background-color': row.icon_color}"
+                                                        *ngIf="row.helperColumn == 1">
+                                                        <span style="color: #c77c7c;">Icon Color : {{
+                                                            row.PlanBenifitDesc}}</span>&nbsp;&nbsp;
+                                                    </div>
+
+                                                    <div class="label_chips health_lob"
+                                                        [ngStyle]="{'background-color': row.icon_color}"
+                                                        *ngIf="row.helperColumn == 0">
+                                                        <span style="color: #c77c7c;">Description : {{
+                                                            row.PlanBenifitDesc?row.PlanBenifitDesc
+                                                            :'N/A'}}</span>&nbsp;&nbsp;
+                                                    </div>
+                                                    <div class="label_chips health_lob"
+                                                        [ngStyle]="{'background-color': row.font_color}"
+                                                        *ngIf="row.helperColumn == 1">
+                                                        <span style="color: #d64c4c;">Font Color : {{
+                                                            row.PlanBenifitCategory}}</span>&nbsp;&nbsp;
+                                                    </div>
+                                                    <!-- <div class="label_chips motor_lob dark"
+                                                        [ngStyle]="{'background-color': row.font_color}"
+                                                        *ngIf="row.helperColumn == 0">
+                                                        <span>Type: {{
+                                                            row.PlanBenifitCategory}}</span>&nbsp;&nbsp;
+                                                    </div> -->
+
+
+
+                                                    <div class="label_chips motor_lob" *ngIf="row.helperColumn == 1">
+                                                        <span>Icon Name : {{row.PlanBenifit}}</span>&nbsp;&nbsp;
+                                                    </div>
+                                                    <div class="label_chips health_lob" *ngIf="row.helperColumn == 1">
+                                                        <span>Label Name : {{row.label}}</span>&nbsp;&nbsp;
+                                                    </div>
+
+                                                    <div class="label_chips health_lob" *ngIf="row.helperColumn == 0">
+                                                        <span>Feature : {{row.label}}</span>&nbsp;&nbsp;
+                                                    </div>
+
+
+
+
+
+                                                </div>
+                                            </div>
+                                            <div class="last_row">
+                                                <div class="d_flex effective_date"></div>
+                                                <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                                    <a style="cursor: pointer;"
+                                                        (click)="EditComponent(row.Id, row.helperColumn)"
+                                                        class="edit-btn">Edit</a>
+
+                                                    <a style="cursor: pointer;">
+
+
+                                                        <span *ngIf="row.Status == 1"
+                                                            (click)="ActiveInactive(row.Id,0,row.helperColumn)">
+                                                            Active</span>
+
+                                                        <span *ngIf="row.Status == 0"
+                                                            (click)="ActiveInactive(row.Id, 1 ,row.helperColumn)">
+                                                            Inactive</span>
+                                                    </a>
+
+                                                    <a style="cursor: pointer;"
+                                                        (click)="DeleteRequest(row.Id, row.helperColumn)"
+                                                        class="btn-bg">Delete</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="row" *ngIf="dataAr?.length == 0">
+                                        <div class="col-md-12">
+                                            <div class="no_data_found">
+                                                <span><img src="assets/image/no_data_banner.jpg"></span>
+                                                <small>No data available !</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

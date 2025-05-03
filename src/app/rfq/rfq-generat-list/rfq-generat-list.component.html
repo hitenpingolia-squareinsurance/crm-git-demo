@@ -1,0 +1,116 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <div class="header_title"> Request For Quote Details <a style="color:white;" routerLink="/rfq/products"
+                class=" pull-right btn btn-primary btn-info"> <i class="fa fa-plus"></i> Add Request For Quote</a>
+            </div>
+          </div>
+          <div class="box-body">
+            <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+            <hr> 
+                     
+            <div class=" mydiv table-responsive">
+              <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>SrNo</th>
+                    <th>Quotation</th>
+                    <th>Construction Type</th>
+                    <th>Occupancy Type</th>
+                    <th>Customer Details</th>
+                    <th>Assignee</th>
+                    <th>Status</th>
+                    <th>Create Date</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="dataA?.length != 0">
+                  <tr *ngFor="let row of dataA; let i=index;">
+                    <td>{{row.SrNo}}</td>
+                    <td>
+                      <a  routerLink="/rfq/view-Details-quote/{{row.Quotation_Id}}"><span
+                          class="label label-default">{{row.Quotation_Id}}</span></a>
+                      <br>
+
+                      <a *ngIf="row.Status == 'Completed'" alt="Click here to check SR details"
+                        (click)="SrPopup(1,row.SrId)"><span class="label label-default">{{row.FullSrNo}}</span></a>
+
+                        
+                      <label *ngIf="row.QueryTotalTime != ''"> {{row.QueryTotalTime}} </label>
+                      <br>
+                      <!-- (row.Punching_team == '' || row.Punching_team == null) && -->
+                      <button style="margin-top:4px;" type="button"
+                        *ngIf=" row.Status == 'Quote Accepted' && currentUrl == '/rfq/view-punching-team' && row.Punching_team == null"
+                        (click)="AcceptPunchingTeamQuote(row.Quotation_Id)" class="label label-info">Accept</button>
+
+                      <!-- <br>
+
+                                              <label style="margin-top:4px;"  *ngIf=" row.Status == 'Quote Accepted' && currentUrl == '/rfq/view-punching-team' && row.Punching_team == null && row.punchingAEmployeeFlagDATA != ''" > <img  class="img-fluid" src="assets/dist/img/bhagwaflag.gif" style="width: 30px;">{{row.punchingAEmployeeFlagDATA}}</label> -->
+
+                      <button style="margin-top:4px;" type="button"
+                        *ngIf=" row.Status == 'Pending for Accounts' && currentUrl == '/rfq/view-Account-team' && row.Account_team == null"
+                        (click)="AcceptAccountTeamQuote(row.Quotation_Id)" class="label label-info">Accept</button>
+                      <button style="margin-top:4px;" type="button"
+                        *ngIf=" row.Status == 'Pending for Accounts' && currentUrl == '/rfq/view-Account-team' && row.Account_team != null"
+                        (click)="ApprovedAccountTeam(row.Id,row.Quotation_Id)"
+                        class="label label-info">Approved</button>
+                      <br>
+
+                      <button style="margin-top:4px;" type="button"
+                        *ngIf=" row.Status == 'Pending for Accounts' && currentUrl == '/rfq/view-Account-team' && row.Account_team != null"
+                        (click)="RejectAccountTeam(row.Id,row.Quotation_Id)" class="label label-danger">Cancel</button>
+
+                    </td>
+                    <td>{{row.TypeConstruction}}</td>
+                    <td>{{row.Occupancy_Type}}</td>
+                    <td> <b>Name - </b> {{row.CustomerName}}<br> <b>Mobile - </b>
+                      {{row.CustomerMobile}}<br> <b>Email -
+                      </b> {{row.CustomerEmail}}</td>
+                    <td>{{row.AssignUser}}</td>
+
+
+                    <td *ngIf="row.RejectedStatus != 1">
+                      <label class="label label-warning">{{row.Status}}</label>
+                      <br>
+
+                      <label class="label label-info"
+                        (click)="ViewOfflineQuoteDetails(row.Quotation_Id)">Details</label>
+                    </td>
+                    <td *ngIf="row.RejectedStatus == 1">
+                      <label class="label label-danger">Rejected</label><br>
+
+                      <label class="label label-info"
+                        (click)="ViewOfflineQuoteDetails(row.Quotation_Id)">Details</label> <br>
+                      <span><b> Rejected Remarks => </b> {{row.RejectedRemarks}} </span> <br>
+                    </td>
+                    <!-- <td>{{row.CreateDate}}</td> -->
+                    <td>{{row.CreateDate}}</td>
+                    
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataA?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+

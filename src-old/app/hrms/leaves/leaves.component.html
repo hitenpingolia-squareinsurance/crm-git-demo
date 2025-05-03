@@ -1,0 +1,254 @@
+<div class="inner_page_css main_dashboard_css">
+  <section class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Leave Management</div>
+          </div>
+
+          <div class="main_body main_card_height_scroll_withoutfooter">
+
+            <div class="row">
+             
+            </div>
+
+            <div class="btn_list_group">
+              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="dsr-fillter">
+                      <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                        data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <a role="button" class="fa fa-filter"><span>Filters</span><i
+                            class="fa fa-angle-down pull-right"></i></a>
+                      </button>
+
+                      <div class="btn-space pull-right dsr-fillter">
+                        <a class="btn btn-info1 nextBtn" type="button" (click)="ApplyLeave('Add','')">
+                          Apply Leave
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="panel panel-default">
+                  <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body loader_inner_data">
+                      <form [formGroup]="SearchForm" style="padding: 0 15px;">
+                        <div class="row">
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Financial Year"
+                              [data]="Year_Ar" [(ngModel)]="SelectedYear" formControlName="Financial_Year"
+                              [settings]="dropdownSettingsingleselect">
+                            </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Report Type"
+                              [data]="ReportTypeData" [(ngModel)]="SelectedReportType" formControlName="Report_Type"
+                              [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3" *ngIf="Select_Multi_Month == 'Yes'">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Month" [data]="MonthArray"
+                              [(ngModel)]="SelectedCurrentMonth" formControlName="Month_Name"
+                              [settings]="dropdownSettingsmultiselect1"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3" *ngIf="Select_Multi_Month == 'No'">
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select Month" [data]="MonthArray"
+                              [(ngModel)]="SelectedCurrentMonth" formControlName="Month_Name"
+                              [settings]="dropdownSettingsingleselect1"> </ng-multiselect-dropdown>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <input type="text" formControlName="SearchValue" placeholder="Search Name/Emp. Id/Mobile"
+                              class="form-control">
+                          </div>
+
+                          <div class="col-sm-3">
+                            <input (click)="SearchBtn()" type="button" class="btn btn-info" value="Search">&nbsp;&nbsp;
+                            <input (click)="ClearSearch()" type="button" class="btn btn-danger"
+                              value="Reset">&nbsp;&nbsp;
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="total-count">
+                <ul>
+                  <li>
+                    {{LeaveSummary?.totalApprovedCount}}<span>Approved</span>
+                  </li>
+                  <li>
+                    {{LeaveSummary?.totalPendingCount}}<span>Pending</span>
+                  </li>
+                  <li>
+                    {{LeaveSummary?.totalRejectedCount}}<span>Rejected</span>
+                  </li>
+                  <li>
+                    {{LeaveSummary?.totalExpiredCount}}<span>Expired</span>
+                  </li>
+                  <li>
+                    {{LeaveSummary?.totalCancelledCount}}<span>Cancelled</span>
+                  </li>
+                  <!-- <li>
+                    {{LeaveSummary?.totalApprovedCount +LeaveSummary?.totalPendingCount + LeaveSummary?.totalRejectedCount + LeaveSummary?.totalExpiredCount + LeaveSummary?.totalCancelledCount}}<span>Total Leaves</span>
+                  </li> -->
+                </ul>
+              </div>
+
+              <div class="datawrapper">
+                <div class="mydiv  table-responsive">
+
+                  <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+
+                        <th>S.No</th>
+                        <th class="name-width">Employee Name</th>
+                        <th>Requested</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Leave Days</th>
+                        <th>Holidays</th>
+                        <th>Status</th>
+                        <th>Reporting Manager</th>
+                        <th>Reporting Manager of Manager</th>
+                        <th>Leave Reason</th>
+                        <th>Manager's Action Reason</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+
+                    <tbody *ngIf="dataAr?.length != 0">
+
+                      <tr *ngFor="let row of dataAr; let i=index;">
+                        <td>{{row?.SNO}}</td>
+                        <td> {{row?.employee_name}}</td>
+                        <td>
+                          <div class="view-details">
+                            <span class="date">{{ row?.requested_date | date:'MMM dd, yyyy hh:mm a' }}</span>
+                            <!-- <span class="day">Wednesday</span> -->
+                          </div>
+                        </td>
+
+                        <td>
+                          <div class="view-details">
+                            <span class="date">{{row?.start_date | date: 'MMM dd, yyyy'}}
+                              <img [src]="row?.start_date_type === 'full_day' ? './assets/image/full-day.svg' : 
+                                                  row?.start_date_type === 'first_half' ? './assets/image/first-half.svg' : 
+                                                  row?.start_date_type === 'second_half' ? './assets/image/second-half.svg' : 
+                                                  ''" />
+                            </span>
+                            <span class="day">{{row?.start_date_weekday}}</span>
+                          </div>
+                        </td>
+
+                        <td>
+                          <div class="view-details">
+                            <span class="date">{{row?.end_date | date: 'MMM dd, yyyy' }}
+                              <img [src]="row?.end_date_type === 'full_day' ? './assets/image/full-day.svg' : 
+                                                  row?.end_date_type === 'first_half' ? './assets/image/first-half.svg' : 
+                                                  row?.end_date_type === 'second_half' ? './assets/image/second-half.svg' : 
+                                                  ''" />
+                            </span>
+                            <span class="day">{{row?.start_date_weekday}}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <span>{{ row?.actual_leave_days | number:'1.0-1' }}  {{ row?.actual_leave_days == 1 ? 'Day' : 'Days' }}</span>
+                        </td>
+                        <td>
+                          <span>
+                            {{ row?.holidays == 0 ? 'N/A' : (row?.holidays | number:'1.0-1') + ' ' + (row?.holidays === 1 ? 'Day' : 'Days') }}
+                          </span>
+                          
+
+                        </td>
+
+                        <td>
+                          <span [ngClass]="{
+                                              'text-warning': row?.status === 'Pending',
+                                              'text-success': row?.status === 'Approved',
+                                              'text-danger': row?.status === 'Rejected' || row?.status === 'Expired'
+                                          }">{{row?.status}}</span>
+                        </td>
+                        <td>
+                          <div class="reporter">{{ row?.reporting_manager_name || 'N/A' }}</div>
+                        </td>
+                        <td>
+                          <div class="reporter">{{ row?.reporting_manager_of_manager_name || 'N/A' }}</div>
+                        </td>
+                        <td>
+                          <div class="reason">{{ row?.reason || 'N/A' }}</div>
+                        </td>
+                        <td>
+                          <div class="reason">{{ row?.action_reason || 'N/A' }}</div>
+                        </td>
+                        <td>
+
+                          <a class="btn btn-primary" 
+                            *ngIf="row?.user_id == api.GetUserData('Id') && !row?.approved_1 && !row?.approved_2 && row?.status == 'Pending'"
+                            (click)="ApplyLeave('Edit', row?.id)">
+                            Edit
+                          </a>
+
+                          <div class="dropdown" *ngIf="row?.status === 'Pending'">
+                            <button class="dropbtn">Action</button>
+                            <div class="dropdown-content" style="left:0;">
+                              <a href="javascript:void(0)" *ngIf="row?.user_id !== api.GetUserData('Id') 
+                                  && (row?.reporting_manager === api.GetUserData('Id') 
+                                  || row?.reporting_manager_of_manager_id === api.GetUserData('Id'))"
+                                  (click)="leaveRequestChangeStatus(row?.id,'Approved',row?.user_id)">Approved</a>
+
+                              <a href="javascript:void(0)" *ngIf="row?.user_id !== api.GetUserData('Id') 
+                                  && (row?.reporting_manager === api.GetUserData('Id') 
+                                  || row?.reporting_manager_of_manager_id === api.GetUserData('Id'))"
+                                  (click)="leaveRequestChangeStatus(row?.id,'Rejected',row?.user_id)">Rejected</a>
+
+                              <a href="javascript:void(0)" *ngIf="row?.user_id == api.GetUserData('Id') && !row?.approved_1 && !row?.approved_2"
+                                  (click)="leaveRequestChangeStatus(row?.id,'Cancelled',row?.user_id)">Cancelled</a>
+                            </div>
+                          </div>
+
+
+                        </td>
+                      </tr>
+
+                    </tbody>
+                    <tbody *ngIf="dataAr?.length == 0">
+                      <tr>
+                        <td colspan="12" style="text-align:center !important">No data Available !</td>
+                      </tr>
+                    <tbody>
+
+                  </table>
+
+
+                </div>
+              </div>
+
+
+            </div>
+
+
+
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+</div>

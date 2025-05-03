@@ -1,0 +1,93 @@
+<div style="text-align: right; margin-top: -22px;">
+  <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+</div>
+<div class="box box-default" *ngIf="(Statusval != 'Renewed' && Statusval != 'Lost' && urlSegmentSub != 'manage-renewal-lost-request') ||((Statusval == 'Renewed' || Statusval == 'Lost') && urlSegmentSub == 'manage-renewal-lost-request')" style="margin-top: 20px;">
+  <div class="box-header with-border">
+    <h3 class="box-title">Details Form</h3>
+
+
+  </div>
+
+  <form [formGroup]="UpdateFollowForm" (ngSubmit)="UpdateFollowFormS()">
+    <!-- /.box-header -->
+    <div class="box-body">
+      <div class="row"> 
+
+        <div class="form-group row">
+          <div class="col-lg-3">
+            <label> Status:</label>
+
+
+            
+
+          
+
+            <select *ngIf="UserRoleType == 'employee'" (change)="UpdateStatus($event)" class="form-control"
+              formControlName="RenewalStatus">
+
+
+              <option  *ngIf ="RenewalType !='lost'" [value]="'Pending'" [selected]="Statusval=='Pending'"
+                [disabled]="Statusval=='Lost' || Statusval=='Follow Up' || Statusval=='Renewed' || Statusval=='Missed'">
+                Pending </option>
+
+              <option *ngIf ="RenewalType !='lost'" [value]="'Follow Up'" [selected]="Statusval=='Follow Up'"
+                [disabled]="Statusval=='Missed' || Statusval=='Renewed' || Statusval=='Lost'">Follow Up </option>
+
+              <option *ngIf ="RenewalType !='lost'" [value]="'Missed'" [selected]="Statusval=='Missed'"
+                [disabled]="Statusval=='Lost' || Statusval=='Renewed'"> Missed </option>
+
+              <option  *ngIf ="RenewalType !='lost'" [value]="'Lost'" [selected]="Statusval=='Lost'"
+              [disabled]="Statusval=='Lost' || Statusval=='Renewed'">Lost</option>
+
+              <option  *ngIf ="RenewalType =='lost'" [value]="'Lost'" [selected]="Statusval=='Lost'"
+                [disabled]="Statusval=='Lost' || Statusval=='Renewed'"> Lost </option>
+
+
+            </select>
+          </div>
+
+          <div class="col-lg-3" *ngIf="DateTimesShow">
+ 
+            <label> Date:</label>
+            <input type="text" (click)="add_datapicker_class()" class="form-control" bsDatepicker [minDate]="today" [maxDate]="Nextes"
+              formControlName="Dates" class="form-control">
+            <span *ngIf="isSubmitted && FC.Dates.errors" class="form-text text-muted">
+              <span *ngIf="FC.Dates.errors.required" style="color:red;">Field is required..!</span>
+            </span>
+          </div>
+
+          <div class="col-lg-3" *ngIf="DateTimesShow">
+            <label> Time:</label>
+            <input type="time" class="form-control" formControlName="Times" class="form-control">
+            <span *ngIf="isSubmitted && FC.Times.errors" class="form-text text-muted">
+              <span *ngIf="FC.Times.errors.required" style="color:red;">Field is required..!</span>
+            </span>
+          </div>
+
+          <div class="col-lg-6">
+            <label>Remarks:</label>
+            <textarea type="text" formControlName="Remarks" class="form-control" maxlength="1000"></textarea>
+            <span *ngIf="isSubmitted && FC.Remarks.errors" class="form-text text-muted">
+              <span *ngIf="FC.Remarks.errors.required" style="color:red;">Field is required..!</span>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="box-footer">
+      <button type="button" (click)="CloseModel()" class="btn btn-default pull-right">Cancel</button>
+      <button style="margin-right: 1%;" [disabled]="buttonDisable" type="submit"
+        class="btn btn-info pull-right">Update</button>
+    </div>
+  </form>
+
+</div>
+
+<div class="box box-default" style="margin-top: 0px;">
+  <div class="box-header with-border">
+    <h3 class="box-title">Follow Up</h3>
+  </div>
+  <div class="modal-body card-box" id="show_ac_details" [innerHTML]="dataArr">
+  </div>
+</div>

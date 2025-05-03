@@ -1,0 +1,22 @@
+.custom-scrool .main_card_form {
+    background: #fff;
+    border-radius: 0px;
+    box-shadow: none;
+    border: none;
+}
+.header_title {
+    margin: 0;
+    color: #2cb2b3;
+    font-weight: 700;
+    font-size: 16px;
+}
+hr {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+.mt-gap {
+    margin-top: 20px;
+}
+table.table {
+    width: 100% !important;
+}

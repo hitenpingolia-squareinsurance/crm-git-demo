@@ -1,0 +1,126 @@
+<form class="form-blog-top" [formGroup]="ActionForm" (ngSubmit)="AddNewEmployee()">
+  <table class="table table-bordered">
+    <thead>
+     <tr>
+      <th style="text-align: center;">Add Employee Details
+        <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+      </th>
+     </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-4">
+              <label>REID *: </label>
+              <input type="text" class="form-control" placeholder="Enter Employee Code" formControlName="REID">
+              <span *ngIf="isSubmitted && FC_1.REID.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.REID.errors.required" style="color:red;">Please enter Employee Code !</span>
+              </span>
+            </div>
+
+            <div class="col-sm-4">
+              <label>Employee Code *: </label>
+              <input type="text" class="form-control" placeholder="Enter Employee Code" formControlName="Employee_Code">
+              <span *ngIf="isSubmitted && FC_1.Employee_Code.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.Employee_Code.errors.required" style="color:red;">Please enter Employee Code !</span>
+              </span>
+            </div>
+
+            <div class="col-sm-4">
+              <label>Employee Name *: </label>
+              <input type="text" class="form-control" placeholder="Enter Employee Name" formControlName="Employee_Name">
+              <span *ngIf="isSubmitted && FC_1.Employee_Name.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.Employee_Name.errors.required" style="color:red;">Please enter Employee Name !</span>
+              </span>
+            </div>
+
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-4">
+              <label>DOB *: </label>
+              <input bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}"  formControlName="DOB" placeholder="DD-MM-YYYY" class="form-control" type="text">
+              <span *ngIf="isSubmitted && FC_1.DOB.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.DOB.errors.required" style="color:red;">Please enter DOB !</span>
+              </span>
+            </div>
+
+            <div class="col-sm-4">
+              <label>DOJ *: </label>
+              <input bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}"  formControlName="DOJ" placeholder="DD-MM-YYYY" class="form-control" type="text">
+              <span *ngIf="isSubmitted && FC_1.DOJ.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.DOJ.errors.required" style="color:red;">Please enter DOB !</span>
+              </span>
+            </div>
+
+            <div class="col-sm-4">
+              <label>Gender *: </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select" [data]="GenderArray" formControlName="Gender" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+              <span *ngIf="isSubmitted && FC_1.Gender.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.Gender.errors.required" style="color:red;">Please select Gender !</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-4">
+              <label>Age *: </label>
+              <input type="text" class="form-control" placeholder="Enter Age" formControlName="Age">
+              <span *ngIf="isSubmitted && FC_1.Age.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.Age.errors.required" style="color:red;">Please enter Age !</span>
+              </span>
+            </div>
+
+            <div class="col-sm-4">
+              <label>Designation *: </label>
+              <input type="text" class="form-control" placeholder="Enter Designation" formControlName="Designation">
+              <span *ngIf="isSubmitted && FC_1.Designation.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.Designation.errors.required" style="color:red;">Please enter Designation !</span>
+              </span>
+            </div>
+
+            <div class="col-sm-4">
+              <label>Sum Assured *: </label>
+              <input type="number" class="form-control" placeholder="Enter Sum Assured" formControlName="Sum_Assured">
+              <span *ngIf="isSubmitted && FC_1.Sum_Assured.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.Sum_Assured.errors.required" style="color:red;">Please enter Sum Assured !</span>
+                <span *ngIf="FC_1.Sum_Assured.errors.pattern" style="color:red;">Enter vaild Sum Assured(Numeric value)!</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-4">
+              <label>CTC / Annual Salary *: </label>
+              <input type="number" class="form-control" placeholder="Enter CTC/Annual Salary" formControlName="CTC">
+              <span *ngIf="isSubmitted && FC_1.CTC.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.CTC.errors.required" style="color:red;">Please enter CTC / Annual Salary !</span>
+                <span *ngIf="FC_1.CTC.errors.pattern" style="color:red;">Enter vaild CTC/Annual Salary(Numeric value)!</span>
+              </span>
+            </div>
+
+            <div class="col-sm-4">
+              <label>Adjustment Premium *: </label>
+              <input type="number" class="form-control" placeholder="Enter Adjustment Premium" formControlName="Extra_Premium">
+              <span *ngIf="isSubmitted && FC_1.Extra_Premium.errors" class="form-text text-muted">
+                <span *ngIf="FC_1.Extra_Premium.errors.required" style="color:red;">Please enter Adjustment Premium !</span>
+                <span *ngIf="FC_1.Extra_Premium.errors.pattern" style="color:red;">Enter vaild Premium(Numeric value)!</span>
+              </span>
+            </div>
+
+          </div>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

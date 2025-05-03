@@ -1,0 +1,44 @@
+.input-group-append {
+    margin-top: 20px;
+    text-align: center;
+    display: block;
+    text-align: center;
+}
+  .btn.btn-info {
+    color: #3699ff;
+    background-color: transparent;
+    border-color: transparent;
+    text-align: right;
+    padding: 0px;
+    display: block;
+    width: auto;
+  }
+  .btn.btn-info:hover {
+    color: #3699ff;
+    background-color: transparent;
+    border-color: transparent;
+  }
+  .main_header {
+    position: relative;
+  }
+  .closeModelButton {
+    position: absolute;
+    right: -15px;
+    top: -15px;
+  }
+  h4.header_title {
+    color: rgba(44, 178, 179, 9);
+    margin: 0px;
+    font-weight: 600;
+}
+.resend-otp {
+    padding: 0px;
+    border: none;
+    background: transparent;
+    color: #367fa9;
+    font-weight: 500;
+    text-align: right;
+    float: right;
+    display: block;
+}
+  

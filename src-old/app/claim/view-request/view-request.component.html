@@ -1,0 +1,233 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Claim</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div class="filterquotesrow">
+              <button class="btn btninfo1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><a role="button"><i
+                    class="fa fa-filter"></i><span>Filters</span><i class="fa fa-angle-down"></i></a></button>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panelbody">
+                <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+              </div>
+            </div>
+            <div class="custom_table tables_layout_design" *ngIf="currentUrl == '/claim/manage-requests'">
+              <table datatable [dtOptions]="dtOptions" class="row-border table" id="Table1">
+                <thead>
+                  <tr>
+                    <th></th>
+                  </tr>
+                </thead>
+              </table>
+              <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                <li class="table-row tablerow{{(i % 10) + 1}}" *ngFor="let row of dataAr; let i=index;">
+                  <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                    <div class="agents_data agents_data1">
+                      <div class="icon_re_cl">{{row.Sno}}</div>
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Claim Requester</div>
+                          <strong class="fs_18">{{row.Claim_Manager}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data2">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Policy No</div>
+                          <strong class="fs_18" id="emailToCopy">{{row['AllData'].PolicyNo}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data3">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Name</div>
+                          <strong class="fs_18">{{row['AllData'].name}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="last_row_div custon-234">
+                    <div class="label_chips motor_lob">
+                      <span>Claim Id : {{row['AllData'].Claim_Id}}</span>
+                    </div>
+                    <div class="label_chips non_motor_lob">
+                      <span>Policy Period : {{row.policyStartDate}} To {{row.policyEndDate}}</span>
+                    </div>
+                    <div class="label_chips health_lob">
+                      <span>Email : {{row['AllData'].mailId}}</span>
+                    </div>
+                    <div class="label_chips finance_lob">
+                      <span>Mobile No. : {{row['AllData'].mobileNo}}</span>
+                    </div>
+                    <div class="label_chips growth_negative">
+                      <span>Lob : {{row['AllData'].lob}}</span>
+                    </div>
+                    <div class="label_chips growth_negative">
+                      <span>Type : {{row['AllData'].type}}</span>
+                    </div>
+                    <div class="label_chips growth_negative">
+                      <span>Claim Create Date : {{ formatDate(row['AllData'].addstamp) }}</span>
+                    </div>
+                  </div>
+                  <div class="last_row">
+                    <div class="d_flex effective_date">
+                      <div class="date_text">
+                        <span>Loaction : </span>
+                        <span class="fs_12"> {{row['AllData'].loaction}}</span>
+                      </div>
+                    </div>
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                      <a (click)="AddClaim(row['AllData'].Claim_Id)" class="btnbg">Claim Details</a>
+                      <a *ngIf="this.api.GetUserType() == 'employee'" (click)="GetPolicyDetails(row.Quotation_Id)"
+                        class="btnbg2inactive">Policy Details</a>
+                      <a *ngIf="row['AllData'].manager_id == 0" (click)="activeManager(row['AllData'].Claim_Id)"
+                        class="btnbg2inactive">Accept</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == 1" class="btnbg2inactive">Pending</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == '2'" class="btnbg2inactive">In Process</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == '3'" class="btnbg1active">Approve</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == '4'" class="btnbg3resign">Close</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == '5'" class="btnbg3resign">Rejected</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == '6'" class="btnbg2inactive">Re-open</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == '7'" class="btnbg2inactive">Partially-Settled</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == '8'" class="btnbg2inactive">Settled</a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="row" *ngIf="dataAr?.length == 0">
+                <div class="col-md-12">
+                  <div class="no_data_found">
+                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                    <small>No data available !</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="custom_table tables_layout_design" *ngIf="currentUrl != '/claim/manage-requests'">
+              <table datatable [dtOptions]="dtOptions" class="row-border table" id="Table1">
+                <thead>
+                  <tr>
+                    <th></th>
+                  </tr>
+                </thead>
+              </table>
+              <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                <li class="table-row tablerow{{(i % 10) + 1}}" *ngFor="let row of dataAr; let i=index;">
+                  <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                    <div class="agents_data agents_data1">
+                      <div class="icon_re_cl">{{row.Sno}}</div>
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Claim Requester</div>
+                          <strong class="fs_18">{{row.Claim_Manager}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data2">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Policy No</div>
+                          <strong class="fs_18" id="emailToCopy">{{row['AllData'].PolicyNo}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data3">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Name</div>
+                          <strong class="fs_18">{{row['AllData'].name}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="last_row_div custon-234">
+                    <div class="label_chips motor_lob">
+                      <span>Claim Id : {{row['AllData'].Claim_Id}}</span>
+                    </div>
+                    <div class="label_chips non_motor_lob">
+                      <span>Policy Period : {{row.policyStartDate}} To {{row.policyEndDate}}</span>
+                    </div>
+                    <div class="label_chips health_lob">
+                      <span>Email : {{row['AllData'].mailId}}</span>
+                    </div>
+                    <div class="label_chips finance_lob">
+                      <span>Mobile No. : {{row['AllData'].mobileNo}}</span>
+                    </div>
+                    <div class="label_chips real_estate_lob">
+                      <span>Lob : {{row['AllData'].lob}}</span>
+                    </div>
+                    <div class="label_chips growth_positive">
+                      <span>Type : {{row['AllData'].type}}</span>
+                    </div>
+                    <div class="label_chips growth_negative">
+                      <span>Claim Create Date : {{ formatDate(row['AllData'].addstamp) }}</span>
+                    </div>
+                  </div>
+                  <div class="last_row">
+                    <div class="d_flex effective_date">
+                      <div class="date_text">
+                        <span>Loaction : </span>
+                        <span class="fs_12"> {{row['AllData'].loaction}}</span>
+                      </div>
+                      <div class="date_text">
+                        <span>Claim Manager : </span>
+                        <span class="fs_12"> {{row.Claim_Manager_Id_Name}}</span>
+                      </div>
+                    </div>
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                      <a (click)="AddClaim(row['AllData'].Claim_Id)" class="btnbg">Claim Details</a>
+                      <a *ngIf="this.api.GetUserType() == 'employee'" (click)="GetPolicyDetails(row.Quotation_Id)"
+                        class="btnbg2inactive">Policy Details</a>
+                      <a *ngIf="row['AllData'].manager_id == 0" (click)="activeManager(row['AllData'].Claim_Id)"
+                        class="btnbg2inactive">Accept</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == 1" class="btnbg2inactive">Panding</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == '2'" class="btnbg2inactive">In Process</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == '3'" class="btnbg1active">Approve</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == '4'" class="btnbg3resign">Close</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == '5'" class="btnbg3resign">Rejected</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == '6'" class="btnbg2inactive">Re-open</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == '7'" class="btnbg2inactive">Partially-Settled</a>
+                      <a routerLink="/claim/manage-requests/{{row['AllData'].Claim_Id}}"
+                        *ngIf="row['AllData'].status == '8'" class="btnbg2inactive">Settled</a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="row" *ngIf="dataAr?.length == 0">
+                <div class="col-md-12">
+                  <div class="no_data_found">
+                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                    <small>No data available !</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

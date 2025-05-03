@@ -1,0 +1,111 @@
+<div class="main_card_form">
+    <div class="main_header">
+        <div class="header_title">View Request </div>
+    </div>
+    <div class="main_body h_100">
+
+        <!-- {{Status}} - {{Maneger_Id}} - {{loginPerson}} - {{resign_status}} -->
+        <div
+            *ngIf="((Status == '1' &&  Rm_Id == loginPerson ) || (Status == '2' &&  Hod_Id == loginPerson ) || (Status == '3' &&  Maneger_Id == loginPerson ) || (Status == '4' &&  Maneger_Id == loginPerson && resign_status == 1 ) || (Status == '4' &&  Loginid == loginPerson ) && StatusVal == '1') || RequestType=='Closelead'">
+            <form [formGroup]="updateQuantity" style="margin-top: 10px;" id="form-1">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="item">Quantity</label>
+                            <ng-multiselect-dropdown class="form-control" name="Quantity" placeholder="Select Quantity"
+                                [data]="QuantityData" formControlName="Quantity" [settings]="dropdownSingleSettingsType"
+                                [disabled]="multiselectReadonly">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && formControls.Quantity.errors" class="ValidationError">
+                                <div *ngIf="formControls.Quantity.errors.required">Please enter Quantity</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="item">Remarks</label>
+                            <input type="text" class="form-control" formControlName="Remarks" readonly>
+                            <div *ngIf="isSubmitted && formControls.Remarks.errors" class="ValidationError">
+                                <div *ngIf="formControls.Remarks.errors.required">Please enter Remarks</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="item">Addition</label>
+                            <input type="text" class="form-control" readonly formControlName="Addtion">
+                        </div>
+                        <input type="hidden" class="form-control" readonly formControlName="status_check">
+                        <input type="hidden" class="form-control" readonly formControlName="VisitingOrderId">
+
+                        <div class="col-md-12">
+                            <label for="item">Action Remarks</label>
+                            <textarea type="text" class="form-control" formControlName="ActionRemarks"> </textarea>
+                            <div *ngIf="isSubmitted && formControls.ActionRemarks.errors" class="ValidationError">
+                                <div *ngIf="formControls.ActionRemarks.errors.required">Please enter Action
+                                    Remarks
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="main_footer"
+        *ngIf="((Status == '1' &&  Rm_Id == loginPerson ) || (Status == '2' &&  Hod_Id == loginPerson ) || (Status == '3' &&  Maneger_Id == loginPerson ) || (Status == '4' &&  Maneger_Id == loginPerson && resign_status == 1 )  || (Status == '4' &&  Loginid == loginPerson ) && StatusVal == '1') || RequestType=='Closelead'">
+
+        <button (click)="UpdateRequestLog(0)" class="mr_5 btn-danger Save_click" *ngIf="RequestType!='Closelead'">
+            <span
+                *ngIf="((Status == '1' &&  Rm_Id == loginPerson ) || (Status == '2' &&  Hod_Id == loginPerson ) || (Status == '3' &&  Maneger_Id == loginPerson )  || (Status == '4' &&  Maneger_Id == loginPerson && resign_status == 1 )  && StatusVal == '1') ">Reject</span>
+            <span *ngIf="(Status == '4' &&  Loginid == loginPerson ) && StatusVal == '1'">Not Recevied</span>
+        </button>
+        <button (click)="UpdateRequestLog(2)" class="mr_5 btn-danger Save_click" *ngIf="RequestType=='Closelead'">
+            <span>Close</span>
+        </button>
+
+        <button (click)="UpdateRequestLog(1)" class="Save_click" *ngIf="RequestType!='Closelead'">
+            <span
+                *ngIf="((Status == '1' &&  Rm_Id == loginPerson ) || (Status == '2' &&  Hod_Id == loginPerson )  && StatusVal == '1') ">Approved</span>
+            <span *ngIf="((Status == '3' &&  Maneger_Id == loginPerson )  && StatusVal == '1') ">Delivered</span>
+            <span
+                *ngIf="((Status == '4' &&  Loginid == loginPerson ) || (Status == '4' &&  Maneger_Id == loginPerson && resign_status == 1 )  )&& StatusVal == '1'">Recevied</span></button>
+
+    </div>
+</div>
+<br>
+<br>
+
+<table id="Table1" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>S.No</th>
+            <th>Type</th>
+            <th>Action User Name</th>
+            <!-- <th>Quantity</th> -->
+            <th>Request Id</th>
+            <th>Remark</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody *ngIf="RequestViewLogData?.length != 0">
+        <tr *ngFor="let row of RequestViewLogData; let i=index;">
+            <td>{{row.SrNo}}</td>
+            <td>{{row.Type}}</td>
+            <td>{{row.Name}}</td>
+            <!-- <td>{{row.Quantity}}</td> -->
+            <td>{{row.VisitingId}}</td>
+            <td>{{row.Remarks}}</td>
+            <td>{{row.Date}}</td>
+
+            <td>
+                <label *ngIf="row.Status == '1'" class="label label-info label-inline mr-2">Approve</label>
+                <label *ngIf="row.Status == '0'" class="label label-danger label-inline mr-2">Rejected</label>
+                <label *ngIf="row.Status == '2'" class="label label-danger label-inline mr-2">Close Request</label>
+            </td>
+        </tr>
+    </tbody>
+    <tbody *ngIf="RequestViewLogData?.length == 0">
+        <tr>
+            <td colspan="8" align="center">No data Available !</td>
+        </tr>
+    <tbody>
+</table>

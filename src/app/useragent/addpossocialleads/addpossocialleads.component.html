@@ -1,0 +1,129 @@
+
+
+        <div class="row">
+
+            <div class="modal-header" style="text-align: center;">
+              <h4 class="modal-title">Add Social Lead
+                <button type="button" (click)="CloseModel()" class="btn btn-box-tool" style="float: right;"><i class="fa fa-close"
+                    style="font-size:17px"></i></button>
+              </h4>
+            </div>
+          </div>
+        
+        
+        <form class="form" (ngSubmit)="submit()" [formGroup]="socialleadform">
+        
+        
+            <div class="popup-content-body">
+                <div class="row popup-form">
+        
+                    <div class="col-md-6">
+                        <label for="state">Platform</label>
+                      <select formControlName="platform" class="form-control">
+                          <option value="">--Select Platform--</option>
+                          <option>Whatsapp</option>
+                          <option>Linkedin</option>
+                          <option>Instagram</option>
+                          <option>Facebook</option>
+                          <option>Sulekha</option>                        <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>&nbsp;&nbsp;
+
+                          <option>Google</option>
+                          <option>Twitter</option>
+                          <option>Others</option>
+                      </select>
+                        <div *ngIf="isSubmitted && formControls.platform.errors" class="Validationerrors">
+                            <div *ngIf="formControls.platform.errors.required"><span style="color: red;">Please Select
+                                    platform!</span></div>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6" >
+                    <label for="state">Name</label>
+                    <input type="text" formControlName="name"
+                        class="form-control">
+                    <div *ngIf="isSubmitted && formControls.name.errors" class="Validationerrors">
+                        <div *ngIf="formControls.name.errors.required"><span style="color: red;">Please enter
+                                name!</span></div>
+                    </div>
+                </div>
+        
+        
+                <div class="col-md-6" >
+                    <label for="state">Email</label>
+                    <input type="text" formControlName="email"
+                        class="form-control">
+                    <div *ngIf="isSubmitted && formControls.email.errors" class="Validationerrors">
+                        <div *ngIf="formControls.email.errors.required"><span style="color: red;">Please enter
+                                email!</span></div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" >
+                    <label for="state">Mobile</label>
+                    <input type="text" formControlName="mobile"
+                        class="form-control">
+                    <div *ngIf="isSubmitted && formControls.mobile.errors" class="Validationerrors">
+                        <div *ngIf="formControls.mobile.errors.required"><span style="color: red;">Please enter
+                                mobile!</span></div>
+                    </div>
+                </div>
+        
+                    <div class="col-md-6" >
+                        <label for="state">State Name</label>
+                        <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="State"
+                        formControlName="state" [settings]="dropdownSettingsType"
+                        (onSelect)="onItemSelect($event,'State')"
+                        (onDeSelect)="onItemDeSelect($event,'State')">
+                      </ng-multiselect-dropdown>
+                        <div *ngIf="isSubmitted && formControls.state.errors" class="Validationerrors">
+                            <div *ngIf="formControls.state.errors.required"><span style="color: red;">Please select
+                                state!</span></div>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6">
+                        <label for="state">City Name</label>
+                        <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="City"
+                        formControlName="city" [settings]="dropdownSettingsMultiselect"
+                        (onSelect)="onItemSelect($event,'City')" (onDeSelect)="onItemDeSelect($event,'City')">
+                      </ng-multiselect-dropdown>
+                        <div *ngIf="isSubmitted && formControls.city.errors" class="Validationerrors">
+                            <div *ngIf="formControls.city.errors.required"><span style="color: red;">Please select
+                                city name!</span></div>
+                        </div>
+                    </div>
+        
+        
+                    <div class="col-md-6">
+                        <label for="state">Pincode</label>
+                       <input type="text" class="form-control" formControlName="pincode">
+                        <div *ngIf="isSubmitted && formControls.pincode.errors" class="Validationerrors">
+                            <div *ngIf="formControls.pincode.errors.required"><span style="color: red;">Please enter
+                                pincode!</span></div>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6">
+                      <label for="state">Remarks</label>
+                     <textarea class="form-control" formControlName="remark" style="height: 35px;"></textarea>
+                      <div *ngIf="isSubmitted && formControls.remark.errors" class="Validationerrors">
+                          <div *ngIf="formControls.remark.errors.required"><span style="color: red;">Please enter
+                              remark!</span></div>
+                      </div>
+                  </div>
+        
+                 
+        
+        
+                   <div class="clearfix"></div>
+                    <div class="button-div-yes-no" align="right" style="margin-top: 10px; margin-right: 13px;" >
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+        
+        
+                </div>
+            </div>
+        
+        </form>
+        
+  

@@ -1,0 +1,97 @@
+<form (ngSubmit)="update()" [formGroup]="Updateform">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="text-align: center;">Edit Quotes Label
+                    <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>Select LOB</label>
+                            <ng-multiselect-dropdown class="form-control" placeholder="Select lob" [data]="lob" formControlName="lob"
+                                [settings]="dropdownSettingsType" [(ngModel)]="lob_type" required>
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="Updateform.get('lob').touched && Updateform.get('lob').invalid">
+                                <small class="text-danger">LOB is required.</small>
+                            </div>
+                        </div> 
+                        <div class="col-sm-4">
+                            <label>Select Product Type</label>
+                            <ng-multiselect-dropdown class="form-control" placeholder="select product type" [data]="product_type"
+                                formControlName="product_type" [settings]="dropdownSettingsType"  [(ngModel)]="product_type1" required>
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="Updateform.get('product_type').touched && Updateform.get('product_type').invalid">
+                                <small class="text-danger">product_type is required.</small>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Label type</label>
+                            <ng-multiselect-dropdown class="form-control" placeholder="Label type" [data]="label_type"
+                                formControlName="label_type" [settings]="dropdownSettingsType"  [(ngModel)]="label_type1" required>
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="Updateform.get('label_type').touched && Updateform.get('label_type').invalid">
+                                <small class="text-danger">label_type is required.</small>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Plan type</label>
+                            <ng-multiselect-dropdown class="form-control" placeholder="Plan type" [data]="plan_type"
+                                formControlName="plan_type" [settings]="dropdownSettingsType"  [(ngModel)]="plan_type1" required>
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="Updateform.get('plan_type').touched && Updateform.get('plan_type').invalid">
+                                <small class="text-danger">plan_type is required.</small>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Select Insurer</label>
+                            <ng-multiselect-dropdown class="form-control" placeholder=" Select Insurer" [data]="insurer"
+                                formControlName="insurer" [settings]="dropdownSettingsType"  [(ngModel)]="insurer1" required>
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="Updateform.get('insurer').touched && Updateform.get('insurer').invalid">
+                                <small class="text-danger">insurer is required.</small>
+                            </div>
+                        </div>    
+                        <div class="col-sm-4">
+                            <label>Icon Color</label>
+                            <input type="color" class="form-control" formControlName="icon_color" placeholder="Icon Color" required>
+                            <div *ngIf="Updateform.get('icon_color').touched && Updateform.get('icon_color').invalid">
+                                <small class="text-danger">icon_color is required.</small>
+                            </div>
+                        </div>   
+                        <div class="col-sm-4">
+                            <label>Font color</label>
+                            <input type="color" class="form-control" formControlName="font_color" placeholder="Font color" required>
+                            <div *ngIf="Updateform.get('font_color').touched && Updateform.get('font_color').invalid">
+                                <small class="text-danger">font_color is required.</small>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Icon Name</label>
+                            <input type="text" class="form-control" formControlName="icon_name" placeholder="Icon Name" required>
+                            <div *ngIf="Updateform.get('icon_name').touched && Updateform.get('icon_name').invalid">
+                                <small class="text-danger">icon_name is required.</small>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Label Name</label>
+                            <input type="text" class="form-control" formControlName="label_name" placeholder="Label Name" required>
+                            <div *ngIf="Updateform.get('label_name').touched && Updateform.get('label_name').invalid">
+                                <small class="text-danger">label_name is required.</small>
+                            </div>
+                        </div>
+                    </div> 
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>

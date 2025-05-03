@@ -1,0 +1,433 @@
+<section class="inner_page_css main_dashboard_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">
+              <!-- title  -->
+              QC Report
+            </div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+
+            <div>
+              <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <a role="button" class="fa fa-filter"><span>Filters</span><i
+                      class="fa fa-angle-down pull-right"></i></a>
+                </button>
+              </div>
+            </div>
+
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+                <!-- filter  -->
+
+                <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Broker" [data]="Broker_Ar"
+                        formControlName="Broker_Id" [settings]="dropdownSettings"></ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <select (change)="GetEmployees($event)" formControlName="Vertical_Id" class="form-control">
+                        <option disabled selected value="0">Select Vertical</option>
+                        <option *ngFor="let r of Vertical_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+                      </select>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <select (change)="GetSubBranches($event)" formControlName="Region_Id" class="form-control">
+                        <option disabled selected value="0">Main Branch</option>
+                        <option value="0">None</option>
+                        <option *ngFor="let r of Region_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+                      </select>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <select (change)="GetEmployees($event)" formControlName="Sub_Region_Id" class="form-control">
+                        <option disabled selected value="0">Service-Location</option>
+                        <option value="0">None</option>
+                        <option *ngFor="let r of Sub_Branch_Ar;" value="{{r.id}}">{{r.text}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row" style="margin-top: 1%;">
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" [placeholder]="Employee_Placeholder"
+                        [data]="Emps_Ar" formControlName="Emp_Id" [settings]="dropdownSettings"
+                        (onSelect)="onItemSelect($event,'Employee')"
+                        (onDeSelect)="onItemDeSelect($event,'Employee')"></ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" name="Agent_Id" [placeholder]="Agents_Placeholder"
+                        [data]="Agents_Ar" formControlName="Agent_Id" [settings]="AgentdropdownSettings">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3" *ngIf="urlSegment != 'life-insurance'">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select LOB" [data]="SRLOB_Ar"
+                        formControlName="SRLOB" [settings]="LOB_dropdownSettings"
+                        (onSelect)="onItemSelect($event,'LOB')"
+                        (onDeSelect)="onItemDeSelect($event,'LOB')"></ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Product" [data]="Products_Ar"
+                        formControlName="Product_Id" [settings]="dropdownSettings"></ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3" *ngIf="urlSegment == 'life-insurance'">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Ins Company"
+                        [data]="Companies_Ar" formControlName="Company_Id"
+                        [settings]="dropdownSettings"></ng-multiselect-dropdown>
+                    </div>
+                  </div>
+
+                  <div class="row" style="margin-top: 1%;">
+                    <div class="col-sm-3" *ngIf="urlSegment != 'life-insurance'">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Ins Company"
+                        [data]="Companies_Ar" formControlName="Company_Id"
+                        [settings]="dropdownSettings"></ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" name="SR_Type" placeholder="Select SR Type"
+                        [data]="SRType_Ar" formControlName="SR_Type" [settings]="LOB_dropdownSettings"
+                        (onSelect)="onItemSelect($event,'SR_Type')"> </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" name="SR_Source_Type" placeholder="Select Source"
+                        [data]="SRSource_Ar" formControlName="SR_Source_Type" [settings]="LOB_dropdownSettings"
+                        (onSelect)="onItemSelect($event,'Source')"></ng-multiselect-dropdown>
+                    </div>
+
+
+                    
+
+
+                    <div class="col-sm-3">
+                      <select formControlName="Request_Type" class="form-control">
+                        <option disabled value="0">Select Request</option>
+                        <option value="1">My Request</option>
+                        <option *ngIf="is_raise_request_view==1" value="2">Raised Request</option>
+                        <option value="3">Rejected Request</option>
+                      </select>
+                      <span *ngIf="isSubmitted && FC.Request_Type.errors" class="form-text text-muted">
+                        <span *ngIf="FC.Request_Type.errors.required" style="color:red;">Please choose request
+                          type!</span>
+                      </span>
+                    </div>
+
+                    <div class="col-sm-3" *ngIf="urlSegment == 'life-insurance'">
+                      <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                        formControlName="DateOrDateRange" bsDaterangepicker
+                        [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                      <span *ngIf="isSubmitted && FC.DateOrDateRange.errors" class="form-text text-muted">
+                        <span *ngIf="FC.DateOrDateRange.errors.required" style="color:red;">Please choose Date or
+                          Date-Range!</span>
+                      </span>
+                    </div>
+
+                  </div>
+
+                  <div class="row" style="margin-top: 1%;">
+
+
+                    <div class="col-sm-3">
+                        <select  placeholder="Select Payment Mode" class="form-control" formControlName="Mode_Of_Payment">
+                          <option disabled value="">---Select Payment Mode---</option>
+                          <option value="Cash">Cash</option>
+                          <option value="Cheque">Cheque </option>
+                          <option value="RTGS">RTGS</option>
+                          <option value="NEFT">NEFT</option>
+                          <option value="IMPS">IMPS</option>
+                          <option value="UPI">UPI</option>
+                          <option value="Card">Card</option>
+                          <option value="Online">Online</option>
+                      </select> 
+                    </div>
+
+                    <div class="col-sm-3" *ngIf="urlSegment != 'life-insurance'">
+                      <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                        formControlName="DateOrDateRange" bsDaterangepicker
+                        [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                      <span *ngIf="isSubmitted && FC.DateOrDateRange.errors" class="form-text text-muted">
+                        <span *ngIf="FC.DateOrDateRange.errors.required" style="color:red;">Please choose Date or
+                          Date-Range!</span>
+                      </span>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <input type="text" formControlName="GlobalSearch" placeholder="Search SR No/Policy/Vehicle No."
+                        class="form-control">
+                    </div>
+
+                    <!-- BEGIN::QC MAPPED FILTER ADDED BY PARAS -->
+                    <div class="col-sm-3" *ngIf="urlSegment == 'general-insurance'">
+                      <select placeholder="Select Payment Mode" class="form-control" formControlName="OC_Mapped">
+                        <option disabled value="">---Select Auto-QC Mapped---</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Review">Review </option>
+                        <option value="Not-Matched">Not-Matched</option>
+                      </select>
+                    </div>
+                    <!-- END::QC MAPPED FILTER ADDED BY PARAS -->
+
+                    <!-- <div class="col-sm-3" *ngIf="urlSegment == 'life-insurance'"></div> -->
+
+                    <div class="col-sm-6" style="text-align: right; margin-top: 1%;">
+                      <!-- <input type="submit" class="btn btn-info" value="Search"> -->
+                      <button type="submit" class="btn btn-info" style="font-size: small;" value="Search">
+                        <i class="fa fa-search">
+                          Search</i></button>
+                      &nbsp;&nbsp;
+                      <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                        value="Reset"> <i class="fa fa-close"> Reset</i> </button>&nbsp;&nbsp;
+                      <input *ngIf="Is_Export == '1' ||  this.loginId == '8'" (click)="ExportExcel()"
+                        style="background-color: #1bc5bd;border-color: #1bc5bd;" type="button" class="btn btn-warning"
+                        value="Export">&nbsp;&nbsp;
+                      <input (click)="SrPopup(0,0)" type="button" class="btn btn-warning" value="Business Login">
+                    </div>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+
+
+            <hr>
+
+
+            <div
+              *ngIf="checkedList?.length>0 && (SearchForm.value['Request_Type'] == '2' || SearchForm.value['Request_Type'] == '3')"
+              class="row" style="margin-top: 1%;">
+              <div class="col-sm-2">
+                <select class="form-control" [(ngModel)]="Status">
+                  <option value="">--Select--</option>
+                  
+                  <option *ngIf="is_accounts==0" value="Accept">Accept</option>
+
+                  <option *ngIf="is_accounts==1" value="Approve">Approve</option>
+                  <option *ngIf="is_accounts==1" value="Reject">Reject</option>
+                  
+                  <option *ngIf="is_raise_request_view==1" value="Assign">Assign</option>
+                </select>
+              </div>
+
+              <div *ngIf="Status=='Assign'" class="col-sm-3">
+                <select class="form-control" [(ngModel)]="Assign_User">
+                  <option selected disabled value="">--Select Assign-user--</option>
+                  <option *ngFor="let r of OpsUsers;" value="{{r.Id}}">{{r.Name}}</option>
+                </select>
+              </div>
+
+              <div class="col-sm-4">
+                <input class="form-control" [(ngModel)]="Remark" placeholder="Remark">
+              </div>
+              <div class="col-sm-3">
+                <input type="button" (click)="Transfer()" class="btn btn-info" value="Submit">
+                &nbsp;&nbsp;
+                <input (click)="CancelTransfer()" type="button" class="btn btn-danger" value="Cancel">
+              </div>
+
+            </div>
+
+            <hr>
+            <div class=" mydiv table-responsive">
+              <table datatable [dtOptions]="dtOptions"
+                class="row-border hover table table-bordered table-hover table-checkable" id="kt_datatable"
+                style="margin-top: 13px !important">
+                <thead>
+                  <tr>
+                    <th> <!--No<br>-->
+                      <input [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()"
+                        type="checkbox">
+                    </th>
+                    <th>Action</th>
+                    <th>SR No/Source</th>
+                    <th style="text-align:center;" *ngIf="urlSegment == 'life-insurance'">CreateDate/Current Status</th>
+                    <th style="text-align:center;" *ngIf="urlSegment != 'life-insurance'">CreateDate</th>
+                    <th>SRCreateUser</th>
+                    <th>Mode Of Payment</th>
+                    <th>Current/UserStatus</th>
+                    <th>Remark</th>
+                    <th>Partner Name/Code</th>
+                    <th>RM Name/Code</th>
+                    <th>Customer Name</th>
+                    <th style="text-align:center;" *ngIf="urlSegment == 'life-insurance'">Policy No</th>
+                    <th style="text-align:center;" *ngIf="urlSegment != 'life-insurance'">Vehicle/Policy No</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr">
+                    <td>
+                      <!--{{row.SrNo}}.
+                        <br>-->
+                      <input type="checkbox" [(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}"
+                        (change)="isAllSelected()">
+
+                    </td>
+
+                    <td>
+
+                      <a href="javascript:;" (click)="SrPopup(1,row.Id)">
+                        <span style="margin-right: 5px;" class="label label-primary label-inline mr-2">Details</span>
+                      </a>
+
+                      <a *ngIf="row.Is_Edit==2 && row.is_accounts==0" href="javascript:;" (click)="Accept(row.Id)">
+                        <span style="margin-top: 5px;  margin-right: 5px;" class="label label-info label-inline mr-2">Accept</span>
+                      </a>
+
+                      <a *ngIf="row.is_accounts==1" href="javascript:;" (click)="ApproveByAccounts(row.Id)">
+                        <span style="margin-top: 5px; margin-right: 5px;" class="label label-success label-inline mr-2">Approve</span>
+                      </a>
+
+                      
+                      <a *ngIf="row.is_accounts==1" href="javascript:;" (click)="RejectByAccounts(row.Id)">
+                        <span style="margin-top: 5px; margin-right: 5px;" class="label label-danger label-inline mr-2">Reject</span>
+                      </a>
+
+                      <a *ngIf="row.Is_Approve_Accounts==2" href="javascript:;">
+                        <span style="margin-top: 5px; margin-right: 5px;" class="label label-danger label-inline mr-2">Reject By Accounts</span>
+                      </a>
+
+
+                      <a *ngIf="row.Is_Edit==1" href="javascript:;" (click)="SrPopup(0,row.Id)">
+                        <span style="margin-top: 5px; margin-right: 5px;"
+                          class="label label-warning label-inline mr-2">Edit</span>
+                      </a>
+
+                      <a *ngIf="row.Is_Edit==1 && row.LOB_Id =='Motor'"
+                        [routerLink]="['/endosment/details-form/'+row.EncodedSrNo]">
+                        <span style="margin-top: 5px; margin-right: 5px;"
+                          class="label label-warning label-inline mr-2">Raise Endorsement</span>
+                      </a>
+
+
+                      <span *ngIf="row.LOB_Id !='Life' && row.LOB_Id != 'LI'">
+
+                        <a *ngIf="row.Is_Cancel==1"
+                          href="javascript:;" (click)="Cancel(row.Id)">
+                          <span style="margin-top: 5px;margin-right: 5px;background-color: #7b353c;"
+                            class="label label-danger label-inline mr-2">Cancel</span>
+                        </a>
+
+
+                        <!-- BEGIN:: ADDED BY PARAS QC MAPPED-->
+                        <a href="javascript:void(0);" *ngIf="urlSegment == 'general-insurance'"
+                          style="margin-top: 5px; margin-right: 5px;display: inline-block;">
+                          <span class="label label-inline mr-2" [ngClass]="{
+                              'label-warning': !row.Dump_Status || row.Dump_Status === 'Pending',
+                              'label-success': row.Dump_Status === 'Review',
+                              'label-danger': row.Dump_Status === 'Not-Matched'
+                            }">
+                            Auto QC : {{ row.Dump_Status ? row.Dump_Status : 'Pending' }}
+                          </span>
+                        </a>
+                        <!-- END:: ADDED BY PARAS QC MAPPED-->
+
+                        <a *ngIf="row.Is_Edit==1" href="javascript:;" (click)="Rejected(row.Id)">
+                          <span style="margin-top: 5px;margin-right: 5px;background-color: #644144;" class="label label-danger label-inline mr-2">Reject</span>
+                        </a>
+                      </span>
+
+                      <span *ngIf="row.LOB_Id =='Life' || row.LOB_Id == 'LI'">
+                        <a *ngIf="row.LOB_Id == 'LI' && row.Is_Edit == 1 && (row.LI_Status != 8 && row.LI_Status != 9 && row.LI_Status != 10 && row.LI_Status != 11)"
+                          href="javascript:;" (click)="UpdateSrStatus(row.Id,'LI')"><span style="margin-right: 5px;"
+                            class="label label-primary">Action</span></a>
+
+                        <a *ngIf="row.LOB_Id == 'LI' && row.Is_Edit == 1 && (row.LI_Status != 9 && row.LI_Status != 11) && row.ShowCancelOption <= 20"
+                          href="javascript:;" (click)="CancelSrStatus(row.Id)"><span
+                            class="label label-danger">Cancel</span></a>
+
+                      </span>
+
+                    </td>
+
+                    <td> {{row.Full_SR_No}}<br>
+                      <!-- <span *ngIf="row.LOB_Id=='Life' || row.LOB_Id=='LI'" class="label label-primary label-inline mr-2">Life</span> -->
+                      <span style="margin-right: 5px;" *ngIf="row.LOB_Id=='Motor'"
+                        class="label label-success label-inline mr-2">Motor</span>
+                      <span style="margin-right: 5px;" *ngIf="row.LOB_Id=='Non Motor'"
+                        class="label label-warning label-inline mr-2">Non Motor</span>
+                      <span style="margin-right: 5px;" *ngIf="row.LOB_Id=='Health'"
+                        class="label label-info label-inline mr-2">Health</span>
+
+                      <span *ngIf="row.Source=='BMS' || row.Source=='CRM'" style="background: #8bc34a;margin-top: 5px;"
+                        class="label label-default label-inline mr-2">Offline</span>
+                      <span *ngIf="row.Source=='Web'" style="margin-top: 5px;"
+                        class="label label-primary label-inline mr-2">Online</span>
+                    </td>
+
+                    <td>{{row.Add_Stamp}}
+                      <span *ngIf="urlSegment == 'life-insurance' && row.Is_Edit == 1"><br>
+                        <span style="margin-right: 5px;" *ngIf="row.LI_Status== 0"
+                          class="label label-primary">Pending</span>
+                        <span style="margin-right: 5px;" *ngIf="row.LI_Status== 1" class="label label-warning">Pending
+                          For
+                          Login</span>
+                        <span style="margin-right: 5px;" *ngIf="row.LI_Status== 2" class="label label-warning">Case to
+                          Insurer</span>
+                        <span style="margin-right: 5px;" *ngIf="row.LI_Status== 3"
+                          class="label label-warning">Logged</span>
+                        <span style="margin-right: 5px;" *ngIf="row.LI_Status== 4" class="label label-warning">Video
+                          PLVC/Customer Declaration</span>
+                        <span style="margin-right: 5px;" *ngIf="row.LI_Status== 5" class="label label-warning">Pending
+                          For
+                          Medical</span>
+                        <span style="margin-right: 5px;" *ngIf="row.LI_Status== 6"
+                          class="label label-warning">Underwriting</span>
+                        <span style="margin-right: 5px;" *ngIf="row.LI_Status== 7" class="label label-warning">Pending
+                          For
+                          Policy Issuance</span>
+                        <span style="margin-right: 5px;" *ngIf="row.LI_Status== 8"
+                          class="label label-success">Booked</span>
+                        <span style="margin-right: 5px;" *ngIf="row.LI_Status== 9" class="label label-danger">Cancelled
+                          Request</span>
+                        <span style="margin-right: 5px;" *ngIf="row.LI_Status== 10" class="label label-danger">Cancelled
+                          Due
+                          TO Underwriter</span>
+                        <span style="margin-right: 5px;" *ngIf="row.LI_Status== 11" class="label label-danger">Cancelled
+                          By
+                          Customer</span>
+                      </span>
+                    </td>
+
+                    <td>{{row.Creator}}</td>
+                    <td>{{row.Mode_Of_Payment}}</td>
+                    <td>{{row.CurrentUser}}</td>
+                    <td>{{row.SR_Current_Remark}}</td>
+
+                    <td>{{row.Partner_Name}}</td>
+                    <td>{{row.RM_Name}}</td>
+
+                    <td>{{row.Customer_Name}}</td>
+                    <td>
+                      <span class="Registration" *ngIf="row.LOB_Id=='Motor'">{{row.Registration_No}} </span>
+                      <span>{{row.Policy_No}}</span>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="12" align="center">No data available !</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

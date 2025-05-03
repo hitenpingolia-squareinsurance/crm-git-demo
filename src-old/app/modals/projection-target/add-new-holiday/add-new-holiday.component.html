@@ -1,0 +1,50 @@
+<form class="form" [formGroup]="AddHolidayForm" (ngSubmit)="AddNewHoliday()">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="text-align: center; background-color: #2cb2b3; color: white;">Add New Holiday
+          <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <label>Choose Date : </label>
+              <input bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" formControlName="Holiday_Date"
+                placeholder="DD-MM-YYYY" class="form-control" [minDate]="minDate" type="text">
+              <div *ngIf="isSubmitted && formControls.Holiday_Date.errors " class="ValidationError">
+                <div *ngIf="formControls.Holiday_Date.errors.required">Please choose date!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-12" style="margin-top: 10px;">
+              <label>Service Location : </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Select Service Location"
+                [data]="Locations_Array" formControlName="Service_Location" [settings]="dropdownSettingMultipleSelect">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.Service_Location.errors " class="ValidationError">
+                <div *ngIf="formControls.Service_Location.errors.required">Please select Service Location!</div>
+              </div>
+            </div>
+
+            <div class="col-sm-12" style="margin-top: 10px;">
+              <label>Remark:</label>
+              <textarea class="form-control" formControlName="Holiday_Remark"></textarea>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

@@ -1,0 +1,129 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+
+
+	<!-- Main content -->
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">Renewal</h3>
+					</div>
+					<!-- /.box-header -->
+					<div class="box-body">
+
+						<form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+							<div class="row">
+
+								<div class="col-sm-4">
+									<ng-multiselect-dropdown class="form-control" name="Company_Id"
+										placeholder="Select Company" [data]="Company_Ar" formControlName="Company_Id"
+										[settings]="dropdownSettings" (onSelect)="onItemSelect($event,'Company')"
+										(onDeSelect)="onItemDeSelect($event,'Company')">
+									</ng-multiselect-dropdown>
+
+								</div>
+								<div class="col-sm-4">
+									<ng-multiselect-dropdown class="form-control" name="LOB" placeholder="Select LOB"
+										[data]="LOB_Ar" formControlName="LOB" [settings]="dropdownSettings"
+										(onSelect)="onItemSelect($event,'LOB')"
+										(onDeSelect)="onItemDeSelect($event,'LOB')">
+									</ng-multiselect-dropdown>
+
+								</div>
+
+								<div class="col-sm-4">
+									<ng-multiselect-dropdown class="form-control" name="Product"
+										placeholder="Select Product" [data]="Product_Ar" formControlName="Product"
+										[settings]="dropdownSettings" (onSelect)="onItemSelect($event,'Product')"
+										(onDeSelect)="onItemDeSelect($event,'Product')">
+									</ng-multiselect-dropdown>
+
+								</div>
+
+							</div>
+							<div class="row"  >
+
+
+								<div class="col-sm-9"></div>
+								<div class="col-sm-3">
+
+									<input *ngIf="(Is_Export==1)" (click)="ExportExcel()" type="button"
+										class="btn btn-success" value="Export">
+									&nbsp;&nbsp;
+									<input type="submit" class="btn btn-info" value="Search">
+									&nbsp;&nbsp;
+									<button (click)="ClearSearch()" type="button" style="font-size: small;"
+										class="btn btn-danger" value="Reset"> <i class="fa fa-close"> Reset</i>
+									</button>
+								</div>
+
+							</div>
+
+						</form>
+						<hr>
+
+
+						<table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>S.No</th>
+									<th>Action</th>
+									<th>Quotation Id</th>
+									<th>CustomerName</th>
+									<th>CustomerMobile</th>
+									<th>LOB</th>
+									<th>Expiry Status</th>
+									<th>Product</th>
+									<th>Vehicle_No</th>
+									<th>Make/Model</th>
+									<th>Policy PDF</th>
+
+
+								</tr>
+							</thead>
+
+							<tbody *ngIf="dataAr?.length != 0">
+
+								<tr *ngFor="let row of dataAr; let i=index;">
+									<td>{{row.SrNo}}.</td>
+
+									<td><a
+											routerLink="/claim-assistance/create-request/{{row.Quotation_Id}}/{{row.Company_Name}}">Create</a>
+									</td>
+									<td>{{row.Quotation_Id}}</td>
+									<td>{{row.CustomerName}}</td>
+									<td>{{row.CustomerMobile}}</td>
+									<td>{{row.LOB}}</td>
+									<td></td>
+									<td>{{row.ProductName}}</td>
+									<td>{{row.Vehicle_No}}</td>
+									<td>{{row.MakeModelName}}</td>
+									<td><a (click)="ViewDocument(row.Download_Url)"
+											href="javascript:void(0)">Download</a></td>
+								</tr>
+
+							</tbody>
+
+							<tbody *ngIf="dataAr?.length == 0">
+								<tr>
+									<td colspan="10" align="center">No data Available !</td>
+								</tr>
+							<tbody>
+
+						</table>
+					</div>
+					<!-- /.box-body -->
+				</div>
+				<!-- /.box -->
+			</div>
+			<!-- /.col -->
+		</div>
+		<!-- /.row -->
+	</section>
+	<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

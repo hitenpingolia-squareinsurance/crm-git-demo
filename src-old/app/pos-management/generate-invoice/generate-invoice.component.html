@@ -1,0 +1,107 @@
+<div class="close_lead_btn"><button (click)="CloseModel()" type="button" class="close">&times;</button>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav_tabs">
+      <li class="breadcrumb_item">Add Invoice</li>
+    </ul>
+    <form (ngSubmit)="submit()" [formGroup]="addInvoice" style="margin-top: -15px;" id="form-1">
+      <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+        <div class="tabs_form">
+          <div class="row_cs_new">
+            <div class="col_row_cs">
+
+              <div class="input_group">
+                <label for="state">Select Financial Year</label>
+                <ng-multiselect-dropdown class="form_control_ng" placeholder="Select Financial Year"  (onSelect)="onSelectChange()" 
+                (onDeSelect)="onSelectChange()" [data]="Year" [(ngModel)]="selectedFinancialYear" formControlName="year" [settings]="dropdownSettingsType">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.year.errors" class="ValidationError">
+                  <div *ngIf="formControls.year.errors.required">Please select year</div>
+                </div>
+              </div>
+
+            </div>
+            <div class="col_row_cs">
+              <div class="input_group">
+                <label for="state">Select Month</label>
+                <ng-multiselect-dropdown class="form_control_ng" placeholder="Select Month" [data]="Month"  (onSelect)="onSelectChange()" 
+                (onDeSelect)="onSelectChange()"  formControlName="month" [settings]="dropdownSettingsType">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.month.errors" class="ValidationError">
+                  <div *ngIf="formControls.month.errors.required">Please select month</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d_flex flex_End">
+          <button type="submit" class="btn btn-primary" [disabled]="isSubmitButtonClicked">Search</button>&nbsp;&nbsp;
+          <button type="reset" class="btn btn-primary" (click)="Reset()">Reset</button>
+        </div>
+      </div>
+    </form>  
+  </div>
+
+
+
+
+
+  <div class="col-md-12 mt_10" *ngIf="isDivVisible">
+    <div *ngIf="this.StatusVal == 1">
+
+      <ul class="nav_tabs">
+        <li class="breadcrumb_item">Product Listing Policy Wise</li>
+        <li class="breadcrumb_item">Total PO : {{TotalPO}}</li>
+      </ul>
+
+      <form class="form" (ngSubmit)="invoiceSubmit()" [formGroup]="generateInvoice">
+        <table class="table table-bordered table-hover" formArrayName="quantities">
+            <tbody class="container-fluid" id="divshow">
+
+                <tr>
+                    <td><b>Product Name</b></td>
+                    <td><b>No. Of Policy</b></td>
+                    <td><b>Amount</b></td>
+                    <td><b>Total Amount</b></td>
+                </tr>
+
+                <tr *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+                    <td>{{dataArr[i]['ProductName']}}</td>
+                    <td>{{dataArr[i]['count']}}</td>
+                    <td><input type="text" formControlName="amount" (keyup)="onSearchChange(i)" required></td>
+                    <td><input type="text" formControlName="totalamount" readonly [value]="calculateTotal(i)" required></td>
+                </tr>
+
+            </tbody>
+        </table>
+        
+        <table class="table table-bordered table-hover">
+            <tbody>
+              <tr>
+                <td>Sub Total Without GST</td>
+                  <td><input type="text" formControlName="amountNoGst" readonly placeholder="Sub Total Amount"></td>
+                </tr>
+                <tr>
+                    <td>
+                      <input type="checkbox" (click)="SetGST($event)" checked=true>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      Sub Total with GST(18%)</td>
+                    <td>
+                      <input type="text" formControlName="subtotal" readonly placeholder="Sub Total Amount"></td>
+                </tr>
+              
+            </tbody>
+        </table>
+  
+        <div class="row">
+            <div class="col-md-10">&nbsp;</div>
+            <div class="col-md-2 actionButtons pull-right" style="margin-top: 10px; margin-bottom: 5px;">
+                <button class="btn btn-primary save-click" type="submit">Submit</button>
+            </div>
+        </div>
+  
+    </form>
+    </div>
+  </div>
+</div>

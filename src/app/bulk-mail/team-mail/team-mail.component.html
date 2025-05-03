@@ -1,0 +1,140 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="box-title">Send Bulk Mail Message</h3>
+                            </div>
+                            <div class="col-md-8">&nbsp;</div>
+                        </div>
+
+                    </div>
+                    <div class="box-body">
+                        <form (ngSubmit)="submit()" [formGroup]="sendbulkmailForm">
+
+                            <div class="popup-content-body">
+                                <div class="row">
+                                    <div class="col-md-6" *ngIf="this.currentUrl == '/bulk-mail/My-Team' ">
+                                        <label>Team Type</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="TeamType"
+                                            formControlName="team" name="team" [settings]="dropdownSettingsType">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && formControls.team.errors" class="Validationerrors">
+                                            <div *ngIf="formControls.team.errors.required"><span
+                                                    style="color: red;">Please Select
+                                                    team!</span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label>POS/Employee</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="PosEmployee"
+                                            formControlName="Type" name="Type" [settings]="dropdownSettingsType"
+                                            (ngModelChange)="ShowVertical()">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && formControls.Type.errors" class="Validationerrors">
+                                            <div *ngIf="formControls.Type.errors.required"><span
+                                                    style="color: red;">Please
+                                                    select!</span></div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6" *ngIf="this.currentUrl == '/bulk-mail/Square-Team' ">
+                                        <label>Vertical Type</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="Verticle" 
+                                        (onSelect)="onItemSelect($event,'Vertical')" (onDeSelect)="onItemDeSelect($event,'Vertical')"
+                                            formControlName="verticle" [settings]="dropdownSettingsMultiselect">
+                                        </ng-multiselect-dropdown>
+
+
+                                        <div *ngIf="isSubmitted && formControls.verticle.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.verticle.errors.required"><span
+                                                    style="color: red;">Please Select
+                                                    Vertical !</span></div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <label>Select Level</label>
+                                        <ng-multiselect-dropdown class="form-control" [data]="SelectLevel"
+                                            formControlName="selectlevel" name="selectlevel"
+                                            [settings]="dropdownSettingsMultiselect">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && formControls.selectlevel.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.selectlevel.errors.required"><span
+                                                    style="color: red;">Please Select
+                                                    Level!</span></div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="col-md-6">
+                                        <label>Subject</label>
+                                        <input type="text" class="form-control" formControlName="subject">
+                                        <div *ngIf="isSubmitted && formControls.subject.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.subject.errors.required"><span
+                                                    style="color: red;">Please enter
+                                                    subject!</span></div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <label>Attachement</label>
+                                        <input type="file" formControlName="attachement"
+                                            (change)="UploadDocs($event,'attachement')" class="form-control">
+                                        <div *ngIf="isSubmitted && formControls.attachement.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.attachement.errors.required"><span
+                                                    style="color: red;">Please choose
+                                                    Attachement!</span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="state">Message</label>
+                                        <ckeditor formControlName="message"></ckeditor>
+                                        <!-- <ckeditor [editor]="CKEditorComponent" formControlName="ckeditor"></ckeditor> -->
+                                        <div *ngIf="isSubmitted && formControls.message.errors"
+                                            class="Validationerrors">
+                                            <div *ngIf="formControls.message.errors.required"><span
+                                                    style="color: red;">Please enter message
+                                                    !</span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="button-div-yes-no" align="right"
+                                        style="margin-right: 14px; margin-top: 520px;">
+                                        <button type="submit" class="btn btn-primary">Submit</button>&nbsp;
+                                        <button type="reset" click="ResetDT()" class="btn btn-danger">Reset</button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </form>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</div>

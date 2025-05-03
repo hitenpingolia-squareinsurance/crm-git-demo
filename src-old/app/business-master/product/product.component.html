@@ -1,0 +1,229 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+    <div class="container-fluid">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <div class="header_title">Business CPA</div>
+            </div>
+
+            <div *ngIf="!hasAccess" class="error-message">
+                <div class="container" style="text-align: center;">
+                    <img src="assets/Authorised.png" alt="">
+                </div>
+            </div>
+
+            <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+                <div class="btn_list_group">
+                    <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="dsr-fillter">
+                                        <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">Filters
+                                        </button>
+                                        <button class="btn btn-info1" (click)="dailog()"><span>Add</span></button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingOne">
+                                <div class="panel-body sub-form">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <form [formGroup]="AddFieldForm"
+                                                (ngSubmit)="SearchData()">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div id="close">
+                                                            <div class="category_list">
+                                                                <ng-multiselect-dropdown class="form-control"
+                                                                    placeholder="Select Company" [data]="company"
+                                                                    formControlName="company"
+                                                                    [settings]="dropdownSettingsmultiselect">
+                                                                </ng-multiselect-dropdown>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <input type="submit" class="btn btn-info" value="Search">
+                                                        &nbsp;&nbsp;
+                                                        <input (click)="ClearSearch()" type="button"
+                                                            class="btn btn-danger" value="Reset">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="All">
+                                <div class="box-body">
+                                    <div class="mydiv">
+
+                                        <table datatable [dtOptions]="dtOptions" id="Table1"
+                                            class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>SNo.</th>
+                                                    <th>Company Name</th>
+                                                    <th>PVT</th>
+                                                    <th>TW</th>
+                                                    <th>GCV</th>
+                                                    <th>MISD</th>
+                                                    <th>PCV</th>
+                                                    <th>Effective Date</th>
+                                                    <th>Add Stamp</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of dataAr">
+                                                    <td>{{row.sno}}</td>
+                                                    <td>{{row.company_id}}</td>
+                                                    <td>{{row.pvt}}</td>
+                                                    <td>{{row.tw}}</td>
+                                                    <td>{{row.gcv}}</td>
+                                                    <td>{{row.misd}}</td>
+                                                    <td>{{row.pcv}}</td>
+                                                    <td>{{row.effective_date}}</td>
+                                                    <td>{{row.add_stamp}}</td>
+
+                                                    <td>
+                                                        <div class="dsr-fillter">
+                                                            <button class=" btn btn-info1"
+                                                                (click)="update(row.id, row.company_id)"><span>Update</span>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody *ngIf="dataAr?.length == 0">
+                                                <tr>
+                                                    <td colspan="11" align="center">No data available !</td>
+                                                </tr>
+                                            <tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                
+                <hr>
+
+                <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                    <div class="custom_table tables_layout_design">
+                        <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <!-- ======= Refer Table  =========-->
+                        <ul class="responsive-table">
+                            <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+
+                                <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                                    <div class="agents_data agents_data1">
+                                        <div class="icon_re_cl">{{row.sno}}</div>
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data">
+                                                <div>Company Name</div>
+                                                <strong class="fs_18 text-bold">{{row.company_id}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="agents_data agents_data2">
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data" *ngIf="row.add_stamp != ''">
+                                                <div> Add Stamp </div>
+                                                <strong>
+                                                    {{row.add_stamp | date : 'dd-MM-yyyy HH:mm:ss' }}
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="agents_data agents_data2">
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data" *ngIf="row.effective_date != ''">
+                                                <div> Effective Date </div>
+                                                <strong>
+                                                    {{row.effective_date}}
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="last_row_div mt10" style="margin-top:10px;">
+                                    <div class="label_chips finance_lob" *ngIf="row.pvt != ''">
+                                        <span>PVT - {{row.pvt}}</span>
+                                    </div>
+
+                                    <div class="label_chips non_motor_lob" *ngIf="row.tw != ''">
+                                        <span>TW - {{row.tw}}</span>
+                                    </div>
+
+
+                                    <div class="label_chips health_lob" *ngIf="row.gcv != ''">
+                                        <span>GCV - {{row.gcv}}</span>
+                                    </div>
+
+                                    <div class="label_chips life_lob" *ngIf="row.misd != ''">
+                                        <span>MISD - {{row.misd}}</span>
+                                    </div>
+
+                                    <div class="label_chips motor_lob" *ngIf="row.pcv != ''">
+                                        <span>PCV - {{row.pcv}}</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="last_row">
+                                    <div class="effective_date"></div>
+                                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                        <button type="button" class="btn btn-primary"
+                                            (click)="update(row.id, row.company_id)" style="padding: 3px;;">
+                                            <strong style="color: #fff;">Update &nbsp;<i class="fa fa-pencil-square-o"
+                                                    aria-hidden="true"></i></strong>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+                        <!--======= Refer Table END ========= -->
+
+                        <div class="row" *ngIf="dataAr?.length == 0">
+                            <div class="col-md-12">
+                                <div class="no_data_found">
+                                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                                    <small>No data available !</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

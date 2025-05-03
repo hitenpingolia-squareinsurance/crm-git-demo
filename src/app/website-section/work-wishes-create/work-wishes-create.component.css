@@ -1,0 +1,162 @@
+.work-anniversary {
+    width: 600px;
+}
+
+.work-anniversary-img img {
+    width: 600px;
+}
+
+.work-anniversary {
+    position: relative;
+    font-family: 'Inter', sans-serif;
+}
+
+.work-anniversary-details {
+    position: absolute;
+    height: 600px;
+    width: 600px;
+    top: 0;
+}
+
+
+
+.anniversary-view {
+    text-align: center;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    margin-top: 5em;
+}
+
+.employee-photo {
+    border: 4px solid #efc98b;
+    width: 250px;
+    border-radius: 100%;
+    height: 250px;
+    background: #e1e1e1;
+    object-fit: inherit;
+
+    overflow: hidden;
+}
+
+.anniversary-view h1 {
+    color: #fff;
+    font-size: 42px;
+    text-transform: uppercase;
+    font-family: 'Bell MT', sans-serif;
+}
+
+.anniversary-view h1 span {
+    display: block;
+}
+
+.employee-view {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 16em;
+}
+
+.employee-photo img {
+    width: 100%;
+    border-radius: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.employee-name {
+    position: absolute;
+    left: 0px;
+    right: 0;
+    bottom: 0px;
+}
+
+.employee-name h4 {
+    margin: 0px;
+    color: #0d4383;
+    background-color: #fffdfe;
+    border-radius: 5px;
+    padding: 8px 5px;
+    display: inline-block;
+    min-width: 150px;
+    font-family: 'Bell MT', sans-serif;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+
+.year-count {
+    bottom: 6rem;
+    position: absolute;
+    text-align: center;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+.year-count h2 {
+    font-size: 36px;
+    font-weight: 400;
+    text-align: center;
+    color: #fff;
+    margin: 0;
+    font-family: 'Algerian', sans-serif;
+}
+
+/* .year-count h2  {
+font-family: 'Algerian', sans-serif;
+} */
+.loc-work {
+    position: absolute;
+    bottom: 7px;
+    padding: 0px 0px;
+    text-align: center;
+    width: 100%;
+    right: 0;
+    left: 0;
+}
+
+.loc-work ul {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px;
+    padding: 0px 10px;
+    border-top: 2px solid #ffe655;
+    padding-top: 7px;
+}
+
+.loc-work ul li {
+    color: #fff;
+    font-size: 16px;
+    list-style: none;
+}
+
+.loc-work ul li i {
+    font-size: 14px;
+}
+
+.loc-work ul li i {
+    margin-right: 5px;
+}
+
+.column {
+    float: left;
+    width: 16.66%;
+}
+
+.work-anniversary-details .add_logo {
+    position: relative;
+}
+
+.work-anniversary-details .add_logo img {
+    width: 150px;
+    padding: 15px 0px 0px 15px;
+    position: absolute;
+    left: 0px;
+}
+
+.cursor {
+    cursor: pointer !important;
+}

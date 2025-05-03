@@ -1,0 +1,126 @@
+<div class="row">
+    <div class="modal-header" style="text-align: center;">
+      <h4 class="modal-title">Add ToolTip/Addons Description </h4>
+    </div>
+  </div>
+  
+  <div class="popup-content-body">
+    <div class="row popup-form">
+      <form [formGroup]="AddAddonForm" id="form-1">
+  
+        <div class="col-md-6">
+          <label for="state">LOB</label>
+          <ng-multiselect-dropdown class="form-control" formControlName="LOB" [data]="lobs"
+            (onSelect)="FetchCompany($event)" [settings]="dropdownSingleSettingsType">
+          </ng-multiselect-dropdown>
+          <div *ngIf="isSubmitted && formControls.LOB.errors" class="ValidationError">
+            <div *ngIf="formControls.LOB.errors.required">Please select lob</div>
+          </div>
+        </div>
+  
+        <div class="col-md-6" *ngIf="tempValue !== 'Motor'">
+          <label for="state">Insurer</label>
+          <ng-multiselect-dropdown class="form-control" formControlName="Company" [data]="Companys"
+            (onSelect)="FetchPlans($event)" [settings]="dropdownSingleSettingsType">
+          </ng-multiselect-dropdown>
+          <div *ngIf="isSubmitted && formControls.Company.errors" class="ValidationError">
+            <div *ngIf="formControls.Company.errors.required">Please select company</div>
+          </div>
+        </div>
+  
+       
+        <div class="col-md-6" *ngIf="tempValue !== 'Motor'" >
+          <label for="state">Plan</label>
+          <ng-multiselect-dropdown class="form-control" formControlName="Plan" [data]="Plans"
+            [settings]="dropdownSingleSettingsType" (onSelect)="FetchSubplans($event)">
+          </ng-multiselect-dropdown>
+          <div *ngIf="isSubmitted && formControls.Plan.errors" class="ValidationError">
+            <div *ngIf="formControls.Plan.errors.required">Please select plan</div>
+          </div>
+        </div>
+  
+        <div class="col-md-6" *ngIf="tempValue !== 'Motor'">
+          <label for="state">Sub Plan</label>
+          <ng-multiselect-dropdown class="form-control" formControlName="Subplan" [data]="SubPlans"
+            [settings]="dropdownSingleSettingsType" (onSelect)="getSuplanId($event)">
+          </ng-multiselect-dropdown>
+          <div *ngIf="isSubmitted && formControls.Subplan.errors" class="ValidationError">
+            <div *ngIf="formControls.Subplan.errors.required">Please select Subplan</div>
+          </div>
+        </div>
+
+        <div class="col-md-6" *ngIf="tempValue == 'Health' ||tempValue == 'Pa'">
+          <div class="form-group">
+            <label for="state">Type</label>
+  
+  
+            <ng-multiselect-dropdown class="form-control" formControlName="typeData" [data]="TypeData"
+              [settings]="dropdownSingleSettingsType" (onSelect)="FetchAddon($event)">
+            </ng-multiselect-dropdown>
+            <div *ngIf="isSubmitted && formControls.typeData.errors" class="ValidationError">
+              <div *ngIf="formControls.typeData.errors.required">Please Select  Type</div>
+            </div>
+  
+          </div>
+  
+        </div>
+
+        
+  
+  
+        <div class="col-md-6" *ngIf="tempValue !== 'Motor'">
+          <div class="form-group">
+            <label for="state" *ngIf ="tempTypeData === 'discount'" >Discount</label>
+            <label for="state" *ngIf ="tempTypeData === 'addon'">Addon</label>
+           
+  
+  
+            <ng-multiselect-dropdown class="form-control" formControlName="Addons" [data]="Addons"
+              [settings]="dropdownSingleSettingsType">
+            </ng-multiselect-dropdown>
+            <div *ngIf="isSubmitted && formControls.Addons.errors" class="ValidationError">
+              <div *ngIf="formControls.Addons.errors.required">Please select addons</div>
+            </div>
+  
+          </div>
+  
+        </div>
+        
+
+
+  
+        <div class="col-md-6" *ngIf="tempValue == 'Motor'">
+          <div class="form-group">
+            <label for="state"> Motor Addons</label>
+  
+  
+            <ng-multiselect-dropdown class="form-control" formControlName="motorAddons" [data]="MotorAddons"
+              [settings]="dropdownSingleSettingsType">
+            </ng-multiselect-dropdown>
+            <div *ngIf="isSubmitted && formControls.motorAddons.errors" class="ValidationError">
+              <div *ngIf="formControls.motorAddons.errors.required">Please select Motor addons</div>
+            </div>
+  
+          </div>
+  
+        </div>
+  
+        <div class="col-md-6">
+          <label for="state">Description </label>
+  
+          <textarea class="form-control" formControlName="description" rows="4"></textarea>
+          <div *ngIf="isSubmitted && formControls.description.errors" class="ValidationError">
+            <div *ngIf="formControls.description.errors.required">Description is required</div>
+          </div>
+  
+        </div>
+  
+      </form>
+  
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="button-div-yes-no">
+    <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>
+    <button type="submit" class="btn btn-primary" (click)="submit()">Submit</button>
+  </div>

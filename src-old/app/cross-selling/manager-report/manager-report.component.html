@@ -1,0 +1,343 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+	<!-- Main content -->
+	<section class="content">
+
+		<!-- SELECT2 EXAMPLE -->
+		<div class="box box-default">
+			<div class="box-body">
+
+				<form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+					<div class="row"  >
+
+						<div class="col-sm-3">
+							<ng-multiselect-dropdown class="form-control" placeholder="Select Financial Year"
+								[data]="Year_Ar" [(ngModel)]="SelectedYear" formControlName="Financial_Year"
+								[settings]="dropdownSettingsingleselect" (onSelect)="CheckDateLimit($event)"
+								(onDeSelect)="CheckDateLimit($event)"> </ng-multiselect-dropdown>
+							<span *ngIf="isSubmitted && formControls.Financial_Year.errors"
+								class="form-text text-muted">
+								<span *ngIf="formControls.Financial_Year.errors.required" style="color:red;">Please
+									Select Financial
+									Year !</span>
+							</span>
+						</div>
+
+						<div class="col-sm-3">
+							<ng-multiselect-dropdown class="form-control" placeholder="Vertical" [data]="Vertical_Ar"
+								formControlName="Vertical_Id" [settings]="dropdownSettingsmultiselect"
+								(onSelect)="GetEmployees()" (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+						</div>
+
+						<div class="col-sm-3">
+							<ng-multiselect-dropdown class="form-control" placeholder="Branch" [data]="Region_Ar"
+								formControlName="Region_Id" [settings]="dropdownSettingsmultiselect"
+								(onSelect)="GetSubBranches()" (onDeSelect)="GetSubBranches()">
+							</ng-multiselect-dropdown>
+						</div>
+
+						<div class="col-sm-3">
+							<ng-multiselect-dropdown class="form-control" placeholder="Service Location"
+								[data]="Sub_Branch_Ar" formControlName="Sub_Region_Id"
+								[settings]="dropdownSettingsmultiselect" (onSelect)="GetEmployees()"
+								(onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+						</div>
+
+						<div class="col-sm-3">
+							<ng-multiselect-dropdown class="form-control" name="Emp_Id"
+								[placeholder]="Employee_Placeholder" [data]="Emps_Ar" formControlName="Emp_Id"
+								[settings]="dropdownSettingsmultiselect" (onSelect)="GetAgents('1')"
+								(onDeSelect)="GetAgents('1')"> </ng-multiselect-dropdown>
+						</div>
+
+						<div class="col-sm-3"
+							*ngIf="UserRights.Is_Manager_Tracking_Report_View=='All' || UserRights.Is_Manager_Tracking_Report_View == 'Hierarchy'">
+							<ng-multiselect-dropdown class="form-control" placeholder="Report Type"
+								[data]="ReportTypeData" formControlName="RM_Search_Type"
+								[settings]="dropdownSettingsingleselect" (onSelect)="SetReportType()"
+								(onDeSelect)="SetReportType()" [(ngModel)]="reportTypeVal"
+								[disabled]="ReportTypeDisable">
+							</ng-multiselect-dropdown>
+						</div>
+
+						<div class="col-sm-3">
+							<ng-multiselect-dropdown class="form-control" name="Emp_Id"
+								[placeholder]="Agents_Placeholder" [data]="Agents_Ar" formControlName="Agents_Id"
+								[settings]="dropdownSettingsmultiselect">
+							</ng-multiselect-dropdown>
+						</div>
+
+						<div class="col-sm-3">
+							<ng-multiselect-dropdown class="form-control" placeholder="LOB" [data]="LobData"
+								(onSelect)="GetManagerEmployees()" (onDeSelect)="GetManagerEmployees()"
+								formControlName="LobType" [settings]="dropdownSettingsingleselect1"
+								[(ngModel)]="LobDataVal">
+							</ng-multiselect-dropdown>
+						</div>
+
+						<div class="col-sm-3">
+							<ng-multiselect-dropdown class="form-control" placeholder="Club Status"
+								[data]="ClubStatusData" formControlName="AgentStatus"
+								[settings]="dropdownSettingsingleselect1" [(ngModel)]="ClubStatusVal">
+							</ng-multiselect-dropdown>
+						</div>
+
+
+						<div class="col-sm-3">
+							<ng-multiselect-dropdown class="form-control" placeholder="Manager" [data]="Manager_Emps_Ar"
+								formControlName="Manager_Id" [settings]="dropdownSettingsmultiselect1">
+							</ng-multiselect-dropdown>
+						</div>
+
+
+
+						<div class="col-sm-3">
+							<select (change)="UpateFilterField('Lead_Status')" formControlName="Lead_Status"
+								class="form-control">
+								<option value="">Club Manager Report</option>
+								<option value="Attended">Attended</option>
+								<option value="Unattended">Unattended</option>
+								<option value="Unaccepted">Unaccepted</option>
+							</select>
+						</div>
+
+						<div class="col-sm-3">
+							<select (change)="UpateFilterField('Interaction_Type')" formControlName="Interaction_Type"
+								class="form-control">
+								<option value="">Interaction Type</option>
+								<option value="Follow Up">Virtual</option>
+								<option value="Visit">Visit</option>
+								<option value="Reject">Reject</option>
+							</select>
+						</div>
+
+						<div class="col-sm-3">
+							<select formControlName="FollowupRemarks" class="form-control">
+								<option value="">Select Follow Up Remarks</option>
+								<option value="Agent don't want to work in insurance segment">Agent don't want to work
+									in insurance segment</option>
+								<option value="Payout Issue">Payout Issue</option>
+								<option value="Service Issue">Service Issue</option>
+								<option value="Part Time Business">Part Time Business</option>
+								<option value="Unable to connect with Agent">Unable to connect with Agent</option>
+								<option value="Others">Others</option>
+							</select>
+						</div>
+
+						<div class="col-sm-3">
+							<input type="text" placeholder="Date OR Date-Range" class="form-control"
+								formControlName="DateOrDateRange" bsDaterangepicker
+								[bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+						</div>
+
+
+						<div class="col-sm-3">
+							<ng-multiselect-dropdown class="form-control" placeholder="Follow Ups"
+								[data]="FollowupLeadData" formControlName="FollowupLeads"
+								(onSelect)="EnableDisableFields('FollowUp_Lead')"
+								(onDeSelect)="EnableDisableFields('FollowUp_Lead')"
+								[settings]="dropdownSettingsingleselect1">
+							</ng-multiselect-dropdown>
+						</div>
+
+						<div class="col-sm-3">
+							<input type="text" placeholder="Search" class="form-control" formControlName="SearchValue">
+						</div>
+
+						<div class="col-sm-3">
+							<input type="submit" class="btn btn-info" value="Search">&nbsp;&nbsp;
+							<!-- <input *ngIf="UserRights['Is_Agent_Report_Excel_Export']==1 && Is_Export==1" (click)="ExportExcel()" type="button" class="btn btn-success" value="Export">&nbsp;&nbsp; -->
+							<button (click)="ClearSearch()" type="button" style="font-size: small;"
+								class="btn btn-danger" value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+						</div>
+					</div>
+
+				</form>
+
+				<hr style="margin: 10px 0px;">
+				<div class="d_flex flex_Equal flex_wrap flex_Middel  position-relative">
+					<div class="c-dashboardInfo width_dev_eight">
+						<div class="wrap">
+							<ul>
+								<li><Strong>Total POS</Strong> <label>{{ TotalPosCount }}</label></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="c-dashboardInfo width_dev_eight">
+						<div class="wrap">
+							<ul>
+								<li><Strong>Activity Done</Strong> <label>{{ ActivityDoneCount }}</label></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="c-dashboardInfo width_dev_eight">
+						<div class="wrap">
+							<ul>
+								<li><Strong>Under Followup</Strong> <label>{{ UnderFollowupCount }}</label></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="c-dashboardInfo width_dev_eight">
+						<div class="wrap">
+							<ul>
+								<li><Strong>Today Activity</Strong> <label>{{ TodayActivityCount }}</label></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="c-dashboardInfo width_dev_eight">
+						<div class="wrap">
+							<ul>
+								<li><Strong>Yesterday Activity</Strong> <label>{{ YesterdayActivityCount }}</label></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="d_flex flex_Equal flex_wrap flex_Middel  position-relative">
+					<div class="c-dashboardInfo width_dev_eight1">
+						<div class="wrap">
+							<ul>
+								<li><Strong>Today Followup</Strong> <label>{{ TodayData }}</label></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="c-dashboardInfo width_dev_eight1">
+						<div class="wrap">
+							<ul>
+								<li><Strong>Tomorrow Followup</Strong> <label>{{ TomorrowData }}</label></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="c-dashboardInfo width_dev_eight1">
+						<div class="wrap">
+							<ul>
+								<li><Strong>Overmorrow Followup</Strong> <label>{{ OvermorrowData }}</label></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="c-dashboardInfo width_dev_eight1">
+						<div class="wrap">
+							<ul>
+								<li><Strong>Missed Followup</Strong> <label>{{ MissedData }}</label></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<hr style="margin: 10px 0px;">
+
+				<div class="table-responsive mydiv">
+					<table datatable [dtOptions]="dtOptions"
+						class="row-border hover table table-bordered table-hover table-checkable {{Is_CutCopyPasteCls}}"
+						id="kt_datatable" style="margin-top: 13px !important;width: 100%  !important;">
+						<thead>
+							<tr>
+								<!-- <th><input [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()" type="checkbox"></th> -->
+								<th>S.No</th>
+								<th>Activity Reports</th>
+								<th>Activity Manager / Circle</th>
+								<th>Agent Name</th>
+								<th>Mobile</th>
+								<th>RM</th>
+								<th>Remarks</th>
+								<th>Add Stamp</th>
+								<th>Created By</th>
+								<th>YTD LFY</th>
+								<th>YTD CFY</th>
+								<th>Total Business LFY</th>
+
+							</tr>
+						</thead>
+						<tbody *ngIf="dataAr?.length != 0">
+							<tr *ngFor="let row of dataAr; let i=index;">
+								<td> {{row.SrNo}} </td>
+
+								<td>
+									<a href="javascript:void(0);">
+										<span (click)="FollowUpTrack(row.Id, row.Circle_Type, row.Agent_Id)"
+											class="label label-success label-inline mr-2">Activity Reports</span>
+									</a><br>
+									<span style="cursor:not-allowed;" *ngIf="row.VisitCount > 0"
+										class="label label-primary label-inline mr-2">Visits : {{ row.VisitCount
+										}}<br></span>
+									<span style="cursor:not-allowed;" *ngIf="row.VirtualCount > 0"
+										class="label label-warning label-inline mr-2">Virtual Calls : {{
+										row.VirtualCount }}</span>
+									<span style="cursor:not-allowed;"
+										*ngIf="row.VirtualCount == 0 && row.VisitCount == 0"
+										class="label label-danger label-inline mr-2">No Activity</span>
+								</td>
+
+								<td> {{ row.FollowUp_By }} <br>
+									<strong>Circle : </strong>
+									<span *ngIf="row.Circle_Type == 'LI'">Life</span>
+									<span *ngIf="row.Circle_Type != 'LI'">{{ row.Circle_Type }}</span>
+								</td>
+
+								<td>{{ row.Agent_Name }}</td>
+								<td>{{ row.Mobile }}</td>
+
+								<td>{{ row.RM_Name }}</td>
+								<td>{{ row.Remark }}</td>
+								<td>{{ row.AddStamp }}</td>
+								<td>{{ row.Created_By }}</td>
+								<td>{{ row.FTYLFY }}</td>
+								<td>{{ row.FTYCFY }}
+
+									<span style="background-color: #00bb1c;" *ngIf="row.CheckNumber=='PositiveNumber'"
+										class="label label-info label-inline mr-1"><i class="fa fa-arrow-up"
+											aria-hidden="true"></i>
+										{{row.GrowthRate }}%</span>
+									<span style="background-color: red;" *ngIf="row.CheckNumber=='NegativeNumber'"
+										class="label label-danger label-inline mr-1"><i class="fa fa-arrow-down"
+											aria-hidden="true"></i>
+										{{row.GrowthRate }}%</span>
+
+									<span *ngIf="row.Club_Status=='Elite'"
+										class="label label-success label-inline mr-2">Elite</span>
+									<span *ngIf="row.Club_Status=='Maker'"
+										class="label label-warning label-inline mr-2">Maker</span>
+									<span *ngIf="row.Club_Status=='Novel'"
+										class="label label-info label-inline mr-2">Novel</span>
+									<span *ngIf="row.Club_Status=='Aspirant'"
+										class="label label-info label-inline mr-2">Aspirant/Prospect</span>
+								</td>
+
+								<td>{{ row.FTY }}
+									<span *ngIf="row.Previous_Club=='Elite'"
+										class="label label-success label-inline mr-2">Elite</span>
+									<span *ngIf="row.Previous_Club=='Maker'"
+										class="label label-warning label-inline mr-2">Maker</span>
+									<span *ngIf="row.Previous_Club=='Novel'"
+										class="label label-info label-inline mr-2">Novel</span>
+									<span *ngIf="row.Previous_Club=='Aspirant'"
+										class="label label-info label-inline mr-2">Aspirant/Prospect</span>
+								</td>
+
+							</tr>
+						</tbody>
+						<tbody *ngIf="dataAr?.length == 0">
+							<tr>
+								<td colspan="12" align="center">No data Available !</td>
+							</tr>
+						<tbody>
+					</table>
+
+				</div>
+			</div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
+	</section>
+	<!-- /.content -->
+
+</div>

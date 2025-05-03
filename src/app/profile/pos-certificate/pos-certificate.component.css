@@ -1,0 +1,9 @@
+.export_download_btn {
+    position: fixed;
+    right: 0;
+    bottom: 0px
+}
+
+.export_download_btn a img {
+    width: 60px;
+}

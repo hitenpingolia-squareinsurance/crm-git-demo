@@ -1,0 +1,90 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="main_card_form">
+                  <div class="main_header">
+                      <div class="header_title">Contact Us</div>
+                  </div>
+                  <div class="main_body main_card_height_scroll_withoutfooter">
+
+                    <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+                      
+                      <hr>
+                      <div class=" mydiv table-responsive">
+                         <!-- table  -->
+                         <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                         class="table table-bordered table-hover">
+                         <thead>
+                           <tr>
+                             <th>S.No</th>
+                             <th>Name</th>
+                             <th>Email ID</th>
+                             <th>Mobile</th>
+                             <th>Date</th>
+                             <th>Message</th>
+                             <th>Status/Details</th>
+         
+                           </tr>
+                         </thead>
+                         <tbody *ngIf="dataAr?.length != 0">
+                           <tr *ngFor="let row of dataAr">
+                             <td>{{row.SrNo}}.</td>
+                             <td>{{row.Name}}</td>
+                             <td>{{row.Email}}</td>
+                             <td>{{row.Mobile}}</td>
+                             <td>{{row.Date}}</td>
+                             <td>{{row.Message}}</td>
+         
+                             <td>
+                               <span *ngIf="row.Status == '0'" class="label label-info">Pending</span>
+                               <span *ngIf="row.Status == '1'" class="label" style="background-color: #8A2BE2;">Follow Up</span>
+                               <span *ngIf="row.Status == '2'" class="label label-success">Close</span>
+                               <span *ngIf="row.Status == '3'" class="label label-danger">Lost</span>&nbsp;&nbsp;
+                               <span><a (click)="FollowUp(row.Id,'contact_us_query')"><label
+                                     class="label label-info btn">View</label></a>
+                               </span>
+                               <!-- *ngIf="row.Status == '0' || row.Status == '1'" -->
+         
+                               <select *ngIf="row.Status == '0' || row.Status == '1'"
+                                 (change)="  OnchangeFollowups ($event,row.Id,'contact_us_query')">
+                                 <option disabled [value]="''">Select</option>
+                                 <option disabled [value]="0"> Pending</option>
+                                 <option [value]="1"> Follow Up</option>
+                                 <option [value]="2"> Close</option>
+                                 <option [value]="3"> Lost/Reject</option>
+         
+                               </select>
+                             </td>
+                           </tr>
+                         </tbody>
+                         <tbody *ngIf="dataAr?.length == 0">
+                           <tr>
+                             <td colspan="14" align="center">No data available!</td>
+                           </tr>
+                         <tbody>
+                       </table>
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

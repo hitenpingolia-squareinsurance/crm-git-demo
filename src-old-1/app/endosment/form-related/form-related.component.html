@@ -1,0 +1,51 @@
+<!--==== FOR FIRSTNAME AND LASTNAME START====-->
+<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+
+<div *ngIf="fieldName == 'firstName' || fieldName == 'lastName'" >
+<h2 class="heading-h2">Is it an Ownership Change or Name Correction?
+</h2>
+
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="nameUpdateReason" [(ngModel)] = "nameUpdateReason" id="flexRadioDefault1" (change)="setValue(nameUpdateReason)" (click)="setValue(nameUpdateReason)" value="Name Correction (spelling error, Typo mistake)." >
+  <label class="form-check-label" for="flexRadioDefault2">
+    Name Correction (spelling error, Typo mistake).
+  </label>
+</div>
+
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="nameUpdateReason" [(ngModel)] = "nameUpdateReason" id="flexRadioDefault1" (change)="setValue(nameUpdateReason)" value="Transfer of Ownership from Individual to Individual.">
+  <label class="form-check-label" for="flexRadioDefault2">
+    Transfer of Ownership from Individual to Individual.
+  </label>
+</div>
+
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="nameUpdateReason" [(ngModel)] = "nameUpdateReason" id="flexRadioDefault1" (change)="setValue(nameUpdateReason)" value="Transfer of Ownership from Individual to Company.">
+  <label class="form-check-label" for="flexRadioDefault2">
+    Transfer of Ownership from Individual to Company.
+  </label>
+</div>
+</div>
+<!--==== FOR FIRSTNAME AND LASTNAME END====-->
+
+
+<!--==== FOR NCB START====-->
+<div *ngIf="fieldName == 'ncb'" >
+  <h2 class="heading-h2">What kind of NCB change it is?</h2>
+
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="ncbUpdateReason" [(ngModel)] = "ncbUpdateReason" id="flexRadioDefault2" (change)="setValue(ncbUpdateReason)" (click)="setValue(ncbUpdateReason)" value="Transfer of NCB benefit (from one policy to another).">
+    <label class="form-check-label" for="flexRadioDefault2">
+      Transfer of NCB benefit (from one policy to another).
+    </label>
+  </div>
+
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="ncbUpdateReason" [(ngModel)] = "ncbUpdateReason" id="flexRadioDefault2" (change)="setValue(ncbUpdateReason)" value="Incorrect NCB declared at the time of Policy Issuance.">
+    <label class="form-check-label" for="flexRadioDefault2">
+      Incorrect NCB declared at the time of Policy Issuance.
+    </label>
+  </div>
+
+</div>
+<!--==== FOR NCB START====-->

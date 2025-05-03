@@ -1,0 +1,158 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Offline Quotes Report</div>
+          </div>
+
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div>
+              <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <a role="button" class="fa fa-filter"><span>Filters</span><i
+                      class="fa fa-angle-down pull-right"></i></a>
+                </button>
+              </div>
+            </div>
+
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+                <!-- filter  -->
+                <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+              </div>
+            </div>
+            <!-- 
+            <div *ngIf="this.urlSegment == 'offline-quote-reports' ">
+              <app-square-filter-v2 (postCreated)="SearchData($event)"></app-square-filter-v2>
+
+            </div>
+            <div *ngIf="this.urlSegment == 'offline-quote' "> -->
+
+
+            <!-- </div> -->
+            <hr>
+            <div class=" mydiv table-responsive">
+              <!-- table  -->
+              <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Quotation</th>
+                    <th>File Type</th>
+                    <th>Vehicle No</th>
+                    <th>Customer Details</th>
+                    <th>Manager Details</th>
+                    <th>Punching Manager Details</th>
+                    <th>Creator Details</th>
+                    <th>Creator Location</th>
+                    <th>Status</th>
+                    <th>Create Date</th>
+                    <!-- <th style="width: 22%;">TAT</th> -->
+
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{row.SrNo}}</td>
+                    <td> <b>{{row.Quotation_Id}}</b>
+
+                      <label *ngIf="row.QueryTotalTime != ''"> {{row.QueryTotalTime}} </label>
+
+                      <br>
+                      <a *ngIf="row.Status == 'Completed'" alt="Click here to check SR details"
+                        (click)="SrPopup(1,row.SrId)"><span class="label label-default">{{row.FullSrNo}}</span></a>
+
+
+                    </td>
+                    <td>{{row.BusniessType}}</td>
+                    <td>{{row.Vehicle_No}}</td>
+
+                    <td> <b>Name - </b> {{row.CustomerName}}<br> <b>Mobile - </b> {{row.CustomerMobile}}<br> <b>Email -
+                      </b> {{row.CustomerEmail}}</td>
+                    <td>{{row.AssignUser}}</td>
+                    <td>{{row.PunchingUser}}</td>
+
+
+                    <td>{{row.Creator_Details}}</td>
+                    <td>{{row.Creator_Location}}</td>
+
+                    <td *ngIf="row.RejectedStatus != 1">
+
+
+                      <label class="label label-warning">{{row.Status}}</label>
+
+                      <br>
+                      <label class="label label-info"
+                        (click)="ViewOfflineQuoteDetails(row.Quotation_Id)">Details</label>
+                    </td>
+                    <td *ngIf="row.RejectedStatus == 1">
+
+
+                      <label class="label label-danger">Rejected</label><br>
+                      <label class="label label-info"
+                        (click)="ViewOfflineQuoteDetails(row.Quotation_Id)">Details</label><br>
+                      <span><b> Rejected Remarks => </b> {{row.RejectedRemarks}} </span>
+
+
+                    </td>
+
+                    <td>{{row.CreateDate}}</td>
+
+
+                    <!-- <td>
+                                <table class=" PayoutTable">
+          
+                                  <tr *ngIf="row.QuoteAccpt != ''">
+                                    <td>Create - Accept</td>
+                                    <td> <label *ngIf="row.QuoteAccpt != ''"> {{row.QuoteAccpt}} </label> </td>
+                                  </tr>
+          
+          
+                                  <tr *ngIf="row.QuoteRelashed != ''">
+                                    <td>Accept - Release</td>
+                                    <td> <label *ngIf="row.QuoteRelashed != ''"> {{row.QuoteRelashed}} </label> </td>
+                                  </tr>
+          
+          
+                                  <tr *ngIf="row.AccptSharedQuote != ''">
+                                    <td>Release - Accept Shared Quote</td>
+                                    <td> <label *ngIf="row.AccptSharedQuote != ''"> {{row.AccptSharedQuote}} </label> </td>
+                                  </tr>
+          
+                                  <tr *ngIf="row.PaymentTime != ''">
+                                    <td>Accept - Release</td>
+                                    <td> <label *ngIf="row.PaymentTime != ''"> {{row.PaymentTime}} </label> </td>
+                                  </tr>
+          
+                                  <tr *ngIf="row.policyCompletedTime != ''">
+                                    <td>Payment URL Shared - Completed</td>
+                                    <td> <label *ngIf="row.policyCompletedTime != ''"> {{row.policyCompletedTime}} </label> </td>
+                                  </tr>
+          
+          
+                                </table>
+          
+                              </td> -->
+
+                  </tr>
+
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

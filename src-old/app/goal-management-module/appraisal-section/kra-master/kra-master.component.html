@@ -1,0 +1,120 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header d_flex flex_Equal flex_Middel">
+            <div class="header_title">KRA Ratings</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div class="box box-default"
+              style="margin-bottom: 0px !important; margin-top: 0px !important; position: relative;">
+
+              <div>
+
+                <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()" style="padding: 0 15px;">
+
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Financial Year" [data]="Year_Ar"
+                        [(ngModel)]="SelectedYear" formControlName="Financial_Year"
+                        [settings]="dropdownSettingsingleselect">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Department"
+                        [data]="Department_Ar" formControlName="Department_Id" [settings]="dropdownSettingsingleselect">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Profile" [data]="Profile_Ar"
+                        formControlName="Profile_Type" [settings]="dropdownSettingsingleselect">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Employee" [data]="Employee_Ar"
+                        formControlName="Employee_Id" [settings]="dropdownSettingsingleselect">
+                      </ng-multiselect-dropdown>
+                    </div>
+                  </div>
+
+                  <div class="row" style="margin-top:10px;">
+                    <div class="col-sm-9"> </div>
+
+                    <div class="col-sm-3">
+                      <input type="submit" class="btn btn-info" value="Search">&nbsp;&nbsp;
+                      <input (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset">&nbsp;&nbsp;
+                      <input (click)="AddEditNewKra('0')" type="button" class="btn btn-warning" value="+ Add New">
+                    </div>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="box-body">
+
+                <div class="table-responsive mydiv">
+                  <table datatable [dtOptions]="dtOptions"
+                    class="row-border hover table table-bordered table-hover table-checkable" id="kt_datatable"
+                    style="margin-top: 13px !important; width:100%">
+                    <thead>
+                      <tr>
+
+                        <th>S.No</th>
+                        <th style="width:50%">Kra&nbsp;Type</th>
+                        <th>Weightage</th>
+                        <th>Department</th>
+                        <th>Profile&nbsp;Type</th>
+                        <th>Employee&nbsp;Details</th>
+                        <th>Action</th>
+
+                      </tr>
+                    </thead>
+
+                    <tbody *ngIf="dataAr?.length != 0">
+                      <tr *ngFor="let row of dataAr; let i=index;">
+
+                        <td>{{row.SrNo}}.</td>
+
+                        <td style="padding: 7px !important; text-align: left !important;">{{row.KraType}}</td>
+
+                        <td>{{row.Weightage}}</td>
+                        <td>{{row.Department}}</td>
+                        <td>{{row.ProfileType}}</td>
+                        <td>{{row.EmployeeDetails}}</td>
+
+                        <td>
+                          <a href="javascript:;" (click)="AddEditNewKra(row.Id)">
+                            <span style="margin-right: 5px;" class="label label-primary">Edit</span>
+                          </a>
+
+                          <a href="javascript:;" (click)="DeleteKraMaster(row.Id)">
+                            <span style="margin-right: 5px;" class="label label-danger">Delete</span>
+                          </a>
+                        </td>
+
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="dataAr?.length == 0">
+                      <tr>
+                        <td colspan="6" align="center">No data Available !</td>
+                      </tr>
+                    <tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

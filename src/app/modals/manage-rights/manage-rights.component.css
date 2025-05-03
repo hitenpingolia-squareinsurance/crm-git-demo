@@ -1,0 +1,65 @@
+.rv_form {
+	height: 460px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+ 
+fieldset {
+   
+   border:1px solid #000;
+   padding: 10px 10px;
+   padding-top: 0;
+}
+legend {
+   display: inherit;
+    width: auto;
+    max-width: 100%;
+    padding: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    line-height: inherit;
+    color: inherit;
+    white-space: normal;
+}
+
+.ShowSubMenu { 
+	display:block;
+}
+.ShowSubMenuExport { 
+	display:inline; 
+}
+.ShowSubMenuAction {
+	display: inline-block;
+}
+
+.HideSubMenu {
+	display:none;
+}
+
+ .ul-li-blog{
+	 padding:0;
+	 margin:0;
+	 margin-left: 20px;
+ }
+ 
+ .ul-li-blog li{
+	 list-style: none;
+    border-bottom: 1px solid #9d9d9d;
+    margin-bottom: 12px;
+    padding: 0px 5px;
+ }
+ 
+.li-border-blog{
+	border: 1px solid #c5c5c5;
+    padding: 15px;
+    margin-bottom: 5px;
+    list-style: none;
+}
+ 
+ 
+ .main-ul{
+	width: 100%;
+    margin: 0;
+    padding: 0;
+ }
+ 

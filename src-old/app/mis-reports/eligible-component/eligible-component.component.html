@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="modal-header" style="text-align: center;">
+
+        <h4 class="modal-title">Eligibility Remarks</h4>
+        <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+    </div>
+</div>
+
+<div class="popup-content-body">
+    <div class="row popup-form">
+        <form [formGroup]="AddEligible">
+            <div class="col-md-6">
+                <label for="state">Type </label>
+                <ng-multiselect-dropdown class="form-control" formControlName="type" [data]="typeEligible"
+                    [settings]="dropdownSingleSettingsType">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.type.errors" class="ValidationError">
+                    <div *ngIf="formControls.type.errors.required">Please select type</div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="state">Description</label>
+
+
+                <textarea class="form-control" formControlName="description" rows="3"></textarea>
+
+
+                <div *ngIf="isSubmitted && formControls.description.errors" class="ValidationError">
+                    <div *ngIf="formControls.description.errors.required">Description is required</div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-12">
+                <div class="col-sm-8">&nbsp;</div>
+                <div class="col-sm-4">
+                    <div class="button-di1v-yes-no" align="right">
+
+                        <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary" (click)="submit()">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

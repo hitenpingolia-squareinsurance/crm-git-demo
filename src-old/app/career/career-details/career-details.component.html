@@ -1,0 +1,90 @@
+<div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Follow Up</h3>
+        </div>
+        <div class="col-md-5">&nbsp;</div>
+        <div class="col-md-1">
+            <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+        </div>
+    </div>
+    <form (ngSubmit)="submit()" [formGroup]="UpdateFollowForm">
+
+        <div class="form-group row">
+            <div class="row">
+            <div class="col-lg-3">
+                <label for="state">Follow Up </label>
+                <ng-multiselect-dropdown class="form-control" [data]="Follow_Up" formControlName="Follow_Up"
+                    [settings]="dropdownSettingsType" [(ngModel)]="Follow_UpName">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.Follow_Up.errors" class="ValidationError">
+                    <div *ngIf="formControls.Follow_Up.errors.required">Please select Follow Up</div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label> Date:</label>
+                <input type="Date" class="form-control" formControlName="Dates">
+                <div *ngIf="isSubmitted && formControls.Dates.errors" class="ValidationError">
+                    <div *ngIf="formControls.Dates.errors.required">Please select Date</div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label> Time:</label>
+                <input type="time" class="form-control" formControlName="Times">
+                <div *ngIf="isSubmitted && formControls.Times.errors" class="ValidationError">
+                    <div *ngIf="formControls.Times.errors.required">Please select Time</div>
+                </div>
+            </div>
+            </div>
+            <div class="row">
+            <div class="col-lg-6">
+                <label>Remarks:</label>
+                <textarea type="text" formControlName="Remarks" class="form-control" maxlength="1000"></textarea>
+                <div *ngIf="isSubmitted && formControls.Remarks.errors" class="ValidationError">
+                    <div *ngIf="formControls.Remarks.errors.required">Please Enter Remark</div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="box-footer with-border">
+            <footer>
+                <button class="btn pull-right" (click)="CloseModel()" type="button">Close</button>
+                <button class="btn btn-primary nextBtn pull-right" type="submit">Update</button>
+            </footer>
+        </div>
+
+    </form>
+
+
+</div>
+<hr>
+<div class="mydiv">
+    <table id="Table1" style="width: 100%;" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Name</th>
+                <th>Follow Up</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Remark</th>
+
+            </tr>
+        </thead>
+        <tbody *ngIf="dataArr?.length != 0">
+            <tr *ngFor="let row of dataArr">
+                <td>{{row.SrN}}.</td>
+                <td>{{row.Name}}</td>
+                <td>{{row.Type}}</td>
+                <td>{{row.Date}}</td>
+                <td>{{row.Time}}</td>
+                <td>{{row.Remark}}</td>
+            </tr>
+        </tbody>
+        <tbody *ngIf="dataArr?.length == 0">
+            <tr>
+                <td colspan="14" align="center">No data available!</td>
+            </tr>
+        <tbody>
+    </table>
+</div>

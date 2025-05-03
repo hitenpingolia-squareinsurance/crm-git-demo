@@ -1,0 +1,242 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header d_flex flex_Equal flex_Middel">
+              <div class="header_title">Current Opening </div>
+            </div>
+            <div *ngIf="!hasAccess" class="error-message">
+              <div class="container" style="text-align: center;">
+                <img src="assets/Authorised.png" alt="">
+                <h4>{{ errorMessage }}</h4>
+              </div>
+              
+            </div>
+  
+            <div class="main_body main_card_height_scroll" *ngIf="hasAccess">
+              <div class="filterquotesrow">
+                <div class="row">
+                  <div class="col-md-12" style="text-align: end;">
+                    <button class="btn btn-info nextBtn pull-right" (click)="AddRequestupdate()" style="margin-right: 5px;"> <i
+                      class="fa fa-plus"> Add Request</i></button>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="mydiv">
+
+
+
+
+                <div class="custom_table tables_layout_design">
+                  <table datatable [dtOptions]="dtOptions" id="example2" class="row-border table">
+                    <thead>
+                      <tr>
+                        <th></th>
+                      </tr>
+                    </thead>
+                  </table>
+                  <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                    <li class="table-row tablerow" *ngFor="let row of dataAr; let i=index;" [ngClass]="{'activestatus': row.Status == '0' , 'inactivestatus': row.Status == '1' }">
+                      
+                      <!-- <span class="addon_tag_name" style="background: rgba(44, 178, 179, 1);" *ngIf="row.source == 'web'">WEB</span>
+                      <span class="addon_tag_name" style="background-color: #00a65a;" *ngIf="row.source == 'crm'">CRM</span>
+                      <span class="addon_tag_name" style="background-color: #f39c12;" *ngIf="row.source == 'bms'">BMS</span> -->
+                      
+                      <!-- <span class="addon_tag_name">{{row.source}}</span> -->
+                      <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15" style="margin-top: 15px;">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">{{row.SrNo}}.</div>
+                            <div class="agent_name_mobile">
+                              <div class="agent_data">
+                                <div>Profile</div>
+                                <strong class="fs_18"><span>
+                                  {{row.Title}}
+                                </span></strong>
+                                
+                              </div>
+  
+                              
+  
+                            </div>
+                        </div>
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data" *ngIf="row.Location != ''">
+                              <div>Location</div>
+                              <strong class="fs_18"><span>{{row.Location}}</span></strong>
+                            </div>
+                          </div>
+                          
+                          
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data" *ngIf="row.AddStamp != ''">
+                              <div>Created Date</div>
+                              <strong class="fs_18"><span>{{row.created_at}}</span></strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="last_row_div">
+                        <div class="d_flex custon-234">
+  
+                          <div class="label_chips mutual_fund_lob">
+                            <span>CTC - {{row.CTC}}</span>&nbsp;&nbsp;
+                          </div>
+  
+                          <div class="label_chips motor_lob">
+                            <span>Min. Experience - {{row.Experience}}</span>&nbsp;&nbsp;
+                          </div>
+                         
+                          <div class="label_chips non_motor_lob">
+                            <span>No of positions - {{row.RequiredCandidate}}</span>&nbsp;&nbsp;
+                          </div>
+
+                          
+
+                          <!-- <div class="label_chips real_estate_lob" type="button" data-toggle="modal"
+                          [attr.data-target]="'#myModal'+ row.SrNo" (click)="HtmlFormat(row.mail_body)">
+                            <span>Mail Body</span>&nbsp;&nbsp;
+                          </div> -->
+                        </div>
+                          <div class="d_flex custon-234" style="margin-top: 10px;">
+                            <div class="label_chips life_lob">
+                              <span>Short Desc - {{row.Job_Description}}</span>&nbsp;&nbsp;
+                            </div>
+                          </div>
+                        
+                      </div>
+                      
+                      
+                      
+                      <div class="last_row">
+                        <div class="effective_date">
+                          <div class="d_flex">
+                            <div>Last Date - </div>
+                            <span>{{row.last_date}}</span>
+                           
+                          </div>
+                        </div>
+                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                          <div class="row">
+                            <button class="btn btn-danger" style="padding:3px 10px; margin-right:10px;" *ngIf="row.Status == 1" (click)="ActiveInactive(row.Id, 0, 'Current_opening')">In-active</button>
+
+                            <button class="btn btn-success" style="padding:3px 10px; margin-right:10px;" *ngIf="row.Status == 0" (click)="ActiveInactive(row.Id, 1, 'Current_opening')">Active</button>
+
+                            <button class="btn btn-info" style="padding:3px 10px; margin-right:10px;" (click)="viewMore( row.exp_field, row.tech_skill_field, row.desired_field)">View</button>
+
+
+                            <button class="btn btn-danger" style="padding:3px 10px; margin-right:10px;" (click)="DeleteRequest(row.Id,'Current_opening')">Delete</button>
+                        
+                          <!-- <label class="fa fa-edit" (click)="EditRequest(row.Id)"></label>
+                          <br> -->
+                        
+
+
+
+
+
+
+
+
+
+
+
+                            
+                            <!-- <label class="label label-info"
+                                (click)="AddProductDetailsComponent('Edit',row.Id)">Edit</label> -->
+                            &nbsp;
+                            
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="row" *ngIf="dataAr?.length == 0">
+                    <div class="col-md-12">
+                      <div class="no_data_found">
+                        <span><img src="assets/image/no_data_banner.jpg"></span>
+                        <small>No data available !</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- <table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>S.No</th>
+                      <th>Profile</th>
+                      <th>Min. Experience</th>
+                      <th>No. of positions</th>
+                      <th>CTC</th>
+                      <th>Location</th>
+                      <th>Short Description</th>
+                      <th>Last Date</th>
+                      <th>Create Date</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+  
+                  <tbody *ngIf="dataAr?.length != 0">
+  
+                    <tr *ngFor="let row of dataAr; let i=index;">
+                      <td>{{row.SrNo}}</td>
+                      <td>{{row.Title}}</td>
+                      <td>{{row.Experience}}</td>
+                      <td>{{row.RequiredCandidate}}</td>
+                      <td>{{row.CTC}}</td>
+                      <td>{{row.Location}}</td>
+                      <td>{{row.Job_Description}}</td>
+                      <td>{{row.last_date}}</td>
+                      <td>{{row.created_at}}</td>
+  
+                      <td>
+                        <label class="fa fa-trash" (click)="DeleteRequest(row.Id,'Current_opening')"></label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <label *ngIf="row.Status == 1" class="fa fa-close " (click)="ActiveInactive(row.Id, 0, 'Current_opening')"></label>
+                        <label *ngIf="row.Status == 0" class="fa fa-check" (click)="ActiveInactive(row.Id, 1, 'Current_opening')"></label>
+                          &nbsp;&nbsp;
+                          
+                        <label class="label label-info" (click)="viewMore( row.exp_field, row.tech_skill_field, row.desired_field)">View</label>
+                      </td>
+  
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="dataAr?.length == 0">
+                    <tr>
+                      <td colspan="8" align="center">No data Available !</td>
+                    </tr>
+                  <tbody>
+                </table> -->
+              </div>
+            </div>
+  
+  
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+</section>
+

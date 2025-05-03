@@ -1,0 +1,97 @@
+
+        <div class="heading" *ngIf="this.type == 'Add' ">Add Contest</div>
+        <div class="heading" *ngIf="this.type == 'Edit' ">Edit Contest</div>
+
+        <button type="button" (click)="CloseModel()" class="close closeModelButton"><i class="fa fa-remove"></i></button>
+
+    <form (ngSubmit)="submit()" [formGroup]="AddContest"  id="form-1">
+          <div class="row">
+  
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="state">Contest For</label>
+              <ng-multiselect-dropdown class="form-control" [data]="Category" formControlName="category"
+              [settings]="dropdownSettingsMultiselect" [(ngModel)]="categoryName">
+            </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.category.errors" class="ValidationError">
+                <div *ngIf="formControls.category.errors.required">Please select Contest For</div>
+              </div>
+              </div>
+              
+            </div>
+  
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="state">Contest Name</label>
+              <input type="text" class="form-control" formControlName="Contest_Name">
+              <div *ngIf="isSubmitted && formControls.Contest_Name.errors" class="ValidationError">
+                <div *ngIf="formControls.Contest_Name.errors.required">Please enter Contest Name</div>
+              </div>
+              </div>
+              
+            </div>
+  
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="state">Document</label>
+              <input type="file" class="form-control" formControlName="ContestImage"
+                (change)="UploadDocs($event,'ContestImage')">
+              <div *ngIf="isSubmitted && formControls.ContestImage.errors" class="ValidationError">
+                <div *ngIf="formControls.ContestImage.errors.required">Please Select Document</div>
+              </div>
+              </div>
+              
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="state">From Date</label>
+              <!-- <input type="date" class="form-control" formControlName="enabledate"> -->
+              <input type="date" class="form-control" formControlName="enabledate" (change)="updateMinDisableDate()">
+              <div *ngIf="isSubmitted && formControls.ContestImage.errors" class="ValidationError">
+                <div *ngIf="formControls.ContestImage.errors.required">Please Select From Date</div>
+              </div>
+              </div>
+              
+            </div>
+  
+  
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="state">To Date</label>
+              <!-- <input type="date" class="form-control" formControlName="disabledate"> -->
+              <input type="date" class="form-control" formControlName="disabledate" [min]="minDisableDate">
+              <div *ngIf="isSubmitted && formControls.ContestImage.errors" class="ValidationError">
+                <div *ngIf="formControls.ContestImage.errors.required">Please Select To Date</div>
+              </div>
+            </div>
+              
+            </div>
+            <!-- remark -->
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="state">Add Remark</label>
+              <input type="text" class="form-control" formControlName="remark">
+              <div *ngIf="isSubmitted && formControls.remark.errors" class="ValidationError">
+                <div *ngIf="formControls.remark.errors.required">Please Add Remark</div>
+              </div>
+              </div>
+              
+            </div>
+  
+          </div>
+  
+          <div class="box-footer with-border">
+            <footer>
+              <button class="btn pull-right" (click)="CloseModel()" type="button">Close</button>
+              <button *ngIf="this.type == 'Add'" class="btn btn-primary nextBtn pull-right" style="margin-right: 5px;" type="submit">Submit</button>
+              <button *ngIf="this.type == 'Edit'" class="btn btn-primary nextBtn pull-right" type="submit">Update</button>
+  
+            </footer>
+          </div>
+  
+    </form>
+
+  

@@ -1,0 +1,27 @@
+.label_top_blog {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.label_top_blog span {
+  font-weight: 700;
+  font-size: 12px;
+  background: white;
+  padding: 5px;
+  border: 1px solid #1a6a99;
+  border-radius: 3px;
+  box-shadow: 0px 0px 5px #00000026;
+}
+
+.cs_table_border,
+.cs_table_border tr td {
+  border: 1px solid #282525;
+}
+
+.cs_table_td tr td {
+  padding: 3px;
+}
+
+.cs_table_td tr:first-child td {
+  background-color: #d4ebff;
+}

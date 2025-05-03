@@ -1,0 +1,191 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 *ngIf="ActivePage == 'Default'" class="box-title">POSP Activation Report</h3>
+                    </div>
+                    <app-bms-filter (postCreated)="SearchData($event)"></app-bms-filter>
+
+                    <div class="box-body">
+                        <hr>
+                        <div class="mydiv" style="display:none">
+
+                            <table datatable [dtOptions]="dtOptions" id="Table1"
+                                class="table table-bordered table-hover" style="display:none;">
+                                <thead>
+                                    <tr>
+
+                                        <th>S.No</th>
+
+
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngIf="dataArToDate?.length != 0">
+
+                                    <tr *ngFor="let row of dataArToDate; let i=index;">
+                                        <td>{{row.SrNo}}</td>
+
+                                    </tr>
+
+                                </tbody>
+                                <tbody *ngIf="dataArToDate?.length == 0">
+                                    <tr>
+                                        <td colspan="8" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+
+                            </table>
+                        </div>
+                        <div *ngIf="ShowDIv == 1" class="d_flex flex_End">
+                            <button type="button" class="btn btn-info" (click)="downloadAsPDF()">
+                                {{DownloadPdf}}</button>
+                        </div>
+
+                        <div *ngIf="ShowDIv == 1" id="contentToConvert">
+                            <div class="row" id="TableGraph">
+
+
+                                <div class="col-lg-12 col-md-12">
+                                    <h3 class="box-title text_center fw_600">Report Table View</h3>
+
+                                </div>
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="main_card">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+
+                                                    <th> Date Range </th>
+                                                    <th style="background: #007ffc24;"> {{ToDateValueCheck}}
+                                                    </th>
+                                                    <th style="background: #00f7964a;"> {{FromDateValuecheck}}
+                                                    </th>
+
+                                                </tr>
+
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th style="background: #007ffc24;">Count POSP </th>
+                                                    <th style="background: #00f7964a;">Count POSP </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody *ngIf="dataArValuee?.length != 0">
+
+                                                <tr *ngFor="let row of dataArValuee; let i=index;">
+                                                    <td>{{row.Name}}</td>
+                                                    <td style="background: #007ffc24;">{{row.ToDatePos}}</td>
+
+                                                    <td style="background: #00f7964a;">{{row.FromDatePos}}
+
+                                                        <span style="background-color: #00bb1c;"
+                                                            *ngIf="row.GrowthCheckDatePos=='PositiveNumber'"
+                                                            class="label label-info label-inline mr-1"><i
+                                                                class="fa fa-arrow-up" aria-hidden="true"></i>
+                                                            {{row.GrowthCheckDate }}%</span>
+
+                                                        <span style="background-color: red;"
+                                                            *ngIf="row.GrowthCheckDatePos=='NegativeNumber'"
+                                                            class="label label-danger label-inline mr-1"><i
+                                                                class="fa fa-arrow-down" aria-hidden="true"></i>
+                                                            {{row.GrowthCheckDate }}%</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Total</td>
+                             
+                                                    <td style="background: #00f7964a;">{{TotalToPosCount}} 
+                                                        </td>
+
+
+                                                    <td style="background: #00f7964a;">{{TotalFromPosCount}}<span
+                                                            style="background-color: #00bb1c;"
+                                                            *ngIf="GrowthCheckTotalPos=='PositiveNumber'"
+                                                            class="label label-info label-inline mr-1"><i
+                                                                class="fa fa-arrow-up" aria-hidden="true"></i>
+                                                            {{GrowthTotalPos }}%</span>
+
+
+                                                            <span style="background-color: red;"
+                                                            *ngIf="GrowthCheckTotalPos=='NegativeNumber'"
+                                                            class="label label-danger label-inline mr-1"><i
+                                                                class="fa fa-arrow-down" aria-hidden="true"></i>
+                                                            {{GrowthTotalPos}}%</span>
+                                                        
+                                                        </td>
+
+                                                </tr>
+                                            </tbody>
+                                            <tbody *ngIf="dataArValuee?.length == 0">
+                                                <tr>
+                                                    <td colspan="8" align="center">No data Available !</td>
+                                                </tr>
+                                            <tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="row" id="NetGraph">
+                                <div class="col-lg-12 col-md-12">
+                                    <h3 class="box-title text_center fw_600">POSP Activation Reports</h3>
+
+                                </div>
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="main_card">
+                                        <div class="col-lg-6 col-md-6">
+                                            <h3 style="background: #007ffc24;"
+                                                class="box-title text_center fw_600 py_5 border_red5px">
+                                                {{TotalToPosCount}}
+                                            </h3>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h3 style="background: #00f7964a;"
+                                                class="box-title text_center fw_600 py_5 border_red5px">
+                                                {{TotalFromPosCount}}
+                                            </h3>
+                                        </div>
+                                        <div id="chart" class="col-lg-12 col-md-12">
+
+                                            <apx-chart [series]="chartOptionsActivationCount.series"
+                                                [chart]="chartOptionsActivationCount.chart"
+                                                [dataLabels]="chartOptionsActivationCount.dataLabels"
+                                                [plotOptions]="chartOptionsActivationCount.plotOptions"
+                                                [yaxis]="chartOptionsActivationCount.yaxis"
+                                                [fill]="chartOptionsActivationCount.fill"
+                                                [xaxis]="chartOptionsActivationCount.xaxis">
+                                            </apx-chart>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+
+
+<!-- /.content-wrapper -->

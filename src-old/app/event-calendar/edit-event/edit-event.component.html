@@ -1,0 +1,300 @@
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 *ngIf="this.type == 'Add'">Add Event</h3>
+      <h3 *ngIf="this.type == 'Edit'">Edit Event</h3>
+      <h3 *ngIf="this.type == 'Events'">Event</h3>
+    </div>
+    <div class="col-md-5">&nbsp;</div>
+
+    <div class="col-md-1">
+      <button type="button" (click)="CloseModel()" class="btn btn-box-tool">
+        <i class="fa fa-remove"></i>
+      </button>
+    </div>
+
+  </div>
+
+  <div *ngIf="this.type != 'Events'">
+    <form (ngSubmit)="submit()" [formGroup]="AddEvent" style="margin-top: -15px" id="form-1">
+      <div class="box">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-4">
+              <label>Request Type</label>
+              <ng-multiselect-dropdown class="form-control" [data]="RequestTypeArr" formControlName="RequestType" [settings]="dropdownSettingsTypeSingle" (onSelect)="onRequestedTypeSelect()">
+              </ng-multiselect-dropdown>
+            </div>
+    
+            <div class="col-md-4" *ngIf="RequestedTypeValue==1">
+              <label>Requests</label>
+              <ng-multiselect-dropdown class="form-control" [data]="RequestMemberArr" formControlName="RequestMember" [settings]="dropdownSettingsType">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.RequestMember.errors" class="ValidationError">
+                <div *ngIf="formControls.RequestMember.errors.required">
+                  Please select Requests
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4">
+              <label>Event Type</label>
+              <!-- <ng-multiselect-dropdown class="form-control" [data]="EventTypeArr" formControlName="EventType" [settings]="dropdownSettingsTypeSingle" (onSelect)="onEventTypeSelect($event)"> -->
+              <ng-multiselect-dropdown class="form-control" [data]="EventTypeArr" formControlName="EventType" [settings]="dropdownSettingsTypeSingle" (onSelect)="onEventTypeSelect()">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.EventType.errors" class="ValidationError">
+                <div *ngIf="formControls.EventType.errors.required">
+                  Please select Event Type
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4">
+              <label>Type</label>
+              <ng-multiselect-dropdown class="form-control" [data]="TypeArr" formControlName="Type" [settings]="dropdownSettingsTypeSingle" (onSelect)="onTypeSelect()">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.Type.errors" class="ValidationError">
+                <div *ngIf="formControls.Type.errors.required">
+                  Please select Type
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4"*ngIf="EmployeeProfile == '1'">
+              <label>Employee profile</label>
+              <ng-multiselect-dropdown class="form-control" [data]="EmployeeProfileArr" formControlName="EmployeeProfile" [settings]="dropdownSettingsType" (onSelect)="onEmployeeProfileSelect()">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.EmployeeProfile.errors" class="ValidationError">
+                <div *ngIf="formControls.EmployeeProfile.errors.required">
+                  Please select Employee profile
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4" *ngIf="ShowVertical == '1'">
+              <label>Select Vertical</label>
+              <ng-multiselect-dropdown class="form-control" [data]="verticalArr" formControlName="vertical" [settings]="dropdownSettingsType" (onSelect)="onverticalSelect($event)" (onSelectAll)="onverticalSelect($event)">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.vertical.errors" class="ValidationError">
+                <div *ngIf="formControls.vertical.errors.required">
+                  Please select Contest For
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4" *ngIf="vertical_member_value == '1'">
+              <label>Select Member</label>
+              <ng-multiselect-dropdown class="form-control" [data]="VerticalMemberArr" formControlName="VerticalMember" [settings]="dropdownSettingsType" (onSelect)="onVerticalMemberSelect($event)" (onSelectAll)="onVerticalMemberSelect($event)">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.VerticalMember.errors" class="ValidationError">
+                <div *ngIf="formControls.VerticalMember.errors.required">
+                  Please select Vertical Member
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4" *ngIf="ShowPOSPValue == '1'">
+              <label>Select POSP</label>
+              <ng-multiselect-dropdown class="form-control" [data]="POSPArr" formControlName="POSP" [settings]="dropdownSettingsType">
+              </ng-multiselect-dropdown>
+              <div *ngIf="isSubmitted && formControls.POSP.errors" class="ValidationError">
+                <div *ngIf="formControls.POSP.errors.required">
+                  Please select POSP
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4">
+              <label>Event Name</label>
+              <input type="text" class="form-control" formControlName="Event_Name" />
+              <div *ngIf="isSubmitted && formControls.Event_Name.errors" class="ValidationError">
+                <div *ngIf="formControls.Event_Name.errors.required">
+                  Please Enter Event Name
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4">
+              <label>Event Start</label>
+              <input type="date" class="form-control" formControlName="Event_Start" (change)="updateMinEvent_End()" [min]="currentDate" />
+              <div *ngIf="isSubmitted && formControls.Event_Start.errors" class="ValidationError">
+                <div *ngIf="formControls.Event_Start.errors.required">
+                  Please Select Event Start
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4">
+              <label>Start time</label>
+              <input type="time" class="form-control" formControlName="start_time" />
+              <div *ngIf="isSubmitted && formControls.start_time.errors" class="ValidationError">
+                <div *ngIf="formControls.start_time.errors.required">
+                  Please Select Start Time
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4">
+              <label>Event End</label>
+              <input type="date" class="form-control" formControlName="Event_End" [min]="minEvent_End" />
+              <div *ngIf="isSubmitted && formControls.Event_End.errors" class="ValidationError">
+                <div *ngIf="formControls.Event_End.errors.required">
+                  Please Select Event End Date
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4">
+              <label>End Time</label>
+              <input type="time" class="form-control" formControlName="end_time" />
+              <div *ngIf="isSubmitted && formControls.end_time.errors" class="ValidationError">
+                <div *ngIf="formControls.end_time.errors.required">
+                  Please Select Event End Time
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4">
+              <label>Label Color</label>
+              <input type="Color" class="form-control" formControlName="Event_Color" />
+              <div *ngIf="isSubmitted && formControls.Event_Color.errors" class="ValidationError">
+                <div *ngIf="formControls.Event_Color.errors.required">
+                  Please Select Event Color
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4">
+              <label>{{ UrlLable }}</label>
+              <input type="url" class="form-control" formControlName="URL" />
+              <div *ngIf="isSubmitted && formControls.URL.errors" class="ValidationError">
+                <div *ngIf="formControls.URL.errors.required">
+                  Please Enter Event URL
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4" *ngIf="EventTypeValue == 'offline'">
+              <label>Event Address</label>
+              <input type="text" class="form-control" formControlName="Location_Name" />
+              <div *ngIf="isSubmitted && formControls.Location_Name.errors" class="ValidationError">
+                <div *ngIf="formControls.Location_Name.errors.required">
+                  Please Add Location Name
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4" *ngIf="EventTypeValue == 'offline'">
+              <label>City Name</label>
+              <input type="text" class="form-control" formControlName="City_Name" />
+              <div *ngIf="isSubmitted && formControls.City_Name.errors" class="ValidationError">
+                <div *ngIf="formControls.City_Name.errors.required">
+                  Please Add City Name
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4">
+              <label>Description</label>
+              <textarea class="form-control" formControlName="remark"></textarea>
+              <div *ngIf="isSubmitted && formControls.remark.errors" class="ValidationError">
+                <div *ngIf="formControls.remark.errors.required">
+                  Please Enter Description
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <div class="box-footer with-border">
+            <footer>
+              <button class="btn pull-right" (click)="CloseModel()" type="button">Close</button>
+              <button *ngIf="this.type == 'Add'" class="btn btn-primary nextBtn pull-right" style="margin-right: 5px" type="submit">Submit</button>
+              <button *ngIf="this.type == 'Edit'" class="btn btn-primary nextBtn pull-right" style="margin-right: 5px" type="submit">Update</button>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </form>
+    
+  </div>
+
+  <div *ngIf="this.type == 'Events'">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tab-content">
+          <div class="tab-pane fade in active" id="All" role="tabpanel">
+            <div class="custom_table">
+              <ul class="responsive-table">
+                <ng-container>
+                  <!-- <div *ngFor="let row of events; let i = index"> -->
+                  <div *ngFor="let row of events; let i = index">
+                    <li class="table-row">
+                      <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">{{ i+1 }}</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Event Name</div>
+                              <strong class="fs_18">{{ row.data.event_name }}</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_name_mobile">
+                              <div class="agent_data">
+                                <div>Event Type</div>
+                                <strong class="fs_18">{{ row.data.event_type }}</strong>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data" *ngIf=" row.data.location_name !=''">
+                              <div> Event Address</div>
+                              <strong class="fs_18">
+                                <label class="label label-info">{{row.data.location_name}}</label>
+                              </strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="last_row_div">
+                        <div class="d_flex">
+                          <div class="label_chips motor_lob dark">
+                            <span>Event Start Date / Time : {{ row.data.event_start | date: 'dd/MM/yyyy' }} - {{
+                              row.data.start_time }} </span>
+                          </div>
+
+                          <div class="label_chips non_motor_lob">
+                            <span>Event End Date / Time : {{ row.data.event_end | date: 'dd/MM/yyyy' }} - {{
+                              row.data.end_time }} </span>
+                          </div>
+
+                          <div class="label_chips non_motor_lob">
+                            <span>Event Url : </span>
+                            <a href="{{row.data.url}}" target="_blank">{{row.data.url}}</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="copybtn" (click)="CopyText(row.data.url)" value="click to copy">
+                              <span class="fa fa-copy"></span> </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="last_row">
+                        <div class="d_flex effective_date">
+                          <span>Remark : {{row.data.remark}} </span>
+                        </div>
+                      </div>
+                    </li>
+                  </div>
+                </ng-container>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

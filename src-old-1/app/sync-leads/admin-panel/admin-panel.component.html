@@ -1,0 +1,332 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">
+              <div>{{currentUrl == 'synced-details' || currentUrl == 'synced-leads' ? 'Synced Leads' : currentUrl == 'synced-report' ?
+                'Transactions' : currentUrl == 'synced-users' ? 'Users' : currentUrl == 'synced-contact' ? 'Contacts' : ''}}
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!hasAccess" class="error-message">
+            <div class="container" style="text-align: center;">
+                <img src="assets/Authorised.png" alt="">
+            </div>
+        </div>
+
+          <div class="main_body main_card_height_scroll_withoutfooter"  *ngIf="hasAccess">
+
+            <div class="panelbody">
+              <form [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+                <div class="row">
+
+                  <div class="col-sm-3">
+                    <label>Select Financial Year</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="Financial Year" [data]="SR_Session_Year"
+                      formControlName="FinancialYear" [settings]="dropdownSettingsType"
+                      (onSelect)="onItemSelect($event)" [(ngModel)]="financialYearVal"> </ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <label>Select Date Range</label>
+                    <input type="text" placeholder="Date OR Date-Range" class="form-control"
+                      formControlName="DateOrDateRange" bsDaterangepicker [minDate]="minDate" [maxDate]="maxDate"
+                      [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                  </div>
+
+                  <!-- <div class="col-sm-3" *ngIf=" currentUrl == 'synced-report'">
+                    <label>Select User Type</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="User Type" [data]="User_Data"
+                      formControlName="UserData" [settings]="dropdownSettingsType" (onSelect)="Selected_User($event)"
+                      (onDeSelect)="Remove_User()"></ng-multiselect-dropdown>
+                  </div> -->
+
+                  <div class="col-sm-3"  *ngIf="currentUrl == 'synced-report' || currentUrl == 'synced-leads' || currentUrl == 'synced-users' || currentUrl == 'synced-contact'">
+                    <label>Select Employee</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="User Type" [data]="User_Data"
+                      formControlName="UserData" [settings]="dropdownSettingsMultiselect" (click)="searchAgent()"
+                      (onDeSelect)="Remove_User()"></ng-multiselect-dropdown>
+                  </div>
+
+
+                  <div class="col-sm-3" *ngIf="currentUrl == 'synced-report' || currentUrl == 'synced-leads' || currentUrl == 'synced-users' || currentUrl == 'synced-contact'">
+                    <label>Select Partner</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="User" [data]="AllUsersData"
+                      formControlName="AllUsers" [settings]="dropdownSettingsMultiselect"></ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-3" *ngIf="currentUrl == 'synced-details' || currentUrl == 'synced-leads'">
+                    <label>Select Policy Expire Days</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="Policy Expired In" [data]="Days_Data"
+                      formControlName="Days_Data" [settings]="dropdownSettingsType"
+                      [(ngModel)]="Days_DataVal"></ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-3" *ngIf=" currentUrl == 'synced-report'">
+                    <label>Select Range</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="Range" [data]="AllRange"
+                      formControlName="Range" [settings]="dropdownSettingsMultiselect"></ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-3" *ngIf=" currentUrl != 'synced-users'">
+                    <label>Transaction</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="Transaction" [data]="TransactionData"
+                      formControlName="Transaction" [settings]="dropdownSettingsMultiselect"></ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="col-sm-3" *ngIf="currentUrl != 'synced-report'">
+                    <label>Lead Status</label>
+                    <ng-multiselect-dropdown class="form-control" placeholder="Status" [data]="PurchasedData"
+                      formControlName="Purchased" [settings]="dropdownSettingsType"></ng-multiselect-dropdown>
+                  </div>
+
+
+                  <div class="col-sm-3" *ngIf="currentUrl == 'synced-details' || currentUrl == 'synced-leads' || currentUrl == 'synced-contact'">
+                    <label for="Request_type">Search</label>
+                    <input type="text" class="form-control" placeholder="Search" formControlName="SearchVal">
+                  </div>
+
+                  <div class="col-sm-3" style="margin-top:24px;">
+                    <input type="submit" class="btn btn-info" value="Search"> &nbsp;&nbsp;
+                    <button (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset"> <i
+                        class="fa fa-close"> </i> Reset</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <hr>
+
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>{{currentUrl == 'synced-report' ? 'Total Transactions' : currentUrl == 'synced-leads' ? 'Total Leads' : currentUrl == 'synced-contact' ? 'Total Contacts' : currentUrl == 'synced-users' ? 'Total User' : ''}}</th>
+                    <th>{{currentUrl == 'synced-report' ? 'Gems' : currentUrl == 'synced-leads' ? 'Purchased Leads' : currentUrl == 'synced-contact' ? 'Total Partner' : currentUrl == 'synced-users' ? 'Total Leads' : ''}}</th>
+                    <th *ngIf="currentUrl != 'synced-report'">{{ currentUrl == 'synced-leads' ? 'Gems' : currentUrl == 'synced-contact' ? 'Purchased Leads' : currentUrl == 'synced-users' ? 'Total Synced' : ''}}</th>
+                    <th *ngIf="currentUrl == 'synced-leads' || currentUrl == 'synced-users' || currentUrl == 'synced-contact'">{{ currentUrl == 'synced-leads' || currentUrl == 'synced-contact' ? 'Non-Purchased' : currentUrl == 'synced-users' ? 'Purchased' :'' }}</th>
+                    <th *ngIf="currentUrl == 'synced-users'">{{ currentUrl == 'synced-users' ? 'Non-Purchased' : ''}}</th>
+                    <th *ngIf="currentUrl == 'synced-users'">{{ currentUrl == 'synced-users' ? 'Pending' : ''}}</th>
+                  </tr>
+    
+                </thead>
+                <tbody style="background-color: #f4f4f4;">
+                  <tr>
+                    <td>{{dashboard_data && ( currentUrl == 'synced-report' ||currentUrl == 'synced-leads' || currentUrl == 'synced-users' || currentUrl == 'synced-contact') ? dashboard_data.recordsTotal : 0}}</td>
+                    <td>{{dashboard_data &&  currentUrl == 'synced-report' ? dashboard_data.totalGems : dashboard_data &&  currentUrl == 'synced-leads' ? dashboard_data.purchased : dashboard_data &&  currentUrl == 'synced-users' ? dashboard_data.totalContacts : dashboard_data &&  currentUrl == 'synced-contact' ? dashboard_data.totalPartner : 0}}</td>
+                    <td *ngIf="currentUrl != 'synced-report'">{{dashboard_data &&  currentUrl == 'synced-leads' ? dashboard_data.totalGems : dashboard_data && currentUrl == 'synced-users' ? dashboard_data.totalsynced : dashboard_data && currentUrl == 'synced-contact' ? dashboard_data.totalLeadPurchased : 0}}</td>
+                    <td *ngIf="currentUrl == 'synced-leads' || currentUrl == 'synced-users' || currentUrl == 'synced-contact'">{{dashboard_data &&  currentUrl == 'synced-leads' ? dashboard_data.non_purchased : dashboard_data && currentUrl == 'synced-users' ? dashboard_data.totalPurchased : dashboard_data &&  currentUrl == 'synced-contact' ? dashboard_data.total_not_Purchased : 0}}</td>
+                    <td *ngIf="currentUrl == 'synced-users'">{{dashboard_data && currentUrl == 'synced-users' ? dashboard_data.totalNonPurchased : 0}}</td>
+                    <td *ngIf="currentUrl == 'synced-users'">{{dashboard_data && currentUrl == 'synced-users' ? dashboard_data.totalPending : 0}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+
+                <!-- ======= Refer Table  =========-->
+                <ul class="responsive-table">
+                  <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+                    <!-- <span class="addon_tag_name">Lead Purchased {{row.leads_purchased }}</span> -->
+                    <p class="life_status_label label label-success" style="padding : 5px 11px;" *ngIf="currentUrl == 'synced-report'">
+                      <span><b>Lead Purchased {{ row.leads_purchased}}</b></span>
+                    </p>
+
+                    <p class="life_status_label" *ngIf="(currentUrl == 'synced-details' || currentUrl == 'synced-leads') && row.policyExpireIn != ''">
+                      <span>
+                        <a>
+                          <span  [ngClass]="{
+                              'label label-warning': row.policyStatus == 1,
+                              'label label-danger': row.policyStatus == 0
+                            }">
+                            {{ row.policyStatus == 1 ? 'Policy Expiery IN - ' + row.policyExpireIn : row.policyExpireIn
+                            }}
+                          </span>
+                        </a>
+                      </span>
+                    </p>
+
+                    <p class="life_status_label" *ngIf="currentUrl == 'synced-users' && row.leadstatus != ''">
+                      <span>
+                        <a>
+                          <span  [ngClass]="{
+                              'label label-warning px_10': row.leadstatus == 0,
+                              'label label-success': row.leadstatus == 1
+                            }">
+                            {{ row.leadstatus == 1 ? 'Synced' : row.leadstatus == 0 ? 'Pending' : ''
+                            }}
+                          </span>
+                        </a>
+                      </span>
+                    </p>
+
+                    <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{row.sno}}</div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <strong class="fs_18 text-bold">{{currentUrl == 'synced-details' || currentUrl == 'synced-leads' ? row.contactName :
+                              currentUrl == 'synced-report' || currentUrl == 'synced-contact'  || currentUrl == 'synced-users'? row.user : ''}}</strong>
+                          </div>
+                          <div><b *ngIf="currentUrl == 'synced-details' || currentUrl == 'synced-leads'">{{row.contactMobile}}</b></div>
+                        </div>
+                      </div>
+
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>{{currentUrl == 'synced-details' || currentUrl == 'synced-leads' ? 'Lead Purchased' : currentUrl == 'synced-report' ?
+                              'Transaction Id' :  currentUrl == 'synced-contact' ? 'Contact' : currentUrl == 'synced-users' ? 'Total Contacts' : ''}}</div>
+                              <ng-container *ngIf="currentUrl == 'synced-details' || currentUrl == 'synced-leads'">
+                                <strong>{{ row.leadPurchasedDate | date : 'dd-MM-yyyy' }}</strong>
+                              </ng-container>
+                              <ng-container *ngIf="currentUrl == 'synced-report'">
+                                <strong>{{ row.transaction_id }}</strong>
+                              </ng-container>
+                              <ng-container *ngIf="currentUrl == 'synced-contact'">
+                                <strong>{{ row.contact }}</strong>
+                              </ng-container>
+                              <ng-container *ngIf="currentUrl == 'synced-users'">
+                                <strong>{{ row.total_contact }}</strong>
+                              </ng-container>
+                              
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="agents_data agents_data3" *ngIf="currentUrl == 'synced-report' ||  currentUrl == 'synced-contact' || currentUrl == 'synced-users'">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>{{currentUrl == 'synced-report' ? 'Transaction Date' : currentUrl == 'synced-contact' ? 'Insert Date' : currentUrl == 'synced-users' ? 'Insert Date' : ''}}</div>
+                            <strong *ngIf="currentUrl == 'synced-report'">
+                              {{row.transaction_date | date : 'dd-MM-yyyy'}}
+                            </strong>
+                            <strong *ngIf="currentUrl == 'synced-contact' || currentUrl == 'synced-users'">
+                              {{row.insert_date | date : 'dd-MM-yyyy'}}
+                            </strong>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- </div> -->
+
+                      <div class="agent_name_mobile" style="position: relative; left: -5%; width: 600px;"
+                        *ngIf="currentUrl == 'synced-details' || currentUrl == 'synced-leads'">
+
+                        <div class="agent_data" *ngIf="row.customername != ''">
+                          <strong>
+                            Customer Name -
+                            {{row.customername}}
+                          </strong>
+                        </div>
+                        <div class="agent_data" *ngIf="row.customermobile != ''">
+                          <strong>
+                            Customer Mobile -
+                            {{row.customermobile}}
+                          </strong>
+                        </div>
+                        <div class="agent_data" *ngIf="row.customeremail != '' ">
+                          <strong>
+                            Customer Email -
+                            {{row.customeremail}}
+                          </strong>
+                        </div>
+                      </div>
+
+                      <div class="agents_data agents_data3" *ngIf="currentUrl == 'synced-details' || currentUrl == 'synced-leads'">
+                        <div class="agent_name_mobile">
+
+                          <div class="agent_data" *ngIf="row.registration_date != ''">
+                            <div>Registration Date</div>
+                            <strong>
+                              {{row.registration_date | date : 'dd-MM-yyyy'}}
+                            </strong>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="last_row_div mt10" style="margin-top:10px;" *ngIf="currentUrl == 'synced-details' || currentUrl == 'synced-leads' || currentUrl == 'synced-contact' || currentUrl == 'synced-users'">
+                      <div class="d_flex custon-234">
+                        <div class="label_chips finance_lob" style="width: auto;" *ngIf="(row.registration_no && row.registration_no != '') || row.total_synced && row.total_synced != null">
+                          <span *ngIf=" row.registration_no && row.registration_no != ''">Registration No. - {{row.registration_no}}</span>
+                          <span *ngIf="row.total_Purchased != null">Total Purchased - {{row.total_Purchased}}</span>
+                        </div>
+                        <div class="label_chips finance_lob" style="width: auto;" *ngIf="row.transaction_id && row.transaction_id != '' && currentUrl == 'synced-contact'">
+                          <span *ngIf="currentUrl == 'synced-contact'">Transaction Id - {{row.transaction_id}}</span>
+                        </div>
+
+                        <div class="label_chips non_motor_lob" style="width: auto;" *ngIf="row.make && row.make != '' || currentUrl == 'synced-users'">
+                          <span *ngIf="row.make && row.make != ''">Make - {{row.make}}</span>&nbsp;&nbsp;
+                          <span *ngIf="currentUrl == 'synced-users'">Total Synced - {{row.total_synced}}</span>&nbsp;&nbsp;
+                        </div>
+
+                        <div class="label_chips health_lob" style="width: auto;" *ngIf="row.model && row.model != ''">
+                          <span>Model - {{row.model}}</span>&nbsp;&nbsp;
+                        </div>
+
+                        <div class="label_chips life_lob" style="width: auto;" *ngIf="row.variant && row.variant != ''">
+                          <span>Variant - {{row.variant}}</span>&nbsp;&nbsp;
+                        </div>
+                        <div class="label_chips motor_lob" style="width: auto;" *ngIf="row.fuel && row.fuel != ''">
+                          <span>Fuel Type - {{row.fuel}}</span>&nbsp;&nbsp;
+                        </div>
+
+                        <div class="label_chips finance_lob" style="width: auto;" *ngIf="row.vechileType && row.vechileType != ''">
+                          <span>Vechile Type - {{row.vechileTypeName}}</span>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+                    <div class="last_row">
+                      <div class="d_flex effective_date">
+                        <div style="margin-right: 80px;"
+                          *ngIf="row.transaction_id != '' && currentUrl == 'synced-details' || currentUrl == 'synced-leads'">Transaction Id :
+                          {{row.transaction_id}}</div>
+                        <div style="margin-right: 80px;"
+                          *ngIf="(row.policy_expiery_date && row.policy_expiery_date != '') && (currentUrl == 'synced-details' || currentUrl == 'synced-leads')">Policy Expiry Date :
+                          {{row.policy_expiery_date | date : 'dd-MM-yyyy'}}</div>
+                      </div>
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                        <button *ngIf="currentUrl == 'synced-report' " class="btn btn-info" style="padding:2px;"
+                          [routerLink]="['/Sync/synced-details', row.transaction_id]">Details</button>
+                        <div *ngIf="row.previous_insurer != '' && currentUrl == 'synced-details' || currentUrl == 'synced-leads'">Previous Insurer :
+                          {{row.previous_insurer}}</div>
+                      </div>
+                    </div>
+
+                  </li>
+                </ul>
+                <!--======= Refer Table END ========= -->
+
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

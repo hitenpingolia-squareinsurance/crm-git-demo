@@ -1,0 +1,156 @@
+
+
+
+
+
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header d_flex flex_Equal flex_Middel">
+            <div class="header_title">Discription & HSN Number</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div class="btn_list_group">
+              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                  <div class="row">
+                    <div class="col-md-9">&nbsp;</div>
+                    <div class="col-md-3">
+                      <div class="dsr-fillter">
+                        <button class=" btn btn-info2" data-toggle="modal" data-target="#discriptionMasterModel">
+                          <a role="button" class="fa fa-plus" style="margin-right: 2px;">&nbsp;&nbsp;<span>Add
+                              </span></a>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="custom_table tables_layout_design">
+                <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+                <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                  <li class="table-row" *ngFor="let row of dataAr">
+                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                      <div class="agents_data agents_data1">
+                        <div class="icon_re_cl">{{row.SrNo}}</div>
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>Discription </div>
+                            <strong class="fs_18">{{row.discription}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="agents_data agents_data2">
+                        <div class="agent_name_mobile">
+                          <div class="agent_data">
+                            <div>HSN Number</div>
+                            <strong class="fs_18">{{row.hsn_no}}</strong>
+                          </div>
+                        </div>
+                      </div>
+                     
+                    </div>
+                    <div class="last_row_div">
+                      <div class="d_flex custon-234">
+                        <div class="label_chips finance_lob">
+                          <span>Add Stamp : {{row.add_stamp}}</span>
+                        </div>
+                      </div>
+                    </div>
+                       
+
+                    <div class="last_row">
+                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                        <!-- <a style="cursor: pointer;" (click)="AddProductDetailsComponent('Edit',row.Id)"
+                          class=" mr_5 btn-bg">Edit</a>
+                        <a style="cursor: pointer;" (click)="AddProductDetailsComponent('Document',row.Id)"
+                          class=" mr_5 btn-bg1">View</a>
+                        <a style="cursor: pointer;" (click)="DeleteRequest(row.Id, row.delete_status)"
+                          class=" mr_5 btn-bg2">Delete</a> -->
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="row" *ngIf="dataAr?.length == 0">
+                  <div class="col-md-12">
+                    <div class="no_data_found">
+                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                      <small>No data available !</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <div class="modal fade" id="discriptionMasterModel" tabindex="-1" aria-labelledby="discriptionMasterModelLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="discriptionMasterModelLabel">Add Discription</h5>
+          <button type="button" class="close" id="closeDialoginvoice" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+  
+        <div class="modal-body">
+          <form [formGroup]="discriptionForm" (ngSubmit)="AddDiscription()">
+          
+            <div class="form-group">
+              <label for="discription">Discription</label>
+              <input type="text" class="form-control" id="discription" formControlName="discription">
+              <span *ngIf="isSubmitted && ErrorDiscription.discription.errors" class="ValidationError">
+                <span *ngIf="ErrorDiscription.discription.errors.required">Please enter Discription!</span>
+              </span>
+            </div>
+  
+            <div class="form-group">
+              <label for="hsnnumber">HSN Number</label>
+              <input type="text" class="form-control" id="hsnnumber" formControlName="hsnnumber">
+              <span *ngIf="isSubmitted && ErrorDiscription.hsnnumber.errors" class="ValidationError">
+                <span *ngIf="ErrorDiscription.hsnnumber.errors.required">Please Enter HSN No.!</span>
+              </span>
+            </div>
+  
+  
+            <button type="submit" class="btn btn-primary">Submit</button>
+          
+          </form>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

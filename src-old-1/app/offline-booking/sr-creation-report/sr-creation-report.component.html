@@ -1,0 +1,160 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Offline Booking</div>
+
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+
+            <form class="form-blog-top" [formGroup]="SearchForm">
+
+
+              <div class="row" style="margin-top: 1%;">
+
+
+                <div class="col-sm-3">
+                  <ng-multiselect-dropdown name="LobAr" class="form-control" placeholder="Select LOB" [data]="LOB_Ar"
+                    formControlName="Lob" [settings]="SR_StatusDropdownSettings">
+                  </ng-multiselect-dropdown>
+                  <!-- 
+                  <select (change)="GetCompanies($event)" formControlName="Report_Type" name="Report_Type"
+                    class="form-control" placeholder="">
+                    <option selected value="">--select--</option>
+                    <option>General Insurance</option>
+                    <option>Life Insurance</option>
+                  </select> -->
+
+                  <span *ngIf="isSubmitted && FC.Lob.errors" class="form-text text-muted">
+                    <span *ngIf="FC.Lob.errors.required" style="color:red;">Please choose LOB !</span>
+                  </span>
+
+                </div>
+
+
+                <div class="col-sm-3">
+                  <ng-multiselect-dropdown name="SRStatus" class="form-control" placeholder="Select SR Status"
+                    [data]="SRStatus_Ar" formControlName="SRStatus" [settings]="SR_StatusDropdownSettings">
+                  </ng-multiselect-dropdown>
+
+                  <span *ngIf="isSubmitted && FC.SRStatus.errors" class="form-text text-muted">
+                    <span *ngIf="FC.SRStatus.errors.required" style="color:red;">Please choose business type!</span>
+                  </span>
+                </div>
+
+
+                <div class="col-sm-3">
+                  <ng-multiselect-dropdown class="form-control" name="Company_Id" placeholder="Select Ins Company"
+                    [data]="Companies_Ar" formControlName="Company_Id" [settings]="dropdownSettings">
+                  </ng-multiselect-dropdown>
+
+                  <span *ngIf="isSubmitted && FC.SRStatus.errors" class="form-text text-muted">
+                    <span *ngIf="FC.SRStatus.errors.required" style="color:red;">Please choose Company!</span>
+                  </span>
+
+                </div>
+
+                <div class="col-sm-3" style="text-align: right;">
+                  <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                    formControlName="DateOrDateRange" bsDaterangepicker
+                    [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+
+                  <span *ngIf="isSubmitted && FC.DateOrDateRange.errors" class="form-text text-muted">
+                    <span *ngIf="FC.DateOrDateRange.errors.required" style="color:red;">Please choose Date or
+                      Date-Range!</span>
+                  </span>
+                </div>
+
+              </div>
+
+
+              <div class="row" style="margin-top: 1%;">
+                <div class="col-sm-3" style="text-align: right;">
+                  <input type="text" placeholder="Search" class="form-control" formControlName="SearchValue">
+
+
+                </div>
+                <div class="col-sm-6"></div>
+
+
+                <div class="col-sm-3" style="text-align: right;">
+
+                  <!-- <input type="button" class="btn btn-info" value="Export"> -->
+                  <input type="submit" (click)="SearchBtn2()" class="btn btn-info" value="Export">
+
+                  &nbsp;&nbsp;
+
+                  <input type="submit" (click)="SearchBtn()" class="btn btn-info" value="Search">
+
+                  &nbsp;&nbsp;
+                  <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                    value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                </div>
+
+              </div>
+
+            </form>
+
+
+
+            <!-- /.box-body -->
+
+
+
+            <!-- /.box -->
+
+
+            <hr>
+
+            <!--begin: Datatable-->
+            <div class="table-responsive mysrdiv" id="mydiv">
+              <table datatable [dtOptions]="dtOptions"
+                class="row-border hover table table-bordered table-hover table-checkable" id="kt_datatable"
+                style="margin-top: 13px !important;width: 100% !important;">
+                <thead>
+                  <tr>
+                    <th>Sr.No.</th>
+                    <th>SR Creator</th>
+                    <th>S.No</th>
+                    <th>SR Status</th>
+                    <th>LOB</th>
+                    <th>Registration/Policy-No</th>
+                    <th>SR-Login Date/Time</th>
+
+                  </tr>
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{ row.SrNo }}.</td>
+                    <td>{{ row.user_Name }}</td>
+                    <td>{{ row.Full_SR_No }}</td>
+                    <td>{{ row.SR_Status }}</td>
+                    <td>{{ row.LOB_Id }}</td>
+                    <td><span *ngIf="row.Registration_No!=''">{{ row.Registration_No }}/</span>{{ row.Policy_No }}</td>
+                    <td>{{ row.Add_Stamp }}</td>
+
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="7" align="center">No data available !</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+
+            <!--end: Datatable-->
+
+            <!-- /.col -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</section>

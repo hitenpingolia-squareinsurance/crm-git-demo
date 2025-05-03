@@ -1,0 +1,121 @@
+<div>
+  <div class="row">
+
+
+    <div class="modal-header" style="text-align: center;">
+      <h4 class="modal-title">Partner Team
+        <button type="button" (click)="CloseModel()" class="btn btn-box-tool" style="float: right;"><i
+            class="fa fa-close" style="font-size:17px"></i></button>
+      </h4>
+    </div>
+
+  </div>
+
+  <div *ngIf="dataAr_Posp?.length > 0">
+    <table class="tab">
+      <tbody>
+        <tr class="col-12">
+          <td cols="4"><b>Name</b>: {{ dataAr_Posp[0]?.Name }} - {{ dataAr_Posp[0]?.agent_id }}</td>
+          <td col="4"><b>Email</b>: {{ dataAr_Posp[0]?.Email }}</td>
+          <td col="4"><b>Mobile</b>: {{ dataAr_Posp[0]?.Mobile }}</td>
+        </tr>
+
+        <tr>
+          <td col="4"><b>Mapped Partners</b>: {{ dataAr_Posp[0]?.countMapping }}</td>
+          <td col="4">
+            <b>Reporting Manager</b>: {{ dataAr_Posp[0]['Reporting_Manager'] ? dataAr_Posp[0]['Reporting_Manager'] : this.reportingManagerName }}
+            {{ dataAr_Posp[0]['Reporting_Manager_Id'] ? dataAr_Posp[0]['Reporting_Manager_Id'] : this.reportingManagerId}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+  </div>
+
+  <div class="box-body">
+
+    <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+
+    <div class="custom_table tables_layout_design">
+      <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+        class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th></th>
+          </tr>
+        </thead>
+      </table>
+      <ul class="responsive-table">
+        <li class="table-row" *ngFor="let row of DataAr_Posptable; let i=index;"> 
+          <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+            <div class="agents_data agents_data1">
+              <div class="icon_re_cl">{{ row.SrNo }}</div>
+              <div class="agent_name_mobile">
+                <div class="agent_data">
+                  <div> Name </div>
+                  <strong class="fs_18">{{ row.Name }} {{row.agent_id}}</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="agents_data agents_data2">
+              <div class="agent_name_mobile">
+                <div class="agent_data">
+                  <span class="label label-primary" *ngIf="Masking =='Mobile'+i"
+                    (click)="ShowMaskingField('TempMobile')"> Mobile : {{row.Mobile}}</span>
+
+                  <span class="label label-primary" *ngIf="Masking != 'Mobile'+i"
+                    (click)="ShowMaskingField('Mobile'+i)"> Mobile : ****</span>
+
+                </div>
+              </div>
+            </div>
+            <div class="agents_data agents_data2">
+              <div class="agent_name_mobile">
+                <div class="agent_data">
+                  <span class="label label-primary" *ngIf="Masking == 'Email'+i"
+                    (click)="ShowMaskingField('TempEmail')"> Email : {{row.Email}} <span (click)="CopyText(row.Email)"
+                      class="fa fa-copy"></span></span>
+
+                  <span class="label label-primary" *ngIf="Masking != 'Email'+i" (click)="ShowMaskingField('Email'+i)">
+                    Email : ****</span>
+
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="last_row_div">
+            <div class="d_flex custon-234">
+
+
+              <div class="label_chips motor_lob" style="width: auto;">
+                <span>Reporting Manager : {{ row.Reporting_Manager
+                  }} - {{row.Reporting_Manager_Id}} </span>&nbsp;&nbsp;
+              </div>
+
+              <div class="label_chips finance_lob" style="width: auto;">
+                <span>POS Type :{{ row.postype == 0 ? 'Non-Life' : 'Life and Non-Life' }}</span>
+              </div>
+              <div class="label_chips non_motor_lob" style="width: auto;">
+                <span>Status : {{ row.status == 1 ? 'Active' : 'Inactive' }}</span>
+              </div> 
+
+            </div>
+          </div> 
+        </li>
+        <div class="row" *ngIf="DataAr_Posptable?.length == 0">
+          <div class="col-md-12">
+            <div class="no_data_found">
+              <span><img src="assets/image/no_data_banner.jpg"></span>
+              <small>No data available !</small>
+            </div>
+          </div>
+        </div>
+      </ul>
+    </div>
+  </div> 
+</div>

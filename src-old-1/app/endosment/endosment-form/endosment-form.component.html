@@ -1,0 +1,1141 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+
+  <!-- <section class="content-header">
+    <h1>
+      Details Form
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#">Endorsement</a></li>
+      <li class="active">Details</li>
+    </ol>
+  </section>  -->
+
+  <!-- Main content -->
+  <section class="content">
+
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Endorsement Forms</h3>
+          </div>
+          <form class="form-horizontal" [formGroup]="EndosmentForm" (ngSubmit)="submitNewDetails()">
+            <div class="col-md-12">
+              <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#activity" data-toggle="tab">Owner Details</a></li>
+                  <li><a href="#timeline" data-toggle="tab">Vehicle Details</a></li>
+                  <li><a href="#settings" data-toggle="tab"> Other Details</a></li>
+                </ul>
+                <div class="tab-content">
+                  <!--====== OWNER DETAILS SECTION STARTS======-->
+                  <div class="active tab-pane" id="activity">
+                    <!--=== SALUTATION START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Salutation</label>
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.Salutation}}" readonly>
+                      </div>
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('salutation')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="salutation">
+                        <div *ngIf="isSubmitted && formControls.salutation.errors " class="ValidationError">
+                          <div *ngIf="formControls.salutation.errors.required">Please Enter Salutation! </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('salutation')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+
+                    <!--===SALUTTION END===-->
+
+                    <!--===FIRST NAME START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">First Name<br><span
+                          style="color:red;">{{nameUpdateReason}}</span></label>
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.FirstName}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="chooseReason('firstName')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="firstName">
+                        <div *ngIf="isSubmitted && formControls.firstName.errors " class="ValidationError">
+                          <div *ngIf="formControls.firstName.errors.required">Please Enter Name! </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('firstName')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--===FIRST NAME END===-->
+
+                    <!--===MOBILE NUMBER START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Mobile Number</label>
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.MobileNumber}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('mobileNo')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="mobileNo" maxlength="10">
+                        <div *ngIf="isSubmitted && formControls.mobileNo.errors " class="ValidationError">
+                          <div *ngIf="formControls.mobileNo.errors.required">Please Enter Mobile Number! </div>
+                          <div *ngIf="formControls.mobileNo.errors.pattern">Please Enter Valid Mobile Number! </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('mobileNo')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--===MOBILE NUMBER END===-->
+
+                    <!--===EMAIL ID START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Email ID</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.EmailId}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('emailId')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="emailId">
+                        <div *ngIf="isSubmitted && formControls.emailId.errors " class="ValidationError">
+                          <div *ngIf="formControls.emailId.errors.required">Please Enter Customer Email ID! </div>
+                          <div *ngIf="formControls.emailId.errors.pattern">Please Enter Valid Email ID! </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('emailId')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--===EMAIL ID END===-->
+
+                    <!--===GENDER START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Gender</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.Gender}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('gender')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="gender">
+                        <div *ngIf="isSubmitted && formControls.gender.errors " class="ValidationError">
+                          <div *ngIf="formControls.gender.errors.required">Please Enter Gender! </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('gender')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--===GENDER END===-->
+
+                    <!--===DOB START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">DOB</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.Dob}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('dob')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="date" class="form-control" formControlName="dob">
+                        <div *ngIf="isSubmitted && formControls.dob.errors " class="ValidationError">
+                          <div *ngIf="formControls.dob.errors.required">Please Enter DOB! </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('dob')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--===DOB END===-->
+
+                    <!--=== HOUSE/STREET NUMBER START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">House/Street Number</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('streetNo')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="streetNo">
+                        <div *ngIf="isSubmitted && formControls.streetNo.errors " class="ValidationError">
+                          <div *ngIf="formControls.streetNo.errors.required">Please Enter Street/House Number!
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('streetNo')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== HOUSE/STREET NUMBER END===-->
+
+                    <!--=== LOCATION START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Location</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.Location}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('location')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="location">
+                        <div *ngIf="isSubmitted && formControls.location.errors " class="ValidationError">
+                          <div *ngIf="formControls.location.errors.required">Please Enter Location! </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('location')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== LOCATION END===-->
+
+                    <!--=== PINCODE START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Pincode</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.Pincode}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('pincode')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <ng-multiselect-dropdown class="form-control" placeholder="" [data]="pincodeData"
+                          formControlName="pincode" [settings]="dropdownSettingsSingle"
+                          (keyup)="searchPincodes($event, 1)" (onSelect)="getStateCityDetails($event)" maxlength="6"
+                          [disabled]="pincodeDisable"></ng-multiselect-dropdown>
+                        <div *ngIf="isSubmitted && formControls.pincode.errors " class="ValidationError">
+                          <div *ngIf="formControls.pincode.errors.required">Please Enter Pincode! </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('pincode')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== PINCODE END===-->
+
+                    <!--=== STATE START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">State</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.State}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('state')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="state">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('state')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== STATE END===-->
+
+                    <!--=== CITY START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">City</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.City}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('city')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="city">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('city')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== CITY END===-->
+
+                    <!--=== PANCARD START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Pancard Number</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.PancardNo}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('pancardNo')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="pancardNo" maxlength="10">
+                        <div *ngIf="isSubmitted && formControls.pancardNo.errors " class="ValidationError">
+                          <div *ngIf="formControls.pancardNo.errors.required">Please Enter Pancard Number! </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('pancardNo')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== PANCARD END===-->
+
+                    <!--=== AADHARCARD START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Aadharcard Number</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.AadharcardNo}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('aadharcardNo')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="aadharcardNo" maxlength="12">
+                        <div *ngIf="isSubmitted && formControls.aadharcardNo.errors " class="ValidationError">
+                          <div *ngIf="formControls.aadharcardNo.errors.required">Please Enter Aadharcard Number!
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('aadharcardNo')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== ADHARCARD END===-->
+
+                    <!--=== GSTIN START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">GSTIN</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.GstIn}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('GstIN')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="GstIN">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('GstIN')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== GSTIN END===-->
+
+                  </div>
+                  <!--====== OWNER DETAILS SECTION STARTS======-->
+
+                  <!--====== VEHICLE DETAILS SECTION STARTS======-->
+                  <div class="tab-pane" id="timeline">
+
+                    <!-- === REGISTRATION NUMBER START === -->
+                    <div class="form-group">
+
+                      <label for="inputName" class="col-sm-2 control-label">Registration Number</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.RegistrationNo}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('registrationNo')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="registrationNo">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('registrationNo')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                    </div>
+                    <!--=== REGISTRATION NUMBER END===-->
+
+                    <!--=== REGISTRATION YEAR START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Registration Year</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.RegistrationYear}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('registrationYear')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <ng-multiselect-dropdown class="form-control" placeholder="" [data]="manufactureYearData"
+                          formControlName="registrationYear" [settings]="dropdownSettingsSingle"
+                          [disabled]="manufactureYearDisable"> </ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('registrationYear')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== REGISTRATION YEAR END===-->
+
+                    <!--=== MAKE START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Make</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.Make}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('make')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <ng-multiselect-dropdown class="form-control" placeholder="" [data]="makeData"
+                          formControlName="make" [settings]="dropdownSettingsSingle" (onSelect)="searchModels()"
+                          [disabled]="makeDisable" (onSelect)="onItemSelect('Make')"
+                          (onDeSelect)="onItemDeSelect('Make')">
+                        </ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('make')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                    </div>
+                    <!--=== MAKE END===-->
+
+                    <!--=== MODEL START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Model</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.Model}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('model')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <ng-multiselect-dropdown class="form-control" placeholder="" [data]="modelData"
+                          formControlName="model" [settings]="dropdownSettingsSingle" (onSelect)="searchFuelType()"
+                          [disabled]="modelDisable">
+                        </ng-multiselect-dropdown>
+                        <!-- formControlName="model" [settings]="dropdownSettingsSingle" (onSelect)="searchVariants()" -->
+
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('model')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== MODEL END===-->
+
+
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Fuel Type</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.FuelType}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('fuelType')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <ng-multiselect-dropdown class="form-control" placeholder="" [data]="fuelData" (onSelect)="searchVariants()"
+                          formControlName="fuelType" [settings]="dropdownSettingsSingle" [disabled]="fuelTypeDisable">
+                        </ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('fuelType')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                    </div>
+
+
+
+                    <!--=== VARIANT START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Variant</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.Variant}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('variant')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <ng-multiselect-dropdown class="form-control" placeholder="" [data]="variantData"
+                          formControlName="variant" [settings]="dropdownSettingsSingle" [disabled]="variantDisable">
+                        </ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('variant')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== VARIANT END===-->
+
+                    <!--=== FUEL TYPE START===-->
+                    <!-- <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Fuel Type</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.FuelType}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('fuelType')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <ng-multiselect-dropdown  class="form-control"  placeholder="" [data]="fuelData" formControlName="fuelType"
+                          [settings]="dropdownSettingsSingle" [disabled]="fuelTypeDisable"></ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('fuelType')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div> -->
+                    <!--=== FUEL TYPE END===-->
+
+                    <!--=== ENGINE NUMBER START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Engine Number</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.EngineNo}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('engineNo')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="engineNo">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('engineNo')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== ENGINE NUMBER END===-->
+
+                    <!--=== CHASSIS NUMBER START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Chassis Number</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.ChassisNo}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('chassisNo')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="chassisNo">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('chassisNo')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== CHASSIS NUMBER END===-->
+
+                    <!--=== CUBIC CAPACITY START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Cubic Capacity</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('cubicCapacity')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="cubicCapacity">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('cubicCapacity')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== CUBIC CAPACITY END===-->
+
+                    <!--=== CND IDV START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">CNG IDV</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('Cng_idv')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="Cng_idv">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('Cng_idv')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== CNG IDV END===-->
+
+                    <!--=== PA OWNER DRIVER START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">PA Owner Driver</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.PaOwnerDriver}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('paOwnerDriver')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <ng-multiselect-dropdown class="form-control" placeholder="" [data]="yesNoData"
+                          formControlName="paOwnerDriver" [settings]="dropdownSettingsSingle"
+                          [disabled]="paOwnerDriverDisable"></ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('paOwnerDriver')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== PA OWNER DRIVER END===-->
+
+                    <!--=== UNNAMED PA START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Unnamed PA</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.UnnamedPa}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('unnamedPa')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <ng-multiselect-dropdown class="form-control" placeholder="" [data]="yesNoData"
+                          formControlName="unnamedPa" [settings]="dropdownSettingsSingle" [disabled]="unnamedPaDisable">
+                        </ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('unnamedPa')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== UNNAMED PA END===-->
+
+                    <!--=== LEGAL LIABILITY START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Legal Liability</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.LegalLiability}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('legalLiability')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <ng-multiselect-dropdown class="form-control" placeholder="" [data]="yesNoData"
+                          formControlName="legalLiability" [settings]="dropdownSettingsSingle"
+                          [disabled]="legalLiabilityDisable"></ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('legalLiability')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== LEGAL LIABILITY END===-->
+
+                    <!--=== LEGAL LIABILITY FOR EMP START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Legal Liability For Emp</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.LegalLiabilityForEmp}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('legalLiabilityForEmp')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <ng-multiselect-dropdown class="form-control" placeholder="" [data]="yesNoData"
+                          formControlName="legalLiabilityForEmp" [settings]="dropdownSettingsSingle"
+                          [disabled]="legalLiabilityEmpDisable"></ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('legalLiabilityForEmp')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== UNNAMED PA END===-->
+
+                  </div>
+                  <!--====== VEHICLE DETAILS SECTION STARTS======-->
+
+                  <!--====== OTHER DETAILS SECTION STARTS======-->
+                  <div class="tab-pane" id="settings">
+
+                    <!--=== NCB VALUE START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">NCB<br><span
+                          style="color:red;">{{ncbUpdateReason}}</span></label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.Ncb}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="chooseReason('ncb')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="ncb">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('ncb')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== NCB VALUE END===-->
+
+                    <!--=== FINANCIER NAME START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Financier Name</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.FinancierName}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('financierName')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="financierName">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('financierName')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== FINANCIER NAME END===-->
+
+                    <!--=== NOMINEE FULL NAME START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Nominee Full Name</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.NomineeFullName}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('nomineeName')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="nomineeName">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('nomineeName')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== NOMINEE FULL NAME END===-->
+
+                    <!--=== NOMINEE DOB START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Nominee DOB</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.NomineeDob}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('nomineeDob')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="date" class="form-control" formControlName="nomineeDob">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('nomineeDob')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== NOMINEE DOB END===-->
+
+                    <!--=== NOMINEE RELATIONSHIP START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Nominee Relationship</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.NomineeRelation}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('nomineeRelation')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="nomineeRelation">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('nomineeRelation')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== NOMINEE RELATIONSHIP END===-->
+
+                    <!--=== PREVIOUS POLICY NUMBER START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Previous Policy Number</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.PreviousPolicyNo}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('previousPolicyNo')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="previousPolicyNo"
+                          [readonly]="prePolNoReadOnly">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('previousPolicyNo')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== PREVIOUS POLICY END===-->
+
+                    <!--=== PREVIOUS POLICY EXPIRY DATE START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Previous Policy Expiry Date</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.PreviousPolicyExpiry}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('previousPolicyExpiry')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="previousPolicyExpiry">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('previousPolicyExpiry')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== PREVIOUS POLICY EXPIRY DATE END===-->
+
+                    <!--=== PREVIOUS POLICY NCB START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Previous Policy NCB </label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('previousPolicyNCB')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="previousPolicyNCB">
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('previousPolicyNCB')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== PREVIOUS POLICY NCB END===-->
+
+                    <!--=== PREVIOUS POLICY INSURER START===-->
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Previous Policy Insurer</label>
+
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{row.PreviousPolicyInsurer}}" readonly>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="enableInputFieldsValue('previousInsurer')"><i
+                            class="fa fa-pencil-square-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <ng-multiselect-dropdown class="form-control" placeholder="" [data]="previousInsurerData"
+                          formControlName="previousInsurer" [settings]="dropdownSettingsSingle"
+                          [disabled]="preInsurerDisable"> </ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-sm-1" style="text-align: center;">
+                        <a class="cursorPointer" (click)="disableInputFieldValue('previousInsurer')"><i
+                            class="fa fa-times-circle-o fa-fa-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                    <!--=== PREVIOUS POLICY INSURER END===-->
+
+                    <!-- <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox"> I agree to the <a href="#">terms and
+                          conditions</a>
+                      </label>
+                    </div>
+                  </div>
+                </div> -->
+                  </div>
+                  <!--====== OTHER DETAILS SECTION STARTS======-->
+                  <div class="box box-primary doc-required">
+
+                    <div class="box-body" id="filecontainer" style="margin-top: 20px;;">
+
+                      <div class="form-group">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-3 Vineet old_1 doctype_OLD">
+                          <label class="form-control btn fileUpload btn-default"
+                            [ngClass]="(this.RC_Motor_Front_image==1 ? 'ImageUploaded' : 'else' )" name="button"
+                            value="RC_Front">
+                            <input type="file" (change)="checkFileType($event,'RC_Motor_Front')" id="file"
+                              formControlName="RcFront" accept="image/png, image/gif, image/jpeg, application/pdf"
+                              style="display:none;" />
+                            <span class="fas fa-user-alt">
+                              <b>RC Front </b>
+                            </span>
+                          </label>
+                        </div>
+
+                        <div class="col-md-2"></div>
+                        <div class="col-md-3 Vineet old_1 doctype_OLD">
+                          <label class="form-control btn fileUpload btn-default"
+                            [ngClass]="(this.RC_Motor_Back_image==1 ? 'ImageUploaded' : 'else' )" name="button"
+                            value="RC_Back">
+                            <input type="file" (change)="checkFileType($event,'RC_Motor_Back')" id="file"
+                              formControlName="RcBack" accept="image/png, image/gif, image/jpeg, application/pdf"
+                              style="display:none;" />
+                            <span class="fas fa-user-alt">
+                              <b>RC Back </b>
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-3 Vineet old_1 doctype_OLD">
+                          <label class="form-control btn fileUpload btn-default"
+                            [ngClass]="(this.Request_Letter_image==1 ? 'ImageUploaded' : 'else' )" name="button"
+                            value="Request_Letter">
+                            <input type="file" (change)="checkFileType($event,'Request_Letter')" id="file"
+                              formControlName="RequestLetter" accept="image/png, image/gif, image/jpeg, application/pdf"
+                              style="display:none;" />
+                            <span class="fas fa-user-alt">
+                              <b>Request Letter </b>
+                            </span>
+                          </label>
+                          <div *ngIf="isSubmitted && formControls.RequestLetter.errors " class="ValidationError">
+                            <div *ngIf="formControls.RequestLetter.errors.required">Request Letter Mandatory! </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-2"></div>
+                        <div class="col-md-3 Vineet old_1 doctype_OLD">
+                          <label class="form-control btn fileUpload btn-default"
+                            [ngClass]="(this.Supporting_Doc_image==1 ? 'ImageUploaded' : 'else' )" name="button"
+                            value="Supporting_Doc">
+                            <input type="file" (change)="checkFileType($event,'Supporting_Doc')" id="file"
+                              formControlName="SupportingDoc" accept="image/png, image/gif, image/jpeg, application/pdf"
+                              style="display:none;" />
+                            <span class="fas fa-user-alt">
+                              <b>Supporting Document </b>
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <label>Remark*</label>
+                    <textarea class="form-control" formControlName="mandateremark"></textarea>
+                    <div *ngIf="isSubmitted && formControls.mandateremark.errors " class="ValidationError">
+                      <div *ngIf="formControls.mandateremark.errors.required">Please Enter Remark </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-9" style="text-align: right;">
+                      <button type="submit" [disabled]="buttonDisable" class="btn btn-primary"
+                        style="background-color: #2cb2b3; color:white;">Submit</button>
+                    </div>
+                  </div>
+
+
+                </div>
+                <!-- /.tab-content -->
+              </div>
+              <!-- /.nav-tabs-custom -->
+            </div>
+
+          </form>
+
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

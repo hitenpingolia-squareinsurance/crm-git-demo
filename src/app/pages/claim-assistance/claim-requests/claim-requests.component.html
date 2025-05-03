@@ -1,0 +1,208 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div *ngIf="ActivePage == 'Default'" class="header_title">View Claim Requests</div>
+            <div *ngIf="ActivePage == 'ManageRequests'" class="header_title">View Manage Requests
+
+              <a style="color:white;" class=" pull-right btn btn-primary btn-info" data-toggle="modal"
+                data-target="#AddBulkUploadClaim" data-backdrop="static" data-keyboard="false"> <i
+                  class="fa fa-plus"></i>Add Bulk Upload Claim</a>
+            </div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+
+            <div>
+              <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <a role="button" class="fa fa-filter"><span>Filters</span><i
+                      class="fa fa-angle-down pull-right"></i></a>
+                </button>
+              </div>
+            </div>
+
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+                <!-- filter  -->
+                <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+              </div>
+            </div>
+            <hr>
+
+            <div class=" mydiv table-responsive">
+              <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+
+                    <th>S.No</th>
+                    <th>Action</th>
+                    <th>Claim Id</th>
+                    <th>Claim Creator</th>
+                    <th>Claim Manager</th>
+                    <th>Loss Type</th>
+                    <th>Cause Loss Type</th>
+                    <!-- <th>Intimated To Insurer</th> -->
+                    <th>Vechile No</th>
+                    <th>Customer Name</th>
+                    <th>Spot Survey</th>
+                    <th>Survey</th>
+                    <th>Claim Create Date</th>
+                    <th style="width: 200px;">RSD</th>
+                    <th style="width: 200px;">RED</th>
+                    <th>Details</th>
+
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{row.SrNo}}.</td>
+                    <td>
+                      <a *ngIf="row.Status == '6'" routerLink="/claim-assistance/view-claim/{{row.Claim_Id}}"><span
+                          class="label label-info">Re-open</span></a>
+                      <a *ngIf="row.Status == '1'" routerLink="/claim-assistance/view-claim/{{row.Claim_Id}}"><span
+                          class="label label-default">Pending</span></a>
+                      <a *ngIf="row.Status == '4'" routerLink="/claim-assistance/view-claim/{{row.Claim_Id}}"><span
+                          class="label label-primary"> Close</span></a>
+                      <a *ngIf="row.Status == '2'" routerLink="/claim-assistance/view-claim/{{row.Claim_Id}}"><span
+                          class="label label-success">In Process</span></a>
+                      <a *ngIf="row.Status == '3'" routerLink="/claim-assistance/view-claim/{{row.Claim_Id}}"><span
+                          class="label label-info">Approved</span></a>
+                      <a *ngIf="row.Status == '5'" routerLink="/claim-assistance/view-claim/{{row.Claim_Id}}"><span
+                          class="label label-danger">Rejected</span></a>
+                      <a *ngIf="row.Status == '7'" routerLink="/claim-assistance/view-claim/{{row.Claim_Id}}"><span
+                          class="label label-warning">Partially-Settled</span></a>
+                      <a *ngIf="row.Status == '8'" routerLink="/claim-assistance/view-claim/{{row.Claim_Id}}"><span
+                          class="label label-warning">Settled</span></a>
+                      <br>
+                      <a *ngIf="ActivePage == 'ManageRequests' && row.Claim_Manager == 'N/A'"
+                        (click)="AcceptClaim(row.Claim_Id)">
+                        <span class="label label-info">Accept</span></a>
+                      <br>
+                      <a *ngIf="ActivePage == 'ManageRequests' && row.Claim_Manager != 'N/A'"
+                        (click)="EditClaim(row.Id)">
+                        <span class="label label-info">Edit Claim</span></a>
+                    </td>
+                    <td>{{row.Claim_Id}}</td>
+                    <td>{{row.Claim_Creator}}</td>
+                    <td>{{row.Claim_Manager}}</td>
+                    <td>{{row.LossType}}</td>
+                    <td>{{row.CauseOfLossType}}</td>
+                    <!-- <td>{{row.Intimated_To_Insurer}}</td> -->
+                    <td>{{row.registration_no}}</td>
+                    <td>{{row.CustomerName}}</td>
+                    <td>{{row.Spot_Survey_Status}}</td>
+                    <td>{{row.Survey_Status}}</td>
+                    <td>{{row.Add_Stamp}}</td>
+
+                    <td>
+                      <div class="PayoutTable">
+                        <span><b>OD -</b> {{row.Policy_Start_Date_OD}}</span>
+                        <br>
+                        <span><b>TP -</b> {{row.Policy_Start_Date_TP}}</span>
+                      </div>
+                    </td>
+
+                    <td>
+                      <div class="PayoutTable">
+                        <span><b>OD -</b> {{row.Policy_End_Date_OD}}</span> <br>
+                        <span><b>TP -</b> {{row.Policy_End_Date_TP}}</span>
+                      </div>
+                    </td>
+                    <td> <label (click)="GetClaimDetails(row.Id)"><span class="label label-warning">Claim
+                          Details</span></label>
+                      <br> <label *ngIf="this.api.GetUserType() == 'employee'"
+                        (click)="GetPolicyDetails(row.Quotation_Id)"><span class="label label-primary">Policy
+                          Details</span></label>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="10" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+
+              </table>
+
+            </div>
+          </div>
+
+
+
+
+          <div id="AddBulkUploadClaim" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="main_card_form">
+                      <div class="main_header">
+                        <div class="header_title">Add Form</div>
+                      </div>
+                      <form class="form" (ngSubmit)="SubmitBulkClaim()" [formGroup]="SubmitBulkClaimForm">
+                        <div class="main_body main_card_height_scroll">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form_sub_title"><i class="fa fa-smile-o mr_5"></i> Basic Details</div>
+                            </div>
+                            <!-- <div class="col-md-12"> -->
+                            <!-- <div class="input_group">
+                                <label for="CustomerName">Type
+                                  <span *ngIf="isSubmitted1 && formControls2.Type.errors" class="ValidationError">
+                                    <span *ngIf="formControls2.Type.errors.required">Type is required</span>
+                                  </span>
+                                </label>
+                                <div class="position_relative">
+
+                                </div>
+                              </div> -->
+
+                            <div class="col-md-3">
+                              <div class="input_group">
+                                <label class="form_control fileUpload_btn d_flex flex_Center flex_Middel"
+                                  [ngClass]="(this.ClaimFileVal==1 ? 'ImageUploaded' : 'else' )" name="button"
+                                  value="aadhaar_documents">
+
+                                  <input type="file" (change)="UploadDocs($event,'ClaimFile')" id="file"
+                                    name="ClaimFile" accept="application/csv" formControlName="ClaimFile" />
+                                  <i class="fas fa-user-alt"><b>Add Claim File</b></i>
+
+                                  <!-- <span *ngIf="isSubmitted1 && ClaimFile.Type.errors" class="ValidationError">
+                                        <span *ngIf="formControls2.Type.errors.required">Type is required</span>
+                                      </span> -->
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- </div> -->
+                        <div class="main_footer">
+                          <button type="button" id="ClosePOUPUP" class="mr_5 btn-danger Save_click"
+                            data-dismiss="modal">Close</button>
+                          <button type="submit" class="Save_click">Add</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</section>

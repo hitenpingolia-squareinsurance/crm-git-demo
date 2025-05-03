@@ -1,0 +1,68 @@
+<section class="custom-scrool" id="click-close">
+    <div class="main_card_form ">
+        <div class="main_header">
+            <h4 class="header_title" *ngIf=" this.type == 'add'" >Add Checklist</h4>
+            <h4 class="header_title" *ngIf=" this.type == 'update'" >Update Checklist </h4>
+            <button type="button" (click)="CloseModel()" class="close closeModelButton"><i class="fa fa-close"></i></button>
+        </div>
+        <hr>
+        <div class="modal_body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form [formGroup]="AddFieldForm" (ngSubmit)="SubBtn()">
+                        <div class="row">
+                                <div class="col-sm-3" style="margin-left: 25px;">
+                                    <div class="category_list">
+                                        <label>Check List Name</label>
+                                        <input type="text" class="form-control" formControlName="checkListName">
+
+                                        <span *ngIf="isSubmitted && FC['checkListName'].errors" class="form-text text-muted">
+                                            <span *ngIf="isSubmitted && FC['checkListName'].errors['required']"
+                                                style="color:red;">This field is Required</span>
+                                        
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3" style="margin-top: 0px;">
+                                    <label>Source</label>
+                                    <ng-multiselect-dropdown class="form-control" name="Source_Type" placeholder="Select Source"
+                                    [data]="SRSource_Ar" formControlName="Source_Type" [settings]="dropdownSettingsmultiselect" [(ngModel)]="Source_Type"></ng-multiselect-dropdown>
+                               
+                                    <span *ngIf="isSubmitted && FC['Source_Type'].errors" class="form-text text-muted">
+                                        <span *ngIf="isSubmitted && FC['Source_Type'].errors['required']"
+                                            style="color:red;">This field is Required</span>
+                                    </span>
+                               
+                                </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Declaration</label>
+                                <ckeditor formControlName="declaration" [config]="ckconfig"></ckeditor>
+                                <div *ngIf="isSubmitted && FC.declaration.errors"
+                                    class="Validationerrors">
+                                    <div *ngIf="FC.declaration.errors.required">
+                                        <span style="color: red;">
+                                            Please Enter declaration!</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="float-end pull-right">
+                                    <button type="submit" class="btn btn_primary btn-success">Submit</button>
+                                    &nbsp;&nbsp;
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

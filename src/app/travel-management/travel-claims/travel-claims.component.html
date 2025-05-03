@@ -1,0 +1,794 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="main_card_form">
+            <div class="main_header">
+                <div class="header_title">
+                    Raise Claim
+                    <button class="btn btn-secondary" (click)="goBack()" style="float:right; color:#000; padding:2px;">
+                        <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;Back
+                    </button>
+                </div>
+            </div>
+            <div class="main_body  mt_10">
+
+                <form [formGroup]="sendClaimRequest" (ngSubmit)="claimRequest()">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="title">Employee Name</label>
+                            <input type="text" class="form-control" formControlName="EmployeeName"
+                                [value]="TravelData ? TravelData[0].Employee_Name : ''" readonly />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="title">Employee Id</label>
+                            <input type="text" class="form-control" formControlName="EmployeeId"
+                                [value]="TravelData ? TravelData[0].Employee_ID : ''" readonly />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="title">Designation</label>
+                            <input type="text" class="form-control" formControlName="EmployeeDesignation"
+                                [value]="TravelData ? TravelData[0].Employee_Designation : ''" readonly />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="title">Profile</label>
+                            <input type="text" class="form-control" formControlName="EmployeeProfile"
+                                [value]="TravelData ? TravelData[0].Employee_Profile : ''" readonly />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="title">Vertical</label>
+                            <input type="text" class="form-control" formControlName="EmployeeVerticle"
+                                [value]="TravelData ? TravelData[0].Employee_Department : ''" readonly />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="title">Reporting Manager</label>
+                            <input type="text" class="form-control" formControlName="EmployeeRM"
+                                [value]="TravelData ? TravelData[0].Employee_ReportingManager +' '+ '(' + TravelData[0].ReportingManager_ID + ')': ''"
+                                readonly />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="title">Travel Request Id</label>
+                            <input type="text" class="form-control" formControlName="TravelRequestId"
+                                [value]="TravelData ? TravelData[0].TravelRequestId : ''" readonly />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="title">Date Range</label>
+                            <input type="text" class="form-control" formControlName="DateRange"
+                                [value]="TravelData ? TravelData[0].StartDate + ' TO ' + TravelData[0].EndDate : ''"
+                                readonly />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="title">Purpose Of Visit</label>
+                            <input type="text" class="form-control" formControlName="PurposeOfVisit"
+                                [value]="TravelData ? TravelData[0].PurposeOfVisit : ''" readonly />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="title">Place Of Visit</label>
+                            <input type="text" class="form-control" formControlName="PlaceOfVisit"
+                                [value]="TravelData ? TravelData[0].District_Name_start +' TO '+ TravelData[0].District_Name_end : ''"
+                                readonly />
+                        </div>
+                    </div>
+
+                    <!-- --------------------------JOURNEY DETAILS------------------------ -->
+
+                    <div class="form_sub_title mt20">
+                        <i class="fa fa-link mr_5"></i> Details Of Journey
+                    </div>
+                    <div>
+                        <div class="row">
+                            <input type="hidden" *ngIf="this.url_segment == 'edit_claim' || SavedForm"
+                                class="form-control">
+                            <div class="form-group col-md-4">
+                                <label for="detailsOfJourney">Select Details Of Journey</label>
+                                <ng-multiselect-dropdown id="detailsOfJourney" class="form-control"
+                                    [data]="details_Of_Journey" formControlName="detailsOfJourney"
+                                    [(ngModel)]="selecteddetailsOfJourney" [settings]="dropdownSettingsType"
+                                    (onSelect)="ShowForm($event , 'detailsOfJourney')"
+                                    (onDeSelect)="ShowForm($event , 'detailsOfJourney')">
+                                </ng-multiselect-dropdown>
+                                <div *ngIf="isSubmitted && FC.detailsOfJourney.errors" class="ValidationError">
+                                    <div *ngIf="FC.detailsOfJourney.errors.required">Please Select Details Of Journey
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div formArrayName="JourneyDetails_formArrays" *ngIf="JourneyDetails">
+                            <div class="row"
+                                *ngFor="let JourneyDetails_formArray of JourneyDetails_formArrays.controls; let i = index"
+                                [formGroupName]="i" [ngClass]="{'formarray': i == 1 }">
+
+                                <div class="row">
+                                    <button *ngIf="this.url_segment == 'edit_claim' ? i >= 0 :  i != 0"
+                                        class="close_btn" style="float:right; margin-right:50px;" type="button"><i
+                                            class="fa fa-close"
+                                            (click)="removeArray(i , 'Details Of Journey')"></i></button>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="DepartureDate">Departure Date</label>
+                                    <input class="form-control" type="text" formControlName="DepartureDate" bsDatepicker
+                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" id="DepartureDate"
+                                        [minDate]="minDate" [maxDate]="maxDate" maxlength="10" placeholder="dd/mm/yyyy">
+                                    <div *ngIf="is_Submit && JourneyDetails_formArray.get('DepartureDate').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="JourneyDetails_formArray.get('DepartureDate').errors.required">
+                                            Please Select Date</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="DepartureTime">Departure Time</label>
+                                    <input class="form-control" type="time" formControlName="DepartureTime"
+                                        id="DepartureTime">
+                                    <div *ngIf="is_Submit && JourneyDetails_formArray.get('DepartureTime').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="JourneyDetails_formArray.get('DepartureTime').errors.required">
+                                            Please Enter Departure Time</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="DepartureStartPoint">Departure Point</label>
+                                    <input class="form-control" type="text" formControlName="DepartureStartPoint"
+                                        id="DepartureStartPoint">
+                                    <div *ngIf="is_Submit && JourneyDetails_formArray.get('DepartureStartPoint').errors"
+                                        class="ValidationError">
+                                        <div
+                                            *ngIf="JourneyDetails_formArray.get('DepartureStartPoint').errors.required">
+                                            Please Enter Departure Start Point</div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-md-4">
+                                    <label for="ArrivalDate">Arrival Date</label>
+                                    <input class="form-control" type="text" formControlName="ArrivalDate" bsDatepicker
+                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" id="ArrivalDate"
+                                        [minDate]="minDate" [maxDate]="maxDate" placeholder="dd/mm/yyyy">
+                                    <div *ngIf="is_Submit && JourneyDetails_formArray.get('ArrivalDate').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="JourneyDetails_formArray.get('ArrivalDate').errors.required">Please
+                                            Select Date</div>
+                                    </div>
+                                    <div *ngIf="JourneyDetails_formArray.get('ArrivalDate').hasError('toDateInvalid')"
+                                        class="ValidationError">
+                                        'Arrival Date' cannot be earlier than 'Departure Date'.
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="ArrivalTime">Arrival Time</label>
+                                    <input class="form-control" type="time" formControlName="ArrivalTime"
+                                        id="ArrivalTime">
+                                    <div *ngIf="is_Submit && JourneyDetails_formArray.get('ArrivalTime').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="JourneyDetails_formArray.get('ArrivalTime').errors.required">Please
+                                            Enter Arrival Time</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="ArrivalStartPoint">Arrival Point</label>
+                                    <input class="form-control" type="text" formControlName="ArrivalStartPoint"
+                                        id="ArrivalStartPoint">
+                                    <div *ngIf="is_Submit && JourneyDetails_formArray.get('ArrivalStartPoint').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="JourneyDetails_formArray.get('ArrivalStartPoint').errors.required">
+                                            Please Enter Arrival Start Point</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="Travelmode">Travel Mode</label>
+                                    <ng-multiselect-dropdown id="Travelmode" class="form-control"
+                                        [data]="travelmode_data" formControlName="Travelmode"
+                                        [settings]="dropdownSettingsType" (onSelect)="GetFair($event, i)">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="is_Submit && JourneyDetails_formArray.get('Travelmode').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="JourneyDetails_formArray.get('Travelmode').errors.required">Please
+                                            Select Travel Mode</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4"
+                                    *ngIf="showDistanceForIndex[i] || show_Distance_For_Index[i]">
+                                    <label for="JourneyDistance">Distance</label>
+                                    <input class="form-control" type="number" formControlName="JourneyDistance"
+                                        id="JourneyDistance" (input)="DistanceAmount($event , i)">
+                                    <div *ngIf="is_Submit && JourneyDetails_formArray.get('JourneyDistance').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="JourneyDetails_formArray.get('JourneyDistance').errors.required">
+                                            Please Enter Distance</div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group col-md-4">
+                                    <label for="JourneyAmount">Amount (INR)</label>
+                                    <input class="form-control" type="number" formControlName="JourneyAmount"
+                                        id="JourneyAmount" (input)="AmountCalculate()">
+                                    <div *ngIf="is_Submit && JourneyDetails_formArray.get('JourneyAmount').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="JourneyDetails_formArray.get('JourneyAmount').errors.required">
+                                            Please Enter Amount</div>
+                                    </div>
+                                </div>
+
+                                <div class=" form-group col-md-4">
+                                    <label for="JourneyFile">Upload Documents (Max 5)</label>
+                                    <div class="custom-file-input-wrapper">
+                                        <input type="file" multiple="true" id="File"
+                                            (change)="onFileChange($event,'JourneyFile',i)"
+                                            formControlName="JourneyFile" class="form-control ">
+                                    </div>
+                                    <p>{{this.FileNames}}</p>
+                                    <div *ngIf="is_Submit && JourneyDetails_formArray.get('JourneyFile').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="JourneyDetails_formArray.get('JourneyFile').errors.required">Please
+                                            Choose File</div>
+                                    </div>
+
+                                    <div *ngIf="is_Submit && fileError" class="ValidationError">
+                                        <p><b>{{ fileError }}</b></p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="JourneyRemark">Remark</label>
+                                    <input class="form-control" type="text" formControlName="JourneyRemark"
+                                        id="JourneyRemark">
+                                    <div *ngIf="is_Submit && JourneyDetails_formArray.get('JourneyRemark').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="JourneyDetails_formArray.get('JourneyRemark').errors.required">
+                                            Please Enter Remark</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row" *ngIf="JourneyDetails">
+                                <a style="float:right;" class="btn btn-primary mr_15"
+                                    (click)="AddMore('Details Of Journey')">Add More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ----------------------LOADING DETAILS---------------------------- -->
+
+                    <div class="form_sub_title mt20">
+                        <i class="fa fa-link mr_5"></i> Details Of Loading
+                    </div>
+
+                    <div>
+                        <div class="row">
+                            <input type="hidden" class="form-control"
+                                *ngIf="this.url_segment == 'edit_claim' || SavedForm">
+                            <div class="form-group col-md-4">
+                                <label for="detailsOfLoading">Select Details Of Loading</label>
+                                <ng-multiselect-dropdown id="detailsOfLoading" class="form-control"
+                                    [data]="details_Of_Loading" formControlName="detailsOfLoading"
+                                    [settings]="dropdownSettingsType" [(ngModel)]="selecteddetailsOfLoading"
+                                    (onSelect)="ShowForm($event , 'detailsOfLoading')"
+                                    (onDeSelect)="ShowForm($event , 'detailsOfLoading')">
+                                </ng-multiselect-dropdown>
+                                <div *ngIf="isSubmitted && FC.detailsOfLoading.errors" class="ValidationError">
+                                    <div *ngIf="FC.detailsOfLoading.errors.required">Please Select Details Of Loading
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div formArrayName="LoadingDetails_formArrays" *ngIf="LoadingDetails">
+                            <div class="row"
+                                *ngFor="let LoadingDetails_formArray of LoadingDetails_formArrays.controls; let i = index"
+                                [formGroupName]="i" [ngClass]="{'formarray': i == 1 }">
+
+                                <div class="row">
+                                    <button *ngIf="this.url_segment == 'edit_claim' ? i >= 0 :  i != 0"
+                                        class="close_btn" style="float:right; margin-right:50px;" type="button"><i
+                                            class="fa fa-close"
+                                            (click)="removeArray(i , 'Details Of Loading')"></i></button>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="LoadingFromdate">From Date</label>
+                                    <input class="form-control" type="text" formControlName="LoadingFromdate"
+                                        bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" [minDate]="minDate"
+                                        [maxDate]="maxDate" id="LoadingFromdate" placeholder="dd/mm/yyyy">
+                                    <div *ngIf="is_Submit && LoadingDetails_formArray.get('LoadingFromdate').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="LoadingDetails_formArray.get('LoadingFromdate').errors.required">
+                                            Please Select Date</div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-md-4">
+                                    <label for="LoadingTodate">To Date</label>
+                                    <input class="form-control" type="text" formControlName="LoadingTodate" bsDatepicker
+                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" [minDate]="minDate"
+                                        [maxDate]="maxDate" id="LoadingTodate" placeholder="dd/mm/yyyy">
+                                    <div *ngIf="is_Submit && LoadingDetails_formArray.get('LoadingTodate').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="LoadingDetails_formArray.get('LoadingTodate').errors.required">
+                                            Please Select Date</div>
+                                    </div>
+                                    <div *ngIf="LoadingDetails_formArray.get('LoadingTodate').hasError('toDateInvalid')"
+                                        class="ValidationError">
+                                        'TO Date' cannot be earlier than 'From Date'.
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="Hotel">Hotel</label>
+                                    <input class="form-control" type="text" formControlName="Hotel" id="Hotel">
+                                    <div *ngIf="is_Submit && LoadingDetails_formArray.get('Hotel').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="LoadingDetails_formArray.get('Hotel').errors.required">Please Enter
+                                            Hotel Name</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="LoadingAmount">Loading Amount (INR)</label>
+                                    <input class="form-control" type="number" formControlName="LoadingAmount"
+                                        id="LoadingAmount" (input)="AmountCalculate()">
+                                    <div *ngIf="is_Submit && LoadingDetails_formArray.get('LoadingAmount').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="LoadingDetails_formArray.get('LoadingAmount').errors.required">
+                                            Please Enter Amount</div>
+                                    </div>
+                                </div>
+
+                                <div class=" form-group col-md-4">
+                                    <label for="LoadingFile">Upload Documents (Max 5)</label>
+                                    <div class="custom-file-input-wrapper">
+                                        <input type="file" multiple="true" id="File"
+                                            (change)="onFileChange($event , 'LoadingFile', i)"
+                                            formControlName="LoadingFile" class="form-control ">
+                                    </div>
+                                    <p>{{this.FileNames}}</p>
+
+                                    <div *ngIf="is_Submit && LoadingDetails_formArray.get('LoadingFile').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="LoadingDetails_formArray.get('LoadingFile').errors.required">Please
+                                            Choose File</div>
+                                    </div>
+
+
+                                    <div *ngIf="is_Submit && fileError" class="ValidationError">
+                                        <p><b>{{ fileError }}</b></p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="LoadingRemark">Remark</label>
+                                    <input class="form-control" type="text" formControlName="LoadingRemark"
+                                        id="LoadingRemark">
+                                    <div *ngIf="is_Submit && LoadingDetails_formArray.get('LoadingRemark').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="LoadingDetails_formArray.get('LoadingRemark').errors.required">
+                                            Please Enter Remark</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" *ngIf="LoadingDetails">
+                                <a style="float:right;" class="btn btn-primary mr_15"
+                                    (click)="AddMore('Details Of Loading')">Add More</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- ----------------------TA DETAILS---------------------------- -->
+
+                    <div class="form_sub_title mt20">
+                        <i class="fa fa-link mr_5"></i> Details Of TA
+                    </div>
+
+                    <div>
+                        <div class="row">
+                            <input type="hidden" class="form-control"
+                                *ngIf="this.url_segment == 'edit_claim' || SavedForm">
+                            <div class="form-group col-md-4">
+                                <label for="detailsOfTA">Select Details Of TA</label>
+                                <ng-multiselect-dropdown id="detailsOfTA" class="form-control" [data]="details_Of_TA"
+                                    formControlName="detailsOfTA" [settings]="dropdownSettingsType"
+                                    [(ngModel)]="selecteddetailsOfTA" (onSelect)="ShowForm($event , 'detailsOfTA')"
+                                    (onDeSelect)="ShowForm($event , 'detailsOfTA')">
+                                </ng-multiselect-dropdown>
+                                <div *ngIf="isSubmitted && FC.detailsOfTA.errors" class="ValidationError">
+                                    <div *ngIf="FC.detailsOfTA.errors.required">Please Select Details Of TA</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div formArrayName="TADetails_formArrays" *ngIf="TADetails">
+
+                            <div class="row"
+                                *ngFor="let TADetails_formArray of TADetails_formArrays.controls; let i = index"
+                                [formGroupName]="i" [ngClass]="{'formarray': i == 1 }">
+
+                                <div class="row">
+                                    <button *ngIf="this.url_segment == 'edit_claim' ? i >= 0 :  i != 0"
+                                        class="close_btn" style="float:right; margin-right:50px;" type="button"><i
+                                            class="fa fa-close" (click)="removeArray(i , 'Details Of TA')"></i></button>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="TAFromdate">From Date</label>
+                                    <input class="form-control" type="text" formControlName="TAFromdate" bsDatepicker
+                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" [minDate]="minDate"
+                                        [maxDate]="maxDate" placeholder="dd/mm/yyyy" id="TAFromdate"
+                                        (bsValueChange)="getAllowance('TA')">
+                                    <div *ngIf="is_Submit && TADetails_formArray.get('TAFromdate').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="TADetails_formArray.get('TAFromdate').errors.required">Please Select
+                                            Date</div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form-group col-md-4">
+                                    <label for="TATodate">To Date</label>
+                                    <input class="form-control" type="text" formControlName="TATodate" bsDatepicker
+                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" [minDate]="minDate"
+                                        [maxDate]="maxDate" placeholder="dd/mm/yyyy" id="TATodate"
+                                        (bsValueChange)="getAllowance('TA')">
+
+
+                                    <div *ngIf="is_Submit && TADetails_formArray.get('TATodate').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="TADetails_formArray.get('TATodate').errors.required">Please Select
+                                            Date</div>
+                                    </div>
+                                    <div *ngIf="TADetails_formArray.get('TATodate').hasError('toDateInvalid')"
+                                        class="ValidationError">
+                                        'TO Date' cannot be earlier than 'From Date'.
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-md-4">
+                                    <label for="TAAmount">TA Amount (INR)</label>
+                                    <input class="form-control" type="number" formControlName="TAAmount" id="TAAmount"
+                                        (input)="AmountCalculate()">
+                                    <div *ngIf="is_Submit && TADetails_formArray.get('TAAmount').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="TADetails_formArray.get('TAAmount').errors.required">Please Enter
+                                            Amount</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="TARemark">Remark</label>
+                                    <input class="form-control" type="text" formControlName="TARemark" id="TARemark">
+                                    <div *ngIf="is_Submit && TADetails_formArray.get('TARemark').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="TADetails_formArray.get('TARemark').errors.required">Please Enter
+                                            Remark</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" *ngIf="TADetails">
+                                <a style="float:right;" class="btn btn-primary mr_15"
+                                    (click)="AddMore('Details Of TA')">Add More</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ----------------------DA DETAILS---------------------------- -->
+
+                    <div class="form_sub_title mt20">
+                        <i class="fa fa-link mr_5"></i> Details Of DA
+                    </div>
+
+                    <div>
+
+                        <div class="row">
+                            <input type="hidden" class="form-control"
+                                *ngIf="this.url_segment == 'edit_claim' || SavedForm">
+                            <div class="form-group col-md-4">
+                                <label for="detailsOfDA">Select Details Of DA</label>
+                                <ng-multiselect-dropdown id="detailsOfDA" class="form-control" [data]="details_Of_DA"
+                                    formControlName="detailsOfDA" [settings]="dropdownSettingsType"
+                                    [(ngModel)]="selecteddetailsOfDA" (onSelect)="ShowForm($event , 'detailsOfDA')"
+                                    (onDeSelect)="ShowForm($event , 'detailsOfDA')">
+                                </ng-multiselect-dropdown>
+                                <div *ngIf="isSubmitted && FC.detailsOfDA.errors" class="ValidationError">
+                                    <div *ngIf="FC.detailsOfDA.errors.required">Please Select Details Of DA</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div formArrayName="DADetails_formArrays" *ngIf="DADetails">
+                            <div class="row"
+                                *ngFor="let DADetails_formArray of DADetails_formArrays.controls; let i = index"
+                                [formGroupName]="i" [ngClass]="{'formarray': i == 1 }">
+
+
+                                <div class="row">
+                                    <button *ngIf="this.url_segment == 'edit_claim' ? i >= 0 :  i != 0"
+                                        class="close_btn" style="float:right; margin-right:50px;" type="button"><i
+                                            class="fa fa-close" (click)="removeArray(i , 'Details Of DA')"></i></button>
+                                </div>
+
+
+                                <div class="form-group col-md-4">
+                                    <label for="DAFromdate">From Date</label>
+                                    <input class="form-control" type="text" formControlName="DAFromdate" bsDatepicker
+                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" [minDate]="minDate"
+                                        [maxDate]="maxDate" placeholder="dd/mm/yyyy" id="DAFromdate"
+                                        (bsValueChange)="getAllowance('DA')">
+                                    <div *ngIf="is_Submit && DADetails_formArray.get('DAFromdate').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="DADetails_formArray.get('DAFromdate').errors.required">Please Select
+                                            Date</div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form-group col-md-4">
+                                    <label for="DATodate">To Date</label>
+                                    <input class="form-control" type="text" formControlName="DATodate" bsDatepicker
+                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" [minDate]="minDate"
+                                        [maxDate]="maxDate" placeholder="dd/mm/yyyy" id="DATodate"
+                                        (bsValueChange)="getAllowance('DA')">
+                                    <div *ngIf="is_Submit && DADetails_formArray.get('DATodate').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="DADetails_formArray.get('DATodate').errors.required">Please Select
+                                            Date</div>
+                                    </div>
+                                    <div *ngIf="DADetails_formArray.get('DATodate').hasError('toDateInvalid')"
+                                        class="ValidationError">
+                                        'TO Date' cannot be earlier than 'From Date'.
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="DAAmount">DA Amount (INR)</label>
+                                    <input class="form-control" type="number" formControlName="DAAmount" id="DAAmount"
+                                        (input)="AmountCalculate()">
+                                    <div *ngIf="is_Submit && DADetails_formArray.get('DAAmount').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="DADetails_formArray.get('DAAmount').errors.required">Please Enter
+                                            Amount</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="DARemark">Remark</label>
+                                    <input class="form-control" type="text" formControlName="DARemark" id="DARemark">
+                                    <div *ngIf="is_Submit && DADetails_formArray.get('DARemark').errors"
+                                        class="ValidationError">
+                                        <div *ngIf="DADetails_formArray.get('DARemark').errors.required">Please Enter
+                                            Remark</div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row" *ngIf="DADetails">
+                                <a style="float:right;" class="btn btn-primary mr_15"
+                                    (click)="AddMore('Details Of DA')">Add More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ----------------------Other Expense DETAILS---------------------------- -->
+
+                    <div class="form_sub_title mt20">
+                        <i class="fa fa-link mr_5"></i> Details Of Other Expense
+                    </div>
+                    <div>
+                        <div class="row">
+                            <input type="hidden" class="form-control"
+                                *ngIf="this.url_segment == 'edit_claim' || SavedForm">
+                            <div class="form-group col-md-4">
+                                <label for="detailsOfOther_Expense">Select Details Of Other Expense</label>
+                                <ng-multiselect-dropdown id="detailsOfOther_Expense" class="form-control"
+                                    [data]="details_Of_Other_Expense" formControlName="detailsOfOther_Expense"
+                                    [settings]="dropdownSettingsType" [(ngModel)]="selecteddetailsOfOther_Expense"
+                                    (onSelect)="ShowForm($event , 'detailsOfOther_Expense')"
+                                    (onDeSelect)="ShowForm($event , 'detailsOfOther_Expense')">
+                                </ng-multiselect-dropdown>
+                                <div *ngIf="isSubmitted && FC.detailsOfOther_Expense.errors" class="ValidationError">
+                                    <div *ngIf="FC.detailsOfOther_Expense.errors.required">Please Select Details Of
+                                        Other Expense</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="Other_ExpenseDetails">
+                            <div formArrayName="Other_ExpenseDetails_formArrays">
+                                <div class="row"
+                                    *ngFor="let Other_ExpenseDetails_formArray of Other_ExpenseDetails_formArrays.controls; let i = index"
+                                    [formGroupName]="i" [ngClass]="{'formarray': i == 1 }">
+
+
+                                    <div class="row">
+                                        <button *ngIf="this.url_segment == 'edit_claim' ? i >= 0 :  i != 0"
+                                            class="close_btn" style="float:right; margin-right:50px;" type="button"><i
+                                                class="fa fa-close"
+                                                (click)="removeArray(i , 'Other Expense')"></i></button>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="Other_ExpenseFromdate">From Date</label>
+                                        <input class="form-control" type="text" formControlName="Other_ExpenseFromdate"
+                                            bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}"
+                                            [minDate]="minDate" [maxDate]="maxDate" id="Other_ExpenseFromdate"
+                                            placeholder="dd/mm/yyyy">
+                                        <div *ngIf="is_Submit && Other_ExpenseDetails_formArray.get('Other_ExpenseFromdate').errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="Other_ExpenseDetails_formArray.get('Other_ExpenseFromdate').errors.required">
+                                                Please Select Date</div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group col-md-4">
+                                        <label for="Other_ExpenseTodate">To Date</label>
+                                        <input class="form-control" type="text" formControlName="Other_ExpenseTodate"
+                                            bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}"
+                                            [minDate]="minDate" [maxDate]="maxDate" id="Other_ExpenseTodate"
+                                            placeholder="dd/mm/yyyy">
+                                        <div *ngIf="is_Submit && Other_ExpenseDetails_formArray.get('Other_ExpenseTodate').errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="Other_ExpenseDetails_formArray.get('Other_ExpenseTodate').errors.required">
+                                                Please Select Date</div>
+
+                                        </div>
+                                        <div *ngIf="Other_ExpenseDetails_formArray.get('Other_ExpenseTodate').hasError('toDateInvalid')"
+                                            class="ValidationError">
+                                            'TO Date' cannot be earlier than 'From Date'.
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="Other_ExpenseAmount">Amount (INR)</label>
+                                        <input class="form-control" type="number" formControlName="Other_ExpenseAmount"
+                                            id="Other_ExpenseAmount" (input)="AmountCalculate()">
+                                        <div *ngIf="is_Submit && Other_ExpenseDetails_formArray.get('Other_ExpenseAmount').errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="Other_ExpenseDetails_formArray.get('Other_ExpenseAmount').errors.required">
+                                                Please Enter Amount</div>
+                                        </div>
+                                    </div>
+
+                                    <div class=" form-group col-md-4">
+                                        <label for="Other_ExpenseFile">Upload Documents (Max 5)</label>
+                                        <div class="custom-file-input-wrapper">
+                                            <input type="file" multiple="true" id="File"
+                                                (change)="onFileChange($event , 'Other_ExpenseFile' , i)"
+                                                formControlName="Other_ExpenseFile" class="form-control ">
+                                        </div>
+                                        <p>{{this.FileNames}}</p>
+                                        <div *ngIf="is_Submit && Other_ExpenseDetails_formArray.get('Other_ExpenseFile').errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="Other_ExpenseDetails_formArray.get('Other_ExpenseFile').errors.required">
+                                                Please Choose File</div>
+                                        </div>
+
+                                        <div *ngIf="is_Submit && fileError" class="ValidationError">
+                                            <p><b>{{ fileError }}</b></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="Other_ExpenseRemark">Remark</label>
+                                        <input class="form-control" type="text" formControlName="Other_ExpenseRemark"
+                                            id="Other_ExpenseRemark">
+                                        <div *ngIf="is_Submit && Other_ExpenseDetails_formArray.get('Other_ExpenseRemark').errors"
+                                            class="ValidationError">
+                                            <div
+                                                *ngIf="Other_ExpenseDetails_formArray.get('Other_ExpenseRemark').errors.required">
+                                                Please Enter Remark</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="Other_ExpenseDetails">
+                                    <a style="float:right;" class="btn btn-primary mr_15"
+                                        (click)="AddMore('Other Expense')">Add More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- -----------------SUBMIT------------------------ -->
+                    <hr>
+
+
+
+
+                    <div class="features-box">
+                        <div class="box1">
+                            <div class="box2">
+                                <div class="box_1">
+                                    <abbr>Journey Amount Total</abbr>
+                                    <span>{{JourneyAmountTotal != 'NaN' || JourneyAmountTotal != '' ? JourneyAmountTotal
+                                        : 0}}</span>
+                                </div>
+                                <div class="box_1">
+                                    <abbr>Loading Amount Total</abbr>
+                                    <span>{{LoadingAmountTotal != 'NaN' || LoadingAmountTotal != '' ? LoadingAmountTotal
+                                        : 0}}</span>
+                                </div>
+                                <div class="box_1">
+                                    <abbr>TA Amount Total</abbr>
+                                    <span>{{TAAmountTotal != 'NaN' || TAAmountTotal != '' ? TAAmountTotal : 0}}</span>
+                                </div>
+                                <div class="box_1">
+                                    <abbr>DA Amount Total</abbr>
+                                    <span>{{DAAmountTotal != 'NaN' || DAAmountTotal != '' ? DAAmountTotal : 0}}</span>
+                                </div>
+                                <div class="box_1">
+                                    <abbr>Other Expense Amount Total</abbr>
+                                    <span>{{OtherAmountTotal != 'NaN' || OtherAmountTotal != '' ? OtherAmountTotal :
+                                        0}}</span>
+                                </div>
+                            </div>
+                            <div class="box3">
+                                <div class="box3_1 bg1">
+                                    <abbr>Total:</abbr>
+                                    <span>{{TotalAmount != 'NaN' || TotalAmount != '' ? TotalAmount : 0}}</span>
+                                </div>
+                                <div class="box3_1 bg2">
+                                    <abbr>Advance Taken:</abbr>
+                                    <span>
+                                        {{TravelData ? TravelData[0].Account_Amount : ''}}
+                                    </span>
+                                </div>
+                                <div class="box3_1 bg3">
+                                    <abbr>Balance:</abbr>
+                                    <span>{{Balance != 'NaN' || Balance != '' ? Balance : 0}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div style="float:right; margin-top:10px; margin-right:18px;">
+                        <button class="btn btn-success" type="submit">
+                            {{this.url_segment == 'edit_claim' ? 'Update' : 'Submit'}}
+                        </button>
+                    </div>
+
+                    <div style="float:right; margin-top:10px; margin-right:18px;">
+                        <button class="btn btn-danger">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+                <div style="float:right; margin-top:10px; margin-right:18px;">
+                    <button class="btn btn-primary" (click)="claimRequest('saveForm')">
+                        Save
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,249 @@
+<!--begin::Content-->
+
+<div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
+	<!--begin::Subheader-->
+	<div class="subheader py-2 py-lg-4  subheader-transparent " id="kt_subheader">
+		<div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+			<!--begin::Info-->
+			<div class="d-flex align-items-center flex-wrap mr-1">
+
+				<!--begin::Page Heading-->
+				<div class="d-flex align-items-baseline mr-5">
+					<!--begin::Page Title-->
+					<h5 class="text-dark font-weight-bold my-2 mr-5">INFRA TDS</h5>
+					<!--end::Page Title-->
+
+					<!--begin::Breadcrumb-->
+					<ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+
+
+						<li class="breadcrumb-item"> <a href="javascript:;" class="text-muted"> brokerage </a> </li>
+						<li class="breadcrumb-item"> <a href="javascript:;" class="text-muted"
+								style="text-transform: lowercase;"> agents-tds</a> </li>
+
+					</ul>
+					<!--end::Breadcrumb-->
+				</div>
+				<!--end::Page Heading-->
+			</div>
+			<!--end::Info-->
+
+			<!--begin::Toolbar-->
+
+			<!--end::Toolbar-->
+		</div>
+	</div>
+	<!--end::Subheader-->
+
+	<!--begin::Entry-->
+	<div class="d-flex flex-column-fluid">
+		<!--begin::Container-->
+		<div class="container-fluid ">
+			<!--begin::Notice-->
+
+			<!--end::Notice-->
+
+			<!--begin::Card-->
+			<div class="card card-custom">
+				<!--<div class="card-header">
+          <div class="card-title">  
+            <h3 class="card-label"></h3>
+          </div>
+        <div class="card-toolbar"> 
+             
+            
+            begin::Button 
+            <a routerLink="/sr/sr-creation" class="btn btn-primary font-weight-bolder"> 
+			<span class="svg-icon svg-icon-md"> 
+             <i class="icon-xl fas fa-plus"></i>
+            </span> ADD New </a> 
+            
+          </div>
+        </div>-->
+
+
+				<div class="card-body">
+
+
+					<form *ngIf="checkedList?.length==0" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+						<div class="row">
+
+							<div class="col-sm-4">
+
+
+
+								<select (change)="GetEmployees()" formControlName="Vertical_Id" class="form-control">
+									<option value="0">Select Vertical</option>
+
+									<option *ngFor="let r of Vertical_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+								</select>
+
+							</div>
+
+							<div class="col-sm-4">
+								<select (change)="GetSubBranches($event)" formControlName="Region_Id"
+									class="form-control">
+									<option value="0">Select Region</option>
+									<option value="0">None</option>
+									<option *ngFor="let r of Region_Ar;" value="{{r.id}}">{{r.text}}</option>
+								</select>
+							</div>
+
+							<div class="col-sm-4">
+								<select (change)="GetEmployees()" formControlName="Sub_Region_Id" class="form-control">
+									<option value="0">Select Region-Branch</option>
+									<option value="0">None</option>
+									<option *ngFor="let r of Sub_Branch_Ar;" value="{{r.id}}">{{r.text}}</option>
+								</select>
+							</div>
+
+
+						</div>
+
+
+						<div class="row"  >
+
+							<div class="col-sm-6">
+
+								<ng-multiselect-dropdown name="Emp_Id" [placeholder]="Employee_Placeholder"
+									[data]="Emps_Ar" formControlName="Emp_Id" [settings]="dropdownSettings"
+									(onSelect)="onItemSelect($event,'Employee')"
+									(onDeSelect)="onItemDeSelect($event,'Employee')">
+								</ng-multiselect-dropdown>
+
+
+							</div>
+
+
+							<div class="col-sm-6">
+
+								<ng-multiselect-dropdown name="Agent_Id" [placeholder]="Agents_Placeholder"
+									[data]="Agents_Ar" formControlName="Agent_Id" [settings]="AgentdropdownSettings">
+								</ng-multiselect-dropdown>
+							</div>
+
+						</div>
+
+
+
+						<div class="row"  >
+
+							<div class="col-sm-2">
+
+								<ng-multiselect-dropdown name="SR_Source_Type" placeholder="Select TDS"
+									[data]="IRDA_TDS_Ar" formControlName="TDS" [settings]="LOB_dropdownSettings"
+									(onSelect)="onItemSelect($event,'TDS')">
+								</ng-multiselect-dropdown>
+
+							</div>
+
+							<div class="col-sm-3">
+								<input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+									formControlName="DateOrDateRange" bsDaterangepicker
+									[bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+							</div>
+							<div class="col-sm-4"></div>
+
+							<div class="col-lg-3" style="text-align: right;">
+
+								<!--<input (click)="ExportExcel()" type="button" class="btn btn-success" value="Export">
+				&nbsp;&nbsp;-->
+								<input type="submit" class="btn btn-info" value="Search">
+								&nbsp;&nbsp;
+								<button (click)="ClearSearch()" type="button" style="font-size: small;"
+									class="btn btn-danger" value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+							</div>
+
+						</div>
+
+					</form>
+
+
+					<div *ngIf="checkedList?.length>0" class="row"  >
+
+						<div class="col-sm-4">
+							<select class="form-control" [(ngModel)]="Assign_TDS">
+								<option value="">--Select TDS--</option>
+								<option *ngFor="let r of IRDA_TDS_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+							</select>
+						</div>
+
+						<div class="col-sm-3">
+							<input type="text" placeholder="Effective Date" [(ngModel)]="Effective_Date" bsDatepicker
+								[bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }" class="form-control">
+						</div>
+
+
+						<div class="col-sm-3">
+							<input type="button" (click)="UpdateTDS()" class="btn btn-info" value="Update TDS">
+							&nbsp;&nbsp;
+							<input (click)="Cancel()" type="button" class="btn btn-danger" value="Cancel">
+						</div>
+
+
+					</div>
+					<hr>
+
+
+					<table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+						<thead>
+							<tr>
+
+								<th><input [(ngModel)]="masterSelected" name="list_name" value="m1"
+										(change)="checkUncheckAll()" type="checkbox">
+								</th>
+
+								<th>INFRA TDS %</th>
+								<th>Agent Name</th>
+								<th>Agent Code</th>
+								<th>RM Name</th>
+								<th>RM Code</th>
+								<th>Creation Date</th>
+
+							</tr>
+						</thead>
+
+						<tbody *ngIf="dataAr?.length != 0">
+
+							<tr *ngFor="let row of dataAr; let i=index;">
+								<td><!--{{row.SrNo}}.-->
+
+									<input type="checkbox" [(ngModel)]="row.isSelected" name="list_name"
+										value="{{row.Id}}" (change)="isAllSelected()">
+
+								</td>
+
+								<td>{{row.IRDA_TDS}}</td>
+
+
+								<td>{{row.Agent_Name}}</td>
+								<td>{{row.Agent_Code}}</td>
+								<td>{{row.RM_Name}}</td>
+								<td>{{row.RM_Code}}</td>
+								<td>{{row.Create_Date}}</td>
+							</tr>
+
+						</tbody>
+
+						<tbody *ngIf="dataAr?.length == 0">
+							<tr>
+								<td colspan="9" align="center">No data Available !</td>
+							</tr>
+						<tbody>
+
+					</table>
+
+
+				</div>
+			</div>
+
+		</div>
+
+		<!--end::Container-->
+
+
+	</div>
+	<!--end::Entry-->
+</div>
+<!--end::Content-->

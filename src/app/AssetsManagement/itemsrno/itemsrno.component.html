@@ -1,0 +1,66 @@
+<div class="">
+
+    <section class="content">
+
+        <div class="row">
+
+            <div class="modal-header" style="text-align: left;">
+                <h4 class="modal-title">Item
+                </h4>
+            </div>
+        </div>
+
+        <form [formGroup]="srnoform" (ngSubmit)="onSubmit()">
+
+
+
+            <table class="table table-bordered" formArrayName="quantities">
+                <tr>
+                    <th colspan="2">Add Multiple Serial No.:</th>
+                    <!-- <th width="150px"><button type="button" (click)="addQuantity()" class="btn btn-primary pull-right">Add
+              More</button></th> -->
+                </tr>
+
+
+                <tr *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+
+                    <!-- <td>
+                        Product Type :
+                        <br>
+                        <input type="text" formControlName="product" class="form-control">
+                    </td> -->
+
+                    <!-- <td>
+                        Assest Id:
+                        <input type="text" formControlName="assetsid" class="form-control">
+                    </td> -->
+
+                    <!-- <td>
+                        Inventory Id:
+                        <input type="text" formControlName="inventoryid" class="form-control" readonly>
+                    </td> -->
+                    <!-- <td>
+                        {{i}}
+                    </td> -->
+                    <td>
+                        Sr No:
+                        <input type="text" formControlName="srno" class="form-control">
+                        <!-- <div *ngIf="isSubmitted && formControls.srno.errors" class="ValidationError">
+                            <div *ngIf="formControls.srno.errors.required">Please enter srno</div>
+                        </div> -->
+                    </td>
+
+                    <!-- <td>
+                        <button (click)="removeQuantity(i)" class="btn btn-danger">Remove</button>
+                    </td> -->
+                </tr>
+
+            </table>
+
+            <button type="submit" class="btn btn-success">Submit</button>
+
+        </form>
+
+    </section>
+
+</div>

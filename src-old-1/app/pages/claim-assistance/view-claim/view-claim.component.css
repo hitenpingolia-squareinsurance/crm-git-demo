@@ -1,0 +1,26 @@
+.direct-chat-msg2 {
+    width: 80%;
+    float: right;
+}
+
+.direct-chat-msg-left {
+    width: 80%;
+    float: left;
+}
+
+
+.btn-right-side a span{
+  padding: 6px;
+    margin: 0px 10px;
+    font-size: 11px;
+}
+
+span.label.label-Policy_Details {
+  color: white;
+  background: #8f8f90;
+}
+
+
+span.label.label-Details {
+  background: #1a6fa1;
+}

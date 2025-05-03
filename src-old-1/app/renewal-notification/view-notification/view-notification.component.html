@@ -1,0 +1,77 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+  
+    <section class="content">
+      
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header">
+              <div class="row">
+                <div class="col-md-4">
+                  <h3 class="box-title">Notification's</h3>
+                </div>
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-4">               
+                </div>
+              </div>
+            </div>
+            <div class="box-body">
+              <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+              <div class="mydiv">
+                <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                  class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>S.No</th>
+                      <th>Type</th>
+                      <th>Attachment</th>
+                      <th>Title</th>
+                      <th>Message</th>
+                      <th>Date</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="dataAr?.length != 0">
+                    <tr *ngFor="let row of dataAr">
+                      <td>{{row.SrNo}}.</td>
+                      <td>{{row.type}}</td>
+                      <td>
+                      <label class="label label-info"> <a style="color: white;" *ngIf="row.image != '' "
+                        href="{{row.image}}" target="_blank">
+                        View</a></label> </td>
+                      <td>{{row.title}}</td>
+                      <td>{{row.body}}</td>
+                      <td>{{row.time}}</td>
+                       <td>
+                        <label *ngIf="row.status == 1" class="label label-danger"
+                        (click)="ActiveInactive(row.Id, 0, 'custom_notification')">Disable</label>
+                      <label *ngIf="row.status == 0" class="label label-success"
+                        (click)="ActiveInactive(row.Id, 1, 'custom_notification')">Enable</label>&nbsp;
+                        <label class="label label-danger"
+                        (click)="DeleteRequest(row.Id, 'custom_notification')">Delete</label>&nbsp;
+                        <label class="label label-info"
+                        (click)="UpdateNotification(row.Id)">Update</label>
+                    </td>
+                    
+                    
+                    </tr>
+                  </tbody>
+
+                  <tbody *ngIf="dataAr?.length == 0">
+                    <tr>
+                      <td colspan="14" align="center">No data available!</td>
+                    </tr>
+                  <tbody>
+                </table>
+              </div>
+            </div>
+  
+  
+          </div>
+        </div>
+      </div>
+  
+    </section>
+  </div>
+  

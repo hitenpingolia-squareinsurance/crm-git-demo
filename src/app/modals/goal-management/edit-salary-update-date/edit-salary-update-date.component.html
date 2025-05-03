@@ -1,0 +1,47 @@
+<form class="form" [formGroup]="SalaryUpdateDateForm" (ngSubmit)="SubmitSalaryUpdateDate()">
+  <table class="table table-bordered">
+    <thead>
+     <tr>
+      <th  style="text-align: center; background-color: #2cb2b3; color: white;">Salary Update Date
+        <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+      </th>
+     </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-6">
+              <label>Start Date *: </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="Start Date" [data]="DatesData" [(ngModel)]="SelectedStartDate"  formControlName="Start_Date" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-sm-6">
+              <label>End Date *: </label>
+              <ng-multiselect-dropdown class="form-control" placeholder="End Date" [data]="DatesData" [(ngModel)]="SelectedEndDate"  formControlName="End_Date" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <label>End Time *: </label>
+              <timepicker [(ngModel)]="mytime" formControlName="EndTime"></timepicker>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

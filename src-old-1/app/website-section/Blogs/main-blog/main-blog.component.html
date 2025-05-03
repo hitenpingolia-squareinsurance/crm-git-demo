@@ -1,0 +1,275 @@
+<div class="row">
+
+    <div class="modal-header" style="text-align: center;">
+        <h4 *ngIf="this.actiontype=='Main' " class="modal-title">Main Blog</h4>
+        <h4 *ngIf="this.actiontype=='Sub' " class="modal-title">Sub Blog</h4>
+        <h4 *ngIf="this.actiontype=='Edit' && this.type!='Author' " class="modal-title">Edit Blog</h4>
+        <h4 *ngIf="this.actiontype=='Edit' && this.type=='Author'" class="modal-title">Edit Author</h4>
+        <h4 *ngIf="this.actiontype=='Add' && this.type=='Author' " class="modal-title">Add Author</h4>
+    </div>
+</div>
+
+
+<form (ngSubmit)="submit()" [formGroup]="mainBlogForm" *ngIf="this.type!='Author'">
+
+
+    <div class="popup-content-body">
+        <div class="row popup-form">
+            <div class="col-md-6">
+                <label for="state">Title</label>
+                <input type="text" class="form-control" formControlName="title">
+                <div *ngIf="isSubmitted && formControls.title.errors" class="Validationerrors">
+                    <div *ngIf="formControls.title.errors.required"><span style="color: red;">Please enter
+                            title!</span></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="state">Image</label>
+                <input type="file" formControlName="image" (change)="UploadDocs($event,'image')" class="form-control">
+                <div *ngIf="isSubmitted && formControls.image.errors" class="Validationerrors">
+                    <div *ngIf="formControls.image.errors.required"><span style="color: red;">Please choose
+                            file!</span></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="state">Category Name</label>
+                <input type="text" *ngIf="this.type == 'Main' || this.type=='Edit'" class="form-control"
+                    formControlName="categoryname">
+                <ng-multiselect-dropdown *ngIf="this.type == 'Sub'" class="form-control" [data]="Category"
+                    formControlName="categoryname" [settings]="dropdownSettingsType" [(ngModel)]="category_Name">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.categoryname.errors" class="Validationerrors">
+                    <div *ngIf="formControls.categoryname.errors.required"><span style="color: red;">Please enter
+                            categoryname!</span></div>
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="this.type == 'Sub'">
+                <label for="state">Select Author</label>
+                <ng-multiselect-dropdown class="form-control" [data]="AuthorArr" formControlName="Author"
+                    [settings]="dropdownSettingsType">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.Author.errors" class="Validationerrors">
+                    <div *ngIf="formControls.Author.errors.required"><span style="color: red;">Please Select
+                            Author!</span></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="state">Discription</label>
+                <textarea class="form-control" formControlName="discription"></textarea>
+                <div *ngIf="isSubmitted && formControls.discription.errors" class="Validationerrors">
+                    <div *ngIf="formControls.discription.errors.required"><span style="color: red;">Please enter
+                            discription!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-6" *ngIf="this.type=='Main'">
+                <label for="state">Quote Url</label>
+                <input type="text" class="form-control" formControlName="Quotes_Url">
+                <div *ngIf="isSubmitted && formControls.Quotes_Url.errors" class="Validationerrors">
+                    <div *ngIf="formControls.Quotes_Url.errors.required"><span style="color: red;">Please enter
+                            URL!</span></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="state">Url</label>
+                <input type="text" class="form-control" formControlName="Url">
+                <div *ngIf="isSubmitted && formControls.Url.errors" class="Validationerrors">
+                    <div *ngIf="formControls.Url.errors.required"><span style="color: red;">Please enter
+                            URL!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <label for="state">Select Blog</label>
+                <select class="form-control" formControlName="SelectBlog" name="SelectBlog" id="SelectBlog">
+                    <option disabled value="">Select Blog</option>
+                    <option value="HTML">HTML</option>
+                    <option value="Ckeditor">Ckeditor</option>
+                </select>
+                <!-- <ckeditor [editor]="CKEditorComponent" formControlName="ckeditor"></ckeditor> -->
+
+                <div *ngIf="isSubmitted && formControls.SelectBlog.errors" class="Validationerrors">
+                    <div *ngIf="formControls.SelectBlog.errors.required"><span style="color: red;">
+                            Select Blog!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-12" *ngIf="mainBlogForm.value['SelectBlog'] == 'HTML' ">
+                <label for="state">Editor</label>
+                <textarea class="form-control" formControlName="ckeditorContent"></textarea>
+                <!-- <ckeditor [editor]="CKEditorComponent" formControlName="ckeditor"></ckeditor> -->
+                <div *ngIf="isSubmitted && formControls.ckeditorContent.errors" class="Validationerrors">
+                    <div *ngIf="formControls.ckeditorContent.errors.required"><span style="color: red;">
+                            ckeditor!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-12" *ngIf="  mainBlogForm.value['SelectBlog'] == 'Ckeditor' ">
+                <label for="state">Editor</label>
+                <ckeditor formControlName="ckeditorContent"></ckeditor>
+                <!-- <ckeditor [editor]="CKEditorComponent" formControlName="ckeditor"></ckeditor> -->
+                <div *ngIf="isSubmitted && formControls.ckeditorContent.errors" class="Validationerrors">
+                    <div *ngIf="formControls.ckeditorContent.errors.required"><span style="color: red;">
+                            ckeditor!</span></div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-12" formArrayName="faqs" *ngIf="this.type!='Main'">
+                <div class="mainfaqheaderblog">
+                    <label><strong>FAQs</strong></label>
+                    <button type="button" class="btn btn-success mt-2" (click)="addFAQ()">Add FAQ</button>
+                </div>
+                <div class="row">
+                    <div *ngFor="let faq of faqs.controls; let i = index" [formGroupName]="i">
+                        <!-- FAQ Description -->
+                        <div class="col-md-6">
+                            <div class="faqbloginnerbox">
+                                <button type="button" class="blogremovefaqbox" (click)="removeFAQ(i)"><i
+                                        aria-hidden="true" class="fa fa-times"></i></button>
+                                <div class="faqbloginnerlist">
+                                    <label for="faqTitle" class="form-label"><strong>FAQ Title</strong></label>
+                                    <input type="text" class="form-control" formControlName="faqTitle"
+                                        placeholder="Enter FAQ Title">
+                                    <div *ngIf="isSubmitted && faq.get('faqTitle')?.errors" class="text-danger mt-1">
+                                        <small *ngIf="faq.get('faqTitle')?.errors?.required">Please enter FAQ
+                                            title!</small>
+                                    </div>
+                                </div>
+                                <div class="faqbloginnerlist1">
+                                    <label for="ckeditorFaqDescription" class="form-label"><strong>FAQ
+                                            Description</strong></label>
+                                    <ckeditor formControlName="ckeditorFaqDescription"></ckeditor>
+                                    <div *ngIf="isSubmitted && faq.get('ckeditorFaqDescription')?.errors"
+                                        class="text-danger mt-1">
+                                        <small *ngIf="faq.get('ckeditorFaqDescription')?.errors?.required">Please enter
+                                            FAQ
+                                            description!</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add FAQ Button -->
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="clearfix"></div>
+            <div class="button-div-yes-no" align="right" style="margin-top: 10px; margin-right: 13px;">
+                <button type="submit" *ngIf="this.actiontype=='Add'" class="btn btn-primary">Submit</button>&nbsp;&nbsp;
+                <button type="submit" *ngIf="this.actiontype=='Edit'"
+                    class="btn btn-primary">Update</button>&nbsp;&nbsp;
+                <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</form>
+
+
+
+<form (ngSubmit)="submitAuthor()" [formGroup]="AuthorForm" *ngIf="this.type == 'Author'">
+    <div class="popup-content-body">
+        <div class="row popup-form">
+            <!-- Author Name -->
+            <div class="col-md-6">
+                <label for="authorName">Author Name</label>
+                <input type="text" class="form-control" formControlName="authorName">
+                <div *ngIf="isSubmittedAuthor && AuthorForm.controls.authorName.errors" class="Validationerrors">
+                    <div *ngIf="AuthorForm.controls.authorName.errors.required">
+                        <span style="color: red;">Please enter author name!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Author Image -->
+            <div class="col-md-6">
+                <label for="authoreImage">Author Image</label>
+                <input type="file" formControlName="authoreImage" (change)="UploadDocs($event, 'image')"
+                    class="form-control">
+                <div *ngIf="isSubmittedAuthor && AuthorForm.controls.authoreImage.errors" class="Validationerrors">
+                    <div *ngIf="AuthorForm.controls.authoreImage.errors.required">
+                        <span style="color: red;">Please choose an image!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Link -->
+            <div class="col-md-6">
+                <label for="link">Link</label>
+                <input type="text" class="form-control" formControlName="link">
+                <div *ngIf="isSubmittedAuthor && AuthorForm.controls.link.errors" class="Validationerrors">
+                    <div *ngIf="AuthorForm.controls.link.errors.required">
+                        <span style="color: red;">Please enter URL!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Author -->
+            <div class="col-md-6">
+                <label for="aboutAuthore">About Author</label>
+                <textarea class="form-control" formControlName="aboutAuthore"></textarea>
+                <div *ngIf="isSubmittedAuthor && AuthorForm.controls.aboutAuthore.errors" class="Validationerrors">
+                    <div *ngIf="AuthorForm.controls.aboutAuthore.errors.required">
+                        <span style="color: red;">Please enter details about the author!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certificates -->
+            <div class="col-md-6">
+                <label for="Certificates">Certificates</label>
+                <textarea class="form-control" formControlName="Certificates"></textarea>
+                <div *ngIf="isSubmittedAuthor && AuthorForm.controls.Certificates.errors" class="Validationerrors">
+                    <div *ngIf="AuthorForm.controls.Certificates.errors.required">
+                        <span style="color: red;">Please enter certificates!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="col-md-6">
+                <label for="Education">Education</label>
+                <textarea class="form-control" formControlName="Education"></textarea>
+                <div *ngIf="isSubmittedAuthor && AuthorForm.controls.Education.errors" class="Validationerrors">
+                    <div *ngIf="AuthorForm.controls.Education.errors.required">
+                        <span style="color: red;">Please enter education details!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience -->
+            <div class="col-md-6">
+                <label for="Experience">Experience</label>
+                <textarea class="form-control" formControlName="Experience"></textarea>
+                <div *ngIf="isSubmittedAuthor && AuthorForm.controls.Experience.errors" class="Validationerrors">
+                    <div *ngIf="AuthorForm.controls.Experience.errors.required">
+                        <span style="color: red;">Please enter experience!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="button-div-yes-no" align="right" style="margin-top: 10px; margin-right: 13px;">
+                <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>
+                <button type="submit" *ngIf="this.actiontype=='Add'" class="btn btn-primary">Submit</button>
+                <button type="submit" *ngIf="this.actiontype=='Edit'" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </div>
+</form>

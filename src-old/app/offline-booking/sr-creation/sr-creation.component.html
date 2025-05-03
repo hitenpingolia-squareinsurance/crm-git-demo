@@ -1,0 +1,686 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+    <div class="container-fluid">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <div class="header_title">Offline SR-Login</div>
+            </div>
+
+            <div class="main_body main_card_height_scroll_withoutfooter">
+                <div class="btn_list_group">
+                    <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div id="exTab1">
+                                        <ul class="nav nav-pills">
+
+                                            <li class="active"><a data-toggle="tab" class=""
+                                                    routerLink="/offline-booking/sr-login">File to File</a></li>
+
+                                            <li><a data-toggle="tab" routerLink="/offline-booking/qc-report">By
+                                                    Excel</a></li>
+
+                                            <li><a routerLink="#" (click)="soon()">By PDF</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="All">
+
+                                <div class="box-body">
+                                    <div class="mydiv">
+                                        <form class="form" [formGroup]="SRForm_1" (ngSubmit)="SubmitForm()">
+                                            <div class="row">
+
+
+
+                                                <div *ngIf="api.GetUserData('Type')!='agent'" class="col-md-6 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label for="rm">Select RM</label>
+                                                        <ng-multiselect-dropdown class="form_control_ng"
+                                                            placeholder="--Select--" [data]="RM_Ar"
+                                                            formControlName="RM_Id"
+                                                            (onSelect)="onItemSelect($event,'RM')"
+                                                            [settings]="dropdownSettingsType">
+                                                        </ng-multiselect-dropdown>
+                                                        <div *ngIf="isSubmitted && FC_1.RM_Id.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.RM_Id.errors.required">Please select an
+                                                                option!</div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="api.GetUserData('Type')!='agent'" class="col-md-6 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label>Select Parnter<span class="Astrik">*</span></label>
+                                                        <ng-multiselect-dropdown class="form_control_ng"
+                                                            placeholder="Search" [data]="Agents_Ar"
+                                                            formControlName="Agent_Id"
+                                                            [settings]="dropdownSettingsType">
+                                                        </ng-multiselect-dropdown>
+                                                        <span *ngIf="isSubmitted && FC_1.Agent_Id.errors"
+                                                            class="form-text text-muted">
+                                                            <span *ngIf="FC_1.Agent_Id.errors.required"
+                                                                class="ValidationError">Please
+                                                                select an option !</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+
+
+
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label for="Lob">Select LOB</label>
+                                                        <ng-multiselect-dropdown class="form_control_ng"
+                                                            placeholder="--Select--" [data]="LOB_Ar"
+                                                            formControlName="LOB_Id" (onSelect)="LOB()"
+                                                            [settings]="dropdownSettingsType">
+                                                        </ng-multiselect-dropdown>
+                                                        <div *ngIf="isSubmitted && FC_1.LOB_Id.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.LOB_Id.errors.required">Please select an
+                                                                option!</div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label>Insurance Company<span class="Astrik">*</span></label>
+                                                        <ng-multiselect-dropdown class="form_control_ng"
+                                                            placeholder="Search" [data]="Ins_Companies_Ar"
+                                                            formControlName="Insurance_Company_Id"
+                                                            (onSelect)="HealthInsuranceCompanies()"
+                                                            [settings]="dropdownSettingsType">
+                                                        </ng-multiselect-dropdown>
+                                                        <span *ngIf="isSubmitted && FC_1.Insurance_Company_Id.errors"
+                                                            class="form-text text-muted">
+                                                            <span *ngIf="FC_1.Insurance_Company_Id.errors.required"
+                                                                class="ValidationError">Please
+                                                                select an option !</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-md-4 col-sm-6"
+                                                    *ngIf="(LOB_Id == 'Motor' || LOB_Id == 'Non Motor' || LOB_Id == 'Health' || LOB_Id == 'Travel' || LOB_Id == 'Personal Accident')">
+                                                    <div class="input_group">
+                                                        <label>IMD File Type<span class="Astrik">*</span></label>
+                                                        <select class="form_control" formControlName="File_Type"
+                                                            (change)="Products()">
+                                                            <option *ngFor="let row of File_Type_Ar;"
+                                                                value="{{row.Id}}">{{row.Name}}
+                                                            </option>
+                                                        </select>
+                                                        <div *ngIf="isSubmitted && FC_1.File_Type.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.File_Type.errors.required">Please select an
+                                                                option!</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="display: none;" class="col-md-2 col-sm-6"
+                                                    *ngIf="(SRForm_1.value['File_Type'] == 'Renewal' || SRForm_1.value['File_Type'] == 'Rollover')">
+                                                    <div class="input_group">
+                                                        <label>Insurer Renewal<span class="Astrik">*</span></label>
+                                                        <select class="form_control" formControlName="Insurer_Renewal">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <div *ngIf="isSubmitted && FC_1.Insurer_Renewal.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.Insurer_Renewal.errors.required">Please
+                                                                select
+                                                                an option!</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="display: none;" class="col-md-2 col-sm-6"
+                                                    *ngIf="(LOB_Id == 'Motor' || KisanSuvidhaBimaPolicy==1)">
+                                                    <div class="input_group">
+                                                        <label>PA Owner<span class="Astrik">*</span></label>
+                                                        <select class="form_control" (change)="PA_Owner()"
+                                                            formControlName="PA_Owner">
+                                                            <option disabled value="">---Select---</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <div *ngIf="isSubmitted && FC_1.PA_Owner.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.PA_Owner.errors.required">Please select an
+                                                                option!</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="display: none;" class="col-md-2 col-sm-6"
+                                                    *ngIf="( (PAOwner == 'Yes') && (LOB_Id == 'Motor' || KisanSuvidhaBimaPolicy==1) )">
+                                                    <div class="input_group">
+                                                        <label>PA Owner Tenure<span class="Astrik">*</span></label>
+                                                        <select class="form_control" formControlName="PA_Owner_Tenure">
+                                                            <option disabled value="">---Select---</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                        <div *ngIf="isSubmitted && FC_1.PA_Owner_Tenure.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.PA_Owner_Tenure.errors.required">Please
+                                                                select
+                                                                an option!</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngIf="(LOB_Id != 'Life')">
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label>Select Product</label>
+                                                        <ng-multiselect-dropdown class="form_control_ng"
+                                                            placeholder="Select Product" [data]="Products_Ar"
+                                                            formControlName="Product_Id" (onSelect)="Policy_Type()"
+                                                            [settings]="dropdownSettingsType">
+                                                        </ng-multiselect-dropdown>
+                                                        <div *ngIf="isSubmitted && FC_1.Product_Id.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.Product_Id.errors.required">Please select
+                                                                an
+                                                                option!</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6" *ngIf="viewPolicyType==1">
+                                                    <div class="input_group">
+                                                        <label>Select Policy Type<span class="Astrik">*</span></label>
+                                                        <ng-multiselect-dropdown class="form_control_ng"
+                                                            (onSelect)="Plan_Type()" placeholder="Select Policy Type"
+                                                            [data]="Segment_Ar" formControlName="Segment_Id"
+                                                            [settings]="dropdownSettingsType">
+                                                        </ng-multiselect-dropdown>
+                                                        <div *ngIf="isSubmitted && FC_1.Segment_Id.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.Segment_Id.errors.required">Please select
+                                                                an
+                                                                option!</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- <div class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label for="regno">Vehicle No <span
+                                                                class="Astrik"></span></label>
+                                                        <input class="form_control" formControlName="Registration_Code"
+                                                            id="Registration_Code" type="text" maxlength="11">
+                                                        <span *ngIf="isSubmitted && FC_1.Registration_Code.errors"
+                                                            class="form-text text-muted">
+                                                            <span *ngIf="FC_1.Registration_Code.errors.required"
+                                                                class="ValidationError">this
+                                                                field required !</span>
+                                                            <span *ngIf="FC_1.Registration_Code.errors.pattern"
+                                                                class="ValidationError">allowed
+                                                                only numbers !</span>
+                                                            <span *ngIf="FC_1.Registration_Code.errors.minlength"
+                                                                class="ValidationError">this
+                                                                field required !</span>
+                                                            <span *ngIf="FC_1.Registration_Code.errors.maxlength"
+                                                                class="ValidationError">this
+                                                                field required !</span>
+                                                        </span>
+                                                    </div>
+                                                </div> -->
+                                                <div class="col-md-4">
+                                                <label for="regno">Vehicle No<span
+                                                        class="Astrik">*</span>
+                                                </label>
+                                                <br>
+
+                                                <input (keyup)="GetRegistrionNo($event,1)"
+                                                    class="form-control VehicleNoCls"
+                                                    formControlName="Registration_State_Code" type="text"
+                                                    maxlength="2">
+                                                <input (keyup)="GetRegistrionNo($event,2)"
+                                                    class="form-control VehicleNoCls"
+                                                    formControlName="Registration_District_Code"
+                                                    id="Registration_District_Code" type="text" maxlength="2">
+                                                <input (keyup)="GetRegistrionNo($event,3)"
+                                                    class="form-control VehicleNoCls2"
+                                                    formControlName="Registration_City_Code"
+                                                    id="Registration_City_Code" type="text" maxlength="3">
+                                                <input class="form-control VehicleNoCls3"
+                                                    formControlName="Registration_Code" id="Registration_Code"
+                                                    type="text" maxlength="4">
+                                                    
+
+                                                <span style="float: left;">
+                                                    <span *ngIf="isSubmitted && FC_1.Registration_State_Code.errors"
+                                                    class="ValidationError">
+                                                        <span *ngIf="FC_1.Registration_State_Code.errors.pattern"
+                                                            class="ValidationError">allowed only alphabet's !</span>
+                                                        <span *ngIf="FC_1.Registration_State_Code.errors.minlength"
+                                                            class="ValidationError">this field required !</span>
+                                                        <span *ngIf="FC_1.Registration_State_Code.errors.maxlength"
+                                                            class="ValidationError">this field required !</span>
+                                                    </span>
+
+                                                    <span
+                                                        *ngIf="isSubmitted && FC_1.Registration_District_Code.errors"
+                                                        class="ValidationError">
+                                                        <span
+                                                            *ngIf="FC_1.Registration_District_Code.errors.required"
+                                                            class="ValidationError">this field required !</span>
+                                                        <span *ngIf="FC_1.Registration_District_Code.errors.pattern"
+                                                            class="ValidationError">allowed only numbers !</span>
+                                                        <span
+                                                            *ngIf="FC_1.Registration_District_Code.errors.minlength"
+                                                            class="ValidationError">this field required !</span>
+                                                        <span
+                                                            *ngIf="FC_1.Registration_District_Code.errors.maxlength"
+                                                            class="ValidationError">this field required !</span>
+                                                    </span>
+
+                                                    <span *ngIf="isSubmitted && FC_1.Registration_City_Code.errors"
+                                                    class="ValidationError">
+                                                        <span *ngIf="FC_1.Registration_City_Code.errors.required"
+                                                            class="ValidationError">this field required !</span>
+                                                        <span *ngIf="FC_1.Registration_City_Code.errors.pattern"
+                                                            class="ValidationError">allowed only alphanumeric !</span>
+                                                        <span *ngIf="FC_1.Registration_City_Code.errors.minlength"
+                                                            class="ValidationError">this field required !</span>
+                                                        <span *ngIf="FC_1.Registration_City_Code.errors.maxlength"
+                                                            class="ValidationError">this field required !</span>
+                                                    </span>
+
+                                                    <span *ngIf="isSubmitted && FC_1.Registration_Code.errors"
+                                                    class="ValidationError">
+                                                        <span *ngIf="FC_1.Registration_Code.errors.required"
+                                                            class="ValidationError">this field required !</span>
+                                                        <span *ngIf="FC_1.Registration_Code.errors.pattern"
+                                                            class="ValidationError">allowed only numbers !</span>
+                                                        <span *ngIf="FC_1.Registration_Code.errors.minlength"
+                                                            class="ValidationError">this field required !</span>
+                                                        <span *ngIf="FC_1.Registration_Code.errors.maxlength"
+                                                            class="ValidationError">this field required !</span>
+                                                    </span>
+                                                </span>
+
+                                            </div>
+
+                                                <div style="display: none;" class="col-md-4 col-sm-6"
+                                                    *ngIf="viewPlanType==1">
+                                                    <div class="input_group">
+                                                        <label>Select Plan Type<span class="Astrik">*</span></label>
+                                                        <ng-multiselect-dropdown class="form_control_ng"
+                                                            (onSelect)="SubProduct()" placeholder="Search"
+                                                            [data]="Plan_Type_Ar" formControlName="Plan_Type"
+                                                            [settings]="dropdownSettingsType">
+                                                        </ng-multiselect-dropdown>
+
+                                                        <div *ngIf="isSubmitted && FC_1.Plan_Type.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.Plan_Type.errors.required">Please select an
+                                                                option!</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="display: none;" class="col-md-4 col-sm-6"
+                                                    *ngIf="viewSubProduct==1">
+                                                    <div class="input_group">
+                                                        <label>Select Sub-Product<span class="Astrik">*</span></label>
+                                                        <ng-multiselect-dropdown class="form_control_ng"
+                                                            (onSelect)="Classes()" placeholder="Search"
+                                                            [data]="SubProducts_Ar" formControlName="SubProduct_Id"
+                                                            [settings]="dropdownSettingsType">
+                                                        </ng-multiselect-dropdown>
+
+
+                                                        <div *ngIf="isSubmitted && FC_1.SubProduct_Id.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.SubProduct_Id.errors.required">Please
+                                                                select an
+                                                                option!</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="display: none;" class="col-md-4 col-sm-6"
+                                                    *ngIf="viewClass==1">
+                                                    <div class="input_group">
+                                                        <label>Select Class<span class="Astrik">*</span></label>
+                                                        <ng-multiselect-dropdown class="form_control_ng"
+                                                            (onSelect)="Sub_Classes()" placeholder="Search"
+                                                            [data]="Classes_Ar" formControlName="Class_Id"
+                                                            [settings]="dropdownSettingsType">
+                                                        </ng-multiselect-dropdown>
+
+                                                        <div *ngIf="isSubmitted && FC_1.Class_Id.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.Class_Id.errors.required">Please select an
+                                                                option!</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngIf="(LOB_Id == 'Motor' || KisanSuvidhaBimaPolicy==1)">
+                                                <div style="display: none;" class="col-md-4 col-sm-6"
+                                                    *ngIf="(LOB_Id == 'Motor')">
+                                                    <div class="input_group">
+                                                        <label>Select Sub-Class<span class="Astrik">*</span></label>
+                                                        <ng-multiselect-dropdown class="form_control_ng"
+                                                            (onSelect)="Make()" placeholder="Search"
+                                                            [data]="Sub_Classes_Ar" formControlName="Sub_Class_Id"
+                                                            [settings]="dropdownSettingsType">
+                                                        </ng-multiselect-dropdown>
+
+                                                        <div *ngIf="isSubmitted && FC_1.Sub_Class_Id.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.Sub_Class_Id.errors.required">Please select
+                                                                an
+                                                                option!</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+
+                                                
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label for="fullName">Customer Name </label>
+                                                        <input class="form_control" type="text"
+                                                            formControlName="CustomerName" placeholder="Enter Full Name"
+                                                            required>
+                                                        <div *ngIf="isSubmitted && FC_1.CustomerName.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.CustomerName.errors.required">Required..
+                                                            </div>
+                                                            <div *ngIf="FC_1.CustomerName.errors.pattern">please enter
+                                                                valid Customer
+                                                                Name</div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="display: none;" class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label for="personalEmail">Email</label>
+                                                        <input class="form_control" type="text"
+                                                            formControlName="emailId" placeholder="Enter Email">
+                                                        <div *ngIf="isSubmitted && FC_1.emailId.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.emailId.errors.required">Required..</div>
+                                                            <div *ngIf="FC_1.emailId.errors.pattern">please enter valid
+                                                                email</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="display: none;" class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label for="personalMobile">Customer Mobile</label>
+                                                        <input class="form_control" type="text"
+                                                            placeholder="Enter Mobile" formControlName="personalMobile"
+                                                            maxlength="10">
+
+                                                        <div *ngIf="isSubmitted && FC_1.personalMobile.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.personalMobile.errors.required">Required..
+                                                            </div>
+                                                            <div *ngIf="FC_1.personalMobile.errors.pattern">please enter
+                                                                valid mobile
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label for="policyStartDate">Policy Start Date :</label>
+                                                        <input type='date' class="form_control"
+                                                            formControlName="policyStartDate">
+                                                        <div *ngIf="isSubmitted && FC_1.policyStartDate.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.policyStartDate.errors.required">Required..
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="display: none;" class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label for="IssueDate">Issue Date</label>
+                                                        <input type='date' class="form_control"
+                                                            formControlName="IssueDate">
+                                                        <div *ngIf="isSubmitted && FC_1.IssueDate.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.IssueDate.errors.required">Required..</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label for="PolicyNumber">Policy Number</label>
+                                                        <input class="form_control" type="text"
+                                                            formControlName="PolicyNumber"
+                                                            placeholder="Enter Policy Number"
+                                                            (keyup)="GetPolicyNo($event)">
+                                                        <div *ngIf="isSubmitted && FC_1.PolicyNumber.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.PolicyNumber.errors.required">Required..
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6" style="display: none;">
+                                                    <div class="input_group">
+                                                        <label for="PaymentFavour">Payment Favour:</label>
+                                                        <ng-multiselect-dropdown class="form_control_ng"
+                                                            placeholder="--Select--" [data]="paymentFavours"
+                                                            formControlName="PaymentFavour"
+                                                            (onSelect)="Payment_Towards()"
+                                                            [settings]="dropdownSettingsType">
+                                                        </ng-multiselect-dropdown>
+
+                                                        <div *ngIf="isSubmitted && FC_1.PaymentFavour.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.PaymentFavour.errors.required">Required..
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- (onSelect)="SelectPaymentMode()" *ngIf="api.GetUserData('Type')!='agent'"-->
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label for="PaymentMode">Mode of Payment:</label>
+                                                        <ng-multiselect-dropdown class="form_control_ng"
+                                                            placeholder="--Select--" [data]="modeOfPayments"
+                                                            formControlName="PaymentMode"
+                                                            [settings]="dropdownSettingsType">
+                                                        </ng-multiselect-dropdown>
+
+                                                        <div *ngIf="isSubmitted && FC_1.PaymentMode.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.PaymentMode.errors.required">Required..
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6" style="display: none;">
+                                                    <div class="input_group">
+                                                        <label for="ChequeNumber">Payment/Cheque Ref No.</label>
+                                                        <input class="form_control" type="text"
+                                                            formControlName="ChequeNumber"
+                                                            placeholder="Enter Cheque Number">
+                                                        <div *ngIf="isSubmitted && FC_1.ChequeNumber.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.ChequeNumber.errors.required">Please Enter
+                                                                cheque Number
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6" style="display: none;">
+                                                    <div class="input_group">
+                                                        <label for="PayoutMode">Payout Mode </label>
+                                                        <ng-multiselect-dropdown class="form_control_ng"
+                                                            placeholder="--Select--" [data]="Payout_Mode_Ar"
+                                                            formControlName="Payout_Mode"
+                                                            (onSelect)="SelectPaymentMode()"
+                                                            [settings]="dropdownSettingsType">
+                                                        </ng-multiselect-dropdown>
+
+                                                        <div *ngIf="isSubmitted && FC_1.Payout_Mode.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.Payout_Mode.errors.required">Required..
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label for="GrossPremium">Gross Premium </label>
+                                                        <input class="form_control" type="number"
+                                                            formControlName="GrossPremium" placeholder="0.00">
+
+                                                        <div *ngIf="isSubmitted && FC_1.GrossPremium.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.GrossPremium.errors.required">Please enter
+                                                                Gross Premium!
+                                                            </div>
+                                                            <div *ngIf="FC_1.GrossPremium.errors.pattern">Please enter
+                                                                Gross valid
+                                                                Premium!</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 col-sm-6"
+                                                    *ngIf="LOB_Id == 'Health' || LOB_Id == 'Personal Accident' ">
+                                                    <div class="input_group">
+                                                        <label>Sum Insured:</label>
+                                                        <input placeholder="0.00" class="form_control"
+                                                            formControlName="Sum_Insured" min="1" type="number">
+                                                        <div *ngIf="isSubmitted && FC_1.Sum_Insured.errors"
+                                                            class="ValidationError">
+                                                            <div *ngIf="FC_1.Sum_Insured.errors.required">Please enter
+                                                                Sum Insured !
+                                                            </div>
+                                                            <div *ngIf="FC_1.Sum_Insured.errors.pattern">Please enter
+                                                                only number !
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row"
+                                                *ngIf="( (LOB_Id == 'Motor' || LOB_Id == 'Health'  || LOB_Id == 'Personal Accident') )">
+                                                <div class="col-md-4 col-sm-6"
+                                                    *ngIf="LOB_Id == 'Motor' || KisanSuvidhaBimaPolicy==1">
+                                                    <div class="input_group">
+                                                        <label>RC Front (Motor Registration):</label>
+                                                        <input class="form_control RC_Motor_Registraion_Front"
+                                                            type="file"
+                                                            (change)="UploadDocs($event,'RC_Motor_Registraion_Front')"
+                                                            formControlName="RC_Motor_Registraion_Front">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6"
+                                                    *ngIf="LOB_Id == 'Motor' || KisanSuvidhaBimaPolicy==1">
+                                                    <div class="input_group">
+                                                        <label>RC Back(Motor Registration):</label>
+                                                        <input class="form_control RC_Motor_Registraion_Back"
+                                                            type="file"
+                                                            (change)="UploadDocs($event,'RC_Motor_Registraion_Back')"
+                                                            formControlName="RC_Motor_Registraion_Back">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label>Invoice:</label>
+                                                        <input class="form_control" type="file"
+                                                            (change)="UploadDocs($event,'Invoice')"
+                                                            formControlName="Invoice">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label>Cheque-Copy/Payment Recipt:</label>
+                                                        <input class="form_control" type="file"
+                                                            (change)="UploadDocs($event,'Cheque_Payment_Recipt')"
+                                                            formControlName="Cheque_Payment_Recipt">
+                                                    </div>
+
+                                                    <div *ngIf="isSubmitted && FC_1.Cheque_Payment_Recipt.errors"
+                                                        class="ValidationError">
+                                                        <div *ngIf="FC_1.Cheque_Payment_Recipt.errors.required">
+                                                            Required..</div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-4 col-sm-6"
+                                                    *ngIf="SRForm_1.value['Insurer_Renewal'] == 'Yes'">
+                                                    <div class="input_group">
+                                                        <label>Renewal Notice:</label>
+                                                        <input class="form_control" type="file"
+                                                            (change)="UploadDocs($event,'Renewal_Notice')"
+                                                            formControlName="Renewal_Notice">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label>Policy Document: </label>
+                                                        <input class="form_control" type="file"
+                                                            (change)="UploadDocs($event,'Policy_Document')"
+                                                            formControlName="Policy_Document">
+                                                    </div>
+                                                    <div *ngIf="isSubmitted && FC_1.Policy_Document.errors"
+                                                        class="ValidationError">
+                                                        <div *ngIf="FC_1.Policy_Document.errors.required">Required..
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label>Previous Policy Copy : </label>
+                                                        <input class="form_control" type="file"
+                                                            (change)="UploadDocs($event,'Previous_Policy_Copy')"
+                                                            formControlName="Previous_Policy_Copy">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="input_group">
+                                                        <label>Other:</label>
+                                                        <input class="form_control" type="file"
+                                                            (change)="UploadDocs($event,'Other')"
+                                                            formControlName="Other">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="main_footer">
+                                                <button type="submit" class="Save_click nextBtn">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

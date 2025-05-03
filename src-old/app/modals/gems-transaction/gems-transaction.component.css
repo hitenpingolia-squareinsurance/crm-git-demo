@@ -1,0 +1,106 @@
+.coustom_btn button {
+    height: 35px;
+    background: #0175f2;
+    text-transform: uppercase;
+    font-size: 16px;
+    padding:5px;
+    margin-left: 5px;
+}
+
+ .other_btn{
+    background: #ff7900 !important;
+    border: 1px solid #ff7900;
+}
+
+
+
+.coustom_input input {
+    height: 35px;
+    border-radius: 3px;
+}
+
+.box {
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #d2d6de;
+     margin: 0px 0px; 
+    width: 100%;
+    box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+}
+button.close.closeModelButton {
+    background: #2cb2b3;
+    opacity: 1;
+    color: aliceblue;
+    border-radius: 50px;
+    height: 30px;
+    width: 30px;
+    position: relative;
+    top: -13px;
+    border: none;
+}
+li.custom_close_btn {
+   
+    list-style: none;
+}
+
+.wallet_heading h3 {
+    margin: 0;
+    color: rgba(44,178,179,9);
+    font-weight: 600;
+}
+.right_side_blog ul {
+    margin: 0;
+    padding: 0;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.right_side_blog ul li {
+    list-style: none;
+}
+.right_side_blog ul li div {
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid rgba(44, 178, 179, 9);
+    width: auto;
+    display: inline-flex;
+    padding: 5px 15px;
+    border-radius: 5px;
+    background: rgb(234 252 252);
+}
+.right_side_blog ul li div span  {
+    color: rgba(44, 178, 179, 9);
+    margin-left: 15px;
+}
+.table_details {
+    display: flex;
+    align-items: center;
+}
+.table_details .table_details_text_blog {
+    margin-left: 15px;
+    text-align: left;
+}
+.table_details_text_blog span {
+    cursor: inherit;
+    display: block;
+}
+td label {
+    margin: 0!important;
+}
+.stutas_label {
+    color: #fff;
+    background-color: #00a65a!important;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: .25rem;
+}
+.stutas_label_failed {
+    color: #fff;
+    background: #dd4b39!important;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: .25rem;
+}
+table thead tr th:nth-child(1) {
+    text-align: left!important;
+}

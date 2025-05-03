@@ -1,0 +1,145 @@
+<form class="form" [formGroup]="ActionForm" (ngSubmit)="EditPremium()">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="text-align: center;">Edit Premium
+          <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <!--== IF PRODUCT TYPE IS NOT EQUAL TO TERM + SAVING COMBO START==-->
+          <div class="row" style="margin-top: 10px;" *ngIf="StepData['LI_Product_Type'] != 'Term + Saving Combo'">
+            <div class="col-sm-6">
+              <label for="">Net Premium:</label>
+              <input type="number" (keyup)="LifeCalculation('Net_Premium_LI')" class="form-control" placeholder="0.00"
+                formControlName="LI_Net_Premium" name="LI_Net_Premium">
+              <span *ngIf="isSubmitted && FC_6.LI_Net_Premium.errors" class="form-text text-muted">
+                <span *ngIf="FC_6.LI_Net_Premium.errors.pattern" style="color:red;">Please enter vaild Net
+                  Premium !</span>
+              </span>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="">Gross Premium:</label>
+              <input type="number" (keyup)="LifeCalculation('Gross_Premium_LI')" class="form-control" placeholder="0.00"
+                formControlName="LI_Gross_Premium" name="LI_Gross_Premium">
+              <span *ngIf="isSubmitted && FC_6.LI_Gross_Premium.errors" class="form-text text-muted">
+                <span *ngIf="FC_6.LI_Gross_Premium.errors.pattern" style="color:red;">Please enter vaild
+                  Gross Premium !</span>
+              </span>
+            </div>
+          </div>
+          <!--== IF PRODUCT TYPE IS NOT EQUAL TO TERM + SAVING COMBO END==-->
+
+
+          <!--== IF PRODUCT TYPE IS EQUAL TO TERM + SAVING COMBO START==-->
+          <div class="row" style="margin-top: 10px;" *ngIf="StepData['LI_Product_Type'] == 'Term + Saving Combo'">
+            <div class="col-md-6">
+              <label for="">Term Plan Net Premium:</label>
+              <input type="number" (keyup)="LifeCalculation('Term_Net_Premium_LI')" class="form-control"
+                placeholder="0.00" formControlName="LI_Term_Net_Premium" name="LI_Term_Net_Premium">
+              <span *ngIf="isSubmitted && FC_6.LI_Term_Net_Premium.errors" class="form-text text-muted">
+                <span *ngIf="FC_6.LI_Rider_Gross_Premium.errors.pattern" style="color:red;">Please enter
+                  vaild Gross Premium !</span>
+              </span>
+            </div>
+
+            <div class="col-md-6">
+              <label for="">Term Plan Gross Premium:</label>
+              <input type="number" class="form-control" placeholder="0.00"
+                (keyup)="LifeCalculation('Term_Gross_Premium_LI')" formControlName="LI_Term_Gross_Premium"
+                name="LI_Term_Gross_Premium">
+              <span *ngIf="isSubmitted && FC_6.LI_Term_Gross_Premium.errors" class="form-text text-muted">
+                <span *ngIf="FC_6.LI_Base_Premium.errors.pattern" style="color:red;">Please enter vaild
+                  Base/ULIP Premium !</span>
+              </span>
+            </div>
+          </div>
+          <!--== IF PRODUCT TYPE IS EQUAL TO TERM + SAVING COMBO END==-->
+
+          <!--== IF PRODUCT TYPE IS EQUAL TO TERM + SAVING COMBO START==-->
+          <div class="row" style="margin-top: 10px;" *ngIf="StepData['LI_Product_Type'] == 'Term + Saving Combo'">
+            <div class="col-md-6">
+              <label for="">Saving Plan Net Premium:</label>
+              <input type="number" (keyup)="LifeCalculation('Net_Premium_LI')" class="form-control" placeholder="0.00"
+                formControlName="LI_Net_Premium" name="LI_Net_Premium">
+              <span *ngIf="isSubmitted && FC_6.LI_Net_Premium.errors" class="form-text text-muted">
+                <span *ngIf="FC_6.LI_Net_Premium.errors.pattern" style="color:red;">Please enter vaild Net
+                  Premium !</span>
+              </span>
+            </div>
+
+            <div class="col-md-6">
+              <label for="">Saving Plan Gross Premium:</label>
+              <input type="number" (keyup)="LifeCalculation('Gross_Premium_LI')" class="form-control" placeholder="0.00"
+                formControlName="LI_Gross_Premium" name="LI_Gross_Premium">
+              <span *ngIf="isSubmitted && FC_6.LI_Gross_Premium.errors" class="form-text text-muted">
+                <span *ngIf="FC_6.LI_Gross_Premium.errors.pattern" style="color:red;">Please enter vaild
+                  Gross Premium !</span>
+              </span>
+            </div>
+          </div>
+          <!--== IF PRODUCT TYPE IS EQUAL TO TERM + SAVING COMBO END==-->
+
+          <!--== IF PRODUCT TYPE IS TERM + SAVING START ==-->
+          <div class="row" style="margin-top: 10px;" *ngIf="StepData['LI_Product_Type']  != 'Retirement Plan'">
+            <div class="form-group">
+              <div class="row">
+
+                <div class="col-md-12">
+                  <div class="table-responsive">
+                    <table style="font-size: 12px;" class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>S.No</th>
+                          <th>Rider Name</th>
+                          <th>Net Premium</th>
+                          <th>Gross Premium</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                      <tbody formArrayName="LI_Riders_Premium">
+                        <tr *ngFor="let c of LI_Riders_PremiumFN().controls; let i=index" [formGroupName]="i">
+
+                          <td>{{i + 1}}</td>
+                          <td>
+                            <input type="hidden" formControlName="RiderId">
+                            <input type="text" placeholder="Rider Name" formControlName="RiderName" class="form-control"
+                              readonly>
+                          </td>
+
+                          <td><input type="number" placeholder="0.00" formControlName="RiderNetPremium"
+                              (keyup)="RidersCalculation('Net', $event, i)" class="form-control"> </td>
+                          <td><input type="number" placeholder="0.00" formControlName="RiderGrossPremium"
+                              (keyup)="RidersCalculation('Gross', $event, i)" class="form-control"></td>
+                          <td><input type="hidden" placeholder="0.00" formControlName="RiderSumAssured"
+                              class="form-control"></td>
+                        </tr>
+                      </tbody>
+
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <!--== IF PRODUCT TYPE IS TERM + SAVING END ==-->
+
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</form>

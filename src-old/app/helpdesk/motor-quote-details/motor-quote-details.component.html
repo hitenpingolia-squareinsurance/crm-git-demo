@@ -1,0 +1,459 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Quotations</h3>
+          </div>
+
+          <div class="box-body">
+            <div class="mydiv table-responsive ">
+              <table id="Table1" class="table table-bordered table-hover" style="line-break: anywhere;">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Date</th>
+                    <th>Company</th>
+                    <th>Error</th>
+                    <th>Gross Premium</th>
+                    <th>Service Tax</th>
+                    <th>Net Premium</th>
+                    <th>Quote Request</th>
+                    <th>Quote Response</th>
+                  </tr>
+
+                </thead>
+                <tbody *ngIf="QuotationData?.length != 0">
+
+                  <tr *ngFor="let row of QuotationData; let i=index;"
+                    [ngClass]="(row.quote ==1  ? 'PaymentSuccess' : 'else' )">
+
+                    <td>{{row.SrNo}}</td>
+                    <td>{{row.DateTime}}</td>
+                    <td>{{row.Company}}</td>
+                    <td style="max-width: 200px;">{{row.Error}}</td>
+                    <td>{{row.GrossPremium}}</td>
+                    <td>{{row.ServiceTax}}</td>
+                    <td>{{row.NetPremium}}</td>
+
+                    <td>
+                      <button type="button" class="btn btn-info clicks" data-toggle="modal"
+                        attr.data-target="#myModalRequest{{i}}"> Request</button>
+                    </td>
+                    <td>
+                      <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalResponse{{row.Company}}{{row.SrNo}}">Response</button> -->
+                      <button type="button" class="btn btn-info clicks" data-toggle="modal"
+                        attr.data-target="#myModalResponse{{i}}"> Response</button>
+                    </td>
+
+                    <div class="modal fade" id="myModalRequest{{i}}" tabindex="-1" role="dialog" style ="color: black;"
+                      aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content" style='width:700px;'>
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="exampleModalLabel"><strong>Quote Request - {{row.Company}}
+                              </strong></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body request-response" id='showQueryDetails' style="line-break: anywhere;">
+                            <p>
+                            <div>
+                              <div *ngIf="row.request2 != ''">
+                                <span *ngIf="row.Company == 'tata'">
+                                  <h3 align="center" style="font-weight:bold;">Quick quote Request</h3>
+                                  <!-- Quick quote Request -->
+                                </span>
+                                <span *ngIf="row.Company == 'reliance'">
+                                  <!-- Quick quote Request -->
+                                  <h3 align="center" style="font-weight:bold;">Quick quote Request</h3>
+
+                                </span>
+                                <span *ngIf="row.Company != 'reliance' || row.Company == 'tata'">
+                                  <h3 align="center" style="font-weight:bold;">Quote Request</h3>
+                                </span>
+
+                              </div>
+
+                              <span>
+                                {{row.request}}
+                              </span>
+                            </div>
+                            <div>
+                              <div *ngIf="row.request2 != ''">
+                                <span *ngIf="row.Company == 'tata'">
+                                  <h3 align="center" style="font-weight:bold;">Full Quote Request</h3>
+
+
+                                </span>
+                                <span *ngIf="row.Company == 'reliance'">
+                                  <h3 align="center" style="font-weight:bold;"> Premium Request</h3>
+
+                                </span>
+
+                                <div *ngIf="row.Company != 'reliance' || row.Company == 'tata'">
+                                  <span>
+                                    <h3 align="center" style="font-weight:bold;"> Quote Request</h3>
+                                  </span>
+                                </div>
+                              </div>
+
+                              <span>
+                                {{row.request2}}
+                              </span>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <div class="modal fade" id="myModalResponse{{i}}" tabindex="-1" role="dialog" style ="color: black;"
+                      aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content" style='width:700px;'>
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="exampleModalLabel"><strong>Quote Request - {{row.Company}}
+                              </strong></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body request-response" id='showQueryDetails' style="line-break: anywhere;">
+                            <p>
+                            <div>
+                              <div *ngIf="row.response2 != ''">
+                                <span *ngIf="row.Company == 'tata'">
+                                  <h3 align="center" style="font-weight:bold;">Quick quote response</h3>
+                                  <!-- Quick quote response -->
+                                </span>
+                                <span *ngIf="row.Company == 'reliance'">
+                                  <!-- Quick quote response -->
+                                  <h3 align="center" style="font-weight:bold;">Coverage response</h3>
+
+                                </span>
+                                <div *ngIf="row.Company != 'reliance' || row.Company == 'tata'">
+                                  <span>
+                                    <h3 align="center" style="font-weight:bold;">Quote response</h3>
+
+                                    <!-- Quote response -->
+                                  </span>
+                                </div>
+
+                              </div>
+
+                              <span>
+                                {{row.response}}
+                              </span>
+                            </div>
+                            <div>
+                              <div *ngIf="row.response2 != ''">
+                                <span *ngIf="row.Company == 'tata'">
+                                  <h3 align="center" style="font-weight:bold;">Full Quote response</h3>
+
+
+                                </span>
+                                <span *ngIf="row.Company == 'reliance'">
+                                  <h3 align="center" style="font-weight:bold;"> Premium response</h3>
+
+                                </span>
+
+                                <div *ngIf="row.Company != 'reliance' || row.Company == 'tata'">
+                                  <span>
+                                    <h3 align="center" style="font-weight:bold;"> Quote response</h3>
+                                  </span>
+                                </div>
+                              </div>
+
+                              <span>
+                                {{row.response2}}
+                              </span>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </tr>
+                </tbody>
+
+                <tbody *ngIf="QuotationData?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+
+
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Purposal</h3>
+          </div>
+
+          <div class="box-body">
+            <div class="mydiv table-responsive ">
+              <table id="Table1" class="table table-bordered table-hover" style="line-break: anywhere;">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Date</th>
+                    <th>Company</th>
+                    <th>Type</th>
+                    <th>Request</th>
+                    <th>Response</th>
+                  </tr>
+
+                </thead>
+                <tbody *ngIf="ProposalData?.length != 0">
+
+                  <tr *ngFor="let row of ProposalData; let i=index;"
+                    [ngClass]="(row.GrossPremium==1 ? 'PaymentSuccess' : 'else' )">
+
+                    <td>{{row.SrNo}}</td>
+                    <td>{{row.DateTime}}</td>
+                    <td>{{row.Company}}</td>
+                    <td>{{row.Type}}</td>
+
+                    <td>
+                      <button type="button" class="btn btn-info clicks" data-toggle="modal"
+                        attr.data-target="#myProposalRequest{{i}}"> Request</button>
+                    </td>
+                    <td>
+                      <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalResponse{{row.Company}}{{row.SrNo}}">Response</button> -->
+                      <button type="button" class="btn btn-info clicks" data-toggle="modal"
+                        attr.data-target="#myProposalResponse{{i}}"> Response</button>
+                    </td>
+
+                    <div class="modal fade" id="myProposalRequest{{i}}" tabindex="-1" role="dialog" style ="color: black;"
+                      aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content" style='width:700px;'>
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="exampleModalLabel"><strong>Quote Request - {{row.Company}}
+                              </strong></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body request-response" id='showQueryDetails' style="line-break: anywhere;">
+                            <p>
+                            <div>
+                              <div *ngIf="row.request2 != ''">
+                                <span *ngIf="row.Company == 'tata'">
+                                  <h3 align="center" style="font-weight:bold;">Quick quote Request</h3>
+                                  <!-- Quick quote Request -->
+                                </span>
+                                <span *ngIf="row.Company == 'reliance'">
+                                  <!-- Quick quote Request -->
+                                  <h3 align="center" style="font-weight:bold;">Quick quote Request</h3>
+
+                                </span>
+                                <div *ngIf="row.Company != 'reliance' || row.Company == 'tata'">
+                                  <span>
+                                    <h3 align="center" style="font-weight:bold;">Quote Request</h3>
+
+                                    <!-- Quote Request -->
+                                  </span>
+                                </div>
+
+                              </div>
+
+                              <span>
+                                {{row.request}}
+                              </span>
+                            </div>
+                            <div>
+                              <div *ngIf="row.request2 != ''">
+                                <span *ngIf="row.Company == 'tata'">
+                                  <h3 align="center" style="font-weight:bold;">Full Quote Request</h3>
+
+
+                                </span>
+                                <span *ngIf="row.Company == 'reliance'">
+                                  <h3 align="center" style="font-weight:bold;"> Premium Request</h3>
+
+                                </span>
+
+                                <div *ngIf="row.Company != 'reliance' || row.Company == 'tata'">
+                                  <span>
+                                    <h3 align="center" style="font-weight:bold;"> Quote Request</h3>
+                                  </span>
+                                </div>
+                              </div>
+
+                              <span>
+                                {{row.request2}}
+                              </span>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <div class="modal fade" id="myProposalResponse{{i}}" tabindex="-1" role="dialog "
+                      aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document " style ="color: black;">
+                        <div class="modal-content" style='width:700px;'>
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="exampleModalLabel"><strong>Quote Request - {{row.Company}}
+                              </strong></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body request-response" id='showQueryDetails' style="line-break: anywhere;">
+                            <p>
+                            <div>
+                              <div *ngIf="row.response2 != ''">
+                                <span *ngIf="row.Company == 'tata'">
+                                  <h3 align="center" style="font-weight:bold;">Quick quote response</h3>
+                                  <!-- Quick quote response -->
+                                </span>
+                                <span *ngIf="row.Company == 'reliance'">
+                                  <!-- Quick quote response -->
+                                  <h3 align="center" style="font-weight:bold;">Coverage response</h3>
+
+                                </span>
+                                <div *ngIf="row.Company != 'reliance' || row.Company == 'tata'">
+                                  <span>
+                                    <h3 align="center" style="font-weight:bold;">Quote response</h3>
+
+                                    <!-- Quote response -->
+                                  </span>
+                                </div>
+
+                              </div>
+
+                              <span>
+                                {{row.response}}
+                              </span>
+                            </div>
+                            <div>
+                              <div *ngIf="row.response2 != ''">
+                                <span *ngIf="row.Company == 'tata'">
+                                  <h3 align="center" style="font-weight:bold;">Full Quote response</h3>
+
+
+                                </span>
+                                <span *ngIf="row.Company == 'reliance'">
+                                  <h3 align="center" style="font-weight:bold;"> Premium response</h3>
+
+                                </span>
+
+                                <div *ngIf="row.Company != 'reliance' || row.Company == 'tata'">
+                                  <span>
+                                    <h3 align="center" style="font-weight:bold;"> Quote response</h3>
+                                  </span>
+                                </div>
+                              </div>
+
+                              <span>
+                                {{row.response2}}
+                              </span>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </tr>
+                </tbody>
+
+                <tbody *ngIf="ProposalData?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <div class="col-xs-12" *ngIf="PolicyDetails.payment_status == 1">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Payment Details</h3>
+          </div>
+
+          <div class="box-body">
+            <table id="Table1" class="table table-bordered table-hover" style="line-break: anywhere;">
+              <thead>
+                <tr>
+                  <th>Policy Schedule</th>
+                  <th>Policy No</th>
+                  <th>Download</th>
+                  <th>Manual Send</th>
+                </tr>
+
+              </thead>
+              <tbody>
+
+                <tr>
+
+                  <td>
+                    <a class="btn btn-success" target="_blank"
+                      href="https://www.squareinsurance.in/Email_cron/send_email/{{Quote_Id}}">Policy Schedule </a>
+                  </td>
+                  <td>
+                    {{PolicyDetails.policy_no}}
+                  </td>
+                  <td>
+                    <a *ngIf="(DownloadUrl !='')" class="fa fa-Info" (click)="ViewDocument(DownloadUrl)"
+                      href="javascript:void(0)"> &nbsp;<i class="fa fa-download"> Download</i></a>
+
+                  </td>
+                  <td>
+                    <a class="btn btn-success" target="_blank"
+                      href="https://www.squareinsurance.in/email_cron/send_email/{{Quote_Id}}/manual">Manual Email</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+</div>

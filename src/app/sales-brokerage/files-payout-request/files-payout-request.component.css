@@ -1,0 +1,15 @@
+.d_flex {
+    display: flex;
+  }
+  
+  .cs_search_btn {
+    width: 250px;
+    position: absolute;
+    right: 0;
+    z-index: 3;
+    top: -8px;
+  }
+  
+  .errorMsgg {
+    border-color: red;
+  }

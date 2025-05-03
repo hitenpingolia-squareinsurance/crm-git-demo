@@ -1,0 +1,439 @@
+<form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+    <div class="row"  >
+        <div
+            *ngIf="(urlSegmentRoot != 'Leads') && (urlSegmentRoot != 'exams') && (urlSegmentRoot != 'landing')  && (urlSegmentRoot != 'employee-directory') && (urlSegmentRoot != 'contact') && (urlSegmentRoot != 'payment-track') && (urlSegmentRoot != 'WebsiteSection')">
+
+            <!--===== POS REPORTS FILTER SECTION START =====-->
+            <div
+                *ngIf="(urlSegment == 'Posp-reports' || urlSegment == 'active-inactive-pos'  || urlSegment == 'pos-active-inactive')">
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="PosBusniessstatus" placeholder="POS Type"
+                        [(ngModel)]="SelectStatusValue" [data]="SelectStatus" formControlName="PosBusniessstatus"
+                        [settings]="dropdownSettingsingleselect">
+                    </ng-multiselect-dropdown>
+                </div>
+
+            </div>
+            <!--===== POS REPORTS FILTER SECTION START =====-->
+
+            <div class="col-sm-3" *ngIf="urlSegment != 'pos'">
+                <ng-multiselect-dropdown class="form-control" placeholder="Financial Year" [data]="SR_Session_Year"
+                    formControlName="FinancialYearr" [settings]="dropdownSettingsingleselect"
+                    (onSelect)="onItemSelect($event,'FinancialYear')"
+                    (onDeSelect)="onItemDeSelect($event,'FinancialYear')" [(ngModel)]="financialYearVal">
+                </ng-multiselect-dropdown>
+                <span *ngIf="isSubmitted && formControls.FinancialYearr.errors" class="ValidationError">
+                    <span *ngIf="formControls.FinancialYearr.errors.required">Financial Year is required</span></span>
+            </div>
+
+            <div class="col-sm-3">
+                <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                    formControlName="DateOrDateRange" bsDaterangepicker [minDate]="minDate" [maxDate]="maxDate"
+                    [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                <span *ngIf="isSubmitted && formControls.DateOrDateRange.errors" class="ValidationError">
+                    <span *ngIf="formControls.DateOrDateRange.errors.required">Date is required</span></span>
+            </div>
+
+            <!--===== COMMON HIERARCHY FILTER SECTION START =====-->
+            <div *ngIf="loginType == 'employee'">
+                <div class="col-sm-3"
+                    *ngIf="rightType == 'All' || PageType == 'ManageRequests' || EmployeeType == 'HOD'">
+                    <ng-multiselect-dropdown class="form-control" placeholder="Vertical" [data]="verticalData"
+                        formControlName="Vertical_Id" [settings]="dropdownSettingsmultiselect" (onSelect)="searchZone()"
+                        (onDeSelect)="onItemDeSelect($event,'Vertical')"> </ng-multiselect-dropdown>
+                </div>
+
+                <div *ngIf="rightType == 'All' || PageType == 'Reports' || PageType == 'ManageRequests'">
+
+                    <div class="col-sm-3">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Zone" [data]="zoneData"
+                            formControlName="Zone_Id" [settings]="dropdownSettingsmultiselect1"
+                            (onSelect)="searchRegion()" (onDeSelect)="onItemDeSelect($event,'Zone')">
+                        </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Branch" [data]="regionData"
+                            formControlName="Region_Id" [settings]="dropdownSettingsmultiselect1"
+                            (onSelect)="searchSubRegion()" (onDeSelect)="onItemDeSelect($event,'Region')">
+                        </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Service Location"
+                            [data]="subRegionData" formControlName="Sub_Region_Id"
+                            [settings]="dropdownSettingsmultiselect" (onSelect)="searchEmployee('', 0)"
+                            (onDeSelect)="onItemDeSelect($event,'Sub Region')">
+                        </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <ng-multiselect-dropdown class="form-control" name="status" placeholder="Employee Status"
+                            [data]="employeeStatusData" formControlName="EmployeeStatus"
+                            [(ngModel)]="employeeStatusValue" (onSelect)="searchEmployee('', 0)"
+                            (onDeSelect)="onItemDeSelect($event,'EmployeeStatus')"
+                            [settings]="dropdownSettingsingleselect1"></ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Employee Name & Code"
+                            [data]="employeeData" formControlName="Emp_Id" [settings]="dropdownSettingsmultiselect"
+                            (onSelect)="searchAgents('', 0)" (onDeSelect)="onItemDeSelect($event,'employee')">
+                        </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3"
+                        *ngIf="urlSegment != 'active-inactive-pos' && urlSegment != 'pos-active-inactive'">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Report Type" [data]="reportTypeData"
+                            formControlName="Report_Type" [settings]="dropdownSettingsingleselect1"
+                            (onSelect)="searchAgents('', 0)" (onDeSelect)="onItemDeSelect($event,'ReportType')"
+                            [disabled]="reportTypeDisable">
+                        </ng-multiselect-dropdown>
+                    </div>
+
+                </div>
+
+                <div
+                    *ngIf="(urlSegment != 'pos') && urlSegment != 'Posp-reports'  && urlSegment != 'active-inactive-pos' && urlSegment != 'pos-active-inactive'">
+                    <div class="col-sm-3">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Agent Type" [data]="agentTypeData"
+                            [(ngModel)]="agentTypeVal" formControlName="Agent_Type"
+                            [settings]="dropdownSettingsingleselect1" (onSelect)="searchAgents('', 0)"
+                            (onDeSelect)="onItemDeSelect($event,'AgentType')">
+                        </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <ng-multiselect-dropdown class="form-control" placeholder="Agent Name/Code" [data]="agentData"
+                            formControlName="Agent_Id" [settings]="dropdownSettingsmultiselect"
+                            (keyup)="searchAgents($event, 1)" (onDeSelect)="onItemDeSelect($event,'Agent')">
+                        </ng-multiselect-dropdown>
+                    </div>
+
+                </div>
+
+            </div>
+            <!--===== COMMON HIERARCHY FILTER SECTION END =====-->
+
+            <div class="col-sm-3" *ngIf="PageType == 'ManageRequests'">
+                <ng-multiselect-dropdown class="form-control" name="QuoteType" placeholder="QuoteType"
+                    [data]="QuoteTypes" formControlName="QuoteType" [settings]="dropdownSettingsingleselect"
+                    (onSelect)="showStatusHtml()" [(ngModel)]="QuoteTypeVal"> </ng-multiselect-dropdown>
+                <span *ngIf="isSubmitted && formControls.QuoteType.errors" class="ValidationError">
+                    <span *ngIf="formControls.QuoteType.errors.required">Quote Type is required</span></span>
+            </div>
+
+            <!--===== CANCELLATION FILTER SECTION START =====-->
+            <div
+                *ngIf="(urlSegmentRoot == 'cancellation' && urlSegment == 'view-requests') || (urlSegmentRoot == 'endosment' && urlSegment == 'view-requests') || (urlSegmentRoot == 'mis-reports' && urlSegment == 'cancellation') || (urlSegmentRoot == 'mis-report' && urlSegment == 'endorsement') || ((urlSegmentRoot == 'endosment' || urlSegmentRoot == 'cancellation') && urlSegment == 'manage-requests')">
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="Source" placeholder="Select Source"
+                        [data]="SRSource_Ar" formControlName="Source" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'SRSource_Ar')"
+                        (onDeSelect)="onItemDeSelect($event,'SRSource_Ar')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="Lob" placeholder="Select LOB" [data]="GlobelLOB"
+                        formControlName="Lob" [settings]="dropdownSettingsingleselect1"
+                        (onSelect)="onItemSelect($event,'GlobelLOB')" (onDeSelect)="onItemDeSelect($event,'GlobelLOB')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="PolicyFileType" placeholder="Business Type"
+                        [data]="PolicyFileType" formControlName="PolicyFileType"
+                        [settings]="dropdownSettingsmultiselect" (onSelect)="onItemSelect($event,'PolicyFileType')"
+                        (onDeSelect)="onItemDeSelect($event,'PolicyFileType')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="ProductType" placeholder="Product Type"
+                        [data]="ProductType" formControlName="ProductType" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'ProductType')"
+                        (onDeSelect)="onItemDeSelect($event,'ProductType')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="PolicyType" placeholder="Policy Type"
+                        [data]="PolicyType" formControlName="PolicyType" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'PolicyType')"
+                        (onDeSelect)="onItemDeSelect($event,'PolicyType')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="Company" placeholder="Select Insurer"
+                        [data]="Ins_Compaines" formControlName="Company" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'Ins_Compaines')"
+                        (onDeSelect)="onItemDeSelect($event,'Ins_Compaines')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+            </div>
+            <!--===== CANCELLATION FILTER SECTION START =====-->
+
+
+            <!--===== OFFLINE-QUOTE FILTER SECTION START =====-->
+            <div
+                *ngIf="(urlSegmentRoot == 'offline-quote' && urlSegment == 'view-requests') || (urlSegmentRoot == 'mis-reports' && urlSegment == 'offline-quote') || (urlSegmentRoot == 'manage-requests' && urlSegment == 'offline-quote')">
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="BusniessType" placeholder="Business Type"
+                        [data]="PolicyFileType" formControlName="BusniessType" [settings]="dropdownSettingsmultiselect">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="Product_Type" placeholder="Product Type"
+                        [data]="ProductType" formControlName="Product_Type" [settings]="dropdownSettingsingleselect1">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="PolicyType" placeholder="Policy Type"
+                        [data]="PolicyType" formControlName="PolicyType" [settings]="dropdownSettingsmultiselect">
+                    </ng-multiselect-dropdown>
+                </div>
+
+            </div>
+            <!--===== OFFLINE-QUOTE FILTER SECTION START =====-->
+
+
+            <!--===== CLAIM-ASSISTANCE RELATED FILTER SECTION START =====-->
+            <div
+                *ngIf="(urlSegmentRoot == 'claim-assistance' && urlSegment == 'all-requests') || (urlSegmentRoot == 'mis-reports' && urlSegment == 'claim') || (urlSegmentRoot == 'manage-requests' && urlSegment == 'claims')">
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="Company_Id" placeholder="Select Company"
+                        [data]="Company_Ar" formControlName="Company_Id" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'Company')" (onDeSelect)="onItemDeSelect($event,'Company')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="PolicyType" placeholder="Select Loss Type"
+                        [data]="PolicyType_Ar" formControlName="PolicyType" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'PolicyType')"
+                        (onDeSelect)="onItemDeSelect($event,'PolicyType')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="LossType"
+                        placeholder="Select Cause of Loss Type" [data]="LossType_Ar" formControlName="LossType"
+                        [settings]="dropdownSettingsmultiselect" (onSelect)="onItemSelect($event,'LossType')"
+                        (onDeSelect)="onItemDeSelect($event,'LossType')">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div>
+            <!--===== CLAIM-ASSISTANCE RELATED FILTER SECTION START =====-->
+
+
+            <!--===== SURVEY RELATED FILTER SECTION START =====-->
+            <div
+                *ngIf="(urlSegmentRoot == 'survey' && urlSegment == 'view-requests') || (urlSegmentRoot == 'mis-reports' && urlSegment == 'inspection')  || (urlSegmentRoot == 'survey' && urlSegment == 'manage-requests')">
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="surveyType" placeholder="Inspection Type"
+                        [data]="surveyTypeData" formControlName="surveyType" [settings]="dropdownSettingsingleselect1">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="product" placeholder="Products"
+                        [data]="productData" formControlName="product" [settings]="dropdownSettingsingleselect1"
+                        (onDeSelect)="onItemDeSelect($event,'product')">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div>
+            <!--===== SURVEY RELATED FILTER SECTION END =====-->
+
+
+            <!--===== TICKET RELATED FILTER SECTION START =====-->
+            <div
+                *ngIf="(urlSegmentRoot == 'ticket' && (urlSegment == 'all-tickets-user' || urlSegment == 'all-tickets-assign')) || (urlSegmentRoot == 'mis-reports' && urlSegment == 'ticket')">
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="Ticket_Type" placeholder="Select Ticket Type"
+                        [data]="TicketType_Ar" formControlName="Ticket_Type" [settings]="dropdownSettingsingleselect1"
+                        (onSelect)="onItemSelect($event,'Claim_Status')"
+                        (onDeSelect)="onItemDeSelect($event,'Claim_Status')">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div>
+            <!--===== TICKET RELATED FILTER SECTION END =====-->
+
+
+            <!--===== INSPECTION(Cases) FILTER SECTION START =====-->
+            <div *ngIf="(urlSegmentSub == 'inspections')">
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="ProductType" placeholder="Product Type"
+                        [data]="ProductType" formControlName="ProductType" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'ProductType')"
+                        (onDeSelect)="onItemDeSelect($event,'ProductType')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="PolicyType" placeholder="Policy Type"
+                        [data]="PolicyType" formControlName="PolicyType" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'PolicyType')"
+                        (onDeSelect)="onItemDeSelect($event,'PolicyType')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="Company" placeholder="Select Insurer"
+                        [data]="Ins_Compaines" formControlName="Company" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect($event,'Ins_Compaines')"
+                        (onDeSelect)="onItemDeSelect($event,'Ins_Compaines')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+            </div>
+            <!--===== INSPECTION(Cases) FILTER SECTION START =====-->
+
+
+            <!--===== CANCELLATION FILTER SECTION START =====-->
+            <div *ngIf="(urlSegmentSub == 'quotations')">
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="Lob" placeholder="Select LOB" [data]="GlobelLOB"
+                        formControlName="Lob" [settings]="dropdownSettingsingleselect"
+                        (onSelect)="onItemSelect1($event,'GlobelLOB')"
+                        (onDeSelect)="onItemDeSelect1($event,'GlobelLOB')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="PolicyFileType" placeholder="Business Type"
+                        [data]="PolicyFileType" formControlName="PolicyFileType"
+                        [settings]="dropdownSettingsmultiselect" (onSelect)="onItemSelect1($event,'PolicyFileType')"
+                        (onDeSelect)="onItemDeSelect1($event,'PolicyFileType')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="ProductType" placeholder="Product Type"
+                        [data]="ProductType" formControlName="ProductType" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="onItemSelect1($event,'ProductType')"
+                        (onDeSelect)="onItemDeSelect1($event,'ProductType')">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="PolicyType" placeholder="Policy Type"
+                        [data]="PolicyType" formControlName="PolicyType" [settings]="dropdownSettingsmultiselect">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-sm-3">
+                    <ng-multiselect-dropdown class="form-control" name="Company" placeholder="Select Insurer"
+                        [data]="Ins_Compaines" formControlName="Company" [settings]="dropdownSettingsmultiselect">
+                    </ng-multiselect-dropdown>
+                </div>
+
+            </div>
+            <!--===== CANCELLATION FILTER SECTION START =====-->
+
+
+            <!--===== POS MIS REPORTS FILTER SECTION START =====-->
+            <!-- <div
+          *ngIf="urlSegmentRoot == 'mis-reports' && (urlSegment == 'pos' || urlSegment == 'active-inactive-pos' || urlSegment == 'pos-active-inactive')">
+  
+          <div class="col-sm-3">
+            <ng-multiselect-dropdown class="form-control" placeholder="Gems Status" [data]="GemsStatusData"
+              formControlName="GemsStatus" [settings]="dropdownSettingsingleselect">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="col-sm-3">
+            <ng-multiselect-dropdown class="form-control" placeholder="Gems Quater" [data]="GemsQuaterData"
+              formControlName="GemsQuater" [settings]="dropdownSettingsingleselect">
+            </ng-multiselect-dropdown>
+          </div>
+        </div> -->
+            <!--===== POS REPORTS FILTER SECTION START =====-->
+
+
+            <!--===== COMMON EXTRA FILTER SECTION START =====-->
+            <div class="col-sm-3" *ngIf="showStatusDiv == 'show' && urlSegment != 'Motor-reports' ">
+                <ng-multiselect-dropdown class="form-control" name="status" placeholder="Select Status"
+                    [data]="statusData" formControlName="status" [settings]="dropdownSettingsmultiselect1">
+                </ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-sm-3"
+                *ngIf="PageType != 'ManageRequests' && urlSegment != 'Motor-reports' && urlSegmentSub != 'quotations' && urlSegmentSub != 'inspections' && urlSegment != 'pos' && urlSegment != 'active-inactive-pos' && urlSegment != 'pos-active-inactive'">
+                <ng-multiselect-dropdown class="form-control" name="AssignedEmployee" placeholder="Current User"
+                    [data]="assignedEmployeeData" formControlName="AssignedEmployee"
+                    [settings]="dropdownSettingsingleselect1">
+                </ng-multiselect-dropdown>
+            </div>
+        </div>
+ 
+
+        <div class="col-sm-3" *ngIf="urlSegmentRoot == 'payment-track'">
+            <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                formControlName="DateOrDateRange" bsDaterangepicker [minDate]="minDate" [maxDate]="maxDate"
+                [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+            <span *ngIf="isSubmitted && formControls.DateOrDateRange.errors" class="ValidationError">
+                <span *ngIf="formControls.DateOrDateRange.errors.required">Date is required</span></span>
+        </div>
+
+        <div class="col-sm-3" *ngIf="urlSegmentRoot == 'payment-track'">
+
+            <ng-multiselect-dropdown class="form-control" name="status" placeholder="Select Status" [data]="statusData"
+                formControlName="status" [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+        </div>
+        <div class="col-sm-3" *ngIf="urlSegmentRoot == 'payment-track'">
+
+            <ng-multiselect-dropdown class="form-control" name="Quotations" placeholder="Select Quotations"
+                [data]="QuotationDATA" formControlName="Quotations" (keyup)="GetPaymentTrackQuotations($event, 1)"
+                [settings]="dropdownSettingsmultiselect"> </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-sm-3" *ngIf="(urlSegmentRoot == 'landing')">
+            <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                formControlName="DateOrDateRange" bsDaterangepicker [minDate]="minDate" [maxDate]="maxDate"
+                [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+            <span *ngIf="isSubmitted && formControls.DateOrDateRange.errors" class="ValidationError">
+                <span *ngIf="formControls.DateOrDateRange.errors.required">Date is required</span></span>
+        </div>
+
+
+        <div class="col-sm-3" *ngIf="urlSegmentRoot != 'payment-track'"><input type="text" formControlName="SearchValue"
+                name="SearchValue" class="form-control" placeholder="Search"></div>
+        <!--===== COMMON EXTRA FILTER SECTION END =====-->
+
+        <div class="col-sm-3">
+            <!-- <input *ngIf="(Is_Export==1)" (click)="ExportExcel()" type="button" class="btn btn-success"
+          value="Export"> -->
+            <button type="submit" class="btn btn-info" style="font-size: small;" value="Search" [disabled]="SearchButtonDisabled" > <i
+                    class="fa fa-search">
+                    Search</i> </button>
+            &nbsp;&nbsp;
+            <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+            &nbsp;&nbsp;
+            <button *ngIf="AddRequestButton == 1" style="font-size: small;    padding: 6px;
+        " routerLink="{{AddRequestButtonRouterLink}}" type="button" class="btn btn-warning" value="Add"> <i
+                    class="fa fa-plus"> Add</i> </button>
+
+            <!-- <input  *ngIf="AddRequestButton == '1'"   type="button" class="btn btn-warning" value="Add"> -->
+
+        </div>
+
+        <!-- <div class="col-sm-3" >
+  
+  
+        &nbsp;&nbsp;
+      </div> -->
+
+        <!-- style="text-align: right;-->
+    </div>
+</form>

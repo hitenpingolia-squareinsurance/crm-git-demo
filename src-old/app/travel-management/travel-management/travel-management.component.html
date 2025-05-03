@@ -1,0 +1,436 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+        <div class="main_card_form">
+            <div class="main_header">
+                <div class="header_title">
+                    <div>{{this.Update_ID ? 'Update Travel Request' : 'Travel Request'}}
+                        <div style="float:right; color:#000; margin-right:18px;">
+                            <button class="btn btn-secondary" style="padding:3px;" (click)="Cancelrequest()">
+                                <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;Back
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="main_body main_card_height_scroll_withoutfooter">
+
+                <div class="row" *ngIf="ManagerRights">
+                    <div class="form-group col-md-4">
+                        <label for="Select_travelEmployees">Select Employee</label>
+                        <ng-multiselect-dropdown class="form-control" [data]="Select_travelEmployees_Data"
+                            (onSelect)="GetEmployeedata($event)" (onDeSelect)="GetEmployeedata('')"
+                            [settings]="dropdownSettingsType">
+                        </ng-multiselect-dropdown>
+                    </div>
+                </div>
+
+                <form [formGroup]="Send_request" (ngSubmit)="TravelRequest()">
+                    <div class="row">
+                        <input type="hidden" class="form-control" formControlName="Employee"
+                            [value]="EmployeeData ? EmployeeData[0].Employee : ''" readonly />
+                        <div class="form-group col-md-4">
+                            <label for="title">Employee Name</label>
+                            <input type="text" class="form-control" formControlName="EmployeeName"
+                                [value]="EmployeeData ? EmployeeData[0].Employee_Name : ''" readonly />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="title">Employee Id</label>
+                            <input type="text" class="form-control" formControlName="EmployeeId"
+                                [value]="EmployeeData ? EmployeeData[0].Employee_ID : ''" readonly />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="title">Designation</label>
+                            <input type="text" class="form-control" formControlName="EmployeeDesignation"
+                                [value]="EmployeeData ? EmployeeData[0].Employee_Designation : ''" readonly />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="title">Profile</label>
+                            <input type="text" class="form-control" formControlName="EmployeeProfile"
+                                [value]="EmployeeData ? EmployeeData[0].Employee_Profile : ''" readonly />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="title">Vertical</label>
+                            <input type="text" class="form-control" formControlName="EmployeeVerticle"
+                                [value]="EmployeeData ? EmployeeData[0].Employee_Department : ''" readonly />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="title">Reporting Manager</label>
+                            <input type="text" class="form-control" formControlName="EmployeeRM"
+                                [value]="EmployeeData ? EmployeeData[0].Employee_ReportingManager : ''" readonly />
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-group col-md-4">
+                            <label for="travelarrangement">Travel Arrangement</label>
+                            <ng-multiselect-dropdown class="form-control" [data]="travelarrangement_data"
+                                formControlName="Travelarrangement" [settings]="dropdownSettingsType"
+                                [(ngModel)]="selectedTravelArrangement">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && FC.Travelarrangement.errors" class="ValidationError">
+                                <div *ngIf="FC.Travelarrangement.errors.required">Please Select Travel Arrangement</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="Traveltype">Travel Type</label>
+                            <ng-multiselect-dropdown class="form-control" [data]="traveltype_data"
+                                formControlName="Traveltype" [settings]="dropdownSettingsType"
+                                [(ngModel)]="selectedTravelType">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && FC.Traveltype.errors" class="ValidationError">
+                                <div *ngIf="FC.Traveltype.errors.required">Please Select Travel Type</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="Travelmode">Travel Mode</label>
+                            <ng-multiselect-dropdown class="form-control" [data]="travelmode_data"
+                                formControlName="Travelmode" [settings]="dropdownSettingsType"
+                                [(ngModel)]="selectedTravelMode">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && FC.Travelmode.errors" class="ValidationError">
+                                <div *ngIf="FC.Travelmode.errors.required">Please Select Travel Mode</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="Fromdate">From Date</label>
+                            <input class="form-control" type="text" formControlName="Fromdate" bsDatepicker
+                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" [minDate]="minDate"
+                                [(ngModel)]="selected_StartDate" placeholder="dd/mm/yyyy">
+                            <div *ngIf="isSubmitted && FC.Fromdate.errors" class="ValidationError">
+                                <div *ngIf="FC.Fromdate.errors.required">Please Select Date</div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-md-4">
+                            <label for="Todate">To Date</label>
+                            <input class="form-control" type="text" formControlName="Todate" bsDatepicker
+                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY'}" [minDate]="minDate"
+                                [(ngModel)]="selected_EndDate" placeholder="dd/mm/yyyy">
+                            <div *ngIf="isSubmitted && FC.Todate.errors" class="ValidationError">
+                                <div *ngIf="FC.Todate.errors.required">Please Select Date</div>
+                                <div *ngIf="FC.Todate.errors.dateInvalid"> 'To' date cannot be earlier than 'From' date.
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="Purpose_of_visit">Purpose of Visit Details</label>
+                            <ng-multiselect-dropdown class="form-control" [data]="purpose_of_visitData"
+                                formControlName="Purpose_of_visit" [settings]="dropdownSettingsType"
+                                [(ngModel)]="selectedPurpose_Of_Vist">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && FC.Purpose_of_visit.errors" class="ValidationError">
+                                <div *ngIf="FC.Purpose_of_visit.errors.required">Please Select Visit Details</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- -----------------------------START POINT------------------------------------ -->
+
+                    <div class=" doc-required">
+                        <div class="form_sub_title">
+                            <i class="fa fa-link mr_5"></i>Start Point
+                        </div>
+                        <div class="">
+                            <div class="row">
+
+                                <div class="form-group col-md-4">
+                                    <label for="Country">Country</label>
+                                    <ng-multiselect-dropdown class="form-control" [data]="CountryData"
+                                        formControlName="Country" [settings]="dropdownSettingsType"
+                                        [(ngModel)]="CountryData">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="isSubmitted && FC.Country.errors" class="ValidationError">
+                                        <div *ngIf="FC.Country.errors.required">Please Select Country</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="State">State</label>
+                                    <ng-multiselect-dropdown class="form-control" [data]="StateData"
+                                        formControlName="State" [settings]="dropdownSettingsType"
+                                        [(ngModel)]="selected_StartState" (onSelect)="citydrop('start')">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="isSubmitted && FC.State.errors" class="ValidationError">
+                                        <div *ngIf="FC.State.errors.required">Please Select State</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="City">City</label>
+                                    <ng-multiselect-dropdown class="form-control" [data]="CityData"
+                                        formControlName="City" [settings]="dropdownSettingsType"
+                                        [(ngModel)]="selected_StartCity">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="isSubmitted && FC.City.errors" class="ValidationError">
+                                        <div *ngIf="FC.City.errors.required">Please Select City</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="City_Class">City Class</label>
+                                    <ng-multiselect-dropdown class="form-control" [data]="City_Class_Data"
+                                        formControlName="City_Class" [settings]="dropdownSettingsType"
+                                        [(ngModel)]="selected_StartTier">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="isSubmitted && FC.City_Class.errors" class="ValidationError">
+                                        <div *ngIf="FC.City_Class.errors.required">Please Select City Class</div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- ---------------------------------END POINT---------------------------------------- -->
+
+                    <div class=" doc-required">
+
+                        <div class="form_sub_title">
+                            <i class="fa fa-link mr_5"></i>End Point
+                        </div>
+                        <div>
+                            <div class="row">
+
+                                <div class="form-group col-md-4">
+                                    <label for="Country_EndPoint">Country</label>
+                                    <ng-multiselect-dropdown class="form-control" [data]="CountryData"
+                                        formControlName="Country_EndPoint" [settings]="dropdownSettingsType"
+                                        [(ngModel)]="CountryData">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="isSubmitted && FC.Country_EndPoint.errors" class="ValidationError">
+                                        <div *ngIf="FC.Country_EndPoint.errors.required">Please Select Country</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="State_EndPoint">State</label>
+                                    <ng-multiselect-dropdown class="form-control" [data]="StateData_EndPoint"
+                                        formControlName="State_EndPoint" [settings]="dropdownSettingsType"
+                                        [(ngModel)]="selected_EndState" (onSelect)="citydrop('end')">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="isSubmitted && FC.State_EndPoint.errors" class="ValidationError">
+                                        <div *ngIf="FC.State_EndPoint.errors.required">Please Select State</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="City_EndPoint">City</label>
+                                    <ng-multiselect-dropdown class="form-control" [data]="CityData_EndPoint"
+                                        formControlName="City_EndPoint" [settings]="dropdownSettingsType"
+                                        [(ngModel)]="selected_EndCity">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="isSubmitted && FC.City_EndPoint.errors" class="ValidationError">
+                                        <div *ngIf="FC.City_EndPoint.errors.required">Please Select City</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="City_Class_EndPoint">City Class</label>
+                                    <ng-multiselect-dropdown class="form-control" [data]="City_Class_Data"
+                                        formControlName="City_Class_EndPoint" [settings]="dropdownSettingsType"
+                                        [(ngModel)]="selected_EndTier">
+                                    </ng-multiselect-dropdown>
+                                    <div *ngIf="isSubmitted && FC.City_Class_EndPoint.errors" class="ValidationError">
+                                        <div *ngIf="FC.City_Class_EndPoint.errors.required">Please Select City Class
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class=" doc-required">
+                        <div class="form_sub_title">
+                            <i class="fa fa-link mr_5"></i>Travel Details
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="Travel_with">Travel With</label>
+                                <ng-multiselect-dropdown class="form-control" [data]="Travel_with_Data"
+                                    formControlName="Travel_with" [settings]="dropdownSettingsType"
+                                    [(ngModel)]="selected_Travel">
+                                </ng-multiselect-dropdown>
+                                <div *ngIf="isSubmitted && FC.Travel_with.errors" class="ValidationError">
+                                    <div *ngIf="FC.Travel_with.errors.required">Please Select Travel With</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4" *ngIf="travelwithgroup || this.selected_Travel == 'Group'">
+                                <label for="Select_travelEmployees">Select Employees To Travel With</label>
+                                <ng-multiselect-dropdown class="form-control" [data]="Select_travelEmployees_Data"
+                                    formControlName="Select_travelEmployees" [settings]="dropdownSettingsMultiselect"
+                                    [(ngModel)]="selected_TravelWith">
+                                </ng-multiselect-dropdown>
+                                <div *ngIf="isSubmitted && FC.Select_travelEmployees && FC.Select_travelEmployees.errors"
+                                    class="ValidationError">
+                                    <div *ngIf="FC.Select_travelEmployees.errors.required">Please Select Employees To
+                                        Travel With</div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="Email_Employees">Email To Contact Person</label>
+                                <ng-multiselect-dropdown class="form-control" [data]="Email_Employees_Data"
+                                    formControlName="Email_Employees" [settings]="dropdownSettingsMultiselect"
+                                    [(ngModel)]="Selected_Email">
+                                </ng-multiselect-dropdown>
+                                <div *ngIf="isSubmitted && FC.Email_Employees.errors" class="ValidationError">
+                                    <div *ngIf="FC.Email_Employees.errors.required">Please Select Email To Contact
+                                        Person</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="accommodation">Accommodation Detail</label>
+                                <ng-multiselect-dropdown class="form-control" [data]="AccommodationData"
+                                    formControlName="accommodation" (onSelect)="NearBy($event)"
+                                    [settings]="dropdownSettingsType" [(ngModel)]="AccommodationValue">
+                                </ng-multiselect-dropdown>
+                                <div *ngIf="isSubmitted && FC.accommodation.errors" class="ValidationError">
+                                    <div *ngIf="FC.accommodation.errors.required">Please Select Guest House</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4" *ngIf="GuestHouseRequired_yes == true">
+                                <label for="GuestHouse">Guest House</label>
+                                <ng-multiselect-dropdown class="form-control" [data]="GuestHouse_Data"
+                                    formControlName="GuestHouse" [settings]="dropdownSettingsType"
+                                    [(ngModel)]="Selected_GuestHouse">
+                                </ng-multiselect-dropdown>
+                                <div *ngIf="isSubmitted && FC.GuestHouse.errors" class="ValidationError">
+                                    <div *ngIf="FC.GuestHouse.errors.required">Please Select Guest House</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4" *ngIf="HotelRequired_yes == true">
+                                <label for="HotelRequired">Hotel Name</label>
+                                <input type="text" class="form-control" formControlName="HotelName"
+                                    [(ngModel)]="hotelName">
+                                <div *ngIf="isSubmitted && FC.HotelName.errors" class="ValidationError">
+                                    <div *ngIf="FC.HotelName.errors.required">Please Enter Hotel Name</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4"
+                                *ngIf="landmarkshowornot == 1 || HotelRequired_yes == true">
+                                <label for="Nearby_Hotels">Nearby Landmark</label>
+                                <input type="text" class="form-control" formControlName="Nearby_Hotels"
+                                    [(ngModel)]="Selected_NearbyHotel">
+                                <div *ngIf="isSubmitted && FC.Nearby_Hotels && FC.Nearby_Hotels.errors"
+                                    class="ValidationError">
+                                    <div *ngIf="FC.Nearby_Hotels.errors.required">Please Enter Nearby Hotel</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="Advance">Advance</label>
+                                <ng-multiselect-dropdown class="form-control" [data]="Advance_Data"
+                                    formControlName="Advance" [settings]="dropdownSettingsType"
+                                    (onSelect)="AdvanceYesNO($event)" [(ngModel)]="selectedAdvanceRequirement">
+                                </ng-multiselect-dropdown>
+                                <div *ngIf="isSubmitted && FC.Advance.errors" class="ValidationError">
+                                    <div *ngIf="FC.Advance.errors.required">Please Select Advance Requirement</div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-md-4"
+                                *ngIf="Advance_yes || this.selectedAdvanceRequirement == 'Yes'">
+                                <label for="AdvanceAmount">Advance Amount</label>
+                                <input class="form-control" type="text" formControlName="AdvanceAmount"
+                                    [(ngModel)]="Selected_Advance" maxlength="6">
+                                <div *ngIf="isSubmitted && FC.AdvanceAmount && FC.AdvanceAmount.errors"
+                                    class="ValidationError">
+                                    <div *ngIf="FC.AdvanceAmount.errors.required">Please Enter Advance Amount</div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-md-4"
+                                *ngIf="Advance_yes || this.selectedAdvanceRequirement == 'Yes'">
+                                <label for="AdvanceDetails">Advance Details</label>
+                                <textarea type="text" class="form-control" formControlName="AdvanceDetails"
+                                    [(ngModel)]="Selected_AdvanceDetails"></textarea>
+                                <div *ngIf="isSubmitted && FC.AdvanceDetails && FC.AdvanceDetails.errors"
+                                    class="ValidationError">
+                                    <div *ngIf="FC.AdvanceDetails.errors.required">Please Enter Advance Details</div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="Work_InHand">Work In Hand</label>
+                                <textarea type="text" class="form-control" formControlName="Work_InHand"
+                                    [(ngModel)]="Selected_WorkInHand"></textarea>
+                                <div *ngIf="isSubmitted && FC.Work_InHand.errors" class="ValidationError">
+                                    <div *ngIf="FC.Work_InHand.errors.required">Please Enter Current Work In Hand</div>
+                                </div>
+
+                            </div>
+
+                            <div class=" form-group col-md-4">
+                                <label for="File">Choose Files</label>
+                                <div class="custom-file-input-wrapper">
+                                    <input type="file" multiple="true" id="File" (change)="onFileChange($event)"
+                                        formControlName="File" class="form-control ">
+                                </div>
+                                <p>{{this.FileNames}}</p>
+
+                                <div *ngIf="isSubmitted && fileError" class="text-danger">
+                                    <p><b>{{ fileError }}</b></p>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-4">
+                                <label for="Remark">Remark</label>
+                                <input type="text" class="form-control" formControlName="Remark"
+                                    [(ngModel)]="selected_Remark">
+                                <div *ngIf="isSubmitted && FC.Remark.errors" class="ValidationError">
+                                    <div *ngIf="FC.Remark.errors.required">Please Enter Remark</div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- -----------------SUBMIT------------------------ -->
+
+                    <div style="float:right; margin-top:10px; ;">
+
+                        <button class="btn btn-danger" (click)="Cancelrequest()" style="margin-right:10px">
+                            Cancel
+                        </button>
+                        <button class="btn btn-success" type="submit">
+                            {{this.Update_ID ? 'Update' : 'Submit'}}
+                        </button>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

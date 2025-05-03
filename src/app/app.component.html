@@ -1,0 +1,18 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<!-- <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate-pulse" [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner> -->
+<div id="LoaderhaiBhaiYeh">
+  <div class="new_rotate_loader">
+    <span>Loading</span>
+  </div>
+</div>
+<div *ngIf="windownPoupupstatus == 0" [ngClass]="IsLoggedIn=='TRUE'?'wrapper':''">
+  <app-header *ngIf="IsLoggedIn=='TRUE'"></app-header>
+  <app-sidebar *ngIf="IsLoggedIn=='TRUE'"></app-sidebar>
+  <router-outlet></router-outlet>
+  <app-footer *ngIf="IsLoggedIn=='TRUE'"></app-footer>
+</div>
+<div *ngIf="windownPoupupstatus == 1">
+  <router-outlet></router-outlet>
+</div>

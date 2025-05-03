@@ -1,0 +1,56 @@
+<section class="content-header">
+    <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+
+    <div class="col-lg-12 teliarm">
+        <div class="row position-relative">
+            <div class="col-lg-3 col-md-12">
+            </div>
+
+            <div class="col-lg-6 col-md-12">
+                <div class="c-dashboardInfo">
+                    <div class="wrap">
+                        <h4><img class="img-fluid" src="assets/dist/img/user.png">My Details</h4>
+                        <ul>
+                            <li> Name<label> {{FetchData.name}}</label></li>
+                            <li> Mobile<label> {{FetchData.mobile}}</label></li>
+                            <li style="width: 100%;"> Email<label class="one_label"> {{FetchData.email}}</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-12">
+            </div>
+
+            <div class="col-lg-6 col-md-12">
+                <div class="c-dashboardInfo">
+                    <div class="wrap">
+                        <h4><img class="img-fluid" src="assets/dist/img/myrm.png">My Relationship Manager</h4>
+                        <ul>
+                            <li> Name<label> {{RmData.name}} - {{RmData.employee_id}}</label></li>
+                            <li> Mobile<label> {{RmData.mobile}}</label></li>
+                            <li style="width: 100%;"> Email<label class="one_label"> {{RmData.email}}</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="c-dashboardInfo text_center ">
+                    <div class="wrap">
+                        <h4><img class="img-fluid" src="assets/dist/img/telerm.png">
+                        </h4>
+                        <ul>
+                            <li>Name <label> {{TeleRmData.name}} - {{TeleRmData.employee_id}}</label></li>
+                            <li>Mobile <label> {{TeleRmData.mobile}}</label> </li>
+                            <li style="width: 100%;">Email <label class="one_label">
+                                    {{TeleRmData.email}}</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

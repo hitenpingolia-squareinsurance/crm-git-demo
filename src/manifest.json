@@ -1,0 +1,6 @@
+{
+  "short_name": "CRM",
+  "name": "CRM Notifications",
+  "start_url": "/",
+  "gcm_sender_id": "196022669915"
+} 

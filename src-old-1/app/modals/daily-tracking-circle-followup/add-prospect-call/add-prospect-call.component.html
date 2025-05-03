@@ -1,0 +1,102 @@
+<form class="form" [formGroup]="AddProspectCallForm" (ngSubmit)="SubmitFollowupAction()">
+  <table class="table table-bordered">
+    <thead>
+     <tr>
+      <th style="text-align: center;">Activity Tracker
+        <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+      </th>
+     </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+        <div class="row" style="margin-top: 10px;">
+           <div class="col-sm-12">
+            <label>Name* : </label>
+            <input type="text" class="form-control" formControlName="Name">
+            <div *ngIf="isSubmitted && formControls.Name.errors " class="ValidationError">
+              <div *ngIf="formControls.Name.errors.required">Please enter name!</div>
+            </div>
+           </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+           <div class="col-sm-12">
+            <label>Email* : </label>
+            <input type="text" class="form-control" formControlName="Email">
+            <div *ngIf="isSubmitted && formControls.Email.errors " class="ValidationError">
+              <div *ngIf="formControls.Email.errors.required">Please enter email!</div>
+              <div *ngIf="formControls.Email.errors.pattern">Please enter valid email!</div>
+            </div>
+           </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+           <div class="col-sm-12">
+            <label>Mobile* : </label>
+            <input type="text" class="form-control" maxlength="10" formControlName="Mobile">
+            <div *ngIf="isSubmitted && formControls.Mobile.errors" class="ValidationError">
+              <div *ngIf="formControls.Mobile.errors.required">Please enter mobile!</div>
+              <div *ngIf="formControls.Mobile.errors.pattern">Please enter valid mobile!</div>
+            </div>
+           </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+           <div class="col-sm-12">
+            <label>Occupation* : </label>
+            <input type="text" class="form-control" formControlName="Occupation">
+            <div *ngIf="isSubmitted && formControls.Occupation.errors " class="ValidationError">
+              <div *ngIf="formControls.Occupation.errors.required">Please enter occupation!</div>
+            </div>
+           </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+           <div class="col-sm-12">
+            <label>Prospect Type* : </label>
+            <select class="form-control" formControlName="Prospect_Type">
+              <option value="" selected disabled>--Prospect Type--</option>
+              <option value="POS">POS</option>
+              <option value="Customer">Customer</option>
+            </select>
+            <div *ngIf="isSubmitted && formControls.Prospect_Type.errors " class="ValidationError">
+              <div *ngIf="formControls.Prospect_Type.errors.required">Please choose prospect type!</div>
+            </div>
+           </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+           <div class="col-sm-12">
+             <label>Call Type* : </label>
+             <select class="form-control" formControlName="Call_Type">
+              <option value="" selected disabled>--Call Type--</option>
+              <option value="Hot">Hot</option>
+              <option value="Cold">Cold</option>
+            </select>
+            <div *ngIf="isSubmitted && formControls.Call_Type.errors " class="ValidationError">
+              <div *ngIf="formControls.Call_Type.errors.required">Please choose call type!</div>
+            </div>
+          </div>
+        </div>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Remarks : </label>
+          <textarea class="form-control" formControlName="Remark"></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Submit">
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+
+  </form>

@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="modal-header" style="text-align: center;">
+        <h4 class="modal-title">Edit Youtube Vedio </h4>
+    </div>
+</div>
+
+<div class="popup-content-body">
+    <div class="row popup-form">
+        <form [formGroup]="Addposter" (ngSubmit)="submit()">
+            <div class="col-md-6">
+                <label for="state">LOB</label>
+                <ng-multiselect-dropdown class="form-control" formControlName="LOB" [data]="lobs"
+                    (onSelect)="FetchCompany($event)" [settings]="dropdownSingleSettingsType" [(ngModel)]="lob_name">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.LOB.errors" class="ValidationError">
+                    <div *ngIf="formControls.LOB.errors.required">Please enter LOB</div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="state">Insurer</label>
+                <ng-multiselect-dropdown class="form-control" formControlName="Company" [data]="Companys"
+                    (onSelect)="FetchPlans($event)" [settings]="dropdownSingleSettingsType" [(ngModel)]="company_name">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.Company.errors" class="ValidationError">
+                    <div *ngIf="formControls.Company.errors.required">Please enter Company</div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="state">Plan</label>
+                <ng-multiselect-dropdown class="form-control" formControlName="Plan" [data]="Plans"
+                    [settings]="dropdownSingleSettingsType" (onSelect)="FetchSubplans($event)" [(ngModel)]="plan_name">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.Plan.errors" class="ValidationError">
+                    <div *ngIf="formControls.Plan.errors.required">Please enter Plan</div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="state">SubPlan</label>
+                <ng-multiselect-dropdown class="form-control" formControlName="SubPlan" [data]="SubPlans"
+                    [settings]="dropdownSingleSettingsType" [(ngModel)]="subplan_name">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.SubPlan.errors" class="ValidationError">
+                    <div *ngIf="formControls.SubPlan.errors.required">Please enter SubPlan</div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-6">
+                <label for="Videourl">YouTube URL</label>
+                <input type="url" id="Videourl" class="form-control" placeholder="Enter YouTube URL"
+                    formControlName="Videourl" />
+                <div *ngIf="isSubmitted && formControls.Videourl.errors" class="ValidationError">
+                    <div *ngIf="formControls.Videourl.errors.required">
+                        Please enter a YouTube URL
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-sm-8">&nbsp;</div>
+                <div class="col-sm-4">
+                    <div class="button-di1v-yes-no">
+                        <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

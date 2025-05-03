@@ -1,0 +1,53 @@
+<div class="row">
+  <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+</div>
+
+	<table class="table table-bordered">
+
+  <thead>
+    <tr>
+      <th colspan="5" style="text-align: center; background-color: #2cb2b3; color: white;">Salary Remarks Track</th>
+    </tr>
+
+    <tr>
+      <th colspan="6"> </th>
+    </tr>
+
+    <tr>
+      <th>S.No</th>
+      <th>Salary Remarks</th>
+      <th>Remarks</th>
+      <th>Remark By</th>
+      <th>Remark Date</th>
+    </tr>
+  </thead>
+
+  <tbody *ngIf="dataAr?.length != 0">
+    <tr *ngFor="let row of dataAr; let i=index;">
+      <td>{{row.SrNo}} </td>
+
+      <td>
+        <span *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'Full'" style="margin-right: 5px; cursor: not-allowed;" class="label label-success">Full</span>
+        <span *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'Partial'" style="margin-right: 5px; cursor: not-allowed;" class="label label-warning">Partial</span>
+        <span *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'None'" style="margin-right: 5px; cursor: not-allowed;" class="label label-danger">Null</span>
+        <span *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'Hold'" style="margin-right: 5px; cursor: not-allowed;" class="label label-danger">Hold</span>
+
+        <span *ngIf="row.SalaryRemarks != '' && row.DaysCount != '0'" style="margin-right: 5px; cursor: not-allowed;" class="label label-primary">
+          {{ row.DaysCount }} Days</span>
+
+        <span *ngIf="row.SalaryRemarks != '' && row.TotalSalary != '0'" style="margin-right: 5px; cursor: not-allowed;" class="label label-primary">Rs. {{ row.TotalSalary }} </span>
+      </td>
+
+      <td>{{row.Remarks}} </td>
+      <td>{{row.SalaryUpdatedBy}} </td>
+      <td>{{row.UpdateDate}} </td>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="dataAr?.length == 0">
+  <tr>
+    <td colspan="5" align="center">No data Available !</td>
+  </tr>
+  <tbody>
+
+</table>

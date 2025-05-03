@@ -1,0 +1,58 @@
+.direct-chat-msg2 {
+  width: 80%;
+  float: right;
+}
+
+.direct-chat-msg-left {
+  width: 80%;
+  float: left;
+}
+
+.ImageUploaded{
+  background-color:green;
+  color:white;
+}
+.btn-right-side a span{
+padding: 6px;
+  margin: 0px 10px;
+  font-size: 11px;
+}
+
+span.label.label-Policy_Details {
+color: white;
+background: #8f8f90;
+}
+
+
+span.label.label-Details {
+background: #1a6fa1;
+}
+
+
+.btn-warningx {
+  background-color: #f39c12;
+  border-color: #e08e0b;
+  padding: 2px;
+  font-size: 12px;
+}
+
+.btn-primaryx {
+  background-color: #128ef3;
+  border-color: #128ef3;
+  padding: 2px;
+  font-size: 12px;
+}
+
+.btn-successx {
+  background-color: #3ff312;
+  border-color: #3ff312;
+  padding: 2px;
+  font-size: 12px;
+}
+
+.btn-dangerx {
+  background-color: #f31212;
+  border-color: #f31212;
+  padding: 2px;
+  font-size: 12px;
+}

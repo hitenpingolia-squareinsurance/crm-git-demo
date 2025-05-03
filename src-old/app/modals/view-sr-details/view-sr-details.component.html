@@ -1,0 +1,586 @@
+<!--===== MOTOR, NON MOTOR, HEALTH SR DETAILS TABLE START=====-->
+<table *ngIf="(row['LOB_Id'] == 'Motor' || row['LOB_Id'] == 'Non Motor' || row['LOB_Id'] == 'Health')" class="table table-bordered"  style="font-size: 12px;">
+<thead>
+<tr class="">
+	<td colspan="5" align="center">
+		<b>SR No : {{row.SR_No}}</b>
+
+		<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+	</td>
+  </tr>
+
+</thead>
+	<thead>
+	  <tr (click)="ShowDetails(0,showDetails_0)" class="TDHeading">
+		<th colspan="5">Mapping Details
+			<i *ngIf="showDetails_0==0" class="fa fa-plus" aria-hidden="true"></i>
+			<i *ngIf="showDetails_0==1" class="fa fa-minus" aria-hidden="true"></i>
+		</th>
+	  </tr>
+	</thead>
+	<tbody *ngIf="showDetails_0==1">
+	  <tr>
+		<td><b>Broker :</b> {{row['Broker_Name']}}</td>
+		<td><b>RM : </b>{{row['RM_Name']}}</td>
+		<td><b>Franchise : </b>{{row['Franchise_Name']}}</td>
+		<td><b>Agent : </b>{{row['Agent_Name']}}</td>
+		<td><b>Fleet : </b>{{row['Fleet_Name']}}</td>
+	  </tr>
+
+	  <tr>
+		<td><b>LOB :</b> {{row['LOB_Id']}}</td>
+		<td><b>File Type : </b>{{row['File_Type']}}</td>
+		<td><b>Insurer Renewal  : </b>{{row['Insurer_Renewal']}}</td>
+		<td>
+			<span *ngIf="(row['LOB_Id'] == 'Non Motor')"><b>Mandate Letter : </b>{{row['Mandate_Status']}}</span>
+			<span *ngIf="(row['LOB_Id'] == 'Motor')"><b>PA Owner : </b>{{row['PA_Owner']}}</span>
+		</td>
+		<td><span *ngIf="(row['LOB_Id'] == 'Motor')"><b>PA Owner Tenure : </b>{{row['PA_Owner_Tenure']}}</span></td>
+	  </tr>
+
+
+	  <tr>
+		<td><b>Product :</b> {{row['Product_Id']}}</td>
+		<td><b>Sub-Product : </b>{{row['SubProduct_Id']}}</td>
+		<td><b>Segment  : </b>{{row['Segment_Id']}}</td>
+		<td><b>Class : </b>{{row['Class_Id']}}</td>
+		<td><span *ngIf="(row['LOB_Id'] == 'Motor')"><b>Sub-Class : </b>{{row['Sub_Class_Id']}}</span></td>
+	  </tr>
+
+	  <tr *ngIf="(row['LOB_Id'] == 'Motor')">
+		<td><b>Make :</b> {{row['Make_Id']}}</td>
+		<td><b>Model : </b>{{row['Model_Id']}}</td>
+		<td><b>Variant  : </b>{{row['Variant_Id']}}</td>
+		<td><b>Body/Fuel Type : </b>{{row['Body_Type']}}/{{row['Fuel_Type']}}</td>
+		<td><b>Seating Capacity : </b>{{row['Seating_Capcity']}}</td>
+	  </tr>
+
+	   <tr *ngIf="(row['LOB_Id'] == 'Motor')">
+	    <td><b>GVW/CC. : </b>{{row['GVW_CC']}}</td>
+		<td><b>Purchase Date :</b> {{row['Purchase_Date']}}</td>
+		<td><b>Year Of Manufacturing : </b>{{row['Manufacture_Year']}}</td>
+		<td><b>Engine No. : </b>{{row['Engine_No']}}</td>
+		<td><b>Chasis No. : </b>{{row['Chasis_No']}}</td>
+	  </tr>
+
+	  <tr *ngIf="(row['LOB_Id'] == 'Motor')">
+		<td><b>Vehicle Type :</b> {{row['Vehicle_Type']}}</td>
+		<td><b>Vehicle No : </b>{{row['Registration_No']}}</td>
+		<td><b>Vehicle State  : </b>{{row['State_Name']}}</td>
+		<td><b>Vehicle RTO : </b>{{row['RTO_Name']}}</td>
+		<td></td>
+	  </tr>
+	</tbody>
+
+
+	<thead (click)="ShowDetails(1,showDetails_1)">
+	  <tr class="TDHeading">
+		<th colspan="5">Insurer/Policy Details
+			<i *ngIf="showDetails_1==0" class="fa fa-plus" aria-hidden="true"></i>
+			<i *ngIf="showDetails_1==1" class="fa fa-minus" aria-hidden="true"></i>
+		</th>
+	  </tr>
+	</thead>
+
+	<tbody *ngIf="showDetails_1==1">
+		 <tr>
+			<td colspan="3"><b>Insurance Company : </b>{{row['Insurance_Company_Name']}}</td>
+			<td><b>Insurance Company Branch :</b> {{row['Insurance_Branch_Company_Name']}}</td>
+			<td><b>Company Branch Address : </b>{{row['Insurance_Company_Branch_Address']}}</td>
+
+		  </tr>
+
+		   <tr>
+			<td><b>Insured Type : </b>{{row['Insured_Type']}}</td>
+			<td><b>Customer Name :</b> {{row['Salutation_Type']}} {{row['Customer_Name']}}</td>
+			<td><b>Customer Mobile No. : </b>{{row['Customer_Mobile']}}</td>
+			<td><b>Alternate No. : </b>{{row['Customer_Alternate_Mobile']}}</td>
+			<td><b>Customer Email  : </b>{{row['Customer_Email']}}</td>
+		  </tr>
+
+		  <tr *ngIf="row['Is_Policy_OD'] == 4 && row['LOB_Id'] == 'Motor'">
+			<td><b>Policy Start Date (OD) : </b>{{row['Policy_Start_Date_OD']}}</td>
+			<td><b>Policy End Date (OD) :</b> {{row['Policy_End_Date_OD']}}</td>
+
+			<td><b>Policy Start Date (TP)< : </b>{{row['Policy_Start_Date_TP']}}</td>
+			<td><b>Policy End Date (TP) : </b>{{row['Policy_End_Date_TP']}}</td>
+
+			<td><b>Policy Booking Date.  : </b>{{row['Booking_Date']}}</td>
+		  </tr>
+
+		  <tr *ngIf="row['Is_Policy_OD'] == 2">
+			<td><b>Policy Start Date : </b>{{row['Policy_Start_Date_TP']}}</td>
+			<td><b>Policy End Date : </b>{{row['Policy_End_Date_TP']}}</td>
+			<td colspan="3"><b>Policy Booking Date.  : </b>{{row['Booking_Date']}}</td>
+
+		  </tr>
+
+
+		  <tr>
+			<td><b>Policy Status : </b>{{row['Policy_Status']}}</td>
+			<td><b>Policy No. :</b> {{row['Policy_No']}}</td>
+			<td colspan="3">&nbsp;</td>
+		  </tr>
+
+	  </tbody>
+
+
+	  <thead>
+	  <tr (click)="ShowDetails(2,showDetails_2)" class="TDHeading">
+		<th colspan="5">Previous Year Policy Details
+			<i *ngIf="showDetails_2==0" class="fa fa-plus" aria-hidden="true"></i>
+			<i *ngIf="showDetails_2==1" class="fa fa-minus" aria-hidden="true"></i>
+		</th>
+	  </tr>
+	</thead>
+
+	<tbody *ngIf="showDetails_2==1">
+		 <tr>
+			<td><b>Don't Know Case : </b>{{row['Previous_Policy_Status']}}</td>
+			<td colspan="2"><span *ngIf="(row['Previous_Policy_Status'] == 'Yes')"><b>Previous Insurer :</b> {{row['Pre_Insurer_Name']}}</span></td>
+			<td><span *ngIf="(row['Previous_Policy_Status'] == 'Yes')"><b>Policy No. : </b>{{row['Pre_Policy_No']}}</span></td>
+			<td><span *ngIf="(row['Previous_Policy_Status'] == 'Yes')"><b>Expiry Date : </b>{{row['Pre_Expiry_Date']}}</span></td>
+		  </tr>
+	  </tbody>
+
+
+
+
+	    <thead>
+	  <tr class="TDHeading">
+		<th (click)="ShowDetails(3,showDetails_3)" colspan="5">Premium/Payout Details
+			<i *ngIf="showDetails_3==0" class="fa fa-plus" aria-hidden="true"></i>
+			<i *ngIf="showDetails_3==1" class="fa fa-minus" aria-hidden="true"></i>
+		</th>
+	  </tr>
+	</thead>
+
+	 <tbody *ngIf="showDetails_3==1">
+		 <tr>
+			<!-- <td colspan="2"><b>Payment Favour : </b>{{row['Payment_Towards']}}</td> -->
+			<td colspan="2"><b>Mode of Payment :</b> {{row['Mode_Of_Payment']}}</td>
+			<td><b>Payment/Cheque Ref No : </b>{{row['Payment_Cheque_Ref_No']}}</td>
+		  </tr>
+
+		  <tr *ngIf="(row['LOB_Id'] == 'Motor')">
+			<td><b>TPPD : </b>{{row['TPPD']}}</td>
+			<td><b>Basic OD :</b> {{row['Basic_OD']}}</td>
+			<td><b>Basic TP : </b>{{row['Basic_TP']}}</td>
+			<td><b>Other TP : </b>{{row['Other_TP']}}</td>
+			<td><b>P A Owner  : </b>{{row['PA_Owner_Premium']}}</td>
+		  </tr>
+
+
+		 <tr *ngIf="(row['LOB_Id'] == 'Motor')">
+			<td><b>Net Premium : </b>{{row['Net_Premium']}}</td>
+			<td><b>Gross Premium :</b> {{row['Estimated_Gross_Premium']}}</td>
+			<td><b>IDV  : </b>{{row['IDV']}}</td>
+			<td><b>NCB : </b>{{row['NCB']}}</td>
+			<td><b>Discount  : </b>{{row['Discount']}}</td>
+		  </tr>
+
+		  <tr *ngIf="(row['LOB_Id'] == 'Non Motor' || row['LOB_Id'] == 'Health')">
+			<td><b>Net Premium : </b>{{row['Net_Premium']}}</td>
+			<td><b>Gross Premium :</b> {{row['Estimated_Gross_Premium']}}</td>
+			<td><b>Terrorism Premium : </b>{{row['Terrorism_Premium']}}</td>
+			<td><b>Sum_Insured : </b>{{row['Sum_Insured']}}</td>
+			<td></td>
+		  </tr>
+
+	  </tbody>
+
+
+	   <thead>
+	  <tr class="TDHeading">
+		<th (click)="ShowDetails(4,showDetails_4)" colspan="5">Document Details
+			<i *ngIf="showDetails_4==0" class="fa fa-plus" aria-hidden="true"></i>
+			<i *ngIf="showDetails_4==1" class="fa fa-minus" aria-hidden="true"></i>
+		</th>
+	  </tr>
+	</thead>
+	<tbody *ngIf="showDetails_4==1">
+	  <tr>
+		<td><b>Document Name</b></td>
+		<td><b>Document View</b></td>
+		<td><b>Upload By</b></td>
+		<td colspan="2"><b>Upload Date</b></td>
+
+	  </tr>
+	  <tr *ngFor="let r of row['Sr_Docs'];">
+		<td>{{r.Document_Type}}</td>
+		<td><a *ngIf="r.Document_File_Name!=''" (click)="ViewDocument(r.Document_File_Name)" href="javascript:;">Click to View</a> </td>
+		<td><span *ngIf="r.Document_File_Name!=''">{{r.Upload_By}}</span></td>
+		<td colspan="2"><span *ngIf="r.Document_File_Name!=''">{{r.Upload_Date_Format}}</span></td>
+	  </tr>
+	 </tbody>
+
+</table>
+<!--===== MOTOR, NON MOTOR, HEALTH SR DETAILS TABLE END=====-->
+
+<!--===== LIFE SR DETAILS TABLE START=====-->
+<table *ngIf="(row['LOB_Id'] == 'LI')" class="table table-bordered"  style="font-size: 12px;">
+<thead>
+<tr class="">
+	<td colspan="1" align="center">
+		<b>SR NO : {{row.SR_No}}</b>
+	</td>
+
+	<td colspan="4" align="center">
+		<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+	</td>
+  </tr>
+
+</thead>
+
+<thead>
+  <tr class="TDHeading">
+	<th (click)="ShowDetails(0,showDetails_0)" colspan="5">Mapping Details
+		<i *ngIf="showDetails_0==0" class="fa fa-plus" aria-hidden="true"></i>
+		<i *ngIf="showDetails_0==1" class="fa fa-minus" aria-hidden="true"></i>
+	</th>
+  </tr>
+</thead>
+
+<tbody *ngIf="showDetails_0==1">
+
+  <tr>
+		<td><b>Broker :</b> {{row['Broker_Name']}}</td>
+		<td><b>RM : </b>{{row['RM_Name']}}</td>
+		<td><b>Franchise : </b>{{row['Franchise_Name']}}</td>
+		<td><b>Agent : </b>{{row['Agent_Name']}}</td>
+		<td><b>Fleet : </b>{{row['Fleet_Name']}}</td>
+  </tr>
+
+	<tr *ngIf="row['LI_Proposer_Type'] == 'Group'">
+		<td><b>Group/organization : </b> {{row['LI_Proposer_Name']}}</td>
+		<td colspan="2"><b>Email Id : </b> {{row['LI_Email_Id']}}</td>
+		<td><b>Contact No. : </b> {{row['LI_Contact_No']}}</td>
+		<td><b>Total Lives/Employees : </b> {{row['LI_Persons_Number']}}</td>
+  </tr>
+
+  <tr *ngIf="row['LI_Proposer_Type'] == 'Individual'">
+		<td><b>Proposer Name : </b> {{row['LI_Proposer_Name']}}</td>
+		<td colspan="2"><b>Life Assured Name (If LA is different) : </b> {{row['LI_Life_Assured_Name']}}</td>
+		<td><b>Mother Name : </b> {{row['LI_Mother_Name']}}</td>
+		<td><b>Father Name : </b> {{row['LI_Father_Name']}}</td>
+  </tr>
+
+  <tr *ngIf="row['LI_Proposer_Type'] == 'Individual'">
+		<td><b>Date of Birth : </b>{{row['DOB']}}</td>
+		<td><b>Gender : </b>{{row['Gender']}}</td>
+		<td><b>Marital Status : </b>{{row['LI_Marital_Status']}}</td>
+		<td><b>Health Status : </b>{{row['LI_Health_Status']}}</td>
+		<td><b>Diseases Remark : </b>{{row['LI_Diseases_Remark']}}</td>
+  </tr>
+
+  <tr *ngIf="row['LI_Proposer_Type'] == 'Individual'">
+		<td><b>Place of Birth : </b>{{row['LI_PlaceOf_Birth']}}</td>
+		<td colspan="2"><b>Permanent Address : </b>{{row['LI_PlaceOf_Birth']}}</td>
+		<td colspan="2"><b>Communication Address : </b>{{row['LI_Permanent_Address']}}</td>
+  </tr>
+
+  <tr *ngIf="row['LI_Proposer_Type'] == 'Individual'">
+		<td><b>Contact No. : </b>{{row['LI_Contact_No']}}</td>
+		<td><b>Email Id : </b>{{row['LI_Email_Id']}}</td>
+		<td><b>Aadhar No. : </b>{{row['ProposerAadharCard_No']}}</td>
+		<td><b>PAN No. : </b>{{row['ProposerPanCard_No']}}</td>
+		<td></td>
+  </tr>
+
+
+  <tr *ngIf="row['LI_Proposer_Type'] == 'Individual'">
+		<td><b>Occupation : </b>{{row['LI_Occupation']}}</td>
+		<td colspan="3"><b>Company Name : </b>{{row['LI_Company_Name']}}</td>
+		<td><b>Industry Type : </b>{{row['LI_Industry_Type']}}</td>
+  </tr>
+
+  <tr *ngIf="row['LI_Proposer_Type'] == 'Individual'">
+		<td><b>CTC : </b>{{row['LI_CTC']}}</td>
+		<td><b>Qualification : </b>{{row['LI_Qualification']}}</td>
+		<td><b>Height (CM) : </b>{{row['LI_Height']}}</td>
+		<td><b>Weight (KG) : </b>{{row['LI_Weight']}}</td>
+		<td><b>Visible Marks : </b>{{row['LI_Visible_Marks']}}</td>
+  </tr>
+
+  <tr *ngIf="row['LI_Proposer_Type'] == 'Individual'">
+		<td><b>Nominee Name : </b>{{row['LI_Nominee_Name']}}</td>
+		<td><b>Nominee DOB : </b>{{row['LI_Nominee_DOB']}}</td>
+		<td><b>Relationship with LA : </b>{{row['LI_Relationship_With_LA']}}</td>
+		<td colspan="2"><b>Appointee Name (In case of Nominee is minor) : </b>{{row['LI_Appointee_Name']}}</td>
+  </tr>
+
+	<tr *ngIf="row['LI_Proposer_Type'] == 'Individual' && row['LI_Appointee_Name'] != ''">
+		<td><b>Appointee DOB : </b>{{row['LI_Appointee_DOB']}}</td>
+		<td><b>Appointee Relationship : </b>{{row['LI_Appointee_Relation']}}</td>
+  </tr>
+
+</tbody>
+
+<thead  *ngIf="row['LI_Proposer_Type'] == 'Individual'">
+  <tr class="TDHeading">
+	<th (click)="ShowDetails(1,showDetails_1)" colspan="5">Family Health Status
+		<i *ngIf="showDetails_1==0" class="fa fa-plus" aria-hidden="true"></i>
+		<i *ngIf="showDetails_1==1" class="fa fa-minus" aria-hidden="true"></i>
+	</th>
+  </tr>
+</thead>
+<tbody *ngIf="showDetails_1==1 && row['LI_Proposer_Type'] == 'Individual'">
+
+  <tr>
+		<td><b>Relation</b></td>
+		<td><b>Age</b></td>
+		<td><b>Health Status</b></td>
+		<td colspan="2"><b>Health Remark</b></td>
+  </tr>
+
+  <tr>
+		<td>Father</td>
+		<td>{{row['LI_Father_Age']}}</td>
+		<td>{{row['LI_Father_Health_Status']}}</td>
+		<td colspan="2">{{row['LI_Father_Health_Remark']}}</td>
+  </tr>
+
+   <tr>
+		<td>Mother</td>
+		<td>{{row['LI_Mother_Age']}}</td>
+		<td>{{row['LI_Mother_Health_Status']}}</td>
+		<td colspan="2">{{row['LI_Mother_Health_Remark']}}</td>
+  </tr>
+
+  <tr>
+		<td>Spouse</td>
+		<td>{{row['LI_Spouse_Age']}}</td>
+		<td>{{row['LI_Spouse_Health_Status']}}</td>
+		<td colspan="2">{{row['LI_Spouse_Health_Remark']}}</td>
+  </tr>
+
+
+  <tr *ngFor="let m of row['LI_Family_Members']; ">
+		<td>{{m.Type}}</td>
+		<td>{{m.Age}}</td>
+		<td>{{m.Status}}</td>
+		<td colspan="2">{{m.Remark}}</td>
+  </tr>
+ </tbody>
+
+ <thead  *ngIf="row['LI_Proposer_Type'] == 'Individual'">
+  <tr class="TDHeading">
+	<th (click)="ShowDetails(2,showDetails_2)" colspan="5">Questioner- RM/POS
+		<i *ngIf="showDetails_2==0" class="fa fa-plus" aria-hidden="true"></i>
+		<i *ngIf="showDetails_2==1" class="fa fa-minus" aria-hidden="true"></i>
+	</th>
+  </tr>
+</thead>
+<tbody *ngIf="showDetails_2==1 && row['LI_Proposer_Type'] == 'Individual'">
+  <tr>
+		<td colspan="2"><b>Question</b></td>
+		<td colspan="3"><b>Answer</b></td>
+  </tr>
+
+   <tr>
+		<td colspan="2">How long you know the Proposer/LA?</td>
+		<td colspan="3">{{row['LI_Answer_1']}}</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">How have you been introduced to Proposer ?</td>
+		<td colspan="3">{{row['LI_Answer_2']}}</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">When you last met Proposer/LA?</td>
+		<td colspan="3">{{row['LI_Answer_3']}}</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">Have you met personally met Proposer?</td>
+		<td colspan="3">{{row['LI_Answer_4']}}</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">Are you related to Proposer/ LA?</td>
+		<td colspan="3">{{row['LI_Answer_5']}}</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">Are you satisfied with the health status of Proposer/ LA?</td>
+		<td colspan="3">{{row['LI_Answer_6']}}</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">Are you satisfied with the financial condition and income?</td>
+		<td colspan="3">{{row['LI_Answer_7']}}</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">Have you explained the Product features, benefits, the premium paying term?</td>
+		<td colspan="3">{{row['LI_Answer_8']}}</td>
+	</tr>
+
+ </tbody>
+
+<thead>
+  <tr class="TDHeading">
+	<th (click)="ShowDetails(3,showDetails_3)" colspan="5">Insurer/Policy Details
+		<i *ngIf="showDetails_3==0" class="fa fa-plus" aria-hidden="true"></i>
+		<i *ngIf="showDetails_3==1" class="fa fa-minus" aria-hidden="true"></i>
+	</th>
+  </tr>
+</thead>
+
+<tbody *ngIf="showDetails_3==1">
+  <tr>
+		<td><b>Insurance Company : </b>{{row['Insurance_Company_Name']}}</td>
+		<td><b>Insurance Company Branch : </b>{{row['Insurance_Branch_Company_Name']}}</td>
+		<td><b>Company Branch Address : </b>{{row['Insurance_Company_Branch_Address']}}</td>
+		<td><b>Product Type : </b>{{row['LI_Product_Type']}}</td>
+		<td><b>Product Name : </b>{{row['LI_Product_Id']}}</td>
+  </tr>
+
+  <tr>
+		<td><b>Policy Status : </b>{{row['Policy_Status']}}</td>
+		<td><b>Policy No. : </b>{{row['Policy_No']}}</td>
+		<td><b>Login Date : </b>{{row['LI_Login_Date']}}</td>
+		<td><b>Booking Date : </b>{{row['Booking_Date']}}</td>
+		<td><b>Policy Iss./Risk Start Date : </b>{{row['LI_Policy_Issuance_Date']}}</td>
+  </tr>
+
+	<tr>
+		<td><b>Renewal Date : </b>{{row['LI_Renewal_Date']}}</td>
+  </tr>
+
+ </tbody>
+
+ <thead>
+	<tr class="TDHeading">
+	<th (click)="ShowDetails(4,showDetails_4)" colspan="5">Previous Year Policy Details
+		<i *ngIf="showDetails_4==0" class="fa fa-plus" aria-hidden="true"></i>
+		<i *ngIf="showDetails_4==1" class="fa fa-minus" aria-hidden="true"></i>
+	</th>
+	</tr>
+	</thead>
+
+	 <tbody *ngIf="showDetails_4==1">
+		<tr>
+		<td  colspan="5"><b>Existing Sum Assured : </b>{{row['LI_Existing_Sum_Assured']}}</td>
+		</tr>
+
+		<tr *ngFor="let r of row['PreviousPolicyData'];">
+			<td colspan="2"><b>Company Name : </b>{{r.CompanyName}}</td>
+			<td><b>Net Premium : </b>{{r.Net_Premium}}</td>
+			<td colspan="2"><b>Sum Assured Premium : </b>{{r.Sum_Assured_Premium}}</td>
+		</tr>
+	 </tbody>
+
+	<thead>
+		<tr class="TDHeading">
+		<th (click)="ShowDetails(5,showDetails_5)" colspan="5">Premium/Payout Details
+			<i *ngIf="showDetails_5==0" class="fa fa-plus" aria-hidden="true"></i>
+			<i *ngIf="showDetails_5==1" class="fa fa-minus" aria-hidden="true"></i>
+		</th>
+		</tr>
+	</thead>
+
+	<tbody *ngIf="showDetails_5==1 && row['LI_Proposer_Type'] == 'Individual'">
+		<tr>
+		<td><b>Policy Term : </b>{{row['LI_Policy_Term']}}</td>
+		<td><b>Payment Type : </b>{{row['LI_Payment_Type']}}</td>
+		<td><b>Payment Term : </b>{{row['LI_Payment_Term']}}</td>
+		<td colspan="2"><b>Payment Frequency : </b>{{row['LI_Payment_Frequency']}}</td>
+		</tr>
+
+		<tr>
+			<td><b>Payment Mode : </b>{{row['LI_Payment_Mode']}}</td>
+			<td *ngIf="(row['LI_Product_Id'] == 'Param Rakshak Solution' || row['LI_Product_Id'] == 'Param Rakshak Plus Solution')"><b>Rider Net Premium : </b>{{row['LI_Rider_Premium']}}</td>
+			<td *ngIf="(row['LI_Product_Id'] == 'Param Rakshak Solution' || row['LI_Product_Id'] == 'Param Rakshak Plus Solution')"><b>Rider Gross Premium : </b>{{row['LI_Rider_Gross_Premium']}}</td>
+			<td *ngIf="(row['LI_Product_Id'] == 'Param Rakshak Solution' || row['LI_Product_Id'] == 'Param Rakshak Plus Solution')"><b>Base/ULIP Premium : </b>{{row['LI_Base_Premium']}}</td>
+
+			<td *ngIf="(row['LI_Product_Id'] != 'Param Rakshak Solution' && row['LI_Product_Id'] != 'Param Rakshak Plus Solution')"><b>Net Premium : </b>{{row['LI_Net_Premium']}}</td>
+			<td *ngIf="(row['LI_Product_Id'] != 'Param Rakshak Solution' && row['LI_Product_Id'] != 'Param Rakshak Plus Solution')"><b>Gross Premium : </b>{{row['LI_Gross_Premium']}}</td>
+			<td><b>Sum Assured : </b>{{row['LI_Proposed_Sum_Assured']}}</td>
+		</tr>
+	</tbody>
+
+	<tbody *ngIf="showDetails_5==1 && row['LI_Proposer_Type'] == 'Group'">
+		<tr>
+			<td><b>Payment Frequency : </b>{{row['LI_Payment_Frequency']}}</td>
+			<td><b>Payment Mode : </b>{{row['LI_Payment_Mode']}}</td>
+			<td><b>Net Premium : </b>{{row['LI_Net_Premium']}}</td>
+			<td><b>Gross Premium : </b>{{row['LI_Gross_Premium']}}</td>
+			<td><b>Sum Assured : </b>{{row['LI_Proposed_Sum_Assured']}}</td>
+		</tr>
+	</tbody>
+
+ <thead>
+  <tr class="TDHeading">
+	<th (click)="ShowDetails(6,showDetails_6)" colspan="5">Document Details
+		<i *ngIf="showDetails_6==0" class="fa fa-plus" aria-hidden="true"></i>
+		<i *ngIf="showDetails_6==1" class="fa fa-minus" aria-hidden="true"></i>
+	</th>
+  </tr>
+</thead>
+<tbody *ngIf="showDetails_6==1">
+
+  <tr>
+	<td><b>Document Name</b></td>
+	<td><b>Document View</b></td>
+	<td><b>Upload By</b></td>
+	<td colspan="2"><b>Upload Date</b></td>
+
+  </tr>
+  <tr *ngFor="let r of row['Sr_Docs'];">
+		<td>{{r.Document_Type}}</td>
+		<td><a *ngIf="r.Document_File_Name!=''" (click)="ViewDocument(r.Document_File_Name)" href="javascript:;">Click to View</a> </td>
+		<td><span *ngIf="r.Document_File_Name!=''">{{r.Upload_By}}</span></td>
+		<td colspan="2"><span *ngIf="r.Document_File_Name!=''">{{r.Upload_Date_Format}}</span></td>
+  </tr>
+ </tbody>
+
+</table>
+<!--===== LIFE SR DETAILS TABLE END=====-->
+
+<!--===== WHEN LOB IS LIFE START=====-->
+<div *ngIf="row['LOB_Id'] == 'LI'">
+	<div *ngIf = "Show_Action == 'Yes' && row['SR_Status'] != 8 && row['SR_Status'] != 9 && row['SR_Status'] != 10 && row['SR_Status'] != 11 && User_Rights.Is_Operation==1 && User_Rights.Underwriter_Life==1" style="text-align: right;">
+
+		<a (click)="EditModel()" ><span style="margin-right: 5px;" class="btn btn-primary">Edit</span></a>
+
+	</div>
+</div>
+<!--===== WHEN LOB IS LIFE START=====-->
+
+<!--===== WHEN LOB IS MOTOR, NON MOTOR, HEALTH START=====-->
+<div *ngIf="row['LOB_Id'] == 'Motor' || row['LOB_Id'] == 'Non Motor' || row['LOB_Id'] == 'Health'">
+	<div *ngIf = "Show_Action == 'Yes' && User_Rights.Is_Operation==1 &&  (User_Rights.Underwriter_Motor==1 || User_Rights.Underwriter_Non_Motor==1 || User_Rights.Underwriter_Health==1)" style="text-align: right;">
+
+		<a (click)="EditModel()" ><span style="margin-right: 5px;" class="btn btn-primary">Edit</span></a>
+
+		<span *ngIf="(row['LOB_Id'] == 'Non Motor' || row['LOB_Id'] == 'Health') && ((row['Policy_Status'] == 'Not-Issued' || row['Policy_Status'] == 'NOT ISSUED') && row['Mode_Of_Payment'] == 'Cash' && row['Payment_Towards'] == 'Accounts' && row['Is_Approve_Accounts'] == 3)">
+		 <a href="javascript:;" (click)="UpdateSrStatus('Operation', 'Approve', row['Id'])"><span class="btn btn-success" style="margin-right: 5px;">Transfer To Accounts</span></a>
+	  </span>
+
+		<span *ngIf="(row['LOB_Id'] == 'Non Motor' || row['LOB_Id'] == 'Health') && (row['Policy_Status'] == 'Not-Issued' && row['Mode_Of_Payment'] == 'Cash' && row['Payment_Towards'] == 'Accounts' && row['Is_Approve_Accounts'] == '1')">
+			<a href="javascript:;" (click)="UpdateSrStatus('Operation', 'Approve', row['Id'])"><span class="btn btn-success" style="margin-right: 5px;">Approve</span></a>
+		</span>
+
+		<span *ngIf="(row['LOB_Id'] == 'Non Motor' || row['LOB_Id'] == 'Health') && (row['Policy_Status'] != 'Not-Issued' && row['Mode_Of_Payment'] != 'Cash' && row['Payment_Towards'] != 'Accounts' && row['Is_Approve_Accounts'] != 3)">
+			<a href="javascript:;" (click)="UpdateSrStatus('Operation', 'Approve', row['Id'])"><span class="btn btn-success" style="margin-right: 5px;">Approve</span></a>
+		</span>
+
+		<span *ngIf="(row['LOB_Id'] == 'Motor')">
+			<a href="javascript:;" (click)="UpdateSrStatus('Operation', 'Approve', row['Id'])"><span class="btn btn-success" style="margin-right: 5px;">Approve</span></a>
+		</span>
+
+		<a href="javascript:;" (click)="UpdateSrStatus('Operation', 'Reject', row['Id'])"><span class="btn btn-danger" style="margin-right: 5px;">Reject</span></a>
+
+	</div>
+
+	<div *ngIf = "Show_Action == 'Yes' && User_Rights.Is_Accounts==1" style="text-align: right;">
+
+		<a (click)="EditModel()" ><span style="margin-right: 5px;" class="btn btn-primary">Edit</span></a>
+		<a href="javascript:;" (click)="UpdateSrStatus('Accounts', 'Approve', row['Id'])"><span class="btn btn-success" style="margin-right: 5px;">Approve</span></a>
+		<a href="javascript:;" (click)="UpdateSrStatus('Accounts', 'Reject', row['Id'])"><span class="btn btn-danger" style="margin-right: 5px;">Reject</span></a>
+
+	</div>
+</div>
+<!--===== WHEN LOB IS MOTOR, NON MOTOR, HEALTH START=====-->

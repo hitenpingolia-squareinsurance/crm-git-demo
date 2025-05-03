@@ -1,0 +1,484 @@
+<div class="inner_page_css main_dashboard_css">
+    <!-- Content Header (Page header) -->
+
+    <section class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">Assets Management</div>
+                    </div>
+                    
+                    <div class="box-body">
+                        <div>
+                            <div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+                              <button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                                href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <a role="button" class="fa fa-filter"><span>Filters</span><i
+                                    class="fa fa-angle-down pull-right"></i></a>
+                              </button>
+                            </div>
+                          </div>
+
+
+                          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                              <!-- filter  -->
+                              <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+                            </div>
+                          </div>
+
+                        
+                        <div class="mydiv">
+
+
+                            <div class="custom_table tables_layout_design">
+                                <table datatable [dtOptions]="dtOptions" id="Table1" class="row-border table">
+                                  <thead>
+                                    <tr>
+                                      <th></th>
+                                    </tr>
+                                  </thead>
+                                </table>
+                                <ul class="responsive-table" *ngIf="dataAr?.length != 0" >
+                                  <li class="table-row tablerow" *ngFor="let row of dataAr" >
+                                    <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                                      <div class="agents_data agents_data1">
+                                        <div class="icon_re_cl">{{row.SrNo}}.</div>
+                                        <div class="agent_name_mobile">
+                                          <div class="agent_data">
+                                            <div>Name</div>
+                                            <strong class="fs_18"><span>{{row.Name}}</span></strong>
+                                            
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="agents_data agents_data3">
+                                        <div class="agent_name_mobile">
+                                          <div class="agent_data">
+                                            <div>Created Date - <strong class="fs_18"><span>{{row.Create_date}}</span></strong></div>
+                                            
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <hr>
+                                    <div class="last_row_div">
+                                      <div class="d_flex custon-234">
+                                        <div class="label_chips non_motor_lob">
+                                          <span>Assest Id - {{row.AssestId}}</span>&nbsp;&nbsp;
+                                        </div>
+                                        <div class="label_chips motor_lob">
+                                          <span>Requirement - {{row.Category}}</span>
+                                        </div>
+                                        
+                                      </div>
+                                    </div>
+                                    <div class="last_row">
+                                      <div class="effective_date">
+                                        <div class="d_flex">
+                                         
+                                        </div>
+                                      </div>
+                                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                        
+                                      </div>
+                                      <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                        <button class="btn btn-info" style="padding: 3px 10px;"  data-toggle="modal" data-target="#requestModal" (click)="ForApproval(row.id,row.status_check,row.CategoryId)">Details</button>
+                                    &nbsp;
+
+                                    <button *ngIf="row.status_check == '6'" class="btn btn-danger" data-toggle="modal"
+                                        data-target="#ActionUpdaterequest"
+                                        (click)="HandOverRequest(row.id,row.Item,1)" style="padding: 3px 10px;">Handover</button>
+                                    &nbsp;&nbsp;
+
+
+                                    <button *ngIf="row.status_check == '6'" class="btn btn-danger"
+                                         data-toggle="modal"
+                                        data-target="#ActionUpdaterequest"
+                                        (click)="HandOverRequest(row.id,row.Item,2)" style="padding: 3px 10px;">Have An Issue</button>
+                                    &nbsp;
+
+                                    <button class="btn btn-warning"  type="button"
+                                        *ngIf=" (row.status_check == '3' && currentUrl == '/assest-manegment/assest-maneger' && row.ManegerId == '')"
+                                        (click)="AcceptAssignQuote(row.AssestId)"
+                                        class="label label-warning" style="padding: 7px 10px; border: rgb(234, 207, 72);">Accept</button>&nbsp;&nbsp;
+
+                                    <button class="btn btn-info" type="button"
+                                        *ngIf=" (row.status_check == '4' && currentUrl == '/assest-manegment/assest-distributor' && row.DistributorId == '')"
+                                        (click)="AcceptAssignQuote(row.AssestId)" style="padding: 3px 10px;">Accept</button>&nbsp;&nbsp;
+
+                                      <!-- <button class="btn btn-info" type="button"
+                                      *ngIf=" (row.status_check == '2' && currentUrl == '/assest-manegment/assest-hod' && row.hod_id == '')"
+                                      (click)="AcceptAssignQuote(row.AssestId)" style="padding: 3px 10px;">Accept</button> -->
+
+                                    <label *ngIf="row.status_check == '0'"
+                                        class="btn btn-danger label-inline mr-2" style="padding: 3px 10px;">Rejected
+                                    </label>
+                                    <label *ngIf="row.status_check == '1'"
+                                        class="btn btn-warning label-inline mr-2" style="padding: 3px 10px;">Pending For
+                                        RM</label>
+
+                                    <!-- <label *ngIf="row.status_check == '2'"
+                                        class="btn btn-warning label-inline mr-2" style="padding: 3px 10px;">Pending For
+                                        HOD</label> -->
+                                    <label *ngIf="row.status_check == '3'"
+                                        class="btn btn-warning label-inline mr-2" style="padding: 3px 10px;">Pending For
+                                        Manager</label>
+                                    <label *ngIf="row.status_check == '4'"
+                                        class="btn btn-success label-inline mr-2" style="padding: 3px 10px;">Pending For
+                                        Distributor</label>
+                                    <label *ngIf="row.status_check == '5'"
+                                        class="btn btn-success label-inline mr-2" style="padding: 3px 10px;">Pending For
+                                        Requester</label>
+                                    <button *ngIf="row.status_check == '6'"
+                                        class="btn btn-success label-inline mr-2"  data-toggle="modal" data-target="#exampleModal"
+                                        (click)="GetItemDetails(row.Item)" style="padding: 3px 10px;">Item Detail</button>
+
+                                    <label *ngIf="row.status_check == '7'"
+                                        class="btn btn-danger label-inline mr-2" style="padding: 3px 10px;">Item Handover</label>
+
+                                      </div>
+                                    </div>
+                                  </li>
+                                </ul>
+                                <div class="row" *ngIf="dataAr?.length == 0">
+                                  <div class="col-md-12">
+                                    <div class="no_data_found">
+                                      <span><img src="assets/image/no_data_banner.jpg"></span>
+                                      <small>No data available !</small>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div> 
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+
+
+<!-- ------------Modal----------------- -->
+
+<div class="modal fade" id="ActionUpdaterequest" tabindex="-1" role="dialog" aria-labelledby="ActionModelLabel"
+    aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ActionModelLabel">
+
+
+                    <b *ngIf="ActionType =='1' ">Handover Request</b>
+                    <b *ngIf="ActionType =='2' ">Have an Issue</b>
+
+                </h5>
+                <button type="button" id="close_pop" class="close closeModelButton" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form class="form" (ngSubmit)="UpdateAssestRequest()" [formGroup]="UpdateAssestActionForm">
+                    <div class="row">
+
+                        <div class="col-md-6" *ngIf=" ActionType == '2' ">
+                            <label for="Remark">Issue Type </label>
+                            <select id="IssueType" class="form-control" name="IssueType" formControlName="IssueType"
+                                required>
+                                <option value="Not Working">Not Working</option>
+                            </select>
+                            <span *ngIf="isSubmitted && FC.IssueType.errors" class="ValidationError">
+                                <span *ngIf="FC.IssueType.errors.required">Issue Type required!</span>
+                            </span>
+                        </div>
+
+
+                        <div class="col-md-6" *ngIf=" ActionType == '2' ">
+                            <label for="Remark">Affeted Work</label>
+                            <select id="noc_status" class="form-control" name="AffetedWork"
+                                formControlName="AffetedWork" required>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                            <span *ngIf="isSubmitted && FC.AffetedWork.errors" class="ValidationError">
+                                <span *ngIf="FC.AffetedWork.errors.required">Affeted Work required!</span>
+                            </span>
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <label for="Remark">Remark</label>
+                            <input class="form-control" type="text" formControlName="Remark" name="Remark" id="Remark"
+                                placeholder="Enter Remark">
+                            <span *ngIf="isSubmitted && FC.Remark.errors" class="ValidationError">
+                                <span *ngIf="FC.Remark.errors.required">Remark required!</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- -----------------------------GET ITEM DETAILS------------------------------- -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="width:900px;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Item Details</h5>
+          <button (click)="CloseModel()" id="close_item_model" class="close" data-dismiss="modal" aria-label="Close" type="button" class="close closeModelButton">&times;</button>
+        </div>
+        <div class="modal-body" *ngIf="itemModalShow">
+            <table class="itemtable">
+
+                <tr>
+                  <td colspan="1" align="center">
+                    <b>NO : {{UniqueId}}</b>
+                  </td>
+                  <td colspan="1" align="center">
+                    <label *ngIf="ItemStatus == '1'" class="label label-info">IN
+                      Queue</label>
+                    <label *ngIf="ItemStatus == '2'" class="label label-pending">Item
+                      Occupied</label>
+                    <label *ngIf="ItemStatus == '3'" class="label label-success">Item
+                      Distribute</label>
+                    <label *ngIf="ItemStatus == '4'" class="label label-danger">Item
+                      Damaged</label>
+                  </td>
+                  
+                  <td *ngIf="ItemStatus == '3'" colspan="2">
+                    <b>Current User Name : {{ ResponseData['Name']}} - {{ResponseData['EmployeeId']}}</b>
+                  </td>
+               
+                </tr>
+              
+                <tbody>
+                  <tr class="ValueTD">
+                    <td colspan="6">Details</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><b>Item Id</b>: {{UniqueId}}</td>
+                    <td colspan="2"><b>Item Name</b>: {{ItemName}}</td>
+                    <td colspan="2"><b>Item Model Name</b>: {{ModelName}}</td>
+                  </tr>
+                </tbody>
+                <tbody>
+              
+                  <tr class="ValueTD" colspan="3">
+                    <td colspan="6">Item Specifications</td>
+                  </tr>
+              
+                  <tr *ngFor="let row of ItemSpecifications">
+                    <td colspan="6"><b>{{row.Name}}</b>: {{row.FieldVal}}</td>
+                  </tr>
+              
+                  <tr class="ValueTD" colspan="3">
+                    <td colspan="6">Item Creatation Logs</td>
+                  </tr>
+              
+                  <tr *ngFor="let row of ResponseData['ItemCreatationLogs']">
+                    <!-- <td colspan="2"><b>Log Id</b>: {{row.UniqueId}}</td> -->
+                    <td colspan="2"><b>Log Type</b>: {{row.LogType}}</td>
+                    <td colspan="2"><b>Action User Id</b>: {{row.ActionUserId}} - {{row.ActionCode}}</td>
+                    <td colspan="2"><b>Log Date</b>: {{row.AddStamp}}</td>
+                  </tr>
+              
+                </tbody>  
+              </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+<!-- -----------------------------REQUEST DETAILS AND ACTION------------------------------- -->
+
+
+<div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="width:900px;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Details</h5>
+          <button (click)="CloseModelRequest()" id="close_request_model" class="close" data-dismiss="modal" aria-label="Close" type="button" class="close closeModelButton">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div *ngIf="(StatusRequest == '1' &&  Rm_Id == loginPerson ) || 
+            (StatusRequest == '3' &&  Maneger_Id == loginPerson ) ||
+            (StatusRequest == '4' &&  Distributor_id == loginPerson ) || (StatusRequest == '5' &&  Loginid == loginPerson )   ">
+            
+            
+              <form class="form" (ngSubmit)="submit()" [formGroup]="remarkform">
+                <table class="table table-bordered table-hover" formArrayName="quantities">
+                  <tr class="ValueTD">
+            
+                  </tr>
+            
+                  <tbody class="container-fluid" id="divshow">
+                    <tr>
+                      <td><b>Products</b></td>
+                      <td><b>Remark</b></td>
+                      <td><b>Yes</b></td>
+                      <td><b>No</b></td>
+                      <td><b>Remark</b></td>
+                      <td><b>Status</b></td>
+            
+                      <td *ngIf="this.urlSegment == 'assest-distributor'"><b>Product</b></td>
+            
+                    </tr>
+            
+            
+                    <tr *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+            
+                      <td> {{dataArr[i]['CategoryName']}}</td>
+                      <td>{{dataArr[i]['Remark']}} </td>
+            
+                      <td> <input style="margin-left: 20px;" formControlName="checkvalue" type="radio" value="1" required>
+                      </td>
+            
+                      <td>
+                        <input style="margin-left: 20px;" formControlName="checkvalue" type="radio" value="2" required>
+                      </td>
+            
+                      <input type="hidden" style="margin-left: 20px;" formControlName="assestid" required>
+            
+                      <td>
+                        <textarea class="form-control" formControlName="remarks" style="height: 35px;" required></textarea>
+                      </td>
+            
+                      <td>
+                        <span class="label label-warning btn btn-warning">pending</span>
+                      </td>
+            
+                      <td *ngIf="this.urlSegment == 'assest-distributor' " style="width: 30%;">
+                        <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="ProductId"
+                          formControlName="Products" [settings]="dropdownSettingsType" style="width: 100%;">
+                        </ng-multiselect-dropdown>
+            
+                      </td>
+                      <!-- <input  style="margin-left: 20px;" formControlName="itemvalue" value="1"> -->
+            
+                    </tr>
+            
+                  </tbody>
+            
+                </table>
+            
+            
+                <!-- <div *ngIf="this.isSubmitted && formControls.checkvalue.errors" class="ValidationError">
+                  <div *ngIf="formControls.checkvalue.errors.required">Please Choose checkbox!</div>
+                </div> -->
+            
+            
+                <div class="row">
+                  <div class="col-md-10">&nbsp;</div>
+                  <div class="col-md-2 actionButtons pull-right" style="margin-top: 10px; margin-bottom: 5px;">
+                    <button class="btn btn-primary save-click" type="submit">Submit</button>
+                  </div>
+                </div>
+            
+              </form>
+            </div>
+            
+            
+            <div class="custom_table tables_layout_design">
+              <table id="Table1" class="row-border table">
+                <thead>
+                  <tr>
+                    <th></th>
+                  </tr>
+                </thead>
+              </table>
+              <ul class="responsive-table">
+                <li class="table-row tablerow" *ngFor="let row of Dataresult; let i=index;">
+                  <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                    <div class="agents_data agents_data1">
+                      <div class="icon_re_cl">{{row.srno}}</div>
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Name</div>
+                          <strong class="fs_18"><span>{{row.Name}}</span></strong>
+            
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data3">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Created Date - <strong class="fs_18"><span>{{row.Create_date}}</span></strong></div>
+            
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="last_row_div">
+                    <div class="d_flex custon-234">
+                      <div class="label_chips non_motor_lob">
+                        <span>Type - {{row.Type}}</span>&nbsp;&nbsp;
+                      </div>
+                      <div class="label_chips motor_lob">
+                        <span>Category - {{row.Category}}</span>
+                      </div>
+                      <div class="label_chips finance_lob">
+                        <span>Remarks - {{row.Remark}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="last_row">
+                    <div class="effective_date">
+                      <div class="d_flex">
+            
+                      </div>
+                    </div>
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+            
+                    </div>
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom" style="font-size: 16px;">
+                      <button *ngIf="row.Item_status == '1'" style="padding: 3px 10px;"
+                        class="btn btn-info label-inline mr-2">Approve</button>
+                      <button *ngIf="row.Item_status == '2'" style="padding: 3px 10px;"
+                        class="btn btn-danger label-inline mr-2">Rejected</button>
+                      <button *ngIf="row.Item_status == '0'" style="padding: 3px 10px;"
+                        class="btn btn-warning label-inline mr-2">Pending</button>
+                      <button *ngIf="row.Item_status == '3'" style="padding: 3px 10px;"
+                        class="btn btn-success label-inline mr-2">Complete</button>
+            
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="row" *ngIf="Dataresult?.length == 0">
+                <div class="col-md-12">
+                  <div class="no_data_found">
+                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                    <small>No data available !</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </div>

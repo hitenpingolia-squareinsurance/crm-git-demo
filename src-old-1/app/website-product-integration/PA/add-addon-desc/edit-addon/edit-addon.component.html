@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="modal-header" style="text-align: center;">
+        <h4 class="modal-title">Edit Addon Description</h4>
+    </div>
+</div>
+
+<div class="popup-content-body">
+    <div class="row popup-form">
+        <form [formGroup]="AddDescriptionFrom" (ngSubmit)="submit()">
+            
+
+            
+        
+            <div class="col-md-6">
+                <label for="Videourl">Description</label>
+                <textarea id="description" class="form-control" placeholder="Enter description "
+                    formControlName="description" > </textarea>
+                <!-- <div *ngIf="isSubmitted && formControls.description.errors" class="ValidationError">
+                    <div *ngIf="formControls.description.errors.required">
+                        Please enter a description
+                    </div>
+
+                </div> -->
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-sm-8">&nbsp;</div>
+                <div class="col-sm-4">
+                    <div class="button-di1v-yes-no">
+                        <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

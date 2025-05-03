@@ -1,0 +1,70 @@
+<section class="custom-scrool">
+    <div class="">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <h4 class="header_title">Categories</h4>
+                <button type="button" (click)="CloseModel()" class="close closeModelButton"><i
+                        class="fa fa-close"></i></button>
+                <div class="call-precess" id="callProcess" style="display:none;">
+                    <div class="call-align">
+                        <img src="assets/image/calling.gif" alt="">
+                    </div>
+                    <div class="heading-call">Call in Progress....</div>
+                </div>
+            </div>
+            <div class="main_body main_card_height_scroll_withoutfooter">
+                <div class="modal_body py_15">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form [formGroup]="AddFieldForm" (ngSubmit)="SubBtn()" id="click">
+
+                                <div class="col-md-4">
+                                    <div class="category_list">
+                                        <label>LOB</label>
+                                        <ng-multiselect-dropdown class="form-control" placeholder="LOB" [data]="LOBdata"
+                                            formControlName="LOB" [settings]="dropdownSettingsmultiselect">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="AddFieldForm.get('LOB').hasError('required') && (AddFieldForm.get('LOB').touched || AddFieldForm.dirty)"
+                                            class="text-danger">
+                                            LOB is required.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="state">Categories</label>
+                                    <input type="text" class="form-control" formControlName="Type"
+                                        placeholder="Categories" cols="10" rows="1">
+                                        <div *ngIf="AddFieldForm.get('Type').hasError('required') && (AddFieldForm.get('Type').touched || AddFieldForm.dirty)"
+                                        class="text-danger">
+                                        Categories is required.
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="category_list">
+                                        <label>Type Input</label>
+                                        <ng-multiselect-dropdown class="form-control" placeholder="Select Input"
+                                            [data]="Input" formControlName="Input"
+                                            [settings]="dropdownSettingsmultiselect">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="AddFieldForm.get('Input').hasError('required') && (AddFieldForm.get('Input').touched ||AddFieldForm.dirty)"
+                                            class="text-danger"> Input is required.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="logs-btn-align">
+                                        <button type="submit" class="btn btn_primary btn-success">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,70 @@
+.cs_pane_input {
+    display: flex;
+}
+
+.cs_pane_input input {
+    border-radius: 5px 0px 0px 5px !important;
+    border-right: 0px;
+}
+
+.check_btns_pan {
+  display: flex;
+}
+.check_btns_pan label {
+  margin-bottom: 0px;
+  height: 34px;
+}
+
+.cs_pane_input .check_btns_pan .btn {
+    border-radius: 0px 5px 5px 0px !important;
+    height: 34px;
+    margin-bottom: 0px;
+}
+.re-feedback {
+    width: auto;
+  }
+  .re-feedback .btn {
+    padding: 6px 8px;
+    height: 34px;
+    border-radius: 0px 5px 5px 0px !important;
+  }
+  .has-feedback.align .has-feedback input.form-control {
+    border-radius: 5px 0px 0px 5px;
+    border-right: none !important;
+  }
+  .has-feedback.align .has-feedback  {
+    display: flex;
+}
+.has-feedback.align .has-feedback button.btn.btn-flat {
+    width: 100px;
+    margin: 0px;
+    border-radius: 0px 5px 5px 0px;
+    height: 34px;
+}
+
+
+
+
+.file-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.file-input-wrapper input[type="file"] {
+  flex: 1;
+  padding: 5px;
+}
+.hidden-input {
+  display: none;
+}
+.box-body {
+  padding: 0;
+  border: none;
+}
+.box {
+  margin-top: 0px;
+}
+.box.doc-required {
+  margin-top: 30px;
+  margin-bottom: 0px;
+}

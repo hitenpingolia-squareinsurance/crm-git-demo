@@ -1,0 +1,226 @@
+<table style="font-size: 11px;">
+    <tr>
+      <td colspan="2" align="center"> <b>Quotation Id : {{row.Quotation}}</b>
+      </td>
+      <td *ngIf="row.RejectedStatus != 1" colspan="2" align="center">
+        <b>Status: <label class="label label-warning" *ngIf="row.QuoteStatus == 1">
+            Quote Requested
+          </label>
+          <label class="label label-warning" *ngIf="row.QuoteStatus == 2">
+            Quote Released
+          </label>
+          <label class="label label-warning" *ngIf="row.QuoteStatus == 3">
+            Quote Accepted
+          </label>
+          <label class="label label-warning" *ngIf="row.QuoteStatus == 4">
+  
+  
+            <span  *ngIf="row.PaymentMode == 'Cash'">Payment For Cash</span>
+            <span  *ngIf="row.PaymentMode == 'Online'">Payment Url Shared</span>
+            <span  *ngIf="row.PaymentMode == 'Cheque'">Payment For Cheque</span>
+            
+            
+             
+          </label>
+          <label class="label label-warning" *ngIf="row.QuoteStatus == 5">
+            Pending For Approval
+          </label>
+          <label class="label label-warning" *ngIf="row.QuoteStatus == 6">
+            Complete
+          </label>
+          <label class="label label-warning" *ngIf="row.QuoteStatus == 8">
+            Pending for Accounts
+          </label>
+        </b>
+      </td>
+  
+      <td *ngIf="row.RejectedStatus == 1" colspan="2" align="center"> <b>Status: <label
+            class="label label-danger">Rejected</label> </b>
+      </td>
+  
+      <td colspan="2" align="center"> <b>Company: <label>{{row.CompanyName}}</label> </b>
+      </td>
+  
+  
+      <td colspan="2" align="center"> <button (click)="CloseModel()" type="button"
+          class="close closeModelButton">&times;</button></td>
+    </tr>
+    <tbody *ngIf="row.CreateUser_Id != ''">
+      <tr class="ValueTD">
+        <td colspan="6">Creater Details</td>
+      </tr>
+      <tr>
+        <td colspan="2"><b>Name - (Code)</b>: {{row.CreaterName}} - ({{row.CreaterCode}})</td>
+        <td colspan="2"><b>Mobile</b>: {{row.CreaterMobile}}</td>
+        <td colspan="2"><b>Mail</b>: {{row.CreaterEmail}}</td>
+  
+      </tr>
+    </tbody>
+  
+    <tbody>
+      <tr class="ValueTD" *ngIf="row.AssignerCode != ''">
+        <td colspan="6">Assignee Details</td>
+      </tr>
+      <tr>
+        <td colspan="2"><b>Name - (Code)</b>: {{row.AssignerName}} - ({{row.AssignerCode}})</td>
+        <td colspan="2"><b>Mobile</b>: {{row.AssignerMobile}}</td>
+        <td colspan="2"><b>Mail</b>: {{row.AssignerEmail}}</td>
+      </tr>
+    </tbody>
+  
+    <tbody>
+      <tr class="ValueTD">
+        <td colspan="6">Customer Details</td>
+      </tr>
+      <tr>
+        <td colspan="2"><b>Name</b>: {{row.Name}}</td>
+        <td colspan="2"><b>Mobile</b>: {{row.Mobile}}</td>
+        <td colspan="2"><b>Mail</b>: {{row.Email}}</td>
+  
+      </tr>
+    </tbody>
+  
+    <tbody>
+      <tr class="ValueTD">
+        <td colspan="6">Family Details</td>
+      </tr>
+      <tr *ngIf="row.AgeData.self != ''">
+        <td colspan="2"><b>Self Age</b>: {{row.AgeData.self}}</td>
+        <td colspan="2"><b>Self DOB</b>: {{row.AgeData.self_dob}}</td>
+        <td colspan="2"><b>Gender</b>: {{row.Gender}}</td>
+      </tr>
+
+      <tr *ngIf="row.AgeData.spouse != ''">
+        <td colspan="3"><b>Spouse Age</b>: {{row.AgeData.spouse}}</td>
+        <td colspan="3"><b>Spouse DOB</b>: {{row.AgeData.spouse_dob}}</td>
+      </tr>
+
+      <!--  SON AGE DEATILS -->
+      <tr *ngIf="row.AgeData.son!= ''">
+        <td colspan="3">
+          <label *ngIf="row.AgeData != '' && row.AgeData['son']">
+            <ng-container *ngFor="let age of row.AgeData['son']; let i = index">
+              Son Age : {{ age }}
+            </ng-container>
+          </label>
+      </td>
+        <td colspan="3">
+          <label *ngIf="row.AgeData != '' && row.AgeData['son_dob']">
+            <ng-container *ngFor="let age of row.AgeData['son_dob']; let i = index">
+              Son DOB : {{ age }}
+            </ng-container>
+          </label>  
+        </td>
+      </tr>
+      
+      <!-- Daughter Age deatils -->
+      <tr *ngIf="row.AgeData.daughter != ''">
+          <td colspan="3">
+            <label *ngIf="row.AgeData != '' && row.AgeData['daughter']">
+              <ng-container *ngFor="let age of row.AgeData['daughter']; let i = index">
+                Daughter Age : {{ age }}
+              </ng-container>
+            </label>
+        </td>
+          <td colspan="3">
+            <label *ngIf="row.AgeData != '' && row.AgeData['daughter_dob']">
+              <ng-container *ngFor="let age of row.AgeData['daughter_dob']; let i = index">
+                Daughter DOB : {{ age }}
+              </ng-container>
+            </label>  
+          </td>
+      </tr>
+
+      <tr *ngIf="row.AgeData.father != ''">
+        <td colspan="3"><b>Father Age</b>: {{row.AgeData.father}}</td>
+        <td colspan="3"><b>Father DOB</b>: {{row.AgeData.father_dob}}</td>
+      </tr>
+
+      <tr>
+        <td colspan="2"><b>Create Date Date </b>: {{row.CreateDate}}</td>
+        <td colspan="2"><b>Payment Mode </b>: {{row.PaymentMode}}</td>
+      </tr>
+      <tr>
+        <td colspan="2"><b>Medical History </b>: {{row.Medical_history}}</td>
+        <td colspan="2"><b>Pincode </b>: {{row.Pincode}}</td>
+        <td colspan="2"><b>Individual or Float</b>: {{row.Individual_or_float}}</td>
+      </tr>
+      <tr class="ValueTD">
+        <td colspan="6"><b>Remark </b>: {{row.Remark}} </td>
+      </tr>
+      <tr class="ValueTD" *ngIf="row.reject_status == 1">
+        <td colspan="2"><b>Rejected Status </b>: Successfully Done</td>
+        <td colspan="2"><b>Rejected Date </b>: {{row.rejected_date}} </td>
+        <td colspan="2"><b>Rejected Remark </b>: {{row.rejected_remarks}} </td>
+      </tr>
+    </tbody>
+  
+    <tr class="ValueTD">
+      <td colspan="6">Document Details</td>
+    </tr>
+    <tbody>
+      <tr>
+        <th colspan="3">Document Name</th>
+        <th colspan="3">Document View</th>
+      </tr>
+      <tr *ngIf="row.InsurerFile !='0'">
+        <th colspan="3">Insurer File</th>
+        <th colspan="3"> <label *ngIf="(row.InsurerFile =='')" class="form-control"> Not available </label>
+          <label *ngIf="(row.InsurerFile !='0')" (click)="ViewDocument(row.InsurerFile)" class="form-control"> Click to View
+          </label>
+        </th>
+      </tr>
+      <tr *ngIf="row.PaymentProof !='0'">
+        <th colspan="3">Payment Proof</th>
+        <th colspan="3"> <label *ngIf="(row.PaymentProof =='')" class="form-control"> Not available </label>
+          <label *ngIf="(row.PaymentProof !='0')" (click)="ViewDocument(row.PaymentProof)" class="form-control"> Click to View
+          </label>
+        </th>
+      </tr>
+      <tr *ngIf="row.PolicyPdf !='0'">
+        <th colspan="3">Policy Pdf</th>
+        <th colspan="3"> <label *ngIf="(row.PolicyPdf =='')" class="form-control"> Not available </label>
+          <label *ngIf="(row.PolicyPdf !='0')" (click)="ViewDocument(row.PolicyPdf)" class="form-control"> Click
+            to View </label>
+        </th>
+      </tr>
+      <tr *ngIf="row.MedicalDocuments0 !='0'">
+        <th colspan="3">Medical Documents 1</th>
+        <th colspan="3"> <label *ngIf="(row.MedicalDocuments0 =='')" class="form-control"> Not available </label>
+          <label *ngIf="(row.MedicalDocuments0 !='0')" (click)="ViewDocument(row.MedicalDocuments0)" class="form-control"> Click
+            to View </label>
+        </th>
+      </tr>
+      <tr *ngIf="row.MedicalDocuments1 !='0'">
+        <th colspan="3">Medical Documents 2</th>
+        <th colspan="3"> <label *ngIf="(row.MedicalDocuments1 =='')" class="form-control"> Not available </label>
+          <label *ngIf="(row.MedicalDocuments1 !='0')" (click)="ViewDocument(row.MedicalDocuments1)" class="form-control"> Click
+            to View </label>
+        </th>
+      </tr>
+      <tr *ngIf="row.MedicalDocuments2 !='0'">
+        <th colspan="3">Medical Documents 3</th>
+        <th colspan="3"> <label *ngIf="(row.MedicalDocuments2 =='')" class="form-control"> Not available </label>
+          <label *ngIf="(row.MedicalDocuments2 !='0')" (click)="ViewDocument(row.MedicalDocuments2)" class="form-control"> Click
+            to View </label>
+        </th>
+      </tr>
+      <tr *ngFor="let document of row.other_document | keyvalue; let i = index">
+          <th colspan="3">{{ ReplesName(document.key) }} </th>
+          <th colspan="3"> <label *ngIf="document.key ==''" class="form-control"> Not available </label>
+            <label *ngIf="(row.OtherDocument !='0')" (click)="ViewDocument2(document.value)" class="form-control"> Click
+              to
+              View </label>
+          </th>
+        </tr>
+    </tbody>
+  
+  </table>
+  
+  
+  
+  <div class="modal-body card-box" id="show_ac_details" [innerHTML]="dataArr">
+  
+  
+  
+  </div>

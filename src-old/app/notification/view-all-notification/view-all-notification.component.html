@@ -1,0 +1,91 @@
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Notifications
+        <!--<small>example</small>-->
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="javascript:void(0)"><i class="fa fa-bell-o"></i> Notification</a></li>
+        <li class="active">view-all-notifications</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- row -->
+      <div class="row">
+        <div class="col-md-12">
+          <!-- The time line -->
+          <ul class="timeline">
+            <!-- timeline time label -->
+            
+		    <li *ngFor="let row of NotificationsAr; let i=index;" [ngClass]="(row.Date!='Loop'?'time-label':'')">
+                  <span *ngIf="row.Date!='Loop'" class="bg-green">
+                    {{row.Date}}
+                  </span>
+				
+				<i *ngIf="row.Date=='Loop'" class="fa fa-envelope bg-blue"></i>
+				
+			  <div *ngIf="row.Date=='Loop'" class="timeline-item">
+                <span class="time"><i class="fa fa-clock-o"></i> {{row.DateTime}}</span>
+
+                <h3 class="timeline-header"><a [routerLink]="row.Route" href="javascript:void(0)"> {{row.Title}}</a> </h3>
+
+                <div class="timeline-body">
+				{{row.Message}}
+                </div>
+                <div class="timeline-footer">
+                  <a [routerLink]="row.Route" class="btn btn-xs bg-maroon">View more</a>
+                  
+                </div>
+              </div>
+				
+				  
+           </li>
+		   
+		   <li>
+              <i class="fa fa-clock-o bg-gray"></i>
+            </li>
+            <!-- /.timeline-label -->
+            <!-- timeline item -->
+            
+			<!--<li>
+              <i class="fa fa-envelope bg-blue"></i>
+
+              <div class="timeline-item">
+                <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+
+                <h3 class="timeline-header"><a href="javascript:void(0)">Support Team</a> sent you an email</h3>
+
+                <div class="timeline-body">
+				quora plaxo ideeli hulu weebly balihoo...
+                </div>
+                <div class="timeline-footer">
+                  <a class="btn btn-primary btn-xs">View more</a>
+                  
+                </div>
+              </div>
+            </li>-->
+            <!-- END timeline item -->
+            
+			 
+			 
+			 
+          </ul>
+		  
+		  
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+       
+      <!-- /.row -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->

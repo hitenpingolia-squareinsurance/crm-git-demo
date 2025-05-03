@@ -1,0 +1,365 @@
+<section class="inner_page_css main_dashboard_css">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="main_card_form">
+					<div class="main_header">
+						<div class="header_title">
+							<!-- title  -->
+							Payout Posting
+						</div>
+					</div>
+					<div class="main_body main_card_height_scroll_withoutfooter">
+						<div>
+							<div class="d_flex flex_End dsr-fillters" style="float: unset !important;">
+								<button class="btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+									data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+									aria-controls="collapseOne">
+									<a role="button" class="fa fa-filter"><span>Filters</span><i
+											class="fa fa-angle-down pull-right"></i></a>
+								</button>
+							</div>
+						</div>
+
+						<div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+							aria-labelledby="headingOne">
+							<div class="panel-body">
+								<!-- filter  -->
+								<form *ngIf="checkedList?.length==0" [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+									<div class="row">
+										<div class="col-sm-3">
+											<select (change)="GetEmployees($event)" formControlName="Vertical_Id"
+												class="form-control">
+												<option value="0">Select Vertical</option>
+
+												<option *ngFor="let r of Vertical_Ar;" value="{{r.Id}}">{{r.Name}}
+												</option>
+											</select>
+										</div>
+										<div class="col-sm-3">
+											<select (change)="GetSubBranches($event)" formControlName="Region_Id"
+												class="form-control">
+												<option value="0">Select Region</option>
+												<option value="0">None</option>
+												<option *ngFor="let r of Region_Ar;" value="{{r.id}}">{{r.text}}
+												</option>
+											</select>
+										</div>
+										<div class="col-sm-3">
+											<select (change)="GetEmployees($event)" formControlName="Sub_Region_Id"
+												class="form-control">
+												<option value="0">Select Region-Branch</option>
+												<option value="0">None</option>
+												<option *ngFor="let r of Sub_Branch_Ar;" value="{{r.id}}">{{r.text}}
+												</option>
+											</select>
+										</div>
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown class="form-control" name="Emp_Id"
+												[placeholder]="Employee_Placeholder" [data]="Emps_Ar"
+												formControlName="Emp_Id" [settings]="dropdownSettings"
+												(onSelect)="onItemSelect($event,'Employee')"
+												(onDeSelect)="onItemDeSelect($event,'Employee')">
+											</ng-multiselect-dropdown>
+										</div>
+									</div>
+									<div class="row"  >
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown class="form-control" name="Agent_Id"
+												[placeholder]="Agents_Placeholder" [data]="Agents_Ar"
+												formControlName="Agent_Id" [settings]="AgentdropdownSettings">
+											</ng-multiselect-dropdown>
+										</div>
+
+
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown class="form-control" name="SRLOB"
+												placeholder="Select LOB" [data]="SRLOB_Ar" formControlName="SRLOB"
+												[settings]="LOB_dropdownSettings"
+												(onSelect)="onItemSelect($event,'LOB')"
+												(onDeSelect)="onItemDeSelect($event,'LOB')">
+											</ng-multiselect-dropdown>
+										</div>
+
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown class="form-control" name="Product_Id"
+												placeholder="Select Product" [data]="Products_Ar"
+												formControlName="Product_Id" [settings]="dropdownSettings">
+											</ng-multiselect-dropdown>
+										</div>
+
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown class="form-control" name="Company_Id"
+												placeholder="Select Ins Company" [data]="Companies_Ar"
+												formControlName="Company_Id" [settings]="dropdownSettings">
+											</ng-multiselect-dropdown>
+										</div>
+									</div>
+									<!-- <div class="row"  >
+									</div> -->
+									<div class="row"  >
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown class="form-control" name="SR_Source_Type"
+												placeholder="Select Source" [data]="SRSource_Ar"
+												formControlName="SR_Source_Type" [settings]="LOB_dropdownSettings"
+												(onSelect)="onItemSelect($event,'Source')">
+											</ng-multiselect-dropdown>
+
+										</div>
+										<div class="col-sm-3">
+											<select (change)="GetPoType($event)" formControlName="PO_Type"
+												class="form-control">
+												<option Disabled value="">Select</option>
+												<option value="1">Non-Posted</option>
+												<option value="2">Posted</option>
+											</select>
+											<span *ngIf="isSubmitted && FC.PO_Type.errors" class="form-text text-muted">
+												<span *ngIf="FC.PO_Type.errors.required" style="color:red;">Please
+													choose Po-Type options !</span>
+											</span>
+										</div>
+										<div class="col-sm-3">
+											<ng-multiselect-dropdown class="form-control" name="SR_Payout_Status"
+												placeholder="Select Payout Status" [data]="SR_Payout_Status_Ar"
+												formControlName="SR_Payout_Status" [settings]="LOB_dropdownSettings">
+											</ng-multiselect-dropdown>
+											<span *ngIf="isSubmitted && FC.SR_Payout_Status.errors"
+												class="form-text text-muted">
+												<span *ngIf="FC.SR_Payout_Status.errors.required"
+													style="color:red;">Please
+													choose posting options !</span>
+											</span>
+										</div>
+
+										<div class="col-sm-3">
+											<input type="text" placeholder="Select Date OR Date-Range"
+												class="form-control" formControlName="DateOrDateRange" bsDaterangepicker
+												[bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+											<span *ngIf="isSubmitted && FC.DateOrDateRange.errors"
+												class="form-text text-muted">
+												<span *ngIf="FC.DateOrDateRange.errors.required"
+													style="color:red;">Please
+													Select Date OR Date-Range !</span>
+											</span>
+										</div>
+
+										<div class="col-lg-3">
+											<input *ngIf="Is_Export==1" (click)="ExportExcel()" type="button"
+												class="btn btn-success" value="Export">
+											&nbsp;&nbsp;
+											<!-- <input type="submit" class="btn btn-info" value="Search"> -->
+											<button type="submit" class="btn btn-info" style="font-size: small;"
+												value="Search">
+												<i class="fa fa-search">
+													Search</i></button>
+											&nbsp;&nbsp;
+											<input (click)="ClearSearch()" type="button" class="btn btn-danger"
+												value="Reset">
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+
+						<div *ngIf="checkedList?.length>0" class="row"  >
+							<div class="col-sm-4">
+								<select class="form-control" [(ngModel)]="Assign_User">
+									<option value="">--Select Assign-user--</option>
+									<option *ngFor="let r of AccountsUser_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+								</select>
+							</div>
+							<div class="col-sm-5">
+								<input class="form-control" [(ngModel)]="Remark" placeholder="Remark">
+							</div>
+							<div class="col-sm-3">
+								<input type="button" (click)="Transfer()" class="btn btn-info" value="Transfer">
+								&nbsp;&nbsp;
+								<input (click)="CancelTransfer()" type="button" class="btn btn-danger" value="Cancel">
+							</div>
+						</div>
+						<hr>
+
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Status</th>
+									<th>PendingForPosting</th>
+									<th>PendingForAccounts</th>
+									<th>RejectByAccounts</th>
+									<th>PendingForBanking</th>
+									<th>RejectByBanking</th>
+									<th>Approved</th>
+									<th>Paid/PayoutTransfered</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Files</td>
+									<td>{{TotalPendingForPosting}}</td>
+									<td>{{TotalPendingForAccounts}}</td>
+									<td>{{TotalRejectByAccounts}}</td>
+									<td>{{TotalPendingForBanking}}</td>
+									<td>{{TotalRejectByBanking}}</td>
+									<td>{{TotalApproved}}</td>
+									<td>{{TotalPaid}}</td>
+								</tr>
+
+								<tr>
+									<td>Amount</td>
+									<td>{{TotalPendingForPosting_Amt}}</td>
+									<td>{{TotalPendingForAccounts_Amt}}</td>
+									<td>{{TotalRejectByAccounts_Amt}}</td>
+									<td>{{TotalPendingForBanking_Amt}}</td>
+									<td>{{TotalRejectByBanking_Amt}}</td>
+									<td>{{TotalApproved_Amt}}</td>
+									<td>{{TotalPaid_Amt}}</td>
+								</tr>
+							</tbody>
+						</table>
+
+
+						<hr>
+						<div class=" mydiv table-responsive">
+							<table datatable [dtOptions]="dtOptions" id="example2"
+								class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th><input [(ngModel)]="masterSelected" name="list_name" value="m1"
+												(change)="checkUncheckAll()" type="checkbox">
+										</th>
+										<th>Action
+										</th>
+										<th>Posting Status</th>
+										<th style="text-align:center;">Product Details</th>
+										<th style="text-align:center;">Payout Details</th>
+										<th>Policy No</th>
+										<th>Agent</th>
+										<th>RM</th>
+										<th>Booking Date</th>
+									</tr>
+								</thead>
+
+								<tbody *ngIf="dataAr?.length != 0">
+									<tr *ngFor="let row of dataAr; let i=index;">
+										<td>
+											<!--{{row.SrNo}}.-->
+											<input
+												*ngIf="(row.Posting_Status_Web == '0' || row.Posting_Status_Web == '2' || row.Posting_Status_Web == '4')"
+												type="checkbox" [(ngModel)]="row.isSelected" name="list_name"
+												value="{{row.Id}}" (change)="isAllSelected()">
+
+										</td>
+										<td>
+											<a href="javascript:;" (click)="ViewSR(row.Id)"><span
+													style="margin-right: 5px;"
+													class="label label-primary">Details</span></a>
+										</td>
+
+										<td>
+											<span *ngIf="row.Posting_Status_Web == '0'"
+												class="label label-warning label-inline mr-2">PendingForPosting</span>
+											<span *ngIf="row.Posting_Status_Web == '1'"
+												class="label label-default label-inline mr-2">PendingForAccounts</span>
+											<span *ngIf="row.Posting_Status_Web == '2'"
+												class="label label-danger label-inline mr-2">RejectByAccounts</span>
+											<span *ngIf="row.Posting_Status_Web == '3'"
+												class="label label-primary label-inline mr-2">PendingForBanking</span>
+											<span *ngIf="row.Posting_Status_Web == '4'"
+												class="label label-danger label-inline mr-2">RejectByBanking</span>
+											<span *ngIf="row.Posting_Status_Web == '5'"
+												class="label label-info label-inline mr-2">Approved</span>
+											<span *ngIf="row.Posting_Status_Web == '6'"
+												class="label label-success label-inline mr-2">Paid/PayoutTransfered</span>
+
+										</td>
+
+										<td>
+											<table style="font-size: 12px;" class="PayoutTable">
+												<tr>
+													<td>Product</td>
+													<td>Sub-Product</td>
+													<td>Segment</td>
+												</tr>
+												<tr>
+													<td>{{row.Product_Id}}</td>
+													<td>{{row.SubProduct_Id}}</td>
+													<td>{{row.Segment_Id}}</td>
+												</tr>
+											</table>
+										</td>
+										<td>
+											<table class="PayoutTable">
+												<tr>
+													<td *ngIf="row.LOB_Id=='Motor'">OD%</td>
+													<td *ngIf="row.LOB_Id=='Motor'">OD AMT</td>
+													<td *ngIf="row.LOB_Id=='Motor'">TP%</td>
+													<td *ngIf="row.LOB_Id=='Motor'">TP AMT</td>
+													<td *ngIf="row.LOB_Id!='Motor'">Net%</td>
+													<td *ngIf="row.LOB_Id!='Motor'">Net AMT</td>
+													<td>Reward</td>
+													<td>Scheme</td>
+													<td>Total</td>
+													<td
+														*ngIf="(row.Posting_Status_Web == '0' || row.Posting_Status_Web == '2' || row.Posting_Status_Web == '4')">
+														Action</td>
+												</tr>
+												<tr>
+													<td *ngIf="row.LOB_Id=='Motor'">{{row.Web_Agent_Payout_OD}}</td>
+													<td *ngIf="row.LOB_Id=='Motor'">{{row.Web_Agent_Payout_OD_Amount}}
+													</td>
+													<td *ngIf="row.LOB_Id=='Motor'">{{row.Web_Agent_Payout_TP}}</td>
+													<td *ngIf="row.LOB_Id=='Motor'">{{row.Web_Agent_Payout_TP_Amount}}
+													</td>
+													<td *ngIf="row.LOB_Id!='Motor'">{{row.Web_Agent_Payout_Net}}</td>
+													<td *ngIf="row.LOB_Id!='Motor'">{{row.Web_Agent_Payout_Net_Amount}}
+													</td>
+													<td>{{row.Web_Agent_Reward_Amount}}</td>
+													<td>{{row.Web_Agent_Scheme_Amount}}</td>
+													<td>{{row.Web_Agent_Total_Amount}}</td>
+													<td
+														*ngIf="(row.Posting_Status_Web == '0' || row.Posting_Status_Web == '2' || row.Posting_Status_Web == '4')">
+														<a href="javascript:;" (click)="EditPayout(row.Id,i)">
+															<span
+																class="label label-danger label-inline mr-2">Edit</span>
+														</a>
+													</td>
+												</tr>
+											</table>
+										</td>
+
+										<td>{{row.Policy_No}}
+											<span style="margin-right: 5px;"
+												class="label label-info">{{row.LOB_Id}}</span>
+
+											<span *ngIf="row.Source == 'Web'" style="margin-right: 5px;"
+												class="label label-success">Online</span>
+											<span *ngIf="(row.Source == 'BMS' || row.Source == 'Excel')"
+												style="margin-right: 5px;" class="label label-warning">Offline</span>
+											<span *ngIf="(row.Policy_Type == '2' || row.Policy_Type == '3')"
+												style="margin-right: 5px;" class="label label-warning">Non POS</span>
+											<span *ngIf="row.Policy_Type == '1'" style="margin-right: 5px;"
+												class="label label-info">POS</span>
+										</td>
+
+										<td>{{row.Agent_Name}}</td>
+										<td>{{row.RM_Name}}</td>
+										<td>{{row.Create_Date}}</td>
+									</tr>
+
+								</tbody>
+
+								<tbody *ngIf="dataAr?.length == 0">
+									<tr>
+										<td colspan="9" align="center">No data Available !</td>
+									</tr>
+								<tbody>
+
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

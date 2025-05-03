@@ -1,0 +1,302 @@
+<section class="inner_page_css main_dashboard_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+                            <div *ngIf="this.url == 'resign-rm'">Employee Resignation RM</div>
+                            <div *ngIf="this.url == 'resign-hod'">Employee Resignation Vertical Manager</div>
+                            <div *ngIf="this.url == 'resign-hr'">Employee Resignation Manager</div>
+                            <div *ngIf="this.url == 'noc-ops'">Employee NOC OPS</div>
+                            <div *ngIf="this.url == 'noc-finance'">Employee NOC Finance</div>
+                            <div *ngIf="this.url == 'noc-it'">Employee NOC IT</div>
+                        </div>
+
+
+
+                    </div>
+
+
+
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+
+                        <form [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+
+                            <div class="row" style="margin-top: 1%;">
+
+
+                                <div class="col-sm-3"
+                                    *ngIf="(this.url == 'resign-hr' || this.url == 'resign-hod' || this.url == 'noc-ops' || this.url == 'noc-finance' ||this.url == 'noc-it')">
+                                    <ng-multiselect-dropdown class="form-control" placeholder="Request Type"
+                                        [data]="QuoteTypes" formControlName="Request_Type"
+                                        [settings]="dropdownSettingsingleselect1" [(ngModel)]="QuoteTypeVal">
+                                    </ng-multiselect-dropdown>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <input type="text" placeholder="Search" class="form-control"
+                                        formControlName="SearchValue">
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <input type="submit" class="btn btn-info" value="Search">&nbsp;&nbsp;
+                                    <!-- <input *ngIf="UserRights['Is_Agent_Report_Excel_Export']==1 && Is_Export==1" (click)="ExportExcel()" type="button" class="btn btn-success" value="Export">&nbsp;&nbsp; -->
+                                    <button (click)="ClearSearch()" type="button" style="font-size: small;"
+                                        class="btn btn-danger" value="Reset"> <i class="fa fa-close">Reset</i> </button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <br>
+
+
+                        <div class=" mydiv table-responsive">
+
+                            <table datatable [dtOptions]="dtOptions" id="Table1"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th> Name</th>
+                                        <th> Email</th>
+                                        <th> Mobile</th>
+                                        <th> Remark</th>
+                                        <th> Created</th>
+                                        <th> Status </th>
+                                        <th> Action </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr; let i=index;">
+                                        <td>{{row.SrNo}}</td>
+                                        <td>{{row.Name}}</td>
+                                        <td>{{row.Email}}</td>
+                                        <td>{{row.Mobile_No}}</td>
+                                        <td>{{row.remark}}</td>
+                                        <td>{{row.Addstamp | date: 'dd-MM-yyyy' }}</td>
+                                        <td>
+
+
+
+
+
+                                            <!-- Status  -->
+
+                                            <!-- 
+                                            {{row.Leadstatus == 0 ? 'Rejected' : (row.Leadstatus == 1 ? 'Pending for
+                                            RM' : (row.Leadstatus == 2 ? 'Pending for HOD': 'Pending for HR') )}} -->
+
+
+
+                                            <label *ngIf="row.Status == 0 && row.revoke_status == 0">
+
+                                                <label class="label label-danger" *ngIf="row.Leadstatus == 1">
+                                                    Rejected by RM
+                                                </label>
+                                                <label class="label label-danger" *ngIf="row.Leadstatus == 2">
+                                                    Rejected by Vertical Manager
+                                                </label>
+                                                <label class="label label-danger" *ngIf="row.Leadstatus == 3">
+                                                    Rejected by Manager
+                                                </label>
+                                                <label class="label label-danger" *ngIf="row.Leadstatus == 4">
+                                                    Rejected by OPS
+                                                </label>
+                                                <label class="label label-danger" *ngIf="row.Leadstatus == 5">
+                                                    Rejected by IT
+                                                </label>
+                                                <label class="label label-danger" *ngIf="row.Leadstatus == 6">
+                                                    Rejected by Finance
+                                                </label>
+
+                                            </label>
+                                            <label *ngIf="row.Status == 1 && row.revoke_status == 0">
+
+                                                <label class="label label-success" *ngIf="row.Leadstatus == 1">
+                                                    Pending for RM
+                                                </label>
+                                                <label class="label label-success" *ngIf="row.Leadstatus == 2">
+                                                    Pending for Vertical Manager
+                                                </label>
+                                                <label class="label label-success" *ngIf="row.Leadstatus == 3">
+                                                    Pending for Manager
+                                                </label>
+                                                <label class="label label-success"
+                                                    *ngIf="row.Leadstatus == 4 && row.noc_status == 0 ">
+                                                    Resignation complete / Pending for NOC
+                                                </label>
+                                                <!-- <label class="label label-success" *ngIf="row.Leadstatus == 5">
+                                                    Pending for IT
+                                                </label>
+                                                <label class="label label-success" *ngIf="row.Leadstatus == 6">
+                                                    Pending for Finance
+                                                </label> -->
+                                                <label class="label label-success"
+                                                    *ngIf="row.Leadstatus == 4 && row.noc_status == 1">
+                                                    Resignation / NOC Completed
+                                                </label>
+                                            </label>
+
+
+
+                                            <label *ngIf="row.Status == 1 && row.revoke_status == 1"
+                                                class="label label-success"> Request Revoked </label>
+
+                                            <label *ngIf="row.Status == 1 && row.revoke_status == 2"
+                                                class="label label-success"> Employee Resigned </label>
+
+                                            <!--  
+                                            'finance_id' => $row->finance_id,
+                                            'it_id' => $row->it_id,
+                                            'ops_id' => $row->ops_id,
+                                            'manager_id' => $row->manager_id,
+
+
+                                            && loginId == row.ops_id
+                                            && loginId == row.it_id -->
+
+                                        </td>
+                                        <td>
+
+
+                                            <button class="btn btn-success"
+                                                *ngIf="( (row.Leadstatus == 2 && this.url == 'resign-hod'  && row.hod_id == '') || (row.Leadstatus == 3 && this.url == 'resign-hr'  && row.manager_id == '') || (row.noc_status_ops == 0 && this.url == 'noc-ops' &&  row.ops_id == '') || (row.noc_status_it == 0 && this.url == 'noc-it'    &&  row.it_id == '') ||  (row.noc_status_finance == 0 && this.url == 'noc-finance' &&  row.finance_id == '') ) && row.Status == '1' && row.revoke_status == '0' "
+                                                (click)="AcceptRequest(row.Id,row.Leadstatus)"
+                                                style="font-size: small; padding: 2px;">Accept
+                                            </button>
+
+
+                                            <br
+                                                *ngIf="( (row.Leadstatus == 2 && this.url == 'resign-hod'  && row.hod_id == '')  || (row.Leadstatus == 3 && this.url == 'resign-hr'  && row.manager_id == '') || (row.noc_status_ops == 0 && this.url == 'noc-ops' &&  row.ops_id == '') || (row.noc_status_it == 0 && this.url == 'noc-it'    &&  row.it_id == '') ||  (row.noc_status_finance == 0 && this.url == 'noc-finance' &&  row.finance_id == '') ) && row.Status == '1' && row.revoke_status == '0'">
+
+                                            <button class="btn btn-success"
+                                                *ngIf="((row.Leadstatus == 1 && this.url == 'resign-rm'  ) || (row.Leadstatus == 2 && this.url == 'resign-hod' && loginId == row.hod_id ) || (row.Leadstatus == 3 && this.url == 'resign-hr'  && loginId == row.manager_id) || (row.noc_status_ops == 0 && this.url == 'noc-ops' && loginId == row.ops_id) || (row.noc_status_it == 0 && this.url == 'noc-it'    && loginId == row.it_id) ||  (row.noc_status_finance == 0 && this.url == 'noc-finance' && loginId == row.finance_id) ) && row.Status == '1' && row.revoke_status == '0'"
+                                                (click)="LeadData(row.Id , 'Approve',row.Leadstatus)"
+                                                style="font-size: small; padding: 2px;" data-toggle="modal"
+                                                data-target="#ActionModel">Approve
+                                            </button>
+                                            <br
+                                                *ngIf="(  (row.Leadstatus == 1 && this.url == 'resign-rm'  ) || (row.Leadstatus == 2 && this.url == 'resign-hod') || (row.Leadstatus == 3 && this.url == 'resign-hr'  && loginId == row.manager_id) || (row.noc_status_ops == 0 && this.url == 'noc-ops' && loginId == row.ops_id) || (row.noc_status_it == 0 && this.url == 'noc-it'    && loginId == row.it_id) ||  (row.noc_status_finance == 0 && this.url == 'noc-finance' && loginId == row.finance_id) ) && row.Status == '1' && row.revoke_status == '0'">
+
+                                            <button
+                                                *ngIf="((row.Leadstatus == 1 && this.url == 'resign-rm' ) || (row.Leadstatus == 2 && this.url == 'resign-hod' && loginId == row.hod_id  ) || (row.Leadstatus == 3 && this.url == 'resign-hr' && loginId == row.manager_id ) ) && row.Status == '1' && row.revoke_status == '0'"
+                                                class="btn btn-danger"
+                                                (click)="LeadData(row.Id , 'Reject',row.Leadstatus)"
+                                                style="font-size: small; padding: 2px;" data-toggle="modal"
+                                                data-target="#ActionModel">Reject
+                                            </button>
+                                            <br
+                                                *ngIf="((row.Leadstatus == 1 && this.url == 'resign-rm' ) || (row.Leadstatus == 2 && this.url == 'resign-hod') || (row.Leadstatus == 3 && this.url == 'resign-hr' && loginId == row.manager_id ) ) && row.Status == '1' && row.revoke_status == '0'">
+
+
+                                            <button class="btn btn-pending" (click)="ViewResignationDetails(row.Id)"
+                                                style="font-size: small; padding: 2px;" data-toggle="modal"
+                                                data-target="#ViewResignationDetailsModel">View
+                                            </button>
+
+
+
+
+
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="8" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ------------Modal----------------- -->
+
+<div class="modal fade" id="ActionModel" tabindex="-1" role="dialog" aria-labelledby="ActionModelLabel"
+    aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ActionModelLabel"><b>{{this.ActionStatus }}</b></h5>
+                <button type="button" id="close_pop" class="close closeModelButton" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form class="form" (ngSubmit)="EmployeeResign()" [formGroup]="employee_resign">
+                    <div class="row">
+                        <div class="col-md-4" *ngIf="LeadStatus >= 3 &&  ActionStatus =='Approve'">
+                            <label for="Remark">NOC Status</label>
+                            <select id="noc_status" class="form-control" name="NOC" formControlName="noc_status"
+                                required>
+                                <option selected value="0">Pending</option>
+                                <option value="1">Completed</option>
+                            </select>
+                            <span *ngIf="isSubmitted && FC.noc_status.errors" class="ValidationError">
+                                <span *ngIf="FC.noc_status.errors.required">NOC required!</span>
+                            </span>
+                        </div>
+
+                        <div class="col-md-4" *ngIf="LeadStatus == 3 &&  ActionStatus =='Approve'">
+                            <label for="Remark">Relieving date</label>
+                            <input class="form-control" type="date" formControlName="resignationDate"
+                                name="resignationDate" id="resignationDate" placeholder="Enter last working date"
+                                [min]="currentDate" required>
+                            <span *ngIf="isSubmitted && FC.resignationDate.errors" class="ValidationError">
+                                <span *ngIf="FC.resignationDate.errors.required">Relieving date required!</span>
+                            </span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="Remark">Remark</label>
+                            <textarea class="form-control" type="text" formControlName="Remark" name="Remark"
+                                id="Remark" placeholder="Enter Remark"> </textarea>
+                            <span *ngIf="isSubmitted && FC.Remark.errors" class="ValidationError">
+                                <span *ngIf="FC.Remark.errors.required">Remark required!</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="ViewResignationDetailsModel" tabindex="-1" role="dialog"
+    aria-labelledby="ViewResignationDetailsModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div>
+            <!-- <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Change POSP RM</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div> -->
+            <div [innerHTML]="dataArra">
+
+
+            </div>
+        </div>
+    </div>
+</div>

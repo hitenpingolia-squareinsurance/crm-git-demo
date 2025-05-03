@@ -1,0 +1,13 @@
+<p>
+  <span *ngIf="Percentage_Slot!=0 && Percentage_Slot!=100">{{ReportType_Str}} report preparing please wait...
+    <b>{{Percentage_Slot}}%</b></span>
+  <span *ngIf="Is_Prepre_Excel==1">{{ReportType_Str}} report preparing wait a few minutes...</span>
+</p>
+
+<div *ngIf="Percentage_Slot!=0" class="progress">
+  <div class="progress-bar" role="progressbar" [style.width.%]="Percentage_Slot" [attr.aria-valuenow]="Percentage_Slot"
+    aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+<p *ngIf="Is_Download==1"><a (click)="ClickToDownload()" href="javascript:void(0)">Click to download {{ReportType_Str}}
+    report</a></p>

@@ -1,0 +1,33 @@
+<div class="row">
+  <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+</div>
+
+<table class="table table-bordered">
+
+  <thead>
+    <tr>
+      <th colspan="3" style="text-align: center; background-color: #2cb2b3; color: white;">KRA Ratings</th>
+    </tr>
+
+    <tr>
+      <th>Sr&nbsp;No</th>
+      <th>KRA&nbsp;Type</th>
+      <th>Weightage</th>
+    </tr>
+  </thead>
+
+  <tbody *ngIf="dataAr?.length != 0">
+    <tr *ngFor="let row of dataAr; let i=index;">
+      <td>{{ row.SrNo }}</td>
+      <td style="padding: 7px !important; text-align: left !important;">{{ row.Kra_Type }}</td>
+      <td>{{ row.Weightage }}</td>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="dataAr?.length == 0">
+    <tr>
+      <td colspan="3" align="center">No data Available !</td>
+    </tr>
+  <tbody>
+
+</table>

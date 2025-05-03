@@ -1,0 +1,127 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Manage Endorsement Requests</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+
+            <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+            <hr>
+
+            <!-- <div class="row">
+              <div class="col-sm-2">
+                <b>Total Files :</b>
+              </div>
+              <div class="col-sm-2">{{TotalFiles}}</div>
+            </div> -->
+
+            <div class="mydiv">
+              <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+
+                    <th>S.No</th>
+                    <th>Endorsement Id</th>
+                    <th>Action</th>
+                    <th>LOB </th>
+                    <th>Policy Number</th>
+                    <th>Insurer</th>
+                    <th>Vehicle No</th>
+                    <th>Customer Details</th>
+                    <th>Created By</th>
+                    <th>Add Stamp</th>
+
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td>{{row.SrNo}}</td>
+                    <td>{{ row.endosmentId }}</td>
+                    <td>
+                      <div *ngIf="(row.assignedToEmp == '' || row.assignedToEmp == null )">
+                        <label class="label label-success" style="cursor: pointer;"
+                          (click)="acceptEndosmentRequest(row.endosmentId)">Accept</label><br>
+
+                        <a *ngIf="(row.status == 0)" routerLink="/endosment/view-details/{{row.endosmentId}}"><span
+                            class="label label-warning"> Pending</span></a><br>
+                      </div>
+
+                      <div *ngIf="(row.assignedToEmp != '' && row.assignedToEmp != null )">
+                        <a *ngIf="(row.status == 0)"
+                          routerLink="/endosment/view-details/{{row.endosmentId}}/Manage"><span
+                            class="label label-primary"> Pending</span></a>
+
+                        <a *ngIf="(row.status == 1)"
+                          routerLink="/endosment/view-details/{{row.endosmentId}}/Manage"><span
+                            class="label label-warning"> In Process</span></a>
+
+                        <a *ngIf="(row.status == 2)"
+                          routerLink="/endosment/view-details/{{row.endosmentId}}/Manage"><span
+                            class="label label-success"> Complete</span></a>
+
+                        <a *ngIf="(row.status == 3)"
+                          routerLink="/endosment/view-details/{{row.endosmentId}}/Manage"><span
+                            class="label label-danger"> Rejected</span></a>
+                      </div>
+                    </td>
+
+                    <!-- <td><div  *ngIf="(row.assignedToEmp == '' || row.assignedToEmp == null )">
+                      <label class="label label-success" style="cursor: pointer;" (click)="acceptEndosmentRequest(row.endosmentId)">Accept</label><br>
+
+                      <label class="label label-warning"  style="cursor: pointer;" (click)="openDialog(row.endosmentId, rightType)">Details</label><br>
+                     </div>
+
+                     <div  *ngIf="(row.assignedToEmp != '' && row.assignedToEmp != null )">
+                      <label class="label label-primary" (click)="openDialog(row.endosmentId, rightType)" style="cursor: pointer;"
+                        *ngIf="(row.status == 0)">Pending</label>
+                      <label class="label label-warning" (click)="openDialog(row.endosmentId, rightType)" style="cursor: pointer;"
+                        *ngIf="(row.status == 1)">In Process</label>
+                      <label class="label label-success" (click)="openDialog(row.endosmentId, rightType)" style="cursor: pointer;"
+                        *ngIf="(row.status == 2)">Complete</label></div>
+                      <label class="label label-danger" (click)="openDialog(row.endosmentId, rightType)" style="cursor: pointer;"
+                        *ngIf="(row.status == 3)">Rejected</label>
+                    </td> -->
+
+                    <td>{{row.LOB}} </td>
+                    <td>{{row.PolicyNo}} <br><a *ngIf="(row.DownloadUrl !='')" class="fa fa-Info"
+                        (click)="ViewDocument(row.DownloadUrl)" href="javascript:void(0)"> &nbsp;<i
+                          class="fa fa-download"> Download</i></a>
+                    </td>
+                    <td>{{row.Company}}</td>
+                    <td>{{row.Vehicle_No}}</td>
+                    <td> <b>Name - </b> {{row.CustomerName}}<br> <b>Mobile - </b> {{row.CustomerMobile}}</td>
+                    <td>{{row.AddedByDetails}}</td>
+                    <td>{{row.InsertDate}}</td>
+                  </tr>
+
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="10" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+
+              </table>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

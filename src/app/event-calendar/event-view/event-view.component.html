@@ -1,0 +1,37 @@
+<div class="main_dashboard_css calendar">
+    <div class="inner_dashboard">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="btn-group-align">
+                        <div class="btn-group">
+                            <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+                                (viewDateChange)="closeOpenMonthViewDay()">
+                                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                            </div>
+                           
+                            <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+                                (viewDateChange)="closeOpenMonthViewDay()">
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="btn btn-success" mwlCalendarToday [(viewDate)]="viewDate">
+                            Month
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="heading">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</div>
+                </div>
+            </div>
+            <br />
+            <div [ngSwitch]="view">
+                <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+                    [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+                    (eventClicked)="handleEvent('Clicked', $event.event)"
+                    (eventTimesChanged)="eventTimesChanged($event)">
+                </mwl-calendar-month-view>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,138 @@
+<div class="row">
+
+    <div class="modal-header" style="text-align: center;">
+        <h4 class="modal-title">More Action
+            <button type="button" (click)="CloseModel()" class="btn btn-box-tool" style="float: right;"><i class="fa fa-close"
+          style="font-size:17px"></i></button>
+        </h4>
+    </div>
+</div>
+
+<form (ngSubmit)="submit()" [formGroup]="MoreActionForm">
+
+    <table class="table table-bordered table-hover">
+
+        <tbody class="container-fluid" id="divshow">
+
+            <tr *ngIf="this.currentUrl == '/user_agent/verified_posc' || this.currentUrl == '/user_agent/advisor_pos'
+        || this.currentUrl == '/user_agent/master_advisor_pos' || this.currentUrl == '/user_agent/all_pos'">
+                <td>Create POS/Advisor Permission</td>
+                <td *ngIf="posStatus == 2 && CreatePosPermission == 1">
+                    <label class="label label-success">Advisor</label>
+                </td>
+                <td *ngIf="posStatus && CreatePosPermission == 2">
+                    <label class="label label-success">Master Advisor</label>
+                </td>
+                <td *ngIf="posStatus && CreatePosPermission == 0">
+                    <label class="label label-danger">Not Allowed</label>
+                </td>
+            </tr>
+
+
+            <tr *ngIf="this.currentUrl == '/user_agent/verified_posc' || this.currentUrl == '/user_agent/advisor_pos'
+        || this.currentUrl == '/user_agent/master_advisor_pos' || this.currentUrl == '/user_agent/all_pos'">
+                <td>Create SP Permission</td>
+                <td>
+                    <label *ngIf="CreateSpPermission == 1" class="label label-success" (click)="UpdateSpPermission(Id, 0, 'user_agent')">Allowed</label>
+                    <label *ngIf="CreateSpPermission == 0" class="label label-danger" (click)="UpdateSpPermission(Id, 1, 'user_agent')">Not Allowed</label>
+                </td>
+
+            </tr>
+
+
+
+
+            <tr *ngIf="this.currentUrl == '/user_agent/verified_posc' || this.currentUrl == '/user_agent/advisor_pos'
+        || this.currentUrl == '/user_agent/master_advisor_pos' || this.currentUrl == '/user_agent/all_pos'">
+
+                <td>Regenrate Certificate</td>
+                <td>
+                    <label class="label label-primary">Generate</label>
+                </td>
+
+            </tr>
+
+
+            <tr *ngIf="this.currentUrl == '/user_agent/verified_posc' || this.currentUrl == '/user_agent/advisor_pos'
+        || this.currentUrl == '/user_agent/master_advisor_pos' || this.currentUrl == '/user_agent/all_pos'">
+
+                <td>Download Certificate</td>
+                <td>
+                    <label class="label label-primary">Download</label>
+                </td>
+
+            </tr>
+
+            <tr *ngIf="this.currentUrl == '/user_agent/verified_posc' || this.currentUrl == '/user_agent/advisor_pos'
+        || this.currentUrl == '/user_agent/master_advisor_pos' || this.currentUrl == '/user_agent/all_pos'">
+
+                <td>POSC Default Mail</td>
+                <td>
+                    <label class="label label-primary">Send</label>
+                </td>
+
+            </tr>
+
+            <tr *ngIf="this.currentUrl == '/user_agent/pos_leads' || this.currentUrl == '/user_agent/under_training_pos'
+        || this.currentUrl == '/user_agent/verified_posc' || this.currentUrl == '/user_agent/advisor_pos'
+        || this.currentUrl == '/user_agent/master_advisor_pos' || this.currentUrl == '/user_agent/incomplete_pos'
+        || this.currentUrl == '/user_agent/rejected_pos' || this.currentUrl == '/user_agent/all_pos'">
+                <td>
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="EmployeeNameId" [(ngModel)]="Employee" formControlName="emp" [settings]="dropdownSettingsType">
+                    </ng-multiselect-dropdown>
+                    <!-- <input type="text"  class="form-control" value="{{EmployeeName}}- {{EmployeeId}}"> -->
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" style="padding: 5px 5px; text-align: center; font-size: 10px; "><b>Update RM</b></button>
+                </td>
+
+            </tr>
+
+
+
+            <tr *ngIf="this.currentUrl == '/user_agent/pos_leads' || this.currentUrl == '/user_agent/under_training_pos'
+        || this.currentUrl == '/user_agent/verified_posc' || this.currentUrl == '/user_agent/advisor_pos'
+        || this.currentUrl == '/user_agent/master_advisor_pos' || this.currentUrl == '/user_agent/incomplete_pos'
+        || this.currentUrl == '/user_agent/rejected_pos' || this.currentUrl == '/user_agent/all_pos'">
+
+
+                <td>
+                    <input type="text" readonly class="form-control" value="{{Email}}">
+
+                </td>
+                <td>
+                    <label class="label label-primary">Send Mail</label>
+                </td>
+
+            </tr>
+
+
+
+            <tr *ngIf="this.currentUrl == '/user_agent/advisor_pos' || this.currentUrl == '/user_agent/master_advisor_pos'">
+
+
+                <td>
+                    <input type="text" class="form-control">
+
+                </td>
+                <td>
+                    <label class="label label-primary">Map POS</label>
+                </td>
+
+            </tr>
+
+
+
+        </tbody>
+
+    </table>
+
+
+    <!-- <div class="row">
+      <div class="col-md-10">&nbsp;</div>
+      <div class="col-md-2 actionButtons pull-right" style="margin-top: 10px; margin-bottom: 5px;">
+        <button class="btn btn-primary save-click" type="submit">Submit</button>
+      </div>
+    </div> -->
+
+</form>

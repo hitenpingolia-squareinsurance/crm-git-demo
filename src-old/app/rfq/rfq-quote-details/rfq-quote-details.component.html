@@ -1,0 +1,1319 @@
+<div class="content-wrapper">
+    <section class="content">
+        <div class="main-content-right" style="margin: 50px 0px;">
+            <div class="quote-request-list">
+                <div class="clearfix">
+                    <div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <div class="request-details">
+                                            <ul class="nav nav-tabs" role="tablist">
+                                                <li role="presentation" class="active"> <a href="#quote-details"
+                                                        aria-controls="home" role="tab" data-toggle="tab"> Request For
+                                                        Quote Details</a> </li>
+                                                <!-- <li *ngIf="row.PreviousPolicy == 'Yes' && (row.FirePolicy == 'Rollover' || row.FirePolicy == 'Renewal')"
+                                                    role="presentation"><a href="#policy-details"
+                                                        aria-controls="profile" role="tab" data-toggle="tab"> Previous
+                                                        Year
+                                                        Policy Details </a></li> -->
+
+                                                <!-- {{this.row.quotationId}} -->
+                                                <!-- <li *ngIf="row.PlanType == 'Saod'" role="ThirdParty"><a
+                                                        href="#ThirdParty-details" aria-controls="messages" role="tab"
+                                                        data-toggle="tab"> Third Party Details </a></li> -->
+                                                <li role="ThirdParty" (click)="ViewOfflineQuoteDetails(rows.Quotation)">
+                                                    <a aria-controls="messages" role="tab" data-toggle="tab"> Details
+                                                    </a>
+                                                </li>
+                                                <!-- <button type="button"  class="label label-info">Details</button> -->
+
+                                                <button type="button"
+                                                    *ngIf="rows.Status == '1' && rows.user_type != 'employee'"
+                                                    (click)="AcceptAssignQuote()"
+                                                    class=" ul-last-btn btn btn-info">Accept</button>
+                                            </ul>
+
+
+                                            <div class="tab-content details-scroll">
+                                                <div role="tabpanel" class="tab-pane active" id="quote-details">
+                                                    <div class="row">
+                                                        <div class="col-md-6 border">
+                                                            <div class="details-policy">
+                                                                <ul>
+                                                                    <li>Quotation Id: <label>{{rows.Quotation}}</label>
+                                                                    </li>
+                                                                    <li>Policy Duration:
+                                                                        <label>{{rows.PolicyDuration}}</label>
+                                                                    </li>
+                                                                    <li>Fire Policy:
+                                                                        <label>{{rows.FirePolicy}}</label>
+                                                                    </li>
+                                                                    <li>Fire Product:
+                                                                        <label>{{rows.FireProduct}}</label>
+                                                                    </li>
+                                                                    <li>Policy Risk Period:
+                                                                        <label>{{rows.PolicyRiskStartDate}} To <span *ngIf="this.rows.PolicyRiskEndDate != ''">{{rows.PolicyRiskEndDate}}</span></label>
+                                                                    </li>
+                                                                    <li *ngIf="this.rows.Build_Up_Year != ''">Build Up
+                                                                        Year:
+                                                                        <label>{{rows.Build_Up_Year}}</label>
+                                                                    </li>
+                                                                    <li *ngIf="this.rows.FormType != ''">Form Type:
+                                                                        <label>{{rows.FormType}}</label>
+                                                                    </li>
+                                                                    <li *ngIf="this.rows.CreateDate != ''">Create
+                                                                        Date:
+                                                                        <label>{{rows.CreateDate}}</label>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <!--col-md-4-->
+                                                        <div class="col-md-6 border">
+                                                            <div class="details-policy">
+                                                                <ul>
+                                                                    <li>Customer Name:
+                                                                        <label>{{rows.CreaterName}}</label>
+                                                                    </li>
+                                                                    <li>Customer
+                                                                        Email:<label>{{rows.Createremail}}</label> </li>
+                                                                    <li>Customer Mobile:
+                                                                        <label>{{rows.CreaterMobile}}</label>
+                                                                    </li>
+                                                                    <li>Address: <label>{{rows.Address}}</label>
+                                                                    </li>
+                                                                    <li *ngIf="this.rows.Basement_Exposed !== null">
+                                                                        Basement Exposed:
+                                                                        <label>{{rows.Basement_Exposed}}</label>
+                                                                    </li>
+                                                                    <li
+                                                                        *ngIf="this.rows.Basement_Exposed_Details !== null">
+                                                                        Basement Exposed Details:
+                                                                        <label>{{rows.Basement_Exposed_Details}}</label>
+                                                                    </li>
+                                                                    <li *ngIf="this.rows.Description_property == 'Yes'">
+                                                                        Description Property:
+                                                                        <label>{{rows.Description_property}}</label>
+                                                                    </li>
+                                                                    <li>Fire Previous Policy No:
+                                                                        <label>{{rows.FirePreviousPolicyNo}}</label>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <!--col-md-4-->
+                                                        <div class="col-md-12">
+                                                            <div class="details-policy">
+                                                                <ul class="bottom-li-addon">
+                                                                    <li *ngIf="this.rows.Occupancy_Type !== null">
+                                                                        Occupancy:
+                                                                        <label>{{rows.Occupancy_Type}}</label>
+                                                                    </li>
+                                                                    <li *ngIf="this.rows.Type_of_Construction !== null">
+                                                                        Type of Construction:
+                                                                        <label>{{rows.Type_of_Construction}}</label>
+                                                                    </li>
+                                                                    <li *ngIf="this.rows.Remark !== null">Remark:
+                                                                        <label>{{rows.Remark}}</label>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <!--col-md-4-->
+                                                    </div>
+                                                </div>
+                                                <!--tab-pan-->
+                                                <div role="tabpanel" class="tab-pane" id="policy-details">
+                                                    <!--Show previous year policy details if available-->
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="details-policy">
+                                                                <ul>
+                                                                    <li>Previous
+                                                                        Insurer:<label>{{rows.CoverValuableContents}}</label>
+                                                                    </li>
+                                                                    <li>Claim Status :
+                                                                        <label>{{rows.MaxSumInsuredperitem}}</label>
+                                                                    </li>
+                                                                    <li>Owner Change :
+                                                                        <label>{{rows.TotalMaxSumInsured}}</label>
+                                                                    </li>
+                                                                    <li>Ncb Protection :
+                                                                        <label>{{rows.Stocks2}}</label>
+                                                                    </li>
+                                                                    <li>Expiry Date :
+                                                                        <label>{{rows.Earthquake}}</label>
+                                                                    </li>
+                                                                    <li *ngIf="this.rows.Terrorism !== null">Last Year
+                                                                        NCB:
+                                                                        <label>{{rows.Terrorism}}</label>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div role="tabpanel" class="tab-pane" id="ThirdParty-details">
+                                                    <!--Inspection Details Section-->
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="details-policy">
+                                                                <ul>
+                                                                    <li>Third Party
+                                                                        Insurer:<label>{{rows.LossofRent}}</label>
+                                                                    </li>
+                                                                    <li>Third Party Policy Number:
+                                                                        <label>{{rows.NoMonthCoverRent}}</label>
+                                                                    </li>
+                                                                    <li>Third Party Expiry:
+                                                                        <label>{{rows.RentAlternateAccommodatio}}</label>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <!--tab-content-->
+                                        </div>
+                                        <!---rquest-details-->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="box box-primary">
+                                    <div class="box-header with-border">
+                                        <h2 class="box-title "> Documents Attached </h2>
+                                    </div>
+                                    <div class="doc-attached box-body document-box-scroll" id="document-box">
+
+                                        <div class="row" *ngIf="this.GetSharedPaymentUrl.PolicyPdf != '' && this.GetSharedPaymentUrl.PolicyPdf != null">
+                                            <div class="col-lg-9 col-md-8 doc-name"> Policy PDF </div>
+                                            <div class="col-lg-3 col-md-4 text-left"> </div>
+                                            <div class="col-md-12 doc-carousel">
+                                                <div class="owl-carousel owl-loaded owl-drag">
+                                                    <div class="owl-stage-outer">
+                                                        <div class="owl-stage"
+                                                            style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 85px;">
+                                                            <div class="owl-item active"
+                                                                style="width: 79.175px; margin-right: 5px;">
+                                                                <div class="item"> <a title="rc_front_image.jpg"
+                                                                        class="view_image"
+                                                                        (click)="ViewDocument(GetSharedPaymentUrl.PolicyPdf)"
+                                                                        target="_blank"> View
+                                                                    </a> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" *ngIf="GetSharedPaymentUrl.file != '' && this.GetSharedPaymentUrl.PolicyPdf != null ">
+                                            <div class="col-lg-9 col-md-8 doc-name"> Accepted Quotes </div>
+                                            <div class="col-lg-3 col-md-4 text-left"> </div>
+                                            <div class="col-md-12 doc-carousel">
+                                                <div class="owl-carousel owl-loaded owl-drag">
+                                                    <div class="owl-stage-outer">
+                                                        <div class="owl-stage"
+                                                            style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 85px;">
+                                                            <div class="owl-item active"
+                                                                style="width: 79.175px; margin-right: 5px;">
+                                                                <div class="item"> <a title="rc_front_image.jpg"
+                                                                        class="view_image"
+                                                                        (click)="ViewDocument(GetSharedPaymentUrl.file)"
+                                                                        target="_blank"> View
+                                                                    </a> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" *ngIf="GetSharedPaymentUrl.PaymentProof != '' && this.GetSharedPaymentUrl.PolicyPdf != null">
+                                            <div class="col-lg-9 col-md-8 doc-name"> Payment Proof </div>
+                                            <div class="col-lg-3 col-md-4 text-left"> </div>
+                                            <div class="col-md-12 doc-carousel">
+                                                <div class="owl-carousel owl-loaded owl-drag">
+                                                    <div class="owl-stage-outer">
+                                                        <div class="owl-stage"
+                                                            style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 85px;">
+                                                            <div class="owl-item active"
+                                                                style="width: 79.175px; margin-right: 5px;">
+                                                                <div class="item"> <a title="rc_front_image.jpg"
+                                                                        class="view_image"
+                                                                        (click)="ViewDocument(GetSharedPaymentUrl.PaymentProof)"
+                                                                        target="_blank"> View
+                                                                    </a> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngFor="let row of GetSharedPaymentUrl.OtherDocument; let i = index">
+                                            <div class="col-lg-9 col-md-8 doc-name"> Other Document {{i}}</div>
+                                            <div class="col-lg-3 col-md-4 text-left"></div>
+                                            <div class="col-md-12 doc-carousel">
+                                                <div class="owl-carousel owl-loaded owl-drag">
+                                                    <div class="owl-stage-outer">
+                                                        <div class="owl-stage"
+                                                            style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 85px;">
+                                                            <div class="owl-item active"
+                                                                style="width: 79.175px; margin-right: 5px;">
+                                                                <div class="item"> <a title="other_image.jpeg"
+                                                                        class="view_image"
+                                                                        (click)="ViewDocument(row)"
+                                                                        target="_blank"> View
+                                                                    </a> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="row form-group">
+
+                                    <div *ngIf="rows.RejectedStatus == '1'" class="col-md-12" id="section-status">
+                                        <div class="box box-primary quote-status">
+                                            <div class="box-body-2 status-details">
+                                                <div class="row">
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header" id="heading-1">
+                                                                <h5 class="mb-0 collapse-heading collaps-a">
+                                                                    <a role="button" data-toggle="collapse"
+                                                                        href="#collapse-0" aria-expanded="true"
+                                                                        aria-controls="collapse-1"> <label
+                                                                            class="style_span"> Status - Rejected
+                                                                        </label>
+                                                                        <span class="singl-span"><span>By -
+                                                                                <label>{{rows.AssignerName}}</label></span>
+                                                                            <span class="time-div">Time -
+                                                                                <label>{{rows.rejected_date}}</label></span></span>
+                                                                    </a>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapse-0" class="collapse"
+                                                                data-parent="#accordion" aria-labelledby="heading-1">
+                                                                <div class="card-body">
+                                                                    <div class="insurer-list">
+                                                                        <table class="table table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th scope="col"> Sr No.</th>
+                                                                                    <th scope="col">Quotes</th>
+                                                                                    <th scope="col">Remarks</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>1</td>
+                                                                                    <td class="btn-all"> <a
+                                                                                            class="btn btn-danger btn-xs download-btn"><i
+                                                                                                class="fa fa-check"
+                                                                                                aria-hidden="true"></i>Quote
+                                                                                            Rejected </a> </td>
+                                                                                    <td>{{rows.rejected_remarks}}</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="Status >= '6' && Status != '8'" class="col-md-12" id="section-status">
+                                        <div class="box box-primary quote-status">
+                                            <div class="box-body-2 status-details">
+                                                <div class="row">
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header" id="heading-1">
+                                                                <h5 class="mb-0 collapse-heading collaps-a">
+                                                                    <a role="button" data-toggle="collapse"
+                                                                        href="#collapse-6" aria-expanded="true"
+                                                                        aria-controls="collapse-1"> <label
+                                                                            class="style_span"> Status - Complete
+                                                                        </label>
+                                                                        <span class="singl-span"><span>By -
+                                                                                <label>{{rows.AssignerName}}</label></span>
+                                                                            <span class="time-div">Time -
+                                                                                <label>{{GetSharedPaymentUrl.PolicyCompletedTime}}</label></span></span>
+                                                                    </a>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapse-6" class="collapse"
+                                                                data-parent="#accordion" aria-labelledby="heading-1">
+                                                                <div class="card-body">
+
+
+
+                                                                    <div class="offline_payment_design">
+                                                                        <div class="img_box"><img
+                                                                                src="/assets/image/verified.gif"
+                                                                                alt="verified">
+                                                                        </div>
+                                                                        <div class="payment_secuss_title">Dear
+                                                                            {{rows.CustomerName}},
+                                                                            <br>Thank you for choosing Square Insurance
+                                                                            Brokers
+                                                                            Private Limited.<br> Your payment has been
+                                                                            completed
+                                                                            successfully and your SR Number is
+                                                                            <a title="rc_front_image.jpg" class="view_image"
+                                                                                (click)="SrPopup(1,rows.SrId)"
+                                                                                target="_blank">{{rows.FullSrNo}}</a>. In case of any query kindly mail us at 
+                                                                                <a href="mailto:insurance@squareinsurance.in">insurance@squareinsurance.in</a>.
+                                                                        </div>
+                                                                        <ul class="payment_block">
+                                                                            <li><span>premium paid :</span><label><i
+                                                                                        class="fa fa-inr"></i>{{GetSharedPaymentUrl.gross}}
+                                                                                </label>
+                                                                            </li>
+                                                                            <li><span>status : </span><label> Completed
+                                                                                </label>
+                                                                            </li>
+
+                                                                            <li><span>Creater Name : </span> <label>MR. {{rows.CreaterName}} </label> </li>
+                                                                            <li *ngIf="rows.PaymentStatus == 1 && rows.PaymentMode != ''"><span>Payment Time : </span>
+                                                                                <label>{{rows.PaymentTime}}</label> </li>
+                                                                            <li><span>Quotation Id : </span>
+                                                                                <label>{{rows.Quotation}}</label>
+                                                                            </li>
+
+                                                                            <li><span>Company Name : </span>
+                                                                                <label>{{GetSharedPaymentUrl.insurer}}</label>
+                                                                            </li>
+
+                                                                            <li><span>Policy No : </span>
+                                                                                <label>{{
+                                                                                    GetSharedPaymentUrl.PolicyNumber}}</label>
+                                                                            </li>
+
+                                                                            <li class="last_child"
+                                                                                *ngIf="this.GetSharedPaymentUrl.PolicyPdf !=''">
+                                                                                <a (click)="ViewDocument(GetSharedPaymentUrl.PolicyPdf)">
+                                                                                    <button type="button"
+                                                                                        name="get_policy"
+                                                                                        class="download_policy"
+                                                                                        target="_blank"><i
+                                                                                            class="fa fa-download mr_10"></i>Download
+                                                                                        Policy</button>
+                                                                                </a>
+                                                                            </li>
+
+                                                                            <li class="last_child"
+                                                                                *ngIf="(GetSharedPaymentUrl.PaymentProof !='')">
+                                                                                <a
+                                                                                    (click)="ViewDocument(GetSharedPaymentUrl.PaymentProof)">
+                                                                                    <button type="button"
+                                                                                        name="get_policy"
+                                                                                        class="download_policy"
+                                                                                        target="_blank"><i
+                                                                                            class="fa fa-download mr_10"></i>Download
+                                                                                        Payment Proof</button>
+                                                                                </a>
+                                                                            </li>
+                                                                            <div class="payment_note">
+                                                                                <p><span>Note:</span>only digital copy
+                                                                                    of the
+                                                                                    policy will be issued. this is the
+                                                                                    original
+                                                                                    policy document, valid for all
+                                                                                    purpose.</p>
+                                                                            </div>
+                                                                        </ul>
+                                                                    </div>
+
+                                                                    <!-- <div class="insurer-list">
+                                                                        <table class="table table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th scope="col"> Sr No.</th>
+                                                                                    <th scope="col"> Insurers</th>
+                                                                                    <th scope="col">Quotes</th>
+                                                                                    <th scope="col">Gross Premium</th>
+                                                                                    <th scope="col">Remarks</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>1</td>
+                                                                                    <td>{{GetSharedPaymentUrl.insurer}}
+                                                                                    </td>
+                                                                                    <td class="btn-all"> <a
+                                                                                            href="{{GetSharedPaymentUrl.file}}"
+                                                                                            target="__blank"
+                                                                                            class="btn  btn-primary btn-xs download-btn"><i
+                                                                                                class="fa fa-download"></i>
+                                                                                            Download</a> <a
+                                                                                            class="btn btn-success btn-xs download-btn"><i
+                                                                                                class="fa fa-check"
+                                                                                                aria-hidden="true"></i>Accepted</a>
+                                                                                        <a
+                                                                                            class="btn btn-success btn-xs download-btn"><i
+                                                                                                class="fa fa-check"
+                                                                                                aria-hidden="true"></i>Payment
+                                                                                            complete </a>
+                                                                                    </td>
+                                                                                    <td>{{GetSharedPaymentUrl.gross}}
+                                                                                    </td>
+                                                                                    <td>{{GetSharedPaymentUrl.remark}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div> -->
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="Status >= '5' && Status != '8'" class="col-md-12" id="section-status">
+                                        <div class="box box-primary quote-status">
+                                            <div class="box-body-2 status-details">
+                                                <div class="row">
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header" id="heading-1">
+                                                                <h5 class="mb-0 collapse-heading collaps-a">
+                                                                    <a role="button" data-toggle="collapse"
+                                                                        href="#collapse-5" aria-expanded="true"
+                                                                        aria-controls="collapse-1"> <label
+                                                                            class="style_span"> Status - Pending For
+                                                                            Approval
+                                                                        </label> <span class="singl-span"><span>By -
+                                                                                <label>{{rows.CreaterName}}</label></span>
+                                                                            <span class="time-div">Time -
+                                                                                <label>{{GetSharedPaymentUrl.Paymentdate}}</label></span></span>
+                                                                    </a>
+                                                                </h5>
+                                                            </div>
+
+                                                            <!-- <div class="offline_payment_design">
+                                                                <div class="img_box"><img
+                                                                        src="/assets/image/verified.gif" alt="verified">
+                                                                </div>
+                                                                <div class="payment_secuss_title">Dear Customer,
+                                                                    <br>Thank you for choosing Square Insurance Brokers
+                                                                    Private Limited,<br> your payment has been completed
+                                                                    successfully and your SR Number is MCP53253. In case
+                                                                    of any query kindly mail us at
+                                                                    insurance@squareinsurance.in.
+                                                                </div>
+                                                                <ul class="payment_block">
+                                                                    <li><span>premium paid :</span><label><i
+                                                                                class="fa fa-inr"></i>6295.00 </label>
+                                                                    </li>
+                                                                    <li><span>status : </span><label> success</label>
+                                                                    </li>
+                                                                    <li><span>Customer Name : </span> <label>MR DIXIT
+                                                                            VITTAL MURALI</label> </li>
+                                                                    <li><span>Payment Time : </span> <label>2023-06-15
+                                                                            14:45:05</label> </li>
+                                                                    <li><span>Quotation Id : </span>
+                                                                        <label>SQTW2023061514111217806</label>
+                                                                    </li>
+                                                                    <li><span>Company Name : </span>
+                                                                        <label>icici</label>
+                                                                    </li>
+                                                                    <li><span>Policy No : </span>
+                                                                        <label>3005/294870625/00/000</label>
+                                                                    </li>
+                                                                    <li class="last_child">
+                                                                        <a href="https://squarebweb-documents.s3.ap-south-1.amazonaws.com/web/pdf-motor/2023-24/SQTW2023061514111217806_F8UFEaRdNqNdMqV8NGJcNGVbNGx5NWB%3D.pdf"
+                                                                            download="" target="_blank">
+                                                                            <button type="button" name="get_policy"
+                                                                                class="download_policy"
+                                                                                target="_blank"><i
+                                                                                    class="fa fa-download mr_10"></i>Download
+                                                                                Policy</button>
+                                                                        </a>
+                                                                    </li>
+                                                                    <div class="payment_note">
+                                                                        <p><span>Note:</span>only digital copy of the
+                                                                            policy will be issued. this is the original
+                                                                            policy document, valid for all purpose.</p>
+                                                                    </div>
+                                                                </ul>
+                                                            </div> -->
+
+
+                                                            <div id="collapse-5" class="collapse"
+                                                                data-parent="#accordion" aria-labelledby="heading-1">
+                                                                <div class="card-body">
+
+                                                                    <div class="offline_payment_design">
+                                                                        <!-- <div class="img_box"><img
+                                                                                src="/assets/image/verified.gif"
+                                                                                alt="verified">
+                                                                        </div> -->
+
+                                                                        <ul class="payment_block">
+                                                                            <li><span>premium paid :</span><label><i
+                                                                                        class="fa fa-inr"></i>{{GetSharedPaymentUrl.gross}}
+                                                                                </label>
+                                                                            </li>
+                                                                            <li><span>status : </span><label> Pending
+                                                                                    For Approval</label>
+                                                                            </li>
+                                                                            <!-- <li><span>Customer Name : </span> <label>MR
+                                                                                    DIXIT
+                                                                                    VITTAL MURALI</label> </li>
+
+
+                                                                            <li><span>Payment Time : </span>
+                                                                                <label>2023-06-15
+                                                                                    14:45:05</label> </li>
+
+
+                                                                            <li><span>Quotation Id : </span>
+                                                                                <label>SQTW2023061514111217806</label>
+                                                                            </li> -->
+
+                                                                            <li><span>Company Name : </span>
+                                                                                <label>{{GetSharedPaymentUrl.insurer}}</label>
+                                                                            </li>
+
+                                                                            <li><span>Policy No : </span>
+                                                                                <label>{{
+                                                                                    GetSharedPaymentUrl.PolicyNumber}}</label>
+                                                                            </li>
+
+                                                                            <li class="last_child"
+                                                                                *ngIf="this.GetSharedPaymentUrl.PolicyPdf !=''">
+                                                                                <a
+                                                                                    (click)="ViewDocument(GetSharedPaymentUrl.PolicyPdf)">
+                                                                                    <button type="button"
+                                                                                        name="get_policy"
+                                                                                        class="download_policy"
+                                                                                        target="_blank"><i
+                                                                                            class="fa fa-download mr_10"></i>Download
+                                                                                        Policy</button>
+                                                                                </a>
+                                                                            </li>
+
+                                                                            <!-- <li class="last_child"
+                                                                                *ngIf="(GetSharedPaymentUrl.PaymentProof !='')">
+                                                                                <a
+                                                                                    (click)="ViewDocument(GetSharedPaymentUrl.PaymentProof)">
+                                                                                    <button type="button"
+                                                                                        name="get_policy"
+                                                                                        class="download_policy"
+                                                                                        target="_blank"><i
+                                                                                            class="fa fa-download mr_10"></i>Download
+                                                                                        Payment Proof</button>
+                                                                                </a>
+                                                                            </li> -->
+                                                                            <div class="payment_note">
+                                                                                <p><span>Note:</span>only digital copy
+                                                                                    of the
+                                                                                    policy will be issued. this is the
+                                                                                    original
+                                                                                    policy document, valid for all
+                                                                                    purpose.</p>
+                                                                            </div>
+                                                                        </ul>
+                                                                    </div>
+
+                                                                    <div class="insurer-list">
+
+                                                                        <!-- kamal-start -->
+                                                                        <!-- <div class="col-sm-4 padding-0"
+                                                                            *ngIf="Status == '5'" tyle="width: 50%;">
+                                                                            <label
+                                                                                class="btn-success btn-xs download-btn btn-no">
+                                                                                Policy Number : <span>{{
+                                                                                    GetSharedPaymentUrl.PolicyNumber
+                                                                                    }}</span></label>
+                                                                        </div> -->
+                                                                        <div class="col-sm-4 a-btn"
+                                                                            *ngIf="Status == '5'" style="width: 50%;">
+                                                                             <a
+                                                                                *ngIf="(GetSharedPaymentUrl.PolicyPdf !='')"
+                                                                                (click)="ViewDocument(GetSharedPaymentUrl.PolicyPdf)"
+                                                                                class="btn  btn-primary btn-xs download-btn"><i
+                                                                                    class="fa fa-download"></i>
+                                                                                Policy Pdf</a>
+                                                                                
+                                                                                <a
+                                                                                *ngIf="(GetSharedPaymentUrl.PaymentProof !='')"
+                                                                                (click)="ViewDocument(GetSharedPaymentUrl.PaymentProof)"
+                                                                                class="btn  btn-primary btn-xs download-btn"><i
+                                                                                    class="fa fa-download"></i>
+                                                                                Payment Proof </a>
+                                                                        </div>
+
+
+                                                                        <!-- 
+
+
+                                                                        <div class="col-sm-4 last-btn"
+                                                                            *ngIf="Status == '5' &&  row.PunchingTeam == this.LoginUserId ">
+                                                                        </div> -->
+                                                                        <div class="col-sm-12"
+                                                                            *ngIf="((Status == '5' &&  QuoteAction == 'Admin') || (rows.PunchingTeam == this.LoginUserId)) && RejectedStatus == '0'">
+                                                                            <div class="d_flex flex_End">
+                                                                                <button class="btn btn-primary btn-sm"
+                                                                                    (click)="CreateAnSr()"
+                                                                                    type="submit">Edit Sr
+                                                                                </button>&nbsp;&nbsp;
+
+                                                                                <button type="button"
+                                                                                    (click)="RejectedQuoteModel(rows.Quotation)"
+                                                                                    class="btn btn-danger">
+                                                                                    Reject </button>
+                                                                            </div>
+
+
+
+
+                                                                            <!-- <form class="form"
+                                                                                (ngSubmit)="CompletedPayment()"
+                                                                                [formGroup]="CompletePaymentForm">
+                                                                                <div class="row form-row-padding">
+                                                                                    <div class="col-md-8"> <input
+                                                                                            type="text"
+                                                                                            placeholder="SR No"
+                                                                                            formControlName="CompletedSr_No"
+                                                                                            class="form-control col-sm-8">
+                                                                                        <div *ngIf="isSubmitted && formControls3.CompletedSr_No.errors "
+                                                                                            class="ValidationError">
+                                                                                            <div
+                                                                                                *ngIf="formControls3.CompletedSr_No.errors.required">
+                                                                                                Please Enter SrNo !
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-4 full-width">
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-success">
+                                                                                            Complete </button> <button
+                                                                                            type="button"
+                                                                                            (click)="RejectedQuoteModel(row.Quotation)"
+                                                                                            class="btn btn-danger">
+                                                                                            Reject </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form> -->
+
+
+                                                                            <!-- <div    *ngIf="Status == '5' &&  QuoteAction == 'Admin' && RejectedStatus == '0'">
+                                                                                <button class="btn btn-primary btn-sm"
+                                                                                    (click)="CreateAnSr()"
+                                                                                    type="submit">Edit Sr
+                                                                                </button>&nbsp;&nbsp;
+
+                                                                                <button type="button"
+                                                                                    (click)="RejectedQuoteModel(row.Quotation)"
+                                                                                    class="btn btn-danger">
+                                                                                    Reject </button>
+                                                                            </div> -->
+
+                                                                        </div>
+                                                                        <!-- kamal-end -->
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="Status >= '4' && Status != '8'" class="col-md-12" id="section-status">
+                                        <div class="box box-primary quote-status">
+                                            <div class="box-body-2 status-details">
+                                                <div class="row">
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header" id="heading-1">
+                                                                <h5 class="mb-0 collapse-heading collaps-a">
+                                                                    <a role="button" data-toggle="collapse"
+                                                                        href="#collapse-4" aria-expanded="true"
+                                                                        aria-controls="collapse-1"> <label
+                                                                            class="style_span">
+                                                                            Status - <span
+                                                                                *ngIf="rows.PaymentMode == 'Cash'">Payment
+                                                                                For Cash </span> <span
+                                                                                *ngIf="rows.PaymentMode == 'Cheque'">Payment
+                                                                                For Cheque </span> <span
+                                                                                *ngIf="rows.PaymentMode == 'Online'">Payment
+                                                                                URL Shared </span>
+
+                                                                        </label> <span class="singl-span">
+                                                                            <span>By -
+                                                                                <label>{{rows.AssignerName}}</label></span>
+                                                                            <span class="time-div">Time
+                                                                                -
+                                                                                <label>{{GetSharedPaymentUrl.paymentUrlDateTime}}</label></span></span>
+                                                                    </a>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapse-4" class="collapse"
+                                                                data-parent="#accordion" aria-labelledby="heading-1">
+                                                                <div class="card-body">
+                                                                    <div class="insurer-list">
+                                                                        <table class="table table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th scope="col"> Sr No.</th>
+                                                                                    <th scope="col"> Insurers</th>
+                                                                                    <th scope="col">Quotes</th>
+                                                                                    <th scope="col">Gross Premium</th>
+                                                                                    <th scope="col">Remarks</th>
+                                                                                    <!-- <th scope="col">Date</th> -->
+                                                                                    <!-- <th scope="col" *ngIf="Status == '4' && row.PaymentMode !='Online' ">Payment </th> <th scope="col">Date</th> -->
+                                                                                    <th scope="col"
+                                                                                        *ngIf="Status == '4'  && rows.PaymentMode == 'Online'">
+                                                                                        Action </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <!-- <td>{{row.SrNo}}</td> -->
+                                                                                    <td>1</td>
+                                                                                    <td>{{GetSharedPaymentUrl.insurer}}
+                                                                                    </td>
+                                                                                    <td class="btn-all"> <a
+                                                                                            href="{{GetSharedPaymentUrl.file}}"
+                                                                                            target="__blank"
+                                                                                            class="btn  btn-primary btn-xs download-btn"><i
+                                                                                                class="fa fa-download"></i>
+                                                                                            Download</a> <a
+                                                                                            class="btn btn-success btn-xs download-btn"><i
+                                                                                                class="fa fa-check"
+                                                                                                aria-hidden="true"></i>Accepted</a>
+                                                                                    </td>
+                                                                                    <td>{{GetSharedPaymentUrl.gross}}
+                                                                                    </td>
+                                                                                    <td>{{GetSharedPaymentUrl.remark}}
+                                                                                    </td>
+
+                                                                                    <!-- <td>{{GetSharedPaymentUrl.date}}</td> *ngIf="rows.PunchingTeam == this.LoginUserId && (Status == '3' || Status == '4') && RejectedStatus == '0' || (AssignBy == 'Admin' || rows.CreateUser_Id == this.LoginUserId) || (row.FirePolicy == 'New Business' ||  row.FirePolicy =='Rollover')" -->
+                                                                                    <td
+                                                                                        *ngIf="Status == '4' &&  rows.PaymentMode == 'Online'  && RejectedStatus == '0'">
+                                                                                        <a href="{{GetSharedPaymentUrl.PaymentUrl}}"
+                                                                                            target="_Blank"
+                                                                                            class="btn btn-info btn-xs download-btn"><i
+                                                                                                class="fa fa-check"
+                                                                                                aria-hidden="true"></i>Proceed
+                                                                                            to pay </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+
+                                                                        <div class="col-sm-12 padding-0"
+                                                                            *ngIf="(( Status == '4') && (rows.PunchingTeam == this.LoginUserId || rows.CreateUser_Id == this.LoginUserId))">
+                                                                            <form class="form"
+                                                                                (ngSubmit)="AddPaymentConfrimForm()"
+                                                                                [formGroup]="AddPaymentConfrim">
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-3"> <label>
+                                                                                            PolicyNumber:</label>
+                                                                                        <input type="text"
+                                                                                            formControlName="PolicyNumber"
+                                                                                            class="form-control"
+                                                                                            required>
+                                                                                        <div *ngIf="isSubmitted && formControlsAddPaymentConfrim.PolicyNumber.errors "
+                                                                                            class="ValidationError">
+                                                                                            <div
+                                                                                                *ngIf="formControlsAddPaymentConfrim.PolicyNumber.errors.required">
+                                                                                                Please Enter
+                                                                                                PolicyNumber ! </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-3">
+                                                                                        <label>PolicyPdf:</label> <input
+                                                                                            type="file"
+                                                                                            (change)="UploadDocss($event,'PolicyPdf')"
+                                                                                            formControlName="PolicyPdf"
+                                                                                            class="form-control"
+                                                                                            required>
+                                                                                        <div *ngIf="isSubmitted && formControlsAddPaymentConfrim.PolicyPdf.errors "
+                                                                                            class="ValidationError">
+                                                                                            <div
+                                                                                                *ngIf="formControlsAddPaymentConfrim.PolicyPdf.errors.required">
+                                                                                                Please Enter Policy Pdf!
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-3">
+                                                                                        <label>PaymentProof:</label>
+                                                                                        <input type="file"
+                                                                                            (change)="UploadDocss($event,'PaymentProof')"
+                                                                                            formControlName="PaymentProof"
+                                                                                            class="form-control">
+                                                                                        <div *ngIf="isSubmitted && formControlsAddPaymentConfrim.PaymentProof.errors "
+                                                                                            class="ValidationError">
+                                                                                            <div
+                                                                                                *ngIf="formControlsAddPaymentConfrim.PaymentProof.errors.required">
+                                                                                                Please Enter Payment
+                                                                                                Proof ! </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-3 sub-btn">
+                                                                                        <button
+                                                                                            class="btn btn-primary btn-sm"
+                                                                                            type="submit">Submit
+                                                                                        </button>&nbsp;&nbsp;
+                                                                                        <button *ngIf="rows.AssignUsertype == 'employee' && rows.PunchingTeam == this.LoginUserId && Status == '4' && RejectedStatus == '0' "
+                                                                                            type="button" (click)="RejectedQuoteModel(rows.Quotation)" class="btn btn-danger btn-sm sub-btn-tbl">
+                                                                                            Reject
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="Status >= '3' || Status == '8'" class="col-md-12" id="section-status">
+                                        <div class="box box-primary quote-status">
+                                            <div class="box-body-2 status-details">
+                                                <div class="row">
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header" id="heading-1">
+                                                                <h5 class="mb-0 collapse-heading collaps-a collaps-a-span">
+                                                                    <a role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="true"
+                                                                        aria-controls="collapse-1"> <label class="style_span"> Status - Quote Accepted
+                                                                        </label> <span class="singl-span"> <span>By - <label>{{rows.CreaterName}}</label></span>
+                                                                        <span class="time-div">Time - <label>{{this.GetSharedPaymentUrl.SharedQuoteAccpetTime}}</label></span></span>
+                                                                    </a>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapse-3" class="collapse"
+                                                                data-parent="#accordion" aria-labelledby="heading-1">
+                                                                <div class="card-body">
+                                                                    <div class="insurer-list">
+                                                                        <table class="table table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th scope="col"> Sr No.</th>
+                                                                                    <th scope="col"> Insurers</th>
+                                                                                    <th scope="col">Quotes</th>
+                                                                                    <th scope="col">Gross Premium</th>
+                                                                                    <th scope="col">Remarks</th>
+                                                                                    <!-- <th scope="col">Date</th> -->
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>1</td>
+                                                                                    <td>{{this.GetSharedPaymentUrl.insurer}}
+                                                                                    </td>
+                                                                                    <td class="btn-all">
+                                                                                    <a *ngIf="(this.GetSharedPaymentUrl.file !='')" (click)="ViewDocument(this.GetSharedPaymentUrl.file)" class="btn  btn-primary btn-xs download-btn"><i  class="fa fa-download"></i>Download</a> 
+                                                                                    <a class="btn btn-success btn-xs download-btn"><i class="fa fa-check"   aria-hidden="true"></i>Accepted</a>
+                                                                                        <!-- <a  *ngIf="rows.SurveyStatus == '1' && rows.SurveyId =='0'" routerLink="/survey/create-requests/{{rows.Quotation}}"><i class="fa fa-check"                                                      aria-hidden="true"></i>Raise Survay</a> -->
+                                                                                    </td>
+                                                                                    <td>{{GetSharedPaymentUrl.gross}}
+                                                                                    </td>
+                                                                                    <td>{{GetSharedPaymentUrl.remark}}
+                                                                                    </td>
+                                                                                    <td>{{GetSharedPaymentUrl.date}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+
+                                                                        <div class="col-sm-12"  *ngIf="rows.PunchingTeam == this.LoginUserId && (Status == '3') && RejectedStatus == '0'">
+                                                                            <form class="form"
+                                                                                (ngSubmit)="AddPaymentUrlForm()"
+                                                                                [formGroup]="PaymentUrlQuoteForm">
+                                                                                <div class="row form-row-padding">
+                                                                                    <label class="col-md-12">Payment Url</label>
+                                                                                    <div class="col-md-4">
+                                                                                        <select class="form-control" formControlName="PaymentMethod" name="PaymentMethod" id="PaymentMethod">
+                                                                                            <!-- <option disabled value="">
+                                                                                                Payment Mode </option> -->
+                                                                                            <option value="Cash">Cash </option>
+                                                                                            <option value="Online"> Online</option>
+                                                                                            <option value="Cheque"> Cheque</option>
+                                                                                        </select> <span *ngIf="isSubmitted && formControls1.PaymentMethod.errors" class="form-text text-muted">
+                                                                                            <span *ngIf="formControls1.PaymentMethod.errors.required" style="color:red;">Field is required..!</span>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div class="col-md-4" *ngIf="PaymentUrlQuoteForm.value['PaymentMethod'] == 'Online'">
+                                                                                        <input type="text" formControlName="PaymentUrl" placeholder="Enter Payment  Url"class="form-control">
+                                                                                        <div *ngIf="isSubmitted && formControls1.PaymentUrl.errors" class="ValidationError">
+                                                                                            <div *ngIf="formControls1.PaymentUrl.errors.required"> Please Enter Payment  Url! </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-4" *ngIf="PaymentUrlQuoteForm.value['PaymentMethod'] != 'Cheque'">
+                                                                                        <input type="text" formControlName="UtrNumber" placeholder="Enter UTR Number" class="form-control">
+                                                                                        <div *ngIf="isSubmitted && formControls1.UtrNumber.errors"  class="ValidationError">
+                                                                                            <div *ngIf="formControls1.UtrNumber.errors.required"> Please Enter UTR Number! </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-md-4" *ngIf="PaymentUrlQuoteForm.value['PaymentMethod'] == 'Cheque'">
+                                                                                        <input type="file" (change)="UploadDocss($event,'chequeImage')" formControlName="chequeImage" class="form-control">
+                                                                                        <div *ngIf="isSubmitted && formControls1.chequeImage.errors "
+                                                                                            class="ValidationError">
+                                                                                            <div *ngIf="formControls1.chequeImage.errors.required"> Please Select Cheque Image ! </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-4" *ngIf="PaymentUrlQuoteForm.value['PaymentMethod'] == 'Cash'">
+                                                                                        <input type="file" (change)="UploadDocss($event,'CashProof')" formControlName="CashProof" class="form-control">
+                                                                                        <div *ngIf="isSubmitted && formControls1.CashProof.errors"
+                                                                                            class="ValidationError">
+                                                                                            <div *ngIf="formControls1.CashProof.errors.required"> Please Select Cash Proof Image ! </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-4"  *ngIf="PaymentUrlQuoteForm.value['PaymentMethod'] == 'Cheque'">
+                                                                                        <input type="text" formControlName="Cheque_No" placeholder="Enter Cheque No" class="form-control">
+                                                                                        <div *ngIf="isSubmitted && formControls1.Cheque_No.errors"
+                                                                                            class="ValidationError">
+                                                                                            <div *ngIf="formControls1.Cheque_No.errors.required">  Please Enter Cheque No ! </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-4" style="padding-top: 20px;"> 
+                                                                                        <button class="btn btn-primary btn-sm"  type="submit">Submit </button>
+                                                                                        <button *ngIf="rows.AssignUsertype == 'employee' && rows.PunchingTeam == this.LoginUserId && Status == '3' && RejectedStatus == '0' "
+                                                                                            type="button"  (click)="RejectedQuoteModel(rows.Quotation)" class="btn btn-danger btn-sm sub-btn-tbl">
+                                                                                            Reject
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="Status >= '2'" class="col-md-12" id="section-status">
+                                        <div class="box box-primary quote-status">
+                                            <div class="box-body-2 status-details">
+                                                <div class="row">
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header" id="heading-1">
+                                                                <h5 class="mb-0 collapse-heading collaps-a">
+                                                                    <a role="button" data-toggle="collapse"
+                                                                        href="#collapse-2" aria-expanded="true"
+                                                                        aria-controls="collapse-1"> <label
+                                                                            class="style_span"> Status - Quotes Released
+                                                                        </label> <span class="singl-span">
+                                                                            <span>By -
+                                                                                <label>{{rows.AssignerName}}
+                                                                                </label></span>
+                                                                            <span class="time-div">Time
+                                                                                -
+                                                                                <label>{{RequestedQuoteDate}}</label></span></span>
+                                                                    </a>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapse-2" class="collapse"
+                                                                data-parent="#accordion" aria-labelledby="heading-1">
+                                                                <div class="card-body">
+                                                                    <div class="insurer-list">
+                                                                        <table class="table table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th scope="col"> Insurers</th>
+                                                                                    <!-- <th scope="col"> PaymentMode</th> -->
+                                                                                    <th scope="col">Quotes <label
+                                                                                            *ngIf="rows.SurveyStatus == '1'"
+                                                                                            class="label label-danger">Survay
+                                                                                            Required</label> </th>
+                                                                                    <th scope="col">Gross Premium</th>
+                                                                                    <th scope="col">Remarks</th>
+                                                                                    <th scope="col">Date</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody
+                                                                                *ngIf="this.RequestedQuote?.length != 0">
+                                                                                <tr
+                                                                                    *ngFor="let row of this.RequestedQuote; let i=index;">
+                                                                                    <td>{{row.insurer}}</td>
+
+
+                                                                                    <td class="btn-all"> <a
+                                                                                            *ngIf="(this.row.file !='')"
+                                                                                            (click)="ViewDocument(this.row.file)"
+                                                                                            class="btn  btn-primary btn-xs download-btn"><i
+                                                                                                class="fa fa-download"></i>
+                                                                                            Download</a>
+
+                                                                                        <a *ngIf="(Status == '2' || Status == '3' ) &&  ( (QuoteAction == 'Creater' && rows.CreateUser_Id == this.LoginUserId)  ) && RejectedStatus == '0' && GetSharedPaymentUrl.Id != row.id"
+                                                                                            data-toggle="modal"
+                                                                                            (click)="acceptQuoteValueManger(row.id,0,rows.Quotation)"
+                                                                                            data-target="#AddCatSubCat"
+                                                                                            data-backdrop="static"
+                                                                                            data-keyboard="false"
+                                                                                            class="btn btn-success btn-xs "><i
+                                                                                                aria-hidden="true"></i>Accept</a>
+
+
+                                                                                        <a *ngIf="(Status == '2' || Status == '3' ) &&  (  rows.CurrentUser_Id== this.LoginUserId)  && RejectedStatus == '0' && GetSharedPaymentUrl.Id != row.id"
+                                                                                            data-toggle="modal"
+                                                                                            (click)="acceptQuoteValueManger(row.id,0,rows.Quotation)"
+                                                                                            data-target="#AddCatSubCat"
+                                                                                            data-backdrop="static"
+                                                                                            data-keyboard="false"
+                                                                                            class="btn btn-success btn-xs "><i
+                                                                                                aria-hidden="true"></i>Accept</a>
+
+
+                                                                                        <!-- <a *ngIf="(Status == '2' || Status == '3' ) &&  (rows.CurrentUser_Id == this.LoginUserId || rows.CreateUser_Id == this.LoginUserId)  && RejectedStatus == '0' && GetSharedPaymentUrl.Id != row.id"
+                                                                                            (click)="acceptQuoteValueManger(row.id,0,rows.Quotation)"
+                                                                                            class="btn btn-success btn-xs "><i
+                                                                                                aria-hidden="true"></i>Accept</a> -->
+
+
+                                                                                        <a *ngIf="GetSharedPaymentUrl.Id == row.id"
+                                                                                            class="btn btn-success btn-xs download-btn"><i
+                                                                                                class="fa fa-check"
+                                                                                                aria-hidden="true"></i>Accepted</a>
+
+                                                                                    </td>
+
+
+                                                                                    <td>{{row.gross}}</td>
+                                                                                    <td>{{row.remark}}</td>
+                                                                                    <td>{{row.Date}}</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                            <button
+                                                                                *ngIf="rows.AssignUsertype == 'employee' && QuoteAction == 'Admin'  && rows.CurrentUser_Id == this.LoginUserId && Status == '2' && RejectedStatus == '0'"
+                                                                                type="button"
+                                                                                (click)="RejectedQuoteModel(rows.Quotation)"
+                                                                                class="btn btn-danger btn-sm sub-btn-tbl">
+                                                                                Reject
+                                                                            </button>&nbsp;&nbsp;
+
+                                                                            <tbody *ngIf="RequestedQuote?.length == 0">
+                                                                                <tr>
+                                                                                    <td colspan="8" align="center">No
+                                                                                        data Available !</td>
+                                                                                </tr>
+                                                                            <tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="Status >= '1'" class="col-md-12" id="section-status">
+                                        <div class="box box-primary quote-status">
+                                            <div class="box-body-2 status-details">
+                                                <div class="row">
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header" id="heading-1">
+                                                                <h5 class="mb-0 collapse-heading collaps-a">
+                                                                    <a role="button" data-toggle="collapse"
+                                                                        href="#collapse-1" aria-expanded="true"
+                                                                        aria-controls="collapse-1"> <label
+                                                                            class="style_span"> Status - Quote Requested
+                                                                        </label> <span class="singl-span">
+                                                                            <span>By -
+                                                                                <label>{{rows.CreaterName}}</label></span>
+                                                                            <span class="time-div">Time -
+                                                                                <label>{{rows.CreateDate}}</label></span></span>
+                                                                    </a>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapse-1" class="collapse"
+                                                                data-parent="#accordion" aria-labelledby="heading-1">
+                                                                <div class="card-body">
+                                                                    <div class="insurer-list"
+                                                                        *ngIf="(Status == '1' || Status == '2' ) &&  QuoteAction == 'Admin' && RejectedStatus == '0' ">
+                                                                        <form class="form"
+                                                                            (ngSubmit)="AddSharedCompany()"
+                                                                            [formGroup]="SharedQuoteForm">
+                                                                            <table class="table table-bordered">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th scope="col">Insurers</th>
+                                                                                        <th scope="col">Quotes</th>
+                                                                                        <th scope="col">Gross Premium
+                                                                                        </th>
+                                                                                        <th scope="col">Remarks</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody formArrayName="quantities">
+                                                                                    <tr *ngFor="let quantity of quantities().controls; let i=index"
+                                                                                        [formGroupName]="i">
+                                                                                        <td class="dropdownmaincl">
+                                                                                            <ng-multiselect-dropdown
+                                                                                                [settings]="dropdownSettingsType"
+                                                                                                class="form-control"
+                                                                                                name="Insurer"
+                                                                                                placeholder="Select&nbsp;Insurer"
+                                                                                                [data]="Company"
+                                                                                                formControlName="Insurer"
+                                                                                                (onSelect)="onItemSelectShareRowWise($event)"
+                                                                                                (onDeSelect)="onItemDeSelectShareRowWise($event)">
+                                                                                            </ng-multiselect-dropdown>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <input type="File"
+                                                                                                formControlName="Files"
+                                                                                                class="form-control"
+                                                                                                (change)="UploadDocs($event,'Image_'+(i+1))">
+                                                                                        </td>
+                                                                                        <td> <input type="number"
+                                                                                                formControlName="GrossPremium"
+                                                                                                maxlength="10"
+                                                                                                class="form-control"
+                                                                                                placeholder="Gross Premium">
+                                                                                            <!-- <span *ngIf="isSubmitted && Formcontrols.GrossPremium.errors" class="ValidationError">
+                                                                                                    <span *ngIf="Formcontrols.GrossPremium.errors.pattern">Special characters not allowed</span>
+                                                                                                 </span> -->
+                                                                                        </td>
+                                                                                        <td> <input type="text"
+                                                                                                formControlName="Remarks"
+                                                                                                class="form-control"
+                                                                                                placeholder="Remarks">
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                            <div class="col-sm-12 padding-0">
+                                                                                <div class="col-sm-12">
+                                                                                    <div class="col-sm-5"></div>
+                                                                                    <div class="col-sm-3 sub-btn">
+                                                                                        <button
+                                                                                            *ngIf="rows.AssignUsertype == 'employee' && Status == '1'"
+                                                                                            type="button"
+                                                                                            (click)="RejectedQuoteModel(rows.Quotation)"
+                                                                                            class="btn btn-danger btn-sm sub-btn-tbl">
+                                                                                            Reject
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="col-sm-3 sub-btn">
+                                                                                        <button
+                                                                                            *ngIf="rows.AssignUsertype == 'employee'"
+                                                                                            class="btn btn-primary btn-sm sub-btn-tbl"
+                                                                                            type="submit">Submit
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <!-- DIRECT CHAT -->
+                                <div class="box box-info direct-chat direct-chat-info">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Offline Quote Discussion</h3>
+                                        <div class="box-tools pull-right"> </div>
+                                    </div>
+                                    <div class="box-body">
+                                        <!-- Conversations are loaded here -->
+                                        <div #scrollframe id="directmessages" class="direct-chat-messages frame"
+                                            (scroll)="scrolled($event)">
+                                            <div *ngFor="let m of Messages;"
+                                                class="direct-chat-msg {{m.MainClassName}} item" #item>
+                                                <div class="direct-chat-info clearfix"> <span
+                                                        class="direct-chat-name pull-{{m.ClassName}}">{{m.Name}}</span>
+                                                    <span
+                                                        class="direct-chat-timestamp pull-{{m.DateTimeClassName}}">{{m.DateTime}}</span>
+                                                </div>
+                                                <!-- /.direct-chat-info --><img class="direct-chat-img"
+                                                    src="assets/dist/img/user2-160x160.png">
+                                                <!-- /.direct-chat-img -->
+                                                <div *ngIf="m.Message != ''" class="direct-chat-text"
+                                                    [innerHTML]="m.Message">
+                                                </div>
+                                                <div *ngIf="m.Is_Attachement == '1'" class="attachment">
+                                                    <h6>Attachments:</h6>
+                                                    <a href="javascript:void" (click)="ViewDocument(m.Attachment_Url)">
+                                                        <p class="filename"> {{m.Attachment_Name}} </p>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+                                    <div class="box-footer"
+                                        *ngIf="this.RejectedStatus != '1' && Status != '6' && rows.AssignUsertype == 'employee'">
+                                        <form [formGroup]="ChatForm" (ngSubmit)="Send()" method="post">
+                                            <div class="input-group"> <input type="text" formControlName="Message"
+                                                    placeholder="type message..." class="form-control"> <span
+                                                    class="input-group-btn"> <label for="file-input"> <a type="button"
+                                                            class="btn"> <input id="file-input"
+                                                                (change)="UploadAttachment($event)"
+                                                                style="display: none;" type="file"> <i
+                                                                class="fa fa-paperclip"></i></a></label> <button
+                                                        type="submit" class="btn btn-info btn-flat">Send</button>
+                                                </span> </div>
+                                        </form>
+                                    </div>
+                                    <!-- /.box-footer-->
+                                </div>
+                                <!--/.direct-chat -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--
+ /.content -->
+</div>

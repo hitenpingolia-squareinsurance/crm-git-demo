@@ -1,0 +1,35 @@
+<div class="">
+
+
+      <h4 class="heading_popup">Priority Updation Log</h4>
+      <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+
+
+
+  <div class="table-responsive mydiv">
+    <table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th style="text-align:center;">SNo</th>
+          <th style="text-align:center;">Priority Level</th>
+          <th style="text-align:center;">Add Stamp </th>
+        </tr>
+      </thead>
+
+      <tbody *ngIf="dataAr?.length != 0">
+        <tr *ngFor="let row of dataAr; let i=index;">
+          <td>{{row.SrNo}} </td>
+          <td>{{row.PriorityLevel}} </td>
+          <td>{{row.AddStamp}} </td>
+        </tr>
+      </tbody>
+
+      <tbody *ngIf="dataAr?.length == 0">
+        <tr>
+          <td colspan="3" align="center">No data Available !</td>
+        </tr>
+      <tbody>
+   </table>
+  </div>
+   
+  </div>

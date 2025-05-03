@@ -1,0 +1,95 @@
+<div class="content-wrapper">
+
+  <!-- Content Header (Page header) -->
+
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box">
+          <div class="box-header" style="background-color: #2cb2b3; margin-top: -3px;">
+            <div class="row">
+              <div class="col-md-4">Backend Notification's
+               </div>
+              <div class="col-md-4">&nbsp;</div>
+              <div class="col-md-4">
+                <!-- <button class="btn btn-primary nextBtn pull-right" (click)="MeetingURlAdd()" style="margin-right: 5px;">
+                    <i class="fa fa-plus">Add Meeting URL </i> </button> -->
+              </div>
+            </div>
+          </div>
+          <div class="box-body">
+            <!-- <app-square-filter (postCreated)="SearchData($event)"></app-square-filter> -->
+
+
+            <form (ngSubmit)="submit()" [formGroup]="AddNotify">
+              <div class="popup-content-body">
+                <div class="row popup-form">
+
+
+                  <div class="col-md-6">
+                    <label for="state">Type</label>
+
+                    <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="Users"
+                      formControlName="type" [settings]="dropdownSettingsMultiselect">
+                    </ng-multiselect-dropdown>
+
+                    <div *ngIf="isSubmitted && formControls.type.errors" class="Validationerrors">
+                      <div *ngIf="formControls.type.errors.required"><span style="color: red;">Please select
+                          Type!</span></div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 next">
+                    <label for="state">Is best deal</label>
+                    <select name="type" formControlName="bestDeal" class="form-control" data-parsley-required="true">
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 next">
+                    <label for="state">File</label>
+                    <input type="file" class="form-control" (change)="UploadDocs($event,'file')" formControlName="file">
+                    <!-- <div *ngIf="isSubmitted && formControls.file.errors" class="Validationerrors">
+                      <div *ngIf="formControls.file.errors.required"><span style="color: red;">Please Choose
+                          file!</span></div>
+                    </div> -->
+                  </div>
+
+
+
+                  <div class="col-md-12 next">
+                    <label for="state">Title</label>
+                    <textarea class="form-control" formControlName="title"></textarea>
+                    <div *ngIf="isSubmitted && formControls.title.errors" class="Validationerrors">
+                      <div *ngIf="formControls.title.errors.required"><span style="color: red;">Please enter
+                          title!</span></div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-md-12 next">
+                    <label for="state">Message</label>
+                    <textarea class="form-control" formControlName="message"></textarea>
+                    <div *ngIf="isSubmitted && formControls.message.errors" class="Validationerrors">
+                      <div *ngIf="formControls.message.errors.required"><span style="color: red;">Please enter
+                          message!</span></div>
+                    </div>
+                  </div>
+
+
+                  <div class="clearfix"></div>
+                  <div class="button-div-yes-no next" align="right" style="margin-top: 10px; margin-left: 20px;">
+                    <button type="submit" class="btn btn-primary">Send</button>&nbsp;
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

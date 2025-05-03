@@ -1,0 +1,1213 @@
+<div class="row">
+
+    <div class="modal-header" style="text-align: center;">
+        <h4 class="modal-title">Add Leads</h4>
+    </div>
+</div>
+
+<form (ngSubmit)="submit()" [formGroup]="LeadForm" >
+
+    <div class="popup-content-body">
+
+        <div class="row">
+
+            <h4 style="margin-left: 15px;">Customer Leads</h4>
+        </div>
+
+        <hr style="border-top: dotted 3px; margin-top: 0px;" />
+        <div class="row">
+            <div class="col-md-3">
+                <label>Lead Type</label>
+                    <ng-multiselect-dropdown class="form-control" [data]="LeadType" formControlName="lead"
+                        [settings]="dropdownSettingsType" (change)="FileType_Status(leader,vehicles,Filetypes,Policyexpiryselect)" (onSelect)="onSelect('lead')">
+                    </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.lead.errors" class="Validationerrors">
+                    <div *ngIf="formControls.lead.errors.required"><span style="color: red;">Please
+                            select Lead!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <label>Name</label>
+                <input type="text" class="form-control" formControlName="name">
+                <div *ngIf="isSubmitted && formControls.name.errors" class="Validationerrors">
+                    <div *ngIf="formControls.name.errors.required"><span style="color: red;">Please enter
+                            name!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label>Mobile</label>
+                <input type="text" class="form-control" formControlName="mobile" maxlength="10">
+                <div *ngIf="isSubmitted && formControls.mobile.errors" class="Validationerrors">
+                    <div *ngIf="formControls.mobile.errors.required"><span style="color: red;">Please enter
+                            mobile!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <label>Email</label>
+                <input type="text" class="form-control" formControlName="email">
+                <div *ngIf="isSubmitted && formControls.email.errors" class="Validationerrors">
+                    <div *ngIf="formControls.email.errors.required"><span style="color: red;">Please enter
+                            email!</span></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" *ngIf="(leader == '1' || leader == '2')">
+            <h4 style="margin-left: 15px;">Vehicle Details</h4>
+        </div>
+
+        <hr *ngIf="(leader == '1' || leader == '2')" style="border-top: dotted 3px; margin-top: 0px;" />
+
+        <div class="row" *ngIf="(leader == '1' || leader == '2')">
+
+
+            <div class="col-md-3">
+                <label>Vehicle Owned Type</label>
+                <ng-multiselect-dropdown class="form-control" [data]="Vehicle" formControlName="vehicle"
+                    [settings]="dropdownSettingsType" (onSelect)="onSelect('vehicle')">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.vehicle.errors" class="Validationerrors">
+                    <div *ngIf="formControls.vehicle.errors.required"><span style="color: red;">Please
+                            select vehicle!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <label>File Type</label>
+                <ng-multiselect-dropdown class="form-control" [data]="FileType" formControlName="filetype"
+                    [settings]="dropdownSettingsType" (onSelect)="onSelect('FileType')">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.filetype.errors" class="Validationerrors">
+                    <div *ngIf="formControls.filetype.errors.required"><span style="color: red;">Please select
+                            filetype !</span></div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-3">
+                <label class="form-control-label" for="RegistrationNumber">Registration
+                    Number</label>
+
+                <div class="outer_input" id="register_number">
+                    <input class="myinput AutoUppercase" formControlName="Registration_State_Code" type="text"
+                        maxlength="2" placeholder="XX">
+                    -
+                    <input *ngIf="Filetypes == 'Rollover'" class="myinput AutoUppercase" formControlName="Registration_District_Code" placeholder="XX"
+                        type="text" appOnlynumber maxlength="2">
+                    <b>
+                        - </b>
+
+                    <input *ngIf="Filetypes == 'Rollover'" class="myinput AutoUppercase" placeholder="XXX" formControlName="Registration_City_Code"
+                        type="text" maxlength="3">
+
+                        <input *ngIf="Filetypes == 'New'" class="myinput AutoUppercase" placeholder="XX" formControlName="Registration_City_Code"
+                        type="text" maxlength="3">
+
+                    <b>
+                        - </b>
+
+                    <input *ngIf="Filetypes == 'Rollover'" class="myinput AutoUppercase" formControlName="Registration_Code" type="text"
+                        placeholder="XXXX" appOnlynumber maxlength="4">
+
+                </div>
+                <div *ngIf="isSubmitted && formControls.Registration_District_Code.errors " class="ValidationError">
+                    <div *ngIf="formControls.Registration_District_Code.errors.required">
+                        Please Enter
+                        District number!</div>
+                </div>
+                <div *ngIf="isSubmitted && formControls.Registration_Code.errors && Filetypes == 'Rollover'" class="ValidationError">
+                    <div *ngIf="formControls.Registration_Code.errors.required">
+                        Please Enter
+                        Registration number!</div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-3" *ngIf="Filetypes == 'Rollover'">
+                <label>Policy Expiry</label>
+                <ng-multiselect-dropdown class="form-control" [data]="PolicyExpiry" formControlName="policyexpiry"
+                    [settings]="dropdownSettingsType" (onSelect)="onSelect('policyexpire')">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.policyexpiry.errors" class="Validationerrors">
+                    <div *ngIf="formControls.policyexpiry.errors.required"><span style="color: red;">Please select
+                            policyexpiry!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <label>Registration Year</label>
+                <ng-multiselect-dropdown class="form-control" [data]="RegistrationY" formControlName="registrationyear"
+                    [settings]="dropdownSettingsType">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.registrationyear.errors" class="Validationerrors">
+                    <div *ngIf="formControls.registrationyear.errors.required"><span style="color: red;">Please select
+                            registrationyear!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3" *ngIf="Filetypes == 'Rollover'">
+                <label>Policy Type</label>
+                <ng-multiselect-dropdown class="form-control" [data]="PolicyType" formControlName="policytype"
+                    [settings]="dropdownSettingsType">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.policytype.errors" class="Validationerrors">
+                    <div *ngIf="formControls.policytype.errors.required"><span style="color: red;">Please select
+                        policytype!</span></div>
+                </div>
+               
+            </div>
+
+
+            <div class="col-md-3" *ngIf="vehicles == 'individual'">
+                <label>PA Owner</label>
+                <ng-multiselect-dropdown class="form-control" [data]="PAOwner" formControlName="paowner"
+                    [settings]="dropdownSettingsType">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.paowner.errors" class="Validationerrors">
+                    <div *ngIf="formControls.paowner.errors.required"><span style="color: red;">Please select
+                            paowner!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-3" *ngIf="Filetypes == 'Rollover'">
+                <label>NCB</label>
+                <ng-multiselect-dropdown class="form-control" [data]="NCB" formControlName="ncb"
+                    [settings]="dropdownSettingsType">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.ncb.errors" class="Validationerrors">
+                    <div *ngIf="formControls.ncb.errors.required"><span style="color: red;">Please select
+                            ncb!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label>IDV</label>
+                <input type="text" class="form-control" formControlName="idv" placeholder="&#8377;1000">
+                <div *ngIf="isSubmitted && formControls.idv.errors" class="Validationerrors">
+                    <div *ngIf="formControls.idv.errors.required"><span style="color: red;">Please enter
+                            idv!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <label>Engine NO</label>
+                <input type="text" class="form-control" formControlName="engineno">
+                <div *ngIf="isSubmitted && formControls.engineno.errors" class="Validationerrors">
+                    <div *ngIf="formControls.engineno.errors.required"><span style="color: red;">Please enter
+                            engineno!</span></div>
+                </div>
+            </div>
+            
+
+            <div class="col-md-3">
+                <label>Chassis No</label>
+                <input type="text" class="form-control" formControlName="chassisno">
+                <div *ngIf="isSubmitted && formControls.chassisno.errors" class="Validationerrors">
+                    <div *ngIf="formControls.chassisno.errors.required"><span style="color: red;">Please enter
+                            chassisno!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label>Policy No</label>
+                <input type="text" class="form-control" formControlName="newpolicyno">
+                <div *ngIf="isSubmitted && formControls.newpolicyno.errors" class="Validationerrors">
+                    <div *ngIf="formControls.newpolicyno.errors.required"><span style="color: red;">Please enter
+                            newpolicyno!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label>Insurer*</label>
+                <ng-multiselect-dropdown class="form-control" name="insurer" [data]="Company" formControlName="insurer"
+                    [settings]="dropdownSettingsType">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.insurer.errors" class="Validationerrors">
+                    <div *ngIf="formControls.insurer.errors.required"><span style="color: red;">Please select
+                            insurer!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <label>Make</label>
+                <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="Make"
+                    formControlName="make" [settings]="dropdownSettingsType" (onSelect)="onItemSelect($event,'Make')"
+                    (onDeSelect)="onItemDeSelect($event,'Make')">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.make.errors" class="Validationerrors">
+                    <div *ngIf="formControls.make.errors.required"><span style="color: red;">Please select
+                            make!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <label>Modal</label>
+                <ng-multiselect-dropdown class="form-control" placeholder="--Select--" [data]="Modal"
+                    formControlName="modal" [settings]="dropdownSettingsMultiselect"
+                    (onSelect)="onItemSelect($event,'Modal')" (onDeSelect)="onItemDeSelect($event,'Modal')">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.modal.errors" class="Validationerrors">
+                    <div *ngIf="formControls.modal.errors.required"><span style="color: red;">Please select
+                            modal!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <label>Fuel Type</label>
+                <ng-multiselect-dropdown class="form-control" [data]="FuleTypes" formControlName="fuletype"
+                    [settings]="dropdownSettingsType" (onSelect)="onItemSelect($event,'Fuel')"
+                    (onDeSelect)="onItemDeSelect($event,'Fuel')">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.fuletype.errors" class="Validationerrors">
+                    <div *ngIf="formControls.fuletype.errors.required"><span style="color: red;">Please select
+                            fuletype!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <label>Variant</label>
+                <ng-multiselect-dropdown class="form-control" [data]="Variant" formControlName="variant"
+                    [settings]="dropdownSettingsType" (onSelect)="onItemSelect($event,'Variant')"
+                    (onDeSelect)="onItemDeSelect($event,'Variant')">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.variant.errors" class="Validationerrors">
+                    <div *ngIf="formControls.variant.errors.required"><span style="color: red;">Please select
+                            variant!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3"
+                *ngIf="Policyexpiryselect == 'not_expired' || Policyexpiryselect == 'expired_within_90_days' || Policyexpiryselect == 'expired_more_than_90_days'">
+                <label>Previous Policy No.</label>
+                <input type="text" class="form-control" formControlName="previouspolicyno">
+                <div *ngIf="isSubmitted && formControls.previouspolicyno.errors" class="Validationerrors">
+                    <div *ngIf="formControls.previouspolicyno.errors.required"><span style="color: red;">Please enter
+                            previouspolicyno!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-3"
+                *ngIf="Policyexpiryselect == 'not_expired' || Policyexpiryselect == 'expired_within_90_days' || Policyexpiryselect == 'expired_more_than_90_days'">
+                <label>Policy Expiry Date</label>
+                <input type="date" class="form-control" formControlName="policyexpirydate">
+                <div *ngIf="isSubmitted && formControls.policyexpirydate.errors" class="Validationerrors">
+                    <div *ngIf="formControls.policyexpirydate.errors.required"><span style="color: red;">Please select
+                            policyexpirydate!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3"
+                *ngIf="Policyexpiryselect == 'not_expired' || Policyexpiryselect == 'expired_within_90_days' || Policyexpiryselect == 'expired_more_than_90_days'">
+                <label>Previous Policy Documents</label>
+                <input type="file" class="form-control" formControlName="previouspolicydocuments"
+                    (change)="UploadDocs($event,'previouspolicydocuments')" >
+                <div *ngIf="isSubmitted && formControls.previouspolicydocuments.errors" class="Validationerrors">
+                    <div *ngIf="formControls.previouspolicydocuments.errors.required"><span style="color: red;">Please
+                            select
+                            previouspolicydocuments!</span></div>
+                </div>
+            </div>
+
+            
+            <div class="col-md-3"
+                *ngIf="Policyexpiryselect == 'not_expired' || Policyexpiryselect == 'expired_within_90_days' || Policyexpiryselect == 'expired_more_than_90_days'">
+                <label>Previous Insurer*</label>
+                <ng-multiselect-dropdown class="form-control" [data]="Company"
+                    formControlName="previousinsurer" [settings]="dropdownSettingsType">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.previousinsurer.errors" class="Validationerrors">
+                    <div *ngIf="formControls.previousinsurer.errors.required"><span style="color: red;">Please select
+                            previousinsurer!</span></div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-3">
+                <label>Quotes Company</label>
+                <ng-multiselect-dropdown class="form-control" [data]="Company" formControlName="quotescompany"
+                [settings]="dropdownSettingsMultiselect">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.quotescompany.errors" class="Validationerrors">
+                    <div *ngIf="formControls.quotescompany.errors.required"><span style="color: red;">Please enter
+                            quotes company!</span></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" *ngIf="leader == '1' || leader == '2' ">
+            <h4 style="margin-left: 15px;">Addon</h4>
+        </div>
+
+        <hr *ngIf="(leader == '1' || leader == '2')" style="border-top: dotted 3px; margin-top: 10px;" />
+
+        <div class="row" *ngIf="(leader == '1' || leader == '2')">
+
+            <div class="col-md-3" >
+                <label for="Item">Addon</label>
+                <ng-multiselect-dropdown *ngIf="(leader == '1')" class="form-control" placeholder="--Select--" [data]="Addonsss"
+                    formControlName="addon" [settings]="dropdownSettingsMultiselect">
+                </ng-multiselect-dropdown>
+                <ng-multiselect-dropdown *ngIf="(leader == '2')" class="form-control" placeholder="--Select--" [data]="Addon"
+                formControlName="addon" [settings]="dropdownSettingsMultiselect">
+            </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.addon.errors" class="ValidationError">
+                    <div *ngIf="formControls.addon.errors.required">Please select Addon!</div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3" *ngIf="Filetypes == 'New'">
+                <label for="Item">Invoice</label>
+                <input type="file" class="form-control" formControlName="invoice"
+                    (change)="UploadDocs($event,'invoice')">
+                <div *ngIf="isSubmitted && formControls.invoice.errors" class="ValidationError">
+                    <div *ngIf="formControls.invoice.errors.required">Please Choose invoice!</div>
+                </div>
+            </div>
+
+            
+            <div class="col-md-3" *ngIf="Filetypes == 'Rollover'">
+                <label for="Item">Rc Front Image</label>
+                <input type="file" class="form-control" formControlName="rcfrontimage"
+                    (change)="UploadDocs($event,'rcfrontimage')">
+                <div *ngIf="isSubmitted && formControls.rcfrontimage.errors" class="ValidationError">
+                    <div *ngIf="formControls.rcfrontimage.errors.required">Please Choose rcfrontimage!</div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3" *ngIf="Filetypes == 'Rollover'">
+                <label for="Item">RC Back Image</label>
+                <input type="file" class="form-control" formControlName="rcbackimage"
+                    (change)="UploadDocs($event,'rcbackimage')">
+                <div *ngIf="isSubmitted && formControls.rcbackimage.errors" class="ValidationError">
+                    <div *ngIf="formControls.rcbackimage.errors.required">Please Choose rcbackimage!</div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- (onSelect)="onaddonSelect($event,'Item')" (onDeSelect)="onItemDeSelect($event,'Item')" -->
+
+        <div class="row" *ngIf="leader == '3' ">
+            <h4 style="margin-left: 15px;">Policy Details</h4>
+        </div>
+
+        <hr *ngIf="leader == '3'" style="border-top: dotted 3px; margin-top: 10px;" />
+
+
+        <div class="row" *ngIf="leader == '3'">
+            <div class="col-md-3">
+                <label>Policy Type</label>
+                <ng-multiselect-dropdown class="form-control" [data]="HealthPolicyType"
+                    formControlName="healthpolicytype" [settings]="dropdownSettingsType">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.healthpolicytype.errors" class="Validationerrors">
+                    <div *ngIf="formControls.healthpolicytype.errors.required"><span style="color: red;">Please
+                            select healthpolicytype!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <label>KYC Docs</label>
+                <input type="file" class="form-control" formControlName="kyc" (change)="UploadDocs($event,'kyc')">
+                <div *ngIf="isSubmitted && formControls.kyc.errors" class="Validationerrors">
+                    <div *ngIf="formControls.kyc.errors.required"><span style="color: red;">Please choose
+                            kyc file!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label>Other Documents</label>
+                <input type="file" class="form-control" formControlName="other" (change)="UploadDocs($event,'other')">
+                <div *ngIf="isSubmitted && formControls.other.errors" class="Validationerrors">
+                    <div *ngIf="formControls.other.errors.required"><span style="color: red;">Please enter
+                            other!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <label>Remarks</label>
+                <textarea class="form-control" formControlName="remarks" style="height: 35px;"></textarea>
+                <div *ngIf="isSubmitted && formControls.remarks.errors" class="Validationerrors">
+                    <div *ngIf="formControls.remarks.errors.required"><span style="color: red;">Please enter
+                            remarks!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4" style="margin-top: 10px;">
+                <label>Any Pre-existing disease</label>
+            </div>
+            
+
+            <div class="col-md-4" style="margin-top: 10px;">
+                <input id="male" type="radio" value="no" name="check" formControlName="check" style="margin-top: 5px;"
+                    size="15px">&nbsp;&nbsp;
+                <label for="male">No</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="male" type="radio" value="yes" name="check" formControlName="check" style="margin-top: 5px;"
+                    size="15px">&nbsp;&nbsp;
+                <label for="male">Yes</label>
+                <div *ngIf="isSubmitted && formControls.check.errors" class="Validationerrors">
+                    <div *ngIf="formControls.check.errors.required"><span style="color: red;">Please choose
+                            checkbox!</span></div>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top: 10px;">&nbsp;</div>
+
+
+            <div class="col-md-6">
+                <label>Gender</label>
+            </div>
+            <div class="col-md-6">
+                <label>Pincode</label>
+            </div>
+
+            <div class="col-md-6" style="margin-top: 10px;">
+                <input id="male" type="radio" name="gender" formControlName="gender" value="male"
+                    style="margin-top: 5px;" size="15px">&nbsp;&nbsp;
+                <label for="male">Male</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="male" type="radio" name="gender" formControlName="gender" value="female"
+                    style="margin-top: 5px;" size="15px">&nbsp;&nbsp;
+                <label for="male">Female</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="male" type="radio" name="gender" formControlName="gender" value="transgender"
+                    style="margin-top: 5px;" size="15px">&nbsp;&nbsp;
+                <label for="male">Transgender</label>
+                <div *ngIf="isSubmitted && formControls.gender.errors" class="Validationerrors">
+                    <div *ngIf="formControls.gender.errors.required"><span style="color: red;">Please
+                            select gender!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-6" style="margin-top: 10px;">
+
+                <ng-multiselect-dropdown class="form-control" name="insurer" [data]="Pincode" formControlName="pincode"
+                    [settings]="dropdownSettingsType">
+                </ng-multiselect-dropdown>
+            <!-- <input type="text" formControlName="pincode" class="form-control" [data]="Pincode"> -->
+                <div *ngIf="isSubmitted && formControls.pincode.errors" class="Validationerrors">
+                    <div *ngIf="formControls.pincode.errors.required"><span style="color: red;">Please
+                            enter pincode!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-1" style="margin-top: 10px;">
+                <label>Plan Type</label>
+            </div>
+            
+            <div class="col-md-3" style="margin-top: 10px;">
+                <input id="male" type="radio" value="individual" name="individual" formControlName="individual"
+                    style="margin-top: 5px;" size="15px">&nbsp;&nbsp;
+                <label for="male">Individual</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="male" type="radio" value="floater" name="individual" formControlName="individual"
+                    style="margin-top: 5px;" size="15px">&nbsp;&nbsp;
+                <label for="male">Floater</label>
+                <div *ngIf="isSubmitted && formControls.individual.errors" class="Validationerrors">
+                    <div *ngIf="formControls.individual.errors.required"><span style="color: red;">Please
+                            select individual!</span></div>
+                </div>
+            </div>
+
+
+            <div class="col-md-2">&nbsp;</div>
+
+
+            <div class="col-md-6" style="margin-top: 10px;">
+                <label>Sum Insured</label>
+            </div>
+
+            <div class="col-md-6" style="margin-left: 190px;">
+                <ng-multiselect-dropdown class="form-control" [data]="SumInsure" formControlName="suminsure"
+                    [settings]="dropdownSettingsType">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.suminsure.errors" class="Validationerrors">
+                    <div *ngIf="formControls.suminsure.errors.required"><span style="color: red;">Please
+                            select suminsure!</span></div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-6" style="margin-top: 10px;">
+
+                <div class="border_box">
+
+
+                    <div class="col-md-3" *ngIf="this.LeadForm.get('individual').value == 'individual'">
+                        <input type="checkbox" formControlName="selectselfage">
+                        &nbsp;
+                        <label for="self" class="label_member_cover">Self</label>
+                    </div>
+
+                    <div class="col-md-3" style="width: 100%;">
+                        <select formControlName="ageself" class="form-control">
+                            <option value="">Select Age</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                            <option value="32">32</option>
+                            <option value="33">33</option>
+                            <option value="34">34</option>
+                            <option value="35">35</option>
+                            <option value="36">36</option>
+                            <option value="37">37</option>
+                            <option value="38">38</option>
+                            <option value="39">39</option>
+                            <option value="40">40</option>
+                            <option value="41">41</option>
+                            <option value="42">42</option>
+                            <option value="43">43</option>
+                            <option value="44">44</option>
+                            <option value="45">45</option>
+                            <option value="46">46</option>
+                            <option value="47">47</option>
+                            <option value="48">48</option>
+                            <option value="49">49</option>
+                            <option value="50">50</option>
+                            <option value="51">51</option>
+                            <option value="52">52</option>
+                            <option value="53">53</option>
+                            <option value="54">54</option>
+                            <option value="55">55</option>
+                            <option value="56">56</option>
+                            <option value="57">57</option>
+                            <option value="58">58</option>
+                            <option value="59">59</option>
+                            <option value="60">60</option>
+                            <option value="61">61</option>
+                            <option value="62">62</option>
+                            <option value="63">63</option>
+                            <option value="64">64</option>
+                            <option value="65">65</option>
+                            <option value="66">66</option>
+                            <option value="67">67</option>
+                            <option value="68">68</option>
+                            <option value="69">69</option>
+                            <option value="70">70</option>
+                            <option value="71">71</option>
+                            <option value="72">72</option>
+                            <option value="73">73</option>
+                            <option value="74">74</option>
+                            <option value="75">75</option>
+                            <option value="76">76</option>
+                            <option value="77">77</option>
+                            <option value="78">78</option>
+                            <option value="79">79</option>
+                            <option value="80">80</option>
+                            <option value="81">81</option>
+                            <option value="82">82</option>
+                            <option value="83">83</option>
+                            <option value="84">84</option>
+                            <option value="85">85</option>
+                            <option value="86">86</option>
+                            <option value="87">87</option>
+                            <option value="88">88</option>
+                            <option value="89">89</option>
+                            <option value="90">90</option>
+                            <option value="91">91</option>
+                            <option value="92">92</option>
+                            <option value="93">93</option>
+                            <option value="94">94</option>
+                            <option value="95">95</option>
+                            <option value="96">96</option>
+                            <option value="97">97</option>
+                            <option value="98">98</option>
+                            <option value="99">99</option>
+                        </select>
+                        <!-- <div *ngIf="isSubmitted && formControls.ageself.errors" class="Validationerrors">
+                            <div *ngIf="formControls.ageself.errors.required"><span style="color: red;">Please
+                                    select ageself!</span></div>
+                        </div> -->
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-6" style="margin-top: 10px;">
+
+                <div class="border_box">
+
+
+                    <div class="col-md-3">
+                        <input type="checkbox" formControlName="selectspouseage">
+                        &nbsp;
+                        <label for="self" class="label_member_cover">Spouse</label>
+                    </div>
+                    <div class="col-md-3" style="width: 100%;">
+                        <select formControlName="agespous" class="form-control">
+                            <option value="">Select Age</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                            <option value="32">32</option>
+                            <option value="33">33</option>
+                            <option value="34">34</option>
+                            <option value="35">35</option>
+                            <option value="36">36</option>
+                            <option value="37">37</option>
+                            <option value="38">38</option>
+                            <option value="39">39</option>
+                            <option value="40">40</option>
+                            <option value="41">41</option>
+                            <option value="42">42</option>
+                            <option value="43">43</option>
+                            <option value="44">44</option>
+                            <option value="45">45</option>
+                            <option value="46">46</option>
+                            <option value="47">47</option>
+                            <option value="48">48</option>
+                            <option value="49">49</option>
+                            <option value="50">50</option>
+                            <option value="51">51</option>
+                            <option value="52">52</option>
+                            <option value="53">53</option>
+                            <option value="54">54</option>
+                            <option value="55">55</option>
+                            <option value="56">56</option>
+                            <option value="57">57</option>
+                            <option value="58">58</option>
+                            <option value="59">59</option>
+                            <option value="60">60</option>
+                            <option value="61">61</option>
+                            <option value="62">62</option>
+                            <option value="63">63</option>
+                            <option value="64">64</option>
+                            <option value="65">65</option>
+                            <option value="66">66</option>
+                            <option value="67">67</option>
+                            <option value="68">68</option>
+                            <option value="69">69</option>
+                            <option value="70">70</option>
+                            <option value="71">71</option>
+                            <option value="72">72</option>
+                            <option value="73">73</option>
+                            <option value="74">74</option>
+                            <option value="75">75</option>
+                            <option value="76">76</option>
+                            <option value="77">77</option>
+                            <option value="78">78</option>
+                            <option value="79">79</option>
+                            <option value="80">80</option>
+                            <option value="81">81</option>
+                            <option value="82">82</option>
+                            <option value="83">83</option>
+                            <option value="84">84</option>
+                            <option value="85">85</option>
+                            <option value="86">86</option>
+                            <option value="87">87</option>
+                            <option value="88">88</option>
+                            <option value="89">89</option>
+                            <option value="90">90</option>
+                            <option value="91">91</option>
+                            <option value="92">92</option>
+                            <option value="93">93</option>
+                            <option value="94">94</option>
+                            <option value="95">95</option>
+                            <option value="96">96</option>
+                            <option value="97">97</option>
+                            <option value="98">98</option>
+                            <option value="99">99</option>
+                        </select>
+                        
+                        <!-- <ng-multiselect-dropdown class="form-control" [data]="Age" formControlName="agespous"
+                            [settings]="dropdownSettingsType">
+                        </ng-multiselect-dropdown> -->
+                        <!-- <div *ngIf="isSubmitted && formControls.agespous.errors" class="Validationerrors">
+                            <div *ngIf="formControls.agespous.errors.required"><span style="color: rgb(255, 0, 0);">Please
+                                    select agespous!</span></div>
+                        </div> -->
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+
+            <!-- <div class="col-md-6" style="margin-top: 10px;">
+
+                <div class="border_box">
+
+                    <div class="col-md-3">
+                        <input type="checkbox" formControlName="selectson1age">
+                        &nbsp;
+                        <label for="self" class="label_member_cover">Son 1</label>
+                    </div>
+
+                    <div class="col-md-3" style="width: 100%;" >
+                        <ng-multiselect-dropdown class="form-control" [data]="Age" formControlName="sonage"
+                            [settings]="dropdownSettingsType">
+                        </ng-multiselect-dropdown>
+                      
+                    </div>
+
+                </div>
+            </div> -->
+
+
+            <div class="col-md-6" *ngIf="this.LeadForm.get('individual').value != 'individual'" style="margin-top: 10px;" formArrayName="addSons">
+                <div class="border_box" *ngFor="let quantity of addSons().controls; let i=index" [formGroupName]="i">
+                    <div class="col-md-3">
+                        <input type="checkbox" checked (click)="removeQuantity(i)">
+                        &nbsp;
+                        <label for="self" class="label_member_cover">Son {{i+1}}</label>
+                    </div>
+                    <div class="col-md-3" style="width: 100%;" >
+                        <select formControlName="sonage" class="form-control">
+                            <option value="">Select Age</option>
+                            <option value="Below 1 Year">Below 1 Year</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                        </select>
+                        <!-- <div *ngIf="isSubmitted && formControls.son1age.errors" class="Validationerrors">
+                            <div *ngIf="formControls.son1age.errors.required"><span style="color: red;">Please
+                                    select son1age!</span></div>
+                        </div> -->
+                    </div>
+                    <!-- <button (click)="removeQuantity(i)" style="margin-top: 5px; position: relative;" class="btn btn-danger">Remove</button> -->
+                </div>
+            </div>
+<!-- 
+            <div class="col-md-6" style="margin-top: 10px;">
+
+                <div class="border_box">
+
+
+                    <div class="col-md-3">
+                        <input type="checkbox" formControlName="selectdaughter1age">
+                        &nbsp;
+                        <label for="self" class="label_member_cover">Daughter 1</label>
+                    </div>
+
+                    <div class="col-md-3" style="width: 100%;">
+
+                        <ng-multiselect-dropdown class="form-control" [data]="Age" formControlName="daughter1age"
+                            [settings]="dropdownSettingsType">
+                        </ng-multiselect-dropdown>                    
+                    </div>
+
+                </div>
+            </div> -->
+
+
+            <div class="col-md-6" style="margin-top: 10px;"*ngIf="this.LeadForm.get('individual').value != 'individual'"  formArrayName="addDaughters">
+
+                <div class="border_box" *ngFor="let quantity of addDaughters().controls; let i=index" [formGroupName]="i">
+
+                    <div class="col-md-3">
+                        <input type="checkbox" checked (click)="removedaughterQuantity(i)" >
+                        &nbsp;
+                        <label for="self" class="label_member_cover">Daughter {{i+1}}</label>
+                    </div>
+                    <div class="col-md-3" style="width: 100%;" >
+                        <select formControlName="daughterage" class="form-control">
+                            <option value="">Select Age</option>
+                            <option value="Below 1 Year">Below 1 Year</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                        </select>
+
+
+                        <!-- <ng-multiselect-dropdown class="form-control" [data]="SmallAge" formControlName="daughterage"
+                            [settings]="dropdownSettingsType">
+                        </ng-multiselect-dropdown> -->
+                        
+                        <!-- <div *ngIf="isSubmitted && formControls.son1age.errors" class="Validationerrors">
+                            <div *ngIf="formControls.son1age.errors.required"><span style="color: red;">Please
+                                    select son1age!</span></div>
+                        </div> -->
+                    
+                    </div>
+
+                    <!-- <label (click)="removedaughterQuantity(i)" style="margin-top: 5px; position: relative;" class="btn btn-danger"><a style="color: red;">Remove</a></label> -->
+
+                </div>
+            </div>
+
+            
+
+            <div class="col-md-6" style="margin-top: 10px;">
+
+                <div class="border_box">
+
+
+                    <div class="col-md-3">
+                        <input type="checkbox">
+                        &nbsp;
+                        <label for="self" class="label_member_cover">Father</label>
+                    </div>
+
+                    <div class="col-md-3" style="width: 100%;">
+                        <select formControlName="fatherage" class="form-control">
+                            <option value="">Select Age</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                            <option value="32">32</option>
+                            <option value="33">33</option>
+                            <option value="34">34</option>
+                            <option value="35">35</option>
+                            <option value="36">36</option>
+                            <option value="37">37</option>
+                            <option value="38">38</option>
+                            <option value="39">39</option>
+                            <option value="40">40</option>
+                            <option value="41">41</option>
+                            <option value="42">42</option>
+                            <option value="43">43</option>
+                            <option value="44">44</option>
+                            <option value="45">45</option>
+                            <option value="46">46</option>
+                            <option value="47">47</option>
+                            <option value="48">48</option>
+                            <option value="49">49</option>
+                            <option value="50">50</option>
+                            <option value="51">51</option>
+                            <option value="52">52</option>
+                            <option value="53">53</option>
+                            <option value="54">54</option>
+                            <option value="55">55</option>
+                            <option value="56">56</option>
+                            <option value="57">57</option>
+                            <option value="58">58</option>
+                            <option value="59">59</option>
+                            <option value="60">60</option>
+                            <option value="61">61</option>
+                            <option value="62">62</option>
+                            <option value="63">63</option>
+                            <option value="64">64</option>
+                            <option value="65">65</option>
+                            <option value="66">66</option>
+                            <option value="67">67</option>
+                            <option value="68">68</option>
+                            <option value="69">69</option>
+                            <option value="70">70</option>
+                            <option value="71">71</option>
+                            <option value="72">72</option>
+                            <option value="73">73</option>
+                            <option value="74">74</option>
+                            <option value="75">75</option>
+                            <option value="76">76</option>
+                            <option value="77">77</option>
+                            <option value="78">78</option>
+                            <option value="79">79</option>
+                            <option value="80">80</option>
+                            <option value="81">81</option>
+                            <option value="82">82</option>
+                            <option value="83">83</option>
+                            <option value="84">84</option>
+                            <option value="85">85</option>
+                            <option value="86">86</option>
+                            <option value="87">87</option>
+                            <option value="88">88</option>
+                            <option value="89">89</option>
+                            <option value="90">90</option>
+                            <option value="91">91</option>
+                            <option value="92">92</option>
+                            <option value="93">93</option>
+                            <option value="94">94</option>
+                            <option value="95">95</option>
+                            <option value="96">96</option>
+                            <option value="97">97</option>
+                            <option value="98">98</option>
+                            <option value="99">99</option>
+                        </select>
+                        <!-- <div *ngIf="isSubmitted && formControls.fatherage.errors" class="Validationerrors">
+                            <div *ngIf="formControls.fatherage.errors.required"><span style="color: red;">Please
+                                    select fatherage!</span></div>
+                        </div> -->
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-6" style="margin-top: 10px;">
+
+                <div class="border_box">
+
+
+                    <div class="col-md-3">
+                        <input type="checkbox">
+                        &nbsp;
+                        <label for="self" class="label_member_cover">Mother</label>
+                    </div>
+
+                    <div class="col-md-3" style="width: 100%;">
+                        <select formControlName="motherage" class="form-control">
+                            <option value="">Select Age</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                            <option value="32">32</option>
+                            <option value="33">33</option>
+                            <option value="34">34</option>
+                            <option value="35">35</option>
+                            <option value="36">36</option>
+                            <option value="37">37</option>
+                            <option value="38">38</option>
+                            <option value="39">39</option>
+                            <option value="40">40</option>
+                            <option value="41">41</option>
+                            <option value="42">42</option>
+                            <option value="43">43</option>
+                            <option value="44">44</option>
+                            <option value="45">45</option>
+                            <option value="46">46</option>
+                            <option value="47">47</option>
+                            <option value="48">48</option>
+                            <option value="49">49</option>
+                            <option value="50">50</option>
+                            <option value="51">51</option>
+                            <option value="52">52</option>
+                            <option value="53">53</option>
+                            <option value="54">54</option>
+                            <option value="55">55</option>
+                            <option value="56">56</option>
+                            <option value="57">57</option>
+                            <option value="58">58</option>
+                            <option value="59">59</option>
+                            <option value="60">60</option>
+                            <option value="61">61</option>
+                            <option value="62">62</option>
+                            <option value="63">63</option>
+                            <option value="64">64</option>
+                            <option value="65">65</option>
+                            <option value="66">66</option>
+                            <option value="67">67</option>
+                            <option value="68">68</option>
+                            <option value="69">69</option>
+                            <option value="70">70</option>
+                            <option value="71">71</option>
+                            <option value="72">72</option>
+                            <option value="73">73</option>
+                            <option value="74">74</option>
+                            <option value="75">75</option>
+                            <option value="76">76</option>
+                            <option value="77">77</option>
+                            <option value="78">78</option>
+                            <option value="79">79</option>
+                            <option value="80">80</option>
+                            <option value="81">81</option>
+                            <option value="82">82</option>
+                            <option value="83">83</option>
+                            <option value="84">84</option>
+                            <option value="85">85</option>
+                            <option value="86">86</option>
+                            <option value="87">87</option>
+                            <option value="88">88</option>
+                            <option value="89">89</option>
+                            <option value="90">90</option>
+                            <option value="91">91</option>
+                            <option value="92">92</option>
+                            <option value="93">93</option>
+                            <option value="94">94</option>
+                            <option value="95">95</option>
+                            <option value="96">96</option>
+                            <option value="97">97</option>
+                            <option value="98">98</option>
+                            <option value="99">99</option>
+                        </select>
+                        <!-- <div *ngIf="isSubmitted && formControls.motherage.errors" class="Validationerrors">
+                            <div *ngIf="formControls.motherage.errors.required"><span style="color: red;">Please
+                                    select motherage!</span></div>
+                        </div> -->
+
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <button type="button" class="form-control btn btn-primary"  
+                 (click)="addSonsage()"
+                    style="background-color:blue; color: white;"><i class="fa fa-plus"></i> &nbsp;Add Son</button>
+            </div>
+            
+            <div class="col-md-3">
+                <button type="button" (click)="addDaughtersage()" class="form-control" style="background-color:blueviolet; color: white;"><i
+                        class="fa fa-plus"></i> &nbsp;Add Daughter</button>
+            </div>
+        </div>
+
+
+        <div class="row" *ngIf=" leader == '4'">
+            <div class="col-md-4">
+                <label>Type Of Insurance</label>
+                <ng-multiselect-dropdown class="form-control" [data]="InsuranceType" formControlName="insurancetype"
+                    [settings]="dropdownSettingsType">
+                </ng-multiselect-dropdown>
+                <div *ngIf="isSubmitted && formControls.insurancetype.errors" class="Validationerrors">
+                    <div *ngIf="formControls.insurancetype.errors.required"><span style="color: red;">Please
+                            select insurancetype!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label>Organisation Name</label>
+                <input type="text" class="form-control" formControlName="organisation">
+                <div *ngIf="isSubmitted && formControls.organisation.errors" class="Validationerrors">
+                    <div *ngIf="formControls.organisation.errors.required"><span style="color: red;">Please enter
+                            organisation!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label>City</label>
+                <input type="text" class="form-control" formControlName="cityNonmotor">
+                <div *ngIf="isSubmitted && formControls.cityNonmotor.errors" class="Validationerrors">
+                    <div *ngIf="formControls.cityNonmotor.errors.required"><span style="color: red;">Please enter
+                            city!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label>Pinocde</label>
+                <ng-multiselect-dropdown class="form-control" name="insurer" [data]="Pincode" formControlName="pincodeNonmotor"
+                [settings]="dropdownSettingsType">
+            </ng-multiselect-dropdown>
+                <!-- <input type="text" class="form-control" formControlName="pincodeNonmotor"> -->
+                <div *ngIf="isSubmitted && formControls.pincodeNonmotor.errors" class="Validationerrors">
+                    <div *ngIf="formControls.pincodeNonmotor.errors.required"><span style="color: red;">Please Select
+                            pincode!</span></div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label>Remarks</label>
+                <textarea class="form-control" formControlName="nonmotorremarks" style="height: 35px;"></textarea>
+                <div *ngIf="isSubmitted && formControls.nonmotorremarks.errors" class="Validationerrors">
+                    <div *ngIf="formControls.nonmotorremarks.errors.required"><span style="color: red;">Please enter
+                            remarks!</span></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="button-div-yes-no" align="right" style="margin-right: 0px;">
+            <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>&nbsp;
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+
+
+
+    </div>
+
+</form>

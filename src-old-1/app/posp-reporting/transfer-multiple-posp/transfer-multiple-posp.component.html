@@ -1,0 +1,37 @@
+<!-- <form  id="form-1"> -->
+<div class="modal_body py_15">
+    <div class="row">
+        <div class="col-md-12">
+            <form [formGroup]="TranferMultiplePospForm">
+
+                <div class="row horizontal_scroll_popup" id="margin">
+                    <div class="col-md-6">
+                        <div class="category_list">
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <div>
+                                        <label for="field-name">Select Employee</label>
+                                        <ng-multiselect-dropdown class="form-control" id="margin"
+                                            placeholder="please select Employee" [data]="EmployeeData"
+                                            formControlName="Employee" [settings]="dropdownSettingsType">
+                                        </ng-multiselect-dropdown>
+
+                                        <!-- <div *ngIf="AddFieldForm.get('FieldForm.' + i + '.EmpData').touched && AddFieldForm.get('FieldForm.' + i + '.EmpData').hasError('required')"
+                                            class="Validationerrors">
+                                            <span style="color: red;">Please select !</span>
+                                        </div> -->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal_footer ">
+    <button class="btn btn-primary nextBtn pull-right" (click)="TransferFillterWise()" type="submit">Submit</button>
+    <button class="btn btn-danger nextBtn pull-right" (click)="CloseModel()">Close</button>
+</div>

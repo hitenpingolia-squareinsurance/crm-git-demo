@@ -1,0 +1,174 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+    <div class="container-fluid">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <div class="header_title">Broker</div>
+            </div>
+
+            <div *ngIf="!hasAccess" class="error-message">
+                <div class="container" style="text-align: center;">
+                    <img src="assets/Authorised.png" alt="">
+                </div>
+            </div>
+
+            <div class="main_body main_card_height_scroll_withoutfooter"  *ngIf="hasAccess">
+                <div class="btn_list_group">
+                    <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="dsr-fillter">
+                                        <button class="btn btn-info1" (click)="dailog()"><span>Add
+                                                Broker</span></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingOne">
+                                <div class="panel-body sub-form">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="All">
+                                <div class="box-body">
+                                    <div class="mydiv">
+
+                                        <table datatable [dtOptions]="dtOptions" id="Table1"
+                                            class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>SNo.</th>
+                                                    <th>Name</th>
+                                                    <th>Status</th>
+                                                    <th>Add Stamp</th>
+                                                    <th>Update Stamp</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of dataAr">
+                                                    <td>{{row.sno}}</td>
+                                                    <td>{{row.Name}}</td>
+
+                                                    <td>
+                                                        <span *ngIf="row.status == 1" class="label label-success">Active</span>
+                                                        <span *ngIf="row.status == 0" class="label label-danger">Inactive</span>
+                                                    </td>
+
+                                                    <td>{{row.add}}</td>
+                                                    <td>{{row.update}}</td>
+
+                                                    <td>
+                                                        <button class=" btn btn-info1"
+                                                            (click)="update(row.id)"><span>Update</span>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody *ngIf="dataAr?.length == 0">
+                                                <tr>
+                                                    <td colspan="11" align="center">No data available !</td>
+                                                </tr>
+                                            <tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+
+                <hr>
+
+                <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                    <div class="custom_table tables_layout_design">
+                        <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <!-- ======= Refer Table  =========-->
+                        <ul class="responsive-table">
+                            <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+                                <p class="life_status_label">
+                                    <span *ngIf="row.status == 1" class="btn btn-inline btn-success ">Active</span>
+                                    <span *ngIf="row.status == 0" class="btn btn-inline btn-danger ">Inactive</span>
+                                </p>
+
+                                <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                                    <div class="agents_data agents_data1">
+                                        <div class="icon_re_cl">{{row.sno}}</div>
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data" *ngIf="row.Name != ''">
+                                                <div>Name</div>
+                                                <strong class="fs_18 text-bold">{{row.Name}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="agents_data agents_data2">
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data" *ngIf="row.add != ''">
+                                                <div> Add Stamp </div>
+                                                <strong>
+                                                    {{row.add}}
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="agents_data agents_data2">
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data" *ngIf="row.update != ''">
+                                                <div> Update Stamp </div>
+                                                <strong>
+                                                    {{row.update}}
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="last_row">
+                                    <div class="effective_date"></div>
+                                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                        <button type="button" class="btn btn-primary" (click)="update(row.id)"
+                                            style="padding: 3px;">
+                                            <strong style="color: #fff;">Update &nbsp;<i class="fa fa-pencil-square-o"
+                                                    aria-hidden="true"></i></strong>
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <!--======= Refer Table END ========= -->
+
+                        <div class="row" *ngIf="dataAr?.length == 0">
+                            <div class="col-md-12">
+                                <div class="no_data_found">
+                                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                                    <small>No data available !</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

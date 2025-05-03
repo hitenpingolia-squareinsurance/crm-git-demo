@@ -1,0 +1,54 @@
+<section class="inner_page_css main_dashboard_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Meeting Request</div>
+            <!-- <div class="header_title" *ngIf="this.id != '' ">Edit Ratings</div>   -->
+            <!-- <button class="btn btn-primary nextBtn pull-right" routerLink="/WebsiteSection/products/view_ratings" 
+            style="margin-top: -27px;">Back To View</button> -->
+
+            
+          </div>
+          <form class="form" (ngSubmit)="Submit()" [formGroup]="request">
+            <div class="main_body main_card_height_scroll">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="input_group">
+                    <label for="CustomerName">Meeting For</label>
+                    <ng-multiselect-dropdown class="form-control" [data]="Menues" formControlName="meetingFor"
+                      [settings]="dropdownSettingsType">
+                    </ng-multiselect-dropdown>
+                    <span *ngIf="isSubmitted && formControls.meetingFor.errors" class="ValidationError">
+                      <span *ngIf="formControls.meetingFor.errors.required">Please Select Meeting For</span>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="input_group">
+                    <label for="CustomerMobileNo">Remark</label>
+                      <input type="text" class="form-control" formControlName="remarks" placeholder="Enter Remark">
+                      <span *ngIf="isSubmitted && formControls.remarks.errors" class="ValidationError">
+                        <span *ngIf="formControls.remarks.errors.required">remark is required</span>
+                      </span>
+                  </div>
+                </div>
+
+              </div>
+
+
+           
+            </div>
+            <div class="main_footer">
+              <button type="submit" class="Save_click">Submit Request</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+

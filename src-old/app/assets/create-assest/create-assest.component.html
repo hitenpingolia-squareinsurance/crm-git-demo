@@ -1,0 +1,105 @@
+<section class="inner_page_css ">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <form class="form" (ngSubmit)="submit()" [formGroup]="assetUserform">
+                        <div class="main_header">
+                            <div class="header_title">Assets Form</div>
+                        </div>
+                        <div class="main_body main_card_height_scroll">
+                            <div class="row">
+
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="input_group">
+                                        <label for="Category">Category</label>
+                                        <div class="d_flex">
+                                            <ng-multiselect-dropdown class="form_control_ng w_100"
+                                                placeholder="--Select--" [data]="Category" formControlName="Category"
+                                                [settings]="dropdownSettingsType"
+                                                (onSelect)="onItemSelect($event,'Category')"
+                                                (onDeSelect)="onItemDeSelect($event,'Category')">
+                                            </ng-multiselect-dropdown>
+                                            <button type="button" title="Add Category" class="add_btn"
+                                                (click)="CategoryAdd('')"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                        <div *ngIf="isSubmitted && formControls.Category.errors"
+                                            class="ValidationError">
+                                            <div *ngIf="formControls.Category.errors.required">Please select Category!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="input_group">
+                                        <label>Assets Name</label>
+                                        <input type="text" name="Asset-title" class="form_control">
+                                    </div>
+                                </div>
+
+
+                                <!-- <div class="col-md-4 col-sm-6">
+                                    <div class="input_group">
+                                        <label for="Item">Item</label>
+                                        <ng-multiselect-dropdown class="form_control_ng" placeholder="--Select--"
+                                            [data]="Item" formControlName="Item"
+                                            [settings]="dropdownSettingsMultiselect"
+                                            (onSelect)="onItemSelect($event,'Item')"
+                                            (onDeSelect)="onItemDeSelect($event,'Item')">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="isSubmitted && formControls.Item.errors" class="ValidationError">
+                                            <div *ngIf="formControls.Item.errors.required">Please select Item!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="input_group">
+                                        <label>Default Loan Period (In Hours)</label>
+                                        <input type="text" name="AsLoanset-Period" class="form_control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="input_group">
+                                        <label for="Status-Label">Status Label</label>
+                                        <div class="d_flex">
+                                            <ng-multiselect-dropdown class="form_control_ng w_100"
+                                                placeholder="--Select--" [data]="Category" formControlName="Category"
+                                                [settings]="dropdownSettingsType"
+                                                (onSelect)="onItemSelect($event,'Category')"
+                                                (onDeSelect)="onItemDeSelect($event,'Category')">
+                                            </ng-multiselect-dropdown>
+                                            <button type="button" title="Add Status Label" class="add_btn"><i
+                                                    class="fa fa-plus"></i></button>
+                                        </div>
+                                        <div *ngIf="isSubmitted && formControls.Category.errors"
+                                            class="ValidationError">
+                                            <div *ngIf="formControls.Category.errors.required">Please select Category!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+
+
+                                <div class="col-md-12">
+                                    <div class="input_group">
+                                        <label for="Remarks">Asset Notes</label>
+                                        <textarea class="form_control" formControlName="remarks"></textarea>
+                                        <div *ngIf="isSubmitted && formControls.remarks.errors" class="ValidationError">
+                                            <div *ngIf="formControls.remarks.errors.required">Please enter remarks.!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="main_footer">
+                            <button class="Save_click" type="submit"> Save Asset</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

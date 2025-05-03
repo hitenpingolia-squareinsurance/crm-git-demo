@@ -1,0 +1,530 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header d_flex flex_Equal flex_Middel">
+            <div class="header_title">Performance Management System</div>
+            <div class="profile_target">
+
+              <span *ngIf="LoginProfileName == 'MD'"><small>Monthly Allocated
+                  Target</small>{{CompleteMonthlyAllocatedTarget}}
+                <i style="font-style: normal !important;"
+                  *ngIf="CompleteMonthlyAllocatedTargetString != ''">({{CompleteMonthlyAllocatedTargetString}})</i>
+              </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+              <span *ngIf="LoginProfileName == 'MD'"><small>Monthly Profile
+                  Target</small>{{CompleteMonthlyProfileTarget}}
+                <i style="font-style: normal !important;"
+                  *ngIf="CompleteMonthlyProfileTargetString != ''">({{CompleteMonthlyProfileTargetString}})</i>
+              </span>
+
+            </div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div class="box box-default"
+              style="margin-bottom: 0px !important; margin-top: 0px !important; position: relative;">
+              <div [ngClass]="(ShowLoader12=='Yes'?'custom_loader_new d_block_one':'custom_loader_new d_none_one')">
+                <div class="new_rotate_loader">
+                  <span>Loading</span>
+                </div>
+              </div>
+
+              <div [ngClass]="((ShowLoader12=='Yes') ? 'filter_blur_new':'')">
+
+                <div class="all_box_flex">
+                  <div class="container pt-5">
+                    <div class="row align-items-stretch">
+
+                      <div class="c-dashboardInfo col-lg-3 col-md-6"
+                        *ngIf="ProfileName == 'HOD' || ProfileName == 'MD' || ProfileName == 'CEO' || ProfileName == 'President' || PTypeD == 'HOD'">
+                        <div class="wrap">
+                          <ul>
+                            <li class="d_flex flex_Middel">Given&nbsp;Target
+                              <label class="pl_7 deful_cursor">{{GivenTarget}}</label>
+                              <span *ngIf="NewGivenTarget != ''">({{NewGivenTarget}})</span>
+                              <small style="cursor:pointer;" class="d_flex" (click)="ViewGivenTargetModal('Given')"><i
+                                  class="fa fa-eye"></i></small>
+                            </li>
+                          </ul>
+
+                          <table class="table table_blog" style="margin-bottom: 0px !important;">
+                            <thead>
+                              <tr>
+                                <th scope="col"></th>
+                                <th scope="col" valign="top">Achievement</th>
+                                <th scope="col">Achievement&nbsp;%</th>
+                              </tr>
+                            </thead>
+
+                            <tbody>
+                              <tr>
+                                <th>YTD</th>
+                                <td>
+                                  <label>{{AchivementData}}</label><br>
+                                  <label>{{NewAchivementData}}</label>
+                                </td>
+                                <td>{{GivenAchivement}}</td>
+                              </tr>
+
+                              <tr>
+                                <th>MTD</th>
+                                <td>
+                                  <label>{{MonthlyAchivementData}}</label><br>
+                                  <label>{{MonthlyNewAchivementData}}</label>
+                                </td>
+                                <td>{{MonthlyGivenAchivement}}</td>
+                              </tr>
+
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="c-dashboardInfo col-lg-3 col-md-6" *ngIf="IsSales == 1">
+                        <div class="wrap">
+                          <ul>
+                            <li class="d_flex flex_Middel">Profile&nbsp;Target
+                              <label class="pl_7 deful_cursor">{{ProfileTarget}}</label>
+                              <span *ngIf="NewProfileTarget != ''">({{NewProfileTarget}})</span>
+                              <small style="cursor:pointer;" class="d_flex" (click)="ViewGivenTargetModal('Profile')"><i
+                                  class="fa fa-eye"></i></small>
+                            </li>
+                          </ul>
+                          <table class="table table_blog" style="margin-bottom: 0px !important;">
+                            <thead>
+                              <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Achievement</th>
+                                <th scope="col">Achievement&nbsp;%</th>
+                              </tr>
+                            </thead>
+
+                            <tbody>
+                              <tr>
+                                <th>YTD</th>
+                                <td>
+                                  <label>{{AchivementData}}</label><br>
+                                  <label>{{NewAchivementData}}</label>
+                                </td>
+
+                                <td>{{ProfileAchivement}}</td>
+                              </tr>
+
+                              <tr>
+                                <th>MTD</th>
+                                <td>
+                                  <label>{{MonthlyAchivementData}}</label><br>
+                                  <label>{{MonthlyNewAchivementData}}</label>
+                                </td>
+                                <td>{{MonthlyProfileAchivement}}</td>
+                              </tr>
+
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="c-dashboardInfo col-lg-3 col-md-6">
+                        <div class="wrap">
+                          <ul>
+                            <!-- <li style="display: flex;">
+                              Allocated&nbsp;Target&nbsp;&nbsp;&nbsp;<label>{{AllocatedTarget}}</label><span
+                                *ngIf="NewAllocatedTarget != ''">({{NewAllocatedTarget}})</span></li> -->
+
+                            <li class="d_flex flex_Middel">Allocated&nbsp;Target
+                              <label class="pl_7 deful_cursor">{{AllocatedTarget}}</label>
+                              <span *ngIf="NewAllocatedTarget != ''">({{NewAllocatedTarget}})</span>
+                              <small style="cursor:pointer;" class="d_flex"
+                                (click)="ViewGivenTargetModal('Allocated')"><i class="fa fa-eye"></i></small>
+                            </li>
+                          </ul>
+                          <table class="table table_blog" style="margin-bottom: 0px !important;">
+                            <thead>
+                              <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Achievement</th>
+                                <th scope="col">Achievement&nbsp;%</th>
+                              </tr>
+                            </thead>
+
+                            <tbody>
+                              <tr>
+                                <th>YTD</th>
+                                <td>
+                                  <label>{{AchivementData}}</label><br>
+                                  <label>{{NewAchivementData}}</label>
+                                </td>
+                                <td>{{AllocatedAcivement}}</td>
+                              </tr>
+
+                              <tr>
+                                <th>MTD</th>
+                                <td>
+                                  <label>{{MonthlyAchivementData}}</label><br>
+                                  <label>{{MonthlyNewAchivementData}}</label>
+                                </td>
+                                <td>{{MonthlyAllocatedAcivement}}</td>
+                              </tr>
+
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="c-dashboardInfo col-lg-3 col-md-6" *ngIf="IsSales == 1">
+                        <div class="wrap">
+                          <ul>
+                            <li>Pool Target <label>{{PoolTarget}}</label><span
+                                *ngIf="NewPoolTarget != ''">({{NewPoolTarget}})</span></li>
+                          </ul>
+
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <form *ngIf="checkedList?.length==0" [formGroup]="SearchForm" style="padding: 0 15px;">
+
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Financial Year" [data]="Year_Ar"
+                        [(ngModel)]="SelectedYear" formControlName="Financial_Year"
+                        [settings]="dropdownSettingsingleselect">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3" *ngIf="(LoginProfileName == 'MD' || LoginProfileName == 'CEO')">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Business Line"
+                        [data]="BusinessLine_Ar" formControlName="Business_Line_Id"
+                        [settings]="dropdownSettingsingleselect" (onSelect)="GetVerticalData()"
+                        (onDeSelect)="SearchComponentsData()"> </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Vertical" [data]="Vertical_Ar"
+                        formControlName="Vertical_Id" [settings]="dropdownSettingsingleselect1"
+                        (onSelect)="GetEmployees()" (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Service Location"
+                        [data]="Region_Ar" formControlName="Region_Id" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="GetEmployees()" (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3" *ngIf="(LoginProfileName != 'MD' && LoginProfileName != 'CEO')">
+                      <ng-multiselect-dropdown class="form-control" name="Emp_Id" placeholder="Select Employee"
+                        [data]="Emps_Ar" formControlName="Emp_Id" [settings]="dropdownSettingsingleselect1"
+                        (onSelect)="GetEmployeeExtraData()" (onDeSelect)="GetEmployeeExtraData()">
+                      </ng-multiselect-dropdown>
+                    </div>
+                  </div>
+
+                  <div class="row"  >
+                    <div class="col-sm-3" *ngIf="(LoginProfileName == 'MD' || LoginProfileName == 'CEO')">
+                      <ng-multiselect-dropdown class="form-control" name="Emp_Id" placeholder="Select Employee"
+                        [data]="Emps_Ar" formControlName="Emp_Id" [settings]="dropdownSettingsingleselect1"
+                        (onSelect)="GetEmployeeExtraData()" (onDeSelect)="GetEmployeeExtraData()">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Report Type"
+                        [data]="ReportTypeData" [(ngModel)]="SelectedReportType" formControlName="Report_Type"
+                        [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Month" [data]="MonthArray"
+                        [(ngModel)]="SelectedCurrentMonth" formControlName="Month_Name"
+                        [settings]="dropdownSettingsingleselect1"> </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <input type="text" formControlName="SearchValue" placeholder="Search Name/Emp. Id/Mobile"
+                        class="form-control">
+                    </div>
+
+                    <div class="col-sm-3" *ngIf="(LoginProfileName != 'MD' && LoginProfileName != 'CEO')">
+                      <input (click)="displayActivePage(1, 'search')" type="button" class="btn btn-info"
+                        value="Search">&nbsp;&nbsp;
+                      <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                        value="Reset"> <i class="fa fa-close"> Reset</i> </button>&nbsp;&nbsp;
+                      <input *ngIf="api.GetUserData('Code') == 'SIB282' || api.GetUserData('Code') == 'SIB101'"
+                        (click)="ExportReport()" type="button" class="btn btn-warning" value="Export">
+                    </div>
+                  </div>
+
+                  <div class="row"  
+                    *ngIf="(LoginProfileName == 'MD' || LoginProfileName == 'CEO')">
+                    <div class="col-sm-9"></div>
+                    <div class="col-sm-3">
+                      <input (click)="displayActivePage(1, 'search')" type="button" class="btn btn-info"
+                        value="Search">&nbsp;&nbsp;
+                      <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                        value="Reset"> <i class="fa fa-close"> Reset</i> </button>&nbsp;&nbsp;
+                      <input *ngIf="api.GetUserData('Code') == 'SIB282' || api.GetUserData('Code') == 'SIB101'"
+                        (click)="ExportReport()" type="button" class="btn btn-warning" value="Export">
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="box-body">
+
+                <div class="label_top_blog">
+                  <span style="margin-right: 5px;"
+                    *ngIf="LoginProfileName == 'HOD' || LoginProfileName == 'MD' || LoginProfileName == 'CEO' || LoginProfileName == 'President' || PType == 'HOD'">
+                    Revenue : {{TotalRevenue}}<i style="font-style: normal !important;"
+                      *ngIf="TotalRevenue != 0">({{TotalRevenueString}})</i></span>
+
+                  <span style="margin-right: 5px;"
+                    *ngIf="LoginProfileName == 'HOD' || LoginProfileName == 'MD' || LoginProfileName == 'CEO' || LoginProfileName == 'President' || PType == 'HOD'">Total
+                    Cost : {{TotalCost}}<i style="font-style: normal !important;"
+                      *ngIf="TotalCost != 0">({{TotalCostString}})</i></span>
+
+                  <span style="margin-right: 5px;"
+                    *ngIf="LoginProfileName == 'HOD' || LoginProfileName == 'MD' || LoginProfileName == 'CEO' || LoginProfileName == 'President' || PType == 'HOD'">Actual
+                    Cost : {{ActualCost}}<i style="font-style: normal !important;"
+                      *ngIf="ActualCost != 0">({{ActualCostString}})</i></span>
+
+                  <span style="margin-right: 5px;"
+                    *ngIf="ShowHideAllocatedTargetTab == 'Yes' && (LoginProfileName == 'MD' || LoginProfileName == 'CEO' || LoginProfileName == 'President')">Allocated
+                    Target : {{TotalAllocatedTarget}}
+                    <i style="font-style: normal !important;"
+                      *ngIf="TotalAllocatedTarget != 0">({{TotalAllocatedTargetString}})</i></span>
+
+                  <span style="margin-right: 5px;"
+                    *ngIf="ShowHideAllocatedTargetTab == 'Yes' && (LoginProfileName == 'MD' || LoginProfileName == 'CEO' || LoginProfileName == 'President') && LoginIsSales == 1">Profile
+                    Target : {{TotalProfileTarget}}
+                    <i style="font-style: normal !important;"
+                      *ngIf="TotalProfileTarget != 0">({{TotalProfileTargetString}})</i>
+                  </span>
+
+                </div>
+
+                <div class="table-responsive mydiv">
+                  <table id="exampe2" class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th>Target&nbsp;Details</th>
+                        <th>Profile&nbsp;/&nbsp;Status&nbsp;/&nbsp;Sales</th>
+                        <th>Name&nbsp;/&nbsp;Employee&nbsp;ID</th>
+                        <th>Mobile</th>
+                        <th>DOJ</th>
+                        <th>Service&nbsp;Location</th>
+                        <th>Allocated&nbsp;Target</th>
+                        <th>Achievement</th>
+                        <th>Achievement&nbsp;%</th>
+
+                        <th [ngClass]="LoginProfileName != 'Relationship Manager'? 'class1' : 'class2' ">
+                          Team/Self&nbsp;Revenue
+                        </th>
+
+                        <th
+                          [ngClass]="LoginProfileName == 'HOD' || LoginProfileName == 'MD' || LoginProfileName == 'CEO'  || LoginProfileName == 'President' || PType == 'HOD'? 'class1' : 'class2' ">
+                          Total&nbsp;Cost
+                        </th>
+
+                        <th>Active&nbsp;Days</th>
+                        <!-- <th>LWP&nbsp;/&nbsp;Edit&nbsp;LWP</th> -->
+                        <th>Salary&nbsp;Actions</th>
+                        <th>Salary&nbsp;Remarks</th>
+                        <th>Salary&nbsp;Updated&nbsp;By</th>
+                      </tr>
+                    </thead>
+
+                    <tbody *ngIf="flagArray?.length != 0">
+
+                      <tr *ngFor="let row of flagArray[activePage]; let i=index;">
+                        <td>{{row.SrNo}}.</td>
+
+                        <td>
+                          <a href="javascript:;"
+                            (click)="TargetDetails(row.Id, row.Profile_Type, row.Is_Sales, row.DOJ)"><span
+                              style="margin-right: 5px;" class="label label-default">Details</span></a>
+                        </td>
+
+                        <td>
+                          <span style="margin-right: 5px; cursor: not-allowed;"
+                            class="label label-primary">{{row.NewProfile}}</span><br>
+                          <span *ngIf="row.ResignStatus == 1" style="margin-right: 5px; cursor: not-allowed;"
+                            class="label label-danger">Resigned</span>
+                          <span *ngIf="row.ResignStatus == 0 && row.Status == 1"
+                            style="margin-right: 5px; cursor: not-allowed;" class="label label-success">Active</span>
+                          <span *ngIf="row.ResignStatus == 1 && row.Status == 0"
+                            style="margin-right: 5px; cursor: not-allowed;" class="label label-warning">Inactive</span>
+
+                          <span *ngIf="row.Is_Sales == 1" style="margin-right: 5px; cursor: not-allowed;"
+                            class="label label-success">Sales</span>
+                          <span *ngIf="row.Is_Sales != 1" style="margin-right: 5px; cursor: not-allowed;"
+                            class="label label-warning">Non Sales</span>
+                        </td>
+
+                        <td>{{row.Name}}</td>
+                        <td>{{row.Mobile}}</td>
+
+                        <td>{{row.DOJ}}</td>
+                        <td>{{row.ServiceLocation}}</td>
+
+                        <td>
+                          <div *ngIf="row.Profile_Type != 'Relationship Manager'">
+                            <span class="label label-warning" style="cursor: not-allowed;"> Self :
+                              {{row.SelfTotalTarget}}</span><br>
+                            <span class="label label-primary" style="cursor: not-allowed;"
+                              *ngIf="row.ShowTeamData == 'Yes'"> Team : {{row.Total_Target}}</span>
+                          </div>
+
+                          <span class="label label-warning" style="cursor: not-allowed;"
+                            *ngIf="row.Profile_Type == 'Relationship Manager'">{{row.SelfTotalTarget}}</span>
+                        </td>
+
+                        <td>
+                          <div *ngIf="row.Profile_Type != 'Relationship Manager'">
+                            <span class="label label-warning" style="cursor: not-allowed;"> Self :
+                              {{row.SelfBusiness}}</span><br>
+                            <span class="label label-primary" style="cursor: not-allowed;"
+                              *ngIf="row.ShowTeamData == 'Yes'"> Team : {{row.Business}}</span>
+                          </div>
+
+                          <span class="label label-warning" style="cursor: not-allowed;"
+                            *ngIf="row.Profile_Type == 'Relationship Manager'">{{row.SelfBusiness}}</span>
+                        </td>
+
+                        <td>
+                          <div *ngIf="row.Profile_Type != 'Relationship Manager'">
+                            <span class="label label-warning" style="cursor: not-allowed;"> Self :
+                              {{row.SelfAchivementPercent}}</span><br>
+                            <span class="label label-primary" style="cursor: not-allowed;"
+                              *ngIf="row.ShowTeamData == 'Yes'"> Team : {{row.AchivementPercent}}</span>
+                          </div>
+
+                          <span class="label label-warning" style="cursor: not-allowed;"
+                            *ngIf="row.Profile_Type == 'Relationship Manager'">{{row.SelfAchivementPercent}}</span>
+                        </td>
+
+                        <td *ngIf="LoginProfileName != 'Relationship Manager'">
+                          <div *ngIf="row.Profile_Type != 'Relationship Manager'">
+                            <span class="label label-warning" style="cursor: not-allowed;"> Self :
+                              {{row.SelfRevenue}}</span><br>
+                            <span class="label label-primary" style="cursor: not-allowed;"
+                              *ngIf="row.ShowTeamData == 'Yes'"> Team : {{row.Revenue}}</span>
+                          </div>
+
+                          <span class="label label-warning" style="cursor: not-allowed;"
+                            *ngIf="row.Profile_Type == 'Relationship Manager'">{{row.SelfRevenue}}</span>
+                        </td>
+
+                        <td
+                          *ngIf="LoginProfileName == 'HOD' || LoginProfileName == 'MD' || LoginProfileName == 'CEO' || LoginProfileName == 'President' || PType == 'HOD'">
+
+                          <div *ngIf="row.Profile_Type != 'Relationship Manager'">
+                            <span class="label label-warning" *ngIf="row.ShowSelfCost == 'Yes'"
+                              (click)="ShowHideCost(i, 'Self', 'No')"> Self : {{row.TotalCost}}</span>
+                            <span class="label label-warning" *ngIf="row.ShowSelfCost == 'No'"
+                              (click)="ShowHideCost(i, 'Self', 'Yes')"> Self : ****</span><br>
+
+                            <span class="label label-primary"
+                              *ngIf="row.ShowTeamData == 'Yes' && row.ShowTeamCost == 'Yes'"
+                              (click)="ShowHideCost(i, 'Team', 'No')"> Team : {{row.TeamTotalCost}}</span>
+                            <span class="label label-primary"
+                              *ngIf="row.ShowTeamData == 'Yes' && row.ShowTeamCost == 'No'"
+                              (click)="ShowHideCost(i, 'Team', 'Yes')"> Team : ****</span>
+                          </div>
+
+                          <span class="label label-warning"
+                            *ngIf="row.Profile_Type == 'Relationship Manager' && row.ShowSelfCost == 'Yes'"
+                            (click)="ShowHideCost(i, 'Self', 'No')">{{row.TotalCost}}</span>
+                          <span class="label label-warning"
+                            *ngIf="row.Profile_Type == 'Relationship Manager' && row.ShowSelfCost == 'No'"
+                            (click)="ShowHideCost(i, 'Self', 'Yes')">****</span>
+                        </td>
+
+                        <td>{{row.TotalActiveDays}}</td>
+                        <!--
+                        <td>{{ row.TotalLwp }} | {{ row.FinalLwp }}<a href="javascript:;"
+                            (click)="EditLwpCount(row.Id, i)" style="margin-left: 5px;">
+                            <span style="margin-right: 5px;" class="fa fa-edit"></span>
+                          </a> </td> -->
+
+                        <td>
+                          <strong style="font-size:10px; color:red; display: block;"
+                            *ngIf="row.TimeExceed == 'Yes' && row.IsEdit == 'No' && row.SalaryRemarks != 'Credited'">Time
+                            limit exceeds</strong>
+
+                          <a href="javascript:;" *ngIf="row.IsEdit == 'Yes' && Sequence > row.LastSalarySequence"
+                            (click)="SalaryRemarks(row.Id, i)">
+                            <span style="margin-right: 5px;" class="label label-default">Remarks</span>
+                          </a>
+
+                          <a href="javascript:;" *ngIf="row.IsEdit == 'No' || Sequence <= row.LastSalarySequence">
+                            <span style="margin-right: 5px; cursor: not-allowed;"
+                              class="label label-danger">Remarks</span>
+                          </a>
+
+                          <br>
+
+                          <span *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'Credited'"
+                            style="margin-right: 5px; cursor: not-allowed;" class="label label-success">Credited</span>
+                          <span *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'Full'"
+                            style="margin-right: 5px; cursor: not-allowed;" class="label label-success">Full</span>
+                          <span *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'Partial'"
+                            style="margin-right: 5px; cursor: not-allowed;" class="label label-warning">Partial</span>
+                          <span *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'None'"
+                            style="margin-right: 5px; cursor: not-allowed;" class="label label-danger">Null</span>
+                          <span *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks == 'Hold'"
+                            style="margin-right: 5px; cursor: not-allowed;" class="label label-danger">Hold</span>
+
+                          <span *ngIf="row.SalaryRemarks == 'Partial' && row.DaysCount != '0'"
+                            style="margin-right: 5px; cursor: not-allowed;" class="label label-primary">
+                            {{ row.DaysCount }} Days</span>
+
+                          <span *ngIf="row.SalaryRemarks == 'Partial' && row.TotalSalary != '0'"
+                            style="margin-right: 5px; cursor: not-allowed;" class="label label-primary">Rs. {{
+                            row.TotalSalary }} </span>
+
+                        </td>
+
+                        <td><a href="javascript:;" *ngIf="row.SalaryRemarks != '' && row.SalaryRemarks != null"
+                            (click)="SalaryRemarksTrack(row.Id)">
+                            <span style="margin-right: 5px;" class="label label-primary">Track</span>
+                          </a>
+                        </td>
+
+                        <td>{{ row.SalaryUpdatedBy }}</td>
+                      </tr>
+
+                    </tbody>
+
+                    <tbody *ngIf="flagArray?.length == 0">
+                      <tr>
+                        <td colspan="17" align="center">No data Available !</td>
+                      </tr>
+                    <tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+              <div class="row">
+                <div class="col-md-12 ml-auto mr-auto">
+                  <div class="float-right">
+                    <app-pagination [totalRecords]="total" [recordsPerPage]="10"
+                      (onPageChange)="displayActivePage($event,'page')"></app-pagination>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

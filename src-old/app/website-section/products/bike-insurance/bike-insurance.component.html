@@ -1,0 +1,64 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Bike Insurance </div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+
+            <div class=" mydiv table-responsive">
+              <!-- table  -->
+              <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Registration Number</th>
+                    <th>Mobile</th>
+                    <th>Add Stamp</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr">
+                    <td>{{row.SrNo}}.</td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.mobile}}</td>
+                    <td>{{row.insert_date}}</td>
+                    <td>
+                      <button *ngIf="row.Status == '1'" (click)="ChangeStatusRenewals(2 ,row.Id,'Button')"
+                        class="btn warnings customMargins">
+                        Pending
+                      </button>
+                      <button *ngIf="row.Status == '2'" (click)="ChangeStatusRenewals(2 ,row.Id,'Button')"
+                        class="btn warnings customMargins">
+                        Follow Up
+                      </button>
+                      <button *ngIf="row.Status == '3'" (click)="ChangeStatusRenewals(3 ,row.Id,'Button')"
+                        class="btn warnings customMargins">
+                        Converted
+                      </button>
+                      <button *ngIf="row.Status == '4'" (click)="ChangeStatusRenewals(4 ,row.Id,'Button')"
+                        class="btn warnings customMargins">
+                        Lost
+                      </button>
+                    </td>
+
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="14" align="center">No data available!</td>
+                  </tr>
+                <tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

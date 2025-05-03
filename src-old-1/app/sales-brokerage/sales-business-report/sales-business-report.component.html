@@ -1,0 +1,433 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title">Blocked-Cases Reports</div>
+               
+            </div>
+            <div class="main_body main_card_height_scroll_withoutfooter">
+   
+				
+				<table>
+					<tr>
+						<th>Type</th>
+						<th>Booked</th>
+						<th>Un-Booked</th>
+						<th>Cancelled</th>
+						<th>Total</th>
+					</tr>
+					<tr>
+						<td>SR</td>
+
+						<td>{{TotalBookedSR}}</td>
+						<td>{{TotalUnBookedSR}}</td>
+						<td>{{TotalCancelledSR}}</td>
+						<td>{{TotalSR}}</td>
+					</tr>
+
+					<tr>
+						<td>Business</td>
+
+						<td>{{TotalBookedPremium}}</td>
+						<td>{{TotalUnBookedPremium}}</td>
+						<td>{{TotalCancelledNetPremium}}</td>
+						<td>{{TotalNetPremium}}</td>
+					</tr>
+
+					<tr>
+						<td>Revenue</td>
+
+						<td>{{TotalBookedRevenue}}</td>
+						<td>{{TotalUnBookedRevenue}}</td>
+						<td>{{TotalCancelledRevenue}}</td>
+						<td>{{TotalRevenue}}</td>
+					</tr>
+
+
+				</table>
+				<hr>
+				 
+
+				
+ 
+
+
+					<form [formGroup]="SearchForm" (ngSubmit)="SearchBtn('0')">
+
+						<div class="row">
+
+							<div class="col-sm-4">
+
+
+
+								<select (change)="GetEmployees()" formControlName="Vertical_Id" class="form-control">
+									<option value="0">Select Vertical</option>
+
+									<option *ngFor="let r of Vertical_Ar;" value="{{r.Id}}">{{r.Name}}</option>
+								</select>
+
+							</div>
+
+							<div class="col-sm-4">
+								<select (change)="GetSubBranches($event)" formControlName="Region_Id" class="form-control">
+									<option value="0">Select Region</option>
+									<option value="0">None</option>
+									<option *ngFor="let r of Region_Ar;" value="{{r.id}}">{{r.text}}</option>
+								</select>
+							</div>
+
+							<div class="col-sm-4">
+								<select (change)="GetEmployees()" formControlName="Sub_Region_Id" class="form-control">
+									<option value="0">Select Region-Branch</option>
+									<option value="0">None</option>
+									<option *ngFor="let r of Sub_Branch_Ar;" value="{{r.id}}">{{r.text}}</option>
+								</select>
+							</div>
+
+
+						</div>
+
+						<div class="row"  >
+
+
+							<div class="col-sm-4">
+
+								<ng-multiselect-dropdown class="form-control" name="Emp_Id" [placeholder]="Employee_Placeholder" [data]="Emps_Ar"
+									formControlName="Emp_Id" [settings]="dropdownSettings" (onSelect)="onItemSelect($event,'Employee')"
+									(onDeSelect)="onItemDeSelect($event,'Employee')">
+								</ng-multiselect-dropdown>
+							</div>
+
+							<div class="col-sm-2">
+								<select formControlName="Report_Type" class="form-control">
+									<option disabled value="0">Report Type</option>
+									<option value="Self">Self</option>
+									<option value="Hierarchy">Hierarchy ({{CountHierarchy_Emp}})</option>
+								</select>
+							</div>
+
+							<div class="col-sm-2">
+
+								<ng-multiselect-dropdown class="form-control" name="SRAgent_Type" placeholder="Select Agent Type" [data]="SRAgentType_Ar"
+									formControlName="SRAgent_Type" [settings]="LOB_dropdownSettings"
+									(onSelect)="onItemSelect($event,'SRAgent_Type')"
+									(onDeSelect)="onItemDeSelect($event,'SRAgent_Type')">
+								</ng-multiselect-dropdown>
+
+							</div>
+
+							<div class="col-sm-4">
+
+								<ng-multiselect-dropdown class="form-control" name="Agent_Id" [placeholder]="Agents_Placeholder" [data]="Agents_Ar"
+									formControlName="Agent_Id" [settings]="AgentdropdownSettings">
+								</ng-multiselect-dropdown>
+							</div>
+
+						</div>
+
+
+						<div class="row"  >
+
+							<div class="col-sm-3">
+
+								<ng-multiselect-dropdown class="form-control" name="SR_Broker" placeholder="Select Broker" [data]="SR_Broker_Ar"
+									formControlName="SR_Broker" [settings]="dropdownSettings"
+									(onSelect)="onItemSelect($event,'SR_Broker')" (onDeSelect)="onItemDeSelect($event,'SR_Broker')">
+								</ng-multiselect-dropdown>
+
+							</div>
+
+							<div class="col-sm-2">
+
+								<ng-multiselect-dropdown class="form-control" name="SRLOB" placeholder="Select LOB" [data]="SRLOB_Ar"
+									formControlName="SRLOB" [settings]="LOB_dropdownSettings" (onSelect)="onItemSelect($event,'LOB')"
+									(onDeSelect)="onItemDeSelect($event,'LOB')">
+								</ng-multiselect-dropdown>
+
+							</div>
+
+							<div class="col-sm-4">
+
+								<ng-multiselect-dropdown class="form-control" name="Product_Id" placeholder="Select Product" [data]="Products_Ar"
+									formControlName="Product_Id" [settings]="dropdownSettings">
+								</ng-multiselect-dropdown>
+
+
+							</div>
+
+							<div class="col-sm-3">
+
+								<ng-multiselect-dropdown class="form-control" name="Company_Id" placeholder="Select Ins Company" [data]="Companies_Ar"
+									formControlName="Company_Id" [settings]="dropdownSettings">
+								</ng-multiselect-dropdown>
+
+
+							</div>
+
+
+
+						</div>
+						<div class="row"  >
+
+							<div class="col-sm-2">
+
+								<ng-multiselect-dropdown class="form-control" name="SRStatus" placeholder="Select SR Status" [data]="SRStatus_Ar"
+									formControlName="SRStatus" [settings]="SR_StatusDropdownSettings">
+								</ng-multiselect-dropdown>
+
+								<span *ngIf="isSubmitted && FC.SRStatus.errors" class="form-text text-muted">
+									<span *ngIf="FC.SRStatus.errors.required" style="color:red;">Please choose
+										business type!</span>
+								</span>
+
+							</div>
+
+
+							<div *ngIf="SR_Current_UsersList_Ar?.length>0" class="col-sm-2">
+
+								<select formControlName="CurrentUser_Id" class="form-control">
+									<option value="0" selected disabled>Select Current-User</option>
+									<option *ngFor="let r of SR_Current_UsersList_Ar;" value="{{r.Id}}">{{r.Name}}
+									</option>
+								</select>
+
+							</div>
+
+
+
+							<div class="col-sm-2">
+
+								<ng-multiselect-dropdown class="form-control" name="SRType" placeholder="Select SR Type" [data]="SRType_Ar"
+									formControlName="SRType" [settings]="LOB_dropdownSettings"
+									(onSelect)="onItemSelect($event,'SR_Type')">
+								</ng-multiselect-dropdown>
+
+							</div>
+
+							<div class="col-sm-2">
+
+								<ng-multiselect-dropdown 	="form-control" name="SR_Source_Type" placeholder="Select Source" [data]="SRSource_Ar"
+									formControlName="SR_Source_Type" [settings]="LOB_dropdownSettings"
+									(onSelect)="onItemSelect($event,'Source')">
+								</ng-multiselect-dropdown>
+
+							</div>
+
+							<div class="col-sm-2">
+								<select (change)="onItemSelectFY($event,0)" formControlName="FY" class="form-control">
+									<option value="0" selected disabled>Select Financial-Year</option>
+									<option *ngFor="let r of FY_Ar;" value="{{r.Id}}">{{r.Name}}
+									</option>
+								</select>
+								<span *ngIf="isSubmitted && FC.FY.errors" class="form-text text-muted">
+									<span *ngIf="FC.FY.errors.required" style="color:red;">Please
+										choose Financial-Year!</span>
+								</span>
+							</div>
+
+							<div class="col-sm-3">
+								<input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+									formControlName="DateOrDateRange" bsDaterangepicker [minDate]="minDate" [maxDate]="maxDate"
+									[bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+
+								<span *ngIf="isSubmitted && FC.DateOrDateRange.errors" class="form-text text-muted">
+									<span *ngIf="FC.DateOrDateRange.errors.required" style="color:red;">Please
+										choose Date or Date-Range!</span>
+								</span>
+
+							</div>
+
+							<!--<div [class]="(SR_Current_UsersList_Ar.length == 0) ? 'col-lg-5' :'col-lg-3'">
+				  <input
+				  type="text"  formControlName="GlobalSearch"
+				  placeholder="Search SR No/Policy/Vehicle No./Quotation Id"
+				  class="form-control">
+			</div>-->
+
+						</div>
+						<div class="row"  >
+
+
+							<div class="col-sm-9"></div>
+							<div style="text-align: right;" class="col-sm-3">
+
+								<input *ngIf="(Is_Export==1)" (click)="ExportExcel()" type="button" class="btn btn-success"
+									value="Export">
+								&nbsp;&nbsp;
+								<input type="submit" class="btn btn-info" value="Search">
+								&nbsp;&nbsp;
+								<input (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset">
+							</div>
+
+						</div>
+
+					</form>
+
+
+				 
+
+				<div *ngIf="checkedList?.length>0" class="row"  >
+
+					<div class="col-sm-3">
+						<input type="button" (click)="UpdateRequest()" class="btn btn-info" value="Submit Request">
+						&nbsp;&nbsp;
+						<input (click)="Cancel()" type="button" class="btn btn-danger" value="Cancel">
+					</div>
+
+
+				</div>
+
+				<hr>
+				<div class="">
+					<form [formGroup]="SearchForm1">
+						<div class="row">
+							<div class="col-sm-9"></div>
+							<div class="col-sm-3 input-group mb-3">
+								<input type="text" formControlName="GlobalSearch" placeholder="Search" class="form-control"
+									[ngClass]="(isSubmitted1 && FC1.GlobalSearch.errors && FC1.GlobalSearch.errors.required?'form-control errorMsgg':'form-control')">
+								<div class="input-group-append">
+									<button class="btn btn-info" type="button" (click)="SearchBtn('1')"><span
+											class="fa fa-search"></span></button>
+								</div>
+							</div>
+						</div>
+
+					</form>
+				</div>
+
+				<hr>
+				<!--begin: Datatable-->
+				<div class="my_div_buisness_report" id="mydiv">
+					<table datatable [dtOptions]="dtOptions"
+						class="row-border hover table table-bordered table-hover table-checkable table-responsive"
+						style="margin-top: 13px !important">
+						<thead>
+							<tr>
+
+								<th>Sr.No</th>
+								<th>
+									<input [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()"
+										type="checkbox">
+								</th>
+								<th>Action</th>
+								<th>CreateDate</th>
+								<th>BookingDate</th>
+								<th>Current-User</th>
+								<th>Create-User</th>
+								<th>Remark</th>
+								<th>SR Type/Status/Source</th>
+								<th>S.No</th>
+								<th>LOB</th>
+								<th>File Type</th>
+								<th>Gross Premium</th>
+								<th>Customer Name</th>
+								<th>Agent/Code</th>
+								<th>RM/Code</th>
+							</tr>
+						</thead>
+						<tbody *ngIf="dataAr?.length != 0">
+							<tr *ngFor="let row of dataAr">
+								<td>{{ row.SrNo }}.</td>
+
+
+								<td>
+									<input
+										*ngIf="row.Posting_Status == 0 && row.Payout_Custom_Update == 0 && row.Posting_Status_Web == 0 && row.Web_Payout_Custom_Update == 0 && api.GetUserData('User_Id_Dec') == row.RM_Id && (row.SR_Type == 'Normal' || row.SR_Type == 'Short' || row.SR_Type == 'Endorsement')"
+										type="checkbox" [(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}"
+										(change)="isAllSelected()">
+								</td>
+
+
+								<td>
+
+									<a href="javascript:;" (click)="Actions(row.Id)">
+										<span class="label label-success label-inline mr-2">Details</span>
+									</a>
+									<a *ngIf="row.SR_Status == 'Pending' && api.GetUserData('User_Id_Dec') == row.SR_Current_User_Id">
+										<span style="margin-top: 5px;" class="label label-danger label-inline mr-2">Clear QC</span>
+									</a>
+
+									<a href="javascript:;" (click)="UpdatePayout(row.Id)"
+										*ngIf="row.Posting_Status == 0 && row.Payout_Custom_Update == 0 && row.Posting_Status_Web == 0 && row.Web_Payout_Custom_Update == 0 && api.GetUserData('User_Id_Dec') == row.RM_Id && (row.SR_Type == 'Normal' || row.SR_Type == 'Short' || row.SR_Type == 'Endorsement')">
+										<span style="margin-top: 5px; width:110px;" class="label label-warning label-inline mr-2">Update
+											Payout</span>
+									</a>
+
+									<a *ngIf="row.SR_Status=='Pending' && api.GetUserData('User_Id_Dec') == row.RM_Id "
+										title="SR-Actions" href="javascript:;" (click)="CancelSR(row.Id,row.SR_No)">
+										<span style="margin-top: 5px;" class="label label-warning label-inline mr-2">Cancel</span>
+									</a>
+
+								</td>
+								<td>{{ row.Add_Stamp }}</td>
+								<td>{{ row.Booking_Date }}</td>
+								<td>{{ row.CurrentSrUserName }}</td>
+
+								<td>{{ row.SRCreateUser }}</td>
+								<td>{{ row.SR_Remark }}</td>
+
+								<td>
+
+									<span *ngIf="row.SR_Type == 'Normal'" style="background: #724a4a;margin-bottom: 2px;"
+										class="label label-success label-inline mr-2">Normal</span>
+									<span *ngIf="row.SR_Type == 'Short'" style="background: #f306c0;margin-bottom: 2px;"
+										class="label label-success label-inline mr-2">Short</span>
+									<span *ngIf="row.SR_Type == 'Endorsement'" style="background: #5358eb;margin-bottom: 2px;"
+										class="label label-success label-inline mr-2">Endorsement</span>
+									<span *ngIf="row.SR_Type == 'Recovery'" style="background: #f1350a;margin-bottom: 2px;"
+										class="label label-success label-inline mr-2">Recovery</span>
+
+									<span *ngIf="row.SR_Status == 'Complete'" style="margin-bottom: 2px;"
+										class="label label-success label-inline mr-2">Booked</span>
+									<span *ngIf="row.SR_Status == 'Pending' && row.Underwriter_Emp_Id =='0'" style="margin-bottom: 2px;"
+										class="label label-warning label-inline mr-2">UnBooked</span>
+									<span *ngIf="row.SR_Status == 'Pending' && row.Underwriter_Emp_Id !='0'"
+										style="margin-bottom: 2px;width: 145px;"
+										class="label label-danger label-inline mr-2">UnBooked/QC-Rejected</span>
+									<span *ngIf="row.SR_Status == 'Cancelled'" style="margin-bottom: 2px;"
+										class="label label-danger label-inline mr-2">Cancelled</span>
+									<span *ngIf="row.SR_Status == 'Recovery'" style="margin-bottom: 2px;"
+										class="label label-danger label-inline mr-2">Recovery</span>
+
+									<span *ngIf="row.SR_Source == 'Online'" style="margin-bottom: 2px;"
+										class="label label-info label-inline mr-2">Online</span>
+									<span *ngIf="row.SR_Source == 'Offline'" style="margin-bottom: 2px;"
+										class="label label-primary label-inline mr-2">Offline</span>
+									<span *ngIf="row.SR_Source == 'Excel'" style="margin-bottom: 2px;"
+										class="label label-danger label-inline mr-2">Excel</span>
+
+								</td>
+
+
+
+								<td>{{ row.SR_No }}</td>
+								<td>{{ row.LOB_Name }}</td>
+								<td>{{ row.File_Type }}</td>
+								<td>{{ row.Estimated_Gross_Premium }}</td>
+								<td>{{ row.Customer_Name }}</td>
+								<td>{{ row.Agent_Name }}</td>
+								<td>{{ row.RM_Name }}</td>
+
+							</tr>
+						</tbody>
+						<tbody *ngIf="dataAr?.length == 0">
+							<tr>
+								<td colspan="15" align="center">No data available !</td>
+							</tr>
+						<tbody>
+					</table>
+				</div>
+
+				<!--end: Datatable-->
+				
+			</div>
+		</div>
+	</div>
+</div>
+      <!-- /.row -->
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</section>

@@ -1,0 +1,214 @@
+.box-title {
+    color: #2cb2b3;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.con-one {
+    margin-top: 10px;
+}
+.con-one ul {
+    padding: 10px 15px;
+    background: rgb(44 178 179 / 16%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    border-radius: 5px;
+}
+.con-one ul li {
+    list-style: none;
+    font-size: 12px;
+    font-weight: 600;
+}
+.con-one ul li span {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 3px;
+}
+
+
+
+
+
+
+
+
+
+
+
+.edit-setting {}
+.edit-setting .heading {
+    color: #2cb2b3;
+    font-size: 18px;
+    font-weight: 700;
+}
+.section {
+    margin-top: 20px;
+}
+.section label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+
+.channels {
+    margin-top: 10px;
+}
+.channels table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.channels th,
+.channels td {
+    padding: 10px;
+    border: 1px solid #eee;
+    padding: 6px;
+}
+.channels td i {
+    margin-right: 7px;
+    font-size: 14px;
+}
+input[type='checkbox']:after {
+    box-shadow: none !important;
+}
+.channels td .fa-whatsapp {
+    color: #25D366;
+}
+.channels th {
+    background-color: rgb(44 178 179 / 16%);
+}
+.submit-btn {
+    display: flex;
+    justify-content: center;
+}
+.submit-btn button {
+    padding: 8px 20px;
+    background-color: #2cb2b3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-bottom: 0px !important;
+}
+.submit-btn button:hover {
+    background-color: #2cb2b3;
+    color: #fff;
+}
+
+
+
+.main input[type=radio] {
+    display: none;
+}
+#tab-1:checked ~ .tab label:nth-child(1), #tab-2:checked ~ .tab label:nth-child(2), #tab-3:checked ~ .tab label:nth-child(3), #tab-4:checked ~ .tab label:nth-child(4) {
+    background-color: #2cb2b3;
+    box-shadow: none;
+    color: #fff;
+}
+.content > div {
+    display: none;
+}
+#tab-1:checked ~ .content div:nth-child(1), #tab-2:checked ~ .content div:nth-child(2), #tab-3:checked ~ .content div:nth-child(3), #tab-4:checked ~ .content div:nth-child(4) {
+    display: block;
+}
+
+.tab {
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 3px;
+}
+.tab label {
+    font-size: 14px;
+    cursor: pointer;
+    float: left;
+    color: #333;
+    width: calc(100%/3);
+    text-align: center;
+    padding: 8px 0;
+    text-transform: capitalize;
+    font-weight: 600;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-user-select: none;
+    background: rgb(44 178 179 / 16%);
+    border: 1px solid rgb(44 178 179 / 16%);
+    margin: 0px;
+}
+.content {
+    min-height: auto;
+    padding: 0px;
+    margin: 0px;
+}
+
+.submit-view {
+    display: flex;
+    margin-top: 10px;
+}
+.submit-view input[type=checkbox] {
+    margin-top: 0px;
+    margin-right: 7px;
+}
+.submit-view label {
+    margin-bottom: 0px;
+    font-weight: 500;
+    font-size: 12px;
+}
+input[type=checkbox] {
+    position: relative;
+      border: 2px solid #2cb2b3;
+      border-radius: 2px;
+      background: none;
+      cursor: pointer;
+      line-height: 0;
+      outline: 0;
+      padding: 0 !important;
+      vertical-align: text-top;
+      height: 18px;
+      width: 18px;
+      -webkit-appearance: none;
+    opacity: .5;
+  }
+  
+  input[type=checkbox]:hover {
+    opacity: 1;
+  }
+  
+  input[type=checkbox]:checked {
+    background-color: #2cb2b3;
+    opacity: 1;
+  }
+  
+  input[type=checkbox]:before {
+    content: '';
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    width: 4px;
+    height: 10px;
+    border: solid #FFF;
+    border-width: 0 2px 2px 0;
+    margin: -1px -1px 0 -1px;
+    transform: rotate(45deg) translate(-50%, -50%);
+    z-index: 2;
+  }
+  .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+    border: 1px solid rgb(44 178 179 / 16%) !important;
+    font-weight: 600 !important;
+}
+.table-bordered>thead>tr>th {
+    font-size: 14px;
+}
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: rgb(44 178 179 / 9%);
+}
+.table-hover>tbody>tr:hover {
+    background-color: rgb(44 178 179 / 16%);
+}

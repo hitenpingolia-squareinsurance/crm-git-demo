@@ -1,0 +1,80 @@
+<div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 *ngIf="this.type == 'Add' ">Add Pre-inspection</h3>
+            <h3 *ngIf="this.type == 'Edit' ">Edit Pre-inspection</h3>
+        </div>
+        <div class="col-md-5">&nbsp;</div>
+        <div class="col-md-1">
+            <button type="button" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+        </div>
+    </div>
+    <form (ngSubmit)="submit()" [formGroup]="preForm" style="margin-top: -15px;" id="form-1">
+
+        <div class="box">
+
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="state">Company Name</label>
+
+                        <input type="text" class="form-control" formControlName="company_name" readonly>
+                        <div *ngIf="isSubmitted && formControls.company_name.errors" class="ValidationError">
+                            <div *ngIf="formControls.company_name.errors.required">Please enter Company Name</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="state">URL</label>
+                        <input type="text" class="form-control" formControlName="url">
+                        <div *ngIf="isSubmitted && formControls.url.errors" class="ValidationError">
+                            <div *ngIf="formControls.url.errors.required">Please enter Url</div>
+                        </div>
+                        <div class="ValidationError">
+                            <div id="validation1">
+                                {{errorMsg}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="state">PPT</label>
+                        <input type="file" class="form-control" formControlName="PPt"
+                            (change)="UploadDocs($event,'PPt')">
+                        <div *ngIf="isSubmitted && formControls.PPt.errors" class="ValidationError">
+                            <div *ngIf="formControls.PPt.errors.required">Please Select PPt</div>
+                        </div>
+                        <div class="ValidationError">
+                            <div id="validation2">
+                                {{errorMsg}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="state">Video</label>
+                        <input type="file" class="form-control" formControlName="Video"
+                            (change)="UploadDocs($event,'Video')">
+                        <div *ngIf="isSubmitted && formControls.Video.errors" class="ValidationError">
+                            <div *ngIf="formControls.Video.errors.required">Please Select Video</div>
+                        </div>
+                        <div class="ValidationError">
+                            <div id="validation3">
+                                {{errorMsg}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer with-border">
+                    <footer>
+                        <button class="btn pull-right" (click)="CloseModel()" type="button">Close</button>
+                        <button *ngIf="this.type == 'Add'" class="btn btn-primary nextBtn pull-right"
+                            style="margin-right: 5px;" type="submit">Submit</button>
+                        <button *ngIf="this.type == 'Edit'" class="btn btn-primary nextBtn pull-right"
+                            style="margin-right: 5px;" type="submit">Update</button>
+
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

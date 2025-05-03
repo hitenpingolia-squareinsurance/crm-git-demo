@@ -1,0 +1,132 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Quotations</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div class="filterquotesrow">
+              <div class="totalquotes">Total Quotation {{ this.totalCount }}</div>
+              <button class="btn btninfo1" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><a role="button"><i class="fa fa-filter"></i><span>Filters</span><i class="fa fa-angle-down"></i></a></button>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panelbody">
+                <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+              </div>
+            </div>
+            <div class="custom_table tables_layout_design">
+              <table datatable [dtOptions]="dtOptions" class="row-border table" id="Table1">
+                <thead>
+                  <tr>
+                    <th></th>
+                  </tr>
+                </thead>
+              </table>
+              <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                <li class="table-row tablerow{{(i % 10) + 1}}" *ngFor="let row of dataAr; let i=index;" [ngClass]="(row.PaymentStatus==1 ? 'PaymentSuccess' : 'else' )">
+                  <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                    <div class="agents_data agents_data1">
+                      <div class="icon_re_cl">{{row.SrNo}}</div>
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>LOB/Type </div>
+                          <strong class="fs_18">{{row.LOB}}/<span *ngIf="row.LOB != 'Personal Accident'">{{row.ProductName}}</span></strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data2">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Created by</div>
+                          <strong class="fs_18">{{row.CreatedBy}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data3">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Created Date</div><strong class="fs_18">{{row.CreateDate}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="last_row_div">
+                    <div class="d_flex custon-234"> 
+                      <div class="label_chips non_motor_lob" *ngIf="row.EmitraUser!=1">
+                        <span>Quotation ID : {{ row.Quotation_Id }}</span>&nbsp;&nbsp;
+                      </div>
+                      <div class="label_chips finance_lob" *ngIf="row.EmitraUser==1">
+                        <span>Trans. Id : {{row.EmitraDatas.req_id}}</span>
+                      </div>
+                      <div class="label_chips finance_lob" *ngIf="row.EmitraUser==1">
+                        <span>KIOSK Code : {{row.EmitraDatas.kisok_id}}</span>
+                      </div>
+                      <div class="label_chips finance_lob" *ngIf="row.EmitraUser==1">
+                        <span>SSO Id : {{row.EmitraDatas.ssoid}}</span>
+                      </div>                      
+                      <div class="label_chips motor_lob" *ngIf="row.LOB == 'Motor' || row.LOB == 'Non-Motor' ">
+                        <span>Vehicle No : {{ row.Vehicle_No }}</span>&nbsp;&nbsp;
+                      </div>
+                      <div class="label_chips motor_lob" *ngIf="row.LOB == 'Health' || row.LOB == 'Personal Accident'">
+                        <span>Sum Insured : {{ row.HealthSuminsured}}</span>
+                      </div>
+                    </div>
+                  </div>   
+                  <div class="last_row">
+                    <div class="d_flex effective_date">
+                      <div class="date_text" *ngIf="row.LOB == 'Motor' || row.LOB == 'Non-Motor' ">
+                        <span class="fs_12">Quote Details:-</span>
+                        <span class="fs_12">{{row.QuoteDetails}}</span>
+                      </div>
+                      <div class="date_text" *ngIf="row.LOB == 'Health'">
+                        <span class="fs_12">Pincode:-</span>
+                        <span class="fs_12">{{row.HealthPincode}}</span>                
+                      </div>
+                      <div class="date_text" *ngIf="row.LOB == 'Health'">
+                        <span class="fs_12">Plan:-</span>
+                        <span class="fs_12">{{row.HealthPlan}}</span>
+                      </div>
+                      <div class="date_text" *ngIf="row.LOB == 'Health'">
+                        <span class="fs_12">Gender:-</span>
+                        <span class="fs_12">{{row.HealthGender}}</span>
+                      </div>
+                      <div class="date_text" *ngIf="row.LOB == 'Personal Accident'">
+                        <span class="fs_12">Pincode:-</span>
+                        <span class="fs_12">{{row.HealthPincode}}</span>                
+                      </div>
+                      <div class="date_text" *ngIf="row.LOB == 'Personal Accident'">
+                        <span class="fs_12">Annual Income:-</span>
+                        <span class="fs_12">{{row.HealthPlan}}</span>
+                      </div>
+                      <div class="date_text" *ngIf="row.LOB == 'Personal Accident'">
+                        <span class="fs_12">Occupation:-</span>
+                        <span class="fs_12">{{row.HealthGender}}</span>
+                      </div>
+                    </div>
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom" *ngIf="row.EmitraUser!=1">
+                      <a style="cursor: pointer;" *ngIf="row.PaymentStatus == '0'" (click)="QuoteToWeb(row.Action)" class=" mr_5 btn-bg">Proceed</a>
+                      <a style="cursor: pointer;" *ngIf="row.PaymentStatus == '1' && row.DownloadPolicy != '0'" target="_blank" href="{{row.DownloadPolicy}}" class=" mr_5 btn-bg1">Download</a>                      
+                    </div>
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom" *ngIf="row.EmitraUser==1 && row.EmitraDatas.req_id">
+                      <a style="cursor: pointer;" target="_blank" href="https://www.squareinsurance.in/emitra/issuance1/success/{{ row.Quotation_Id }}/{{ row.EmitraDatas.ids }}" class=" mr_5 btn-bg">Proceed</a>                    
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="row" *ngIf="dataAr?.length == 0">
+                <div class="col-md-12">
+                  <div class="no_data_found">
+                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                    <small>No data available !</small>
+                  </div>
+                </div>
+              </div>
+            </div>            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,503 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+
+            <div class="main_header">
+              <div class="header_title">
+                <div>Invoice</div>
+              </div>
+            </div>
+            <div class="main_body main_card_height_scroll_withoutfooter">
+                <div class="panelbody">
+                    <form [formGroup]="RequestData" (ngSubmit)="SearchData()">
+                      <div class="row">
+
+                        <div class="col-sm-3" *ngIf="this.urlsegment == 'account'">
+                          <label for="Request_type">Financial Year</label>
+
+                          <ng-multiselect-dropdown class="form-control" placeholder="Financial Year" [data]="SR_Session_Year"
+                            formControlName="FinancialYearr" [settings]="dropdownSettingsingleselect"
+                            (onSelect)="onItemSelect($event,'FinancialYear')"
+                            [(ngModel)]="financialYearVal"> </ng-multiselect-dropdown>
+                        </div>
+
+                        <div class="col-sm-3">
+                          <label for="Request_type">Select Date Range</label>
+                          <input type="text" placeholder="Date OR Date-Range" class="form-control" formControlName="DateOrDateRange"
+                            bsDaterangepicker [minDate]="minDate" [maxDate]="maxDate"
+                            [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+                        </div>
+
+
+                        <div class="col-sm-3" *ngIf="this.urlsegment == 'account'">
+                              <label for="Request_type">Request Type</label>
+                              <ng-multiselect-dropdown   class="form-control" [data]="Request_type" formControlName="Request_type"
+                              [settings]="dropdownSettingsType" [(ngModel)]="Default_Request">
+                              </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-sm-3">
+                          <label for="Request_type" >Search</label>
+                          <input type="text" class="form-control" formControlName="SearchVal">    
+                        </div>
+                        <div class="col-sm-3" style="margin-top: 25px;">
+                          <input type="submit" class="btn btn-success" value="Search" style="padding:6px;"> &nbsp;&nbsp;
+                          <button (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset"> <i
+                              class="fa fa-close"> </i> Reset</button> &nbsp;&nbsp;
+                              <button type="button" class="btn btn-success" style="padding:6px;" *ngIf="this.urlsegment == 'account' && this.Is_Export == 1 " (click)="ExportSettlementExcel()" >
+                                Export Settlement Report</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <hr>
+                  <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                    <div class="custom_table tables_layout_design">
+                      <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                        <thead>
+                          <tr>
+                            <th></th>
+                          </tr>
+                        </thead>
+                      </table>
+                    <!-- ======= Refer Table  =========-->
+                    <ul class="responsive-table">
+
+                        <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+
+                          <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                            <div class="agents_data agents_data1">
+                              <div class="icon_re_cl">{{row.Sr_no}}</div>
+                              <div class="agent_name_mobile">
+                                <div class="agent_data">
+                                  <strong class="fs_18 text-bold">{{row.Part_Name}}</strong>
+                                </div>
+                              </div>
+                            </div>
+
+                                <div class="agents_data agents_data3">
+                                    <div class="agent_name_mobile">
+                                      <div class="agent_data">
+                                        <button type="button"  class="btn btn-info" >
+                                            <label (click)="ViewDocument(row.invoice_url)">Invoice Draft</label>
+                                      </button>
+
+                                      </div>
+                                      
+                                      <div class="agent_data" *ngIf="row.logs_id != 0 && this.urlsegment != 'account' || (Default_Request[0].Id == 'My Request' && this.urlsegment == 'account')">
+
+                                          <button type="button" *ngIf="( (row.status_check != 0 && row.Settlement_amount != '0.00' && row.approval_status == 1)  && this.urlsegment == 'account' ) "  class="btn btn-success" data-toggle="modal" data-target="#exampleModal" (click)="Settlement(row.Id , row.Settlement_amount)">
+                                            {{row.status_check == 3 ? 'Settled' : 'Settlement'}}
+                                          </button>
+
+                                          <button type="button" *ngIf="((row.approval_status == 0 || row.approval_status == 2) && (row.upload_invoice == '' || row.upload_invoice == null) && (row.invoice_no == '' || row.invoice_no == null)) && (this.urlsegment == 'manager' || (this.urlsegment == 'user' && userType == 'agent')) " (click)="InvoiceId(row.Id)" class="btn btn-primary" data-toggle="modal" data-target="#invoiceModal">
+                                            Upload Invoice
+                                          </button>&nbsp;
+                                          <button type="button" *ngIf=" this.userType == 'employee' && (row.approval_status == 1 && (row.utr_no == '' || row.utr_no == null) && (row.utr_date == '' || row.utr_date == null) )" (click)="InvoiceId(row.Id)" class="btn btn-primary" data-toggle="modal" data-target="#utrModal">
+                                            Update UTR
+                                          </button>&nbsp;
+                                      </div>
+
+
+                                      <div class="agent_data" *ngIf="Default_Request[0].Id == 'Raise Request' && this.urlsegment == 'account'">
+                                        <button type="button" class="btn btn-primary"
+                                            (click)="Accept(row.Id , 'Accepted')">
+                                            Accept
+                                        </button>&nbsp;
+                                      </div>
+
+                                      <button type="button" *ngIf="row.approval_status == 3 || row.approval_status == 1 || row.approval_status == 2" class="btn btn-primary" 
+                                      (click)="InvoiceDetails(row.Id)"  data-toggle="modal" data-target="#invoiceDetailModal">
+                                      Logs
+                                      </button>&nbsp;
+                                      <div class="agent_data" *ngIf="Default_Request[0].Id == 'My Request' && this.urlsegment == 'account'">
+                                          
+                                           
+                                            <button type="button" *ngIf="row.approval_status == '3' && this.urlsegment == 'account'"
+                                                                class="btn btn-success" (click)="AccountAction(row.Id, 'approve')" >
+                                                                Approve
+                                            </button>
+
+                                            <button type="button" *ngIf="row.approval_status == '3' && this.urlsegment == 'account'"
+                                              class="btn btn-danger" (click)="AccountAction(row.Id, 'deny')" >
+                                              Deny
+                                            </button>
+                                            <!-- <button type="button" *ngIf="(row.approval_status == 0 || row.approval_status == 2) && (this.urlsegment == 'account') && ((row.upload_invoice == '' row.upload_invoice == null) && (row.hsn_no == '' || row.hsn_no != null))" class="btn btn-success" (click)="AccountAction(row.Id,'approve')">Approve</button>
+                                            <button type="button" *ngIf="(row.approval_status == 0 || row.approval_status == 2) && (this.urlsegment == 'account') && ((row.upload_invoice == '' row.upload_invoice == null) && (row.hsn_no == '' || row.hsn_no == null))" class="btn btn-danger" (click)="AccountAction(row.Id,'deny')">Deny</button> -->
+                                        </div>
+                                        <!-- <div class="agent_data" *ngIf="this.urlSegment == 'user' row.status_check != 1">
+                                          <button type="button"  class="btn btn-warning" style="padding: 2px;" data-toggle="modal" data-target="#logsModal" (click)="View_logs(row.Posting_Id)">
+                                            <strong>Action</strong>
+                                          </button>
+                                        </div> -->
+                                    </div>
+                                </div>
+                          </div>
+
+                          <div class="last_row_div">
+                            <div class="d_flex custon-234">
+                              <div class="label_chips one" >
+                                <span>Payor Name - {{row.payor_name}}</span>
+                              </div>
+                              <div class="label_chips two" >
+                                <span>RM - {{row.Reporting_Manager}}</span>
+                              </div>
+                              <div class="label_chips three" >
+                                <span>Invoice Amount - {{row.Amount_With_GST}}</span>
+                              </div>
+                              <div *ngIf="this.userType != 'agent' && row.Settlement_amount != 0" class="label_chips four" >
+                                <span>Balance Amount - {{row.Settlement_amount}}</span>
+                              </div>
+                              <div class="label_chips five" >
+                                <abbr></abbr>
+                                <span>Add Stamp - {{row.add_stamp}}</span>
+                              </div>
+                              <div *ngIf="row.invoice_no != '' && row.invoice_no != null " class="label_chips six" >
+                                <span>Invoice No. - {{row.invoice_no}}</span>
+                              </div>
+                              <div *ngIf="row.invoice_date != '' " class="label_chips seven" >
+                                <span>Invoice date - {{row.invoice_date}}</span>
+                              </div>
+                              <div *ngIf="row.upload_invoice != '' " class="label_chips eight" >
+                                <span>Invoice - <a [href]="row.upload_invoice" target="_blank">View</a></span>
+                              </div>
+
+
+                              <div *ngIf="((row.utr_no != '' && row.utr_no != null) && this.urlsegment == 'account') " class="label_chips seven" >
+                                <span>UTR Number - {{row.utr_no}}</span>
+                              </div>
+
+                              <div *ngIf="((row.utr_date != '' && row.utr_date != null) && this.urlsegment == 'account') " class="label_chips seven" >
+                                <span>UTR Date - {{row.utr_date}}</span>
+                              </div>
+
+                            </div>
+                          </div>
+
+                        </li>
+
+                    </ul>
+                        <!--======= Refer Table END ========= -->
+                    <div class="row" *ngIf="dataAr?.length == 0">
+                        <div class="col-md-12">
+                          <div class="no_data_found">
+                            <span><img src="assets/image/no_data_banner.jpg"></span>
+                            <small>No data available !</small>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--SETTEMENT MODEL-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><b>Settlement Logs</b></h5>
+          <button id="CloseModel" type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="false">&times;</span>
+          </button>
+  
+        </div>
+        <div class="modal-body">
+          <form class="form" (ngSubmit)="settlement_Form()" [formGroup]="SettleForm" *ngIf="this.urlsegment == 'account' && this.Balance != 0">
+            <div class="row">
+
+              <div class="col-md-4">
+                <label for="Settlement_type">Settlement Type</label>
+
+                <textarea class="form-control" type="text" formControlName="Settlement_type" name="Settlement_type"
+                  id="Settlement_type" placeholder="Enter Settlement_type"></textarea>
+                  <span *ngIf="isSubmitted && FormC.Settlement_type.errors" class="ValidationError">
+                  <span *ngIf="FormC.Settlement_type.errors.required">Settlement Type required!</span>
+                </span>
+              </div>                 
+              <div class="col-md-4">
+                <label for="Settlement_amount">Settlement Amount</label>
+                <input class="form-control" type="number" formControlName="Settlement_amount" name="Settlement_amount"
+                  id="Settlement_amount" placeholder="Enter Settlement_amount" [(ngModel)]="this.Balance">
+                  <span *ngIf="isSubmitted && FormC.Settlement_amount.errors" class="ValidationError">
+                  <span *ngIf="FormC.Settlement_amount.errors.required">Settlement Amount required!</span>
+                </span>
+              </div>
+           </div>
+           <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="closemodel" style="padding:3px;" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+          </form>
+
+           <!-- --------------------- LOGS --------------------------------- -->
+
+           <div class="mydiv table-responsive">
+              <table class="table table-bordered table-hover" id="Table1" style="width: -webkit-fill-available;">
+                <thead>
+                  <th>Sr No.</th>
+                  <th>Name</th>
+                  <th>Settled Amount</th>
+                  <th>Remark</th>
+                  <th>Action Date</th>
+                  <!-- <th>Status</th> -->
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of DataArr;">
+                    <td>{{row.srno}}</td>
+                    <td>{{row.user_name}}</td>
+                    <td *ngIf="this.userType != 'agent' ">{{row.Settlement_amount}}</td>
+                    <td>{{row.remark}}</td>
+                    <td>{{row.add_stamp}}</td>
+                    <!-- <td>
+    
+                      <label  *ngIf="row.status_check == 2 || row.status_check == 3" class="label label-success">Settled</label>
+                      <label  *ngIf="row.status_check == 1" class="label label-warning">Pending</label>
+                     
+                    </td> -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+        </div>
+  
+      </div>
+    </div>
+</div>
+
+
+  <!--LOGS-->
+  <!-- <div class="modal fade" id="logsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document" >
+      <div class="modal-content" style="width:800px;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><b>Settlement</b></h5>
+          <button id="Close_LogsModel" type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="false">&times;</span>
+          </button>
+  
+        </div>
+        <div class="modal-body">
+
+          <table class="table table-bordered table-hover" id="Table1" style="width: -webkit-fill-available;">
+            <thead>
+              <th>Sr No.</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Settlement Amount</th>
+              <th>Settled Amount</th>
+              <th>Remark</th>
+              <th>Action Date</th>
+              <th>Status</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of DataArr;">
+                <td>{{row.srno}}</td>
+                <td>{{row.status_check == 1 || row.status_check == 3 ? row.user_name : ((row.status == 1 && row.status_check == 3) || row.status_check == 2 ? row.rm_name :'')}}</td>
+                <td>{{row.status_check == 1  ? 'User' : (row.status_check == 2 || (row.status == 1 && row.status_check == 3) ? 'Manager' : (row.status_check == 3 ? 'Account' : ''))}}</td>
+                <td>{{row.Settlement_amount}}</td>
+                <td>{{row.settled_amount}}</td>
+                <td>{{row.remark}}</td>
+                <td>{{row.update_stamp == '0000-00-00 00:00:00' ? '-' : row.update_stamp}}</td>
+                <td>
+                  <label  *ngIf="row.status == 0 && row.status_check == 1" class="label label-success">Requested</label>
+                  <label  *ngIf="this.urlsegment == 'user' && row.status == 0 && row.status_check == 2" class="label label-warning">Pending For Manager</label>
+                  
+                  <label  *ngIf="row.status == 1 && row.status_check == 2" class="label label-success">Approved</label>
+                  <label  *ngIf="row.status == 2 && row.status_check == 2" class="label label-danger">Rejected</label>
+
+                  <label  *ngIf="this.urlsegment != 'account'  && (row.status == 0 && row.status_check == 3)" class="label label-warning">Pending For Account-desk</label>
+                  <label  *ngIf="row.status == 1 && row.status_check == 3" class="label label-success">Approved</label>
+                  <label  *ngIf="row.status == 2 && row.status_check == 3" class="label label-danger">Rejected</label>
+
+                  <ng-container *ngIf="this.urlsegment == 'manager' && (row.status == 0 && row.status_check == 2) || this.urlsegment == 'account'  && (row.status == 0 && row.status_check == 3)">
+                    <button class="btn btn-success" data-toggle="modal" data-target="#ApprovalModal" (click)="GetStatus('Approve' , row.refrence_id)">Approve</button><br>
+                    <button class="btn btn-danger" style="padding:3px;" data-toggle="modal" data-target="#ApprovalModal" (click)="GetStatus('Deny' , row.refrence_id)">Deny</button>
+                </ng-container> 
+                 
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+  
+      </div>
+    </div>
+  </div> -->
+  <!--APPROVE/DENY MODEL-->
+  <!-- <div class="modal fade" id="ApprovalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><b>{{ this.ApprovalStatus }}</b></h5>
+          <button id="Close_Approve_Model" type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="false">&times;</span>
+          </button>
+  
+        </div>
+        <div class="modal-body">
+          <form class="form" (ngSubmit)="Approve_Form()" [formGroup]="ApproveForm">
+            <div class="row">
+
+              <div class="col-md-4">
+                <label for="Remark">Remark</label>
+
+                <textarea class="form-control" type="text" formControlName="Remark" name="Remark"
+                  id="Remark" placeholder="Enter Remark"></textarea>
+                  <span *ngIf="isSubmitted && FormControl.Remark.errors" class="ValidationError">
+                  <span *ngIf="FormControl.Remark.errors.required">Settlement Type required!</span>
+                </span>
+              </div> 
+
+
+           </div>
+           <div class="modal-footer">
+            <button type="button" class="btn btn-danger" style="padding:3px;" data-dismiss="modal" (click)="onClose()">Close</button>
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+          </form>
+        </div>
+  
+      </div>
+    </div>
+  </div> -->
+
+
+  <div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="invoiceModalLabel">Upload Invoice Details</h5>
+          <button type="button" class="close" id="closeDialoginvoice" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <form [formGroup]="invoiceForm" (ngSubmit)="invoiceSubmit()">
+            <div class="form-group">
+              <label for="invoiceImage">Invoice Image</label>
+              <input type="file" class="form-control" id="invoiceImage" (change)="UploadDocs($event,'image')" formControlName="invoiceImage">
+              <span *ngIf="isSubmitted && InvoiceForm.invoiceImage.errors" class="ValidationError">
+                <span *ngIf="InvoiceForm.invoiceImage.errors.required">Please select invoice!</span>
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="hsnNo">Invoice Number</label>
+              <input type="text" class="form-control" id="hsnNo" formControlName="hsnNo">
+              <span *ngIf="isSubmitted && InvoiceForm.hsnNo.errors" class="ValidationError">
+                <span *ngIf="InvoiceForm.hsnNo.errors.required">Please enter HSN No.!</span>
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="invoiceDate">Invoice Date</label>
+              <input type="date" class="form-control" id="invoiceDate" formControlName="invoiceDate">
+              <span *ngIf="isSubmitted && InvoiceForm.invoiceDate.errors" class="ValidationError">
+                <span *ngIf="InvoiceForm.invoiceDate.errors.required">Please select invoice date!</span>
+              </span>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="invoiceDetailModal" tabindex="-1" aria-labelledby="invoiceDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="invoiceModalLabel"><b>Upload Invoice Logs</b></h5>
+          <button type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+            <div class="table-responsive mydiv">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>SR No</th>
+                    <th>Requester</th>
+                    <th>Number</th>
+                    <th>Image</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let invoice of invoicedata">
+                    <td>{{ invoice.SRNo }}</td>
+                    <td>{{ invoice.name }} - {{ invoice.code }}</td>
+                    <td>{{ invoice.HSNNO }}</td>
+                    <td>
+                      <a [href]="invoice.invoiceUrl" target="_blank">View</a>
+                      <!-- <img [src]="invoice.invoiceUrl" alt="Invoice" class="img-thumbnail" style="width: 100px; height: auto;" /> -->
+                    </td>
+                    <td>{{ invoice.invoice_date }}</td>
+                    
+                    <td>
+                      <label class="label label-info" *ngIf="invoice.query_response == 0">Pending</label>
+                      <label class="label label-info" *ngIf="invoice.query_response == 1">Approve</label>
+                      <label class="label label-info" *ngIf="invoice.query_response == 2">Deny</label>
+                    </td>
+    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="modal fade" id="utrModal" tabindex="-1" aria-labelledby="utrModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="utrModalLabel">Update UTR Details</h5>
+          <button type="button" class="close" id="closeDialogutr" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <form [formGroup]="utrForm" (ngSubmit)="utrSubmit()">
+            <div class="form-group">
+              <label for="utrno">UTR Number</label>
+              <input type="text" class="form-control" id="utrno" formControlName="utrno">
+              <span *ngIf="isSubmitted && UTRForm.utrno.errors" class="ValidationError">
+                <span *ngIf="UTRForm.utrno.errors.required">Please enter UTR No.!</span>
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="utrDate">Date</label>
+              <input type="date" class="form-control" id="utrDate" formControlName="utrDate">
+              <span *ngIf="isSubmitted && UTRForm.utrDate.errors" class="ValidationError">
+                <span *ngIf="UTRForm.utrDate.errors.required">Please select UTR date!</span>
+              </span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+

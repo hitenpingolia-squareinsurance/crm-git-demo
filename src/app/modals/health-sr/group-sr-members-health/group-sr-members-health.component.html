@@ -1,0 +1,75 @@
+<div class="table-responsive mydiv">
+
+  <div class="row">
+    <div class="col-sm-4">
+      <h1 class="heading_popup">Employee List</h1>
+    </div>
+    <div class="col-sm-8">
+      <div style="text-align: right;margin-bottom: 10px;">
+        <a style="margin-right:5px;" class="btn btn-danger" *ngIf="ShowDeleteButton == 'Yes'" (click)="DeleteMember()">Delete Checked</a>
+
+        <a style="margin-right:5px;" class="btn btn-info" (click)="DownloadSampleExcel()">Excel Sample</a>
+
+        <a style="margin-right:5px;" class="btn btn-primary" (click)="UploadBulkExcelComponent()">Upload Excel</a>
+
+        <a style="margin-right:5px;" class="btn btn-primary" (click)="AddNewMember()">Add New Member</a>
+
+        <a style="margin-right:5px;" class="btn btn-primary" (click)="ExportData()">Export Data</a>
+      </div>
+    </div>
+
+    <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+  </div>
+
+    <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+
+      <thead>
+        <tr>
+          <th style="text-align:center;">
+            <input [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()" type="checkbox">
+          </th>
+          <th style="text-align:center;">Action</th>
+          <th style="text-align:center;">REID</th>
+          <th style="text-align:center;">Employee&nbsp;Code</th>
+          <th style="text-align:center;">Name</th>
+          <th style="text-align:center;">DOB</th>
+          <th style="text-align:center;">DOJ</th>
+          <th style="text-align:center;">Gender</th>
+          <th style="text-align:center;">Age</th>
+          <th style="text-align:center;">Designation</th>
+          <th style="text-align:center;">SumAssured</th>
+          <th style="text-align:center;">CTC/AnnualSalary</th>
+        </tr>
+      </thead>
+
+      <tbody *ngIf="dataAr?.length != 0">
+        <tr *ngFor="let row of dataAr; let i=index;">
+
+           <td>{{ row.SNo }}<br>
+            <input type="checkbox" [(ngModel)]="row.isSelected" name="list_name" value="{{row.Id}}" (change)="isAllSelected()">
+          </td>
+
+           <td>
+            <a href="javascript:;" (click)="EditMemberDetails(row.Id)"><span style="margin-right: 5px;" class="label label-info">Edit</span></a>
+           </td>
+
+           <td>{{ row.REID }}</td>
+           <td>{{ row.Employee_Code }}</td>
+           <td>{{ row.Name }}</td>
+           <td>{{ row.DOB }}</td>
+           <td>{{ row.DOJ }}</td>
+           <td>{{ row.Gender }}</td>
+           <td>{{ row.Age }}</td>
+           <td>{{ row.Designation }}</td>
+           <td>{{ row.Sum_Assured }}</td>
+           <td>{{ row.CTC }}</td>
+        </tr>
+      </tbody>
+
+      <tbody *ngIf="dataAr?.length == 0">
+        <tr>
+          <td colspan="12" align="center">No data Available !</td>
+        </tr>
+      <tbody>
+   </table>
+  </div>

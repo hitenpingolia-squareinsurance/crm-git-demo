@@ -1,0 +1,291 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="">
+            <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+            <button type="button" class="close closeModelButton" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="form-group">
+               <label for="to_email">to Email:</label>
+               <input type="email" id="to_email" [(ngModel)]="toEmail" class="form-control" />
+            </div>
+            <div class="form-group">
+               <label for="cc_email">CC Email:</label>
+               <input type="email" id="cc_email" class="form-control" [(ngModel)]="ccEmail" />
+            </div>
+            <div class="form-group">
+               <label for="MailDetals">Mail Detals:</label>
+               <!-- <input type="email" id="MailDetals" class="form-control" [(ngModel)]="MailDetals" /> -->
+               <textarea id="MailDetals" class="form-control" [(ngModel)]="MailDetals"></textarea>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" id="Close_model_button"
+                  data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-primary" (click)="sendEmail()">Send Email</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- Content Wrapper. Contains page content -->
+<div class="inner_page_css main_dashboard_css">
+   <!-- Content Header (Page header) -->
+   <!-- Main content -->
+   <section class="container-fluid">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="main_card_form">
+               <div class="main_header">
+                  <div class="header_title">Claim Details</div>
+               </div>
+               <div class="main_body main_card_height_scroll">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <!-- USERS LIST -->
+                        <div class="box box-primary box-solid dashpro">
+                           <div class="box-header with-border">
+                              <h3 class="box-title">{{Claim_Id}}</h3>
+                              <div class="box-tools pull-right btn-right-side">
+                                 <!-- <a (click)="GetClaimDetails(row.Id)"><span class="label label-Details">Details</span></a> -->
+                                 <!-- <a *ngIf="this.api.GetUserType() == 'employee'"
+                                     (click)="GetPolicyDetails(row.Quotation_Id)"><span class="label label-Policy_Details">
+                                         Policy
+                                         Details</span></a> -->
+                                 <button type="button" class="btn btn-primary send-mail" data-toggle="modal"
+                                    data-target="#exampleModal">
+                                    Send Email
+                                 </button>
+                                 <a *ngIf="row.status == '1'"><span class="label label-default">Pending</span></a>
+                                 <a *ngIf="row.status == '2'"><span class="label label-primary">In Process</span></a>
+                                 <a *ngIf="row.status == '3'"><span class="label label-success">Approve</span></a>
+                                 <a *ngIf="row.status == '4'"><span class="label label-danger">Close</span></a>
+                                 <a *ngIf="row.status == '5'"><span class="label label-danger">Rejected</span></a>
+                                 <a *ngIf="row.status == '6'"><span class="label label-warning">Re-open</span></a>
+                                 <a *ngIf="row.status == '7'"><span
+                                       class="label label-warning">Partially-Settled</span></a>
+                                 <a *ngIf="row.status == '8'"><span class="label label-warning">Settled</span></a>
+                              </div>
+                              <div>
+                                 <!-- <button>Send Email</button> -->
+                              </div>
+                           </div>
+                           <div class="box-body table-responsive no-padding">
+                              <table class="table table-hover table-bordered">
+                                 <tbody>
+                                    <tr>
+                                       <th>Lob Type</th>
+                                       <th>Claim Id</th>
+                                       <th>Date/Time Lose</th>
+                                    </tr>
+                                    <tr>
+                                       <td>{{row.lob}}</td>
+                                       <td>{{row.Claim_Id}}</td>
+                                       <td>{{row.date}}</td>
+                                    </tr>
+                                    <tr>
+                                       <th>Policy No</th>
+                                       <th>Mobile No</th>
+                                       <th>Mail Id</th>
+                                    </tr>
+                                    <tr>
+                                       <td>{{row.PolicyNo}}</td>
+                                       <td>{{row.mobileNo}}</td>
+                                       <td>{{row.mailId}}</td>
+                                    </tr>
+                                    <tr>
+                                       <th>Name</th>
+                                       <th>Mobile No</th>
+                                       <th>Mail Id</th>
+                                    </tr>
+                                    <tr>
+                                       <td>{{row.name}}</td>
+                                       <td>{{row.mobileNo}}</td>
+                                       <td>{{row.mailId}}</td>
+                                    </tr>
+                                    <tr>
+                                       <th>Number</th>
+                                       <th>Claim type </th>
+                                       <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                       <td>{{row.number}}</td>
+                                       <td>{{row.type}}</td>
+                                       <td>{{row.Description}}</td>
+                                    </tr>
+                                    <tr>
+                                       <th>EffectiveDateMember</th>
+                                       <th>EffectiveDatePolicy</th>
+                                       <th>Address</th>
+                                    </tr>
+                                    <tr>
+                                       <td>{{row.effectiveDateMember}}</td>
+                                       <td>{{row.effectiveDatePolicy}}</td>
+                                       <td>{{row.loaction}}</td>
+                                    </tr>
+                                    <tr>
+                                       <th>Date Of claim</th>
+                                    </tr>
+                                    <tr>
+                                       <td>{{ row.addstamp | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+                                    </tr>
+                                    <!-- *ngIf="row.CurrentUser_Id == this.api.GetUserData('Id') && row.status != '8'" -->
+                                    <tr *ngIf="row.manager_id == LoginUserId">
+                                       <td colspan="4">
+                                          <!--  <select class="form-control" [(ngModel)]="currentSatatus" (change)="UpdateClaimStatus1($event)">
+                                              <option [value]='0'> Select Value</option>
+                                              <option *ngIf="row.status == '2'" [value]='5'>Close</option>
+                                              <option *ngIf="row.status == '2'" [value]='4'>Rejected</option>
+                                              <option *ngIf="row.status == '2'" [value]='3'>Approve</option>
+                                              </select> -->
+                                          <select class="form-control" [(ngModel)]="currentSatatus"
+                                             (change)="UpdateClaimStatus1($event) ">
+                                             <option [value]='0'> Select Value</option>
+                                             <option *ngIf="row.status == '1'" [value]='1'>Pending</option>
+                                             <option *ngIf="row.status == '1'" value='2'>In Process</option>
+                                             <option *ngIf="row.status == '2' || row.status == '6'" [value]='3'>Approve
+                                             </option>
+                                             <option *ngIf="row.status == '2'" [value]='4'>Close</option>
+                                             <option *ngIf="row.status == '2' || row.status == '6'" [value]='5'>Rejected
+                                             </option>
+                                             <option *ngIf="row.status == '4'" [value]='6'>Re-open</option>
+                                             <option *ngIf="row.status == '3' || row.status == '7'" [value]='7'>
+                                                Partially-Settled</option>
+                                             <option *ngIf="row.status == '3' || row.status == '7'" [value]='8'>Settled
+                                             </option>
+                                          </select>
+                                       </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                           <!-- /.box-body -->
+                           <!-- <div class="box-footer text-center">
+                               <a routerLink="/claim-assistance/all-requests" class="uppercase">back to claim requests</a>
+                               </div> -->
+                           <!-- /.box-footer -->
+                        </div>
+                        <!--/.box -->
+                     </div>
+                     <!-- /.col -->
+                     <div class="col-md-6">
+                        <!-- DIRECT CHAT -->
+                        <div class="box box-primary box-solid dashpro">
+                           <div class="box-header with-border">
+                              <h3 class="box-title">Claim Discussion</h3>
+                              <div class="box-tools pull-right btn-right-side">
+                                 <!--<span data-toggle="tooltip" title="3 New Messages" class="badge bg-yellow">3</span>
+                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                     </button>
+                                     
+                                     <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                                     </button>-->
+                              </div>
+                           </div>
+                           <!-- /.box-header -->
+                           <div class="box-body table-responsive no-padding">
+                              <!-- Conversations are loaded here -->
+                              <div #scrollframe id="directmessages" class="direct-chat-messages frame"
+                                 (scroll)="scrolled($event)" style="height: 64vh;">
+                                 <div *ngFor="let m of Messages;" class="direct-chat-msg {{m.MainClassName}} item"
+                                    #item>
+                                    <div class="direct-chat-info clearfix">
+                                       <span class="direct-chat-name pull-{{m.ClassName}}">{{m.Name}}</span>
+                                       <span
+                                          class="direct-chat-timestamp pull-{{m.DateTimeClassName}}">{{m.DateTime}}</span>
+                                    </div>
+                                    <!-- /.direct-chat-info -->
+                                    <img class="direct-chat-img" src="assets/dist/img/user2-160x160.png">
+                                    <!-- /.direct-chat-img -->
+                                    <div *ngIf="m.Message != ''" class="direct-chat-text">
+                                       {{m.Message}}
+                                    </div>
+                                    <div *ngIf="m.Is_Attachement == '1'" class="attachment">
+                                       <h6>Attachments:</h6>
+                                       <a href="javascript:void" (click)="ViewDocument(m.Attachment_Url)">
+                                          <p class="filename">
+                                             {{m.Attachment_Name}}
+                                          </p>
+                                       </a>
+                                       <!--<div class="pull-right">
+                                        <button type="button" (click)="ViewDocument(m.Attachment_Url)" class="btn btn-primary btn-sm btn-flat">Open</button>
+                                        </div>-->
+                                    </div>
+                                    <!-- /.direct-chat-text -->
+                                 </div>
+                              </div>
+                              <!--/.direct-chat-messages-->
+                              <!-- Contacts are loaded here -->
+                              <!-- /.direct-chat-pane -->
+                           </div>
+                           <!-- /.box-body -->
+                           <div class="box-footer">
+                              <form *ngIf="(row.status != '8') &&  (row.CurrentUser_Id != '0') &&  (row.status != '5')"
+                                 [formGroup]="ChatForm" (ngSubmit)="Send()" method="post">
+                                 <div class="input-group">
+                                    <input type="text" formControlName="Message" placeholder="type message..."
+                                       class="form-control">
+                                    <span class="input-group-btn">
+                                       <label for="file-input">
+                                          <a type="button" class="btn">
+                                             <input id="file-input" (change)="UploadAttachment($event)"
+                                                style="display: none;" type="file">
+                                             <i class="fa fa-paperclip"></i></a></label>
+                                       <button type="submit" class="btn btn-info btn-flat">Send</button>
+                                    </span>
+                                 </div>
+                              </form>
+                           </div>
+                           <!-- /.box-footer-->
+                        </div>
+                        <!--/.direct-chat -->
+                     </div>
+                     <!-- /.col -->
+                     <div class="col-sm-12">
+                        <div class="table-responsive  box-info ">
+                           <table class="table table-hover table-bordered">
+                              <tbody>
+                                 <tr>
+                                    <th>Document</th>
+                                    <th>View</th>
+                                    <th>Upload By</th>
+                                    <th>Date/Time</th>
+                                    <th>Remarks</th>
+                                 </tr>
+                                 <tr *ngFor="let doc of data_Ar;">
+                                    <!-- <td>{{doc.Document_Type}}</td> -->
+                                    <td>
+                                       <span *ngIf="doc.ClaimStatus == '1'">Pending</span>
+                                       <span *ngIf="doc.ClaimStatus == '2'">In Process</span>
+                                       <span *ngIf="doc.ClaimStatus == '3'">Approve</span>
+                                       <span *ngIf="doc.ClaimStatus == '4'">Close</span>
+                                       <span *ngIf="doc.ClaimStatus == '5'">Rejected</span>
+                                       <span *ngIf="doc.ClaimStatus == '6'">Re-open</span>
+                                       <span *ngIf="doc.ClaimStatus == '7'">Partially-Settled</span>
+                                       <span *ngIf="doc.ClaimStatus == '8'">Settled</span>
+                                    </td>
+                                    <!-- <td>{{doc.Download_Url}}</td> -->
+                                    <td>
+                                       <a *ngIf="doc.document == ''" href="javascript:void(0)"> N/A</a>
+                                       <a *ngIf="doc.document != ''" class="view-table"
+                                          (click)="ViewDocument(doc.document)" href="javascript:void(0)">View</a>
+                                    </td>
+                                    <td>{{doc.name}}</td>
+                                    <td>{{ doc.add_stamp }}</td>
+                                    <td>{{doc.remark}}</td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- /.content -->
+   <div>

@@ -1,0 +1,302 @@
+<section class="inner_page_css main_dashboard_css">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main_card_form">
+                    <div class="main_header">
+                        <div class="header_title">
+                            <div *ngIf="(this.url == 'assest-action-distributor')">Assest Distributor</div>
+                            <div *ngIf="(this.url == 'assest-action-manager')">Assest Manager</div>
+                        </div>
+                    </div>
+                    <form [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+                        <div class="row" style="margin-top: 1%;">
+                            <div class="col-sm-3"
+                                *ngIf="(this.url == 'assest-action-distributor' || this.url == 'assest-action-manager')">
+                                <ng-multiselect-dropdown class="form-control" placeholder="Request Type"
+                                    [data]="QuoteTypes" formControlName="Request_Type"
+                                    [settings]="dropdownSettingsingleselect1" [(ngModel)]="QuoteTypeVal">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" placeholder="Search" class="form-control"
+                                    formControlName="SearchValue">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="submit" class="btn btn-info" value="Search">&nbsp;&nbsp;
+                                <!-- <input *ngIf="UserRights['Is_Agent_Report_Excel_Export']==1 && Is_Export==1" (click)="ExportExcel()" type="button" class="btn btn-success" value="Export">&nbsp;&nbsp; -->
+                                <button (click)="ClearSearch()" type="button" style="font-size: small;"
+                                    class="btn btn-danger" value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="main_body main_card_height_scroll_withoutfooter">
+                        <div class=" mydiv table-responsive">
+                            <table datatable [dtOptions]="dtOptions" id="Table1"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th> Name</th>
+                                        <th> Email</th>
+                                        <th> Mobile</th>
+                                        <th> Remark</th>
+                                        <th> Created</th>
+                                        <th> Status </th>
+                                        <th> Action </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr; let i=index;">
+                                        <td>{{row.SrNo}}</td>
+                                        <td>{{row.Name}}
+                                            <br>
+
+
+                                            <label *ngIf="row.type == 2">
+                                                Issue Type :- {{row.issue_type}}
+                                            </label>
+
+
+                                            <br><br>
+
+
+                                            <label *ngIf="row.type == 2">
+                                                Affected Work :- {{row.affected_work}}
+                                            </label>
+                                        </td>
+                                        <td>{{row.Email}}</td>
+                                        <td>{{row.Mobile_No}}</td>
+                                        <td>{{row.remark}}</td>
+                                        <td>{{row.Addstamp | date: 'dd-MM-yyyy' }}</td>
+                                        <td>
+                                            <label *ngIf="row.type == 1" class="label label-danger">
+                                                Handover
+                                            </label>
+                                            <label *ngIf="row.type == 2" class="label label-danger">
+                                                Have an issue
+                                            </label>
+                                            <br>
+                                            <label *ngIf="row.Status == 0">
+                                                <label class="label label-danger" *ngIf="row.RequestStatus == 1">
+                                                    Rejected by Distributor
+                                                </label>
+                                                <label class="label label-danger" *ngIf="row.RequestStatus == 2">
+                                                    Rejected by Manager
+                                                </label>
+                                            </label>
+                                            <label *ngIf="row.Status == 1">
+                                                <label class="label label-success" *ngIf="row.RequestStatus == 1">
+                                                    Pending for Distributor
+                                                </label>
+                                                <label class="label label-success" *ngIf="row.RequestStatus == 2">
+                                                    Pending for Manager
+                                                </label>
+                                                <label class="label label-success" *ngIf="row.RequestStatus == 3">
+                                                    Completed
+                                                </label>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-success"
+                                                *ngIf="( (row.RequestStatus == 2 && this.url == 'assest-action-manager'  && row.manager_id == '') || (row.RequestStatus == 1 && this.url == 'assest-action-distributor' &&  row.distributor_id == '')) && row.Status == '1'"
+                                                (click)="AcceptRequest(row.Id,row.RequestStatus)"
+                                                style="font-size: small; padding: 2px;">Accept
+                                            </button>
+                                            <br
+                                                *ngIf="( (row.RequestStatus ==2 && this.url == 'assest-action-manager'  && row.manager_id == '') || (row.RequestStatus == 1 && this.url == 'assest-action-distributor' &&  row.distributor_id == '') ) && row.Status == '1'">
+                                            <button class="btn btn-success"
+                                                *ngIf="( (row.RequestStatus ==2 && this.url == 'assest-action-manager'  && loginId == row.manager_id ) || (row.RequestStatus == 1 && this.url == 'assest-action-distributor' &&  loginId == row.distributor_id) ) && row.Status == '1'"
+                                                (click)="LeadData(row.Id , 'Approve',row.RequestStatus,row.type)"
+                                                style="font-size: small; padding: 2px;" data-toggle="modal"
+                                                data-target="#ActionModel">Update Request
+                                            </button>
+                                            <br
+                                                *ngIf="( (row.RequestStatus ==2 && this.url == 'assest-action-manager'  && loginId == row.manager_id ) || (row.RequestStatus == 1 && this.url == 'assest-action-distributor' &&  loginId == row.distributor_id) ) && row.Status == '1'">
+                                            <button
+                                                *ngIf="( (row.RequestStatus ==2 && this.url == 'assest-action-manager'  && loginId == row.manager_id ) || (row.RequestStatus == 1 && this.url == 'assest-action-distributor' &&  loginId == row.distributor_id) ) && row.Status == '1'"
+                                                class="btn btn-danger"
+                                                (click)="LeadData(row.Id , 'Reject',row.RequestStatus,row.type)"
+                                                style="font-size: small; padding: 2px;" data-toggle="modal"
+                                                data-target="#ActionModel">Reject
+                                            </button>
+                                            <br
+                                                *ngIf="( (row.RequestStatus ==2 && this.url == 'assest-action-manager'  && loginId == row.manager_id ) || (row.RequestStatus == 1 && this.url == 'assest-action-distributor' &&  loginId == row.distributor_id) ) && row.Status == '1'">
+                                            <button class="btn btn-pending" (click)="ViewResignationDetails(row.Id)"
+                                                style="font-size: small; padding: 2px;" data-toggle="modal"
+                                                data-target="#ViewAssestActionDetailsModel">View
+                                            </button>
+                                            <BR>
+                                            <button class="btn btn-info" (click)="GetItemDetails(row.item)" data-toggle="modal" data-target="#exampleModal"
+                                                style="font-size: small; padding: 2px;">Item Details
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="8" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ------------Modal----------------- -->
+<div class="modal fade" id="ActionModel" tabindex="-1" role="dialog" aria-labelledby="ActionModelLabel"
+    aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ActionModelLabel"><b *ngIf="LeadType ==1 ">Handover Request</b>
+                    <b *ngIf="LeadType ==2  ">Have an Issue</b>
+                </h5>
+                <button type="button" id="close_pop" class="close closeModelButton" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+
+            <!-- Remark: ["", Validators.required],
+            IssueType: [""],
+            affectedWork: [""], -->
+            <div class="modal-body">
+                <form class="form" (ngSubmit)="EmployeeResign()" [formGroup]="employee_resign">
+                    <div class="row">
+                        <div class="col-md-4" *ngIf="LeadType == 2  &&  LeadStatus == 1 &&  ActionStatus =='Approve'">
+                            <label for="Remark">Action</label>
+                            <select id="Action_type" class="form-control" name="Action" formControlName="Action_type"
+                                required>
+                                <option value="Replacment">Replacment</option>
+                                <option value="Repair">Repair</option>
+                                <option value="Upgrade">Upgrade</option>
+                                <option value="Fixed">Fixed</option>
+                            </select>
+                            <span *ngIf="isSubmitted && FC.Action_type.errors" class="ValidationError">
+                                <span *ngIf="FC.Action_type.errors.required">Action is required!</span>
+                            </span>
+                        </div>
+                        <div class="col-md-4" *ngIf="LeadType == 2  &&  LeadStatus == 1 &&  ActionStatus =='Approve'">
+
+                            <!-- <label for="Remark">Resignation Date</label>
+                            <input class="form-control" type="date" formControlName="resignationDate"
+                                name="resignationDate" id="resignationDate" placeholder="Enter Resignation Date"
+                                [min]="currentDate" required>
+                            <span *ngIf="isSubmitted && FC.resignationDate.errors" class="ValidationError">
+                                <span *ngIf="FC.resignationDate.errors.required">resignation Date required!</span>
+                            </span> -->
+                        </div>
+                        <div class="col-md-4">
+                            <label for="Remark">Remark</label>
+                            <textarea class="form-control" type="text" formControlName="Remark" name="Remark"
+                                id="Remark" placeholder="Enter Remark"> </textarea>
+                            <span *ngIf="isSubmitted && FC.Remark.errors" class="ValidationError">
+                                <span *ngIf="FC.Remark.errors.required">Remark required!</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ViewAssestActionDetailsModel" tabindex="-1" role="dialog"
+    aria-labelledby="ViewAssestActionDetailsModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div>
+            <!-- <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Change POSP RM</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div> -->
+            <div [innerHTML]="dataArra">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- -----------------------------GET ITEM DETAILS------------------------------- -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="width:900px;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Item Details</h5>
+          <button (click)="CloseModel()" id="close_item_model" class="close" data-dismiss="modal" aria-label="Close" type="button" class="close closeModelButton">&times;</button>
+        </div>
+        <div class="modal-body" *ngIf="itemModalShow">
+            <table class="itemtable">
+
+                <tr>
+                  <td colspan="1" align="center">
+                    <b>NO : {{UniqueId}}</b>
+                  </td>
+                  <td colspan="1" align="center">
+                    <label *ngIf="ItemStatus == '1'" class="label label-info">IN
+                      Queue</label>
+                    <label *ngIf="ItemStatus == '2'" class="label label-pending">Item
+                      Occupied</label>
+                    <label *ngIf="ItemStatus == '3'" class="label label-success">Item
+                      Distribute</label>
+                    <label *ngIf="ItemStatus == '4'" class="label label-danger">Item
+                      Damaged</label>
+                  </td>
+                  
+                  <td *ngIf="ItemStatus == '3'" colspan="2">
+                    <b>Current User Name : {{ ResponseData['Name']}} - {{ResponseData['EmployeeId']}}</b>
+                  </td>
+               
+                </tr>
+              
+                <tbody>
+                  <tr class="ValueTD">
+                    <td colspan="6">Details</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><b>Item Id</b>: {{UniqueId}}</td>
+                    <td colspan="2"><b>Item Name</b>: {{ItemName}}</td>
+                    <td colspan="2"><b>Item Model Name</b>: {{ModelName}}</td>
+                  </tr>
+                </tbody>
+                <tbody>
+              
+                  <tr class="ValueTD" colspan="3">
+                    <td colspan="6">Item Specifications</td>
+                  </tr>
+              
+                  <tr *ngFor="let row of ItemSpecifications">
+                    <td colspan="6"><b>{{row.Name}}</b>: {{row.FieldVal}}</td>
+                  </tr>
+              
+                  <tr class="ValueTD" colspan="3">
+                    <td colspan="6">Item Creatation Logs</td>
+                  </tr>
+              
+                  <tr *ngFor="let row of ResponseData['ItemCreatationLogs']">
+                    <!-- <td colspan="2"><b>Log Id</b>: {{row.UniqueId}}</td> -->
+                    <td colspan="2"><b>Log Type</b>: {{row.LogType}}</td>
+                    <td colspan="2"><b>Action User Id</b>: {{row.ActionUserId}} - {{row.ActionCode}}</td>
+                    <td colspan="2"><b>Log Date</b>: {{row.AddStamp}}</td>
+                  </tr>
+              
+                </tbody>  
+              </table>
+        </div>
+
+      </div>
+    </div>
+  </div>

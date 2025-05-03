@@ -1,0 +1,184 @@
+<section class="inner_page_css knowlage_details_page">
+    <div class="container-fluid">
+        <div class="main_card_form">
+            <div class="main_header">
+                <div class="header_title">POSP Activation Report</div>
+            </div>
+
+            <div class="main_body main_card_height_scroll_withoutfooter">
+
+                <div class="btn_list_group">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div id="exTab1">
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-5">
+
+                                    <div class="dsr-fillter">
+                                        <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            <a role="button" class="fa fa-filter"><span>Filters</span><i
+                                                    class="fa fa-angle-down pull-right"></i></a>
+                                        </button>
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <app-current-mapping-filter
+                                        (postCreated)="SearchData($event)"></app-current-mapping-filter>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- 
+                        <div class="loader_inner_data">
+                            <div class="show_loader_on" [ngClass]="(ShowDashboardLoader == 'Yes'?'inner_cs_loader':'')">
+                                <div class="loader_box">
+                                    <img src="https://squarebweb-documents.s3.ap-south-1.amazonaws.com/Webiste/web-react/SquareWebImages/loadernew.gif">
+                                </div>
+                            </div>
+                            <div class="d_flex flex_Equal flex_wrap flex_Middel  position-relative"
+                                *ngIf="active_tab != 'Employee Call'"
+                                style="cursor: not-allowed !important; position:relative;">
+                                <div class="c-dashboardInfo width_dev_eight">
+                                    <div class="wrap">
+                                        <ul>
+                                            <li>
+                                                <Strong>Total POSP</Strong>
+                                                <label style="cursor: not-allowed !important;">{{ TotalPosCount
+                                                    }}</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> -->
+
+                        <!-- <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="All">
+
+                                <div class="custom_table">
+                                    <ul class="responsive-table">
+
+                                        <cdk-virtual-scroll-viewport #scroller itemSize="72" class="content mt_0">
+                                            <mat-list>
+                                                <ng-container *cdkVirtualFor="let row of dataAr">
+
+                                                    <mat-list-item>
+                                                        <li class="table-row">
+                                                            <span class="addon_tag_name"></span>
+                                                            <div
+                                                                class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                                                                <div class="agents_data agents_data1">
+                                                                    <div class="icon_re_cl">{{ row.SrNo }}</div>
+                                                                    <div class="agent_name_mobile">
+                                                                        <div class="agent_data">
+
+                                                                            <div>
+                                                                                Partner Name &
+                                                                                Code </div>
+
+
+                                                                            <strong class="fs_18">{{ row.Name
+                                                                                }}</strong>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="agents_data agents_data2">
+                                                                    <div class="agent_name_mobile">
+                                                                        <div class="agent_data">
+                                                                            <div>
+                                                                                Partner Mobile
+                                                                                No.</div>
+
+                                                                            <strong
+                                                                                class="fs_18">{{row.Mobile}}</strong>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="agents_data agents_data3">
+                                                                    <div class="agent_name_mobile">
+                                                                        <div class="agent_data">
+                                                                            <div>Reporting Manager & Code</div><strong
+                                                                                class="fs_18">{{ row.RM_Name
+                                                                                }}</strong>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            <div class="last_row">
+                                                                <div class="d_flex effective_date">
+                                                                    <div class="date_text">
+                                                                        <span class="fs_12">LOB</span>
+                                                                        <span class="fs_12">{{ row.AgentLob }}</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                 <div
+                                                                    class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                                                                    <a style="cursor: pointer;" class=" btn-bg1">
+                                                                        Details >></a>
+
+                                                                </div>
+
+
+                                                            </div>
+                                                        </li>
+
+                                                        <mat-divider></mat-divider>
+                                                    </mat-list-item>
+                                                </ng-container>
+
+                                                <div class="spinner-item"
+                                                    *ngIf="post?.length > 0 && show_spinner == 'yes'"
+                                                    style="display: block;margin: auto; width: 50px;">
+                                                    <mat-progress-spinner [mode]="'indeterminate'"
+                                                        [diameter]="50"></mat-progress-spinner>
+                                                </div>
+
+                                                <ul class="responsive-table" *ngIf="post?.length == 0">
+                                                    <li class="table-row">
+                                                        <div class="no_data_found">No data available !</div>
+                                                    </li>
+                                                </ul>
+                                            </mat-list>
+                                        </cdk-virtual-scroll-viewport>
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

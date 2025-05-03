@@ -1,0 +1,116 @@
+<section class="custom-scrool" id="click-close">
+    <div class="">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <h4 class="header_title">Update Pincode</h4>
+                <button type="button" (click)="CloseModel()" class="close closeModelButton"><i
+                        class="fa fa-close"></i></button>
+                <div class="call-precess" id="callProcess" style="display:none;">
+                    <div class="call-align">
+                        <img src="assets/image/calling.gif" alt="">
+                    </div>
+                    <div class="heading-call">Call in Progress....</div>
+                </div>
+            </div>
+            <hr>
+            <div class="modal_body">
+                
+                <form [formGroup]="AddFieldForm" (ngSubmit)="updatePincdoe()">
+                    
+                    <div class="row">
+                        <div class="col-md-4" id="close">
+                            <div class="category_list">
+                                <label>State Name</label>
+                                <ng-multiselect-dropdown class="form-control" placeholder="State Name" [data]="stateAr"
+                                    formControlName="state" [settings]="dropdownSettingsmultiselect" (ngModelChange)="getDistrict($event)">
+                                </ng-multiselect-dropdown>
+
+                                <span *ngIf="isSubmitted && FC['state'].errors" class="form-text text-muted">
+                                    <span *ngIf="isSubmitted && FC['state'].errors['required']"
+                                        style="color:red;">This field is Required</span>
+
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" id="close">
+                            <div class="category_list">
+                                <label>District Name</label>
+                                <ng-multiselect-dropdown class="form-control" placeholder="District" [data]="districtAr"
+                                    formControlName="district" [settings]="dropdownSettingsmultiselect" (ngModelChange)="getCity($event)">
+                                </ng-multiselect-dropdown>
+                                <span *ngIf="isSubmitted && FC['district'].errors" class="form-text text-muted">
+                                    <span *ngIf="isSubmitted && FC['district'].errors['required']"
+                                        style="color:red;">This field is Required</span>
+
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" id="close">
+                            <div class="category_list">
+                                <label>City Name</label>
+                                <ng-multiselect-dropdown class="form-control" placeholder="Select City" [data]="cityAr"
+                                    formControlName="city" [settings]="dropdownSettingsmultiselect">
+                                </ng-multiselect-dropdown>
+                                <span *ngIf="isSubmitted && FC['city'].errors" class="form-text text-muted">
+                                    <span *ngIf="isSubmitted && FC['city'].errors['required']"
+                                        style="color:red;">This field is Required</span>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="category_list">
+                                <label>Area Name</label>
+                                <input type="text" class="form-control" formControlName="area"
+                                    placeholder="Area Name" (keypress)="onlyAllowAlphabet($event)">
+                                    <span *ngIf="isSubmitted && FC['area'].errors" class="form-text text-muted">
+                                        <span *ngIf="isSubmitted && FC['area'].errors['required']"
+                                            style="color:red;">This field is Required</span>
+                                        <span *ngIf="isSubmitted && FC['area'].errors['pattern']"
+                                            style="color:red;">Enter Valid Characters</span>
+                                    </span>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="category_list">
+                                <label>Pincode</label>
+                                <input type="text" class="form-control" formControlName="pincode"
+                                    placeholder="Pincode" minlength="6" maxlength="6" (keypress)="onlyAllowNumbers($event)">
+                                    <span *ngIf="isSubmitted && FC['pincode'].errors" class="form-text text-muted">
+                                        <span *ngIf="isSubmitted && FC['pincode'].errors['required']"
+                                            style="color:red;">This field is Required</span>
+                                        <span *ngIf="isSubmitted && FC['pincode'].errors['pattern']"
+                                            style="color:red;">Enter Valid Pincode</span>
+
+                                            <span *ngIf="isSubmitted && FC['pincode'].errors['min']"
+                                            style="color:red;">Enter minimum 6 number</span>
+                                            <span *ngIf="isSubmitted && FC['pincode'].errors['max']"
+                                            style="color:red;">Enter maximum 6 number</span>
+                                    </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="float-end pull-right">
+                                <button type="submit" class="btn btn_primary btn-success">Submit</button>
+                                &nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>

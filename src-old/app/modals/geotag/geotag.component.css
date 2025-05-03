@@ -1,0 +1,303 @@
+
+  ul.ul-geo {
+    display: flex;
+    margin-bottom: 20px;
+    padding: 0;
+}
+  ul.ul-geo li {
+    list-style: none;
+    margin-right: 10px;
+  }
+  ul.ul-geo li:last-child {
+    margin-right: 0px;
+  }
+    /* ul.ul-geo li a.pending-active span,   ul.ul-geo li a.followup-active span,   ul.ul-geo li a.untouched-active span {
+      color: #fff;
+      width: auto;
+      display: inline-block;
+      text-align: center;
+      border-radius: 3px;
+      font-size: 12px;
+      padding: 4px 15px;
+  } */
+    /* ul.ul-geo li a.pending-active span {
+    background: #e4a11b !important;
+  }
+  
+    ul.ul-geo li a.followup-active span {
+    background: #54b4d3 !important;
+  }
+
+    ul.ul-geo li a.untouched-active span {
+    background: #ca3bbe !important;
+  
+  } */
+
+  ul.ul-geo li a {
+    color: #fff;
+    width: auto;
+    display: inline-block;
+    text-align: center;
+    border-radius: 3px;
+    font-size: 12px;
+    padding: 5px 15px;
+    background: #2cb2b3;
+  }
+  ul.ul-geo li.active a {
+    color: #fff ;
+    background-color: #3c8dbc;
+  }
+  input.form-control {
+    padding-left: 8px !important;
+    font-size: 12px;
+    border-radius: 3px !important;
+}
+
+.modal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+.modal-top h4.modal-title {
+  color: #2cb2b3;
+  text-transform: capitalize;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+
+
+
+
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  .table>thead>tr>th {
+    font-weight: 500;
+}
+  .ValueTD {
+    background-color:#f7f7f7;
+      color: #685757;
+  }
+  .ValueTD td {
+    font-weight: bold;
+  }
+  .BTNClass {
+    background-color: #3699ff;
+      color: #fff;
+  }
+  .linkinput {
+    border-top: 0px;
+      border-left: 0px;
+      border-right: 0px;
+      border-radius: 0px;
+  }
+  .ImgCls {
+    padding: 8px;
+      height: 70px;
+  }
+  #snackbar2 {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+  }
+  #snackbar2.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  
+  @-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+  span.label {
+    padding: 5px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+  
+  
+  .coustom-th-td{
+    text-align: center;
+      color: #2cb2b3;
+      font-size: 15px;
+  }
+  
+  .btn-warningx {
+    background-color: #f39c12;
+    border-color: #e08e0b;
+    padding: 2px;
+    font-size: 12px;
+  }
+  
+  .btn-primaryx {
+    background-color: #128ef3;
+    border-color: #128ef3;
+    padding: 2px;
+    font-size: 12px;
+  }
+  
+  .btn-successx {
+    background-color: #3ff312;
+    border-color: #3ff312;
+    padding: 2px;
+    font-size: 12px;
+  }
+  
+  .btn-dangerx {
+    background-color: #f31212;
+    border-color: #f31212;
+    padding: 2px;
+    font-size: 12px;
+  }
+  
+
+  .geo-details h4 {
+    color: #111111;
+    font-weight: 600;
+}
+  .geo-details ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #d4d4d4;
+    border-radius: 3px;
+
+  }
+  .geo-details ul li {
+    list-style: none;
+    width: calc(100% / 3);
+    border-right: 1px solid #d4d4d4;
+    padding: 10px 15px;
+  }
+  .geo-details ul li .list-details {
+    color: #111;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: flex-start;
+  }
+  .geo-details ul li .list-details span {
+    cursor: inherit;
+    color: #2cb2b3;
+  }
+  .geo-details ul li .list-details span a {
+    color: #3c8dbc;
+  }
+  .geo-details ul li .list-details span img {
+    width: 50px;
+    line-height: 50px;
+    height: 50px;
+    border-radius: 3px;
+    object-fit: cover;
+  }
+  .geo-details ul li .list-details abbr {
+    min-width: 90px;
+  }
+  .geo-details ul li:nth-child(1), .geo-details ul li:nth-child(2), .geo-details ul li:nth-child(3) {
+    border-bottom: 1px solid #d4d4d4;
+  }
+  .geo-details ul li:nth-child(3), .geo-details ul li:nth-child(6) {
+    border-right: none;
+  }
+
+  .modal-header {
+    border-bottom-color: #f4f4f4;
+    background: rgba(44,178,179,9);
+    padding: 7px 15px;
+    border-radius: 3px 3px 0 0;
+}
+.modal-header h5 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: .4px;
+}
+.modal-content {
+  border-radius: 3px;
+}
+.geo-list ul {
+  margin: 0px;
+  padding: 0px;
+}
+.geo-list ul li {
+  list-style: none;
+}
+.geo-list .list-details {
+  font-size: 14px;
+  padding: 10px 0px;
+  border-bottom: 1px solid #ddf3ef;
+  font-weight: 600;
+}
+.geo-list ul li:first-child .list-details {
+  padding-top: 0px;
+}
+.geo-list ul li:last-child .list-details {
+  padding-bottom: 0px;
+  border-bottom: none;
+}
+.geo-list .list-details abbr {
+  display: inline-block;
+  min-width: 100px;
+  color: rgba(44,178,179,9);
+}
+
+.geo-list ul li abbr.status-view {
+  margin-right: 20px;
+  display: inline-flex;
+}
+.geo-list ul li abbr.status-view input[type=radio] {
+  margin-top: 0px;
+}
+.geo-list ul li:first-child abbr.status-view {
+  margin-right: 0px;
+}
+.geo-list ul li abbr.status-view label {
+  margin: 0;
+    line-height: normal;
+    margin-right: 5px;
+}
+.geo-list.geo-pro ul li:first-child {
+  margin-bottom: 15px;
+}
+.custom-footer {
+  border-top: none;
+    padding-bottom: 0px;
+    padding-right: 0px;
+}

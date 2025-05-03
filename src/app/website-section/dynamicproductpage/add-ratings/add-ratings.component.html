@@ -1,0 +1,176 @@
+<section class="inner_page_css">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="main_card_form">
+            <div class="main_header">
+              <div class="header_title" *ngIf="this.id == '' ">Add Ratings</div>
+              <div class="header_title" *ngIf="this.id != '' ">Edit Ratings</div>  
+              <button class="btn btn-primary nextBtn pull-right" routerLink="/WebsiteSection/products/view_ratings" 
+              style="margin-top: -27px;">Back To View</button>
+            </div>
+
+            <form class="form" (ngSubmit)="Submit()" [formGroup]="AddRatingForm">
+              <div class="main_body main_card_height_scroll">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form_sub_title"><i class="fa fa-link mr_5"></i>Details</div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="CustomerName">Product</label>
+                      <ng-multiselect-dropdown class="form-control" (onSelect)="UpdateTypeValue($event)" [data]="Insurer" formControlName="insurercompany"
+                        [settings]="dropdownSettingsType" [(ngModel)]="pagename">
+                      </ng-multiselect-dropdown>
+                      <span *ngIf="isSubmitted && formControls.insurercompany.errors" class="ValidationError">
+                        <span *ngIf="formControls.insurercompany.errors.required">insurer company is
+                          required</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="CustomerName">Company</label>
+                      <ng-multiselect-dropdown class="form-control" [data]="Company" formControlName="company"
+                        [settings]="dropdownSettingsType" [(ngModel)]="companyData">
+                      </ng-multiselect-dropdown>
+                      <span *ngIf="isSubmitted && formControls.company.errors" class="ValidationError">
+                        <span *ngIf="formControls.company.errors.required">company is
+                          required</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="input_group">
+                      <label for="CustomerMobileNo">Name</label>
+                        <input type="text" class="form-control" formControlName="name" placeholder="Enter Name">
+                        <span *ngIf="isSubmitted && formControls.name.errors" class="ValidationError">
+                          <span *ngIf="formControls.name.errors.required">Please enter name!</span>
+                        </span>
+                    </div>
+                </div>
+
+                  <div class="col-md-4">
+                    <div class="input_group">
+                      <label for="CustomerName">Image</label>
+                      <div class="position_relative">
+                        <input type="file" class="form-control" formControlName="image"
+                        (change)="UploadDocs($event,'image')">
+                      </div>
+                      <span *ngIf="isSubmitted && formControls.image.errors" class="ValidationError">
+                        <span *ngIf="formControls.image.errors.required">Please Select Image !</span>
+                      </span>
+                     
+                    </div>
+                  </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                      <div class="form_sub_title"><i class="fa fa-link mr_5"></i>Ratings</div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input_group">
+                          <label for="CustomerMobileNo">Customer Service Rating</label>
+                            <input type="text" class="form-control" formControlName="customerrating" maxlength="1" placeholder="Customer Service Rating">
+                            <span *ngIf="isSubmitted && formControls.customerrating.errors" class="ValidationError">
+                              <span *ngIf="formControls.customerrating.errors.required">Please enter customer service rating</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="input_group">
+                          <label for="CustomerMobileNo">Policy Coverage Rating</label>
+                            <input type="text" class="form-control" formControlName="policycoveragerating" maxlength="1" placeholder="Policy Coverage Rating">
+                            <span *ngIf="isSubmitted && formControls.policycoveragerating.errors" class="ValidationError">
+                              <span *ngIf="formControls.policycoveragerating.errors.required">Please enter customer service rating</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="input_group">
+                          <label for="CustomerMobileNo">Policy Benifit Rating</label>
+                            <input type="text" class="form-control" formControlName="policybenifit"  maxlength="1" placeholder="Policy Benifit Rating">
+                            <span *ngIf="isSubmitted && formControls.policybenifit.errors" class="ValidationError">
+                              <span *ngIf="formControls.policybenifit.errors.required">please enter policy benifit rating</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="input_group">
+                          <label for="CustomerMobileNo">Premium Rating</label>
+                            <input type="text" class="form-control" formControlName="premiumrating" maxlength="1" placeholder="Premium Rating">
+                            <span *ngIf="isSubmitted && formControls.premiumrating.errors" class="ValidationError">
+                              <span *ngIf="formControls.premiumrating.errors.required">Please enter premium rating</span>
+                            </span>
+                        </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form_sub_title"><i class="fa fa-link mr_5"></i>Other Details</div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input_group">
+                          <label for="CustomerMobileNo">City</label>
+                          <ng-multiselect-dropdown class="form-control" [data]="CityVal" formControlName="city"
+                            [settings]="dropdownSettingsType"  [(ngModel)]="cityData">
+                          </ng-multiselect-dropdown>
+                            <span *ngIf="isSubmitted && formControls.city.errors" class="ValidationError">
+                              <span *ngIf="formControls.city.errors.required">Please enter city</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="input_group">
+                          <label for="CustomerMobileNo">Title Review</label>
+                            <input type="text" class="form-control" formControlName="titlereview" placeholder="Enter Title Review">
+                            <span *ngIf="isSubmitted && formControls.titlereview.errors" class="ValidationError">
+                              <span *ngIf="formControls.titlereview.errors.required">Please enter customer service rating</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="input_group">
+                          <label for="CustomerMobileNo">Discription Review</label>
+                          <textarea class="form-control" formControlName="discriptionreview" placeholder="Enter Discription Review"></textarea>
+                            <span *ngIf="isSubmitted && formControls.discriptionreview.errors" class="ValidationError">
+                              <span *ngIf="formControls.discriptionreview.errors.required">please enter policy benifit rating</span>
+                            </span>
+                        </div>
+                    </div>
+                   
+                  </div>
+
+
+              </div>
+              <div class="main_footer">
+                <button type="submit" *ngIf="this.id == '' " class="Save_click">Submit Request</button>
+                <button type="submit" *ngIf="this.id != '' " class="Save_click">Edit Request</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+  

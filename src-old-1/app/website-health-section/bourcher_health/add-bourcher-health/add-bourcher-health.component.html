@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="modal-header" style="text-align: center;">
+    <h4 class="modal-title">Add Plan Benifit</h4>
+  </div>
+</div>
+
+<div class="popup-content-body">
+  <div class="row popup-form">
+    <form [formGroup]="AddBourcherHealthForm" id="form-1">
+      <div class="col-md-6">
+        <label for="state">Company</label>
+
+        <select class="form-control" formControlName="Company" (change)="FetchHealthPlanSubPlan($event)">
+          <option value="" disabled>Select</option>
+          <option *ngFor="let row of Companys;" value="{{row.company}}">{{row.company | uppercase}}</option>
+
+
+        </select>
+        <div *ngIf="isSubmitted && formControls.Company.errors" class="ValidationError">
+          <div *ngIf="formControls.Company.errors.required">Please enter Company</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="state">Plan</label>
+        <select class="form-control" formControlName="product">
+          <option value="" disabled>Select</option>
+          <option *ngFor="let row of Plans;" value="{{row.Plan}}">{{row.Plan | uppercase}}</option>
+
+        </select>
+        <div *ngIf="isSubmitted && formControls.product.errors" class="ValidationError">
+          <div *ngIf="formControls.product.errors.required">Please Select Plan</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="state">Policy Wording</label>
+        <input type="file" class="form-control" formControlName="PolicyWording"
+          (change)="UploadDocs($event,'PolicyWordingForm')">
+
+        <div *ngIf="isSubmitted && formControls.PolicyWording.errors" class="ValidationError">
+          <div *ngIf="formControls.PolicyWording.errors.required">Please Select File</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="state">Purposal</label>
+
+        <input type="file" class="form-control" formControlName="Purposal"
+          (change)="UploadDocs($event,'PurposalImageForm')">
+
+        <div *ngIf="isSubmitted && formControls.Purposal.errors" class="ValidationError">
+          <div *ngIf="formControls.Purposal.errors.required">Please Select File</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="state">Claim Form</label>
+
+        <input type="file" class="form-control" formControlName="ClaimForm" (change)="UploadDocs($event,'ClaimForm')">
+
+        <div *ngIf="isSubmitted && formControls.ClaimForm.errors" class="ValidationError">
+          <div *ngIf="formControls.ClaimForm.errors.required">Please Select File</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="state">Brochure</label>
+
+        <input type="file" class="form-control" formControlName="Brochure" (change)="UploadDocs($event,'BrochureForm')">
+
+        <div *ngIf="isSubmitted && formControls.Brochure.errors" class="ValidationError">
+          <div *ngIf="formControls.Brochure.errors.required">Please Select File</div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="button-div-yes-no">
+  <button type="button" (click)="CloseModel()" class="btn btn-danger">Close</button>
+  <button type="submit" (click)="submit()" class="btn btn-primary">Submit</button>
+</div>

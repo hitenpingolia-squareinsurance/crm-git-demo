@@ -1,0 +1,235 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header d_flex flex_Equal flex_Middel">
+            <div class="header_title">Goals Appraisals</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+            <div class="box box-default"
+              style="margin-bottom: 0px !important; margin-top: 0px !important; position: relative;">
+
+              <div>
+
+                <form [formGroup]="SearchForm" style="padding: 0 15px;">
+
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Financial Year" [data]="Year_Ar"
+                        [(ngModel)]="SelectedYear" formControlName="Financial_Year"
+                        [settings]="dropdownSettingsingleselect">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Business Line"
+                        [data]="BusinessLine_Ar" formControlName="Business_Line_Id"
+                        [settings]="dropdownSettingsingleselect" (onSelect)="GetVerticalData()"
+                        (onDeSelect)="SearchComponentsData()"> </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Vertical" [data]="Vertical_Ar"
+                        formControlName="Vertical_Id" [settings]="dropdownSettingsingleselect1"
+                        (onSelect)="GetEmployees()" (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Service Location"
+                        [data]="Region_Ar" formControlName="Region_Id" [settings]="dropdownSettingsmultiselect"
+                        (onSelect)="GetEmployees()" (onDeSelect)="GetEmployees()"> </ng-multiselect-dropdown>
+                    </div>
+                  </div>
+
+                  <div class="row"  >
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" name="Emp_Id" placeholder="Select Employee"
+                        [data]="Emps_Ar" formControlName="Emp_Id" [settings]="dropdownSettingsingleselect1"
+                        (onSelect)="GetEmployeeExtraData()" (onDeSelect)="GetEmployeeExtraData()">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Report Type"
+                        [data]="ReportTypeData" [(ngModel)]="SelectedReportType" formControlName="Report_Type"
+                        [settings]="dropdownSettingsingleselect"> </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <ng-multiselect-dropdown class="form-control" placeholder="Select Status" [data]="StatusData"
+                        formControlName="Status" [settings]="dropdownSettingsingleselect">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <input type="text" formControlName="SearchValue" placeholder="Search Name/Emp. Id/Mobile"
+                        class="form-control">
+                    </div>
+
+                  </div>
+
+                  <div class="row"  >
+                    <div class="col-sm-9"></div>
+                    <div class="col-sm-3">
+                      <input (click)="displayActivePage(1, 'search')" type="button" class="btn btn-info"
+                        value="Search">&nbsp;&nbsp;
+                      <input (click)="ClearSearch()" type="button" class="btn btn-danger" value="Reset">&nbsp;&nbsp;
+
+                      <!-- <input (click)="DateMasterCrud()" type="button" class="btn btn-warning"
+                        value="Appraisal Date Master">&nbsp;&nbsp; -->
+
+                      <input (click)="ExportPendencyReport()" type="button" class="btn btn-warning"
+                        value="Export">&nbsp;&nbsp;
+                    </div>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+
+            <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+              <div class="box-body">
+
+                <div class="label_top_blog">
+                  <a class="btn btn-primary" (click)="CreateAppraisalLetterInBulk()" style="margin-right: 7px;">Create
+                    Appraisal Letter</a>
+                  <a class=" btn btn-primary" (click)="DateMasterCrud()">Appraisal Date Master</a>
+                </div>
+
+                <div class="table-responsive mydiv">
+                  <table id="exampe2" class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th>Profile&nbsp;/&nbsp;Status&nbsp;/&nbsp;Sales</th>
+                        <th>Name&nbsp;/&nbsp;Employee&nbsp;ID</th>
+                        <th>Mobile</th>
+                        <th>DOJ</th>
+                        <th>Service&nbsp;Location</th>
+                        <th>Status</th>
+                        <th>Rating</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+
+                    <tbody *ngIf="flagArray?.length != 0">
+
+                      <tr *ngFor="let row of flagArray[activePage]; let i=index;">
+                        <td>{{row.SrNo}}.</td>
+
+                        <td>
+                          <span style="margin-right: 5px; cursor: not-allowed;"
+                            class="label label-primary">{{row.NewProfile}}</span><br>
+                          <span *ngIf="row.ResignStatus == 1" style="margin-right: 5px; cursor: not-allowed;"
+                            class="label label-danger">Resigned</span>
+                          <span *ngIf="row.ResignStatus == 0 && row.Status == 1"
+                            style="margin-right: 5px; cursor: not-allowed;" class="label label-success">Active</span>
+                          <span *ngIf="row.ResignStatus == 1 && row.Status == 0"
+                            style="margin-right: 5px; cursor: not-allowed;" class="label label-warning">Inactive</span>
+
+                          <span *ngIf="row.Is_Sales == 1" style="margin-right: 5px; cursor: not-allowed;"
+                            class="label label-success">Sales</span>
+                          <span *ngIf="row.Is_Sales != 1" style="margin-right: 5px; cursor: not-allowed;"
+                            class="label label-warning">Non Sales</span>
+                        </td>
+
+                        <td>{{row.Name}}</td>
+                        <td>{{row.Mobile}}</td>
+
+                        <td>{{row.DOJ}}</td>
+                        <td>{{row.ServiceLocation}}</td>
+
+                        <td>
+                          <span *ngIf="row.CurrentRM == 'Complete'" class="label label-success">Complete</span>
+                          <span
+                            *ngIf="row.CurrentRM != 'Complete' && row.CurrentRM != 'None'">{{row.CurrentRM}}</span><br>
+                          <span *ngIf="row.CurrentRM != 'Complete' && row.CurrentRM != 'None'"
+                            style="margin-right: 5px;" class="label label-danger">Not Submitted</span>
+
+                          <a href="javascript:;" (click)="RatingCriteriaMaster()">
+                            <span class="label label-primary">i</span>
+                          </a>
+                        </td>
+
+                        <td>{{row.Ratings}}</td>
+
+                        <td>
+                          <a href="javascript:;"
+                            (click)="KraRatingList(row.Id, row.Profile_Type, row.Is_Sales, row.EmployeeType, row.RmType, row.CurrentRMId)">
+                            <span style="margin-right: 5px;" class="label label-primary">Submit Goal</span>
+                          </a>
+
+                          <a href="javascript:;" (click)="RatingUpdateLog(row.Id, row.Is_Sales, row.EmployeeType)">
+                            <span style="margin-right: 5px;" class="label label-primary">Track</span>
+                          </a>
+
+                          <a href="javascript:;" (click)="UpdateAppraisalRights(row.Id, row.AppraisalAllowed, i)">
+                            <span *ngIf="row.AppraisalAllowed == 1" style="margin-right: 5px;"
+                              class="label label-success">Opened</span>
+                            <span *ngIf="row.AppraisalAllowed == 0" style="margin-right: 5px;"
+                              class="label label-warning">Closed</span>
+                          </a>
+
+                          <br>
+                          <a href="javascript:;"
+                            (click)="CreateAppraisalLetter(row.Id, row.Ratings, row.F_Rating, row.Is_Promoted)">
+                            <span style="margin-right: 5px;" class="label label-primary">Generate Appraisal
+                              Letter</span>
+                          </a><br>
+
+                          <a href="javascript:;" *ngIf="row.PdfUrl != ''" (click)="ViewDocument(row.PdfUrl)">
+                            <span style="margin-right: 15px;" class="fa fa-download"></span>
+                          </a>
+
+                          <!--=== SHOW All COMMENTS ===-->
+                          <a href="javascript:;" (click)="ShowHideRemarksComments(row.Id, row.AppraisalViewStatus, i)">
+                            <span *ngIf="row.AppraisalViewStatus == 1" style="margin-right: 15px;"
+                              class="fa fa-eye"></span>
+                            <span *ngIf="row.AppraisalViewStatus == 0" style="margin-right: 15px;"
+                              class="fa fa-eye-slash"></span>
+                          </a>
+
+                          <a href="javascript:;" *ngIf="row.PdfUrl != ''"
+                            (click)="SendAppraisalMail(row.Id, row.PdfUrl, i)">
+                            <span *ngIf="row.MailStatus == 0" style="margin-right: 15px; color:red;"
+                              class="fa fa-envelope"></span>
+                            <span *ngIf="row.MailStatus == 1" style="margin-right: 15px; color:green;"
+                              class="fa fa-envelope"></span>
+                          </a>
+
+                          <br>
+                          <span *ngIf="row.AppraisalAllowed == '0'" style="color: red;">Not eligible for
+                            appraisal</span>
+                        </td>
+
+                      </tr>
+
+                    </tbody>
+
+                    <tbody *ngIf="flagArray?.length == 0">
+                      <tr>
+                        <td colspan="9" align="center">Appraisals Not Started!</td>
+                      </tr>
+                    <tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+              <div class="row">
+                <div class="col-md-12 ml-auto mr-auto">
+                  <div class="float-right">
+                    <app-pagination [totalRecords]="total" [recordsPerPage]="10"
+                      (onPageChange)="displayActivePage($event,'page')"></app-pagination>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

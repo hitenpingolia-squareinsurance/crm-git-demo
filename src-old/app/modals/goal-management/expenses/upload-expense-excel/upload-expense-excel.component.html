@@ -1,0 +1,70 @@
+<div class="table-responsive mydiv">
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h3 class="heading_popup"><strong>Upload Expense Details</strong></h3>
+    </div>
+
+    <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+  </div>
+
+  <form [formGroup]="UploadExcelForm" style="padding: 0 15px;">
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-sm-6">
+        <!-- <label>Upload Excel* : </label> -->
+        <label class="form-control btn fileUpload btn-default"
+          [ngClass]="(this.Other_image==1 ? 'ImageUploaded' : 'else' )" name="button">
+          <input type="file" (change)="checkFileType($event,'Excel')" formControlName="Excel_File"
+            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            style="display:none;" />
+          <span class="fas fa-user-alt"><b>Upload Excel</b></span>
+        </label>
+      </div>
+
+      <div class="col-sm-2">
+        <input (click)="UploadExpenseExcel()" type="button" class="btn btn-info" value="Upload">
+      </div>
+
+      <div class="col-sm-4" style="text-align: right;">
+        <a style="margin-right:5px;" class="btn btn-warning" (click)="DownloadSampleExcel()"><i
+            class="fa fa-file-excel-o" aria-hidden="true"></i> Download Sample</a>
+      </div>
+    </div>
+  </form>
+
+  <br>
+
+  <table datatable [dtOptions]="dtOptions" id="Table1" class="table table-bordered table-hover">
+
+    <thead>
+      <tr>
+
+        <th style="text-align:center;">S.No</th>
+        <th style="text-align:center;">Uploaded File</th>
+        <th style="text-align:center;">Upload Date</th>
+
+      </tr>
+    </thead>
+
+    <tbody *ngIf="dataAr?.length != 0">
+      <tr *ngFor="let row of dataAr; let i=index;">
+
+        <td>{{ row.SNo }}</td>
+
+        <td>
+          <a (click)="DownloadUploadedExcel(row.FileUrl)"><span class="label label-primary"><i
+                class="fa fa-file-excel-o" aria-hidden="true"></i> Download File</span></a>
+        </td>
+
+        <td>{{ row.UploadDate }}</td>
+
+      </tr>
+    </tbody>
+
+    <tbody *ngIf="dataAr?.length == 0">
+      <tr>
+        <td colspan="3" align="center">No data Available !</td>
+      </tr>
+    <tbody>
+  </table>
+</div>

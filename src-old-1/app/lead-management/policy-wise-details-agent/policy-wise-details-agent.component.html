@@ -1,0 +1,160 @@
+<div class="mainCampaignBox">
+    <div class="Campaignheaderin">
+        Name : {{agentName}}
+        <small>- {{agentCode}}</small>
+        <button (click)="CloseModel()" type="button">&times;</button>
+    </div>
+    <div class="Campaigninnerdata">
+        <ul>
+            <li class="active">
+                <span>Total Business</span>
+                <small>50,00,000</small>
+            </li>
+            <li class="active">
+                <span>Actual Pay-in</span>
+                <small>30,000</small>
+            </li>
+            <li class="active">
+                <span>Total Policies</span>
+                <small>2000</small>
+            </li>
+        </ul>
+    </div>
+    <!-- <div class="Campaigninnerdatatable tables_layout_design">
+        <table class="row-border table" >
+            <thead>
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+        </table> -->
+        <!-- <ul class="responsive-table">
+            <li class="table-row tablerow1">
+                <div class="campingstatus">
+                  
+                    <span class="labelConverted">Converted</span>
+                   
+                </div>
+                <div class="campingtopmainrow">
+                    <div class="agents_data">
+                        <div class="iconrecl">1</div>
+                        <span>Employee Name & Code</span>
+                        <small>Yuvraj Singh- PI117</small>
+                    </div>
+                    <div class="agents_data">
+                        <span>Mobile</span>
+                        <small>6376507226</small>
+                    </div>
+                    <div class="agents_data">
+                        <span>Add Stamp</span>
+                        <small>23-08-2024 08:43:58</small>
+                    </div>
+                </div>
+                <div class="campingmidrowinner">
+                    <span>Source : Become Posp</span>
+                    <span>Lead Id : SQLD152418</span>
+                    <span>Agent Code : SIBPOS13062</span>
+                    <button type="button">View Business</button>
+                </div>
+            </li>
+        </ul> -->
+
+
+
+
+        <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+            <div class="custom_table tables_layout_design">
+              <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                <thead>
+                  <tr>
+                    <th></th>
+                  </tr>
+                </thead>
+              </table>
+              <!-- ======= Refer Table  =========-->
+              <ul class="responsive-table">
+                <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+                  <div class="campingstatus">
+                    <span *ngIf="row.status == 1" class="labelPending">Pending</span>
+                    <span *ngIf="row.status == 2" class="labelFollow">Follow Up</span>
+                    <span *ngIf="row.status == 3" class="labelConverted">Converted</span>
+                    <span *ngIf="row.status == 4" class="labelLOST">Lost</span>
+                    <span *ngIf="row.status == 6" class="labelClose">Close</span>
+                  </div>
+                  
+                  <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                    <div class="agents_data agents_data1">
+                      <div class="icon_re_cl">{{row.SrNo}}</div>
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Employee Name & Code </div>
+                          <strong class="fs_18">{{row.emp_name}}- {{row.emp_code}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data2">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Mobile</div>
+                          <strong class="fs_18">{{row.Mobile}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="agents_data agents_data3">
+                      <div class="agent_name_mobile">
+                        <div class="agent_data">
+                          <div>Add Stamp</div><strong class="fs_18">{{row.Date}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="last_row_div">
+                    <div class="d_flex custon-234">
+                      <div class="label_chips finance_lob">
+                        <span>Source : {{row.Source}}</span>
+                      </div>
+                      <div class="label_chips non_motor_lob">
+                        <span>Lead Id : {{row.lead_id}}</span>
+                      </div>
+                      <div class="label_chips non_motor_lob" *ngIf="row.agent_id != '' ">
+                        <span>Agent Code : {{row.agent_id}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="last_row">
+                    <div class="col_2 action_btn d_flex flex_Middel box-bottom" *ngIf="row.status == 3">
+                      <button class="btnbg1"
+                      (click)="AgentBusiness(row.agent_id)">View Business</button>
+                    </div>
+                  </div> -->
+                </li>
+              </ul>
+              <!--======= Refer Table END ========= -->
+              <div class="row" *ngIf="dataAr?.length == 0">
+                <div class="col-md-12">
+                  <div class="no_data_found">
+                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                    <small>No data available !</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+    <!-- </div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+

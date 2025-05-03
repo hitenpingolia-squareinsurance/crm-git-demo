@@ -1,0 +1,57 @@
+<section class="inner_page_css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div class="header_title">Corporate Ins Query</div>
+          </div>
+          <div class="main_body main_card_height_scroll_withoutfooter">
+
+            <app-square-filter (postCreated)="SearchData($event)"></app-square-filter>
+
+            <hr>
+            <div class=" mydiv table-responsive">
+              <!-- table  -->
+
+              <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+                class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Ins Type</th>
+                    <th>Company Name</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>City</th>
+                    <th>Date</th>
+
+                  </tr>
+                </thead>
+                <tbody *ngIf="dataAr?.length != 0">
+                  <tr *ngFor="let row of dataAr">
+                    <td>{{row.SrNo}}.</td>
+                    <td>{{row.Ins_type}}</td>
+                    <td>{{row.CompanyName}}</td>
+                    <td>{{row.Name}}</td>
+                    <td>{{row.Email}}</td>
+                    <td>{{row.Mobile}}</td>
+                    <td>{{row.City}}</td>
+                    <td>{{row.Insertdate}}</td>
+
+                  </tr>
+                </tbody>
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="14" align="center">No data available!</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

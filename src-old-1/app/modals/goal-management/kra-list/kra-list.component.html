@@ -1,0 +1,339 @@
+<div class="row">
+  <button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+</div>
+
+<table class="table table-bordered">
+
+  <thead>
+    <tr>
+      <th colspan="9" style="text-align: center; background-color: #3c8dbc; color: white;">KRA Ratings</th>
+    </tr>
+
+    <tr>
+      <th>Sr&nbsp;No</th>
+      <th>KRA&nbsp;Type</th>
+      <th>Weightage</th>
+      <th>Actual&nbsp;Target</th>
+      <th>Achieved&nbsp;Target</th>
+      <th>Achievement&nbsp;%</th>
+      <th>Rating</th>
+      <th>Final&nbsp;Rating</th>
+      <th>Remarks</th>
+    </tr>
+  </thead>
+
+  <tbody *ngIf="dataAr?.length != 0">
+    <tr *ngFor="let row of dataAr; let i=index;">
+      <td>{{ row.SrNo }}</td>
+      <td style="padding: 7px !important; text-align: left !important;">{{ row.Kra_Type }}</td>
+      <td>{{ row.Weightage }}</td>
+
+      <!--=== TOTAL TARGET SECTION START ===-->
+      <td
+        *ngIf="row.Calculation_Type != 'Lobwise Target' && row.Calculation_Type != 'Team Target' && row.Calculation_Type != 'Pos Franchise'">
+        {{ row.TotalTarget }}
+      </td>
+
+      <td *ngIf="row.Calculation_Type == 'Lobwise Target'" style="padding: 2px !important;">
+        <table class="cs_table_border cs_table_td">
+          <tr>
+            <td>Motor</td>
+            <td>Non&nbsp;Motor</td>
+            <td>Health</td>
+            <td>Life</td>
+          </tr>
+
+          <tr>
+            <td>{{ row.MotorTarget }}</td>
+            <td>{{ row.NonMotorTarget }}</td>
+            <td>{{ row.HealthTarget }}</td>
+            <td>{{ row.LifeTarget }}</td>
+          </tr>
+        </table>
+      </td>
+
+      <td *ngIf="row.Calculation_Type == 'Team Target'" style="padding: 2px !important;">
+        <table class="cs_table_border cs_table_td">
+          <tr>
+            <td>Revenue</td>
+            <td>GWP</td>
+            <td>POS</td>
+            <td>Renewal</td>
+            <td>P&L</td>
+          </tr>
+
+          <tr>
+            <td>{{ row.RevenueTotalTarget }}</td>
+            <td>{{ row.BusinessTotalTarget }}</td>
+            <td>{{ row.PosTotalTarget }}</td>
+            <td>{{ row.RenewalTotalTarget }}</td>
+            <td>{{ row.PLTotalTarget }}</td>
+          </tr>
+        </table>
+      </td>
+
+      <td *ngIf="row.Calculation_Type == 'Pos Franchise'" style="padding: 2px !important;">
+        <table class="cs_table_border cs_table_td">
+          <tr>
+            <td>Pos</td>
+            <td>Franchise</td>
+          </tr>
+
+          <tr>
+            <td>{{ row.PosTotalTarget }}</td>
+            <td>{{ row.FranchiseTotalTarget }}</td>
+          </tr>
+        </table>
+      </td>
+      <!--=== TOTAL TARGET SECTION END ===-->
+
+      <!--=== TOTAL ACHIEVED TARGET SECTION START ===-->
+      <td
+        *ngIf="row.Calculation_Type != 'Lobwise Target' && row.Calculation_Type != 'Employee Retention' && row.Calculation_Type != 'Team Target' && row.Calculation_Type != 'Pos Franchise' && row.Calculation_Type != 'Product Leader'">
+        {{ row.AchievedTarget }}
+      </td>
+
+      <td *ngIf="row.Calculation_Type == 'Lobwise Target'" style="padding: 2px !important;">
+        <table class="cs_table_border cs_table_td">
+          <tr>
+            <td>Motor</td>
+            <td>Non&nbsp;Motor</td>
+            <td>Health</td>
+            <td>Life</td>
+          </tr>
+
+          <tr>
+            <td>{{ row.MotorBusiness }}</td>
+            <td>{{ row.NonMotorBusiness }}</td>
+            <td>{{ row.HealthBusiness }}</td>
+            <td>{{ row.LifeBusiness }}</td>
+          </tr>
+        </table>
+      </td>
+
+      <td *ngIf="row.Calculation_Type == 'Team Target'" style="padding: 2px !important;">
+        <table class="cs_table_border cs_table_td">
+          <tr>
+            <td>Revenue</td>
+            <td>GWP</td>
+            <td>POS</td>
+            <td>Renewal</td>
+            <td>P&L</td>
+          </tr>
+
+          <tr>
+            <td>{{ row.RevenueAchTarget }}</td>
+            <td>{{ row.BusinessAchTarget }}</td>
+            <td>{{ row.PosAchTarget }}</td>
+            <td>{{ row.RenewalAchTarget }}</td>
+            <td>{{ row.PLAchTarget }}</td>
+          </tr>
+        </table>
+      </td>
+
+      <td *ngIf="row.Calculation_Type == 'Employee Retention'" style="padding: 2px !important;">
+        <table class="cs_table_border cs_table_td">
+          <tr>
+            <td>Recruitment</td>
+            <td>Attrition</td>
+          </tr>
+
+          <tr>
+            <td>{{ row.NewEmployee }}</td>
+            <td>{{ row.ResignEmployee }}</td>
+          </tr>
+        </table>
+      </td>
+
+      <td *ngIf="row.Calculation_Type == 'Product Leader'" style="padding: 2px !important;">
+        <table class="cs_table_border cs_table_td">
+          <tr>
+            <td>2022</td>
+            <td>2023</td>
+          </tr>
+
+          <tr>
+            <td>{{ row.TotalTarget }}</td>
+            <td>{{ row.AchievedTarget }}</td>
+          </tr>
+        </table>
+      </td>
+
+      <td *ngIf="row.Calculation_Type == 'Pos Franchise'" style="padding: 2px !important;">
+        <table class="cs_table_border cs_table_td">
+          <tr>
+            <td>Pos</td>
+            <td>Franchise</td>
+          </tr>
+
+          <tr>
+            <td>{{ row.PosAchievedTarget }}</td>
+            <td>{{ row.FranchiseAchievedTarget }}</td>
+          </tr>
+        </table>
+      </td>
+      <!--=== TOTAL ACHIEVED TARGET SECTION END ===-->
+
+
+      <!--=== TOTAL ACHIEVED TARGET PERCENT SECTION START ===-->
+      <td
+        *ngIf="row.Calculation_Type != 'Lobwise Target' && row.Calculation_Type != 'Employee Retention' && row.Calculation_Type != 'Team Target' && row.Calculation_Type != 'Pos Franchise'">
+        {{
+        row.AchievementPercent }}</td>
+      <td *ngIf="row.Calculation_Type == 'Employee Retention'"></td>
+      <td *ngIf="row.Calculation_Type == 'Lobwise Target'" style="padding: 2px !important;">
+        <table class="cs_table_border cs_table_td">
+          <tr>
+            <td>Motor</td>
+            <td>Non&nbsp;Motor</td>
+            <td>Health</td>
+            <td>Life</td>
+          </tr>
+
+          <tr>
+            <td>{{ row.MotorAchPercent }}</td>
+            <td>{{ row.NonMotorAchPercent }}</td>
+            <td>{{ row.HealthAchPercent }}</td>
+            <td>{{ row.LifeAchPercent }}</td>
+          </tr>
+        </table>
+      </td>
+
+      <td *ngIf="row.Calculation_Type == 'Team Target'" style="padding: 2px !important;">
+        <table class="cs_table_border cs_table_td">
+          <tr>
+            <td>Revenue</td>
+            <td>GWP</td>
+            <td>POS</td>
+            <td>Renewal</td>
+            <td>P&L</td>
+          </tr>
+
+          <tr>
+            <td>{{ row.RevenueAchPercent }}</td>
+            <td>{{ row.BusinessAchPercent }}</td>
+            <td>{{ row.PosAchPercent }}</td>
+            <td>{{ row.RenewalAchPercent }}</td>
+            <td>{{ row.PLAchPercent }}</td>
+          </tr>
+        </table>
+      </td>
+
+      <td *ngIf="row.Calculation_Type == 'Pos Franchise'" style="padding: 2px !important;">
+        <table class="cs_table_border cs_table_td">
+          <tr>
+            <td>Pos</td>
+            <td>Franchise</td>
+          </tr>
+
+          <tr>
+            <td>{{ row.PosAchievementPercent }}</td>
+            <td>{{ row.FranchiseAchievementPercent }}</td>
+          </tr>
+        </table>
+      </td>
+      <!--=== TOTAL ACHIEVED TARGET PERCENT SECTION END ===-->
+
+      <td>
+        {{ row.Rating }}
+        <span class="fa fa-pencil-square-o" *ngIf="row.IsEdit == 'Yes' && row.IsSelfEdit == 'No'"
+          (click)="EditKraRating(i, row.Id, row.Rating)"></span>
+      </td>
+
+      <td>{{ row.FinalRating }}</td>
+      <td>{{ row.Remarks }}
+        <span class="fa fa-pencil-square-o" *ngIf="row.IsSelfEdit == 'Yes'"
+          (click)="EditSelfRemarks(i, row.Id, row.Rating)"></span>
+      </td>
+    </tr>
+
+    <tr>
+      <th colspan="9">
+        <div class="label_top_blog">
+          <span style="margin-right: 5px;">Over All Rating : {{ OverAllRating }}</span>
+        </div>
+      </th>
+    </tr>
+  </tbody>
+
+  <thead *ngIf="comments_data?.length != 0">
+
+    <tr>
+      <th colspan="3">Comments/Suggestions</th>
+      <th>Promotion Status</th>
+      <th colspan="3">Promotion Remarks</th>
+      <th colspan="2">Action Users</th>
+    </tr>
+  </thead>
+
+  <tbody *ngIf="comments_data?.length != 0">
+    <tr *ngFor="let row of comments_data; let i=index;">
+      <td colspan="3">{{ row.Suggestions }}</td>
+      <td>{{ row.Is_Promoted }}</td>
+      <td colspan="3">{{ row.Remarks }}</td>
+      <td colspan="2">{{ row.ActionUser }}</td>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="SubmitRights == 'Yes'">
+    <tr>
+      <th colspan="9">
+        <!--  -->
+        <form [formGroup]="KraRatingForm" (ngSubmit)="SubmitKraRatingRemarks()">
+          <!-- <textarea placeholder="Any suggestion or comment" formControlName="suggestion_comment"
+            class="form-control"></textarea> -->
+          <div class="row" style="margin-bottom: 10px;">
+            <div class="col-sm-5">
+              <input type="text" formControlName="suggestion_comment" class="form-control"
+                placeholder="Any suggestion or comment">
+            </div>
+
+            <div class="col-sm-1" *ngIf="rm_type == 'Self'">
+              <input type="submit" class="btn btn-info" value="Submit">
+            </div>
+
+            <div class="col-sm-2" *ngIf="rm_type != 'Self'">
+              <ng-multiselect-dropdown class="form-control" placeholder="Promotion Recom." [data]="PromotionTypeAr"
+                formControlName="is_promoted" [settings]="dropdownSettingsingleselect1">
+              </ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-sm-5" *ngIf="rm_type != 'Self'">
+              <input type="text" formControlName="remarks" class="form-control" placeholder="Promotion Remarks">
+            </div>
+          </div>
+
+          <div class="row" *ngIf="rm_type != 'Self'">
+            <div class="col-sm-3"
+              *ngIf="(KraRatingForm.value['is_promoted'].length > 0 && KraRatingForm.value['is_promoted'][0]['Id'] == 'Yes') && sequence == '4'">
+              <ng-multiselect-dropdown class="form-control" placeholder="Choose Designation" [data]="DesignationAr"
+                formControlName="designation" [settings]="dropdownSettingsingleselect1">
+              </ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-sm-2"
+              *ngIf="(KraRatingForm.value['is_promoted'].length > 0 && KraRatingForm.value['is_promoted'][0]['Id'] == 'Yes') && sequence == '4'">
+              <ng-multiselect-dropdown class="form-control" placeholder="Choose Grade" [data]="BandAr"
+                formControlName="band" [settings]="dropdownSettingsingleselect1">
+              </ng-multiselect-dropdown>
+            </div>
+
+            <div
+              [ngClass]="((KraRatingForm.value['is_promoted'].length > 0 && KraRatingForm.value['is_promoted'][0]['Id'] == 'Yes') && sequence == '4'?'col-sm-6':'col-sm-11')">
+            </div>
+            <div class="col-sm-1">
+              <input type="submit" class="btn btn-info" value="Submit">
+            </div>
+          </div>
+        </form>
+      </th>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="dataAr?.length == 0">
+    <tr>
+      <td colspan="9" align="center">No data Available !</td>
+    </tr>
+  <tbody>
+
+</table>

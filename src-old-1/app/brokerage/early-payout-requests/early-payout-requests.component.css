@@ -1,0 +1,14 @@
+.table-responsive table th {
+    background: #2cb2b3;
+    color: #ffff;
+}
+.labelpro {
+    display: block;
+    width: min-content;
+    text-align: center;
+    margin: 0px auto;
+    margin-top: 3px;
+}
+table.table {
+    width: 100% !important;
+}

@@ -1,0 +1,86 @@
+
+.outer_input {
+  background-color: #fff;
+  color: #000;
+  text-align: center;
+
+  display: inline-block;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  width: 100%;
+  height: 34px;
+    padding: 3px 5px;
+}
+
+.outer_input input {
+  height: 20px;
+  width: 65px;
+  display: inline-block;
+  margin-right: 5px;
+  background-color: #fff;
+  text-align: center;
+  color: #000;
+  border: 0;
+  margin: 0;
+  font-size: small;
+}
+
+.fileUpload input[type=file]{
+  display:none;
+}
+.btn{
+  background-color:#e3e3e3;
+  color:#333;
+  border:1px solid #e6e6e6;
+  border-radius:3px;
+  padding:6px 12px;
+  font-size:16px;
+}
+.Save-click{
+border:1px solid #e6e6e6;
+border-radius:3px;
+padding:6px 12px;
+font-size:16px;
+}
+.ImageUploaded{
+background-color:green;
+color:white;
+}
+
+
+.myinput1 {
+  width: calc(100% / 2 - 0px) !important;
+  text-align: center;
+  border: none !important;
+}
+.input-group.custom-input-group button.btn-success {
+  margin: 0px !important;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 10px 6px;
+  border-radius: 0px 3px 3px 0px;
+}
+.input-group.custom-input-group button.btn-success {
+  background-color: #2cb2b3;
+  color: #fff;
+  border: 1px solid #2cb2b3;
+}
+.input_group .input-group.custom-input-group .form_control {
+  padding: 0 0px 0px 5px;
+}
+.input_group .input-group.custom-input-group .myinput {
+  width: 16%;
+  text-align: center;
+  border: none !important;
+}
+.input_group .input-group.custom-input-group .form_control#register_number {
+  justify-content: flex-start;
+}
+.input_group .input-group.custom-input-group {
+  width: 100%;
+}
+/* .opacity {
+  opacity: 0.5;
+} */

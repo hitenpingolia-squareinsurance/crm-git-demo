@@ -1,0 +1,197 @@
+<table style="font-size: 11px;">
+  <tr>
+    <td colspan="2" align="center"> <b>Quotation Id : {{row.Quotation}}</b>
+    </td>
+    <td *ngIf="row.RejectedStatus != 1" colspan="2" align="center">
+      <b>Status: <label class="label label-warning" *ngIf="row.QuoteStatus == 1">
+          Quote Requested
+        </label>
+        <label class="label label-warning" *ngIf="row.QuoteStatus == 2">
+          Quote Released
+        </label>
+        <label class="label label-warning" *ngIf="row.QuoteStatus == 3">
+          Quote Accepted
+        </label>
+        <label class="label label-warning" *ngIf="row.QuoteStatus == 4">
+
+
+          <span *ngIf="row.PaymentMode == 'Cash'">Payment For Cash</span>
+          <span *ngIf="row.PaymentMode == 'Online'">Payment Url Shared</span>
+          <span *ngIf="row.PaymentMode == 'Cheque'">Payment For Cheque</span>
+
+
+
+        </label>
+        <label class="label label-warning" *ngIf="row.QuoteStatus == 5">
+          Pending For Approval
+        </label>
+        <label class="label label-warning" *ngIf="row.QuoteStatus == 6">
+          Complete
+        </label>
+        <label class="label label-warning" *ngIf="row.QuoteStatus == 8">
+          Pending for Accounts
+        </label>
+      </b>
+    </td>
+
+    <td *ngIf="row.RejectedStatus == 1" colspan="2" align="center"> <b>Status: <label
+          class="label label-danger">Rejected</label> </b>
+    </td>
+
+    <td colspan="2" align="center"> <b>Company: <label>{{row.CompanyName}}</label> </b>
+    </td>
+
+
+    <td colspan="2" align="center"> <button (click)="CloseModel()" type="button"
+        class="close closeModelButton">&times;</button></td>
+  </tr>
+  <tbody *ngIf="row.CreateUser_Id != ''">
+    <tr class="ValueTD">
+      <td colspan="6">Creater Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Name - (Code)</b>: {{row.CreaterName}} - ({{row.CreaterCode}})</td>
+      <td colspan="2"><b>Mobile</b>: {{row.CreaterMobile}}</td>
+      <td colspan="2"><b>Mail</b>: {{row.Createremail}}</td>
+
+    </tr>
+  </tbody>
+
+  <tbody>
+    <tr class="ValueTD" *ngIf="row.AssignerCode != ''">
+      <td colspan="6">Assignee Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Name - (Code)</b>: {{row.AssignerName}} - ({{row.AssignerCode}})</td>
+      <td colspan="2"><b>Mobile</b>: {{row.AssignerMobile}}</td>
+      <td colspan="2"><b>Mail</b>: {{row.Assigneremail}}</td>
+    </tr>
+  </tbody>
+
+  <tbody>
+    <tr class="ValueTD">
+      <td colspan="6">Customer Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Name</b>: {{row.Name}}</td>
+      <td colspan="2"><b>Mobile</b>: {{row.Mobile}}</td>
+      <td colspan="2"><b>Mail</b>: {{row.Email}}</td>
+
+    </tr>
+  </tbody>
+
+  <tbody>
+    <tr class="ValueTD">
+      <td colspan="6">Vechile Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>File Type</b>: {{row.FileType}}</td>
+      <td colspan="2"><b>Product Type</b>: {{row.ProductType}}</td>
+      <td colspan="2"><b>Plan Type</b>: {{row.PlanType}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Registration Date </b>: {{row.RegistrationDate}}</td>
+      <td colspan="2"><b>Registration No </b>: {{row.RegistrationNo}}</td>
+      <td colspan="2"><b>Required Idv </b>: {{row.RequiredIdv}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Tenure</b>: {{row.Tenure}} Year</td>
+      <td colspan="2"><b>Survey Status </b>: {{row.SurveyStatus}}</td>
+      <td colspan="2"><b>Survey Id </b>: {{row.SurveyId}}</td>
+    </tr>
+    <tr class="ValueTD">
+      <td colspan="6"><b>Addons </b>: {{row.Fir_Remark}} </td>
+    </tr>
+    <tr class="ValueTD" *ngIf="row.BestQuote == 'Yes'">
+      <td colspan="6"><b>Required Insurer </b>: {{row.RequiredInsurer}} </td>
+    </tr>
+    <tr class="ValueTD">
+      <td colspan="6"><b>Remark </b>: {{row.Remark}} </td>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="row.PreviousPolicy == 'Yes'">
+    <tr class="ValueTD">
+      <td colspan="6">Previous Year Policy Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Previous Insurer</b>: {{row.PreviousInsurer}}</td>
+      <td colspan="2"><b>Last Year Ncb</b>: {{row.LastYearNcb}}</td>
+      <td colspan="2"><b>Previous Expiry Date</b>: {{row.PreviousExpiryDate}}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Owner Change </b>: {{row.OwnerChange}}</td>
+      <td colspan="2"><b>Ncb Protection </b>: {{row.NcbProtection}}</td>
+      <td colspan="2"><b>Claim Status </b>: {{row.ClaimStatus}}</td>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="row.PlanType == 'Saod'">
+    <tr class="ValueTD">
+      <td colspan="6">Third Party Details</td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>TP Expiry Date</b>: {{row.TPExpiryDate}}</td>
+      <td colspan="2"><b>TP Policy Number</b>: {{row.TPPolicyNumber}}</td>
+      <td colspan="2"><b>TP Policy Insurer</b>: {{row.TPPolicyInsurer}}</td>
+    </tr>
+  </tbody>
+
+  <tr class="ValueTD">
+    <td colspan="6">Document Details</td>
+  </tr>
+  <tbody>
+    <tr>
+      <th colspan="3">Document Name</th>
+      <th colspan="3">Document View</th>
+    </tr>
+    <tr *ngIf="row.RCFront !='0'">
+      <th colspan="3">RCFront</th>
+      <th colspan="3"> <label *ngIf="(row.RCFront =='')" class="form-control"> Not available </label>
+        <label *ngIf="(row.RCFront !='0')" (click)="ViewDocument(row.RCFront)" class="form-control"> Click to View
+        </label>
+      </th>
+    </tr>
+    <tr *ngIf="row.RCBack !='0'">
+      <th colspan="3">RCBack</th>
+      <th colspan="3"> <label *ngIf="(row.RCBack =='')" class="form-control"> Not available </label>
+        <label *ngIf="(row.RCBack !='0')" (click)="ViewDocument(row.RCBack)" class="form-control"> Click to View
+        </label>
+      </th>
+    </tr>
+    <tr *ngIf="row.Invoice !='0'">
+      <th colspan="3">Invoice</th>
+      <th colspan="3"> <label *ngIf="(row.Invoice =='')" class="form-control"> Not available </label>
+        <label *ngIf="(row.Invoice !='0')" (click)="ViewDocument(row.Invoice)" class="form-control"> Click to View
+        </label>
+      </th>
+    </tr>
+    <tr *ngIf="row.PreviousPolicy !='0'">
+      <th colspan="3">PreviousPolicy</th>
+      <th colspan="3"> <label *ngIf="(row.PreviousPolicy =='')" class="form-control"> Not available </label>
+        <label *ngIf="(row.PreviousPolicy !='0')" (click)="ViewDocument(row.PreviousPolicyPdf)" class="form-control">
+          Click
+          to View </label>
+      </th>
+    </tr>
+
+    <tr *ngIf="row.OtherDocument !='0'">
+      <th colspan="3">OtherDocument</th>
+      <th colspan="3"> <label *ngIf="(row.OtherDocument =='')" class="form-control"> Not available </label>
+        <label *ngIf="(row.OtherDocument !='0')" (click)="ViewDocument(row.OtherDocument)" class="form-control"> Click
+          to
+          View </label>
+    </th>
+    
+    </tr>
+  </tbody>
+
+</table>
+
+
+
+<div class="modal-body card-box" id="show_ac_details" [innerHTML]="dataArr">
+
+
+
+</div>

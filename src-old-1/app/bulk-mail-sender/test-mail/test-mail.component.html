@@ -1,0 +1,60 @@
+<section class="custom-scrool" id="click-close">
+  <div class="">
+    <div class="main_card_form">
+      <div class="main_header">
+        <h4 class="header_title">Test Mail</h4>
+        <button
+          type="button"
+          (click)="closeDialog()"
+          class="close closeModelButton"
+        >
+          <i class="fa fa-close"></i>
+        </button>
+        <div class="call-precess" id="callProcess" style="display: none">
+          <div class="call-align">
+            <img src="assets/image/calling.gif" alt="" />
+          </div>
+          <div class="heading-call">Call in Progress....</div>
+        </div>
+      </div>
+      <hr />
+      <div class="modal_body">
+        <div class="row">
+          <form [formGroup]="NewMailSubmit" (ngSubmit)="submit()">
+            <div class="col-sm-12">
+              <div class="input-group">
+                <input
+                  type="email"
+                  class="form-control"
+                  formControlName="toMail"
+                  placeholder="Enter Your Email"
+                />
+                <button type="submit" class="btn btn-info">Update</button>
+              </div>
+              <div class="error">
+                <div
+                  *ngIf="
+                    NewMailSubmit.get('toMail').hasError('pattern') &&
+                    (NewMailSubmit.get('toMail').touched || NewMailSubmit.dirty)
+                  "
+                  class="text-danger"
+                >
+                  Please Write Correct Email Format
+                </div>
+                <div
+                  *ngIf="
+                    NewMailSubmit.get('toMail').hasError('email') &&
+                    (NewMailSubmit.get('toMail').touched || NewMailSubmit.dirty)
+                  "
+                  class="text-danger"
+                >
+                  Please Write Correct Email Format
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,114 @@
+<section class="custom-scrool" id="click-close">
+    <div class="main_card_form">
+        <div class="main_header">
+            <h4 class="header_title">Add New Company Form</h4>
+            <button type="button" (click)="CloseModel()" class="close closeModelButton"><i class="fa fa-close"></i></button>
+        </div>
+        <div class="main_body">  
+            <form [formGroup]="AddFieldForm" (ngSubmit)="SubBtn()">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="category_list">
+                            <label>Company Name</label>
+                            <input type="text" class="form-control" formControlName="company"
+                                placeholder="Company Name">
+                            <div *ngIf="isSubmitted && AddFieldForm.get('company').hasError('required') && (AddFieldForm.get('company').touched ||AddFieldForm.dirty)"
+                                class="text-danger"> This Field is required
+                            </div>
+                            <div *ngIf="isSubmitted && AddFieldForm.get('company').hasError('pattern') && (AddFieldForm.get('company').touched ||AddFieldForm.dirty)"
+                                class="text-danger"> This Field is required only Character
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category_list">
+                            <label>Logo</label>
+                            <input type="file" class="form-control" formControlName="logo" (change)="UploadDocs($event)">
+                            <div *ngIf="isSubmitted && AddFieldForm.get('logo').hasError('required') && (AddFieldForm.get('logo').touched ||AddFieldForm.dirty)"
+                                class="text-danger"> This Field is required
+                            </div>
+                        </div>
+                    </div>                      
+                    <div class="col-md-4" id="close">
+                        <div class="category_list">
+                            <label>Status</label>
+                            <ng-multiselect-dropdown class="form-control" placeholder="Status" [data]="active"
+                                formControlName="status" [settings]="dropdownSettingsmultiselect">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && AddFieldForm.get('status').hasError('required') && (AddFieldForm.get('status').touched || AddFieldForm.dirty)"
+                                class="text-danger">
+                                This field is Required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="category_list">
+                            <label>Split</label>
+                            <ng-multiselect-dropdown [settings]="dropdownSettingsmultiselect" class="form-control"
+                                 [data]="split" formControlName="split">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && AddFieldForm.get('split').hasError('required') && (AddFieldForm.get('split').touched || AddFieldForm.dirty)"
+                                class="text-danger">
+                                This field is Required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="category_list">
+                            <label>Payout Posting Criteria</label>
+                            <ng-multiselect-dropdown [settings]="dropdownSettingsmultiselect" class="form-control"
+                                 [data]="payin" formControlName="payin">
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="isSubmitted && AddFieldForm.get('payin').hasError('required') && (AddFieldForm.get('payin').touched || AddFieldForm.dirty)"
+                            class="text-danger">
+                            This field is Required
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 mt_10">
+                        <div class="category_list">
+                            <label for="state">LOB</label>
+                            <div class="newcsradio">
+                                <span class="custom_radio_button">
+                                    <input type="checkbox" id="yesRadio1" formControlName="motor" (change)="toggleCheckbox($event.target.checked, 'motor')" [value]="1" [checked]="AddFieldForm.get('motor').value ==='1'">
+                                    <label class="form-control-label" for="yesRadio1">Motor</label>
+                                </span>
+                                <span class="custom_radio_button">
+                                    <input type="checkbox" id="yesRadio2" formControlName="health" [checked]="AddFieldForm.get('health').value ==='1'" (change)="toggleCheckbox($event.target.checked, 'health')" [value]="1">
+                                    <label class="form-control-label" for="yesRadio2">Health</label>
+                                </span>
+                                <span class="custom_radio_button">
+                                    <input type="checkbox" id="yesRadio3" formControlName="nonM" [checked]="AddFieldForm.get('nonM').value ==='1'" (change)="toggleCheckbox($event.target.checked, 'nonM')" [value]="1">
+                                    <label class="form-control-label" for="yesRadio3">Non Motor</label>
+                                </span>
+                                <span class="custom_radio_button">
+                                    <input type="checkbox" id="yesRadio4" formControlName="life" [checked]="AddFieldForm.get('life').value ==='1'" (change)="toggleCheckbox($event.target.checked, 'life')" [value]="1">
+                                    <label class="form-control-label" for="yesRadio4">Life</label>
+                                </span>
+                                <span class="custom_radio_button">
+                                    <input type="checkbox" id="yesRadio5" formControlName="pa" [checked]="AddFieldForm.get('pa').value ==='1'" (change)="toggleCheckbox($event.target.checked, 'pa')" [value]="1">
+                                    <label class="form-control-label" for="yesRadio5">PA</label>
+                                </span>
+                                <span class="custom_radio_button">
+                                    <input type="checkbox" id="yesRadio6" formControlName="travel" [checked]="AddFieldForm.get('travel').value ==='1'" (change)="toggleCheckbox($event.target.checked, 'travel')" [value]="1">
+                                    <label class="form-control-label" for="yesRadio6">Travel</label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="float-end pull-right">
+                            <button type="submit" class="btn btn_primary btn-success">Submit</button>
+                            &nbsp;&nbsp;
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,237 @@
+<section class="inner_page_css knowlage_details_page">
+  <div class="container-fluid">
+    <div class="main_card_form ">
+      <div class="main_header">
+        <div class="header_title">Plan Benefit</div>
+      </div>
+
+      <div class="main_body main_card_height_scroll_withoutfooter">
+        <div class="btn_list_group">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="row">
+                <div class="col-md-8">
+                  <div id="exTab1">
+                    <ul class="nav nav-pills">
+                      <li class="active"><a href="/integration/plan-benefit">Plan Benefit</a></li>
+                      <li><a href="/integration/hospital">Hospital List</a></li>
+                      <li><a href="/integration/bourcher">Bourcher List</a></li>
+
+
+                      <li> <a href="/integration/highlight-label"> Highlight label</a></li>
+                      <li> <a href="/integration/youtube-url"> Youtube Video</a></li>
+
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="dsr-fillter">
+
+                    <a href="../../../../assets/media/health_company_plan_data_new.csv" target="_blank"
+                      download>
+                      <button>Download Sample</button>
+                    </a>
+
+
+
+                    <button class="img_btn" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion"
+                      href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" title="Filter"><img
+                        src="../../../assets/image/filter.svg" alt="Filter"> </button>
+                    <button class="img_btn" type="button" style="margin-left: 5px;" (click)="AddPlanBenifitList()"
+                      title="Add Lead"><img src="../../../assets/image/add_file.svg" alt="Add Lead">Plan Benifit List
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse mt_15" role="tabpanel" aria-labelledby="headingOne">
+                <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+                  <div class="row">
+                    <div class="col-sm-3 ">
+                      <ng-multiselect-dropdown class="form-control" [settings]="dropdownSingleSettingsType"
+                        placeholder="Select Lob" formControlName="LOB" [data]="lobs"
+                        (onSelect)="FetchHealthInsurer($event)">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3 ">
+                      <ng-multiselect-dropdown class="form-control" formControlName="Search_Insurer"
+                        placeholder="Select Insurer" [data]="search_insurer" (onSelect)="FetchHealthPlan($event)"
+                        [settings]="dropdownSingleSettingsType">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3 ">
+                      <ng-multiselect-dropdown class="form-control" formControlName="Search_Plan" [data]="search_plan"
+                        placeholder="Select Plan" [settings]="dropdownSingleSettingsType"
+                        (onSelect)="FetchHealthSubplan($event)">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-sm-3 ">
+                      <ng-multiselect-dropdown class="form-control" [settings]="dropdownSingleSettingsType"
+                        placeholder="Select Subplan" formControlName="Search_Subplan" [data]="search_subplan">
+                      </ng-multiselect-dropdown>
+
+                    </div>
+                    <div class="col-sm-3">
+                      <input type="text" formControlName="SearchValue" name="SearchValue" class="form-control"
+                        placeholder="Search">
+                    </div>
+                    <div class="col-sm-3">
+
+                      <button class="btn btn-info" style="font-size: small;" type="submit">
+
+                        <i class="fa fa-search"></i> Search
+                      </button>
+                      &nbsp;&nbsp;
+                      <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                        value="Reset"> <i class="fa fa-close"> Reset</i> </button>&nbsp;&nbsp; &nbsp;&nbsp;
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="custom_table">
+              <ul class="responsive-table">
+                <div class="custom_table tables_layout_design">
+                  <table datatable [dtOptions]="dtOptions" class="row-border table" id="example2">
+                    <thead>
+                      <tr>
+                        <th></th>
+                      </tr>
+                    </thead>
+                  </table>
+                  <ul class="responsive-table" *ngIf="dataAr?.length != 0">
+                    <li class="table-row" *ngFor="let row of dataAr; let i=index;">
+                      <div class="d_flex w_100 flex_Equal px_10 pb_10 flex_colum_sm mt15">
+                        <div class="agents_data agents_data1">
+                          <div class="icon_re_cl">{{row.SrNo}}</div>
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Company </div>
+                              <strong class="fs_18">{{row.company}}</strong>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Plan</div>
+                              <strong class="fs_18">{{row.Plan}}</strong>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="agents_data agents_data2">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>Lob</div>
+                              <strong class="fs_18">{{row.lob}}</strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="agents_data agents_data3">
+                          <div class="agent_name_mobile">
+                            <div class="agent_data">
+                              <div>SubPlan</div><strong class="fs_18">{{row.SubPlan}}</strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="last_row_div row">
+
+                        <div class="col-sm-3">
+                          <div class="label_chips life_lob">
+                            <span>Title : {{row.Features}}</span>
+                          </div>
+
+                        </div>
+
+                        <div class="col-sm-3">
+                          <div class="label_chips motor_lob">
+                            <span>Value : {{ row.PlanBenifit }}</span>&nbsp;&nbsp;
+                          </div>
+                        </div>
+
+
+
+
+                        <div class="col-sm-3" *ngIf="row.Features !== 'Highlight'">
+                          <div class="label_chips motor_lob">
+                            <span>Desc : {{row.PlanBenifitDesc ? row.PlanBenifitDesc : 'N/A'}}</span>
+
+                          </div>
+                        </div>
+                        <!-- <div class="col-sm-3">
+                          <div class="pull-right">
+                            <label class="fa fa-trash"
+                              (click)="DeleteRequest(row.Id, 'int_insurance_features')"></label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <label (click)="EditComponent(row.Id, 'int_insurance_features')"> Edit </label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+
+
+                            <label *ngIf="row.Status == 1" (click)="ActiveInactive(row.Id,0,'int_insurance_features')">
+                              Active</label>
+
+                            <label *ngIf="row.Status == 0"
+                              (click)="ActiveInactive(row.Id, 1 ,'int_insurance_features')">
+                              Inactive</label>
+                          </div>
+                        </div> -->
+
+                      </div>
+
+                      <div class="last_row">
+                        <div class="d_flex effective_date"></div>
+                        <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+
+                          <a style="cursor: pointer;" (click)="EditComponent(row.Id, 'int_insurance_features')"
+                            class="edit-btn">Edit</a>
+
+
+                          <a style="cursor: pointer;">
+
+
+                            <span *ngIf="row.Status == 1" (click)="ActiveInactive(row.Id, 0, 'int_insurance_features')">
+                              Active</span>
+
+                            <span *ngIf="row.Status == 0" (click)="ActiveInactive(row.Id, 1, 'int_insurance_features')">
+                              Inactive</span>
+                          </a>
+
+                          <a style="cursor: pointer;" (click)="DeleteRequest(row.Id, 'int_insurance_features')"
+                            class="btn-bg">Delete</a>
+                        </div>
+                      </div>
+
+
+
+
+                    </li>
+                  </ul>
+
+                  <div class="row" *ngIf="dataAr?.length == 0">
+                    <div class="col-md-12">
+                      <div class="no_data_found">
+                        <span><img src="assets/image/no_data_banner.jpg"></span>
+                        <small>No data available !</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

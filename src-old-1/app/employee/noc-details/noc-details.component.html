@@ -1,0 +1,118 @@
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Noc Edit</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form #myForm="ngForm" (ngSubmit)="ActiveInactive()">
+                    <label>Select Noc Status</label>
+                    <select [(ngModel)]="selectedNoc" name="selectedNoc" required class="form-control">
+                        <option value="" disabled>Select Noc</option>
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                    <label>Remark</label>
+                    <input type="text" [(ngModel)]="remark" name="remark" id="remark" required class="form-control">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="closemodal">Close</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="box-title">Noc List </h3>
+                            </div>
+                            <div class="col-md-6">&nbsp;</div>
+
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="mydiv">
+                            <table datatable [dtOptions]="dtOptions" id="example2"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Name</th>
+                                        <th>View</th>
+                                        <th>Noc Status</th>
+                                        <th>Remark</th>
+                                        <th>Resign Date</th>
+
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngIf="dataAr?.length != 0">
+
+                                    <tr *ngFor="let row of dataAr; let i=index;">
+                                        <td>{{row.SrNo}}</td>
+                                        <td>{{row.name}}</td>
+                                        <td>
+                                            <strong class="fs_18"><span class="link"></span><label
+                                                    class="label label-info">
+                                                    <a style="color: white;" *ngIf="row.noc_letter != '' "
+                                                        href="{{ 'https://squarebweb-documents.s3.ap-south-1.amazonaws.com/' + row.noc_letter }}"
+                                                        target="_blank">
+                                                        View</a></label></strong>
+
+                                        </td>
+                                        <td>
+                                            <!-- <label *ngIf="row.noc_status == 'No'">Pending</label>
+                                            <label *ngIf="row.noc_status != 'No'">Approve</label> -->
+                                            <label *ngIf="row.status == '1'">Pending</label>
+                                            <label *ngIf="row.status == '2'">Approve</label>
+                                        </td>
+                                        <td>{{row.remark}}</td>
+                                        <td>{{row.resign_date}}</td>
+
+                                        <td>
+                                            <!-- class="fa fa-close " -->
+                                            <!-- class="fa fa-check" -->
+
+                                            <!-- <label *ngIf="row.status == 1" (click)="ActiveInactive(row.Id, 2, 'employeeresigndetails')">Pending</label> -->
+                                            <label *ngIf="row.status == 1" data-toggle="modal" data-target="#myModal"
+                                                (click)="ActiveInactiveVarSt(row.Id)">Pending</label>
+                                            <!-- (click)="ActiveInactive(row.Id, 1, 'employeeresigndetails')" -->
+                                            <label *ngIf="row.status == 2">Approve</label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="8" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>

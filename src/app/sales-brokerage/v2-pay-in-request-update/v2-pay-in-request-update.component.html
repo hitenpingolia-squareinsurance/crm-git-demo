@@ -1,0 +1,595 @@
+<button (click)="CloseModel()" type="button" style="margin-bottom:4px;" class="close closeModelButton">&times;</button>
+
+<table class="table table-bordered">
+	<tbody>
+		<tr>
+			<th>Group</th>
+			<th>LOB</th>
+			<th>File Type</th>
+			<th>Broker</th>
+			<th>Insurance Company</th>
+		</tr>
+		<tr>
+			<td>
+				<span *ngIf="rowAr['Broker_Id'] == 1">SIBPL</span>
+				<span *ngIf="rowAr['Broker_Id'] != 1">CM-Market</span>
+			</td>
+			<td>
+				<span *ngFor="let r of LOB_Ar;let i=index;">{{r.Name}}
+					<span *ngIf="(i+1)!=LOB_Ar.length">,</span>
+				</span>
+			</td>
+			<td>
+				<span *ngFor="let r of File_Type_Ar; let i=index;">
+					{{r.Name}}<span *ngIf="(i+1)!=File_Type_Ar.length">,</span>
+				</span>
+			</td>
+			<td>
+				<span *ngFor="let r of Brokers_Ar; let i=index;">
+					{{r.Name}}<span *ngIf="(i+1)!=Brokers_Ar.length">,</span>
+				</span>
+			</td>
+			<td>
+				<span *ngFor="let r of Ins_Companies_Ar; let i=index;">
+					{{r.Name}}<span *ngIf="(i+1)!=Ins_Companies_Ar.length">,</span>
+				</span>
+			</td>
+		</tr>
+
+		<tr>
+			<th>Product</th>
+			<th>Policy Type</th>
+			<th>Plan Type</th>
+			<th>Sub-Product</th>
+			<th>Class</th>
+		</tr>
+		<tr>
+			<td>
+				<span *ngFor="let r of Products_Ar;let i=index;">{{r.Name}}
+					<span *ngIf="(i+1)!=Products_Ar.length">,</span>
+				</span>
+			</td>
+			<td>
+				<span *ngFor="let r of Segment_Ar;let i=index;">{{r.Name}}
+					<span *ngIf="(i+1)!=Segment_Ar.length">,</span>
+				</span>
+			</td>
+			<td>
+
+				<span *ngFor="let r of Plan_Type_Ar;let i=index;">
+					<span *ngIf="i==0">
+						{{r.Name}}
+					</span>
+				</span>
+				<a class="extra_label" (click)="LoadMore('Plan-Type',Plan_Type_Ar)" href="javascript:void(0)"
+					*ngIf="Plan_Type_Ar.length>1">+{{(Plan_Type_Ar.length)-1}}</a>
+
+			</td>
+			<td>
+				<span *ngFor="let r of SubProducts_Ar; let i=index;">
+					{{r.Name}}<span *ngIf="(i+1)!=SubProducts_Ar.length">,</span>
+				</span>
+			</td>
+			<td>
+				<span *ngFor="let r of Classes_Ar; let i=index;">
+					{{r.Name}}<span *ngIf="(i+1)!=Classes_Ar.length">,</span>
+				</span>
+			</td>
+		</tr>
+
+		<tr *ngIf="formArData['LOB']=='Motor'">
+			<th>Sub-Class</th>
+			<th>Make</th>
+			<th>Model</th>
+			<th>State</th>
+			<th>RTO</th>
+		</tr>
+		<tr *ngIf="formArData['LOB']=='Motor'">
+			<td>
+				<span *ngFor="let r of Sub_Classes_Ar;let i=index;">
+					<span *ngIf="i==0">
+						{{r.Name}}
+					</span>
+				</span>
+				<a class="extra_label" (click)="LoadMore('Sub-Classs',Sub_Classes_Ar)" href="javascript:void(0)"
+					*ngIf="Sub_Classes_Ar.length>1">+{{(Sub_Classes_Ar.length)-1}}</a>
+			</td>
+			<td>
+				<span *ngFor="let r of Make_Ar;let i=index;">
+					<span *ngIf="i==0">
+						{{r.Name}}
+					</span>
+				</span>
+				 
+
+				<!--<a class="extra_label" (click)="LoadMore('Make',Make_Ar)" href="javascript:void(0)" *ngIf="Make_Ar.length>1">+{{(Make_Ar.length)-1}}</a>-->
+				<a class="extra_label" (click)="LoadMore_v3('Make',Make_Ar)" href="javascript:void(0)" *ngIf="formArData['Total_Make']>1">+{{formArData['Total_Make']-1}}</a>
+
+			</td>
+			<td>
+				<span *ngFor="let r of Model_Ar;let i=index;">
+					<span *ngIf="i==0">
+						{{r.Name}}
+					</span>
+				</span>
+				<!--<a class="extra_label" (click)="LoadMore('Model',Model_Ar)" *ngIf="Model_Ar.length>1"
+					href="javascript:void(0)">+{{(Model_Ar.length)-1}}</a>-->
+					<a class="extra_label" (click)="LoadMore_v3('Model',Model_Ar)" *ngIf="formArData['Total_Model']>1"
+						href="javascript:void(0)">+{{(formArData['Total_Model'])-1}}</a>
+			</td>
+			<td>
+				<span *ngFor="let r of States_Ar;let i=index;">
+					<span *ngIf="i==0">
+						{{r.Name}}
+					</span>
+				</span>
+				<!--<a class="extra_label" (click)="LoadMore('States',States_Ar)" *ngIf="States_Ar.length>1"
+					href="javascript:void(0)">+{{(States_Ar.length)-1}}</a>-->
+					<a class="extra_label" (click)="LoadMore_v3('States',States_Ar)" *ngIf="formArData['Total_States']>1"
+						href="javascript:void(0)">+{{(formArData['Total_States'])-1}}</a>
+			</td>
+			<td>
+				<span *ngFor="let r of RTO_Ar;let i=index;">
+					<span *ngIf="i==0">
+						{{r.Name}}
+					</span>
+				</span>
+				<!--<a class="extra_label" (click)="LoadMore('RTO',RTO_Ar)" *ngIf="RTO_Ar.length>1"
+					href="javascript:void(0)">+{{(RTO_Ar.length)-1}}</a>-->
+					<a class="extra_label" (click)="LoadMore_v3('RTO',RTO_Ar)" *ngIf="formArData['Total_RTO']>1"
+						href="javascript:void(0)">+{{(formArData['Total_RTO'])-1}}</a>
+			</td>
+
+		</tr>
+
+		<tr *ngIf="formArData['LOB']=='Motor'">
+			<th>NCB Status</th>
+			<th>Fuel Type</th>
+			<th>CPA Status</th>
+			<th>Vehicle age</th>
+			<th>Source</th>
+		</tr>
+		<tr *ngIf="formArData['LOB']=='Motor'">
+			<td>
+				<span *ngFor="let r of CPA_Ar;let i=index;">
+					{{r.Name}}<span *ngIf="(i+1)!=CPA_Ar.length">,</span>
+				</span>
+
+			</td>
+			<td>
+				<span *ngFor="let r of Fuel_Type_Ar; let i=index;">
+					{{r.Name}}<span *ngIf="(i+1)!=Fuel_Type_Ar.length">,</span>
+				</span>
+			</td>
+			<td>
+				<span *ngFor="let r of CPA_Ar; let i=index;">
+					{{r.Name}}<span *ngIf="(i+1)!=CPA_Ar.length">,</span>
+				</span>
+			</td>
+
+			<td>
+				{{formArData['VehicleAgeFrom']}} to {{formArData['VehicleAgeTo']}}
+			</td>
+			<td>
+				<span *ngFor="let r of Source_Ar;let i=index;">
+					{{r.Name}}<span *ngIf="(i+1)!=Source_Ar.length">,</span>
+				</span>
+
+			</td>
+
+
+		</tr>
+
+
+		<tr *ngIf="Body_Type_Ar.length>0">
+			<td colspan="2">
+				<b>Body Type : </b>
+				<span *ngFor="let r of Body_Type_Ar;let i=index;">
+					{{r.Name}}<span *ngIf="(i+1)!=Body_Type_Ar.length">,</span>
+				</span>
+			</td>
+
+		</tr>
+
+		<tr *ngIf="formArData['LOB']=='Non Motor'">
+			<th>Risk Category</th>
+			<th>Risk Occupancy</th>
+			<th colspan="3"></th>
+		</tr>
+		<tr *ngIf="formArData['LOB']=='Non Motor'">
+			<td>
+				<span *ngFor="let r of Risk_Category_Ar;let i=index;">
+					{{r.Name}}<span *ngIf="(i+1)!=Risk_Category_Ar.length">,</span>
+				</span>
+			</td>
+			<td>
+				<span *ngFor="let r of Risk_Occupancy_Ar;let i=index;">
+					<span *ngIf="i==0">
+						{{r.Name}}
+					</span>
+				</span>
+				<a class="extra_label" (click)="LoadMore('Risk-Occupancy',Risk_Occupancy_Ar)" *ngIf="Risk_Occupancy_Ar.length>1"
+					href="javascript:void(0)">+{{(Risk_Occupancy_Ar.length)-1}}</a>
+			</td>
+			<td colspan="3"></td>
+		</tr>
+
+
+		<tr *ngIf="ViewType == 'View'">
+			<td colspan="5"><b>Extra Remark : </b> {{formArData['Extra_Remark']}}</td>
+		</tr>
+		<!--<tr>
+	<td colspan="5"><b>Effective Date : </b> {{formArData['Effective_Date']}}</td>
+  </tr>-->
+
+		<!--<tr *ngIf="rowAr.SlabType == 'Slab'">
+			<th>Premium Slab Applicable Type</th>
+			<th>PayIn Applicable Type</th>
+			<th>PayIn Premium Slab From</th>
+			<th>PayIn Premium Slab UpTo</th>
+			<th rowspan="2"></th>
+		</tr>
+
+		<tr *ngIf="rowAr.SlabType == 'Slab'">
+			<td>
+				{{rowAr.Premium_Slab_Applicable_Type}}
+			</td>
+
+			<td>
+				{{rowAr.PayIn_Applicable_Type[0]['Id']}}
+			</td>
+
+			<td>
+				{{rowAr.PayIn_PremiumSlabFrom}}
+			</td>
+
+			<td>
+				{{rowAr.PayIn_PremiumSlabUpTo}}
+			</td>
+		</tr>-->
+
+	</tbody>  
+</table>
+
+<table class="table table-bordered" *ngIf="SlabHistory?.length != 0 && rowAr.SlabType == 'Slab' && ViewType == 'ViewRequest' && (User_Rights['Is_PO_Request_Approval']=='1' || api.GetUserData('User_Role') == 'Hod')">
+	<thead>
+		<tr>
+			<th>Premium Slab Applicable Type</th>
+			<th>PayIn Applicable Type</th>
+			<th>PayIn Premium Slab From</th>
+			<th>PayIn Premium Slab UpTo</th>
+		<tr>
+	</thead>
+
+	<tbody>
+		<tr *ngFor="let row of SlabHistory"
+			[ngClass]="(row.PayIn_PremiumSlabFrom == rowAr.PayIn_PremiumSlabFrom)?'ShowActive':''">
+
+			<td>
+				{{row.Premium_Slab_Applicable_Type}}
+			</td>
+
+			<td>
+				{{row.PayIn_Applicable_Type[0]['Id']}}
+			</td>
+
+			<td>
+				{{row.PayIn_PremiumSlabFrom}}
+			</td>
+
+			<td>
+				{{row.PayIn_PremiumSlabUpTo}}
+			</td>
+		</tr>
+	</tbody>
+
+</table>
+
+<form [formGroup]="PayInForm" (ngSubmit)="AddPayIn()">
+	<table class="table table-bordered">
+		<tr>
+			<th>Partners Group</th>
+
+			<th *ngIf="rowAr.PayOutOD!=0">Payout OD</th>
+			<th *ngIf="rowAr.PayOutTP!=0">Payout TP</th>
+			<th *ngIf="rowAr.PayOutNet!=0">Payout Net</th>
+			<th *ngIf="rowAr.PayOutScheme!=0">Payout Scheme</th>
+			<th *ngIf="rowAr.PayOutReward!=0">Payout Reward</th>
+
+			<!--<th>Payout Mode</th>-->
+			<th>Bussiness Commitment</th>
+			<th>Effective Date</th>
+			<th *ngIf="ViewType == 'View'">Action</th>
+		</tr>
+
+		<tbody *ngIf="ViewType == 'View'" formArrayName="AgentGroup">
+
+			<tr *ngFor="let agentg of AgentGroup().controls; let i=index" [formGroupName]="i">
+				<td>
+					<ng-multiselect-dropdown name="Agents_Name" [data]="AgentsGroup[i]" formControlName="Agents_Name"
+						[settings]="dropdownSettingsAgent" (onSelect)="searchAgent(i)" (onDeSelect)="searchAgent(i)"
+						(onSelectAll)="onSelectAllAgent($event,i)" (onDeSelectAll)="searchAgent(i)">
+					</ng-multiselect-dropdown>
+
+					<input formControlName="Agent_Ids" type="hidden">
+					
+				</td>
+				<td *ngIf="rowAr.PayOutOD!=0">
+					<div [ngClass]="(PayInForm.value['AgentGroup'][i]['NeedMorePayOutOD']>0)?'input-group morethenHOdCls':'input-group'">
+						<input style="width: 85px;" [placeholder]="rowAr.PayOutOD" (keyup)="onChangeInput($event,'PayOutOD',i)"
+							formControlName="PayOutOD" type="number" class="form-control">
+						<div *ngIf="PayInForm.value['AgentGroup'][i]['NeedMorePayOutOD']>0" class="input-group-append">
+							<span class="input-group-text">More than HOD</span>
+						</div>
+						<input *ngIf="PayInForm.value['AgentGroup'][i]['NeedMorePayOutOD']>0" style="width:60px;"
+							formControlName="NeedMorePayOutOD" type="number" class="form-control">
+					</div>
+				</td>
+				<td *ngIf="rowAr.PayOutTP!=0">
+					<div [ngClass]="(PayInForm.value['AgentGroup'][i]['NeedMorePayOutTP']>0)?'input-group morethenHOdCls':'input-group'">
+						<input style="width: 85px;" [placeholder]="rowAr.PayOutTP" (keyup)="onChangeInput($event,'PayOutTP',i)"
+							formControlName="PayOutTP" type="number" class="form-control">
+						<div *ngIf="PayInForm.value['AgentGroup'][i]['NeedMorePayOutTP']>0" class="input-group-append">
+							<span class="input-group-text">More than HOD</span>
+						</div>
+						<input *ngIf="PayInForm.value['AgentGroup'][i]['NeedMorePayOutTP']>0" style="width:60px;"
+							formControlName="NeedMorePayOutTP" type="number" class="form-control">
+					</div>
+				</td>
+				<td *ngIf="rowAr.PayOutNet!=0">
+					<div [ngClass]="(PayInForm.value['AgentGroup'][i]['NeedMorePayOutNet']>0)?'input-group morethenHOdCls':'input-group'">
+						<input style="width:60px;" [placeholder]="rowAr.PayOutNet" (keyup)="onChangeInput($event,'PayOutNet',i)"
+							formControlName="PayOutNet" type="number" class="form-control">
+						<div *ngIf="PayInForm.value['AgentGroup'][i]['NeedMorePayOutNet']>0" class="input-group-append">
+							<span class="input-group-text">More than HOD</span>
+						</div>
+						<input *ngIf="PayInForm.value['AgentGroup'][i]['NeedMorePayOutNet']>0" style="width:60px;"
+							formControlName="NeedMorePayOutNet" type="number" class="form-control">
+					</div>
+				</td>
+				<td *ngIf="rowAr.PayOutScheme!=0">
+					<input style="width: 85px;" [placeholder]="rowAr.PayOutScheme"
+						(keyup)="onChangeInput($event,'PayOutScheme',i)" formControlName="PayOutScheme" type="number"
+						class="form-control">
+				</td>
+				<td *ngIf="rowAr.PayOutReward!=0">
+					<input style="width: 85px;" [placeholder]="rowAr.PayOutReward"
+						(keyup)="onChangeInput($event,'PayOutReward',i)" formControlName="PayOutReward" type="number"
+						class="form-control">
+				</td>
+				<!--<td>
+					<select class="form-control" formControlName="PayOut_Mode">
+						<option value="" selected disabled>--Select--</option>
+						<option value="Advance">Daily</option>
+						<option value="Weekly">Weekly</option>
+						<option value="Monthly">Monthly</option>
+					</select>
+				</td>-->
+				<td><input type="number" style="width: 120px;" formControlName="Bussiness_Commitment" class="form-control"></td>
+				<td>
+					<input type="date" formControlName="Effective_Date"
+						[min]="PayInForm.value['AgentGroup'][i]['Effective_Min_Date']"
+						[max]="PayInForm.value['AgentGroup'][i]['Effective_Max_Date']" class="form-control">
+
+
+					<span style="display: none;">
+						<span [ngClass]="(PayInForm.value['AgentGroup'][i]['Attachment_Status']==1)?'show':'hide'">
+
+							<div id="AttachmentDiv_{{i}}" class="AttachmentFile btn btn-lg btn-primary">Upload
+								<input formControlName="AttachmentSource" id="Attachment_{{i}}" name="AttachmentFile[]"
+									(change)="onChangeAttachment($event,i)" type="file" class="AttachmentFileCls">
+							</div>
+
+							<input formControlName="Attachment_Status" type="hidden">
+						</span>
+					</span>
+
+				</td>
+				<td>
+
+					<button *ngIf="i==0" type="button" (click)="addAgentGroup()" class="btn btn-primary btn-xs"><i
+							class="fa fa-plus"></i></button>
+					<button *ngIf="i!=0" type="button" (click)="removeNewAgentGroup(i)" class="btn btn-danger btn-xs"><i
+							class="fa fa-trash"></i></button>
+				</td>
+			</tr>
+
+		</tbody>
+
+		<tbody *ngIf="ViewType == 'ViewRequest'" formArrayName="AgentGroup">
+
+			<tr *ngFor="let agentg of AgentGroup().controls; let i=index" [formGroupName]="i">
+				<td>
+					<ng-multiselect-dropdown style="display: none;" name="Agents_Name" [data]="AgentsGroup[i]"
+						formControlName="Agents_Name" [settings]="dropdownSettingsAgent" (onSelect)="searchAgent(i)"
+						(onDeSelect)="searchAgent(i)" (onSelectAll)="onSelectAllAgent($event,i)" (onDeSelectAll)="searchAgent(i)">
+					</ng-multiselect-dropdown>
+
+					<input formControlName="Agent_Ids" type="hidden">
+
+					<span *ngFor="let r of PayInForm.value['AgentGroup'][i]['Agents_Name'];let i=index;">
+						<span *ngIf="i==0">
+							{{r.Name}}
+						</span>
+					</span>
+					<a class="extra_label" *ngIf="PayInForm.value['AgentGroup'][i]['Agents_Name'].length>1"
+						(click)="LoadMore('Parnters',PayInForm.value['AgentGroup'][i]['Agents_Name'])"
+						href="javascript:void(0)">+{{(PayInForm.value['AgentGroup'][i]['Agents_Name'].length)-1}}</a>
+
+
+				</td>
+
+
+				<td *ngIf="rowAr.PayOutOD!=0 && rowAr.RequestStatus=='Pending'">
+					<div class="input-group morethenHOdCls">
+						<input style="width: 85px;" [placeholder]="rowAr.PayOutOD" (keyup)="onChangeInput($event,'PayOutOD',i)"
+							formControlName="PayOutOD" type="number" class="form-control">
+						<div *ngIf="PayInForm.value['AgentGroup'][i]['NeedMorePayOutOD']>0" class="input-group-append">
+							<span class="input-group-text">More than HOD</span>
+						</div>
+						<input [readonly]="true" *ngIf="PayInForm.value['AgentGroup'][i]['NeedMorePayOutOD']>0" style="width:60px;"
+							formControlName="NeedMorePayOutOD" type="number" class="form-control">
+					</div>
+				</td>
+				<td *ngIf="rowAr.PayOutTP!=0 && rowAr.RequestStatus=='Pending'">
+					<div class="input-group morethenHOdCls">
+						<input style="width: 85px;" [placeholder]="rowAr.PayOutTP" (keyup)="onChangeInput($event,'PayOutTP',i)"
+							formControlName="PayOutTP" type="number" class="form-control">
+						<div *ngIf="PayInForm.value['AgentGroup'][i]['NeedMorePayOutTP']>0" class="input-group-append">
+							<span class="input-group-text">More than HOD</span>
+						</div>
+						<input [readonly]="true" *ngIf="PayInForm.value['AgentGroup'][i]['NeedMorePayOutTP']>0" style="width:60px;"
+							formControlName="NeedMorePayOutTP" type="number" class="form-control">
+					</div>
+				</td>
+				<td *ngIf="rowAr.PayOutNet!=0 && rowAr.RequestStatus=='Pending'">
+					<div class="input-group morethenHOdCls">
+						<input [placeholder]="rowAr.PayOutNet" (keyup)="onChangeInput($event,'PayOutNet',i)" formControlName="PayOutNet" type="number" class="form-control">
+						<div *ngIf="PayInForm.value['AgentGroup'][i]['NeedMorePayOutNet']>0" class="input-group-append">
+							<span class="input-group-text">More than HOD</span>
+						</div>
+						<input [readonly]="true" *ngIf="PayInForm.value['AgentGroup'][i]['NeedMorePayOutNet']>0" formControlName="NeedMorePayOutNet" type="number" class="form-control form-control2">
+					</div>
+				</td>
+				<td *ngIf="rowAr.PayOutScheme!=0 && rowAr.RequestStatus=='Pending'">
+					<input style="width: 85px;" (keyup)="onChangeInput($event,'PayOutScheme',i)" formControlName="PayOutScheme"
+						type="number" class="form-control">
+				</td>
+				<td *ngIf="rowAr.PayOutReward!=0 && rowAr.RequestStatus=='Pending'">
+					<input style="width: 85px;" (keyup)="onChangeInput($event,'PayOutReward',i)" formControlName="PayOutReward"
+						type="number" class="form-control">
+				</td>
+
+
+				<td *ngIf="rowAr.PayOutOD!=0 && rowAr.RequestStatus=='Complete'">
+					{{rowAr.PayOutOD}}
+					<span *ngIf="PayInForm.value['AgentGroup'][i]['NeedMorePayOutOD']>0">(More than HOD
+						{{PayInForm.value['AgentGroup'][i]['NeedMorePayOutOD']}})</span>
+				</td>
+				<td *ngIf="rowAr.PayOutTP!=0 && rowAr.RequestStatus=='Complete'">
+					{{rowAr.PayOutTP}}
+					<span *ngIf="PayInForm.value['AgentGroup'][i]['NeedMorePayOutTP']>0">(More than HOD
+						{{PayInForm.value['AgentGroup'][i]['NeedMorePayOutTP']}})</span>
+				</td>
+				<td *ngIf="rowAr.PayOutNet!=0 && rowAr.RequestStatus=='Complete'">
+					{{rowAr.PayOutNet}}
+					<span *ngIf="PayInForm.value['AgentGroup'][i]['NeedMorePayOutNet']>0">(More than HOD
+						{{PayInForm.value['AgentGroup'][i]['NeedMorePayOutNet']}})</span>
+				</td>
+				<td *ngIf="rowAr.PayOutScheme!=0 && rowAr.RequestStatus=='Complete'">
+					{{rowAr.PayOutScheme}}
+				</td>
+				<td *ngIf="rowAr.PayOutReward!=0 && rowAr.RequestStatus=='Complete'">
+					{{rowAr.PayOutReward}}
+				</td>
+
+				<td>
+					<select class="form-control" style="display: none;" formControlName="PayOut_Mode">
+						<option value="" selected disabled>--Select--</option>
+						<option value="Advance">Daily</option>
+						<option value="Weekly">Weekly</option>
+						<option value="Monthly">Monthly</option>
+					</select>
+
+					{{PayInForm.value['AgentGroup'][i]['PayOut_Mode']}}
+				</td>
+				<td>
+					<input type="number" style="display: none;" formControlName="Bussiness_Commitment" class="form-control">
+					{{PayInForm.value['AgentGroup'][i]['Bussiness_Commitment']}}
+				</td>
+				<td>
+					<input type="date" style="display: none;" formControlName="Effective_Date"
+						[min]="PayInForm.value['AgentGroup'][i]['Effective_Min_Date']"
+						[max]="PayInForm.value['AgentGroup'][i]['Effective_Max_Date']" class="form-control">
+					{{rowAr['Effective_Date']}}
+
+				</td>
+
+			</tr>
+
+		</tbody>
+
+
+	</table>
+
+
+	<table *ngIf="logsAr?.length != 0" class="table table-bordered">
+		<tr>
+			<td><b>User</b></td>
+			<td><b>Remark</b></td>
+			<td><b>Date/Time</b></td>
+		</tr>
+		<tr *ngFor="let r of logsAr;">
+			<td>{{r.Name}} ({{r.Emp_Id}})</td>
+			<td>{{r.Remark }}</td>
+			<td>{{r.Add_Stamp }}</td>
+		</tr>
+	</table>
+
+	<table class="table table-bordered" *ngIf="rowAr.RequestStatus=='Pending'">
+
+		<tr>
+			<td><b>Remark : </b><input formControlName="Remark" class="form-control">
+				<span *ngIf="isSubmitted && FC.Remark.errors" class="form-text text-muted">
+					<span *ngIf="FC.Remark.errors.required" style="color:red;">Please enter Remark!</span>
+				</span>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<div class="row" *ngIf="ViewType == 'View'">
+					<div class="col-lg-12 text-right">
+						<button type="submit" class="btn btn-primary font-weight-bold mr-2">Raise Request</button>
+						<button type="reset" (click)="CloseModel()" class="btn btn-light-primary font-weight-bold">Cancel</button>
+					</div>
+				</div>
+
+				<div class="row" *ngIf="ViewType == 'ViewRequest'">
+					
+					<!--HOD-->
+					<div *ngIf="api.GetUserData('User_Role') == 'Hod' && rowAr.Hod_Id == api.GetUserData('User_Id_Dec')"
+						class="col-lg-12 text-right">
+
+						<input type="submit" class="btn btn-primary font-weight-bold mr-2" (click)="onSubmitType('ApproveByHod')"
+							*ngIf="rowAr.Status==2 && rowAr.HodToAdmin == 1 && rowAr.Request_Type=='RequestToHod'" value="Approve">
+						<input type="submit" class="btn btn-danger font-weight-bold" (click)="onSubmitType('RejectByHod')"
+							*ngIf="rowAr.Status==2 && rowAr.HodToAdmin == 1 && rowAr.Request_Type=='RequestToHod'" value="Reject">
+
+						<input type="submit" class="btn btn-primary font-weight-bold mr-2"
+							(click)="onSubmitType('RequestSendToManagement')"
+							*ngIf="rowAr.Status==2 && rowAr.HodToAdmin == 1 && rowAr.Request_Type=='RequestToManagement'"
+							value="Request">
+						<input type="submit" class="btn btn-danger font-weight-bold" (click)="onSubmitType('RejectByHod')"
+							*ngIf="rowAr.Status==2 && rowAr.HodToAdmin == 1 && rowAr.Request_Type=='RequestToManagement'"
+							value="Reject">
+
+					</div>
+					<!--HOD-->
+
+					<!--Management-->
+					<!--1=Management,2=Admin-->
+					<div *ngIf="User_Rights['Is_PO_Request_Approval']=='1'" class="col-lg-12 text-right">
+						<input type="submit" class="btn btn-primary font-weight-bold mr-2"
+							(click)="onSubmitType('ApproveByManagement')" *ngIf="rowAr.Status==2 && rowAr.HodToAdmin == 2"
+							value="Approve">
+						<input type="submit" class="btn btn-danger font-weight-bold" (click)="onSubmitType('RejectByManagement')"
+							*ngIf="rowAr.Status==2 && rowAr.HodToAdmin == 2" value="Reject">
+					</div>
+					<!--Management-->
+
+					<!--Admin-->
+					<div *ngIf="User_Rights['Is_PO_Request_Approval']=='2'" class="col-lg-12 text-right">
+						<input type="submit" class="btn btn-primary font-weight-bold" (click)="onSubmitType('ApproveByAdmin')"
+							*ngIf="rowAr.Status==2 && rowAr.HodToAdmin == 3" value="Approve">
+						<input type="submit" class="btn btn-danger font-weight-bold" (click)="onSubmitType('RejectByAdmin')"
+							*ngIf="rowAr.Status==2 && rowAr.HodToAdmin == 3" value="Reject">
+					</div>
+					<!--Admin-->
+
+				</div>
+
+			</td>
+		</tr>
+	</table>
+</form>

@@ -1,0 +1,12 @@
+<div class="header_title">{{Type}} Details</div>
+<hr>
+<button (click)="CloseModel()" type="button" class="close closeModelButton">&times;</button>
+			
+
+<input type="text" class="form-control" id="myInput" name="search" [(ngModel)]="searchText" autocomplete="off"  placeholder="Search for names.." title="Type in a name">
+ 
+<div [ngClass]="(dataAr.length>38)?'row myUL contenCls':'row myUL'">  
+  <div class="col-sm-3" *ngFor="let row of dataAr | search : searchText">
+    <a href="javascript:void(0)">{{row.Name}}</a>
+</div>
+</div> 

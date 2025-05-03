@@ -1,0 +1,163 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 *ngIf="ActivePage == 'Default'" class="box-title">Unknown Window</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <app-bms-filter (postCreated)="SearchData($event)"></app-bms-filter>
+                    <div class="box-body">
+                        <div class="mydiv">
+                            <table datatable [dtOptions]="dtOptions" id="Table1"
+                                class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>LOB / Type</th>
+                                        <th>Policy Number</th>
+                                        <th>Insurer</th>
+                                        <th>Vehicle No</th>
+                                        <th
+                                            *ngIf="this.api.GetUserType() == 'admin' || this.api.GetUserType() == 'employee'">
+                                            Login User
+                                        </th>
+                                        <th
+                                            *ngIf="this.api.GetUserType() == 'admin' || this.api.GetUserType() == 'employee'">
+                                            RM</th>
+                                        <th>Customer Details</th>
+                                        <th *ngIf="this.api.GetUserType() == 'employee'">Issued Date</th>
+                                        <th *ngIf="this.api.GetUserType() == 'employee'">Booking Date</th>
+                                        <th *ngIf="this.api.GetUserType() != 'employee'">Risk Start Date</th>
+                                        <th *ngIf="this.api.GetUserType() != 'employee'">Risk End Date</th>
+                                        <th>Premium</th>
+                                        <th>Action</th>
+                                        <!-- <th>Download</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="dataAr?.length != 0">
+                                    <tr *ngFor="let row of dataAr; let i=index;">
+                                        <td>{{row.SrNo}}</td>
+                                        <td>
+                                            <label class="label label-success">{{row.LOB}}</label>
+                                            &nbsp;
+                                            <label class="label label-warning">{{row.TypeName}}</label>
+                                            &nbsp;<label *ngIf="(row.Policy_Type =='2')"
+                                                class="label label-danger">Referred</label>
+                                            <br>
+                                            <!-- <a *ngIf="row.SR_Status == 'Complete' && row.DownloadUrl !=''" style="color:white;" class="label label-info" data-toggle="modal"
+                                                    data-target="#referal_link_modal" (click)="SendMailId(row.SrID)" > <i class="fa fa-share"></i> Share </a> -->
+                                            <label
+                                                *ngIf="(row.CustomerMobile !='' && row.SR_Status == 'Complete' && row.DownloadUrl !='')"
+                                                (click)="WhatsappSend(row.SrID,row.CustomerMobile)"
+                                                class="label label-success"><i class="fa fa-whatsapp"></i>
+                                            </label>
+                                            &nbsp;&nbsp;
+                                            <label *ngIf="row.SR_Status == 'Complete' && row.DownloadUrl !=''"
+                                                (click)="SendMailPoupup(row.SrID)" class="label label-info"><i
+                                                    class="fa fa-envelope-o"></i>
+                                            </label>
+                                        </td>
+                                        <td>{{row.PolicyNo}} <br>
+                                            <label *ngIf="(row.DownloadUrl !='')"
+                                                (click)="ViewDocument(row.DownloadUrl)"
+                                                class="label label-info label-inline mr-2 text-dark"><i
+                                                    class="fa fa-download">
+                                                    Download</i></label>
+                                            <br>
+                                            <label
+                                                *ngIf="row.Login_Scope!==null && row.Login_Scope!=='' && Login_Type =='employee'"
+                                                class="label label-info label-inline mr-2 text-dark"
+                                                style="background-color: black !important;margin-top:8px !important;display: inline-block;">{{
+                                                row.Login_Scope }}</label>
+                                            <br>
+                                            <label *ngIf="row.Ed_status == '1'"
+                                                (click)="ViewEndrosmentUsingSrNo(row.SR_No)"
+                                                class="label label-danger label-inline mr-2">Endorsed</label>
+                                            <br>
+                                            <label *ngIf="row.SR_Status == 'Complete'"
+                                                class="label label-success label-inline mr-2">Booked</label>
+                                            <label *ngIf="row.SR_Status == 'Pending' && row.Underwriter_Emp_Id =='0'"
+                                                class="label label-danger label-inline mr-2">UnBooked</label>
+                                            <label *ngIf="row.SR_Status == 'Pending' && row.Underwriter_Emp_Id !='0'"
+                                                class="label label-danger label-inline mr-2">UnBooked/QC-Rejected</label>
+                                        </td>
+                                        <td>{{row.Company}}</td>
+                                        <td>{{row.Vehicle_No}}</td>
+                                        <td
+                                            *ngIf="this.api.GetUserType() == 'admin' || this.api.GetUserType() == 'employee'">
+                                            {{row.Agent_Name}}
+                                        </td>
+                                        <td
+                                            *ngIf="this.api.GetUserType() == 'admin' || this.api.GetUserType() == 'employee'">
+                                            {{row.RM_Name}}</td>
+                                        <td> <b>Name - </b> {{row.CustomerName}}<br> <b>Mobile - </b>
+                                            {{row.CustomerMobile}}</td>
+                                        <td *ngIf="this.api.GetUserType() == 'employee'">{{row.IssuedDate}}</td>
+                                        <td *ngIf="this.api.GetUserType() == 'employee'">{{row.BookingDate}}</td>
+                                        <td *ngIf="this.api.GetUserType() != 'employee'">
+                                            <div class="PayoutTable" *ngIf="row.LOB == 'Motor'">
+                                                <span><b>OD -</b> {{row.rsdod}}</span>
+                                                <br>
+                                                <span><b>TP -</b> {{row.rsdtp}}</span>
+                                            </div>
+                                            <div class="PayoutTable" *ngIf="row.LOB != 'Motor'">
+                                                <span><b></b> {{row.rsdtp}}</span>
+                                            </div>
+                                        </td>
+                                        <td *ngIf="this.api.GetUserType() != 'employee'">
+                                            <div class="PayoutTable" *ngIf="row.LOB == 'Motor'">
+                                                <span><b>OD -</b> {{row.redod}}</span> <br>
+                                                <span><b>TP -</b> {{row.redtp}}</span>
+                                            </div>
+                                            <div class="PayoutTable" *ngIf="row.LOB != 'Motor'">
+                                                <span><b> </b> {{row.redtp}}</span>
+                                            </div>
+                                        <td> <b>Net - </b>{{row.NetPremium}}<br> <b>Gross - </b>{{row.GrossPremium}}<br>
+                                        </td>
+                                        <td>
+
+                                            <a  (click)="ActionUnknownWindow(row.SR_No)">
+                                            <label class="label label-info"> &nbsp;<i class="fa fa-download"> Action </i> </label> </a>
+                                            
+                                            <!-- <select *ngIf="UserRoleType == 'employee'"
+                                                (change)="ChangeStatusRenewals($event,row.SrID )">
+                                                <option [value]="'1'" [selected]="row.SrNewStatus=='1'"
+                                                    [disabled]="row.SrNewStatus=='1' || row.SrNewStatus=='2' || row.SrNewStatus=='3' || row.SrNewStatus=='4'">
+                                                    Pending</option>
+                                                <option [value]="'2'" [selected]="row.SrNewStatus=='2'"
+                                                    [disabled]="row.SrNewStatus=='3' || row.SrNewStatus=='4'"> Unknown
+                                                    Case </option>
+                                                <option [value]="'3'" [selected]="row.SrNewStatus=='3'"
+                                                    [disabled]="row.SrNewStatus=='2' || row.SrNewStatus=='4'"> Direct
+                                                </option>
+                                                <option [value]="'4'" [selected]="row.SrNewStatus=='4'"
+                                                    [disabled]="row.SrNewStatus=='2' || row.SrNewStatus=='3'"> Agent
+                                                </option>
+                                            </select> -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="dataAr?.length == 0">
+                                    <tr>
+                                        <td colspan="8" align="center">No data Available !</td>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

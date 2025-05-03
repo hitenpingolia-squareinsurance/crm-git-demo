@@ -1,0 +1,26 @@
+.warnings{
+background:#ffc107 !important;
+}
+.darks{
+
+    background-color: #343a40 !important;
+    color:white !important;
+}
+
+.secondarys {
+
+    background-color: #6c757d;
+    color:white !important;
+}
+
+.dangers{
+
+    background-color: #dc3545;
+    color:white !important;
+}
+
+.success{
+
+    background-color: #28a745;
+    color:white !important;
+}

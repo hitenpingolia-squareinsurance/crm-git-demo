@@ -1,0 +1,117 @@
+<div>
+  <button type="hidden" (click)="CloseModel()" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+
+  <div class="card">
+
+
+    <form class="form-blog-top" [formGroup]="SearchForm" (ngSubmit)="SearchData()">
+
+      <div class="row"  >
+
+        <!-- <div><input type="hidden" formControlName="SearchValue" name="SearchValue"
+            class="form-control" placeholder="Search"></div> -->
+
+        <div class="col-sm-1"><input type="text" formControlName="make" name="make" class="form-control"
+            placeholder="Type"></div>
+
+        <div class="col-sm-2"><input type="text" formControlName="modal" name="modal" class="form-control"
+            placeholder="Modal"></div>
+
+        <div class="col-sm-2"><input type="text" formControlName="fuel" name="fuel" class="form-control"
+            placeholder="Variant"></div>
+
+        <div class="col-sm-2"><input type="text" formControlName="cubic_capicity" name="cubic_capicity"
+            class="form-control" placeholder="Cubic Capicity"></div>
+
+
+        <div class="col-sm-1" style="text-align: right;">
+          <input type="submit" class="btn btn-info" value="Search"> &nbsp;&nbsp;
+          <!-- <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger" value="Reset"> <i
+                      class="fa fa-close"> Reset</i> </button> -->
+        </div>
+
+      </div>
+      <!-- <hr>
+
+      <div class="row">
+        <div class="col-sm-2">
+          <b>Total Files :</b>
+        </div>
+        <div class="col-sm-2">
+          {{TotalFiles}}
+        </div>
+      </div> -->
+
+    </form>
+
+
+    <table class="table table-bordered table-hover">
+      <tr class="ValueTD">
+        <td colspan="5" align="center">
+          <div class="col-md-11" align="center">
+
+          </div>
+          <div class="box-tools pull-right btn-right-side">
+
+          </div>
+        </td>
+      </tr>
+
+
+
+
+      <div class="mydiv">
+        <table datatable [dtOptions]="dtOptions" id="Table1" style="width: 100%;"
+          class="table table-bordered table-hover">
+          <thead>
+
+            <tr>
+              <th>ID</th>
+              <th>Make</th>
+              <th>Modal</th>
+              <th>Variant</th>
+              <th>Fuel</th>
+              <th>cubic_capicity</th>
+              <th>Seating Capacity</th>
+              <th>Action</th>
+            </tr>
+
+          </thead>
+
+          <tbody *ngIf="dataAr?.length != 0">
+            <tr *ngFor="let row of dataAr">
+              <td>{{row.SrNo}}</td>
+              <td>{{row.make}}</td>
+              <td>{{row.modal}}</td>
+              <td>{{row.variant}}</td>
+              <td>{{row.fuel_type}}</td>
+              <td>{{row.cubic_capacity}} </td>
+              <td>{{row.seating_capacity}}</td>
+              <td>
+                <button (click)="UpdateStatus(row.id)">Update</button>&nbsp;
+                <button (click)="ResetRow(row.id)" style="background-color: red;  color: white;">Reset</button>&nbsp;
+              </td>
+            </tr>
+
+          </tbody>
+
+
+          <tbody *ngIf="dataAr?.length == 0">
+            <tr>
+              <td colspan="14" align="center">No data available!</td>
+            </tr>
+          <tbody>
+        </table>
+      </div>
+
+    </table>
+
+  </div>
+
+
+
+
+
+
+
+</div>

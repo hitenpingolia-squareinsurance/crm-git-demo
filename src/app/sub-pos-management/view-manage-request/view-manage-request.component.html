@@ -1,0 +1,188 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="inner_page_css">
+  <!-- Content Header (Page header) -->
+
+
+  <!-- Main content -->
+  <section class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="main_card_form">
+          <div class="main_header">
+            <div *ngIf="ActivePage == 'Default'" class="header_title">Mobile Requests</div>
+            <div *ngIf="ActivePage == 'ManageRequests'" class="header_title">Manage Mobile Requests</div>
+          </div>
+   
+          
+          <!-- /.box-header -->
+
+
+          <div class="main_body main_card_height_scroll_withoutfooter">
+
+            <form [formGroup]="SearchForm" (ngSubmit)="SearchBtn()">
+
+
+              <div class="row">
+
+
+
+                <div class="col-sm-2" [ngClass]="ActionType=='ManageRequests'?'displays':'hides'">
+                  <ng-multiselect-dropdown class="form-control" name="Ticket_Status" placeholder="Select Type"
+                    [data]="QuoteTypes" formControlName="RequestType" [settings]="dropdownSettings1"
+                    (onSelect)="onItemSelect($event,'Claim_Status')"
+                    (onDeSelect)="onItemDeSelect($event,'Claim_Status')">
+                  </ng-multiselect-dropdown>
+                  <span *ngIf="isSubmitted && formControls.RequestType.errors" class="ValidationError">
+                    <span *ngIf="formControls.RequestType.errors.required">Field is required</span></span>
+                </div>
+                
+                <div class="col-sm-3">
+                  <input type="text" placeholder="Select Date OR Date-Range" class="form-control"
+                    formControlName="DateOrDateRange" bsDaterangepicker
+                    [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',isAnimated: true }">
+
+                  <span *ngIf="isSubmitted && formControls.DateOrDateRange.errors" class="ValidationError">
+                    <span *ngIf="formControls.DateOrDateRange.errors.required">Date is required</span>
+                  </span>
+                </div>
+
+
+                <!-- <div class="col-sm-2">
+                  <ng-multiselect-dropdown class="form-control" name="Ticket_Status" placeholder="Select  Status"
+                    [data]="TicketStatus_Ar" formControlName="Ticket_Status" [settings]="dropdownSettings"
+                    (onSelect)="onItemSelect($event,'Claim_Status')"
+                    (onDeSelect)="onItemDeSelect($event,'Claim_Status')">
+                  </ng-multiselect-dropdown>
+                </div> -->
+
+                <div class="col-sm-3">
+
+                  <input type="text" formControlName="SearchValue" name="SearchValue" class="form-control"
+                    placeholder="Search">
+
+                </div>
+
+
+                <div class="col-sm-2" style="text-align: right;">
+
+
+                  <input type="submit" class="btn btn-info" value="Search">
+                  &nbsp;&nbsp;
+                  <button (click)="ClearSearch()" type="button" style="font-size: small;" class="btn btn-danger"
+                    value="Reset"> <i class="fa fa-close"> Reset</i> </button>
+
+                </div>
+
+              </div>
+
+            </form>
+
+            <button class="btn btn-primary nextBtn pull-right btn-align-right" (click)="getSelectedItems()"  *ngIf="anyRowSelected"
+            style="margin-right: 5px;">Add Margin</button>
+
+
+            <hr>
+
+            <div class="mydiv">
+
+              <table datatable [dtOptions]="dtOptions" id="example2" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+
+                    <th>Select Current Page Rows<input type="checkbox" [(ngModel)]="selectAll" (click)="headerClick($event)"
+                      (change)="selectAllRows()" /></th>
+
+                    <th>S.No</th>
+                    <th *ngIf="ActionType=='ManageRequests'">Action</th>
+                    <th>Status</th>
+
+                    <th>Mobile</th>
+
+                    <!-- <th *ngIf="ActionType=='ManageRequests'">Creator</th> -->
+                    <!-- <th *ngIf="ActionType==''">Assign Manager</th> -->
+                    <th>TimeStamp</th>
+                    <th>Action</th>
+
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="dataAr?.length != 0">
+
+                  <tr *ngFor="let row of dataAr; let i=index;">
+                    <td><input type="checkbox" class="form-contol" [(ngModel)]="row.selected" (change)="selectRow(row)" /></td>
+                    <td>{{row.SrNo}}.</td>
+
+                    <td *ngIf="ActionType=='ManageRequests'">
+                      <label *ngIf="row.Assigner_Id =='' || row.Assigner_Id == null "
+                        class="btn btn-success btnCustomess" style="cursor: pointer;"
+                        (click)="AcceptRequest(row.Id)">Accept</label>
+
+                      <select *ngIf="row.Status==0 && row.Assigner_Id!=''" (change)="ChangeRequest($event,row.Id)">
+                        <option>Select</option>
+                        <option value="2">Reject</option>
+                        <option value="1">Approve</option>
+                      </select>
+                    </td>
+
+                    <td>
+                      <a *ngIf="row.Status == '0'"><span class="label label-default">Pending</span></a>
+                      <a *ngIf="row.Status == '2'" href="javascript:void(0)" (click)="ShowRejectDetails(row.Id)"><span
+                          class="label label-primary">Rejected</span></a>
+                      <a *ngIf="row.Status == '1'"><span class="label label-success">Approved</span>
+                      </a>
+                    </td>
+
+                    <td>{{row.Mobile}}</td>
+
+                    <!-- <td *ngIf="ActionType=='ManageRequests'">{{ row.Creator }}</td> -->
+                    <!-- <td *ngIf="ActionType==''">{{ row.Manager }}</td> -->
+                    <td>{{ row.Add_Stamp }}</td>
+                    <td>
+                      
+                      
+                      <button class="btn btn-primary nextBtn pull-right" *ngIf="row.getmarginvalue == '' || row.getmarginvalue == null" (click)="AddMarginPopup(row.Id,'Add',row.Mobile)"
+                      style="margin-right: 5px;">Add Margin</button>
+                    <button class="btn btn-primary nextBtn pull-right" *ngIf="row.getmarginvalue != '' && row.getmarginvalue != null" (click)="AddMarginPopup(row.Id,'Edit',row.Mobile)"
+                      style="margin-right: 5px;">Update Margin</button>
+
+
+
+                      <button class="btn btn-success nextBtn pull-right" *ngIf="row.Status == 1" (click)="ActiveInactive(row.Id,0,'user_agent',row.Mobile)"
+                      style="margin-right: 5px;">Active</button>
+                    <button class="btn btn-danger nextBtn pull-right" *ngIf="row.Status == 0" (click)="ActiveInactive(row.Id,1,'user_agent',row.Mobile)"
+                      style="margin-right: 5px;">In-Active</button>
+
+
+                      
+
+
+
+
+
+                    </td>
+
+                  </tr>
+
+                </tbody>
+
+                <tbody *ngIf="dataAr?.length == 0">
+                  <tr>
+                    <td colspan="8" align="center">No data Available !</td>
+                  </tr>
+                <tbody>
+
+              </table>
+
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

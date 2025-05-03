@@ -1,0 +1,247 @@
+<div class="content-wrapper">
+	<section class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title">Add Vehicle</h3>
+					</div>
+					<form class="form" [formGroup]="SRForm" (ngSubmit)="Add()">
+						<div class="box-body">
+							<div class="form-group row">
+								<div class="col-md-2">
+									<label>LOB <span style="color:red;">*</span> </label>
+									<select class="form-control" formControlName="LOB_Id" (change)="File_Types()">
+										<option value="">---Select---</option>
+										<option value="Motor">Motor</option>
+									</select>
+									<span *ngIf="isSubmitted && FC.LOB_Id.errors" class="form-text text-muted">
+										<span *ngIf="FC.LOB_Id.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+								</div>
+								<div class="col-md-2">
+									<label>IMD File Type <span style="color:red;">*</span></label>
+									<select class="form-control" formControlName="File_Type" (change)="Products()">
+										<option value="">---Select---</option>
+										<option *ngFor="let row of File_Type_Ar" value="{{row}}">{{row}}</option>
+									</select>
+									<span *ngIf="isSubmitted && FC.File_Type.errors" class="form-text text-muted">
+										<span *ngIf="FC.File_Type.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+								</div>
+								<div class="col-md-4">
+									<label>Product <span style="color:red;">*</span> </label>
+									<select class="form-control" formControlName="Product_Id" (change)="Policy_Type()">
+										<option value="0">---Select---</option>
+										<option *ngFor="let row of Products_Ar;" value="{{row.Id}}">{{row.Name}}
+										</option>
+									</select>
+									<span *ngIf="isSubmitted && FC.Product_Id.errors" class="form-text text-muted">
+										<span *ngIf="FC.Product_Id.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+								</div>
+								<div *ngIf="viewPolicyType==1" class="col-md-4">
+									<label>Select Policy Type <span style="color:red;">*</span> </label>
+									<select class="form-control" formControlName="Segment_Id" (change)="Plan_Type()">
+										<option value="0">---Select---</option>
+										<option *ngFor="let row of Segment_Ar;" value="{{row.Id}}">{{row.Name}}
+										</option>
+									</select>
+									<span *ngIf="isSubmitted && FC.Segment_Id.errors" class="form-text text-muted">
+										<span *ngIf="FC.Segment_Id.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div *ngIf="viewPlanType==1" class="col-md-3">
+									<label>Select Plan Type <span style="color:red;">*</span> </label>
+									<select class="form-control" formControlName="Plan_Type" (change)="SubProduct()">
+										<option value="0">---Select---</option>
+										<option *ngFor="let row of Plan_Type_Ar;" value="{{row.Id}}">{{row.Name}}
+										</option>
+									</select>
+									<span *ngIf="isSubmitted && FC.Plan_Type.errors" class="form-text text-muted">
+										<span *ngIf="FC.Plan_Type.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+								</div>
+								<div *ngIf="viewSubProduct==1" class="col-md-3">
+									<label>Select Sub-Product <span style="color:red;">*</span> </label>
+									<select class="form-control" formControlName="SubProduct_Id" (change)="Classes()">
+										<option value="0">---Select---</option>
+										<option *ngFor="let row of SubProducts_Ar;" value="{{row.Id}}">{{row.Name}}
+										</option>
+									</select>
+									<span *ngIf="isSubmitted && FC.SubProduct_Id.errors" class="form-text text-muted">
+										<span *ngIf="FC.SubProduct_Id.errors.required" style="color:red;">Please select
+											an
+											option !</span>
+									</span>
+								</div>
+								<div *ngIf="viewClass==1" class="col-md-3">
+									<label>Select Class <span style="color:red;">*</span> </label>
+									<select class="form-control" formControlName="Class_Id" (change)="Sub_Classes()">
+										<option value="0">---Select---</option>
+										<option *ngFor="let row of Classes_Ar;" value="{{row.Name}}">{{row.Name}}
+										</option>
+									</select>
+									<span *ngIf="isSubmitted && FC.Class_Id.errors" class="form-text text-muted">
+										<span *ngIf="FC.Class_Id.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+								</div>
+								<div *ngIf="(SRForm.value['LOB_Id'] == 'Motor')" class="col-md-3">
+									<label>Select Sub Class <span style="color:red;">*</span> </label>
+									<select class="form-control" formControlName="Sub_Class_Id" (change)="Make()">
+										<option value="0">---Select---</option>
+										<option *ngFor="let row of Sub_Classes_Ar;" value="{{row.Name}}">{{row.Name}}
+										</option>
+									</select>
+									<span *ngIf="isSubmitted && FC.Sub_Class_Id.errors" class="form-text text-muted">
+										<span *ngIf="FC.Sub_Class_Id.errors.required" style="color:red;">Please select
+											an
+											option !</span>
+									</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label text-left col-md-3 col-sm-12">Make <span
+										style="color:red;">*</span> </label>
+								<div class="col-md-6">
+									<select *ngIf="EditMake=='0'" class="form-control" formControlName="Make_Id"
+										(change)="Model()">
+										<option value="">---Select---</option>
+										<option *ngFor="let row of Make_Ar;" value="{{row.Name}}">{{row.Name}}</option>
+									</select>
+									<input *ngIf="EditMake == '1'" type="text" class="form-control AutoCapitlize"
+										name="Make_Id" formControlName="Make_Id" placeholder="" />
+									<span *ngIf="isSubmitted && FC.Make_Id.errors" class="form-text text-muted">
+										<span *ngIf="FC.Make_Id.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+								</div>
+								<div *ngIf="EditMake_Btn=='Add'" class="col-md-1" style="padding-top: 8px;"><a
+										(click)="AddNew('Make','Add')" href="javascript:void(0);">Add New</a> </div>
+								<div *ngIf="EditMake_Btn=='Cancel'" class="col-md-1" style="padding-top: 8px;"><a
+										(click)="AddNew('Make','Cancel')" href="javascript:void(0);">Cancel</a> </div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label text-left col-md-3 col-sm-12">Model <span
+										style="color:red;">*</span> </label>
+								<div class="col-md-6">
+									<select *ngIf="EditModel=='0'" class="form-control" formControlName="Model_Id">
+										<option value="">---Select---</option>
+										<option *ngFor="let row of Models_Ar;" value="{{row.Name}}">{{row.Name}}
+										</option>
+									</select>
+									<input *ngIf="EditModel == '1'" type="text" class="form-control AutoCapitlize"
+										name="Model_Id" formControlName="Model_Id" placeholder="" />
+									<span *ngIf="isSubmitted && FC.Model_Id.errors" class="form-text text-muted">
+										<span *ngIf="FC.Model_Id.errors.required" style="color:red;">Please select an
+											option !</span>
+									</span>
+								</div>
+								<div *ngIf="EditModel_Btn=='Add'" class="col-md-1" style="padding-top: 8px;"><a
+										(click)="AddNew('Model','Add')" href="javascript:void(0);">Add New</a> </div>
+								<div *ngIf="EditModel_Btn=='Cancel'" class="col-md-1" style="padding-top: 8px;"><a
+										(click)="AddNew('Model','Cancel')" href="javascript:void(0);">Cancel</a> </div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label text-left col-md-3 col-sm-12">Variant <span
+										style="color:red;">*</span></label>
+								<div class="col-md-6 col-md-6 col-sm-12">
+									<input type="text" class="form-control" name="Variant_Id"
+										formControlName="Variant_Id" placeholder="" />
+									<span *ngIf="isSubmitted && FC.Variant_Id.errors" class="form-text text-muted">
+										<span *ngIf="FC.Variant_Id.errors.required" style="color:red;">Please enter
+											Variant name !</span>
+									</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label text-left col-md-3 col-sm-12">GVW/CC <span
+										style="color:red;">*</span></label>
+								<div class="col-md-6 col-md-6 col-sm-12">
+									<input min="0" type="number" class="form-control" name="GVW_CC"
+										formControlName="GVW_CC" placeholder="" />
+									<span *ngIf="isSubmitted && FC.GVW_CC.errors" class="form-text text-muted">
+										<span *ngIf="FC.GVW_CC.errors.required" style="color:red;">Please enter Cubic
+											Capacity !</span>
+									</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label text-left col-md-3 col-sm-12">Seating Capacity <span
+										style="color:red;">*</span></label>
+								<div class="col-md-6 col-md-6 col-sm-12">
+									<input min="0" type="number" class="form-control" name="Seating_Capcity"
+										formControlName="Seating_Capcity" placeholder="" />
+									<span *ngIf="isSubmitted && FC.Seating_Capcity.errors" class="form-text text-muted">
+										<span *ngIf="FC.Seating_Capcity.errors.required" style="color:red;">Please enter
+											Seating Capacity !</span>
+									</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label text-left col-md-3 col-sm-12">Fuel Type <span
+										style="color:red;">*</span></label>
+								<div class="col-md-6 col-md-6 col-sm-12">
+									<!--<input type="text" class="form-control" name="Fuel_Type" formControlName="Fuel_Type"  placeholder=""/>-->
+									<select class="form-control" formControlName="Fuel_Type">
+										<option value="">---Select---</option>
+										<option value="PETROL">PETROL</option>
+										<option value="DIESEL">DIESEL</option>
+										<option value="CNG">CNG</option>
+										<option value="LPG">LPG</option>
+										<option value="ELECTRIC">ELECTRIC</option>
+										<option value="BATTERY">BATTERY</option>
+										<option value="BATTERY OPERATED">BATTERY OPERATED</option>
+									</select>
+									<span *ngIf="isSubmitted && FC.Fuel_Type.errors" class="form-text text-muted">
+										<span *ngIf="FC.Fuel_Type.errors.required" style="color:red;">Please enter Fuel
+											Type !</span>
+									</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label text-left col-md-3 col-sm-12">Body Type <span
+										style="color:red;">*</span></label>
+								<div class="col-md-6 col-md-6 col-sm-12">
+									<input type="text" class="form-control" name="Body_Type" formControlName="Body_Type"
+										placeholder="" />
+									<!-- <select *ngIf="EditBody_Type == '0'" class="form-control"
+										formControlName="Body_Type">
+										<option value="">---Select---</option>
+										<option value="BIKE">BIKE</option>
+										<option value="SCOOTER">SCOOTER</option>
+										<option value="E SCOOTER">E SCOOTER</option>
+									</select> -->
+									<span *ngIf="isSubmitted && FC.Body_Type.errors" class="form-text text-muted">
+										<span *ngIf="FC.Body_Type.errors.required" style="color:red;">Please enter Body
+											Type !</span>
+									</span>
+								</div>
+							</div>
+							<div class="card-footer">
+								<div class="row">
+									<div class="col-md-8 ml-md-auto">
+									</div>
+									<div class="col-md-4 ml-md-auto">
+										<button type="submit"
+											class="btn btn-primary font-weight-bold mr-2">Submit</button> &nbsp; &nbsp;
+										<button type="reset" (click)="Reset()"
+											class="btn btn-light-primary font-weight-bold">Cancel</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>

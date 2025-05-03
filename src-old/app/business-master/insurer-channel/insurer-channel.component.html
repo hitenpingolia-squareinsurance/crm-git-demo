@@ -1,0 +1,187 @@
+<section class="inner_page_css knowlage_details_page custom-scrool">
+    <div class="container-fluid">
+        <div class="main_card_form ">
+            <div class="main_header">
+                <!-- <div class="header_title">Insurer Channels</div> -->
+                <div class="header_title">{{ companyName }}</div>
+
+            </div>
+
+            <div *ngIf="!hasAccess" class="error-message">
+                <div class="container" style="text-align: center;">
+                    <img src="assets/Authorised.png" alt="">
+                </div>
+            </div>
+
+            <div class="main_body main_card_height_scroll_withoutfooter" *ngIf="hasAccess">
+                <div class="btn_list_group">
+                    <div class="panel-group mb-0" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="dsr-fillter">
+                                        <button class=" btn btn-info1" role="tab" id="headingOne" data-toggle="collapse"
+                                        data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                        aria-controls="collapseOne">Filters
+                                    </button>
+                                        <button class="btn btn-info1" (click)="dailog('add','')"><span>Add
+                                            Insurer Channels</span></button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingOne">
+                                <div class="panel-body sub-form">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <form [formGroup]="AddFieldForm"
+                                            (ngSubmit)="SearchData()">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div id="close">
+                                                        <div class="category_list">
+                                                            <ng-multiselect-dropdown class="form-control"
+                                                                placeholder="Select Company" [data]="company"
+                                                                formControlName="company"
+                                                                [settings]="dropdownSettingsmultiselect">
+                                                            </ng-multiselect-dropdown>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="submit" class="btn btn-info" value="Search">
+                                                    &nbsp;&nbsp;
+                                                    <input (click)="ClearSearch()" type="button"
+                                                        class="btn btn-danger" value="Reset">
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <hr>
+
+                <div class="box box-default" style="margin-bottom: 10px !important; margin-top: 0px !important ;">
+                    <div class="custom_table tables_layout_design">
+                        <table datatable [dtOptions]="dtOptions" class="row-border table" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <!-- ======= Refer Table  =========-->
+                        <ul class="responsive-table">
+                            <li class="table-row" *ngFor="let row of dataAr; let i = index;">
+                                <p class="life_status_label">
+                                    <span *ngIf="row.SR_Type == 'Normal'" class="btn btn-inline"
+                                        [ngClass]="{'btn-danger': row.status == 0, 'btn-success': row.status == 1}"
+                                        style="margin-left: 5px; padding: 5px 10px; margin-top: 3px;"> {{ row.status ==
+                                        0 ? 'Inactive' : 'Active' }}</span>
+                                </p>
+                                <div class="d_flex w_100 flex_Equal px_10  flex_colum_sm mt15">
+                                    <div class="agents_data agents_data1">
+                                        <div class="icon_re_cl">{{row.Sno}}</div>
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data">
+                                                <div>Company Name</div>
+                                                <strong class="fs_18 text-bold">{{row.companyName}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="agents_data agents_data2">
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data" *ngIf="row.addStamp != ''">
+                                                <div> Add Stamp </div>
+                                                <strong>
+                                                    {{row.addStamp | date : 'dd-MM-yyyy HH:mm:ss'}}
+                                                </strong>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="agents_data agents_data2">
+                                        <div class="agent_name_mobile">
+                                            <div class="agent_data" *ngIf="row.updateStamp != ''">
+                                                <div> Update Stamp </div>
+                                                <strong>
+                                                    {{row.updateStamp | date : 'dd-MM-yyyy HH:mm:ss'}}
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button
+                                        type="button" 
+                                        class="btn btn-info" 
+                                        [disabled]="row.is_default == 1" 
+                                        (click)="setAsDefaultChannel(row.id)" 
+                                        style="padding: 3px;">
+                                        <strong style="color: #fff;">
+                                            {{ row.is_default == 1 ? 'Default' : 'Add Default' }}
+                                        </strong>
+                                    </button>
+                                    
+                                    </div>
+                                </div>
+
+
+                                <div class="last_row_div mt10" style="display: flex; gap: 1px;">
+                                    <div class="label_chips finance_lob" *ngIf="row.branchName != ''">
+                                        <span>Branch - {{row.branch_address}}</span>
+                                    </div>
+                                    <div class="label_chips real_estate_lob">
+                                        <span>Name - {{row.contact_person_name}}</span>
+                                    </div>
+                                    <div class="label_chips growth_positive">
+                                        <span>Email - {{row.contact_person_email}}</span>
+                                    </div>
+                                    <!-- <div class="label_chips mutual_fund_lob">
+                                        <span>
+                                            Payout Posting Criteria -  {{ row.payin_posting_criteria == 1 ? 'Risk End Date' : 'Issue Date' }}
+                                        </span>
+                                    </div> -->
+                                </div>
+                                
+
+                                <div class="last_row">
+                                    <div class="effective_date"></div>
+                                    <div class="col_2 action_btn d_flex flex_Middel box-bottom">
+                                        <button type="button" class="btn btn-primary" (click)="dailog('update',row.id)"
+                                            style="padding: 3px;">
+                                            <strong style="color: #fff;">Update</strong>
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <!--======= Refer Table END ========= -->
+
+                        <div class="row" *ngIf="dataAr?.length == 0">
+                            <div class="col-md-12">
+                                <div class="no_data_found">
+                                    <span><img src="assets/image/no_data_banner.jpg"></span>
+                                    <small>No data available !</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>

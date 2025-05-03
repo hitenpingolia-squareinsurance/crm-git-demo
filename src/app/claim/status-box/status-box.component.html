@@ -1,0 +1,54 @@
+<h2 mat-dialog-title class="h2-claim-request">Claim Request</h2>
+
+<form class="form" [formGroup]="modalForm" (ngSubmit)="submitStatusRequest()">
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="name">Document</label>
+  
+        <label class="form-control btn fileUpload btn-default" name="button" value="status_document">
+          <input type="file" (change)="checkFileType($event,'status_document')" formControlName="statusdocument"
+            accept="image/png, image/gif, image/jpeg, application/pdf" style="display:none;" />
+          <i class="fas fa-user-alt"><b>Document</b></i>
+        </label>
+      </div>
+     
+    </div>
+  
+    <div class="col-md-6">
+      <div  class="form-group">
+        <label for="name">Remarks * </label>
+        <input class="form-control" formControlName="remarks" placeholder="Enter Remarks" maxlength="200">
+        <div *ngIf="isSubmitted && formControls.remarks.errors " class="ValidationError">
+          <div *ngIf="formControls.remarks.errors.required">Please fill remarks!</div>
+        </div>
+      </div>
+     
+  
+    </div>
+  
+  
+    <div *ngIf="this.status == '8'" class="col-md-6" >
+      <div class="form-group">
+        <label for="name">Case Type</label>
+  
+      <select class="form-control" formControlName="CaseType">
+        <option [value]="'Caseless'">Caseless</option>
+        <option [value]="'Reimbursement'"> Reimbursement</option>
+      </select>
+      </div>
+    </div>
+    <!-- *ngIf="this.status == '3'" -->
+    <div *ngIf="this.status == '8'" class="col-md-6" >
+      <div class="form-group">
+        <label for="name">Access Amount </label>
+      <input class="form-control" formControlName="AccessAmount" placeholder="Enter Access Amount" maxlength="20">
+      </div>
+    </div>
+    <div class="col-md-12" style="text-align: right;">
+      <button class="btn btn-primary" [disabled]="buttonDisable" type="submit">Save</button>&nbsp;&nbsp;
+      <button class="btn btn-light" (click)="CloseModel()">Close</button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,100 @@
+.custom-scrool .main_card_form .main_header {
+  background: rgba(44, 178, 179, 9);
+  padding: 7px 15px;
+  border-radius: 7px 7px 0px 0px;
+  -webkit-border-radius: 7px 7px 0px 0px;
+  -moz-border-radius: 7px 7px 0px 0px;
+  -ms-border-radius: 7px 7px 0px 0px;
+  -o-border-radius: 7px 7px 0px 0px;
+}
+
+.custom-scrool .main_card_form {
+  background: #fff;
+  border-radius: 0px;
+  box-shadow: none;
+  border: none;
+}
+
+.main_card_form .main_header .header_title {
+  font-size: 16px;
+  font-weight: 400;
+  color: #ffffff;
+  letter-spacing: 0.4px;
+}
+
+.newcsradio .custom_radio_button {
+  display: inline-block;
+  padding: 0 5px;
+}
+.newcsradio .custom_radio_button:first-child {
+  padding-left: 0px;
+}
+.newcsradio .custom_radio_button:last-child {
+  padding-right: 0px;
+}
+.newcsradio .custom_radio_button input[type="checkbox"] {
+  appearance: none;
+  display: none;
+}
+
+.newcsradio .custom_radio_button label {
+  font-size: 12px;
+  background-color: #e6f6f3;
+  width: auto;
+  border: 1px solid #bdded7;
+  font-weight: 500 !important;
+  padding: 3px 15px !important;
+  text-align: center;
+  border-radius: 30px;
+  overflow: hidden;
+  transition: linear 0.5s;
+  color: #333;
+  -webkit-transition: linear 0.5s;
+  -moz-transition: linear 0.5s;
+  -ms-transition: linear 0.5s;
+  -o-transition: linear 0.5s;
+}
+
+.newcsradio .custom_radio_button input[type="checkbox"]:checked+label {
+  background-color: #2cb2b3;
+  color: #ffffff;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+
+.col-md-12{
+  padding: 0 40px 0 40px;
+}
+
+.closeModelButton{
+  margin: 5px 5px 0 0;
+}
+
+.float-end{
+  margin-top: 20px;
+}
+
+.check-flex{
+  display: flex;
+  justify-content: space-between;
+}
+
+.check-flex {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  label {
+    margin-left: 2px;
+  }
+}
+
+.cat-list-inline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
